@@ -376,7 +376,13 @@ country_decisions = {
 			has_country_flag = diocese_decisions_yes
 			overlord_of = RD4
 			any_owned_province = {
-				region = france_region
+				OR = {
+					region = france_region
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_gallia }
+					}
+				}
 			}
 		}
 		
@@ -394,6 +400,18 @@ country_decisions = {
 					}
 					add_core = RD4
 					cede_province = RD4
+				}
+				if = {
+					limit = {
+						has_country_flag = rom_belgica_isof_gallia 
+					}
+					low_countries_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RD4
+						cede_province = RD4
+					}
 				}
 			}
 		}
@@ -558,7 +576,13 @@ country_decisions = {
 			has_country_flag = diocese_decisions_yes
 			overlord_of = RD6
 			any_owned_province = {
-				region = north_german_region
+				OR = {
+					region = north_german_region
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_germania }
+					}
+				}
 			}
 		}
 		
@@ -576,6 +600,18 @@ country_decisions = {
 					}
 					add_core = RD6
 					cede_province = RD6
+				}
+				if = {
+					limit = {
+						has_country_flag = rom_belgica_isof_germania
+					}
+					low_countries_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RD6
+						cede_province = RD6
+					}
 				}
 			}
 		}
@@ -1791,7 +1827,19 @@ country_decisions = {
 			has_country_flag = diocese_decisions_yes
 			overlord_of = RDZ
 			any_owned_province = {
-				region = persia_region
+				OR = {
+					region = persia_region
+					AND = {
+						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
+						ROM = { has_country_flag = rom_caucasia_isof_persia }
+					}
+				}
 			}
 		}
 		
@@ -1809,6 +1857,24 @@ country_decisions = {
 					}
 					add_core = RDZ
 					cede_province = RDZ
+				}
+				if = {
+					limit = {
+						has_country_flag = rom_caucasia_isof_persia
+					}
+					caucasia_region = {
+						limit = {
+							owned_by = ROOT
+							NOT = {
+								OR = {
+									area = circassia_area
+									area = dagestan_area
+								}
+							}
+						}
+						add_core = RDZ
+						cede_province = RDZ
+					}
 				}
 			}
 		}

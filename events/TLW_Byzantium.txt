@@ -397,18 +397,35 @@ province_event = {
 			OR = {
 				tag = ROM
 				has_reform = rom_diocese
+				primary_culture = russo_roman
 			}
 		}
 		NOT = { culture_group = roman_g }
 		OR = {
-			has_country_flag = rom_belgica_isof_gallia
-			has_country_flag = rom_belgica_isof_germania
+			ROM = {
+				OR = {
+					has_country_flag = rom_belgica_isof_gallia
+					has_country_flag = rom_belgica_isof_germania
+				}
+			}
 			NOT = { region = low_countries_region }
 		}
 		OR = {
-			has_country_flag = rom_caucasia_isof_anatolia
-			has_country_flag = rom_caucasia_isof_persia
-			NOT = { region = caucasia_region }
+			ROM = {
+				OR = {
+					has_country_flag = rom_caucasia_isof_anatolia
+					has_country_flag = rom_caucasia_isof_persia
+				}
+			}
+			NOT = { 
+				OR = {
+					area = shirvan_area
+					area = armenia_area
+					area = imereti_area
+					area = samtskhe_area
+					area = kartli_kakheti_area
+				}
+			}
 		}
 	}
 
@@ -473,6 +490,12 @@ province_event = {
 					province_id = 2324
 					AND = {
 						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
 						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 					}
 				}
@@ -508,6 +531,12 @@ province_event = {
 					region = khorasan_region
 					AND = {
 						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
 						ROM = { has_country_flag = rom_caucasia_isof_persia }
 					}
 				}
@@ -531,6 +560,52 @@ province_event = {
 				region = arabia_region
 			}
 			change_culture = romano_arabic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = wendia_region
+					region = poland_region
+					region = baltic_region
+					area = podlasie_area
+					area = red_ruthenia_area
+				}
+			}
+			change_culture = romano_sarmatic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = russia_region
+					AND = {
+						region = ruthenia_region
+						NOT = {
+							area = podlasie_area
+							area = red_ruthenia_area
+						}
+					}
+					region = ural_region
+					region = west_siberia_region
+					region = east_siberia_region
+				}
+			}
+			change_culture = russo_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = crimea_region
+					region = central_asia_region
+					region = mongolia_region
+					AND = {
+						region = manchuria_region
+						NOT = { area = liaoning_area }
+					}
+					area = circassia_area
+					area = shirvan_area
+				}
+			}
+			change_culture = romano_scythic
 		}
 		else = {
 			change_culture = roman_new
@@ -779,5 +854,114 @@ country_event = {
 			months = 300
 			target = UKR
 		}
+	}
+}
+
+#Belgica Identity
+country_event = { 
+	id = ab_byzantium.63
+	title = ab_byzantium.63.t 
+	desc = ab_byzantium.63.d 
+	picture = AB_BELGICA_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.63.a
+		ai_chance = { factor = 50 }
+		add_country_modifier = {
+			name = byz_belgica_french
+			duration = -1
+		}
+		custom_tooltip = BYZ_GALLIA_BELGICA
+		set_country_flag = rom_belgica_isof_gallia
+	}
+
+	option = {
+		name = ab_byzantium.63.b
+		ai_chance = { factor = 50 }
+		add_country_modifier = {
+			name = byz_belgica_german
+			duration = -1
+		}
+		custom_tooltip = BYZ_GERMANIA_BELGICA
+		set_country_flag = rom_belgica_isof_germania
+	}
+}
+
+#Master of Europe
+country_event = {
+	id = ab_byzantium.64
+	title = ab_byzantium.64.t
+	desc = ab_byzantium.64.d
+	picture = AB_ROMAN_TRIUMPH_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.64.a
+		add_adm_power = 100
+		add_dip_power = 100
+		add_mil_power = 100
+		change_monarch_points_or_power = {
+			points = 1
+			power = adm
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		custom_tooltip = BYZ_BUFFED_AUGUSTUS
+		hidden_effect = {
+			remove_ruler_personality = augustus_personality
+			add_ruler_personality = augustus_buffed_personality
+		}
+		add_country_modifier = {
+			name = byz_roma_europa
+			duration = 3650
+		}
+	}
+}
+
+#Romanization of Rus
+country_event = {
+	id = ab_byzantium.65
+	title = ab_byzantium.65.t
+	desc = ab_byzantium.65.d
+	picture = AB_COURT_eventPicture
+
+	trigger = {
+		OR = {
+			tag = BYZ
+			tag = ROM
+		}
+		had_country_flag = {
+			flag = byz_tsar_of_rus
+			days = 36500
+		}
+		UKR = { is_subject_of = ROM }
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = ab_byzantium.65.a
+		UKR = {
+			change_primary_culture = russo_roman
+			capital_scope = {
+				change_culture = russo_roman 
+				add_province_modifier = {
+					name = byz_forced_romanized
+					duration = 7300 
+				}
+			}
+		}
+		custom_tooltip = BYZ_RUSSO_ROMAN
 	}
 }

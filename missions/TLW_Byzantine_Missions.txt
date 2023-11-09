@@ -605,6 +605,23 @@ byz_slot1_locked2 = {
 			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
+
+	byzantium_belgica_locked = {
+		icon = mission_unknown_mission
+		position = 24
+		required_missions = { byzantium_rhine_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				tag = ROM
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
 }
 
 byz_slot1_unlocked2 = {
@@ -744,6 +761,36 @@ byz_slot1_unlocked2 = {
 				name = byzantium_imperial_border
 				duration = -1
 			}
+			low_countries_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	byzantium_belgica = {
+	    icon = mission_spanish_netherlands
+		required_missions = { byzantium_rhine }
+		position = 24
+		
+		trigger = {
+		    low_countries_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 200
+			country_event = { id = ab_byzantium.63 }
 		}
 	}
 }
@@ -762,7 +809,7 @@ byz_slot1_third = {
 
 	byzantium_renaissance = {
 		icon = friends_in_high_places
-		position = 25
+		position = 27
 		provinces_to_highlight = {
 			is_institution_origin = renaissance
 			NOT = { owned_by = ROOT } 
@@ -802,7 +849,7 @@ byz_slot1_third = {
 
 	byzantium_university = {
 		icon = mission_rb_trinity_college_dublin
-		position = 26
+		position = 28
 		required_missions = { byzantium_renaissance } 
 
 		provinces_to_highlight = { 
@@ -842,7 +889,7 @@ byz_slot1_third = {
 
 	byzantium_roman_law = {
 		icon = mission_themis
-		position = 28
+		position = 30
 		required_missions = { byzantium_university } 
 
 		provinces_to_highlight = {
@@ -881,7 +928,7 @@ byz_slot1_third = {
 
 	byzantium_caesaropapism = {
 		icon = promote_the_patriarchate
-		position = 30
+		position = 32
 		required_missions = { byzantium_roman_law }
 
 		trigger = {
@@ -905,7 +952,7 @@ byz_slot1_third = {
 	byzantium_patriarchate = {
 		icon = mission_autocephalous_archbishopric
 		required_missions = { byzantium_caesaropapism } 
-		position = 33
+		position = 35
 
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -1546,7 +1593,7 @@ byz_slot2_first = {
 	}
 
 	byzantium_grandarmy = {
-		icon = mission_modern_knight_army
+		icon = mission_redcoats
 		position = 15
 		required_missions = { byzantium_finest }
 
@@ -1760,6 +1807,40 @@ byz_slot2_locked1 = {
 			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
+
+	byzantium_fortify_rhine_locked = {
+		icon = mission_unknown_mission
+		position = 24
+		required_missions = { byzantium_rhine_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				tag = ROM
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	byzantium_germany_locked = {
+		icon = mission_unknown_mission
+		position = 25
+		required_missions = { byzantium_fortify_rhine_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				tag = ROM
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
 }
 
 byz_slot2_unlocked1 = {
@@ -1836,6 +1917,155 @@ byz_slot2_unlocked1 = {
 			}
 		}
 	}
+
+	byzantium_fortify_rhine = {
+		icon = alpine_fortifications
+		required_missions = { byzantium_rhine }
+		position = 24
+		
+		provinces_to_highlight = {
+			OR = {
+				area = inner_austria_area
+				area = austria_proper_area
+				area = switzerland_area
+				area = alsace_area
+				area = lorraine_area
+				area = lower_rhineland_area
+				area = wallonia_area
+				area = brabant_area
+				area = flanders_area
+			}
+			NOT = { base_manpower = 5 }
+			province_has_current_tech_fort_trigger = no
+		}
+		
+		trigger = {
+			mission_completed = byzantium_danubian
+			any_province = {
+				area = inner_austria_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = austria_proper_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = switzerland_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = alsace_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = lorraine_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = lower_rhineland_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = wallonia_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = brabant_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			any_province = {
+				area = flanders_area
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_FORT_ADVANCE
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							area = inner_austria_area
+							area = austria_proper_area
+							area = switzerland_area
+							area = alsace_area
+							area = lorraine_area
+							area = lower_rhineland_area
+							area = wallonia_area
+							area = brabant_area
+							area = flanders_area
+						}
+						province_has_current_tech_fort_trigger = yes
+						base_manpower = 5
+					}
+					upgrade_fort_building = yes
+				}
+			}
+			north_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			south_german_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	byzantium_germany = {
+		icon = the_imperial_border
+		required_missions = { byzantium_fortify_rhine }
+		position = 25
+		
+		provinces_to_highlight = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			north_german_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			south_german_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection_mission = { amount = 25 }
+			add_country_modifier = {
+				name = byz_german_conquest
+				duration = 7300
+			}
+			scandinavia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
 }
 
 byz_slot2_second = {
@@ -1853,7 +2083,7 @@ byz_slot2_second = {
 	byzantium_library = {
 		icon = bibliotheca_corviana
 		required_missions = { byzantium_renaissance } 
-		position = 26
+		position = 28
 
 		provinces_to_highlight = { 
 			province_id = 358
@@ -1893,7 +2123,7 @@ byz_slot2_second = {
 	byzantium_wall = {
 		icon = byz_reinforce_constantinople
 		required_missions = { byzantium_sophia } 
-		position = 30
+		position = 32
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -2669,9 +2899,7 @@ byz_slot3_second = {
 							who = ROOT
 							value = 200
 						}
-						NOT = {
-							liberty_desire = 50
-						}
+						NOT = { liberty_desire = 50 }
 					}
 				}
 				AND = {
@@ -2684,9 +2912,7 @@ byz_slot3_second = {
 								who = ROOT
 								value = 200
 							}
-							NOT = {
-								liberty_desire = 50
-							}
+							NOT = { liberty_desire = 50 }
 						}
 						amount = 3
 					}
@@ -2711,9 +2937,7 @@ byz_slot3_second = {
 							who = ROOT
 							value = 200
 						}
-						NOT = {
-							liberty_desire = 50
-						}
+						NOT = { liberty_desire = 50 }
 					}
 				}
 				custom_tooltip = BYZ_UNION_RUS
@@ -2735,64 +2959,21 @@ byz_slot3_second = {
 								who = ROOT
 								value = 200
 							}
-							NOT = {
-								liberty_desire = 50
-							}
+							NOT = { liberty_desire = 50 }
 						}
 						amount = 3
 					}
 				}
 				custom_tooltip = BYZ_UNION_PRINCES
-				hidden_effect = {
-
-				}
 			}
 			else = {
 				custom_tooltip = BYZ_UNION_PRINCES_NO
 			}
+			custom_tooltip = BYZ_UNION_100_YEARS
 			hidden_effect = {
 				if = {
 					limit = {
-						exists = UKR
-						UKR = {
-							is_subject_of_type_with_overlord = { 
-								who = ROOT 
-								type = personal_union
-							}
-							has_opinion = {
-								who = ROOT
-								value = 200
-							}
-							NOT = {
-								liberty_desire = 50
-							}
-						}
-					}
-					UKR = {
-						add_country_modifier = {
-							name = byz_diocese_russia
-							duration = -1
-						}
-						override_country_name = DIOCESISRUSSIA
-					}
-				}
-				else_if = {
-					limit = {
 						NOT = { exists = UKR }
-						calc_true_if = {
-							all_subject_country = {
-								has_reform = principality
-								is_subject_of_type = personal_union
-								has_opinion = {
-									who = ROOT
-									value = 200
-								}
-								NOT = {
-									liberty_desire = 50
-								}
-							}
-							amount = 3
-						}
 					}
 					random_subject_country = {
 						limit = {
@@ -2802,16 +2983,9 @@ byz_slot3_second = {
 								who = ROOT
 								value = 200
 							}
-							NOT = {
-								liberty_desire = 50
-							}
+							NOT = { liberty_desire = 50 }
 						}
 						change_tag = UKR
-						add_country_modifier = {
-							name = byz_diocese_russia
-							duration = -1
-						}
-						override_country_name = DIOCESISRUSSIA
 						swap_non_generic_missions = yes
 						if = {
 							limit = {
@@ -2867,9 +3041,7 @@ byz_slot3_second = {
 							has_reform = principality
 							is_subject_of_type = personal_union
 						} 
-						UKR = {
-							inherit = PREV
-						}
+						UKR = { inherit = PREV }
 					}
 					russia_region  = {
 						limit = {
@@ -2900,6 +3072,14 @@ byz_slot3_second = {
 						add_permanent_claim = UKR
 					}
 				}
+				UKR = {
+					add_country_modifier = {
+						name = byz_diocese_russia
+						duration = -1
+					}
+					override_country_name = DIOCESISRUSSIA
+				}
+				set_country_flag = byz_tsar_of_rus
 			}
 		}
 	}
@@ -2935,6 +3115,23 @@ byz_slot3_locked2 = {
 		icon = mission_unknown_mission
 		position = 24
 		required_missions = { byzantium_dethrone_locked } 
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				tag = ROM
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	byzantium_europe_locked = {
+		icon = mission_unknown_mission
+		position = 26
+		required_missions = { byzantium_germany_locked byzantium_restoration_locked } 
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3153,6 +3350,69 @@ byz_slot3_unlocked2 = {
 				}
 			}
 			custom_tooltip = BYZ_LATIN_RENAME
+			british_isles_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	byzantium_europe = {
+		icon = peace_in_europe
+		required_missions = { byzantium_germany byzantium_restoration }
+		position = 26
+		
+		provinces_to_highlight = {
+			OR = {
+				region = scandinavia_region
+				region = british_isles_region
+				region = wendia_region
+				region = poland_region
+				region = baltic_region
+			}
+			NOT = { 
+				OR = {
+					owned_by = ROOT 
+					owned_by = UKR
+				}
+			}
+		}
+		
+		trigger = {
+			scandinavia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			british_isles_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wendia_region = {
+				type = all
+				owned_by = UKR
+			}
+			poland_region = {
+				type = all
+				owned_by = UKR
+			}
+			baltic_region = {
+				type = all
+				owned_by = UKR
+			}
+			UKR = {
+				is_subject_of = ROM
+				trust = { who = ROM value = 100 }
+				NOT = {
+					liberty_desire = 1
+				}
+			}
+		}	
+		
+		effect = {
+			country_event = { id = ab_byzantium.64 }
 		}
 	}
 }
@@ -3172,7 +3432,7 @@ byz_slot3_third = {
 	byzantium_desire = {
 		icon = renaissance_city
 		required_missions = { byzantium_renaissance byzantium_hometrade }
-		position = 26
+		position = 28
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -3204,7 +3464,7 @@ byz_slot3_third = {
 	byzantium_sophia = {
 		icon = end_the_schism
 		required_missions = { byzantium_desire } 
-		position = 29
+		position = 31
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -3248,7 +3508,7 @@ byz_slot3_third = {
 
 	byzantium_beacons = {
 		icon = mission_beacon
-		position = 30
+		position = 32
 		required_missions = { byzantium_sophia } 
 
 		provinces_to_highlight = {
@@ -3295,7 +3555,7 @@ byz_slot3_third = {
 	byzantium_ministries = {
 		icon = empower_the_junkers
 		required_missions = { byzantium_beacons byzantium_wall }
-		position = 31
+		position = 33
 
 		trigger = {
 			has_adm_advisor_3 = yes
@@ -3321,7 +3581,7 @@ byz_slot3_third = {
 	
 	byzantium_nomos = {
 		icon = mission_justinian
-		position = 33
+		position = 35
 		required_missions = { byzantium_ministries } 
 
 		trigger = {
@@ -3379,7 +3639,7 @@ byz_slot4_first = {
 	}
 	
 	byzantium_fire = {
-		icon = mission_greekfire
+		icon = byz_greek_fire
 		required_missions = { byzantium_roman }
 		position = 2
 		
@@ -4348,7 +4608,12 @@ byz_slot4_fourth = {
 						limit = {
 							culture = punic
 						}
+						add_devastation = 100
 						change_culture = owner
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
 					}
 				}
 			}
@@ -4358,7 +4623,7 @@ byz_slot4_fourth = {
 	byzantium_docks = {
 		icon = brest_dockyards
 		required_missions = { byzantium_hometrade } 
-		position = 26
+		position = 28
 
 		provinces_to_highlight = {
 			province_id = 151
@@ -4422,7 +4687,7 @@ byz_slot4_fourth = {
 	byzantium_queen_cities = {
 		icon = mission_queencities
 		required_missions = { byzantium_osmans } 
-		position = 27
+		position = 29
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -4473,7 +4738,7 @@ byz_slot4_fourth = {
 	BYZ_megalopolis = {
 		icon = mission_megalopolis
 		required_missions = { byzantium_queen_cities }
-		position = 28
+		position = 30
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -4517,7 +4782,7 @@ byz_slot4_fourth = {
 	byzantium_gigalopolis = {
 		icon = mission_gigalopolis
 		required_missions = { BYZ_megalopolis }
-		position = 29
+		position = 31
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -4542,7 +4807,7 @@ byz_slot4_fourth = {
 	BYZ_collect_our_profits = {
 		icon = mission_african_gold
 		required_missions = { BYZ_economic_independence }
-		position = 30
+		position = 32
 		provinces_to_highlight = {
 		}
 		trigger = {
@@ -4561,7 +4826,7 @@ byz_slot4_fourth = {
 	byzantium_money = {
 		icon = dominant_economy
 		required_missions = { BYZ_collect_our_profits } 
-		position = 31
+		position = 33
 
 		trigger = {  
 		    NOT = {
@@ -4604,7 +4869,7 @@ byz_slot4_fourth = {
 
 	byzantium_roads = {
 		icon = mission_pol_develop_countryside
-		position = 32
+		position = 34
 		required_missions = { byzantium_money }
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -5365,7 +5630,7 @@ byz_slot5_second = {
 	
 	byzantium_hometrade = {
 		icon = mission_the_bospborus
-		position = 25
+		position = 27
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -5403,7 +5668,7 @@ byz_slot5_second = {
 	byzantium_osmans = {
 		icon = mission_the_grand_bazaar
 		required_missions = { byzantium_hometrade } 
-		position = 26
+		position = 28
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -5479,7 +5744,7 @@ byz_slot5_second = {
 	BYZ_economic_independence = {
 		icon = medici_bank_ledgers
 		required_missions = { byzantium_osmans }
-		position = 29
+		position = 31
 		provinces_to_highlight = {
 			OR = {
 				AND = {
@@ -5601,7 +5866,7 @@ byz_slot5_second = {
 	byzantium_cities = {
 		icon = develop_konigsberg
 		required_missions = { BYZ_economic_independence } 
-		position = 30
+		position = 32
 
 		provinces_to_highlight = {
 		    OR = {
@@ -5763,7 +6028,7 @@ byz_slot5_second = {
 
 	byzantium_industry = {
 		icon = mission_rb_central_belt_coal_mining
-		position = 32
+		position = 34
 		required_missions = { byzantium_cities } 
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -5789,7 +6054,7 @@ byz_slot5_second = {
 	BYZ_warehouse_of_the_east = {
 		icon = saxon_manufacturing
 		required_missions = { byzantium_industry }
-		position = 33
+		position = 35
 		provinces_to_highlight = {
 			owned_by = ROOT 
 			NOT = { has_manufactory_trigger = yes }
