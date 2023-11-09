@@ -1,0 +1,1820 @@
+country_decisions = {
+
+	show_diocese_decision = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			NOT = {
+				has_country_flag = diocese_decisions_yes
+			}
+			ai = no
+		}
+		
+		allow = {
+			always = yes
+		}
+
+		effect = {
+			set_country_flag = diocese_decisions_yes
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	hide_diocese_decision = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			ai = no
+		}
+		
+		allow = {
+			always = yes
+		}
+
+		effect = {
+			clr_country_flag = diocese_decisions_yes
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	form_diocese_italia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD1 
+			}
+			any_owned_province = {
+				region = italy_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 118
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_ITALIA
+			hidden_effect = {
+				italy_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD1
+				}
+				release = RD1
+				create_subject = {
+					who = RD1
+					subject_type = vassal
+				}
+				RD1 = {
+					change_primary_culture = roman_new
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_italia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD1
+			any_owned_province = {
+				region = italy_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				italy_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD1
+					cede_province = RD1
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_hispania = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD2
+			}
+			any_owned_province = {
+				region = iberia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 225
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_HISPANIA
+			hidden_effect = {	
+				iberia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD2
+				}
+				release = RD2
+				create_subject = {
+					who = RD2
+					subject_type = vassal
+				}
+				RD2 = {
+					change_primary_culture = hispano_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				225 = {
+					change_culture = hispano_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_hispania = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD2
+			any_owned_province = {
+				region = iberia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				iberia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD2
+					cede_province = RD2
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_africa = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD3 
+			}
+			any_owned_province = {
+				region = maghreb_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 341
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_AFRICA
+			hidden_effect = {	
+				maghreb_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD3
+				}
+				release = RD3
+				create_subject = {
+					who = RD3
+					subject_type = vassal
+				}
+				RD3 = {
+					change_primary_culture = afro_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				341 = {
+					change_culture = afro_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_africa = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD3
+			any_owned_province = {
+				region = maghreb_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				maghreb_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD3
+					cede_province = RD3
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_gallia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD4 
+			}
+			any_owned_province = {
+				region = france_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 183
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_GALLIA
+			hidden_effect = {	
+				france_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD4
+				}
+				release = RD4
+				create_subject = {
+					who = RD4
+					subject_type = vassal
+				}
+				RD4 = {
+					change_primary_culture = gallo_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				183 = {
+					change_culture = gallo_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_gallia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD4
+			any_owned_province = {
+				region = france_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				france_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD4
+					cede_province = RD4
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_britannia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD5
+			}
+			any_owned_province = {
+				region = british_isles_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 236
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_BRITANNIA
+			hidden_effect = {	
+				british_isles_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD5
+				}
+				release = RD5
+				create_subject = {
+					who = RD5
+					subject_type = vassal
+				}
+				RD5 = {
+					change_primary_culture = romano_british
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				236 = {
+					change_culture = romano_british 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_britannia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD5
+			any_owned_province = {
+				region = british_isles_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				british_isles_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD5
+					cede_province = RD5
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_germania = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD6
+			}
+			any_owned_province = {
+				region = north_german_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 1876
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_GERMANIA
+			hidden_effect = {	
+				north_german_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD6
+				}
+				release = RD6
+				create_subject = {
+					who = RD6
+					subject_type = vassal
+				}
+				RD6 = {
+					change_primary_culture = romano_germanic
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				1876 = {
+					change_culture = romano_germanic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_germania = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD6
+			any_owned_province = {
+				region = north_german_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				north_german_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD6
+					cede_province = RD6
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_rhaetia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD7 
+			}
+			any_owned_province = {
+				region = south_german_region
+				NOT = { 
+					area = carinthia_area 
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 134
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_RHAETIA
+			hidden_effect = {	
+				south_german_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							area = carinthia_area 
+						}
+					}
+					add_core = RD7
+				}
+				release = RD7
+				create_subject = {
+					who = RD7
+					subject_type = vassal
+				}
+				RD7 = {
+					change_primary_culture = romano_germanic
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				134 = {
+					change_culture = romano_germanic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_rhaetia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD7
+			any_owned_province = {
+				region = south_german_region
+				NOT = { 
+					area = carinthia_area 
+				}
+			}
+		}
+
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				south_german_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							area = carinthia_area 
+						}
+					}
+					add_core = RD7
+					cede_province = RD7
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_scandia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD8
+			}
+			any_owned_province = {
+				region = scandinavia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 12
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_SCANDIA
+			hidden_effect = {	
+				scandinavia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD8
+				}
+				release = RD8
+				create_subject = {
+					who = RD8
+					subject_type = vassal
+				}
+				RD8 = {
+					change_primary_culture = romano_nordic
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				12 = {
+					change_culture = romano_nordic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_scandia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD8
+			any_owned_province = {
+				region = scandinavia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				scandinavia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD8
+					cede_province = RD8
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_illyria = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RD9 
+			}
+			any_owned_province = {
+				region = balkan_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 4239
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_ILLYRIA
+			hidden_effect = {	
+				balkan_region = {
+					limit = {
+						owned_by = ROOT
+						culture = illyro_roman
+					}
+					add_core = RD9
+				}
+				carpathia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD9
+				}
+				carinthia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD9
+				}
+				release = RD9
+				create_subject = {
+					who = RD9
+					subject_type = vassal
+				}
+				RD9 = {
+					change_primary_culture = illyro_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				4239 = {
+					change_culture = afro_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							overlord_of = WAL
+		    				overlord_of = MOL
+						}
+					}
+					country_event = { id = ab_byzantium.58 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_illyria = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RD9
+			any_owned_province = {
+				OR = {
+					region = carpathia_region
+					area = carinthia_area
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				carpathia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD9
+					cede_province = RD9
+				}
+				carinthia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RD9
+					cede_province = RD9
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_india = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDJ
+			}
+			any_owned_province = {
+				OR = {
+					region = hindusthan_region
+					region = west_india_region
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 507
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_INDIA
+			hidden_effect = {	
+				west_india_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDJ
+				}
+				hindusthan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							OR = {
+								area = baghelkhand_area
+								area = purvanchal_area
+								area = bihar_area
+								area = mithila_area
+								area = nepal_area 
+							}
+						}
+					}
+					add_core = RDJ
+				}
+				release = RDJ
+				create_subject = {
+					who = RDJ
+					subject_type = vassal
+				}
+				RDJ = {
+					change_primary_culture = indo_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				507 = {
+					change_culture = indo_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_india = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDJ
+			any_owned_province = {
+				OR = {
+					region = west_india_region
+					AND = {
+						region = hindusthan_region
+						NOT = { 
+							OR = {
+								area = baghelkhand_area
+								area = purvanchal_area
+								area = bihar_area
+								area = mithila_area
+								area = nepal_area 
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				west_india_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDJ
+					cede_province = RDJ
+				}
+				hindusthan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							OR = {
+								area = baghelkhand_area
+								area = purvanchal_area
+								area = bihar_area
+								area = mithila_area
+								area = nepal_area 
+							}
+						}
+					}
+					add_core = RDJ
+					cede_province = RDJ
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_gangarida = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDK
+			}
+			any_owned_province = {
+				region = bengal_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 563
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_GANGARIDA
+			hidden_effect = {
+				bengal_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				baghelkhand_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				purvanchal_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				bihar_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				mithila_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				nepal_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				berar_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				gondwana_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+				}
+				release = RDK
+				create_subject = {
+					who = RDK
+					subject_type = vassal
+				}
+				RDK = {
+					change_primary_culture = indo_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				563 = {
+					change_culture = indo_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_gangarida = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDK
+			any_owned_province = {
+				OR = {
+					region = bengal_region
+					area = baghelkhand_area
+					area = purvanchal_area
+					area = bihar_area
+					area = mithila_area
+					area = nepal_area 
+					area = berar_area
+					area = gondwana_area
+				}
+				
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				bengal_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				baghelkhand_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				purvanchal_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				bihar_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				mithila_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				nepal_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				berar_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+				gondwana_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDK
+					cede_province = RDK
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_taprobana = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDL
+			}
+			any_owned_province = {
+				OR = {
+					region = deccan_region
+					region = coromandel_region
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 541
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_TAPROBANA
+			hidden_effect = {	
+				coromandel_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDL
+				}
+				deccan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							OR = {
+								area = berar_area
+								area = gondwana_area
+							}
+						}
+					}
+					add_core = RDL
+				}
+				release = RDL
+				create_subject = {
+					who = RDL
+					subject_type = vassal
+				}
+				RDL = {
+					change_primary_culture = indo_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				541 = {
+					change_culture = indo_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_taprobana = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDL
+			any_owned_province = {
+				OR = {
+					region = coromandel_region
+					AND = {
+						region = deccan_region
+						NOT = { 
+							OR = {
+								area = berar_area
+								area = gondwana_area
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				coromandel_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDL
+					cede_province = RDL
+				}
+				deccan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { 
+							OR = {
+								area = berar_area
+								area = gondwana_area
+							}
+						}
+					}
+					add_core = RDL
+					cede_province = RDL
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_aegyptus = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDQ
+			}
+			any_owned_province = {
+				region = egypt_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 358
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_AEGYPTUS
+			hidden_effect = {	
+				egypt_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDQ
+				}
+				release = RDQ
+				create_subject = {
+					who = RDQ
+					subject_type = vassal
+				}
+				RDQ = {
+					change_primary_culture = greco_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				358 = {
+					change_culture = greco_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_aegyptus = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDQ
+			any_owned_province = {
+				region = egypt_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				egypt_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDQ
+					cede_province = RDQ
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_ariana = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDV
+			}
+			any_owned_province = {
+				region = khorasan_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 445
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_ARIANA
+			hidden_effect = {	
+				khorasan_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDV
+				}
+				release = RDV
+				create_subject = {
+					who = RDV
+					subject_type = vassal
+				}
+				RDV = {
+					change_primary_culture = perso_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				445 = {
+					change_culture = perso_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_ariana = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDV
+			any_owned_province = {
+				region = khorasan_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				khorasan_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDV
+					cede_province = RDV
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_arabia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDW
+			}
+			any_owned_province = {
+				region = arabia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 388
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_ARABIA
+			hidden_effect = {	
+				arabia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDW
+				}
+				release = RDW
+				create_subject = {
+					who = RDW
+					subject_type = vassal
+				}
+				RDW = {
+					change_primary_culture = romano_arabic
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				388 = {
+					change_culture = romano_arabic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_arabia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDW
+			any_owned_province = {
+				region = arabia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				arabia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDW
+					cede_province = RDW
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_orientis = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDX
+			}
+			any_owned_province = {
+				region = mashriq_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 2313
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_ORIENTIS
+			hidden_effect = {	
+				mashriq_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDX
+				}
+				release = RDX
+				create_subject = {
+					who = RDX
+					subject_type = vassal
+				}
+				RDX = {
+					change_primary_culture = greco_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				2313 = {
+					change_culture = greco_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_orientis = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDX
+			any_owned_province = {
+				region = mashriq_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				mashriq_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDX
+					cede_province = RDX
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_persia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDZ
+			}
+			any_owned_province = {
+				region = persia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 2218
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_PERSIA
+			hidden_effect = {	
+				persia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDZ
+				}
+				release = RDZ
+				create_subject = {
+					who = RDZ
+					subject_type = vassal
+				}
+				RDZ = {
+					change_primary_culture = perso_roman
+					change_religion = orthodox
+					change_government = republic
+					add_government_reform = rom_diocese
+				}
+				2218 = {
+					change_culture = perso_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_persia = {
+		major = yes
+
+		potential = {
+			tag = ROM
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDZ
+			any_owned_province = {
+				region = persia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			hidden_effect = {
+				persia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDZ
+					cede_province = RDZ
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

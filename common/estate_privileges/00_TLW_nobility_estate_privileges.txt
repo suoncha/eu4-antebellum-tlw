@@ -1,0 +1,75 @@
+estate_nobles_theme_system = {
+	icon = privilege_theme
+	loyalty = 0.1
+	influence = 0.10
+	max_absolutism = -5
+	is_valid = {
+		OR = {
+			has_mission = byzantium_theme
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_theme_system
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_nobles_theme_system
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_theme_system
+			}
+		}
+		any_owned_province = {
+			has_fort_building_trigger = yes
+			base_manpower = 5
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_nobles_theme_system_grant
+		tooltip = {
+			add_province_modifier = {
+				name = byz_estate_theme
+				duration = -1
+			}
+		}
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_fort_building_trigger = yes
+				base_manpower = 5
+			}
+			add_province_modifier = {
+				name = byz_estate_theme
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_nobles_theme_system_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = { 
+				has_province_modifier = byz_estate_theme
+			}
+			remove_province_modifier = byz_estate_theme
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = { 
+				has_province_modifier = byz_estate_theme
+			}
+			remove_province_modifier = byz_estate_theme
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}

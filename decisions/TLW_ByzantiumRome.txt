@@ -1,0 +1,435 @@
+country_decisions = {
+
+	show_romanizing_info = {
+		major = yes
+
+		potential = {
+			culture_group = roman_g
+			ai = no
+		}
+		
+		allow = {
+			always = no
+		}
+
+		effect = {
+			custom_tooltip = AB_ROMANIZING_INFO
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	restore_roman_empire_byz = {
+		major = yes
+
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = restored_rome_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			tag = BYZ
+			NOT = { exists = ROM }
+			OR = {
+				religion_group = christian
+				religion_group = pagan
+			}
+		}
+
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				region = egypt_region
+				region = balkan_region
+				region = anatolia_region
+				area = syria_area
+				area = aleppo_area
+				area = palestine_area
+				area = carinthia_area
+				area = crimea_area
+				area = upper_andalucia_area
+				area = baleares_area
+				area = tripolitania_area
+				area = djerba_area
+				area = tunisia_area
+				area = kabylia_area
+				area = barbary_coast_area
+				area = northern_morocco_area
+				province_id = 1232
+				province_id = 2324
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		allow = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RESTORED_JUSTINIAN
+				italy_region = {
+					type = all
+					owned_by = ROOT
+				}
+				egypt_region = {
+					type = all
+					owned_by = ROOT
+				}
+				balkan_region = {
+					type = all
+					owned_by = ROOT
+				}
+				anatolia_region = {
+					type = all
+					owned_by = ROOT
+				}
+				syria_area = {
+					type = all
+					owned_by = ROOT
+				}
+				aleppo_area = {
+					type = all
+					owned_by = ROOT
+				}
+				palestine_area = {
+					type = all
+					owned_by = ROOT
+				}
+				carinthia_area = {
+					type = all
+					owned_by = ROOT
+				}
+				crimea_area = {
+					type = all
+					owned_by = ROOT
+				}
+				upper_andalucia_area = {
+					type = all
+					owned_by = ROOT
+				}
+				baleares_area = {
+					type = all
+					owned_by = ROOT
+				}
+				tripolitania_area = {
+					type = all
+					owned_by = ROOT
+				}
+				djerba_area = {
+					type = all
+					owned_by = ROOT
+				}
+				tunisia_area = {
+					type = all
+					owned_by = ROOT
+				}
+				kabylia_area = {
+					type = all
+					owned_by = ROOT
+				}
+				barbary_coast_area = {
+					type = all
+					owned_by = ROOT
+				}
+				northern_morocco_area = {
+					type = all
+					owned_by = ROOT
+				}
+				1232 = {
+					owned_by = ROOT
+				}
+				2324 = {
+					owned_by = ROOT
+				}
+			}
+			culture = greek
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			add_prestige = 25
+			change_tag = ROM
+			set_government_rank = 3
+			swap_non_generic_missions = yes
+			custom_tooltip = byz_roman_culture_provinces_tooltip
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture_group = byzantine
+						NOT = {
+							OR = {
+								culture = Illyrian
+								culture = albanian
+							}
+						}
+					}
+					change_culture = greco_roman
+				}
+				every_province = {
+					limit = {
+						OR = {
+							culture = Illyrian
+							culture = albanian
+						}
+					}
+					change_culture = illyro_roman
+				}
+				every_country = {
+					limit = {
+						culture_group = byzantine
+					}
+					change_primary_culture = roman_new
+					set_heir_culture = roman_new
+					set_ruler_culture = roman_new
+				}
+			}
+			change_primary_culture = roman_new
+			add_ruler_personality = augustus_personality
+			custom_tooltip = restore_roman_empire_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					set_in_empire = no
+				}
+				118 = {
+					add_core = ROOT
+					change_culture = roman_new 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+				if = {
+					limit = { 
+						mission_completed = byzantium_general_staff 
+					}
+					add_country_modifier = {
+						name = byz_general_staff_rome
+						duration = -1
+					}
+				}
+				country_event = { id = ab_byzantium.59 }
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 }
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = restored_rome_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	italy_greek = {
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = italy_greek_flag }
+			mission_completed = byzantium_landfall
+			culture = greek
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 122
+				province_id = 1934
+				province_id = 2984
+				province_id = 123
+				area = sicily_area
+				area = western_sicily_area
+			}
+		}
+
+		allow = {
+			dip_power = 250
+			owns_all_provinces = {
+				OR = {
+					area = sicily_area
+					area = western_sicily_area
+					province_id = 122
+					province_id = 1934
+					province_id = 2984
+					province_id = 123
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			add_dip_power = -250
+			122 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			1934 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			2984 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			123 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			sicily_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			western_sicily_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			set_country_flag = italy_greek_flag
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	levant_greek = {
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = levant_greek_flag }
+		    mission_completed = byzantium_syria
+			culture = greek
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+		}
+
+		allow = {
+			dip_power = 300
+			owns_all_provinces = {
+				OR = {
+					area = palestine_area
+					area = syria_area
+					area = aleppo_area
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+		
+		effect = {
+			add_dip_power = -300
+			palestine_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			syria_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			aleppo_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			set_country_flag = levant_greek_flag
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	unite_romanian_vassals = {
+		potential = {
+			normal_or_historical_nations = yes
+			overlord_of = WAL
+		    overlord_of = MOL
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = WAL
+				owned_by = MOL
+			}
+		}
+
+		allow = {
+			dip_power = 50
+			custom_trigger_tooltip = {
+				tooltip = ROMANIAN_VASSALS_LOYAL
+				WAL = {
+					NOT = {
+						liberty_desire = 50
+					}
+				}
+				MOL = {
+					NOT = {
+						liberty_desire = 50
+					}
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+		}
+		
+		effect = {
+			add_dip_power = -50
+			WAL = {
+				inherit = MOL
+				add_liberty_desire = -25
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

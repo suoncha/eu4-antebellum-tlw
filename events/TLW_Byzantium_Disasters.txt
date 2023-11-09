@@ -1,0 +1,709 @@
+namespace = ab_byzantium_disaster
+normal_or_historical_nations = yes
+
+## FALL OF THE ANGELIDS -----
+#Fall Of The Angelid Dynasty Start
+country_event = {
+	id = ab_byzantium_disaster.0
+	title = ab_byzantium_disaster.0.t
+	desc = ab_byzantium_disaster.0.d
+	picture = BYZANTINE_EAGLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_stability = -2
+			add_manpower = -8
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.0.a
+		tooltip = {
+			add_stability = -2
+			add_manpower = -8
+		}
+		add_country_modifier = {
+			name = byz_revolt_mil
+			duration = -1
+		}
+	}
+}
+
+#Fall Of The Angelid Dynasty End
+country_event = {
+	id = ab_byzantium_disaster.1
+	title = ab_byzantium_disaster.1.t
+	desc = ab_byzantium_disaster.1.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = byz_epirus_ruler
+			}
+			hidden_effect = {
+				define_ruler = {
+					name = "Manuel III"
+					adm = 4
+					dip = 3
+					mil = 5
+					dynasty = "Palaiologos"
+					claim = 100
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.1.a
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_court
+				}
+			}
+			complete_mission = byzantium_court
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_economy
+				}
+			}
+			complete_mission = byzantium_economy
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_imperial_army
+				}
+			}
+			complete_mission = byzantium_imperial_army
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_traitors
+				}
+			}
+			complete_mission = byzantium_traitors
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_crisis
+				}
+			}
+			complete_mission = byzantium_crisis
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_epirus_ruler
+			}
+			if = {
+				limit = {
+					exists = EPI
+				}
+				inherit = EPI
+			}
+			
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				hidden_effect = {
+					kill_heir = {}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_epirus_war
+			}
+			if = {
+				limit = {
+					has_country_flag = byz_epirus_venice
+					151 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					149 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					4779 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					4705 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					147 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					144 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					4699 = {
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					morea_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+					ionian_islands_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT	
+					}
+				}
+				custom_tooltip = BYZ_RESTORER_PP
+				hidden_effect = {
+					add_power_projection = {
+						type = BYZ_perma_pp
+						amount = 15
+					}
+				}
+				add_country_modifier = {
+					name = byz_restorer_angelid
+					duration = 18250
+				}
+				add_ruler_personality = augustus_personality
+			}
+		}
+		remove_country_modifier = byz_revolt_mil
+		set_country_flag = byz_finished_angelid_crisis
+		add_government_reform = imperial_autocracy
+	}
+}
+
+#Epirus Rebellion
+country_event = {
+	id = ab_byzantium_disaster.2
+	title = ab_byzantium_disaster.2.t
+	desc = ab_byzantium_disaster.2.d
+	picture = AB_CHARGE_eventPicture
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_fall_angelid
+		EPI = {
+			is_subject_of = ROOT
+			has_ruler = "Manuel III"
+			dynasty = "Palaiologos"
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+
+	option = {
+		name = ab_byzantium_disaster.2.a
+		ai_chance = { factor = 80 }
+		hidden_effect = {
+			release_all_subjects = yes
+			318 = {
+				add_claim = EPI
+			}
+		}
+		EPI = {
+			declare_war_with_cb = {
+			    who = BYZ
+			    casus_belli = cb_conquest
+				war_goal_province = 151
+		    }
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = BYZ_EPIRUS_FIGHT
+		set_country_flag = byz_epirus_war
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.2.b
+		ai_chance = { factor = 20 }
+		custom_tooltip = BYZ_EPIRUS_SURRENDER
+		set_country_flag = byz_epirus_ruler
+	}
+}
+
+#Manuel Palaiologos Crowned - Hidden event
+country_event = {
+	id = ab_byzantium_disaster.3
+	title = ab_byzantium_disaster.3.t
+	desc = ab_byzantium_disaster.3.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+
+	fire_only_once = yes
+
+	hidden = yes
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_fall_angelid
+		OR = {
+			AND = {
+				is_in_war = {
+					attacker_leader = EPI
+					defender_leader = ROOT
+				}
+				capital_scope = {
+					controlled_by = EPI
+				}
+			}
+			has_country_flag = byz_epirus_ruler
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.3.a
+		set_country_flag = had_fall_angelid
+		add_stability = 4
+		if = {
+			limit = {
+				has_country_flag = byz_epirus_war
+			}
+			set_country_flag = byz_epirus_ruler
+			clr_country_flag = byz_epirus_war
+		}
+		if = {
+			limit = {
+				war_with = VEN
+			}
+			add_prestige = -10
+			white_peace = VEN
+			inherit = EPI
+			146 = {
+				cede_province = VEN
+				add_core = VEN
+			}
+			5152 = {
+				cede_province = VEN
+				add_core = VEN
+			}
+		}
+	}
+}
+
+#Noble Uprising
+country_event = {
+	id = ab_byzantium_disaster.4
+	title = ab_byzantium_disaster.4.t
+	desc = ab_byzantium_disaster.4.d
+	picture = BAD_WITH_MONARCH_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_fall_angelid
+		has_country_flag = byz_epirus_war
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.4.a
+		set_country_flag = byz_epirus_revolt
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -20
+		}
+		random_owned_province = {
+			noble_rebels = 1
+		}
+		random_owned_province = {
+			noble_rebels = 1
+		}
+	}
+}
+
+#Venice demands Athens and Thebes 1 - Venice threatens war
+country_event = {
+	id = ab_byzantium_disaster.5
+	title = ab_byzantium_disaster.5.t
+	desc = ab_byzantium_disaster.5.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+
+	trigger = {
+		tag = VEN
+		BYZ = {
+			has_disaster = byzantium_fall_angelid
+			has_country_flag = byz_epirus_revolt
+			owns = 146
+			owns = 5152
+			is_at_war = yes
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.5.a
+		ai_chance = { factor = 90 }
+		BYZ = {
+			country_event = { id = ab_byzantium_disaster.6 }
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.5.b
+		ai_chance = { factor = 10 }
+		add_prestige = -10
+	}
+}
+
+#Venice demands Athens and Thebes 2 - Byzantium receives Venice threat
+country_event = {
+	id = ab_byzantium_disaster.6
+	title = ab_byzantium_disaster.6.t
+	desc = ab_byzantium_disaster.6.d
+	picture = BATTLE_eventPicture
+
+	is_triggered_only = yes
+		
+	option = {
+		name = ab_byzantium_disaster.6.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					VEN = {
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		add_prestige = -10
+		add_truce_with = VEN
+		146 = {
+			cede_province = VEN
+			add_core = VEN
+			remove_core = BYZ
+		}
+		5152 = {
+			cede_province = VEN
+			add_core = VEN
+			remove_core = BYZ
+		}
+		VEN = {
+			country_event = { id = ab_byzantium_disaster.7 }
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.6.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				VEN = {
+					army_size = ROOT
+				}
+			}
+		}
+		add_legitimacy = 10
+		VEN = {
+			country_event = { id = ab_byzantium_disaster.8 }
+		}
+		custom_tooltip = BYZ_VEN_WAR
+	}
+}
+
+#Venice demands Athens and Thebes 3 - Byzantium accepts
+country_event = {
+	id = ab_byzantium_disaster.7
+	title = ab_byzantium_disaster.7.t
+	desc = ab_byzantium_disaster.7.d
+	picture = BATTLE_eventPicture
+
+	is_triggered_only = yes
+		
+	option = {
+		name = ab_byzantium_disaster.7.a
+		add_prestige = 10
+		custom_tooltip = BYZ_VEN_SURRENDER		
+	}
+}
+
+#Venice demands Athens and Thebes 4 - Byzantium refuses
+country_event = {
+	id = ab_byzantium_disaster.8
+	title = ab_byzantium_disaster.8.t
+	desc = ab_byzantium_disaster.8.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.8.a
+		hidden_effect = {
+			146 = {
+				add_claim = VEN
+			}
+			5152 = {
+				add_claim = VEN
+			}
+		}
+		declare_war_with_cb = {
+			who = BYZ
+			casus_belli = cb_conquest
+			war_goal_province = 146
+		}
+		BYZ = {
+			set_country_flag = byz_epirus_venice
+		}
+	}	
+}
+
+#Venice demands Athens and Thebes 5 - Nicaea joins
+country_event = {
+	id = ab_byzantium_disaster.9
+	title = ab_byzantium_disaster.9.t
+	desc = ab_byzantium_disaster.9.d
+	picture = BYZ_CIVIL_WAR_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = NCI
+		BYZ = {
+			has_disaster = byzantium_fall_angelid
+			has_country_flag = byz_epirus_venice
+			is_at_war = yes
+		}
+		is_at_war = no
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.9.a
+		ai_chance = { factor = 70 }
+		join_all_offensive_wars_of = VEN
+		BYZ = {
+			country_event = { id = ab_byzantium_disaster.10 }
+		}
+	}	
+
+	option = {
+		name = ab_byzantium_disaster.9.b
+		ai_chance = { factor = 30 }
+		add_prestige = -10
+	}	
+}
+
+#Venice demands Athens and Thebes 6 - Nicaea joins - Inform Byz
+country_event = {
+	id = ab_byzantium_disaster.10
+	title = ab_byzantium_disaster.10.t
+	desc = ab_byzantium_disaster.10.d
+	picture = BYZ_CIVIL_WAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.10.a
+	}
+}
+
+#Venice demands Athens and Thebes 7 - Bulgaria joins
+country_event = {
+	id = ab_byzantium_disaster.11
+	title = ab_byzantium_disaster.11.t
+	desc = ab_byzantium_disaster.11.d
+	picture = BYZ_CIVIL_WAR_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BUL
+		BYZ = {
+			has_disaster = byzantium_fall_angelid
+			has_country_flag = byz_epirus_venice
+			is_at_war = yes
+		}
+		is_at_war = no
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.11.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0
+				has_country_flag = bul_byzantium_refused
+			}
+		}
+		join_all_offensive_wars_of = VEN
+		BYZ = {
+			country_event = { id = ab_byzantium_disaster.12 }
+		}
+	}	
+
+	option = {
+		name = ab_byzantium_disaster.11.b
+		ai_chance = { factor = 30 }
+		add_prestige = -10
+	}	
+}
+
+#Venice demands Athens and Thebes 8 - Bulgaria joins - Inform Byz
+country_event = {
+	id = ab_byzantium_disaster.12
+	title = ab_byzantium_disaster.12.t
+	desc = ab_byzantium_disaster.12.d
+	picture = BYZ_CIVIL_WAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.12.a
+	}
+}
+
+#Ioannes Assassination
+country_event = {
+	id = ab_byzantium_disaster.13
+	title = ab_byzantium_disaster.13.t
+	desc = ab_byzantium_disaster.13.d
+	picture = ASSASSINATION_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_fall_angelid
+		has_country_flag = byz_epirus_venice
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.13.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = adm
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.13.b
+		hidden_effect = {
+			define_ruler = {
+				adm = 4
+				dip = 4
+				mil = 4
+				dynasty = "Laskaris"
+				claim = 50
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.13.c
+		hidden_effect = {
+			define_ruler = {
+				adm = 4
+				dip = 4
+				mil = 4
+				dynasty = "Doukas"
+				claim = 50
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.13.de
+		hidden_effect = {
+			define_ruler = {
+				adm = 4
+				dip = 4
+				mil = 4
+				dynasty = "Komnenos"
+				claim = 50
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.13.e
+		hidden_effect = {
+			define_ruler = {
+				adm = 4
+				dip = 4
+				mil = 4
+				claim = 30
+			}
+		}
+	}
+}
+
+#Defeat Epirus - Hidden 
+country_event = {
+	id = ab_byzantium_disaster.17
+	title = ab_byzantium_disaster.17.t
+	desc = ab_byzantium_disaster.17.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+
+	fire_only_once = yes
+
+	hidden = yes
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_fall_angelid
+		has_country_flag = byz_epirus_venice
+		142 = {
+			country_or_non_sovereign_subject_holds = ROOT	
+		}
+		144 = {
+			country_or_non_sovereign_subject_holds = ROOT	
+		}
+		4698 = {
+			country_or_non_sovereign_subject_holds = ROOT	
+		}
+		4699 = {
+			country_or_non_sovereign_subject_holds = ROOT	
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.17.a
+		set_country_flag = had_fall_angelid
+		add_stability = 4
+	}
+}

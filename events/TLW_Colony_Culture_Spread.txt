@@ -1,0 +1,42 @@
+namespace = ab_colony_culture_spread
+#Colony culture spread
+province_event = {
+	id = ab_colony_culture_spread.1
+	title = ab_colony_culture_spread.1.t
+	desc = ab_colony_culture_spread.1.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 360
+		modifier = {
+			factor = 0.5
+			religion_group = owner
+		}
+		modifier = {
+			factor = 0.1
+			culture_group = owner
+		}
+	}
+	
+	trigger = {
+		owner = {
+			is_colonial_nation = yes
+		}
+		NOT = {
+			culture = owner
+		}
+		OR = {
+			NOT = { nationalism = 1 } 
+			culture_group = owner
+		}
+
+	}
+
+	option = {
+		name = ab_colony_culture_spread.1.a
+		change_culture = owner
+		change_original_culture = owner
+	}
+}

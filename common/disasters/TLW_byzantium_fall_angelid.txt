@@ -1,0 +1,46 @@
+byzantium_fall_angelid = {
+	potential = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+	}
+	
+	can_start = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		is_year = 1450
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 100
+			tag = BYZ
+		} 
+	}
+	
+	modifier = {
+		global_unrest = 10
+		stability_cost_modifier = 0.5
+	}
+	
+	can_end = {
+		is_at_war = no
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		stability = 1
+		custom_trigger_tooltip = {
+			tooltip = BYZ_RESOLVED_ANGELID
+			has_country_flag = had_fall_angelid
+		}
+	}
+	
+	on_start = ab_byzantium_disaster.0
+	on_end = ab_byzantium_disaster.1
+}

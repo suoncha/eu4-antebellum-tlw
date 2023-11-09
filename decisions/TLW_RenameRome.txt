@@ -1,0 +1,66 @@
+country_decisions = {
+	
+	rename_eastrome = {
+		major = yes
+		potential = {
+			tag = BYZ
+			NOT = {
+				has_country_flag = renamed_eastrome
+			}
+			mission_completed = byzantium_manzikert
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			override_country_name = EROME
+			set_country_flag = renamed_eastrome
+			add_ruler_personality = augustus_personality
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	rename_imperium_romanum = {
+		major = yes
+		potential = {
+			tag = ROM
+			NOT = {
+				has_country_flag = renamed_imperium_romanum
+			}
+			mission_completed = byzantium_restoration
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			if = {
+				limit = {
+					government = monarchy
+				}
+				override_country_name = IMPERIUMROMANUM
+			}
+			else = {
+				override_country_name = RESPUBLICAROMANA
+			}
+			set_country_flag = renamed_imperium_romanum
+			custom_tooltip = BYZ_RESTORER_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = BYZ_perma_pp2
+					amount = 15
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

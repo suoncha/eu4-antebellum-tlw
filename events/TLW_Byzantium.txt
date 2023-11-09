@@ -1,0 +1,783 @@
+namespace = ab_byzantium
+normal_or_historical_nations = yes
+
+# Belisarius
+country_event = {
+	id = ab_byzantium.47
+	title = ab_byzantium.47.t
+	desc = ab_byzantium.47.d
+	picture = AB_BELISARIUS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.47.a
+		define_general = {
+			shock = 4
+			fire = 6
+			manuever = 5
+			siege = 5
+			name = "Belisarius"
+			trait = inspirational_leader_general_personality
+		}
+		add_army_professionalism = 0.1
+		add_country_modifier = {
+			name = byz_strongest_army
+			duration = -1
+		}
+	}
+}
+
+# Byzantine Military Reform
+country_event = {
+	id = ab_byzantium.48
+	title = ab_byzantium.48.t
+	desc = ab_byzantium.48.d
+	picture = MILITARY_CAMP_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.48.a
+		add_army_professionalism = 0.05
+		add_army_tradition = 20
+		add_country_modifier = {
+			name = byz_militarization
+			duration = 3650
+		}
+	}
+}
+
+#Hellenization of Roman Thracia
+country_event = { 
+	id = ab_byzantium.49
+	title = ab_byzantium.49.t 
+	desc = ab_byzantium.49.d 
+	picture = BYZ_COURT_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = ab_byzantium.49.a 
+		silistria_area = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+		bulgaria_area = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+		3001 = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+		4780 = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+		1764 = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+	}
+}
+
+#Hellenization of the Balkans
+country_event = { 
+	id = ab_byzantium.50
+	title = ab_byzantium.50.t 
+	desc = ab_byzantium.50.d 
+	picture = BYZ_COURT_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = ab_byzantium.50.a 
+	    custom_tooltip = BYZ_HELLENIZED_BALKANS
+		replace_culture_with_effect = {
+			new_culture = Illyrian
+			old_culture_1 = bosnian
+			old_culture_2 = serbian
+			old_culture_3 = croatian
+		}
+		east_adriatic_coast_area = {
+			add_devastation = 15 
+			change_culture = Illyrian 
+			add_province_modifier = {
+				name = byz_forced_hellenized
+				duration = 7300 
+			}
+		}
+	}
+}
+
+#War with Nicaea Info
+country_event = { 
+	id = ab_byzantium.51
+	title = ab_byzantium.51.t 
+	desc = ab_byzantium.51.d 
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		OR = {
+			is_in_war = {
+				attacker_leader = NCI
+				defender_leader = ROOT
+			}
+			NCI = {
+				is_in_war = {
+					attacker_leader = VEN
+					defender_leader = BYZ
+				}
+			}
+		}
+		NCI = {
+			ai = yes
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_byzantium.51.a
+		custom_tooltip = ab_war_nicaea_info
+		set_country_flag = byz_quick_victory_nicaea
+	}
+}
+
+#Occupation of Nicaea
+country_event = { 
+	id = ab_byzantium.52
+	title = ab_byzantium.52.t 
+	desc = ab_byzantium.52.d 
+	picture = ABAD5_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		has_country_flag = byz_quick_victory_nicaea
+		NOT = {
+			had_country_flag = {
+				flag = byz_quick_victory_nicaea
+				days = 450
+			}
+		}
+		OR = {
+			is_in_war = {
+				attacker_leader = NCI
+				defender_leader = ROOT
+			}
+			NCI = {
+				is_in_war = {
+					attacker_leader = VEN
+					defender_leader = BYZ
+				}
+			}
+		}
+		NCI = {
+			ai = yes
+			capital_scope = {
+				controlled_by = ROOT
+			}
+		}
+		war_score_against = {
+			who = NCI
+			value = 60
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_byzantium.52.a
+		hidden_effect = {
+			white_peace = NCI
+		}
+		inherit = NCI
+		add_treasury = 125
+	}
+}
+
+#War with Bulgaria Info
+country_event = { 
+	id = ab_byzantium.53
+	title = ab_byzantium.53.t 
+	desc = ab_byzantium.53.d 
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		OR = {
+			is_in_war = {
+				attacker_leader = BUL
+				defender_leader = ROOT
+			}
+			BUL = {
+				is_in_war = {
+					attacker_leader = VEN
+					defender_leader = BYZ
+				}
+			}
+		}
+		BUL = {
+			ai = yes
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_byzantium.53.a
+		custom_tooltip = ab_war_bulgaria_info
+		set_country_flag = byz_quick_victory_bulgaria
+	}
+}
+
+#Occupation of Tarnovo
+country_event = { 
+	id = ab_byzantium.54
+	title = ab_byzantium.54.t 
+	desc = ab_byzantium.54.d 
+	picture = ABAD5_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		has_country_flag = byz_quick_victory_bulgaria
+		NOT = {
+			had_country_flag = {
+				flag = byz_quick_victory_bulgaria
+				days = 450
+			}
+		}
+		OR = {
+			is_in_war = {
+				attacker_leader = BUL
+				defender_leader = ROOT
+			}
+			BUL = {
+				is_in_war = {
+					attacker_leader = VEN
+					defender_leader = BYZ
+				}
+			}
+		}
+		BUL = {
+			ai = yes
+			capital_scope = {
+				controlled_by = ROOT
+			}
+		}
+		war_score_against = {
+			who = BUL
+			value = 40
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_byzantium.54.a
+		white_peace = BUL
+		148 = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		1853 = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		4702 = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		4961 = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		add_treasury = 200
+		BUL = {
+			add_treasury = -200
+		}
+	}
+}
+
+#Romanization
+province_event = {
+	id = ab_byzantium.55
+	title = ab_byzantium.55.t
+	desc = ab_byzantium.55.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 0.9
+			religion = owner
+		}
+		modifier = {
+			factor = 0.75
+			OR = {
+				culture_group = french
+				AND = {
+					culture_group = iberian
+					NOT = { culture = andalucian }
+				}
+				culture = welsh
+				culture = briton
+				culture = breton
+				culture_group = latin
+				culture_group = romanian_culture_group
+				culture_group = byzantine
+			}
+		}
+		modifier = {
+			factor = 0.9
+			has_road_building_trigger = yes
+		}
+		modifier = {
+			factor = 0.9
+			owner = { has_idea = rd_seven }
+		}
+		modifier = {
+			factor = 0.9
+			ROM = { stability = 2 }
+		}
+		modifier = {
+			factor = 0.9
+			ROM = { absolutism = 50 }
+		}
+	}
+	
+	trigger = {
+		owner = {
+			OR = {
+				tag = ROM
+				has_reform = rom_diocese
+			}
+		}
+		NOT = { culture_group = roman_g }
+		OR = {
+			has_country_flag = rom_belgica_isof_gallia
+			has_country_flag = rom_belgica_isof_germania
+			NOT = { region = low_countries_region }
+		}
+		OR = {
+			has_country_flag = rom_caucasia_isof_anatolia
+			has_country_flag = rom_caucasia_isof_persia
+			NOT = { region = caucasia_region }
+		}
+	}
+
+	option = {
+		name = ab_byzantium.55.a
+		if = {
+			limit = {
+				OR = {
+					region = france_region
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_gallia }
+					}
+				}
+			}
+			change_culture = gallo_roman
+		}
+		else_if = {
+			limit = {
+				region = maghreb_region
+			}
+			change_culture = afro_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					AND = {
+						region = balkan_region
+						culture_group = south_slavic
+					}
+					area = carinthia_area
+				}
+			}
+			change_culture = illyro_roman
+		}
+		else_if = {
+			limit = {
+				region = british_isles_region
+			}
+			change_culture = romano_british
+		}
+		else_if = {
+			limit = {
+				region = iberia_region
+			}
+			change_culture = hispano_roman
+		}
+		else_if = {
+			limit = {
+				region = carpathia_region
+			}
+			change_culture = daco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture_group = byzantine
+					region = anatolia_region
+					region = mashriq_region
+					region = egypt_region
+					province_id = 1232
+					province_id = 2324
+					AND = {
+						region = caucasia_region
+						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
+					}
+				}
+			}
+			change_culture = greco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_german_region
+					AND = {
+						region = south_german_region
+						NOT = { area = carinthia_area }
+					}
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_germania }
+					}
+				}
+			}
+			change_culture = romano_germanic
+		}
+		else_if = {
+			limit = {
+				region = scandinavia_region
+			}
+			change_culture = romano_nordic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = persia_region
+					region = khorasan_region
+					AND = {
+						region = caucasia_region
+						ROM = { has_country_flag = rom_caucasia_isof_persia }
+					}
+				}
+			}
+			change_culture = perso_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = west_india_region
+					region = hindusthan_region
+					region = bengal_region
+					region = deccan_region
+					region = coromandel_region
+				}
+			}
+			change_culture = indo_roman
+		}
+		else_if = {
+			limit = {
+				region = arabia_region
+			}
+			change_culture = romano_arabic
+		}
+		else = {
+			change_culture = roman_new
+		}
+		add_province_modifier = {
+			name = byz_forced_romanized
+			duration = 7300 
+		}
+	}
+}
+
+#Spread of Greek Culture in Anatolia
+province_event = {
+	id = ab_byzantium.56
+	title = ab_byzantium.56.t
+	desc = ab_byzantium.56.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.75
+			religion = owner
+		}
+		modifier = {
+			factor = 0.1
+			culture_group = byzantine
+		}
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = byzantium_anatolia_dev
+			culture = greek
+		}
+		region = anatolia_region
+		OR = {
+			any_neighbor_province = {
+				culture = greek
+			}
+			culture_group = byzantine
+		}
+		NOT = { culture = greek }
+	}
+	
+	option = {
+		name = ab_byzantium.56.a
+		change_culture = greek
+		change_original_culture = greek
+	}
+}
+
+#Italian Ambition
+country_event = {
+	id = ab_byzantium.57
+	title = ab_byzantium.57.t
+	desc = ab_byzantium.57.d
+	picture = AB_ITALY_AMBITION_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.57.a
+		italy_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_claim = ROOT
+		}
+		add_mil_power = 50
+		add_prestige = 10
+	}
+}
+
+#Diocesis Illyria annex Romanians
+country_event = { 
+	id = ab_byzantium.58
+	title = ab_byzantium.58.t 
+	desc = ab_byzantium.58.d 
+	picture = SEJM_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.58.a
+		ai_chance = { factor = 90 }
+		RD9 = {
+			if = {
+				limit = {
+					WAL = {
+						is_subject_of = ROM
+					}
+				}
+				inherit = WAL
+			}
+			if = {
+				limit = {
+					MOL = {
+						is_subject_of = ROM
+					}
+				}
+				inherit = MOL
+			}
+			add_liberty_desire = -50
+		}
+	}
+
+	option = {
+		name = ab_byzantium.58.b
+		ai_chance = { factor = 10 }
+		custom_tooltip = ab_diocese_annex_romanians
+	}
+}
+
+#Diocese Info - TBD
+country_event = {
+	id = ab_byzantium.59
+	title = ab_byzantium.59.t
+	desc = ab_byzantium.59.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.59.a
+	}
+}
+
+#Defeat the sea
+country_event = {
+	id = ab_byzantium.60
+	title = ab_byzantium.60.t
+	desc = ab_byzantium.60.d
+	picture = AB_CALILUGA_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.60.a
+		custom_tooltip = NRM_CNS
+		custom_tooltip = BYZ_SEVENSEAS_MODIFIER
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_colonial_nation_of = ROOT
+				}
+				add_country_modifier = {
+					name = byz_seven_seas_subject
+					duration = 36500
+				}
+			}
+		}
+		add_country_modifier = {
+			name = byz_seven_seas
+			duration = 36500
+		}
+	}
+}
+
+#Discover the Punics
+country_event = {
+	id = ab_byzantium.61
+	title = ab_byzantium.61.t
+	desc = ab_byzantium.61.d
+	picture = DHOW_AT_SEA_eventPicture
+
+	trigger = {
+		OR = {
+			tag = BYZ
+			tag = ROM
+		}
+		any_country = {
+			culture = punic
+			capital_scope = {
+				OR = {
+					has_discovered = BYZ
+					has_discovered = ROM
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 10
+	}
+
+	option = {
+		name = ab_byzantium.61.a
+		every_country = {
+			limit = {
+				culture = punic
+			}
+			hidden_effect = {
+				add_historical_rival = ROOT
+			}
+			ROOT = {
+				add_historical_rival = PREV
+			}
+		}
+	}
+}
+
+#Subjugate Russian princes
+country_event = {
+	id = ab_byzantium.62
+	title = ab_byzantium.62.t
+	desc = ab_byzantium.62.d
+	picture = AB_RUS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.62.a
+		trigger = {
+			NOT = {
+				exists = UKR
+			}
+		}
+		custom_tooltip = BYZ_RUSSIAN_PRINCES
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_reform = principality
+				}
+				ROOT = {
+					add_casus_belli = {
+						type = cb_restore_personal_union
+						months = 300
+						target = PREV
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.62.b
+		trigger = {
+			exists = UKR
+		}
+		add_casus_belli = {
+			type = cb_restore_personal_union
+			months = 300
+			target = UKR
+		}
+	}
+}
