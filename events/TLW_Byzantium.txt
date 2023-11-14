@@ -162,10 +162,6 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
 		name = ab_byzantium.51.a
 		custom_tooltip = ab_war_nicaea_info
@@ -218,10 +214,6 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
 		name = ab_byzantium.52.a
 		hidden_effect = {
@@ -258,10 +250,6 @@ country_event = {
 		BUL = {
 			ai = yes
 		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
 	}
 
 	option = {
@@ -313,10 +301,6 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = {
-		days = 1
-	}
-
 	option = {
 		name = ab_byzantium.54.a
 		white_peace = BUL
@@ -359,6 +343,16 @@ province_event = {
 			religion = owner
 		}
 		modifier = {
+			factor = 0.5
+			OR = {
+				superregion = europe_superregion
+				region = maghreb_region
+			}
+			ROM = {
+				mission_completed = byzantium_cities_latin
+			}
+		}
+		modifier = {
 			factor = 0.75
 			OR = {
 				culture_group = french
@@ -375,8 +369,16 @@ province_event = {
 			}
 		}
 		modifier = {
-			factor = 0.9
+			factor = 0.8
 			has_road_building_trigger = yes
+		}
+		modifier = {
+			factor = 0.8
+			has_courthouse_building_trigger = yes
+		}
+		modifier = {
+			factor = 0.5
+			has_building = university
 		}
 		modifier = {
 			factor = 0.9
@@ -401,6 +403,10 @@ province_event = {
 			}
 		}
 		NOT = { culture_group = roman_g }
+		any_friendly_coast_border_province = {
+			owned_by = ROOT
+			culture_group = roman_g
+		}
 		OR = {
 			ROM = {
 				OR = {
@@ -571,7 +577,7 @@ province_event = {
 					area = red_ruthenia_area
 				}
 			}
-			change_culture = romano_sarmatic
+			change_culture = romano_polish
 		}
 		else_if = {
 			limit = {
@@ -644,11 +650,9 @@ province_event = {
 			culture = greek
 		}
 		region = anatolia_region
-		OR = {
-			any_neighbor_province = {
-				culture = greek
-			}
-			culture_group = byzantine
+		any_friendly_coast_border_province = {
+			owned_by = ROOT
+			culture = greek
 		}
 		NOT = { culture = greek }
 	}
@@ -789,10 +793,6 @@ country_event = {
 				}
 			}
 		}
-	}
-
-	mean_time_to_happen = {
-		days = 10
 	}
 
 	option = {
@@ -946,10 +946,6 @@ country_event = {
 		UKR = { is_subject_of = ROM }
 	}
 
-	mean_time_to_happen = {
-		days = 10
-	}
-
 	option = {
 		name = ab_byzantium.65.a
 		UKR = {
@@ -963,5 +959,22 @@ country_event = {
 			}
 		}
 		custom_tooltip = BYZ_RUSSO_ROMAN
+	}
+}
+
+#test
+country_event = {
+	id = ab_byzantium.66
+	title = ab_byzantium.66.t
+	desc = ab_byzantium.66.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.66.a
+		add_government_reform = byzengineering
 	}
 }

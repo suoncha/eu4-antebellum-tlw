@@ -889,7 +889,7 @@ byz_slot1_third = {
 
 	byzantium_roman_law = {
 		icon = mission_themis
-		position = 30
+		position = 29
 		required_missions = { byzantium_university } 
 
 		provinces_to_highlight = {
@@ -926,33 +926,10 @@ byz_slot1_third = {
 		}
 	}
 
-	byzantium_caesaropapism = {
-		icon = promote_the_patriarchate
-		position = 32
-		required_missions = { byzantium_roman_law }
-
-		trigger = {
-			crown_stronger_than_estate = { estate = estate_church }
-			NOT = { 
-				num_of_estate_privileges = { 
-					estate = estate_church
-					value = 1 
-				}
-			}
-			absolutism = 50
-		}
-		effect = {
-			add_country_modifier = {
-				name = byz_caesaropapism
-				duration = 36500 
-			}
-		}
-	}
-
 	byzantium_patriarchate = {
 		icon = mission_autocephalous_archbishopric
-		required_missions = { byzantium_caesaropapism } 
-		position = 35
+		required_missions = { byzantium_roman_law } 
+		position = 30
 
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -984,6 +961,126 @@ byz_slot1_third = {
 
 		effect = { 
 			custom_tooltip = BYZ_MORALE_GAIN 
+		} 
+	}
+
+	byzantium_caesaropapism = {
+		icon = promote_the_patriarchate
+		position = 31
+		required_missions = { byzantium_patriarchate }
+
+		trigger = {
+			crown_stronger_than_estate = { estate = estate_church }
+			NOT = { 
+				num_of_estate_privileges = { 
+					estate = estate_church
+					value = 1 
+				}
+			}
+			absolutism = 50
+		}
+		effect = {
+			add_country_modifier = {
+				name = byz_caesaropapism
+				duration = 36500 
+			}
+			custom_tooltip = BYZ_REFORM_CHURCH
+		}
+	}
+
+	byzantium_industry = {
+		icon = mission_rb_central_belt_coal_mining
+		position = 32
+		required_missions = { } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { 
+				has_manufactory_trigger = yes 
+				has_production_building_trigger = yes
+			}
+		}
+
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_manufactory_trigger = yes
+					has_production_building_trigger = yes
+				}
+				amount = 25
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = byz_industry
+				duration = 18250
+			}
+		} 	
+	}
+
+	byzantium_roads = {
+		icon = mission_pol_develop_countryside
+		position = 33
+		required_missions = { byzantium_industry }
+		provinces_to_highlight = {
+			owned_by = ROOT
+		}
+
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_road_building_trigger = yes
+				}
+				amount = 100
+			}
+		}
+
+		effect = {  
+		   add_country_modifier = {
+				name = byz_roads
+				duration = -1
+			}
+		} 
+	}
+
+	byzantium_wonders = {
+		icon = mam_city_thousand_minarets
+		position = 34
+		required_missions = { byzantium_roads }
+		provinces_to_highlight = {
+			owned_by = ROOT
+		}
+
+		trigger = {
+			tag = ROM
+			calc_true_if = {
+				all_province = {
+					owner = {
+						OR = {
+							has_reform = rom_diocese
+							has_reform = rom_grand_diocese
+						}
+						is_subject_of = ROOT
+					}
+					has_great_project = {
+						type = any
+						tier = 3
+					}
+				}
+				all_owned_province = {
+					has_great_project = {
+						type = any
+						tier = 3
+					}
+				}
+				amount = 12
+			}
+		}
+
+		effect = {  
+			set_country_flag = byz_can_benefit_monuments
+			custom_tooltip = BYZ_GREAT_WONDERS
+			add_government_reform = byzengineering
 		} 
 	}
 }
@@ -1499,7 +1596,7 @@ byz_slot2_first = {
 					value = 100
 				}
 			}
-			mil_tech = 12
+			mil_tech = 8
 			army_professionalism = 0.25
 		} 
 
@@ -1525,7 +1622,7 @@ byz_slot2_first = {
 				which = artillery_power
 				value = 0.1
 			}
-			mil_tech = 17
+			mil_tech = 12
 			army_professionalism = 0.5
 		}
 
@@ -1571,6 +1668,7 @@ byz_slot2_first = {
 		required_missions = { byzantium_unrivaled byzantium_cannons byzantium_general_staff }
 
 		trigger = {
+			tag = ROM
 			has_global_modifier_value = {
 				which = discipline
 				value = 0.25
@@ -1578,7 +1676,7 @@ byz_slot2_first = {
 			army_professionalism = 0.9
 			army_size = 650
 			num_of_generals = 10
-			mil_tech = 23
+			mil_tech = 17
 			NOT = { 
 				any_country = { 
 					army_size = ROOT
@@ -1600,6 +1698,7 @@ byz_slot2_first = {
 		trigger = {
 			army_size = 1500
 			manpower = 1000
+			mil_tech = 23
 			is_hegemon_of_type = military_hegemon
 			hegemon_strength = 100
 		}
@@ -2122,8 +2221,8 @@ byz_slot2_second = {
 	
 	byzantium_wall = {
 		icon = byz_reinforce_constantinople
-		required_missions = { byzantium_sophia } 
-		position = 32
+		required_missions = { byzantium_library byzantium_sophia } 
+		position = 29
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -3078,6 +3177,11 @@ byz_slot3_second = {
 						duration = -1
 					}
 					override_country_name = DIOCESISRUSSIA
+					add_government_reform = rom_grand_diocese
+					if = {
+						limit = { has_custom_ideas = no }
+						country_event = { id = ideagroups.1 } #Swap Ideas
+					}
 				}
 				set_country_flag = byz_tsar_of_rus
 			}
@@ -3431,8 +3535,8 @@ byz_slot3_third = {
 
 	byzantium_desire = {
 		icon = renaissance_city
-		required_missions = { byzantium_renaissance byzantium_hometrade }
-		position = 28
+		required_missions = { }
+		position = 27
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -3440,7 +3544,7 @@ byz_slot3_third = {
 
 		trigger = {
 			151 = { 
-				development = 40 
+				development = 35
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -3448,9 +3552,11 @@ byz_slot3_third = {
 		}
 
 		effect = {
-			add_province_modifier = {
-				name = BYZ_queen_of_cities
-				duration = -1
+			151 = {
+                add_province_modifier = {
+                    name = BYZ_queen_of_cities
+                    duration = -1
+                }
 			}
 			add_country_modifier = {
 				name = BYZ_centralize_all_wealth
@@ -3464,7 +3570,7 @@ byz_slot3_third = {
 	byzantium_sophia = {
 		icon = end_the_schism
 		required_missions = { byzantium_desire } 
-		position = 31
+		position = 28
 
 		provinces_to_highlight = { 
 			province_id = 151 
@@ -3508,7 +3614,7 @@ byz_slot3_third = {
 
 	byzantium_beacons = {
 		icon = mission_beacon
-		position = 32
+		position = 29
 		required_missions = { byzantium_sophia } 
 
 		provinces_to_highlight = {
@@ -3555,7 +3661,7 @@ byz_slot3_third = {
 	byzantium_ministries = {
 		icon = empower_the_junkers
 		required_missions = { byzantium_beacons byzantium_wall }
-		position = 33
+		position = 30
 
 		trigger = {
 			has_adm_advisor_3 = yes
@@ -3581,7 +3687,7 @@ byz_slot3_third = {
 	
 	byzantium_nomos = {
 		icon = mission_justinian
-		position = 35
+		position = 31
 		required_missions = { byzantium_ministries } 
 
 		trigger = {
@@ -3604,6 +3710,142 @@ byz_slot3_third = {
 				duration = -1
 			}
 			custom_tooltip = BYZ_PREVENT
+		}
+	}
+
+	byzantium_ecumenopolis = {
+		icon = mission_ecumenopolis
+		required_missions = { byzantium_caesaropapism byzantium_nomos byzantium_gigalopolis BYZ_warehouse_of_the_east }
+		position = 32
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 316
+				province_id = 149
+				province_id = 4779
+			}
+		}
+		
+		trigger = {
+			151 = {
+				owned_by = ROOT
+				development = 120
+			}
+			316 = {
+				owned_by = ROOT
+				development = 70
+			}
+			149 = {
+				owned_by = ROOT
+				development = 50
+			}
+			4779 = {
+				owned_by = ROOT
+				development = 50
+			}
+			employed_advisor = { type = architect }
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_URBANIZATION_UPGRADE
+			hidden_effect = {
+				remove_country_modifier = byz_urbanization
+				add_country_modifier = {
+					name = byz_massive_urbanization
+					duration = -1
+				}
+			}
+			151 = {
+				add_province_modifier = {
+					name = byz_ecumenopolis
+					duration = -1
+				}
+			}
+			149 = {
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
+				}
+			}
+			4779 = {
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
+				}
+			}
+			if = {
+				limit = {
+					149 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA2
+				
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA2_NO
+			}
+			tooltip = {
+				149 = {
+					change_trade_goods = coal
+				}
+			}
+			if = {
+				limit = {
+					4779 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA3
+				
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA3_NO
+			}
+			tooltip = {
+				4779 = {
+					change_trade_goods = coal
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						149 = {
+							development = 60
+						}
+					}
+					149 = {
+						change_trade_goods = coal
+					}
+				}
+				if = {
+					limit = {
+						4779 = {
+							development = 60
+						}
+					}
+					4779 = {
+						change_trade_goods = coal
+					}
+				}
+			}
 		}
 	}
 }
@@ -4620,65 +4862,77 @@ byz_slot4_fourth = {
 		}
 	}
 
-	byzantium_docks = {
-		icon = brest_dockyards
+	byzantium_osmans = {
+		icon = mission_the_grand_bazaar
 		required_missions = { byzantium_hometrade } 
 		position = 28
 
-		provinces_to_highlight = {
-			province_id = 151
+		provinces_to_highlight = { 
+			province_id = 151 
 		} 
 
 		trigger = {
-			151 = {
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
-				has_state_edict = edict_shipbuilding
+			treasury = 1500
+			mercantilism = 20
+			num_of_estate_privileges = {
+				estate = estate_burghers
+				value = 4
 			}
+			151 = { 
+				has_trade_building_trigger = yes 
+			} 
+			151 = { 
+				NOT = { 
+					has_construction = great_project 
+				}  
+			} 
 		}
 
 		effect = {
-			151 = {
-				add_province_modifier = {
-					name = byz_docks
-					duration = -1
+			add_treasury = -1500
+			custom_tooltip = BYZANTIUM_OSMAN
+			tooltip = {
+				151 = { add_base_production = 3 } 
+				151 = {
+					add_province_modifier = {
+						name = byzantium_osman2
+						duration = -1
+					}
 				}
 			}
-            custom_tooltip = BYZ_MARINES
-			add_country_modifier = {
-				name = byz_marines
-				duration = -1
-			}  			
 			hidden_effect = {
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
+				151 = {
+					if = {
+						limit = {
+							has_great_project = {
+								type = ottoman_market
+								tier = 1
+							}
+							NOT = {
+								OR = {
+									has_great_project = {
+										type = ottoman_market
+										tier = 2
+									}
+									has_great_project = {
+										type = ottoman_market
+										tier = 3
+									}
+								}
+							}
+						}
+						add_great_project_tier = {
+							type = ottoman_market
+							tier = 1
+						}
+					}
+					else = {
+						add_base_production = 3
+						add_province_modifier = {
+							name = byzantium_osman2
+							duration = -1
+						}
+					}
 				}
 			}
 		}
@@ -4785,111 +5039,79 @@ byz_slot4_fourth = {
 		position = 31
 		
 		provinces_to_highlight = {
-			province_id = 151
 			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { development = 100 }
+				province_id = 151
+				province_id = 316
 			}
 		}
 		
 		trigger = {
 			151 = {
 				owned_by = ROOT
-				development = 100
+				development = 85
 			}
+			316 = {
+				owned_by = ROOT
+				development = 40
+			}
+			employed_advisor = { type = architect }
 		}
 		
 		effect = {
-			#TBD
-		}
-	}
-	
-	BYZ_collect_our_profits = {
-		icon = mission_african_gold
-		required_missions = { BYZ_economic_independence }
-		position = 32
-		provinces_to_highlight = {
-		}
-		trigger = {
-			monthly_income = 50
-			NOT = { inflation = 0.2 }
-			NOT = { num_of_loans = 1 }
-			home_trade_node = {
-				trade_node_value = 25 
-			}
-		}
-		effect = {
-			country_event = { id = MEE_Byzantine_Events.21 }
-		}
-	}
-
-	byzantium_money = {
-		icon = dominant_economy
-		required_missions = { BYZ_collect_our_profits } 
-		position = 33
-
-		trigger = {  
-		    NOT = {
-				num_of_loans = 1
+			add_country_modifier = {
+				name = byz_urbanization
+				duration = -1
 			}
 			151 = {
-				trade_share = {
-					country = ROOT
-					share = 80
+				add_province_modifier = {
+					name = byz_gigalopolis
+					duration = -1
 				}
 			}
-			358 = {
-				trade_share = {
-					country = ROOT
-					share = 60
+			316 = {
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
 				}
 			}
-			377 = {
-				trade_share = {
-					country = ROOT
-					share = 60
+			if = {
+				limit = {
+					316 = {
+						development = 50
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA1
+				
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA1_NO
+			}
+			tooltip = {
+				316 = {
+					change_trade_goods = coal
 				}
 			}
-			OR = {
-				monthly_adm = 12
-				full_idea_group = economic_ideas
+			hidden_effect = {
+				if = {
+					limit = {
+						316 = {
+							development = 50
+						}
+					}
+					316 = {
+						change_trade_goods = coal
+					}
+				}
 			}
-			advisor = treasurer
-		} 
-
-		effect = {
-		    add_years_of_income = 1.5
-			add_inflation = -5
-			add_country_modifier = {
-				name = byz_gold_standard
-				duration = -1
-			}
-		} 
-	}
-
-	byzantium_roads = {
-		icon = mission_pol_develop_countryside
-		position = 34
-		required_missions = { byzantium_money }
-		provinces_to_highlight = {
-			owned_by = ROOT
 		}
-
-		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_road_building_trigger = yes
-				}
-				amount = 60
-			}
-		}
-
-		effect = {  
-		   add_country_modifier = {
-				name = byz_roads
-				duration = -1
-			}
-		} 
 	}
 }
 
@@ -5665,77 +5887,65 @@ byz_slot5_second = {
 		}
 	}
 	
-	byzantium_osmans = {
-		icon = mission_the_grand_bazaar
+	byzantium_docks = {
+		icon = brest_dockyards
 		required_missions = { byzantium_hometrade } 
 		position = 28
 
-		provinces_to_highlight = { 
-			province_id = 151 
+		provinces_to_highlight = {
+			province_id = 151
 		} 
 
 		trigger = {
-			treasury = 1500
-			mercantilism = 20
-			num_of_estate_privileges = {
-				estate = estate_burghers
-				value = 4
+			151 = {
+				has_shipyard_building_trigger = yes
+				has_dock_building_trigger = yes
+				has_state_edict = edict_shipbuilding
 			}
-			151 = { 
-				has_trade_building_trigger = yes 
-			} 
-			151 = { 
-				NOT = { 
-					has_construction = great_project 
-				}  
-			} 
 		}
 
 		effect = {
-			add_treasury = -1500
-			custom_tooltip = BYZANTIUM_OSMAN
-			tooltip = {
-				151 = { add_base_production = 3 } 
-				151 = {
-					add_province_modifier = {
-						name = byzantium_osman2
-						duration = -1
-					}
+			151 = {
+				add_province_modifier = {
+					name = byz_docks
+					duration = -1
 				}
 			}
+            custom_tooltip = BYZ_MARINES
+			add_country_modifier = {
+				name = byz_marines
+				duration = -1
+			}  			
 			hidden_effect = {
-				151 = {
-					if = {
-						limit = {
-							has_great_project = {
-								type = ottoman_market
-								tier = 1
-							}
-							NOT = {
-								OR = {
-									has_great_project = {
-										type = ottoman_market
-										tier = 2
-									}
-									has_great_project = {
-										type = ottoman_market
-										tier = 3
-									}
-								}
-							}
-						}
-						add_great_project_tier = {
-							type = ottoman_market
-							tier = 1
-						}
-					}
-					else = {
-						add_base_production = 3
-						add_province_modifier = {
-							name = byzantium_osman2
-							duration = -1
-						}
-					}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
 				}
 			}
 		}
@@ -5743,8 +5953,8 @@ byz_slot5_second = {
 
 	BYZ_economic_independence = {
 		icon = medici_bank_ledgers
-		required_missions = { byzantium_osmans }
-		position = 31
+		required_missions = { byzantium_docks }
+		position = 29
 		provinces_to_highlight = {
 			OR = {
 				AND = {
@@ -5764,16 +5974,6 @@ byz_slot5_second = {
 			}
 		}
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_has_integrated_galata
-				NOT = {
-					151 = {
-						has_province_modifier = BYZ_galata 
-					}
-				}
-			}
-			NOT = { has_estate_privilege = estate_burghers_reliance_on_republics }
-			NOT = { has_estate_privilege = estate_burghers_exkousseiai_for_latins }
 			OR = {
 				151 = {
 					trade_share = {
@@ -5812,7 +6012,8 @@ byz_slot5_second = {
 			}
 		}
 		effect = {
-			custom_tooltip = BYZ_buff_burgher_loans_no_mercantilism_loss #done via mission_completed
+			custom_tooltip = AB_BYZ_buff_burgher_loans_no_mercantilism_loss
+            set_country_flag = no_mercantilism_loss_estate_privilege_flag
 			
 			custom_tooltip = " "
 			
@@ -5862,11 +6063,120 @@ byz_slot5_second = {
 			}
 		}
 	}
+
+	BYZ_collect_our_profits = {
+		icon = mission_african_gold
+		required_missions = { BYZ_economic_independence }
+		position = 30
+		provinces_to_highlight = {
+		}
+		trigger = {
+			monthly_income = 125
+			NOT = { inflation = 0.2 }
+			NOT = { num_of_loans = 1 }
+			home_trade_node = {
+				trade_node_value = 25 
+			}
+		}
+		effect = {
+			country_event = { id = MEE_Byzantine_Events.21 }
+		}
+	}
+
+	BYZ_warehouse_of_the_east = {
+		icon = saxon_manufacturing
+		required_missions = { BYZ_collect_our_profits }
+		position = 31
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = { has_manufactory_trigger = yes }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_manufactory_trigger = yes
+				value = 50
+			}
+			home_trade_node = {
+				trade_node_value = 100
+				highest_value_trade_node = yes
+			}
+			
+			monthly_income = 600 
+		}
+		effect = {
+			add_country_modifier_for_age = {
+				name = BYZ_economic_intimidation
+				age = age_of_reformation
+				else = "
+					add_dip_power = 100
+					add_years_of_income = 1
+				"
+			}
+			
+			# custom_tooltip = " "
+			
+			custom_tooltip = BYZ_naval_commander_advisor_buff #bound to mission_completed
+			
+			custom_tooltip = " "
+			
+			complex_dynamic_effect = {
+				first_custom_tooltip = BYZ_if_we_have_taken_laesio_enormis
+				first_limit = " has_reform = laesio_enormis_reform "
+				first_effect = "
+					change_government_reform_progress = 200
+				"
+			}
+		}
+	}
+
+	byzantium_money = {
+		icon = dominant_economy
+		required_missions = { } 
+		position = 32
+
+		trigger = {  
+		    NOT = {
+				num_of_loans = 1
+			}
+			151 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			358 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			377 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			OR = {
+				monthly_adm = 12
+				full_idea_group = economic_ideas
+			}
+			advisor = treasurer
+		} 
+
+		effect = {
+		    add_years_of_income = 1.5
+			add_inflation = -5
+			add_country_modifier = {
+				name = byz_gold_standard
+				duration = -1
+			}
+		} 
+	}
 	
 	byzantium_cities = {
 		icon = develop_konigsberg
-		required_missions = { BYZ_economic_independence } 
-		position = 32
+		required_missions = { byzantium_money } 
+		position = 33
 
 		provinces_to_highlight = {
 		    OR = {
@@ -5917,14 +6227,20 @@ byz_slot5_second = {
 				has_trade_building_trigger = yes
 			}
 			358 = {
-			    owned_by = ROOT 
+				OR = {
+					owned_by = ROOT 
+					owned_by = RDQ
+				}
 				development = 30
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			2313 = {
-			    owned_by = ROOT 
+			    OR = {
+					owned_by = ROOT 
+					owned_by = RDX
+				}
 				development = 30
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
@@ -5978,20 +6294,27 @@ byz_slot5_second = {
 				}
 				if = {
 					limit = {
-						NOT = { 
-							OR = {
-								culture_group = byzantine
-								culture_group = roman_g
-							}
-						}
+						NOT = { culture_group = byzantine }
+						ROOT = { tag = BYZ }
 					}
 					add_devastation = 15 
-					change_culture = pontic_greek 
+					change_culture = greek 
 					add_province_modifier = {
 						name = byz_forced_hellenized
 						duration = 7300 
 					}
-				}	
+				}
+				else_if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = greco_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
 			}
 			2313 = {
                 add_province_modifier = {
@@ -6008,92 +6331,310 @@ byz_slot5_second = {
 				}
 				if = {
 					limit = {
-						NOT = { 
-							OR = {
-								culture_group = byzantine
-								culture_group = roman_g
-							}
-						}
+						NOT = { culture_group = byzantine }
+						ROOT = { tag = BYZ }
 					}
 					add_devastation = 15 
-					change_culture = pontic_greek 
+					change_culture = greek 
 					add_province_modifier = {
 						name = byz_forced_hellenized
 						duration = 7300 
 					}
-				}	
-			}
-		}
-	}
-
-	byzantium_industry = {
-		icon = mission_rb_central_belt_coal_mining
-		position = 34
-		required_missions = { byzantium_cities } 
-		provinces_to_highlight = {
-			owned_by = ROOT
-		}
-
-		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_manufactory_trigger = yes
 				}
-				amount = 40
+				else_if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = greco_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
 			}
 		}
-		
-		effect = {
-			add_country_modifier = {
-				name = byz_industry
-				duration = 18250
-			}
-		} 
 	}
 
-	BYZ_warehouse_of_the_east = {
-		icon = saxon_manufacturing
-		required_missions = { byzantium_industry }
-		position = 35
+	byzantium_cities_latin = {
+		icon = spa_new_capital
+		required_missions = { byzantium_cities } 
+		position = 34
+
 		provinces_to_highlight = {
-			owned_by = ROOT 
-			NOT = { has_manufactory_trigger = yes }
+		    OR = {
+				province_id = 118
+			    province_id = 225
+		      	province_id = 341
+		      	province_id = 183
+				province_id = 236
+				province_id = 1876
+				province_id = 134
+				province_id = 12
+			}
 		}
+
 		trigger = {
-			num_of_owned_provinces_with = {
-				has_manufactory_trigger = yes
-				value = 50
+		    118 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD1
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
 			}
-			home_trade_node = {
-				trade_node_value = 100
-				highest_value_trade_node = yes
+			225 = {
+			    OR = {
+					owned_by = ROOT 
+					owned_by = RD2
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
 			}
-			
-			monthly_income = 400 
+			341 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD3
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			183 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD4
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			236 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD5
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			1876 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD6
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			134 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD7
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			12 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD8
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
 		}
+
 		effect = {
-			add_country_modifier_for_age = {
-				name = BYZ_economic_intimidation
-				age = age_of_reformation
-				else = "
-					add_dip_power = 100
-					add_years_of_income = 1
-				"
+		    118 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+				    duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = roman_new 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
 			}
-			
-			# custom_tooltip = " "
-			
-			custom_tooltip = BYZ_naval_commander_advisor_buff #bound to mission_completed
-			
-			custom_tooltip = " "
-			
-			complex_dynamic_effect = {
-				first_custom_tooltip = BYZ_if_we_have_taken_laesio_enormis
-				first_limit = " has_reform = laesio_enormis_reform "
-				first_effect = "
-					change_government_reform_progress = 200
-				"
+			225 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+				    duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = hispano_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
 			}
+			341 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+				    duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = afro_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+	        183 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = gallo_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+			236 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = romano_british 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+			1876 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+				    duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = romano_germanic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+			134 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+				    duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = romano_germanic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+			12 = {
+                add_province_modifier = {
+                    name = byz_city_latin
+					duration = -1
+				}
+				if = {
+					limit = {
+						NOT = { 
+							province_has_center_of_trade_of_level = 1 
+						}
+					}
+					center_of_trade = 1
+				}
+				if = {
+					limit = {
+						NOT = { culture_group = roman_g }
+						ROOT = { tag = ROM }
+					}
+					change_culture = romano_nordic 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+			custom_tooltip = BYZ_LATIN_CAPITALS
 		}
 	}
 }
