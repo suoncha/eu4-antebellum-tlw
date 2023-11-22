@@ -1,0 +1,59 @@
+po_defeat_italian_league = {
+	category = 6
+	power_projection = no
+	power_cost_base = 0
+	prestige_base = 1.0
+	ae_base = 0
+	warscore_cost = {
+		all_provinces = 0
+		no_provinces = 100.0 
+		owner_keeps = 0.0 
+		conquered = 0.0 
+		returned_core = 0.0 
+		released_nation = 0.0 
+		cancelled_subject = 0.0 
+		concede_colonial_region = 0.0 
+	}
+	warscore_cap = 100
+	requires_is_allowed = yes
+
+	is_visible = {
+		always = yes
+	}
+	is_allowed = {
+		always = yes
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_italians
+						days = 1825
+					}
+				}
+			}
+			set_country_flag = byz_won_italians_5years
+		}
+		add_years_of_income = 3.0
+		hidden_effect = {
+			italy_region = {
+				limit = {
+					NOT = { owned_by = BYZ }
+				}
+				add_permanent_province_modifier = {
+					name = byz_cheaper_italy_conquest
+					duration = -1
+				}
+			}
+			country_event = { id = ab_byzantium_disaster.31 } 
+		}
+	}
+	ai_weight = { 
+		export_to_variable = {
+			variable_name = ai_value 
+			value = 100
+		}
+	}
+}

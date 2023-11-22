@@ -210,11 +210,18 @@ country_event = {
 			}
 		}
 		EPI = {
+			convert_ruler_to_general = 75
 			declare_war_with_cb = {
 			    who = BYZ
 			    casus_belli = cb_conquest
 				war_goal_province = 151
 		    }
+			capital_scope = {
+				build_to_forcelimit = {
+					infantry = 0.8
+					cavalry = 0.2
+				}
+			}
 		}
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_EPIRUS_FIGHT
@@ -670,9 +677,9 @@ country_event = {
 
 #Defeat Epirus - Hidden 
 country_event = {
-	id = ab_byzantium_disaster.17
-	title = ab_byzantium_disaster.17.t
-	desc = ab_byzantium_disaster.17.d
+	id = ab_byzantium_disaster.14
+	title = ab_byzantium_disaster.14.t
+	desc = ab_byzantium_disaster.14.d
 	picture = COUNTRY_COLLAPSE_eventPicture
 
 	fire_only_once = yes
@@ -698,8 +705,1316 @@ country_event = {
 	}
 	
 	option = {
-		name = ab_byzantium_disaster.17.a
+		name = ab_byzantium_disaster.14.a
 		set_country_flag = had_fall_angelid
 		add_stability = 4
+	}
+}
+
+## CRISIS OF THE SIXTEENTH CENTURY -----
+#Crisis of the Sixteenth Century Start
+country_event = {
+	id = ab_byzantium_disaster.15
+	title = ab_byzantium_disaster.15.t
+	desc = ab_byzantium_disaster.15.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_stability = -3
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.15.a
+		tooltip = {
+			add_stability = -3
+		}
+		custom_tooltip = BYZ_ASHES_THERA
+		tooltip = {
+			add_devastation = 50
+			add_province_modifier = {
+				name = byz_ashes_thera
+				duration = 3650
+			}
+		}
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						area = aegean_archipelago_area
+						area = aydin_area
+						area = morea_area
+						area = northern_greece_area
+						area = macedonia_area
+						area = thrace_area
+						area = hudavendigar_area
+						area = cyrenaica_area
+					}
+				}
+				add_devastation = 50
+				add_province_modifier = {
+					name = byz_ashes_thera
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Crisis of the Sixteenth Century End
+country_event = {
+	id = ab_byzantium_disaster.16
+	title = ab_byzantium_disaster.16.t
+	desc = ab_byzantium_disaster.16.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.16.a
+		add_stability = 1
+		set_country_flag = had_16th_crisis
+	}
+}
+
+#Eruption Recovery
+country_event = {
+	id = ab_byzantium_disaster.17
+	title = ab_byzantium_disaster.17.t
+	desc = ab_byzantium_disaster.17.d
+	picture = FAMINE_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+	}
+
+	mean_time_to_happen = {
+		days = 21
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.17.a
+		ai_chance = { factor = 50 }
+		add_years_of_income = -2.00
+		custom_tooltip = BYZ_THERA_PROVINCES
+		tooltip = {
+			add_province_modifier = {
+				name = byz_thera_funding_max
+				duration = 3650
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = aegean_archipelago_area
+						area = aydin_area
+						area = morea_area
+						area = northern_greece_area
+						area = macedonia_area
+						area = thrace_area
+						area = hudavendigar_area
+						area = cyrenaica_area
+					}
+				}
+				add_province_modifier = {
+					name = byz_thera_funding_max
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.17.b
+		ai_chance = { factor = 30 }
+		add_years_of_income = -1.00
+		custom_tooltip = BYZ_THERA_PROVINCES
+		tooltip = {
+			add_province_modifier = {
+				name = byz_thera_funding_min
+				duration = 3650
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = aegean_archipelago_area
+						area = aydin_area
+						area = morea_area
+						area = northern_greece_area
+						area = macedonia_area
+						area = thrace_area
+						area = hudavendigar_area
+						area = cyrenaica_area
+					}
+				}
+				add_province_modifier = {
+					name = byz_thera_funding_min
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.17.c
+		ai_chance = { factor = 20 }
+		add_prestige = -10
+	}
+}
+
+#Language of the Romans
+country_event = {
+	id = ab_byzantium_disaster.18
+	title = ab_byzantium_disaster.18.t
+	desc = ab_byzantium_disaster.18.d
+	picture = COURT_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+	}
+
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+		name = ab_byzantium_disaster.18.a
+		ai_chance = { factor = 10 }
+		set_country_flag = byz_court_latin
+		custom_tooltip = BYZ_LANGUAGE_LATIN
+	}
+
+	option = {
+		name = ab_byzantium_disaster.18.b
+		ai_chance = { factor = 80 }
+		set_country_flag = byz_court_mixed
+		custom_tooltip = BYZ_LANGUAGE_MIXED
+	}
+
+	option = {
+		name = ab_byzantium_disaster.18.c
+		ai_chance = { factor = 10 }
+		set_country_flag = byz_court_greek
+		custom_tooltip = BYZ_LANGUAGE_GREEK
+	}
+}
+
+#Restoration of the Republic
+country_event = {
+	id = ab_byzantium_disaster.19
+	title = ab_byzantium_disaster.19.t
+	desc = ab_byzantium_disaster.19.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = ab_byzantium_disaster.19.a
+		ai_chance = { factor = 90 }
+		add_prestige = 10
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		149 = {
+			spawn_rebels = {
+				type = leadered_peasant_rebels
+				size = 3
+				leader = "Ioannis Kapodistrias"
+			}
+		}
+		country_event = { id = ab_byzantium_disaster.20 }
+	}
+
+	option = {
+		name = ab_byzantium_disaster.19.b
+		ai_chance = { factor = 10 }
+		add_stability = -3
+		add_prestige = -10
+		add_estate_influence_modifier = {
+			estate = estate_burghers
+			desc = BYZ_SUPREMACY
+			influence = 20
+			duration = 7300
+		}
+		change_estate_land_share = {
+			estate = estate_burghers
+			share = 15
+		}
+		set_country_flag = byz_restore_republic
+		custom_tooltip = BYZ_RESTORE_REPUBLIC
+	}
+}
+
+#Nobles demand power
+country_event = {
+	id = ab_byzantium_disaster.20
+	title = ab_byzantium_disaster.20.t
+	desc = ab_byzantium_disaster.20.d
+	picture = NOBLE_ESTATE_DEMANDS_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.20.a
+		ai_chance = { factor = 20 }
+		add_prestige = -10
+		add_estate_influence_modifier = {
+			estate = estate_nobles
+			desc = BYZ_SUPREMACY
+			influence = 20
+			duration = 7300
+		}
+		change_estate_land_share = {
+			estate = estate_nobles
+			share = 15
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.20.b
+		ai_chance = { factor = 30 }
+		add_prestige = -5
+		add_estate_influence_modifier = {
+			estate = estate_nobles
+			desc = BYZ_SUPREMACY
+			influence = 10
+			duration = 7300
+		}
+		change_estate_land_share = {
+			estate = estate_nobles
+			share = 5
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.20.c
+		ai_chance = { factor = 50 }
+		add_prestige = 10
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = anatolia_region }
+			noble_rebels = 2
+		}
+	}
+}
+
+#Ayyubids Resurrection
+country_event = {
+	id = ab_byzantium_disaster.21
+	title = ab_byzantium_disaster.21.t
+	desc = ab_byzantium_disaster.21.d
+	picture = AB_CHARGE_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+	}
+
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = syria_area
+						area = aleppo_area
+						area = syrian_desert_area
+					}
+				}
+				add_core = RYB
+			}
+			release = RYB
+			RYB = {
+				change_primary_culture = al_suryah_arabic
+				change_religion = sunni
+				change_government = monarchy
+				add_government_reform = iqta
+				change_technology_group = muslim
+				change_unit_type = muslim
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 250
+				set_capital = 382
+				define_ruler = {
+					dynasty = "Ayyubid"
+					ADM = 3
+					DIP = 4
+					MIL = 4
+				}
+				define_ruler_to_general = {
+					fire = 4
+					shock = 4
+					manuever = 2
+					siege = 3
+				}
+			}
+			RYB = {
+				capital_scope = {
+					if = {
+						limit = {
+							religion = sunni
+						}
+						build_to_forcelimit = {
+							infantry = 0.8
+							cavalry = 0.2
+						}
+					}
+					else = {
+						build_to_forcelimit = {
+							infantry = 0.4
+							cavalry = 0.1
+						}
+					}
+				}
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 7
+							OR = {
+								area = syria_area
+								area = aleppo_area
+								area = syrian_desert_area
+							}
+							religion = sunni
+						}
+					}
+					random_owned_province = {
+						for = {
+							amount = 20
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 20	
+				}
+				else = {
+					random_owned_province = {
+						for = {
+							amount = 10
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 10
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+
+	option = {
+		name = ab_byzantium_disaster.21.a
+		ai_chance = { factor = 95 }
+		set_country_flag = byz_timelimit_ayyubids
+		declare_war_with_cb = {
+			who = RYB
+			casus_belli = cb_suppress_revolt
+		}
+		custom_tooltip = BYZ_WAR_AYYUBIDS
+	}
+
+	option = {
+		name = ab_byzantium_disaster.21.b
+		ai_chance = { factor = 5 }
+		set_country_flag = byz_crisis_ayyubids
+		add_truce_with = RYB
+		custom_tooltip = BYZ_SURRENDER_AYYUBIDS
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = palestine_area
+						area = trans_jordan_area
+						region = egypt_region
+					}
+				}
+				cede_province = RYB
+				add_core = RYB
+			}
+			every_province = {
+				limit = {
+					owned_by = RYB
+					is_core = BYZ
+				}
+				remove_core = BYZ
+			}
+		}
+		if = {
+			limit = {
+				NOT = { exists = HSN }
+			}
+			RYB = {
+				change_tag = HSN
+				override_country_name = AYUB
+				swap_non_generic_missions = yes
+			}
+		}
+		else = {
+			HSN = { 
+				inherit = RYB 
+				override_country_name = AYUB
+			}
+		}
+	}
+}
+
+#Palestine join Ayyubids
+country_event = {
+	id = ab_byzantium_disaster.22
+	title = ab_byzantium_disaster.22.t
+	desc = ab_byzantium_disaster.22.d
+	picture = ABAD7_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = ROOT
+			defender_leader = RYB
+			casus_belli = cb_suppress_revolt
+		}
+		any_owned_province = {
+			OR = {
+				area = palestine_area
+				area = trans_jordan_area
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = palestine_area
+						area = trans_jordan_area
+					}
+				}
+				cede_province = RYB
+				add_core = RYB
+			}
+			RYB = {
+				create_general = { tradition = 50 }
+				add_treasury = 100
+			}
+			RYB = {
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 3
+							OR = {
+								area = palestine_area
+								area = trans_jordan_area
+							}
+							religion = sunni
+						}
+					}
+					random_owned_province = {
+						limit = {
+							OR = {
+								area = palestine_area
+								area = trans_jordan_area
+							}
+						}
+						for = {
+							amount = 20
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 20	
+				}
+				else = {
+					random_owned_province = {
+						limit = {
+							OR = {
+								area = palestine_area
+								area = trans_jordan_area
+							}
+						}
+						for = {
+							amount = 10
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 10
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.22.a
+	}
+}
+
+#Egypt join Ayyubids 1
+country_event = {
+	id = ab_byzantium_disaster.23
+	title = ab_byzantium_disaster.23.t
+	desc = ab_byzantium_disaster.23.d
+	picture = ABAD7_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = ROOT
+			defender_leader = RYB
+			casus_belli = cb_suppress_revolt
+		}
+		any_owned_province = {
+			OR = {
+				area = delta_area
+				area = bahari_area
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = delta_area
+						area = bahari_area
+					}
+				}
+				cede_province = RYB
+				add_core = RYB
+			}
+			RYB = {
+				create_general = { tradition = 50 }
+				add_treasury = 100
+			}
+			RYB = {
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 4
+							OR = {
+								area = delta_area
+								area = bahari_area
+							}
+							religion = sunni
+						}
+					}
+					random_owned_province = {
+						limit = {
+							OR = {
+								area = delta_area
+								area = bahari_area
+							}
+						}
+						for = {
+							amount = 20
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 20	
+				}
+				else = {
+					random_owned_province = {
+						limit = {
+							OR = {
+								area = delta_area
+								area = bahari_area
+							}
+						}
+						for = {
+							amount = 10
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 10
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.23.a
+		set_country_flag = byz_egypt_revolt
+	}
+}
+
+#Egypt join Ayyubids 2
+country_event = {
+	id = ab_byzantium_disaster.24
+	title = ab_byzantium_disaster.24.t
+	desc = ab_byzantium_disaster.24.d
+	picture = ABAD7_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = ROOT
+			defender_leader = RYB
+			casus_belli = cb_suppress_revolt
+		}
+		has_country_flag = byz_egypt_revolt
+		any_owned_province = {
+			region = egypt_region
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = egypt_region
+				}
+				cede_province = RYB
+				add_core = RYB
+			}
+			RYB = {
+				create_general = { tradition = 50 }
+				add_treasury = 100
+			}
+			RYB = {
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 10
+							region = egypt_region
+							religion = sunni
+						}
+					}
+					random_owned_province = {
+						limit = {
+							region = egypt_region
+						}
+						for = {
+							amount = 20
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 20	
+				}
+				else = {
+					random_owned_province = {
+						limit = {
+							region = egypt_region
+						}
+						for = {
+							amount = 10
+							effect = "
+								infantry = RYB
+							"
+						}
+					}
+					add_manpower = 10
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.24.a
+	}
+}
+
+#Defeat the Ayyubids
+country_event = {
+	id = ab_byzantium_disaster.25
+	title = ab_byzantium_disaster.25.t
+	desc = ab_byzantium_disaster.25.d
+	picture = PHEONIX_ASCENDANT_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = ab_byzantium_disaster.25.a
+		custom_tooltip = BYZ_PACIFIED_LEVANT
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					is_core = RYB
+				}
+				add_province_modifier = {
+					name = byz_pacified_levant
+					duration = 3650
+				}
+				remove_core = RYB
+			}
+		}
+		set_country_flag = byz_crisis_ayyubids
+		clr_country_flag = byz_timelimit_ayyubids
+	}
+}
+
+#Italians demand Italy - Leader choice
+country_event = {
+	id = ab_byzantium_disaster.26
+	title = ab_byzantium_disaster.26.t
+	desc = ab_byzantium_disaster.26.d
+	picture = LIBERUM_VETO_eventPicture
+
+	trigger = {
+		OR = {
+			AND = {
+				tag = LOM
+				NOT = { has_country_flag = byz_refused_italian_leader }
+				is_part_of_hre = yes
+			}
+			AND = {
+				OR = {
+					NOT = { exists = LOM }
+					LOM = { 
+						OR = {
+							has_country_flag = byz_refused_italian_leader 
+							is_part_of_hre = no
+						}
+					}
+				}
+				culture_group = latin
+				is_part_of_hre = yes
+				NOT = { has_country_flag = byz_refused_italian_leader }
+				NOT = { tag = PAP }
+			}
+		}
+		BYZ = {
+			has_disaster = byzantium_16th_crisis
+			OR = {
+				is_in_war = {
+					attacker_leader = THIS
+					defender_leader = RYB
+					casus_belli = cb_suppress_revolt
+				}
+				has_country_flag = byz_crisis_ayyubids
+			}
+		}
+		NOT = { has_global_flag = byz_picked_italian_leader }
+	}
+
+	mean_time_to_happen = {
+		months = 6
+		modifier = {
+			factor = 0.1
+			has_country_flag = byz_italian_league_candidate
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.26.a
+		ai_chance = { factor = 50 }
+		BYZ = { country_event = { id = ab_byzantium_disaster.27 } }
+		set_global_flag = byz_picked_italian_leader
+		clr_country_flag = byz_italian_league_candidate
+		hidden_effect = {
+			save_global_event_target_as = ItalianLeagueLeader
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.26.b
+		ai_chance = { factor = 50 }
+		trigger = {
+			any_country = {
+				culture_group = latin
+				is_part_of_hre = yes
+				NOT = { has_country_flag = byz_refused_italian_leader }
+				NOT = { tag = ROOT }
+				NOT = { tag = PAP }
+			}
+		}
+		hidden_effect = {
+			random_country = {
+				limit = {
+					culture_group = latin
+					is_part_of_hre = yes
+					NOT = { has_country_flag = byz_refused_italian_leader }
+					NOT = { tag = ROOT }
+					NOT = { tag = PAP }
+				}
+				set_country_flag = byz_italian_league_candidate
+			}
+		}
+		set_country_flag = byz_refused_italian_leader
+		clr_country_flag = byz_italian_league_candidate
+	}
+}
+
+#Italians demand Italy - Byzantium response
+country_event = {
+	id = ab_byzantium_disaster.27
+	title = ab_byzantium_disaster.27.t
+	desc = ab_byzantium_disaster.27.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.27.a
+		ai_chance = { factor = 90 }
+		set_country_flag = byz_timelimit_italians
+		event_target:ItalianLeagueLeader = {
+			add_claim = 118
+			declare_war_with_cb = {
+			    who = BYZ
+			    casus_belli = cb_italian_league_to_byz
+				war_goal_province = 118
+		    }
+		}
+		custom_tooltip = BYZ_WAR_ITALIANS
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			every_country = {
+				limit = {
+					culture_group = latin
+					is_part_of_hre = yes
+					NOT = { tag = event_target:ItalianLeagueLeader }
+					NOT = { tag = PAP }
+				}
+				country_event = { id = ab_byzantium_disaster.28 }
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.27.b
+		ai_chance = { factor = 10 }
+		set_country_flag = byz_crisis_italians
+		add_stability = -3
+		custom_tooltip = BYZ_SURRENDER_ITALIANS
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = italy_region
+				}
+				cede_province = event_target:ItalianLeagueLeader
+				add_core = event_target:ItalianLeagueLeader
+				set_in_empire = yes
+			}
+			clear_global_event_target = ItalianLeagueLeader
+		}
+
+	}
+}
+
+#Italian League - Join the war
+country_event = {
+	id = ab_byzantium_disaster.28
+	title = ab_byzantium_disaster.28.t
+	desc = ab_byzantium_disaster.28.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.28.a
+		ai_chance = { factor = 80 }
+		join_all_offensive_wars_of = event_target:ItalianLeagueLeader
+	}
+
+	option = {
+		name = ab_byzantium_disaster.28.b
+		ai_chance = { factor = 20 }
+		add_prestige = -20
+	}
+}
+
+#HRE Emperor intervene - HRE choice
+country_event = {
+	id = ab_byzantium_disaster.29
+	title = ab_byzantium_disaster.29.t
+	desc = ab_byzantium_disaster.29.d
+	picture = BATTLE_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		is_emperor = yes
+		BYZ = {
+			has_disaster = byzantium_16th_crisis
+			is_in_war = {
+				attacker_leader = event_target:ItalianLeagueLeader
+				defender_leader = BYZ
+				casus_belli = cb_italian_league_to_byz
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 1
+	}
+
+	option = {
+		name = ab_byzantium_disaster.29.a
+		ai_chance = { factor = 90 }
+		BYZ = { 
+			country_event = { id = ab_byzantium_disaster.30 } 
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.29.b
+		ai_chance = { factor = 10 }
+		add_prestige = -20
+	}
+}
+
+#HRE Emperor intervene - Byzantium response
+country_event = {
+	id = ab_byzantium_disaster.30
+	title = ab_byzantium_disaster.30.t
+	desc = ab_byzantium_disaster.30.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.30.a
+		ai_chance = { factor = 90 }
+		add_treasury = -1000
+		add_prestige = -10
+		emperor = {
+			add_treasury = 1000
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.30.b
+		ai_chance = { factor = 10 }
+		emperor = {
+			join_all_offensive_wars_of = event_target:ItalianLeagueLeader
+		}
+	}
+}
+
+#Defeat the Italians
+country_event = {
+	id = ab_byzantium_disaster.31
+	title = ab_byzantium_disaster.31.t
+	desc = ab_byzantium_disaster.31.d
+	picture = PHEONIX_ASCENDANT_eventPicture
+	
+	is_triggered_only = yes 
+
+	option = {
+		name = ab_byzantium_disaster.31.a
+		set_country_flag = byz_crisis_italians
+		clr_country_flag = byz_timelimit_italians
+		clear_global_event_target = ItalianLeagueLeader
+		custom_tooltip = BYZ_CHEAPER_ITALY_CONQUEST
+	}
+}
+
+#White peace with Italians
+country_event = {
+	id = ab_byzantium_disaster.32
+	title = ab_byzantium_disaster.32.t
+	desc = ab_byzantium_disaster.32.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = event_target:ItalianLeagueLeader
+			defender_leader = BYZ
+			casus_belli = cb_italian_league_to_byz
+		}
+		had_country_flag = {
+			flag = byz_timelimit_italians
+			days = 3650
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.32.a
+		hidden_effect = {
+			white_peace = event_target:ItalianLeagueLeader
+		}
+		set_country_flag = byz_crisis_italians
+		clr_country_flag = byz_timelimit_italians
+		clear_global_event_target = ItalianLeagueLeader
+	}
+}
+
+#Ayyubids win
+country_event = {
+	id = ab_byzantium_disaster.33
+	title = ab_byzantium_disaster.33.t
+	desc = ab_byzantium_disaster.33.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = ROOT
+			defender_leader = RYB
+			casus_belli = cb_suppress_revolt
+		}
+		OR = {
+			had_country_flag = {
+				flag = byz_timelimit_ayyubids
+				days = 3650
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				region = anatolia_region
+				controlled_by = RYB
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.33.a
+		hidden_effect = {
+			white_peace = RYB
+		}
+		if = {
+			limit = {
+				NOT = { exists = HSN }
+			}
+			RYB = {
+				change_tag = HSN
+				override_country_name = AYUB
+				swap_non_generic_missions = yes
+			}
+		}
+		else = {
+			HSN = { 
+				inherit = RYB 
+				override_country_name = AYUB
+			}
+		}
+		hidden_effect = {
+			HSN = {
+				every_owned_province = {
+					remove_core = BYZ
+				}
+			}
+		}
+		set_country_flag = byz_crisis_ayyubids
+		clr_country_flag = byz_timelimit_ayyubids
+	}
+}
+
+#Italians win
+country_event = {
+	id = ab_byzantium_disaster.34
+	title = ab_byzantium_disaster.34.t
+	desc = ab_byzantium_disaster.34.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = event_target:ItalianLeagueLeader
+			defender_leader = BYZ
+			casus_belli = cb_italian_league_to_byz
+		}
+		OR = {
+			AND = {
+				has_country_flag = byz_occupied_roma
+				had_country_flag = {
+					flag = byz_occupied_roma
+					days = 730
+				}
+			}
+			NOT = {
+				num_of_owned_provinces_with = {
+					value = 1
+					region = italy_region
+					controlled_by = BYZ
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.34.a
+		hidden_effect = {
+			white_peace = event_target:ItalianLeagueLeader
+			every_owned_province = {
+				limit = {
+					region = italy_region
+				}
+				cede_province = event_target:ItalianLeagueLeader
+				add_core = event_target:ItalianLeagueLeader
+				set_in_empire = yes
+			}
+			every_province = {
+				limit = {
+					region = italy_region
+					is_core = BYZ
+				}
+				remove_core = BYZ
+			}
+		}
+		set_country_flag = byz_crisis_italians
+		clr_country_flag = byz_timelimit_italians
+		clear_global_event_target = ItalianLeagueLeader
+	}
+}
+
+#Rome sieged
+country_event = {
+	id = ab_byzantium_disaster.35
+	title = ab_byzantium_disaster.35.t
+	desc = ab_byzantium_disaster.35.d
+	picture = ABAD5_eventPicture
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = event_target:ItalianLeagueLeader
+			defender_leader = BYZ
+			casus_belli = cb_italian_league_to_byz
+		}
+		NOT = { has_country_flag = byz_occupied_roma }
+		118 = {
+			NOT = { controlled_by = BYZ } 
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.35.a
+		set_country_flag = byz_occupied_roma
+	}
+}
+
+#Rome sieged 2
+country_event = {
+	id = ab_byzantium_disaster.36
+	title = ab_byzantium_disaster.36.t
+	desc = ab_byzantium_disaster.36.d
+	picture = ABAD5_eventPicture
+
+	trigger = {
+		tag = BYZ
+		has_disaster = byzantium_16th_crisis
+		is_in_war = {
+			attacker_leader = event_target:ItalianLeagueLeader
+			defender_leader = BYZ
+			casus_belli = cb_italian_league_to_byz
+		}
+		has_country_flag = byz_occupied_roma
+		118 = {
+			controlled_by = BYZ
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.36.a
+		clr_country_flag = byz_occupied_roma
 	}
 }

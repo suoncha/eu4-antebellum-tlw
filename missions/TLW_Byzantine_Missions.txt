@@ -528,6 +528,10 @@ byz_slot1_second = {
 		}
 		
 		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RESOLVED_16TH
+				has_country_flag = had_16th_crisis
+			}
 			emilia_romagna_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1774,6 +1778,116 @@ byz_slot2_first = {
 			}
 		}
 	}
+}
+
+byz_slot2_timed1_locked1 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = BYZ
+		NOT = { has_country_flag = byz_attack_italians }
+		NOT = { has_country_flag = byz_crisis_italians }
+	}
+	has_country_shield = yes
+
+	byzantium_italian_war_locked = {
+		icon = mission_unknown_mission
+		required_missions = { byzantium_landfall }
+		position = 17
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TIMED
+				OR = {
+					has_country_flag = byz_attack_italians
+					has_country_flag = byz_crisis_italians
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_TIMED
+		}
+	}
+}
+
+byz_slot2_timed1_unlocked1 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			has_country_flag = byz_attack_italians
+			has_country_flag = byz_crisis_italians
+		}
+	}
+	has_country_shield = yes
+
+	byzantium_italian_war = {
+		icon = the_italian_league
+		required_missions = { byzantium_landfall }
+		position = 17
+		
+		provinces_to_highlight = {
+			region = italy_region
+			is_part_of_hre = yes
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_5YEARS_LIMIT
+				has_country_flag = byz_won_italians_5years
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = byz_humiliated_italians
+				duration = 3650
+			}
+			custom_tooltip = BYZ_KICK_ITALIANS
+			hidden_effect = {
+				every_country = {
+					limit = {
+						culture_group = latin
+						is_part_of_hre = yes
+					}
+					elector = no
+					set_in_empire = no
+				}
+				every_province = {
+					limit = {
+						is_part_of_hre = yes
+						region = italy_region
+						owner = { is_part_of_hre = no }
+					}
+					set_in_empire = no
+				}
+			}
+			custom_tooltip = BYZ_RESTORER_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = BYZ_perma_pp3
+					amount = 15
+				}
+			}
+		}
+	}
+}
+
+byz_slot2_second = {
+	slot = 2 
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BYZ
+			was_tag = BYZ
+		}
+	}
+	has_country_shield = yes
 
 	byzantium_jerusalem = {
 		icon = jerusalem
@@ -2167,7 +2281,7 @@ byz_slot2_unlocked1 = {
 	}
 }
 
-byz_slot2_second = {
+byz_slot2_third = {
 	slot = 2 
 	generic = no
 	ai = yes
@@ -3182,6 +3296,7 @@ byz_slot3_second = {
 						limit = { has_custom_ideas = no }
 						country_event = { id = ideagroups.1 } #Swap Ideas
 					}
+					set_capital = 280
 				}
 				set_country_flag = byz_tsar_of_rus
 			}
@@ -5918,34 +6033,12 @@ byz_slot5_second = {
 			}  			
 			hidden_effect = {
 				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
-				}
-				capital_scope = {
-					marine_infantry = ROOT
+					for = {
+						amount = 10
+						effect = "
+							marine_infantry = ROOT
+						"
+					}
 				}
 			}
 		}
@@ -6104,16 +6197,10 @@ byz_slot5_second = {
 			monthly_income = 600 
 		}
 		effect = {
-			add_country_modifier_for_age = {
+			add_country_modifier = {
 				name = BYZ_economic_intimidation
-				age = age_of_reformation
-				else = "
-					add_dip_power = 100
-					add_years_of_income = 1
-				"
+				duration = -1
 			}
-			
-			# custom_tooltip = " "
 			
 			custom_tooltip = BYZ_naval_commander_advisor_buff #bound to mission_completed
 			

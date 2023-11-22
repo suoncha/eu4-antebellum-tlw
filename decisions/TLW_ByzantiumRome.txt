@@ -142,6 +142,10 @@ country_decisions = {
 					owned_by = ROOT
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RESOLVED_16TH
+				has_country_flag = had_16th_crisis
+			}
 			primary_culture = greek
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
@@ -162,6 +166,7 @@ country_decisions = {
 							OR = {
 								culture = Illyrian
 								culture = albanian
+								province_id = 151
 							}
 						}
 					}
@@ -185,7 +190,26 @@ country_decisions = {
 					set_ruler_culture = roman_new
 				}
 			}
-			change_primary_culture = roman_new
+			if = {
+				limit = { has_country_flag = byz_court_greek }
+				change_primary_culture = greco_roman
+			}
+			else = {
+				change_primary_culture = roman_new
+			}
+			if = {
+				limit = { has_country_flag = byz_court_latin }
+				151 = { change_culture = roman_new }
+			}
+			else = {
+				hidden_effect = {
+					151 = { change_culture = greco_roman }
+				}
+			}
+			if = {
+				limit = { has_country_flag = byz_restore_republic }
+				change_government = republic
+			}
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = restore_roman_empire_tt
