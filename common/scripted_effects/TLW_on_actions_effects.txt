@@ -1,28 +1,13 @@
 TLW_on_startup_effect = {
 	if = {
-		limit = {
-			OR = {
-				tag = PU1
-				tag = PU2
-				tag = PU3
-				tag = PU4
-				tag = PU5
-				tag = PU6
-				tag = PU7
-				tag = PU8
-				tag = PU9
-			}
-		}
+		limit = { primary_culture = punic }
 		country_event = { id = ab_punic.1 days = 0 }
 	}
 }
 
 TLW_on_new_monarch_effect = {
 	if = {
-		limit = {
-			tag = ROM
-			government = monarchy
-		}
+		limit = { tag = ROM }
 		if = {
 			limit = {
 				NOT = {
@@ -33,6 +18,253 @@ TLW_on_new_monarch_effect = {
 		}
 		else = {
 			add_ruler_personality = augustus_buffed_personality
+		}
+	}
+}
+
+TLW_on_adm_development_effect = {
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_reform = byzculturalsphere
+					has_reform = rom_diocese
+					has_reform = rom_grand_diocese
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = roman_new
+					culture = gallo_roman
+					culture = afro_roman
+					culture = romano_british
+					culture = hispano_roman
+					culture = romano_germanic
+					culture = romano_nordic
+					culture = daco_roman
+					culture = romano_polish
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = illyro_roman
+					culture = greco_roman
+					culture = romano_arabic
+					culture = russo_roman
+					culture = romano_scythic
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = perso_roman
+					culture = indo_roman
+				}
+				ROM = { has_faction = faction_byzpersian }
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 1
+				}
+			}
+		}
+	}
+}
+
+TLW_on_dip_development_effect = {
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_reform = byzculturalsphere
+					has_reform = rom_diocese
+					has_reform = rom_grand_diocese
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = roman_new
+					culture = gallo_roman
+					culture = afro_roman
+					culture = romano_british
+					culture = hispano_roman
+					culture = romano_germanic
+					culture = romano_nordic
+					culture = daco_roman
+					culture = romano_polish
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = illyro_roman
+					culture = greco_roman
+					culture = romano_arabic
+					culture = russo_roman
+					culture = romano_scythic
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = perso_roman
+					culture = indo_roman
+				}
+				ROM = { has_faction = faction_byzpersian }
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 1
+				}
+			}
+		}
+	}
+}
+
+TLW_on_mil_development_effect = {
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_reform = byzculturalsphere
+					has_reform = rom_diocese
+					has_reform = rom_grand_diocese
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = roman_new
+					culture = gallo_roman
+					culture = afro_roman
+					culture = romano_british
+					culture = hispano_roman
+					culture = romano_germanic
+					culture = romano_nordic
+					culture = daco_roman
+					culture = romano_polish
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = illyro_roman
+					culture = greco_roman
+					culture = romano_arabic
+					culture = russo_roman
+					culture = romano_scythic
+				}
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = perso_roman
+					culture = indo_roman
+				}
+				ROM = { has_faction = faction_byzpersian }
+			}
+			ROM = {
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 1
+				}
+			}
+		}
+	}
+}
+
+TLW_on_new_term_election = {
+	if = {
+		limit = { has_reform = byzromanrepublic }
+		country_event = { id = ab_byzantium.76 }
+	}
+}
+
+TLW_on_death_election = {
+	if = {
+		limit = { has_reform = byzromanrepublic }
+		set_country_flag = byzrepublic_death_election
+		country_event = { id = ab_byzantium.76 }
+	}
+}
+
+TLW_on_siege_won_province = {
+	if = {
+		limit = {
+			ROM = { has_disaster = byzantium_biased_cultural_sphere }
+			owner = {
+				OR = {
+					tag = ROM
+					has_reform = rom_diocese
+					has_reform = rom_grand_diocese
+				}
+			}
+			controller = {
+				OR = {
+					tag = RSL
+					tag = RSH
+					tag = RSP
+					tag = RSS
+				}
+			}
+		}
+		add_core = controller
+		cede_province = controller
+		for = {
+			amount = 5
+			effect = "
+				infantry = controller
+			"
 		}
 	}
 }

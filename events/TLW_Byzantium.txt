@@ -142,30 +142,23 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		NOT = {
-			mission_completed = byzantium_crisis
-		}
-		OR = {
-			is_in_war = {
-				attacker_leader = NCI
-				defender_leader = ROOT
-			}
-			NCI = {
-				is_in_war = {
-					attacker_leader = VEN
-					defender_leader = BYZ
-				}
-			}
-		}
+		NOT = { mission_completed = byzantium_crisis }
 		NCI = {
 			ai = yes
+			offensive_war_with = BYZ
 		}
 	}
 
 	option = {
 		name = ab_byzantium.51.a
-		custom_tooltip = ab_war_nicaea_info
-		set_country_flag = byz_quick_victory_nicaea
+		custom_tooltip = AB_WAR_NICAEA_INFO
+		if = {
+			limit = {
+				defensive_war_with = NCI
+			}
+			custom_tooltip = AB_WAR_NICAEA_ALLIES
+		}
+		set_country_flag = byz_timelimit_nicaea
 	}
 }
 
@@ -180,30 +173,83 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		NOT = {
-			mission_completed = byzantium_crisis
-		}
-		has_country_flag = byz_quick_victory_nicaea
-		NOT = {
-			had_country_flag = {
-				flag = byz_quick_victory_nicaea
-				days = 450
-			}
-		}
+		NOT = { mission_completed = byzantium_crisis }
+		has_country_flag = byz_timelimit_nicaea
 		OR = {
-			is_in_war = {
-				attacker_leader = NCI
-				defender_leader = ROOT
+			AND = {
+				NCI = {
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 1
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_nicaea
+						days = 450
+					}
+				}
 			}
-			NCI = {
-				is_in_war = {
-					attacker_leader = VEN
-					defender_leader = BYZ
+			AND = {
+				NCI = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 1
+					}
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 2
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_nicaea
+						days = 815
+					}
+				}
+			}
+			AND = {
+				NCI = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 2
+					}
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 3
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_nicaea
+						days = 1180
+					}
+				}
+			}
+			AND = {
+				NCI = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 3
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_nicaea
+						days = 1545
+					}
 				}
 			}
 		}
 		NCI = {
 			ai = yes
+			offensive_war_with = BYZ
 			capital_scope = {
 				controlled_by = ROOT
 			}
@@ -220,7 +266,15 @@ country_event = {
 			white_peace = NCI
 		}
 		inherit = NCI
-		add_treasury = 125
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					is_core = NCI
+				}
+				remove_core = NCI
+			}
+		}
+		add_years_of_income = 1.0
 	}
 }
 
@@ -235,27 +289,22 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		OR = {
-			is_in_war = {
-				attacker_leader = BUL
-				defender_leader = ROOT
-			}
-			BUL = {
-				is_in_war = {
-					attacker_leader = VEN
-					defender_leader = BYZ
-				}
-			}
-		}
 		BUL = {
 			ai = yes
+			offensive_war_with = BYZ
 		}
 	}
 
 	option = {
 		name = ab_byzantium.53.a
-		custom_tooltip = ab_war_bulgaria_info
-		set_country_flag = byz_quick_victory_bulgaria
+		custom_tooltip = AB_WAR_BULGARIA_INFO
+		if = {
+			limit = {
+				defensive_war_with = NCI
+			}
+			custom_tooltip = AB_WAR_NICAEA_ALLIES
+		}
+		set_country_flag = byz_timelimit_bulgaria
 	}
 }
 
@@ -270,27 +319,82 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		has_country_flag = byz_quick_victory_bulgaria
-		NOT = {
-			had_country_flag = {
-				flag = byz_quick_victory_bulgaria
-				days = 450
-			}
-		}
+		has_country_flag = byz_timelimit_bulgaria
 		OR = {
-			is_in_war = {
-				attacker_leader = BUL
-				defender_leader = ROOT
+			AND = {
+				BUL = {
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 1
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_bulgaria
+						days = 450
+					}
+				}
 			}
-			BUL = {
-				is_in_war = {
-					attacker_leader = VEN
-					defender_leader = BYZ
+			AND = {
+				BUL = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 1
+					}
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 2
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_bulgaria
+						days = 815
+					}
+				}
+			}
+			AND = {
+				BUL = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 2
+					}
+					NOT = {
+						calc_true_if = {
+							all_ally = { offensive_war_with = BYZ }
+							amount = 3
+						}
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_bulgaria
+						days = 1180
+					}
+				}
+			}
+			AND = {
+				BUL = {
+					calc_true_if = {
+						all_ally = { offensive_war_with = BYZ }
+						amount = 3
+					}
+				}
+				NOT = {
+					had_country_flag = {
+						flag = byz_timelimit_bulgaria
+						days = 1545
+					}
 				}
 			}
 		}
 		BUL = {
 			ai = yes
+			offensive_war_with = BYZ
 			capital_scope = {
 				controlled_by = ROOT
 			}
@@ -303,26 +407,27 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.54.a
-		white_peace = BUL
-		148 = {
-			cede_province = ROOT
-			add_core = ROOT
+		custom_tooltip = BYZ_TAKE_CORE_BULGARIA
+		hidden_effect = {
+			white_peace = BUL
+			BUL = {
+				every_owned_province = {
+					limit = {
+						is_core = BYZ
+					}
+					cede_province = BYZ
+				}
+			}
+			every_owned_province = {
+				limit = {
+					is_core = BUL
+				}
+				remove_core = BUL
+			}
 		}
-		1853 = {
-			cede_province = ROOT
-			add_core = ROOT
-		}
-		4702 = {
-			cede_province = ROOT
-			add_core = ROOT
-		}
-		4961 = {
-			cede_province = ROOT
-			add_core = ROOT
-		}
-		add_treasury = 200
+		add_treasury = 250
 		BUL = {
-			add_treasury = -200
+			add_treasury = -250
 		}
 	}
 }
@@ -337,7 +442,7 @@ province_event = {
 	hidden = yes
 	
 	mean_time_to_happen = {
-		months = 600
+		months = 1200
 		modifier = {
 			factor = 0.9
 			religion = owner
@@ -379,6 +484,10 @@ province_event = {
 		modifier = {
 			factor = 0.5
 			has_building = university
+		}
+		modifier = {
+			factor = 0.5
+			has_seat_in_parliament = yes
 		}
 		modifier = {
 			factor = 0.9
@@ -608,7 +717,7 @@ province_event = {
 						NOT = { area = liaoning_area }
 					}
 					area = circassia_area
-					area = shirvan_area
+					area = dagestan_area
 				}
 			}
 			change_culture = romano_scythic
@@ -825,9 +934,7 @@ country_event = {
 	option = {
 		name = ab_byzantium.62.a
 		trigger = {
-			NOT = {
-				exists = UKR
-			}
+			NOT = { exists = UKR }
 		}
 		custom_tooltip = BYZ_RUSSIAN_PRINCES
 		hidden_effect = {
@@ -985,6 +1092,302 @@ province_event = {
 	option = {
 		name = ab_byzantium.66.a
 		remove_province_modifier = byz_cheaper_italy_conquest
+	}
+}
+
+#Restoration of Rome
+country_event = {
+	id = ab_byzantium.67
+	title = ab_byzantium.67.t
+	desc = ab_byzantium.67.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.67.a
+		if = {
+			limit = { has_country_flag = byz_restore_republic }
+			hidden_effect = {
+				change_government = republic
+			}
+			add_government_reform = byzromanrepublic
+		}
+		else = {
+			add_government_reform = byzromanempire
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = byzculturalsphere
+		hidden_effect = {
+			if = {
+				limit = { has_country_flag = byz_court_latin }
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 10
+				}
+			}
+			else_if = {
+				limit = { has_country_flag = byz_court_mixed }
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 20
+				}
+			}
+			else = {
+				add_faction_influence = {
+					faction = faction_byzgreek
+					influence = 30
+				}
+			}
+			country_event = { id = ab_byzantium.59 }
+		}
+	}
+}
+
+#Employing Latinosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.68
+	title = ab_byzantium.68.t
+	desc = ab_byzantium.68.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzlatin
+		NOT = { has_country_modifier = byz_advisorlatin }
+		OR = {
+			employed_advisor = { culture = roman_new }
+			employed_advisor = { culture = gallo_roman }
+			employed_advisor = { culture = afro_roman }
+			employed_advisor = { culture = romano_british }
+			employed_advisor = { culture = hispano_roman }
+			employed_advisor = { culture = romano_germanic }
+			employed_advisor = { culture = romano_nordic }
+			employed_advisor = { culture = daco_roman }
+			employed_advisor = { culture = romano_polish }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.68.a
+		add_country_modifier = {
+			name = byz_advisorlatin
+			duration = -1
+		}
+	}
+}
+
+#No Latinosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.69
+	title = ab_byzantium.69.t
+	desc = ab_byzantium.69.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzlatin
+		has_country_modifier = byz_advisorlatin
+		NOT = {
+			employed_advisor = { culture = roman_new }
+			employed_advisor = { culture = gallo_roman }
+			employed_advisor = { culture = afro_roman }
+			employed_advisor = { culture = romano_british }
+			employed_advisor = { culture = hispano_roman }
+			employed_advisor = { culture = romano_germanic }
+			employed_advisor = { culture = romano_nordic }
+			employed_advisor = { culture = daco_roman }
+			employed_advisor = { culture = romano_polish }
+		}
+
+	}
+	
+	option = {
+		name = ab_byzantium.69.a
+		remove_country_modifier = byz_advisorlatin
+	}
+}
+
+#Employing Hellenosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.70
+	title = ab_byzantium.70.t
+	desc = ab_byzantium.70.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzgreek
+		NOT = { has_country_modifier = byz_advisorgreek }
+		OR = {
+			employed_advisor = { culture = illyro_roman }
+			employed_advisor = { culture = greco_roman }
+			employed_advisor = { culture = romano_arabic }
+			employed_advisor = { culture = russo_roman }
+			employed_advisor = { culture = romano_scythic }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.70.a
+		add_country_modifier = {
+			name = byz_advisorgreek
+			duration = -1
+		}
+	}
+}
+
+#No Hellenosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.71
+	title = ab_byzantium.71.t
+	desc = ab_byzantium.71.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzgreek
+		has_country_modifier = byz_advisorgreek
+		NOT = {
+			employed_advisor = { culture = illyro_roman }
+			employed_advisor = { culture = greco_roman }
+			employed_advisor = { culture = romano_arabic }
+			employed_advisor = { culture = russo_roman }
+			employed_advisor = { culture = romano_scythic }
+		}
+
+	}
+	
+	option = {
+		name = ab_byzantium.71.a
+		remove_country_modifier = byz_advisorgreek
+	}
+}
+
+#Employing Persosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.72
+	title = ab_byzantium.72.t
+	desc = ab_byzantium.72.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzpersian
+		NOT = { has_country_modifier = byz_advisorpersian }
+		OR = {
+			employed_advisor = { culture = perso_roman }
+			employed_advisor = { culture = indo_roman }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.72.a
+		add_country_modifier = {
+			name = byz_advisorpersian
+			duration = -1
+		}
+	}
+}
+
+#No Persosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.73
+	title = ab_byzantium.73.t
+	desc = ab_byzantium.73.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzpersian
+		has_country_modifier = byz_advisorpersian
+		NOT = {
+			employed_advisor = { culture = perso_roman }
+			employed_advisor = { culture = indo_roman }
+		}
+
+	}
+	
+	option = {
+		name = ab_byzantium.73.a
+		remove_country_modifier = byz_advisorpersian
+	}
+}
+
+#Roman Republic Election
+country_event = {
+	id = ab_byzantium.76
+	title = ab_byzantium.76.t
+	desc = {
+		trigger = { NOT = { has_country_flag = byzrepublic_death_election } }
+		desc = ab_byzantium.76.d1
+	}
+	desc = {
+		trigger = { has_country_flag = byzrepublic_death_election }
+		desc = ab_byzantium.76.d2
+	}
+	picture = ELECTION_REPUBLICAN_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.76.a
+		clr_country_flag = byzrepublic_death_election
+		define_ruler = {
+			hide_skills = yes
+			culture = roman_new
+		}
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 5
+		}
+	}
+
+	option = {
+		name = ab_byzantium.76.b
+		clr_country_flag = byzrepublic_death_election
+		define_ruler = {
+			hide_skills = yes
+			culture = greco_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 5
+		}
+	}
+
+	option = {
+		name = ab_byzantium.76.c
+		clr_country_flag = byzrepublic_death_election
+		trigger = { has_faction = faction_byzpersian }
+		define_ruler = {
+			hide_skills = yes
+			culture = perso_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 5
+		}
+	}
+
+	option = {
+		name = ab_byzantium.76.d
+		clr_country_flag = byzrepublic_death_election
+		trigger = { has_faction = faction_byzchinese }
+		define_ruler = {
+			hide_skills = yes
+			culture = perso_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 5
+		}
 	}
 }
 

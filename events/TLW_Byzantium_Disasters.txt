@@ -104,13 +104,7 @@ country_event = {
 			limit = {
 				has_country_flag = byz_epirus_ruler
 			}
-			if = {
-				limit = {
-					exists = EPI
-				}
-				inherit = EPI
-			}
-			
+			inherit = EPI
 			if = {
 				limit = {
 					has_heir = yes
@@ -202,35 +196,36 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.2.a
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 90 }
 		hidden_effect = {
 			release_all_subjects = yes
 			318 = {
 				add_claim = EPI
 			}
+			EPI = {
+				convert_ruler_to_general = 75
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+			}
 		}
 		EPI = {
-			convert_ruler_to_general = 75
 			declare_war_with_cb = {
 			    who = BYZ
 			    casus_belli = cb_conquest
 				war_goal_province = 151
 		    }
-			capital_scope = {
-				build_to_forcelimit = {
-					infantry = 0.8
-					cavalry = 0.2
-				}
-			}
 		}
-		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_EPIRUS_FIGHT
 		set_country_flag = byz_epirus_war
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.2.b
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 10 }
 		custom_tooltip = BYZ_EPIRUS_SURRENDER
 		set_country_flag = byz_epirus_ruler
 	}
@@ -252,13 +247,8 @@ country_event = {
 		has_disaster = byzantium_fall_angelid
 		OR = {
 			AND = {
-				is_in_war = {
-					attacker_leader = EPI
-					defender_leader = ROOT
-				}
-				capital_scope = {
-					controlled_by = EPI
-				}
+				defensive_war_with = EPI
+				capital_scope = { controlled_by = EPI }
 			}
 			has_country_flag = byz_epirus_ruler
 		}
@@ -281,11 +271,12 @@ country_event = {
 		}
 		if = {
 			limit = {
-				war_with = VEN
+				defensive_war_with = VEN
 			}
 			add_prestige = -10
-			white_peace = VEN
-			inherit = EPI
+			hidden_effect = {
+				white_peace = VEN
+			}
 			146 = {
 				cede_province = VEN
 				add_core = VEN
@@ -353,7 +344,7 @@ country_event = {
 			has_country_flag = byz_epirus_revolt
 			owns = 146
 			owns = 5152
-			is_at_war = yes
+			defensive_war_with = EPI
 		}
 	}
 	
@@ -427,6 +418,7 @@ country_event = {
 			country_event = { id = ab_byzantium_disaster.8 }
 		}
 		custom_tooltip = BYZ_VEN_WAR
+		set_country_flag = byz_epirus_venice
 	}
 }
 
@@ -470,9 +462,6 @@ country_event = {
 			casus_belli = cb_conquest
 			war_goal_province = 146
 		}
-		BYZ = {
-			set_country_flag = byz_epirus_venice
-		}
 	}	
 }
 
@@ -489,8 +478,7 @@ country_event = {
 		tag = NCI
 		BYZ = {
 			has_disaster = byzantium_fall_angelid
-			has_country_flag = byz_epirus_venice
-			is_at_war = yes
+			defensive_war_with = VEN
 		}
 		is_at_war = no
 	}
@@ -542,8 +530,7 @@ country_event = {
 		tag = BUL
 		BYZ = {
 			has_disaster = byzantium_fall_angelid
-			has_country_flag = byz_epirus_venice
-			is_at_war = yes
+			defensive_war_with = VEN
 		}
 		is_at_war = no
 	}
@@ -604,7 +591,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_fall_angelid
-		has_country_flag = byz_epirus_venice
+		defensive_war_with = VEN
 	}
 	
 	option = {
@@ -769,7 +756,7 @@ country_event = {
 	id = ab_byzantium_disaster.16
 	title = ab_byzantium_disaster.16.t
 	desc = ab_byzantium_disaster.16.d
-	picture = AB_JUSTINIAN_eventPicture
+	picture = AB_ROMAN_TRIUMPH_eventPicture
 	
 	is_triggered_only = yes
 
@@ -1216,12 +1203,13 @@ country_event = {
 				cede_province = RYB
 				add_core = RYB
 			}
-			every_province = {
-				limit = {
-					owned_by = RYB
-					is_core = BYZ
+			RYB = {
+				every_owned_province = {
+					limit = {
+						is_core = BYZ
+					}
+					remove_core = BYZ
 				}
-				remove_core = BYZ
 			}
 		}
 		if = {
@@ -1255,11 +1243,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = ROOT
-			defender_leader = RYB
-			casus_belli = cb_suppress_revolt
-		}
+		offensive_war_with = RYB
 		any_owned_province = {
 			OR = {
 				area = palestine_area
@@ -1354,11 +1338,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = ROOT
-			defender_leader = RYB
-			casus_belli = cb_suppress_revolt
-		}
+		offensive_war_with = RYB
 		any_owned_province = {
 			OR = {
 				area = delta_area
@@ -1454,11 +1434,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = ROOT
-			defender_leader = RYB
-			casus_belli = cb_suppress_revolt
-		}
+		offensive_war_with = RYB
 		has_country_flag = byz_egypt_revolt
 		any_owned_province = {
 			region = egypt_region
@@ -1589,11 +1565,7 @@ country_event = {
 		BYZ = {
 			has_disaster = byzantium_16th_crisis
 			OR = {
-				is_in_war = {
-					attacker_leader = THIS
-					defender_leader = RYB
-					casus_belli = cb_suppress_revolt
-				}
+				offensive_war_with = RYB
 				has_country_flag = byz_crisis_ayyubids
 			}
 		}
@@ -1699,6 +1671,15 @@ country_event = {
 				add_core = event_target:ItalianLeagueLeader
 				set_in_empire = yes
 			}
+			event_target:ItalianLeagueLeader = {
+				every_owned_province = {
+					limit = {
+						region = italy_region
+						is_core = BYZ
+					}
+					remove_core = BYZ
+				}
+			}
 			clear_global_event_target = ItalianLeagueLeader
 		}
 
@@ -1740,11 +1721,7 @@ country_event = {
 		is_emperor = yes
 		BYZ = {
 			has_disaster = byzantium_16th_crisis
-			is_in_war = {
-				attacker_leader = event_target:ItalianLeagueLeader
-				defender_leader = BYZ
-				casus_belli = cb_italian_league_to_byz
-			}
+			defensive_war_with = event_target:ItalianLeagueLeader
 		}
 	}
 
@@ -1823,22 +1800,21 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = event_target:ItalianLeagueLeader
-			defender_leader = BYZ
-			casus_belli = cb_italian_league_to_byz
-		}
+		defensive_war_with = event_target:ItalianLeagueLeader
 		had_country_flag = {
 			flag = byz_timelimit_italians
 			days = 3650
 		}
 	}
 
-	option = {
-		name = ab_byzantium_disaster.32.a
+	immediate = {
 		hidden_effect = {
 			white_peace = event_target:ItalianLeagueLeader
 		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.32.a
 		set_country_flag = byz_crisis_italians
 		clr_country_flag = byz_timelimit_italians
 		clear_global_event_target = ItalianLeagueLeader
@@ -1855,11 +1831,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = ROOT
-			defender_leader = RYB
-			casus_belli = cb_suppress_revolt
-		}
+		offensive_war_with = RYB
 		OR = {
 			had_country_flag = {
 				flag = byz_timelimit_ayyubids
@@ -1873,34 +1845,38 @@ country_event = {
 		}
 	}
 
-	option = {
-		name = ab_byzantium_disaster.33.a
+	immediate = {
 		hidden_effect = {
 			white_peace = RYB
-		}
-		if = {
-			limit = {
-				NOT = { exists = HSN }
+			if = {
+				limit = {
+					NOT = { exists = HSN }
+				}
+				RYB = {
+					change_tag = HSN
+					override_country_name = AYUB
+					swap_non_generic_missions = yes
+				}
 			}
-			RYB = {
-				change_tag = HSN
-				override_country_name = AYUB
-				swap_non_generic_missions = yes
+			else = {
+				HSN = { 
+					inherit = RYB 
+					override_country_name = AYUB
+				}
 			}
-		}
-		else = {
-			HSN = { 
-				inherit = RYB 
-				override_country_name = AYUB
-			}
-		}
-		hidden_effect = {
 			HSN = {
 				every_owned_province = {
+					limit = {
+						is_core = BYZ
+					}
 					remove_core = BYZ
 				}
 			}
 		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.33.a
 		set_country_flag = byz_crisis_ayyubids
 		clr_country_flag = byz_timelimit_ayyubids
 	}
@@ -1916,11 +1892,7 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = event_target:ItalianLeagueLeader
-			defender_leader = BYZ
-			casus_belli = cb_italian_league_to_byz
-		}
+		defensive_war_with = event_target:ItalianLeagueLeader
 		OR = {
 			AND = {
 				has_country_flag = byz_occupied_roma
@@ -1939,8 +1911,7 @@ country_event = {
 		}
 	}
 
-	option = {
-		name = ab_byzantium_disaster.34.a
+	immediate = {
 		hidden_effect = {
 			white_peace = event_target:ItalianLeagueLeader
 			every_owned_province = {
@@ -1951,14 +1922,20 @@ country_event = {
 				add_core = event_target:ItalianLeagueLeader
 				set_in_empire = yes
 			}
-			every_province = {
-				limit = {
-					region = italy_region
-					is_core = BYZ
+			event_target:ItalianLeagueLeader = {
+				every_owned_province = {
+					limit = {
+						region = italy_region
+						is_core = BYZ
+					}
+					remove_core = BYZ
 				}
-				remove_core = BYZ
 			}
 		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.34.a
 		set_country_flag = byz_crisis_italians
 		clr_country_flag = byz_timelimit_italians
 		clear_global_event_target = ItalianLeagueLeader
@@ -1975,20 +1952,17 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = event_target:ItalianLeagueLeader
-			defender_leader = BYZ
-			casus_belli = cb_italian_league_to_byz
-		}
+		defensive_war_with = event_target:ItalianLeagueLeader
 		NOT = { has_country_flag = byz_occupied_roma }
-		118 = {
-			NOT = { controlled_by = BYZ } 
-		}
+		118 = { NOT = { controlled_by = BYZ } }
+	}
+
+	immediate = {
+		set_country_flag = byz_occupied_roma
 	}
 
 	option = {
 		name = ab_byzantium_disaster.35.a
-		set_country_flag = byz_occupied_roma
 	}
 }
 
@@ -2002,19 +1976,1199 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		is_in_war = {
-			attacker_leader = event_target:ItalianLeagueLeader
-			defender_leader = BYZ
-			casus_belli = cb_italian_league_to_byz
-		}
+		defensive_war_with = event_target:ItalianLeagueLeader
 		has_country_flag = byz_occupied_roma
-		118 = {
-			controlled_by = BYZ
-		}
+		118 = { controlled_by = BYZ }
+	}
+
+	immediate = {
+		clr_country_flag = byz_occupied_roma
 	}
 
 	option = {
 		name = ab_byzantium_disaster.36.a
-		clr_country_flag = byz_occupied_roma
+	}
+}
+
+## BIASED CULTURAL SPHERE -----
+#Biased Cultural Sphere Start
+country_event = {
+	id = ab_byzantium_disaster.37
+	title = ab_byzantium_disaster.37.t
+	desc = ab_byzantium_disaster.37.d
+	picture = PROTESTANT_CATHOLIC_DEBATE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_stability = -3
+			clr_country_flag = byz_biased_end
+			set_country_flag = byz_biased_start
+			if = {
+				limit = { NOT = { has_faction = faction_byzpersian } }
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzlatin
+								influence = 25
+							}
+						}
+					}
+					set_country_flag = byz_revolt_latinsphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzgreek
+								influence = 25
+							}
+						}
+					}
+					set_country_flag = byz_revolt_hellenosphere
+				}
+			}
+			else_if = {
+				limit = { NOT = { has_faction = faction_byzchinese } }
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzlatin
+								influence = 20
+							}
+						}
+					}
+					set_country_flag = byz_revolt_latinsphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzgreek
+								influence = 20
+							}
+						}
+					}
+					set_country_flag = byz_revolt_hellenosphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzpersian
+								influence = 20
+							}
+						}
+					}
+					set_country_flag = byz_revolt_persosphere
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzlatin
+								influence = 15
+							}
+						}
+					}
+					set_country_flag = byz_revolt_latinsphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzgreek
+								influence = 15
+							}
+						}
+					}
+					set_country_flag = byz_revolt_hellenosphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzpersian
+								influence = 15
+							}
+						}
+					}
+					set_country_flag = byz_revolt_persosphere
+				}
+				if = {
+					limit = {
+						NOT = {
+							faction_influence = {
+								faction = faction_byzchinese
+								influence = 15
+							}
+						}
+					}
+					set_country_flag = byz_revolt_sinosphere
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.37.a
+		tooltip = {
+			add_stability = -3
+		}
+		custom_tooltip = BYZ_FORMING_REVOLT_CENTRE
+	}
+}
+
+#Biased Cultural Sphere End
+country_event = {
+	id = ab_byzantium_disaster.38
+	title = ab_byzantium_disaster.38.t
+	desc = ab_byzantium_disaster.38.d
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.38.a
+		add_stability = 1
+		clr_country_flag = byz_biased_start
+		set_country_flag = byz_biased_end
+		clr_country_flag = byz_revolt_latinsphere
+		clr_country_flag = byz_revolt_hellenosphere
+		clr_country_flag = byz_revolt_persosphere
+		clr_country_flag = byz_revolt_sinosphere
+		clr_country_flag = byz_war_latinsphere
+		clr_country_flag = byz_war_hellenosphere
+		clr_country_flag = byz_war_persosphere
+		clr_country_flag = byz_war_sinosphere
+	}
+}
+
+#Centre of Revolt Formed - Latin
+country_event = {
+	id = ab_byzantium_disaster.39
+	title = ab_byzantium_disaster.39.t
+	desc = ab_byzantium_disaster.39.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_latinsphere
+		NOT = {
+			had_country_flag = {
+				flag = byz_biased_start
+				days = 365
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 400
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 600
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 800
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1000
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1200
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.39.a
+		random_province = {
+			limit = {
+				OR = {
+					owned_by = ROOT
+					owner = { has_reform = rom_diocese }
+					owner = { has_reform = rom_grand_diocese }
+				}
+				OR = {
+					AND = {
+						superregion = europe_superregion
+						NOT = { area = carinthia_area }
+					}
+					region = maghreb_region
+					region = carpathia_region
+				}
+			}
+			add_permanent_province_modifier = {
+				name = byz_revolting_province_centre
+				duration = -1
+			}
+		}
+	}
+}
+
+#Spread of Revolt - Latin
+province_event = {
+	id = ab_byzantium_disaster.40
+	title = ab_byzantium_disaster.40.t
+	desc = ab_byzantium_disaster.40.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		OR = {
+			AND = {
+				superregion = europe_superregion
+				NOT = { area = carinthia_area }
+			}
+			region = maghreb_region
+			region = carpathia_region
+		}
+		ROM = {
+			has_disaster = byzantium_biased_cultural_sphere
+			has_country_flag = byz_revolt_latinsphere
+			NOT = { has_country_flag = byz_war_latinsphere }
+		}
+		NOT = { has_province_modifier = byz_revolting_province }
+		OR = {
+			owned_by = ROM
+			owner = { has_reform = rom_diocese }
+			owner = { has_reform = rom_grand_diocese }
+		}
+		any_neighbor_province = {
+			OR = {
+				has_province_modifier = byz_revolting_province
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 10
+		modifier = {
+			factor = 0.2
+			any_neighbor_province = {
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.40.a
+		add_province_modifier = {
+			name = byz_revolting_province
+			duration = -1
+		}
+	}
+}
+
+#Revolt Faction War - Latin
+country_event = {
+	id = ab_byzantium_disaster.41
+	title = ab_byzantium_disaster.41.t
+	desc = ab_byzantium_disaster.41.d
+	picture = AB_BATTLE_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_latinsphere
+		NOT = { has_country_flag = byz_war_latinsphere }
+		had_country_flag = {
+			flag = byz_biased_start
+			days = 730
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owner = { has_reform = rom_diocese }
+						owner = { has_reform = rom_grand_diocese }
+					}
+					OR = {
+						AND = {
+							superregion = europe_superregion
+							NOT = { area = carinthia_area }
+						}
+						region = maghreb_region
+						region = carpathia_region
+					}
+					OR = {
+						has_province_modifier = byz_revolting_province_centre
+						has_province_modifier = byz_revolting_province
+					}				
+				}
+				add_core = RSL
+				cede_province = RSL
+			}
+			RSL = {
+				change_primary_culture = roman_new
+				change_religion = ROOT
+				change_government = monarchy
+				change_technology_group = western
+				change_unit_type = western
+				add_manpower = 50
+				add_treasury = 500
+				every_owned_province = {
+					limit = { has_province_modifier = byz_revolting_province_centre }
+					for = {
+						amount = 20
+						effect = "
+							infantry = RSL
+						"
+					}
+					for = {
+						amount = 5
+						effect = "
+							cavalry = RSL
+						"
+					}
+					remove_province_modifier = byz_revolting_province_centre
+				}
+			}
+		}		
+	}
+
+	option = {
+		name = ab_byzantium_disaster.41.a
+		set_country_flag = byz_war_latinsphere
+		declare_war_with_cb = {
+			who = RSL
+			casus_belli = cb_suppress_revolt
+		}
+		custom_tooltip = BYZ_WAR_CULTURAL_SPHERE
+	}
+}
+
+#Diocese join the War - Hidden
+country_event = {
+	id = ab_byzantium_disaster.42
+	title = ab_byzantium_disaster.42.t
+	desc = ab_byzantium_disaster.42.d
+	picture = ABAD5_eventPicture
+
+	hidden = yes 
+
+	trigger = {
+		has_reform = rom_diocese
+		ROM = { has_disaster = byzantium_biased_cultural_sphere }
+		any_neighbor_country = {
+			OR = {
+				tag = RSL
+				tag = RSH
+				tag = RSP
+				tag = RSS
+			}
+			NOT = { war_with = ROOT }
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.42.a
+		join_all_offensive_wars_of = ROM
+	}
+}
+
+#Rebels - Latin
+country_event = {
+	id = ab_byzantium_disaster.43
+	title = ab_byzantium_disaster.43.t
+	desc = ab_byzantium_disaster.43.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_war_latinsphere
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = ab_byzantium_disaster.43.a
+		for = {
+			amount = 5
+			effect = "
+				random_province = {
+					limit = {
+						OR = {
+							owned_by = ROOT
+							owner = { has_reform = rom_diocese }
+							owner = { has_reform = rom_grand_diocese }
+						}
+						OR = {
+							AND = {
+								superregion = europe_superregion
+								NOT = { area = carinthia_area }
+							}
+							region = maghreb_region
+							region = carpathia_region
+						}
+					}
+					spawn_rebels = {
+						type = leadered_peasant_rebels
+						size = 1
+						friend = RSL
+					}
+				}
+			"
+		}
+	}
+}
+
+#Centre of Revolt Formed - Hellenic
+country_event = {
+	id = ab_byzantium_disaster.44
+	title = ab_byzantium_disaster.44.t
+	desc = ab_byzantium_disaster.44.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_hellenosphere
+		NOT = {
+			had_country_flag = {
+				flag = byz_biased_start
+				days = 365
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 400
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 600
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 800
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1000
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1200
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.44.a
+		random_province = {
+			limit = {
+				OR = {
+					owned_by = ROOT
+					owner = { has_reform = rom_diocese }
+					owner = { has_reform = rom_grand_diocese }
+				}
+				OR = {
+					superregion = eastern_europe_superregion
+					superregion = near_east_superregion
+					area = circassia_area
+					area = dagestan_area
+					AND = {
+						superregion = tartary_superregion
+						NOT = { region = tibet_region }
+					}
+					AND = {
+						OR = {
+							area = shirvan_area
+							area = armenia_area
+							area = imereti_area
+							area = samtskhe_area
+							area = kartli_kakheti_area
+						}
+						has_country_flag = rom_caucasia_isof_anatolia
+					}
+					AND = {
+						region = manchuria_region
+						NOT = { area = liaoning_area }
+					}
+				}
+			}
+			add_permanent_province_modifier = {
+				name = byz_revolting_province_centre
+				duration = -1
+			}
+		}
+	}
+}
+
+#Spread of Revolt - Hellenic
+province_event = {
+	id = ab_byzantium_disaster.45
+	title = ab_byzantium_disaster.45.t
+	desc = ab_byzantium_disaster.45.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		OR = {
+			superregion = eastern_europe_superregion
+			superregion = near_east_superregion
+			area = circassia_area
+			area = dagestan_area
+			AND = {
+				superregion = tartary_superregion
+				NOT = { region = tibet_region }
+			}
+			AND = {
+				OR = {
+					area = shirvan_area
+					area = armenia_area
+					area = imereti_area
+					area = samtskhe_area
+					area = kartli_kakheti_area
+				}
+				has_country_flag = rom_caucasia_isof_anatolia
+			}
+			AND = {
+				region = manchuria_region
+				NOT = { area = liaoning_area }
+			}
+		}
+		ROM = {
+			has_disaster = byzantium_biased_cultural_sphere
+			has_country_flag = byz_revolt_hellenosphere
+			NOT = { has_country_flag = byz_war_hellenosphere }
+		}
+		NOT = { has_province_modifier = byz_revolting_province }
+		OR = {
+			owned_by = ROM
+			owner = { has_reform = rom_diocese }
+			owner = { has_reform = rom_grand_diocese }
+		}
+		any_neighbor_province = {
+			OR = {
+				has_province_modifier = byz_revolting_province
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 10
+		modifier = {
+			factor = 0.2
+			any_neighbor_province = {
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.45.a
+		add_province_modifier = {
+			name = byz_revolting_province
+			duration = -1
+		}
+	}
+}
+
+#Revolt Faction War - Hellenic
+country_event = {
+	id = ab_byzantium_disaster.46
+	title = ab_byzantium_disaster.46.t
+	desc = ab_byzantium_disaster.46.d
+	picture = AB_BATTLE_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_hellenosphere
+		NOT = { has_country_flag = byz_war_hellenosphere }
+		had_country_flag = {
+			flag = byz_biased_start
+			days = 730
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owner = { has_reform = rom_diocese }
+						owner = { has_reform = rom_grand_diocese }
+					}
+					OR = {
+						superregion = eastern_europe_superregion
+						superregion = near_east_superregion
+						area = circassia_area
+						area = dagestan_area
+						AND = {
+							superregion = tartary_superregion
+							NOT = { region = tibet_region }
+						}
+						AND = {
+							OR = {
+								area = shirvan_area
+								area = armenia_area
+								area = imereti_area
+								area = samtskhe_area
+								area = kartli_kakheti_area
+							}
+							has_country_flag = rom_caucasia_isof_anatolia
+						}
+						AND = {
+							region = manchuria_region
+							NOT = { area = liaoning_area }
+						}
+					}
+					OR = {
+						has_province_modifier = byz_revolting_province_centre
+						has_province_modifier = byz_revolting_province
+					}				
+				}
+				add_core = RSH
+				cede_province = RSH
+			}
+			RSH = {
+				change_primary_culture = greco_roman
+				change_religion = ROOT
+				change_government = monarchy
+				change_technology_group = western
+				change_unit_type = western
+				add_manpower = 50
+				add_treasury = 500
+				every_owned_province = {
+					limit = { has_province_modifier = byz_revolting_province_centre }
+					for = {
+						amount = 20
+						effect = "
+							infantry = RSH
+						"
+					}
+					for = {
+						amount = 5
+						effect = "
+							cavalry = RSH
+						"
+					}
+					remove_province_modifier = byz_revolting_province_centre
+				}
+			}
+		}		
+	}
+
+	option = {
+		name = ab_byzantium_disaster.46.a
+		set_country_flag = byz_war_hellenosphere
+		declare_war_with_cb = {
+			who = RSH
+			casus_belli = cb_suppress_revolt
+		}
+		custom_tooltip = BYZ_WAR_CULTURAL_SPHERE
+	}
+}
+
+#Rebels - Hellenic
+country_event = {
+	id = ab_byzantium_disaster.47
+	title = ab_byzantium_disaster.47.t
+	desc = ab_byzantium_disaster.47.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_war_hellenosphere
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = ab_byzantium_disaster.47.a
+		for = {
+			amount = 5
+			effect = "
+				random_province = {
+					limit = {
+						OR = {
+							owned_by = ROOT
+							owner = { has_reform = rom_diocese }
+							owner = { has_reform = rom_grand_diocese }
+						}
+						OR = {
+							superregion = eastern_europe_superregion
+							superregion = near_east_superregion
+							area = circassia_area
+							area = dagestan_area
+							AND = {
+								superregion = tartary_superregion
+								NOT = { region = tibet_region }
+							}
+							AND = {
+								OR = {
+									area = shirvan_area
+									area = armenia_area
+									area = imereti_area
+									area = samtskhe_area
+									area = kartli_kakheti_area
+								}
+								has_country_flag = rom_caucasia_isof_anatolia
+							}
+							AND = {
+								region = manchuria_region
+								NOT = { area = liaoning_area }
+							}
+						}
+					}
+					spawn_rebels = {
+						type = leadered_peasant_rebels
+						size = 1
+						friend = RSL
+					}
+				}
+			"
+		}
+	}
+}
+
+#Centre of Revolt Formed - Persic
+country_event = {
+	id = ab_byzantium_disaster.48
+	title = ab_byzantium_disaster.48.t
+	desc = ab_byzantium_disaster.48.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_persosphere
+		NOT = {
+			had_country_flag = {
+				flag = byz_biased_start
+				days = 365
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 400
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 600
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 800
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1000
+			}
+		}
+		modifier = {
+			factor = 0.8
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				owner = {
+					OR = {
+						has_reform = byzculturalsphere
+						has_reform = rom_diocese
+						has_reform = rom_grand_diocese
+					}
+				}
+				value = 1200
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.48.a
+		random_province = {
+			limit = {
+				OR = {
+					owned_by = ROOT
+					owner = { has_reform = rom_diocese }
+					owner = { has_reform = rom_grand_diocese }
+				}
+				OR = {
+					region = khorasan_region
+					region = persia_region
+					superregion = india_superregion
+					AND = {
+						OR = {
+							area = shirvan_area
+							area = armenia_area
+							area = imereti_area
+							area = samtskhe_area
+							area = kartli_kakheti_area
+						}
+						has_country_flag = rom_caucasia_isof_persia
+					}
+				}
+			}
+			add_permanent_province_modifier = {
+				name = byz_revolting_province_centre
+				duration = -1
+			}
+		}
+	}
+}
+
+#Spread of Revolt - Persic
+province_event = {
+	id = ab_byzantium_disaster.49
+	title = ab_byzantium_disaster.49.t
+	desc = ab_byzantium_disaster.49.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		OR = {
+			region = khorasan_region
+			region = persia_region
+			superregion = india_superregion
+			AND = {
+				OR = {
+					area = shirvan_area
+					area = armenia_area
+					area = imereti_area
+					area = samtskhe_area
+					area = kartli_kakheti_area
+				}
+				has_country_flag = rom_caucasia_isof_persia
+			}
+		}
+		ROM = {
+			has_disaster = byzantium_biased_cultural_sphere
+			has_country_flag = byz_revolt_persosphere
+			NOT = { has_country_flag = byz_war_persosphere }
+		}
+		NOT = { has_province_modifier = byz_revolting_province }
+		OR = {
+			owned_by = ROM
+			owner = { has_reform = rom_diocese }
+			owner = { has_reform = rom_grand_diocese }
+		}
+		any_neighbor_province = {
+			OR = {
+				has_province_modifier = byz_revolting_province
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 10
+		modifier = {
+			factor = 0.2
+			any_neighbor_province = {
+				has_province_modifier = byz_revolting_province_centre
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.45.a
+		add_province_modifier = {
+			name = byz_revolting_province
+			duration = -1
+		}
+	}
+}
+
+#Revolt Faction War - Persic
+country_event = {
+	id = ab_byzantium_disaster.50
+	title = ab_byzantium_disaster.50.t
+	desc = ab_byzantium_disaster.50.d
+	picture = AB_BATTLE_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_revolt_persosphere
+		NOT = { has_country_flag = byz_war_persosphere }
+		had_country_flag = {
+			flag = byz_biased_start
+			days = 730
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owner = { has_reform = rom_diocese }
+						owner = { has_reform = rom_grand_diocese }
+					}
+					OR = {
+						region = khorasan_region
+						region = persia_region
+						superregion = india_superregion
+						AND = {
+							OR = {
+								area = shirvan_area
+								area = armenia_area
+								area = imereti_area
+								area = samtskhe_area
+								area = kartli_kakheti_area
+							}
+							has_country_flag = rom_caucasia_isof_persia
+						}
+					}
+					OR = {
+						has_province_modifier = byz_revolting_province_centre
+						has_province_modifier = byz_revolting_province
+					}				
+				}
+				add_core = RSP
+				cede_province = RSP
+			}
+			RSP = {
+				change_primary_culture = perso_roman
+				change_religion = ROOT
+				change_government = monarchy
+				change_technology_group = western
+				change_unit_type = western
+				add_manpower = 50
+				add_treasury = 500
+				every_owned_province = {
+					limit = { has_province_modifier = byz_revolting_province_centre }
+					for = {
+						amount = 20
+						effect = "
+							infantry = RSP
+						"
+					}
+					for = {
+						amount = 5
+						effect = "
+							cavalry = RSP
+						"
+					}
+					remove_province_modifier = byz_revolting_province_centre
+				}
+			}
+		}		
+	}
+
+	option = {
+		name = ab_byzantium_disaster.50.a
+		set_country_flag = byz_war_persosphere
+		declare_war_with_cb = {
+			who = RSP
+			casus_belli = cb_suppress_revolt
+		}
+		custom_tooltip = BYZ_WAR_CULTURAL_SPHERE
+	}
+}
+
+#Rebels - Persic
+country_event = {
+	id = ab_byzantium_disaster.51
+	title = ab_byzantium_disaster.51.t
+	desc = ab_byzantium_disaster.51.d
+	picture = ANGRY_MOB_eventPicture
+
+	trigger = {
+		tag = ROM
+		has_disaster = byzantium_biased_cultural_sphere
+		has_country_flag = byz_war_persosphere
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = ab_byzantium_disaster.51.a
+		for = {
+			amount = 5
+			effect = "
+				random_province = {
+					limit = {
+						OR = {
+							owned_by = ROOT
+							owner = { has_reform = rom_diocese }
+							owner = { has_reform = rom_grand_diocese }
+						}
+						OR = {
+							region = khorasan_region
+							region = persia_region
+							superregion = india_superregion
+							AND = {
+								OR = {
+									area = shirvan_area
+									area = armenia_area
+									area = imereti_area
+									area = samtskhe_area
+									area = kartli_kakheti_area
+								}
+								has_country_flag = rom_caucasia_isof_persia
+							}
+						}
+					}
+					spawn_rebels = {
+						type = leadered_peasant_rebels
+						size = 1
+						friend = RSL
+					}
+				}
+			"
+		}
 	}
 }

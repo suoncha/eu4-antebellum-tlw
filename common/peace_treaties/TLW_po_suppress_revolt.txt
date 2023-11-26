@@ -28,7 +28,23 @@ po_suppress_revolt = {
         inherit = FROM
 		add_years_of_income = 1.0
 		hidden_effect = {
-			country_event = { id = ab_byzantium_disaster.25 } 
+			if = {
+				limit = { 
+					BYZ = { has_disaster = byzantium_16th_crisis } 
+				}
+				country_event = { id = ab_byzantium_disaster.25 } 
+			}
+			else_if = {
+				limit = {
+					ROM = { has_disaster = byzantium_biased_cultural_sphere } 
+				}
+				every_owned_province = {
+					limit = {
+						is_core = FROM
+					}
+					remove_core = FROM
+				}
+			}
 		}
 	}
 	ai_weight = { 

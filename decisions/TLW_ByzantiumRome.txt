@@ -1,6 +1,6 @@
 country_decisions = {
 
-	show_romanizing_info = {
+	show_romanization_info = {
 		major = yes
 
 		potential = {
@@ -13,7 +13,7 @@ country_decisions = {
 		}
 
 		effect = {
-			custom_tooltip = AB_ROMANIZING_INFO
+			custom_tooltip = AB_ROMANIZATION_INFO
 		}
 
 		ai_will_do = {
@@ -154,10 +154,20 @@ country_decisions = {
 
 		effect = {
 			add_prestige = 25
-			change_tag = ROM
+			if = {
+				limit = { has_country_flag = byz_restore_republic }
+				custom_tooltip = BYZ_NAMECHANGE_REPUBLIC
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = ROMANREPUBLIC
+				}
+			}
+			else = {
+				change_tag = ROM
+			}
 			set_government_rank = 3
 			swap_non_generic_missions = yes
-			custom_tooltip = byz_roman_culture_provinces_tooltip
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
 				every_province = {
 					limit = {
@@ -185,9 +195,49 @@ country_decisions = {
 					limit = {
 						culture_group = byzantine
 					}
-					change_primary_culture = roman_new
-					set_heir_culture = roman_new
-					set_ruler_culture = roman_new
+					change_primary_culture = greco_roman
+					set_heir_culture = greco_roman
+					set_ruler_culture = greco_roman
+				}
+				random_owned_province = {
+					limit = { area = upper_andalucia_area }
+					change_culture = hispano_roman
+				}
+				random_owned_province = {
+					limit = { area = northern_morocco_area }
+					change_culture = afro_roman
+				}
+				random_owned_province = {
+					limit = { area = barbary_coast_area }
+					change_culture = afro_roman
+				}
+				random_owned_province = {
+					limit = { area = djerba_area }
+					change_culture = afro_roman
+				}
+				random_owned_province = {
+					limit = { area = western_sicily_area }
+					change_culture = roman_new
+				}
+				random_owned_province = {
+					limit = { area = lombardy_area }
+					change_culture = roman_new
+				}
+				random_owned_province = {
+					limit = { area = emilia_romagna_area }
+					change_culture = roman_new
+				}
+				random_owned_province = {
+					limit = { area = corsica_sardinia_area }
+					change_culture = roman_new
+				}
+				random_owned_province = {
+					limit = { area = naples_area }
+					change_culture = roman_new
+				}
+				random_owned_province = {
+					limit = { area = central_italy_area }
+					change_culture = roman_new
 				}
 			}
 			if = {
@@ -206,12 +256,14 @@ country_decisions = {
 					151 = { change_culture = greco_roman }
 				}
 			}
+			add_ruler_personality = augustus_personality
 			if = {
 				limit = { has_country_flag = byz_restore_republic }
-				change_government = republic
+				custom_tooltip = BYZ_ALWAYS_AUGUSTUS_REPUBLIC
 			}
-			add_ruler_personality = augustus_personality
-			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			else = {
+				custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			}
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
@@ -237,7 +289,7 @@ country_decisions = {
 						duration = -1
 					}
 				}
-				country_event = { id = ab_byzantium.59 }
+				country_event = { id = ab_byzantium.67 }
 			}
 			if = {
 				limit = { has_custom_ideas = no }
