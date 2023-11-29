@@ -1,0 +1,179 @@
+diocese_vassal = {
+	copy_from = default
+	
+	# Graphics:
+    sprite = GFX_icon_diocese
+	diplomacy_overlord_sprite = GFX_icon_diplomacy_lead_diocese
+	diplomacy_subject_sprite = GFX_icon_diplomacy_am_diocese
+
+	# Properties:
+	base_liberty_desire = -20
+	transfer_trade_power = yes
+	joins_overlords_wars = no
+	can_be_annexed = yes
+	overlord_can_attack = no
+	has_power_projection = no
+	gets_help_with_rebels = yes
+	forms_trade_companies = no
+	takes_diplo_slot = no
+	can_transfer_in_peace = no
+	extend_trading_range = yes
+	counts_for_borders = yes
+	max_government_rank = 2
+	can_be_co_belligerented = yes
+	must_accept_cta_from_overlord = no
+	favors_cost_to_join_offensive_wars = 50   #Defines how much favors the overlord need to invest to call the subject into an offensive war
+	favors_cost_to_join_defensive_wars = 30   #Defines how much favors the overlord need to invest to call the subject into a defensive war
+	opinion_cost_to_join_offensive_wars = 100   #Defines how much opinion the subject loses of the overlord to call the subject into an offensive war. Applied if you do not have Leviathan
+	opinion_cost_to_join_defensive_wars = 80   #Defines how much opinion the subject loses of the overlord to call the subject into a defensive war. Applied if you do not have Leviathan
+	opinion_on_subject_integration = 0
+
+	liberty_desire_development_ratio = 0.1
+	liberty_desire_same_dynasty = -10.0
+	pays_overlord = 2.0
+	forcelimit_to_overlord = 0.5					
+	naval_forcelimit_to_overlord = 0.5				
+	manpower_to_overlord = 0.5							
+	sailors_to_overlord = 0.5
+	military_focus = 1.5			
+	annex_cost_per_development = 25.0
+	
+	relative_power_class = 1
+	should_quit_wars_on_activation = yes
+
+	restoration_cb = cb_disloyal_diocese
+
+	# Subject Interactions:
+	support_loyalists = yes
+	subsidize_armies = yes
+	divert_trade = yes
+	placate_rulers = no
+	replace_governor = yes
+	grant_province = no
+
+	# Modifiers:
+	modifier_subject = clear
+	modifier_subject = {
+		modifier = byz_diocese_subject_modifier
+	}
+	modifier_overlord = clear
+	modifier_overlord = {
+		modifier = byz_diocese_latin_modifier
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_IS_LATINSPHERE
+				OR = {
+					primary_culture = roman_new
+					primary_culture = gallo_roman
+					primary_culture = afro_roman
+					primary_culture = romano_british
+					primary_culture = hispano_roman
+					primary_culture = romano_germanic
+					primary_culture = romano_nordic
+					primary_culture = daco_roman
+					primary_culture = romano_polish
+				}
+			}	
+		}
+	}
+	modifier_overlord = {
+		modifier = byz_diocese_hellenic_modifier
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_IS_HELLENOSPHERE
+				OR = {
+					primary_culture = illyro_roman
+					primary_culture = greco_roman
+					primary_culture = romano_arabic
+				}
+			}
+		}
+	}
+	modifier_overlord = {
+		modifier = byz_diocese_persic_modifier
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_IS_PERSOSPHERE
+				OR = {
+					primary_culture = perso_roman
+					primary_culture = indo_roman
+				}
+			}
+		}
+	}
+
+	overlord_opinion_modifier = opinion_is_diocese
+	subject_opinion_modifier = opinion_is_diocese
+}
+
+grand_diocese_vassal = {
+	copy_from = default
+	
+	# Graphics:
+    sprite = GFX_icon_diocese
+	diplomacy_overlord_sprite = GFX_icon_diplomacy_lead_diocese
+	diplomacy_subject_sprite = GFX_icon_diplomacy_am_diocese
+
+	# Properties:
+	base_liberty_desire = -50
+	transfer_trade_power = yes
+	joins_overlords_wars = no
+	has_overlords_ruler = yes
+	can_be_integrated = yes
+	overlord_can_attack = no
+	has_power_projection = no
+	disable_inheritance = yes
+	gets_help_with_rebels = yes
+	forms_trade_companies = no
+	takes_diplo_slot = no
+	can_transfer_in_peace = no
+	extend_trading_range = yes
+	counts_for_borders = yes
+	max_government_rank = 0
+	can_be_co_belligerented = yes
+	opinion_on_subject_integration = 0
+
+	liberty_desire_development_ratio = 0.05
+	liberty_desire_same_dynasty = 0.0
+	pays_overlord = 0.2
+	forcelimit_to_overlord = 0.05					
+	naval_forcelimit_to_overlord = 0.05				
+	manpower_to_overlord = 0.05							
+	sailors_to_overlord = 0.05
+	military_focus = 1.5			
+	annex_cost_per_development = 25.0
+	
+	relative_power_class = 1
+	should_quit_wars_on_activation = yes
+
+	restoration_cb = cb_disloyal_diocese
+
+	# Subject Interactions:
+	support_loyalists = yes
+	subsidize_armies = yes
+	divert_trade = yes
+	placate_rulers = no
+	grant_province = no
+
+	# Modifiers:
+	modifier_subject = clear
+	modifier_subject = {
+		modifier = byz_diocese_russia
+	}
+	modifier_overlord = clear
+	modifier_overlord = {
+		modifier = byz_diocese_hellenic_modifier
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_IS_HELLENOSPHERE
+				OR = {
+					primary_culture = russo_roman
+					primary_culture = romano_scythic
+				}
+			}
+		}
+	}
+
+	overlord_opinion_modifier = opinion_is_diocese
+	subject_opinion_modifier = opinion_is_diocese
+}

@@ -28,8 +28,8 @@ TLW_on_adm_development_effect = {
 			owner = { 
 				OR = {
 					has_reform = byzculturalsphere
-					has_reform = rom_diocese
-					has_reform = rom_grand_diocese
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
 				}
 			}
 		}
@@ -95,8 +95,8 @@ TLW_on_dip_development_effect = {
 			owner = { 
 				OR = {
 					has_reform = byzculturalsphere
-					has_reform = rom_diocese
-					has_reform = rom_grand_diocese
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
 				}
 			}
 		}
@@ -162,8 +162,8 @@ TLW_on_mil_development_effect = {
 			owner = { 
 				OR = {
 					has_reform = byzculturalsphere
-					has_reform = rom_diocese
-					has_reform = rom_grand_diocese
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
 				}
 			}
 		}
@@ -245,8 +245,8 @@ TLW_on_siege_won_province = {
 			owner = {
 				OR = {
 					tag = ROM
-					has_reform = rom_diocese
-					has_reform = rom_grand_diocese
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
 				}
 			}
 			controller = {
@@ -265,6 +265,51 @@ TLW_on_siege_won_province = {
 			effect = "
 				infantry = controller
 			"
+		}
+	}
+}
+
+TLW_on_annexed_effect = {
+	if = {
+		limit = {
+			FROM = { 
+				OR = {
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
+				}		
+			}
+		}
+		every_subject_country = {
+			limit = { 
+				NOT = { tag = FROM }
+				is_subject_of_type = diocese_vassal
+			}
+			add_liberty_desire = 25
+		}
+	}
+}
+
+TLW_on_dependency_gained = {
+	if = {
+		limit = {
+			FROM = { has_country_flag = byz_independent_diocese }
+			ROOT = { has_government_attribute = ab_has_dioceses }
+		}
+		FROM = { 
+			clr_country_flag = byz_independent_diocese
+			add_government_reform = rom_diocese
+		}
+	}
+}
+
+TLW_on_dependency_lost = {
+	if = {
+		limit = { 
+			FROM = { is_subject_of_type = diocese_vassal } 
+		}
+		FROM = { 
+			set_country_flag = byz_independent_diocese
+			add_government_reform = rom_former_diocese
 		}
 	}
 }

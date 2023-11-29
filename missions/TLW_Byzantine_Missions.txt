@@ -1060,8 +1060,8 @@ byz_slot1_third = {
 				all_province = {
 					owner = {
 						OR = {
-							has_reform = rom_diocese
-							has_reform = rom_grand_diocese
+							is_subject_of_type = diocese_vassal
+							is_subject_of_type = grand_diocese_vassal
 						}
 						is_subject_of = ROOT
 					}
@@ -3136,28 +3136,6 @@ byz_slot3_second = {
 				name = byz_rus_tsar
 				duration = -1
 			}
-			if = {
-				limit = {
-					exists = UKR
-					UKR = {
-						is_subject_of_type_with_overlord = { 
-							who = ROOT 
-							type = personal_union
-						}
-						has_opinion = {
-							who = ROOT
-							value = 200
-						}
-						NOT = { liberty_desire = 50 }
-					}
-				}
-				custom_tooltip = BYZ_UNION_RUS
-
-			}
-			else = {
-				custom_tooltip = BYZ_UNION_RUS_NO
-			}
-			custom_tooltip = BYZ_DIOCESERUSSIA_MODIFIER
 			custom_tooltip = BYZ_RUS_RENAME
 			if = {
 				limit = {
@@ -3166,11 +3144,6 @@ byz_slot3_second = {
 						all_subject_country = {
 							has_reform = principality
 							is_subject_of_type = personal_union
-							has_opinion = {
-								who = ROOT
-								value = 200
-							}
-							NOT = { liberty_desire = 50 }
 						}
 						amount = 3
 					}
@@ -3284,10 +3257,6 @@ byz_slot3_second = {
 					}
 				}
 				UKR = {
-					add_country_modifier = {
-						name = byz_diocese_russia
-						duration = -1
-					}
 					override_country_name = DIOCESISRUSSIA
 					add_government_reform = rom_grand_diocese
 					if = {
@@ -3295,6 +3264,10 @@ byz_slot3_second = {
 						country_event = { id = ideagroups.1 } #Swap Ideas
 					}
 					set_capital = 280
+				}
+				create_subject = {
+					subject_type = grand_diocese_vassal
+					who = UKR
 				}
 				set_country_flag = byz_tsar_of_rus
 			}

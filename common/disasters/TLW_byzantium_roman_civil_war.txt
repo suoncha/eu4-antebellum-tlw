@@ -1,0 +1,130 @@
+byzantium_roman_civil_war = {
+	potential = {
+		has_government_attribute = ab_has_dioceses
+	}
+	
+	can_start = {
+		has_any_disaster = no
+		calc_true_if = {
+			all_subject_country = {
+				is_subject_of_type = diocese_vassal
+				liberty_desire = 50
+			}
+			amount = 2
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_roman_civil_war_end
+			}
+			custom_trigger_tooltip = {
+				tooltip = BYZ_CIVIL_WAR_END_5YEARS
+				had_country_flag = {
+					flag = byz_roman_civil_war_end
+					days = 1825
+				}
+			}
+		}
+	}
+	
+	can_stop = {
+		OR = {
+			has_any_disaster = yes
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_NODIOCESE
+				NOT = {
+					calc_true_if = {
+						all_subject_country = {
+							is_subject_of_type = diocese_vassal
+							liberty_desire = 50
+						}
+						amount = 1
+					}
+				}
+			}
+		}
+	}
+	
+	progress = {
+		modifier = {
+			factor = 0.25
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_2DIOCESE
+				calc_true_if = {
+					all_subject_country = {
+						is_subject_of_type = diocese_vassal
+						liberty_desire = 50
+					}
+					amount = 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.25
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_3DIOCESE
+				calc_true_if = {
+					all_subject_country = {
+						is_subject_of_type = diocese_vassal
+						liberty_desire = 50
+					}
+					amount = 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_4DIOCESE
+				calc_true_if = {
+					all_subject_country = {
+						is_subject_of_type = diocese_vassal
+						liberty_desire = 50
+					}
+					amount = 4
+				}
+			}
+		}
+		modifier = {
+			factor = 1
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_5DIOCESE
+				calc_true_if = {
+					all_subject_country = {
+						is_subject_of_type = diocese_vassal
+						liberty_desire = 50
+					}
+					amount = 5
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			custom_trigger_tooltip = {
+				tooltip = BYZ_TRIGGER_6DIOCESE
+				calc_true_if = {
+					all_subject_country = {
+						is_subject_of_type = diocese_vassal
+						liberty_desire = 50
+					}
+					amount = 6
+				}
+			}
+		}
+	}
+	
+	modifier = {
+		reduced_liberty_desire = -20
+		can_not_declare_war = yes
+	}
+	
+	can_end = {
+		is_at_war = no
+		custom_trigger_tooltip = {
+			tooltip = BYZ_UNCONTESTED_EMPEROR
+			has_country_flag = byz_uncontested_emperor
+		}
+	}
+	
+	on_start = ab_byzantium_disaster.56
+	on_end = ab_byzantium_disaster.57
+}

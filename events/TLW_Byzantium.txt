@@ -507,7 +507,7 @@ province_event = {
 		owner = {
 			OR = {
 				tag = ROM
-				has_reform = rom_diocese
+				is_subject_of_type = diocese_vassal
 				primary_culture = russo_roman
 			}
 		}
@@ -1391,6 +1391,101 @@ country_event = {
 	}
 }
 
+#Suppressed Diocese
+country_event = {
+	id = ab_byzantium.77
+	title = ab_byzantium.77.t
+	desc = ab_byzantium.77.d
+	picture = CONQUEST_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.77.a
+		inherit = event_target:suppressDiocese
+		every_subject_country = {
+			limit = { is_subject_of_type = diocese_vassal }
+			add_liberty_desire = 10
+		}
+		hidden_effect = {
+			clear_global_event_target = suppressDiocese
+		}	
+	}
+
+	option = {
+		name = ab_byzantium.77.b
+		create_subject = {
+			subject_type = diocese_vassal
+			subject = event_target:suppressDiocese
+		}
+		event_target:suppressDiocese = {
+			add_liberty_desire = -100
+			add_country_modifier = {
+				name = byz_loyal_diocese
+				duration = 3650
+			}
+			add_government_reform = rom_diocese
+			kill_ruler = yes
+		}
+		hidden_effect = {
+			clear_global_event_target = suppressDiocese
+		}
+	}
+}
+
+#Unromanized Province modifier
+province_event = {
+	id = ab_byzantium.78
+	title = ab_byzantium.78.t
+	desc = ab_byzantium.78.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		owner = {
+			is_subject_of_type = diocese_vassal
+		}
+		NOT = { culture_group = roman_g }
+		NOT = { has_province_modifier = byz_unromanized_province }
+	}
+
+	option = {
+		name = ab_byzantium.78.a
+		add_province_modifier = {
+			name = byz_unromanized_province
+			duration = -1
+		}
+	}
+}
+
+#Romanized Province modifier
+province_event = {
+	id = ab_byzantium.79
+	title = ab_byzantium.79.t
+	desc = ab_byzantium.79.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		owner = {
+			is_subject_of_type = diocese_vassal
+		}
+		culture_group = roman_g
+		NOT = { has_province_modifier = byz_romanized_province }
+	}
+
+	option = {
+		name = ab_byzantium.79.a
+		remove_province_modifier = byz_unromanized_province
+		add_province_modifier = {
+			name = byz_romanized_province
+			duration = -1
+		}
+	}
+}
+
 #testing event
 country_event = {
 	id = ab_byzantium.100
@@ -1404,3 +1499,7 @@ country_event = {
 		name = ab_byzantium.100.a
 	}
 }
+
+## CULTURAL SPHERES FLAVOR
+
+## DIOCESES FLAVOR

@@ -1,0 +1,140 @@
+call_diocese_into_wars = {
+	category = influence
+
+	require_acceptance = no
+
+	is_visible = {
+		has_government_attribute = ab_has_dioceses
+		FROM = {
+			is_subject_of = ROOT
+			is_subject_of_type = diocese_vassal
+			is_subject_of_type = grand_diocese_vassal
+		}
+	}
+
+	is_allowed = {
+		if = {
+			limit = {
+				has_any_disaster = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = HAS_DISASTER_TT
+				has_any_disaster = no
+			}
+		}
+		if = {
+			limit = {
+				FROM = { liberty_desire = 50 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_IS_REBELLIOUS_TT
+				FROM = { NOT = { liberty_desire = 50 } }
+			}
+		}
+		if = {
+			limit = {
+				is_at_war = no
+			}
+			custom_trigger_tooltip = {
+				tooltip = ROOT_IS_NOT_AT_WAR_TT
+				is_at_war = yes
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					NOT = {
+						owes_favors = {
+							who = ROOT
+							value = 25
+						}
+					}
+				}
+				is_in_war = {
+					defender_leader = ROOT
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_MUST_OWE_25_FAVORS_DEFENSIVE_WAR_TT
+				FROM = {
+					owes_favors = {
+						who = ROOT
+						value = 25
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					NOT = {
+						owes_favors = {
+							who = ROOT
+							value = 50
+						}
+					}
+				}
+				is_in_war = {
+					attacker_leader = ROOT
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_MUST_OWE_50_FAVORS_TT
+				FROM = {
+					owes_favors = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = { is_at_war = yes }
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_IS_AT_WAR_TT
+				FROM = { is_at_war = no }
+			}
+		}
+	}
+
+	on_accept = {
+		if = {
+			limit = {
+				is_in_war = {
+					attacker_leader = ROOT
+				}
+			}
+			FROM = {
+				ROOT = {
+					add_favors = {
+						who = PREV
+						amount = -50
+					}
+				}
+				join_all_offensive_wars_of = ROOT
+				add_liberty_desire = 20
+			}
+		}
+		else = {
+			FROM = {
+				ROOT = {
+					add_favors = {
+						who = PREV
+						amount = -25
+					}
+				}
+				join_all_defensive_wars_of = ROOT
+				add_liberty_desire = 10
+			}
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = { # this is a trigger
+		always = yes
+	}
+}

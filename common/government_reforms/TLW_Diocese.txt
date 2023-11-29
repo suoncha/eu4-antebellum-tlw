@@ -3,7 +3,10 @@ rom_diocese = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		is_subject_of = ROM
+		culture_group = roman_g
+		NOT = { has_country_flag = byz_independent_diocese }
+		NOT = { tag = ROM }
+		NOT = { tag = UKR }
 	}
 	fixed_rank = 2
 	duration = 10
@@ -13,6 +16,7 @@ rom_diocese = {
 		global_unrest = -2
 		global_missionary_strength = 0.03
 		development_cost = 25.0
+		culture_conversion_cost = 10.0
 	}
 
 	custom_attributes = {
@@ -23,12 +27,42 @@ rom_diocese = {
 	}
 }
 
+rom_former_diocese = {
+	icon = "byzabsolutism"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		culture_group = roman_g
+		has_country_flag = byz_independent_diocese
+	}
+	has_term_election = no
+
+	modifiers = {
+		governing_capacity = 300
+		land_forcelimit_modifier = 0.25
+		global_manpower_modifier = 0.25
+		monarch_lifespan = 0.25
+	}
+
+	custom_attributes = {
+		enables_plutocratic_idea_group = no
+		enables_aristocratic_idea_group = yes
+		lottery_election = yes
+		election_on_death = yes
+		locked_government_type = yes
+	}
+}
+
 rom_grand_diocese = {
 	icon = "byzabsolutism"
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
 		is_subject_of = ROM
+		OR = {
+			tag = UKR
+			was_tag = UKR
+		}
 	}
 	fixed_rank = 3
 
@@ -38,6 +72,7 @@ rom_grand_diocese = {
 		global_unrest = -2
 		global_missionary_strength = 0.03
 		development_cost = 25.0
+		culture_conversion_cost = 10.0
 		has_streltsy = yes
 		allowed_streltsy_fraction = 0.2
 	}
