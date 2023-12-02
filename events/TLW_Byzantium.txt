@@ -20,11 +20,8 @@ country_event = {
 			name = "Belisarius"
 			trait = inspirational_leader_general_personality
 		}
-		add_army_professionalism = 0.1
-		add_country_modifier = {
-			name = byz_strongest_army
-			duration = -1
-		}
+		custom_tooltip = BYZSTRATEGOSRECRUIT
+		add_government_reform = byzprofessionalism
 	}
 }
 
@@ -836,7 +833,7 @@ country_event = {
 	}
 }
 
-#Diocese Info - TBD
+#Diocese Info
 country_event = {
 	id = ab_byzantium.59
 	title = ab_byzantium.59.t
@@ -1483,6 +1480,136 @@ province_event = {
 			name = byz_romanized_province
 			duration = -1
 		}
+	}
+}
+
+# General Focus
+country_event = {
+	id = ab_byzantium.80
+	title = ab_byzantium.80.t
+	desc = ab_byzantium.80.d
+	picture = AB_BELISARIUS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.80.a
+		add_country_modifier = {
+			name = byz_fire_focused
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_byzantium.80.b
+		add_country_modifier = {
+			name = byz_shock_focused
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_byzantium.80.c
+		add_country_modifier = {
+			name = byz_manuever_focused
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_byzantium.80.e
+		add_country_modifier = {
+			name = byz_siege_focused
+			duration = 3650
+		}
+	}
+}
+
+# Max Legion Professionalism Reach
+country_event = {
+	id = ab_byzantium.81
+	title = ab_byzantium.81.t
+	desc = ab_byzantium.81.d
+	picture = NOBLE_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.81.a
+		add_country_modifier = {
+			name = byz_max_legion_professionalism
+			duration = -1
+		}
+		custom_tooltip = BYZREDUCELEGIONPROFESSIONALISM
+	}
+}
+
+# Max Diocese Professionalism Reach
+country_event = {
+	id = ab_byzantium.82
+	title = ab_byzantium.82.t
+	desc = ab_byzantium.82.d
+	picture = NOBLE_ESTATE_TAKE_OVER_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.82.a
+		add_country_modifier = {
+			name = byz_max_diocese_professionalism
+			duration = -1
+		}
+		custom_tooltip = BYZREDUCEDIOCESEPROFESSIONALISM
+	}
+}
+
+# Max Legion Professionalism Remove
+country_event = {
+	id = ab_byzantium.83
+	title = ab_byzantium.83.t
+	desc = ab_byzantium.83.d
+	picture = NOBLE_ESTATE_eventPicture
+	
+	hidden = yes 
+
+	trigger = {
+		has_country_modifier = byz_max_legion_professionalism
+		NOT = {
+			has_government_power = { 
+				mechanic_type = roman_professionalism_mechanic
+				power_type = romanprofessionalism
+				value = 0
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.83.a
+		remove_country_modifier = byz_max_legion_professionalism
+	}
+}
+
+# Max Diocese Professionalism Remove
+country_event = {
+	id = ab_byzantium.84
+	title = ab_byzantium.84.t
+	desc = ab_byzantium.84.d
+	picture = NOBLE_ESTATE_eventPicture
+	
+	hidden = yes 
+
+	trigger = {
+		has_country_modifier = byz_max_diocese_professionalism
+		has_government_power = { 
+			mechanic_type = roman_professionalism_mechanic
+			power_type = romanprofessionalism
+			value = 0
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.84.a
+		remove_country_modifier = byz_max_diocese_professionalism
 	}
 }
 

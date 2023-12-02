@@ -2,6 +2,7 @@ byzantium_persian_war = {
 	potential = {
 		was_tag = BYZ
 		mission_completed = byzantium_manzikert
+		NOT = { has_country_flag = had_persian_war }
 	}
 	
 	can_start = {
@@ -14,6 +15,22 @@ byzantium_persian_war = {
 				is_neighbor_of = PRC
 				is_neighbor_of = PMN
 				is_neighbor_of = PRZ
+				any_subject_country = {
+					is_subject_of_type = diocese_vassal
+					is_neighbor_of = PER
+				}
+				any_subject_country = {
+					is_subject_of_type = diocese_vassal
+					is_neighbor_of = PRC
+				}
+				any_subject_country = {
+					is_subject_of_type = diocese_vassal
+					is_neighbor_of = PMN
+				}
+				any_subject_country = {
+					is_subject_of_type = diocese_vassal
+					is_neighbor_of = PRZ
+				}
 			}
 		}
 	}
@@ -24,27 +41,196 @@ byzantium_persian_war = {
 	
 	progress = {
 		modifier = {
-			factor = 100
-			tag = ROM
+			factor = 3
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RIVAL_PERSIA
+				OR = {
+					is_rival = PER
+					is_rival = PRC
+					is_rival = PMN
+					is_rival = PRZ
+				}
+			}
 		} 
+		modifier = {
+			factor = 1
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN0_PERSIA
+				OR = {
+					PER = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+					PRC = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+					PMN = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+					PRZ = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+				}
+			}
+		} 
+		modifier = {
+			factor = 1
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN50_PERSIA
+				OR = {
+					PER = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+					PRC = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+					PMN = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+					PRZ = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+				}
+			}
+		} 
+		modifier = {
+			factor = 2
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN100_PERSIA
+				OR = {
+					PER = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
+						}
+					}
+					PRC = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
+						}
+					}
+					PMN = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
+						}
+					}
+					PRZ = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 3
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN150_PERSIA
+				OR = {
+					PER = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
+						}
+					}
+					PRC = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
+						}
+					}
+					PMN = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
+						}
+					}
+					PRZ = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	modifier = {
-		global_unrest = 10
-		stability_cost_modifier = 0.5
+		diplomatic_reputation = -2
+		improve_relation_modifier = -0.5
+		reduced_liberty_desire = 10
+		can_not_declare_war = yes
 	}
 	
 	can_end = {
 		is_at_war = no
 		NOT = { num_of_rebel_controlled_provinces = 1 }
 		NOT = { num_of_rebel_armies = 1 }
-		stability = 1
 		custom_trigger_tooltip = {
-			tooltip = BYZ_RESOLVED_ANGELID
-			has_country_flag = had_fall_angelid
+			tooltip = BYZ_CRISIS_PERSIANS
+			has_country_flag = byz_crisis_persians
 		}
 	}
 	
-	on_start = ab_byzantium_disaster.0
-	on_end = ab_byzantium_disaster.1
+	on_start = ab_byzantium_disaster.71
+	on_end = ab_byzantium_disaster.72
 }

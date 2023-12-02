@@ -423,8 +423,8 @@ byz_slot1_second = {
 				which = discipline
 				value = 0.05
 			}
-			army_tradition = 75
-			army_size = 125
+			army_tradition = 50
+			army_size = 100
 		}
 
 		effect = {
@@ -440,15 +440,14 @@ byz_slot1_second = {
 		icon = mission_unrivaled
 		position = 13
 		required_missions = { byzantium_reform_imperial_army } 
-		provinces_to_highlight = {  } 
 
 		trigger = {
 			has_global_modifier_value = {
 				which = discipline
-				value = 0.15
+				value = 0.1
 			}
-			army_tradition = 100
-			army_size = 350
+			army_tradition = 80
+			army_size = 250
 		}
 
 		effect = {
@@ -1047,7 +1046,7 @@ byz_slot1_third = {
 	}
 
 	byzantium_wonders = {
-		icon = mam_city_thousand_minarets
+		icon = mission_romanwonders
 		position = 34
 		required_missions = { byzantium_roads }
 		provinces_to_highlight = {
@@ -1080,9 +1079,7 @@ byz_slot1_third = {
 			}
 		}
 
-		effect = {  
-			set_country_flag = byz_can_benefit_monuments
-			custom_tooltip = BYZ_GREAT_WONDERS
+		effect = {
 			add_government_reform = byzengineering
 		} 
 	}
@@ -1665,7 +1662,7 @@ byz_slot2_first = {
 	}
 	
 	byzantium_finest = {
-		icon = establish_a_standing_army
+		icon = mission_romanfinest
 		position = 14
 		required_missions = { byzantium_unrivaled byzantium_cannons byzantium_general_staff }
 
@@ -1673,16 +1670,20 @@ byz_slot2_first = {
 			tag = ROM
 			has_global_modifier_value = {
 				which = discipline
-				value = 0.25
+				value = 0.2
 			}
+			army_tradition = 100
 			army_professionalism = 0.9
-			army_size = 650
-			num_of_generals = 10
+			army_size = 500
 			mil_tech = 17
-			NOT = { 
-				any_country = { 
-					army_size = ROOT
+			calc_true_if = {
+				all_subject_country = {
+					OR = {
+						is_subject_of_type = diocese_vassal
+						is_subject_of_type = grand_diocese_vassal
+					}
 				}
+				amount = 4
 			}
 		}
 		effect = {
@@ -1693,19 +1694,85 @@ byz_slot2_first = {
 	}
 
 	byzantium_grandarmy = {
-		icon = mission_redcoats
+		icon = establish_a_standing_army
 		position = 15
 		required_missions = { byzantium_finest }
 
 		trigger = {
-			army_size = 1500
+			army_size = 1200
 			manpower = 1000
 			mil_tech = 23
 			is_hegemon_of_type = military_hegemon
 			hegemon_strength = 100
+			NOT = { 
+				any_country = { 
+					army_size = ROOT
+				}
+			}
+			calc_true_if = {
+				all_subject_country = {
+					OR = {
+						is_subject_of_type = diocese_vassal
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				amount = 8
+			}
 		}
 		effect = {
-			#TBD
+			if = {
+				limit = {
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 75
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_NO
+			}
+			if = {
+				limit = {
+					has_government_mechanic = roman_professionalism_mechanic
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = -75
+						}
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = 75
+						}
+					}
+					set_country_flag = byz_grand_army_legion
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_government_power = { 
+								mechanic_type = roman_professionalism_mechanic
+								power_type = romanprofessionalism
+								value = -75
+							}
+						}
+					}
+					set_country_flag = byz_grand_army_diocese
+				}
+			}
 		} 
 	}
 	
@@ -3456,6 +3523,22 @@ byz_slot3_unlocked2 = {
 					}
 				}
 			}
+			if = {
+				limit = { 236 = { owned_by = ENG } }
+				add_casus_belli = {
+					target = ENG
+					type = cb_establish_diocese
+					months = 240
+				}
+			}
+			else_if = {
+				limit = { 236 = { owned_by = GBR } }
+				add_casus_belli = {
+					target = GBR
+					type = cb_establish_diocese
+					months = 240
+				}
+			}
 		}
 	}
 	
@@ -4861,6 +4944,22 @@ byz_slot4_unlocked3 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = { 183 = { owned_by = FRC } }
+				add_casus_belli = {
+					target = FRC
+					type = cb_establish_diocese
+					months = 240
+				}
+			}
+			else_if = {
+				limit = { 183 = { owned_by = FRA } }
+				add_casus_belli = {
+					target = FRA
+					type = cb_establish_diocese
+					months = 240
+				}
+			}
 		}
 	}
 }
@@ -5848,6 +5947,73 @@ byz_slot5_second = {
 					add_country_modifier = {
 						name = byzantium_unknown
 						duration = 7300
+					}
+				}
+			}
+			if = {
+				limit = {
+					tag = ROM
+					225 = {
+						OR = {
+							owned_by = ADU
+							owned_by = IBE
+						}
+					}
+				}
+				custom_tooltip = BYZ_COMPLETE_AS_ROME
+			}
+			else_if = {
+				limit = {
+					225 = {
+						OR = {
+							owned_by = ADU
+							owned_by = IBE
+						}
+					}
+				}
+				custom_tooltip = BYZ_COMPLETE_AS_ROME_NO
+			}
+			if = {
+				limit = { 225 = { owned_by = ADU } }
+				tooltip = {
+					add_casus_belli = {
+						target = ADU
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			else_if = {
+				limit = { 225 = { owned_by = IBE } }
+				tooltip = {
+					add_casus_belli = {
+						target = IBE
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						tag = ROM
+						225 = { owned_by = ADU }
+					}
+					add_casus_belli = {
+						target = ADU
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+				else_if = {
+					limit = {
+						tag = ROM
+						225 = { owned_by = IBE }
+					}
+					add_casus_belli = {
+						target = IBE
+						type = cb_establish_diocese
+						months = 240
 					}
 				}
 			}

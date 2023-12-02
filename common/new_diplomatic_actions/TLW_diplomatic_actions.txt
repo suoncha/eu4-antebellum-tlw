@@ -7,8 +7,10 @@ call_diocese_into_wars = {
 		has_government_attribute = ab_has_dioceses
 		FROM = {
 			is_subject_of = ROOT
-			is_subject_of_type = diocese_vassal
-			is_subject_of_type = grand_diocese_vassal
+			OR = {
+				is_subject_of_type = diocese_vassal
+				is_subject_of_type = grand_diocese_vassal
+			}
 		}
 	}
 
@@ -106,27 +108,71 @@ call_diocese_into_wars = {
 					attacker_leader = ROOT
 				}
 			}
-			FROM = {
-				ROOT = {
-					add_favors = {
-						who = PREV
-						amount = -50
-					}
+			if = {
+				limit = {
+					has_country_flag = byz_grand_army_diocese
 				}
-				join_all_offensive_wars_of = ROOT
-				add_liberty_desire = 20
+				FROM = {
+					ROOT = {
+						add_favors = {
+							who = PREV
+							amount = -50
+						}
+					}
+					join_all_offensive_wars_of = ROOT
+					add_liberty_desire = 10
+				}
+			}
+			else = {
+				FROM = {
+					ROOT = {
+						add_favors = {
+							who = PREV
+							amount = -50
+						}
+					}
+					join_all_offensive_wars_of = ROOT
+					add_liberty_desire = 20
+				}
 			}
 		}
 		else = {
-			FROM = {
-				ROOT = {
-					add_favors = {
-						who = PREV
-						amount = -25
-					}
+			if = {
+				limit = {
+					has_country_flag = byz_grand_army_diocese
 				}
-				join_all_defensive_wars_of = ROOT
-				add_liberty_desire = 10
+				FROM = {
+					ROOT = {
+						add_favors = {
+							who = PREV
+							amount = -25
+						}
+					}
+					join_all_defensive_wars_of = ROOT
+					add_liberty_desire = 10
+				}
+			}
+			else = {
+				FROM = {
+					ROOT = {
+						add_favors = {
+							who = PREV
+							amount = -25
+						}
+					}
+					join_all_defensive_wars_of = ROOT
+					add_liberty_desire = 5
+				}
+			}
+		}
+		if = {
+			limit = { ROOT = { has_government_mechanic = roman_professionalism_mechanic } }
+			ROOT = {
+				add_government_power = {
+					mechanic_type = roman_professionalism_mechanic
+					power_type = romanprofessionalism
+					value = -3
+				}
 			}
 		}
 	}

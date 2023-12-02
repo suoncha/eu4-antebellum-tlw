@@ -1,0 +1,65 @@
+roman_professionalism_mechanic = {
+	available = {
+	}
+
+	powers = {
+		romanprofessionalism = {
+			gui = roman_professionalism_gov_mech
+			max = 100
+			min = -100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				trigger = {
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 0
+					}
+				}
+				modifier = {
+					army_tradition_decay = -0.025
+					army_tradition = 2
+					drill_decay_modifier = -0.5
+					monthly_romanprofessionalism = -0.25
+				}
+				start_value = 0
+				end_value = 100	
+			}
+			reverse_scaled_modifier = {
+				trigger = {
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = 0
+						}
+					}
+				}
+				modifier = {
+					liberty_desire_from_subject_development = -0.2
+					monthly_favor_modifier = 0.5
+					improve_relation_modifier = 0.33
+					monthly_romanprofessionalism = 0.25
+				}
+				start_value = -100
+				end_value = 0
+			}
+			on_max_reached = {
+				if = {
+					limit = { NOT = { has_country_flag = byz_grand_army_legion } }
+					country_event = {
+						id = ab_byzantium.81
+					}
+				}
+			}
+			on_min_reached = {
+				if = {
+					limit = { NOT = { has_country_flag = byz_grand_army_diocese } }
+					country_event = {
+						id = ab_byzantium.82
+					}
+				}
+			}
+		}
+	}
+}

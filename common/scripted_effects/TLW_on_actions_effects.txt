@@ -220,6 +220,36 @@ TLW_on_mil_development_effect = {
 				}
 			}
 		}
+		if = {
+			limit = { ROM = { has_government_mechanic = roman_professionalism_mechanic } }
+			if = {
+				limit = { owner = { tag = ROM } }
+				ROM = {
+					add_government_power = {
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					owner = { 
+						OR = {
+							is_subject_of_type = diocese_vassal
+							is_subject_of_type = grand_diocese_vassal
+						}
+					}
+				}
+				ROM = {
+					add_government_power = {
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = -1
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -265,6 +295,72 @@ TLW_on_siege_won_province = {
 			effect = "
 				infantry = controller
 			"
+		}
+	}
+	if = {
+		limit = { 
+			ROM = { has_government_mechanic = roman_professionalism_mechanic } 
+			owner = {
+				NOT = { tag = ROM }
+				NOT = { is_subject_of_type = diocese_vassal }
+				NOT = { is_subject_of_type = grand_diocese_vassal }
+			}
+		}
+		if = {
+			limit = { controller = { tag = ROM } }
+			ROM = {
+				add_government_power = {
+					mechanic_type = roman_professionalism_mechanic
+					power_type = romanprofessionalism
+					value = 0.2
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				controller = {
+					OR = {
+						is_subject_of_type = diocese_vassal
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+			}
+			ROM = {
+				add_government_power = {
+					mechanic_type = roman_professionalism_mechanic
+					power_type = romanprofessionalism
+					value = -0.2
+				}
+			}
+		}
+	}
+}
+
+TLW_on_battle_won_country = {
+	if = {
+		limit = { ROM = { has_government_mechanic = roman_professionalism_mechanic } }
+		if = {
+			limit = { tag = ROM }
+			add_government_power = {
+				mechanic_type = roman_professionalism_mechanic
+				power_type = romanprofessionalism
+				value = 0.5
+			}
+		}
+		else_if = {
+			limit = { 
+				OR = {
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
+				}
+			}
+			ROM = {
+				add_government_power = {
+					mechanic_type = roman_professionalism_mechanic
+					power_type = romanprofessionalism
+					value = -0.5
+				}
+			}
 		}
 	}
 }

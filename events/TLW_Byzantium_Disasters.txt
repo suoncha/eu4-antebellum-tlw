@@ -3864,5 +3864,47 @@ country_event = {
 
 ## PERSIAN WAR -----
 #Persian War Start
+country_event = {
+	id = ab_byzantium_disaster.71
+	title = ab_byzantium_disaster.71.t
+	desc = ab_byzantium_disaster.71.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					liberty_desire = 50
+				}
+				save_global_event_target_as = dioceseLeader
+				set_country_flag = disaster_tag_cannot_ally
+				ROOT = {
+					declare_war_with_cb = {
+						who = PREV
+						casus_belli = cb_roman_civil_war
+					}
+				}
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					liberty_desire = 50
+				}
+				set_country_flag = disaster_tag_cannot_ally
+				set_country_flag = diocese_side_civil_war
+				join_all_defensive_wars_of = event_target:dioceseLeader
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.71.a
+		custom_tooltip = BYZ_CIVIL_WAR_INFO
+		clr_country_flag = byz_roman_civil_war_end
+	}
+}
 
 #Persian War End
