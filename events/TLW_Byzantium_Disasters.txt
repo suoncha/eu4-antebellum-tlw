@@ -1829,6 +1829,8 @@ country_event = {
 	desc = ab_byzantium_disaster.33.d
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
+	fire_only_once = yes
+
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
@@ -1890,6 +1892,8 @@ country_event = {
 	desc = ab_byzantium_disaster.34.d
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
+	fire_only_once = yes
+
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_16th_crisis
@@ -3874,37 +3878,649 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			random_subject_country = {
-				limit = {
-					is_subject_of_type = diocese_vassal
-					liberty_desire = 50
-				}
-				save_global_event_target_as = dioceseLeader
-				set_country_flag = disaster_tag_cannot_ally
-				ROOT = {
-					declare_war_with_cb = {
-						who = PREV
-						casus_belli = cb_roman_civil_war
-					}
-				}
+			if = {
+				limit = { exists = PER }
+				PER = { save_global_event_target_as = crisisPersia }
 			}
-			every_subject_country = {
-				limit = {
-					is_subject_of_type = diocese_vassal
-					liberty_desire = 50
-				}
-				set_country_flag = disaster_tag_cannot_ally
-				set_country_flag = diocese_side_civil_war
-				join_all_defensive_wars_of = event_target:dioceseLeader
+			else_if = {
+				limit = { exists = PRC }
+				PRC = { save_global_event_target_as = crisisPersia }
+			}
+			else_if = {
+				limit = { exists = PMN }
+				PMN = { save_global_event_target_as = crisisPersia }
+			}
+			else = {
+				PRZ = { save_global_event_target_as = crisisPersia }
 			}
 		}
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.71.a
-		custom_tooltip = BYZ_CIVIL_WAR_INFO
-		clr_country_flag = byz_roman_civil_war_end
+		custom_tooltip = BYZ_PERSIAN_WAR_INFO
+		hidden_effect = {
+			event_target:crisisPersia = {
+				add_historical_rival = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_ancient_rivalry
+				}
+				country_event = {
+					id = ab_byzantium_disaster.74
+				}
+			}
+		}
+		add_historical_rival = event_target:crisisPersia
+		add_opinion = {
+			who = event_target:crisisPersia
+			modifier = opinion_ancient_rivalry
+		}
+		country_event = {
+			id = ab_byzantium_disaster.73
+		}
+		set_country_flag = byz_persian_war_start
 	}
 }
 
 #Persian War End
+country_event = {
+	id = ab_byzantium_disaster.72
+	title = ab_byzantium_disaster.72.t
+	desc = ab_byzantium_disaster.72.d
+	picture = AB_PERSIANWAR_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes 
+
+	option = {
+		name = ab_byzantium_disaster.72.a
+		set_country_flag = had_persian_war
+		clear_global_event_target = crisisPersia
+	}
+}
+
+#Roman Diplomatic Corps
+country_event = {
+	id = ab_byzantium_disaster.73
+	title = ab_byzantium_disaster.73.t
+	desc = ab_byzantium_disaster.73.d
+	picture = AB_ADVISOR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.73.a
+		add_years_of_income = -2.0
+		add_dip_power = -200
+		add_country_modifier = {
+			name = byz_large_diplomatic_corps
+			duration = 1095
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.73.b
+		add_years_of_income = -1.0
+		add_dip_power = -100
+		add_country_modifier = {
+			name = byz_small_diplomatic_corps
+			duration = 1095
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.73.c
+	}
+}
+
+#Persian War Start - Persia Nof
+country_event = {
+	id = ab_byzantium_disaster.74
+	title = ab_byzantium_disaster.74.t
+	desc = ab_byzantium_disaster.74.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.74.a
+		custom_tooltip = BYZ_PERSIAN_WAR_INFO
+	}
+}
+
+#Western Dioceses Refuse to Join - Hidden
+country_event = {
+	id = ab_byzantium_disaster.75
+	title = ab_byzantium_disaster.75.t
+	desc = ab_byzantium_disaster.75.d
+	picture = AB_PERSIA_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		is_subject_of_type = diocese_vassal
+		is_at_war = no
+		ROM = {
+			has_disaster = byzantium_persian_war
+		}
+		capital_scope = {
+			NOT = { superregion = eastern_europe_superregion }
+			NOT = { superregion = near_east_superregion }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.75.a
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.76
+			}
+		}
+	}
+}
+
+#Western Dioceses Refuse to Join - Rome Response
+country_event = {
+	id = ab_byzantium_disaster.76
+	title = ab_byzantium_disaster.76.t
+	desc = ab_byzantium_disaster.76.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.76.a
+		FROM = {
+			add_liberty_desire = 20
+		}
+	}
+}
+
+#Eastern Dioceses Choice - Hidden
+country_event = {
+	id = ab_byzantium_disaster.77
+	title = ab_byzantium_disaster.77.t
+	desc = ab_byzantium_disaster.77.d
+	picture = AB_PERSIA_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		is_subject_of_type = diocese_vassal
+		is_at_war = no
+		ROM = {
+			has_disaster = byzantium_persian_war
+		}
+		capital_scope = {
+			OR = {
+				superregion = eastern_europe_superregion
+				superregion = near_east_superregion
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.77.a
+		trigger = {
+			NOT = { liberty_desire = 40 }
+		}
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.78
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.77.b
+		trigger = {
+			liberty_desire = 40
+		}
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.79
+			}
+		}
+	}
+}
+
+#Eastern Dioceses Choice - They will join
+country_event = {
+	id = ab_byzantium_disaster.78
+	title = ab_byzantium_disaster.78.t
+	desc = ab_byzantium_disaster.78.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.78.a
+		FROM = {
+			add_liberty_desire = -10
+			set_country_flag = byz_persian_war_romeside
+		}
+	}
+}
+
+#Eastern Dioceses Choice - They may join
+country_event = {
+	id = ab_byzantium_disaster.79
+	title = ab_byzantium_disaster.79.t
+	desc = ab_byzantium_disaster.79.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.79.a
+		add_dip_power = -100
+		add_years_of_income = -0.5
+		FROM = {
+			add_dip_power = 100
+			add_years_of_income = 1.0
+			set_country_flag = byz_persian_war_romeside
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.79.b
+		FROM = {
+			add_liberty_desire = 20
+		}
+	}
+}
+
+#Persian War - A chance for reconciliation
+country_event = {
+	id = ab_byzantium_disaster.80
+	title = ab_byzantium_disaster.80.t
+	desc = ab_byzantium_disaster.80.d
+	picture = AB_PERSIANWAR_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = event_target:crisisPersia
+		ROM = {
+			has_disaster = byzantium_persian_war
+			has_country_flag = byz_persian_war_start
+			had_country_flag = {
+				flag = byz_persian_war_start
+				days = 730
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.80.a
+		ai_chance = { factor = 95 }
+		set_country_flag = byz_persian_war_persia_reconcile
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.81
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.80.b
+		ai_chance = { factor = 5 }
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.81
+			}
+		}
+	}
+}
+
+#Persian War - Rome Surrender or War
+country_event = {
+	id = ab_byzantium_disaster.81
+	title = ab_byzantium_disaster.81.t
+	desc = {
+		trigger = {
+			event_target:crisisPersia = {
+				has_country_flag = byz_persian_war_persia_reconcile
+			}
+		}
+		desc = ab_byzantium_disaster.81.d1
+	}
+	desc = {
+		trigger = {
+			event_target:crisisPersia = {
+				NOT = { has_country_flag = byz_persian_war_persia_reconcile }
+			}
+		}
+		desc = ab_byzantium_disaster.81.d2
+	}
+	picture = AB_PERSIANWAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.81.a
+		set_country_flag = byz_crisis_persians
+		custom_tooltip = BYZ_EASTERN_CONQUEST_LOST
+		add_absolutism = -50
+		add_prestige = -100	
+		custom_tooltip = BYZ_SURRENDER_MESOPOTAMIA
+		hidden_effect = {
+			caucasia_region = {
+				limit = {
+					NOT = { area = circassia_area }
+					NOT = { area = dagestan_area }
+				}
+				cede_province = event_target:crisisPersia
+				add_core = event_target:crisisPersia
+				remove_core = ROM
+			}
+			iraq_arabi_area = {
+				cede_province = event_target:crisisPersia
+				add_core = event_target:crisisPersia
+				remove_core = ROM
+			}
+			basra_area = {
+				cede_province = event_target:crisisPersia
+				add_core = event_target:crisisPersia
+				remove_core = ROM
+			}
+			al_jazira_area = {
+				cede_province = event_target:crisisPersia
+				add_core = event_target:crisisPersia
+				remove_core = ROM
+			}
+		}
+		add_truce_with =  event_target:crisisPersia
+	}
+
+	option = {
+		name = ab_byzantium_disaster.81.b
+		trigger = {
+			event_target:crisisPersia = {
+				has_country_flag = byz_persian_war_persia_reconcile
+			}
+		}
+		set_country_flag = byz_crisis_persians
+		set_country_flag = byz_persian_war_partners
+		custom_tooltip = BYZ_EASTERN_CONQUEST_LOST
+		custom_tooltip = BYZ_BUFFER_ZONES
+		hidden_effect = {
+			caucasia_region = {
+				limit = {
+					NOT = { area = circassia_area }
+					NOT = { area = shirvan_area }
+				}
+				cede_province = GEO
+				add_core = GEO
+				remove_core = ROM
+				remove_core = event_target:crisisPersia
+			}
+			iraq_arabi_area = {
+				cede_province = JLR
+				add_core = JLR
+				remove_core = ROM
+				remove_core = event_target:crisisPersia
+			}
+			basra_area = {
+				cede_province = JLR
+				add_core = JLR
+				remove_core = ROM
+				remove_core = event_target:crisisPersia
+			}
+			al_jazira_area = {
+				cede_province = JLR
+				add_core = JLR
+				remove_core = ROM
+				remove_core = event_target:crisisPersia
+			}
+			remove_historical_rival = event_target:crisisPersia
+			remove_opinion = {
+				who = event_target:crisisPersia
+				modifier = opinion_ancient_rivalry
+			}
+			event_target:crisisPersia = {
+				remove_historical_rival = ROM
+				add_historical_friend = ROM
+				remove_opinion = {
+					who = ROM
+					modifier = opinion_ancient_rivalry
+				}
+				add_opinion = {
+					who = ROM
+					modifier = opinion_strategic_partners
+				}
+				create_guarantee = GEO
+				create_guarantee = JLR
+				set_country_flag = byz_persian_war_partners
+				add_trust = {
+					who = ROM
+					value = 50
+					mutual = yes
+				}
+			}
+		}
+		add_truce_with =  event_target:crisisPersia	
+		add_historical_friend = event_target:crisisPersia
+		add_opinion = {
+			who = event_target:crisisPersia
+			modifier = opinion_strategic_partners
+		}
+		create_guarantee = GEO
+		create_guarantee = JLR
+	}
+
+	option = {
+		name = ab_byzantium_disaster.81.c
+		custom_tooltip = BYZ_WAR_PERSIAN_WAR
+		declare_war_with_cb = {
+			who = event_target:crisisPersia
+			casus_belli = cb_roman_persian_war
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							AND = {
+								superregion = persia_superregion
+								NOT = { area = circassia_area }
+								NOT = { area = dagestan_area }
+							}
+							region = arabia_region
+							region = central_asia_region
+							region = west_india_region
+							region = hindusthan_region
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_opinion = {
+							who = ROM
+							value = 100
+						}
+						NOT = {
+							has_opinion = {
+								who = event_target:crisisPersia
+								value = 50
+							}
+						}
+					}
+					join_all_offensive_wars_of = ROM
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							has_opinion = {
+								who = ROM
+								value = 100
+							}
+						}
+					}
+					join_all_defensive_wars_of = event_target:crisisPersia
+				}
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					has_country_flag = byz_persian_war_romeside
+				}
+				join_all_offensive_wars_of = ROM
+			}
+		}
+		
+	}
+}
+
+#Persian wins
+country_event = {
+	id = ab_byzantium_disaster.82
+	title = ab_byzantium_disaster.82.t
+	desc = ab_byzantium_disaster.82.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = ROM
+		is_in_war = {
+			attacker_leader = ROM
+			casus_belli = cb_roman_persian_war
+		}
+		NOT = {
+			num_of_owned_provinces_with = {
+				value = 1
+				superregion = near_east_superregion
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			white_peace = event_target:crisisPersia
+			near_east_superregion = {
+				remove_core = ROM
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.82.a
+		set_country_flag = byz_crisis_persians
+	}
+}
+
+#Establish Dioceses in Persia
+country_event = {
+	id = ab_byzantium_disaster.83
+	title = ab_byzantium_disaster.83.t
+	desc = ab_byzantium_disaster.83.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium_disaster.83.a
+		set_country_flag = byz_persian_war_victory
+		swap_non_generic_missions = yes
+		persia_superregion  = {
+			limit = {
+				owned_by = ROOT
+			}
+			add_permanent_province_modifier = {
+				name = byz_integrate_persia
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.83.b
+		trigger = {
+			owns = 2218
+			owns = 445
+		}
+		set_country_flag = byz_persian_war_victory
+		swap_non_generic_missions = yes
+		hidden_effect = {
+			persia_superregion  = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_permanent_province_modifier = {
+					name = byz_integrate_persia
+				}
+			}
+			persia_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				cede_province = RDZ
+			}
+			create_subject = {
+				who = RDZ
+				subject_type = diocese_vassal
+			}
+			RDZ = {
+				add_core = 2218
+				change_primary_culture = perso_roman
+				change_religion = orthodox
+				change_government = republic
+				kill_ruler = yes
+				add_government_reform = rom_diocese
+				set_capital = 2218
+				add_country_modifier = {
+					name = byz_loyal_diocese
+					duration = -1
+				}
+			}
+			2218 = {
+				change_culture = perso_roman 
+				add_province_modifier = {
+					name = byz_forced_romanized
+					duration = 7300 
+				}
+			}
+			khorasan_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				cede_province = RDV
+			}
+			create_subject = {
+				who = RDV
+				subject_type = diocese_vassal
+			}
+			RDV = {
+				add_core = 445
+				change_primary_culture = perso_roman
+				change_religion = orthodox
+				change_government = republic
+				kill_ruler = yes
+				add_government_reform = rom_diocese
+				set_capital = 445
+				add_country_modifier = {
+					name = byz_loyal_diocese
+					duration = -1
+				}
+			}
+			445 = {
+				change_culture = perso_roman 
+				add_province_modifier = {
+					name = byz_forced_romanized
+					duration = 7300 
+				}
+			}
+		}
+		custom_tooltip = BYZ_DIOCESE_IN_PERSIA
+	}
+}

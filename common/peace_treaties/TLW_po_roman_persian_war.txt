@@ -1,0 +1,52 @@
+po_roman_persian_war = {
+	category = 6
+	power_projection = humiliated_rival
+	power_cost_base = 1.0
+	prestige_base = 1.0
+	ae_base = 0.6
+	warscore_cost = {
+		all_provinces = 0
+		no_provinces = 100.0 
+		owner_keeps = 0.0 
+		conquered = 0.0 
+		returned_core = 0.0 
+		released_nation = 0.0 
+		cancelled_subject = 0.0 
+		concede_colonial_region = 0.0 
+	}
+	warscore_cap = 100
+	requires_is_allowed = yes
+
+	is_visible = {
+		always = yes
+	}
+	is_allowed = {
+		always = yes
+	}
+
+	effect = {
+		persia_superregion  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		persia_superregion  = {
+			limit = {
+				owned_by = event_target:crisisPersia
+			}
+			cede_province = ROOT
+		}
+		set_country_flag = byz_crisis_persians
+		country_event = {
+			id = ab_byzantium_disaster.83
+		}
+	}
+	ai_weight = { 
+		export_to_variable = {
+			variable_name = ai_value 
+			value = 100
+		}
+	}
+}
