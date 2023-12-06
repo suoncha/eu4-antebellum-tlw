@@ -2423,7 +2423,10 @@ country_event = {
 	hidden = yes 
 
 	trigger = {
-		is_subject_of_type = diocese_vassal
+		OR = {
+			is_subject_of_type = diocese_vassal
+			is_subject_of_type = grand_diocese_vassal
+		}
 		ROM = { has_disaster = byzantium_biased_cultural_sphere }
 		any_neighbor_country = {
 			OR = {
@@ -2605,7 +2608,7 @@ country_event = {
 							area = samtskhe_area
 							area = kartli_kakheti_area
 						}
-						has_country_flag = rom_caucasia_isof_anatolia
+						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 					}
 					AND = {
 						region = manchuria_region
@@ -2648,7 +2651,7 @@ province_event = {
 					area = samtskhe_area
 					area = kartli_kakheti_area
 				}
-				has_country_flag = rom_caucasia_isof_anatolia
+				ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 			}
 			AND = {
 				region = manchuria_region
@@ -2737,7 +2740,7 @@ country_event = {
 								area = samtskhe_area
 								area = kartli_kakheti_area
 							}
-							has_country_flag = rom_caucasia_isof_anatolia
+							ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 						}
 						AND = {
 							region = manchuria_region
@@ -2844,7 +2847,7 @@ country_event = {
 									area = samtskhe_area
 									area = kartli_kakheti_area
 								}
-								has_country_flag = rom_caucasia_isof_anatolia
+								ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 							}
 							AND = {
 								region = manchuria_region
@@ -2972,7 +2975,7 @@ country_event = {
 							area = samtskhe_area
 							area = kartli_kakheti_area
 						}
-						has_country_flag = rom_caucasia_isof_persia
+						ROM = { has_country_flag = rom_caucasia_isof_persia }
 					}
 				}
 			}
@@ -3006,7 +3009,7 @@ province_event = {
 					area = samtskhe_area
 					area = kartli_kakheti_area
 				}
-				has_country_flag = rom_caucasia_isof_persia
+				ROM = { has_country_flag = rom_caucasia_isof_persia }
 			}
 		}
 		ROM = {
@@ -3086,7 +3089,7 @@ country_event = {
 								area = samtskhe_area
 								area = kartli_kakheti_area
 							}
-							has_country_flag = rom_caucasia_isof_persia
+							ROM = { has_country_flag = rom_caucasia_isof_persia }
 						}
 					}
 					OR = {
@@ -3184,7 +3187,7 @@ country_event = {
 									area = samtskhe_area
 									area = kartli_kakheti_area
 								}
-								has_country_flag = rom_caucasia_isof_persia
+								ROM = { has_country_flag = rom_caucasia_isof_persia }
 							}
 						}
 					}
@@ -3460,7 +3463,7 @@ country_event = {
 			UKR = {
 				owes_favors = {
 					who = ROOT
-					value = 60
+					value = 30
 				}
 			}
 		}
@@ -3468,7 +3471,7 @@ country_event = {
 		add_years_of_income = -2.0
 		add_favors = {
 			who = UKR
-			amount = -60
+			amount = -30
 		}
 		add_corruption = 2
 		add_adm_power = -200
@@ -3490,7 +3493,7 @@ country_event = {
 			UKR = {
 				owes_favors = {
 					who = ROOT
-					value = 100
+					value = 50
 				}
 			}
 		}
@@ -3498,7 +3501,7 @@ country_event = {
 		add_years_of_income = -4.0
 		add_favors = {
 			who = UKR
-			amount = -100
+			amount = -50
 		}
 		add_corruption = 4
 		add_adm_power = -400
@@ -4210,31 +4213,53 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.81.a
 		set_country_flag = byz_crisis_persians
-		custom_tooltip = BYZ_EASTERN_CONQUEST_LOST
 		add_absolutism = -50
 		add_prestige = -100	
+		custom_tooltip = BYZ_EASTERN_CONQUEST_LOST
 		custom_tooltip = BYZ_SURRENDER_MESOPOTAMIA
 		hidden_effect = {
 			caucasia_region = {
 				limit = {
 					NOT = { area = circassia_area }
 					NOT = { area = dagestan_area }
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
 				}
 				cede_province = event_target:crisisPersia
 				add_core = event_target:crisisPersia
 				remove_core = ROM
 			}
 			iraq_arabi_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
 				cede_province = event_target:crisisPersia
 				add_core = event_target:crisisPersia
 				remove_core = ROM
 			}
 			basra_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
 				cede_province = event_target:crisisPersia
 				add_core = event_target:crisisPersia
 				remove_core = ROM
 			}
 			al_jazira_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
 				cede_province = event_target:crisisPersia
 				add_core = event_target:crisisPersia
 				remove_core = ROM
@@ -4259,29 +4284,75 @@ country_event = {
 				limit = {
 					NOT = { area = circassia_area }
 					NOT = { area = shirvan_area }
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+						owned_by = event_target:crisisPersia
+						owned_by_subject_of = event_target:crisisPersia
+					}
 				}
 				cede_province = GEO
 				add_core = GEO
 				remove_core = ROM
 				remove_core = event_target:crisisPersia
 			}
+			GEO = {
+				if = {
+					limit = {
+						is_subject = yes
+					}
+					grant_independence = yes
+				}
+			}
 			iraq_arabi_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+						owned_by = event_target:crisisPersia
+						owned_by_subject_of = event_target:crisisPersia
+					}
+				}
 				cede_province = JLR
 				add_core = JLR
 				remove_core = ROM
 				remove_core = event_target:crisisPersia
 			}
 			basra_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+						owned_by = event_target:crisisPersia
+						owned_by_subject_of = event_target:crisisPersia
+					}
+				}
 				cede_province = JLR
 				add_core = JLR
 				remove_core = ROM
 				remove_core = event_target:crisisPersia
 			}
 			al_jazira_area = {
+				limit = {
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+						owned_by = event_target:crisisPersia
+						owned_by_subject_of = event_target:crisisPersia
+					}
+				}
 				cede_province = JLR
 				add_core = JLR
 				remove_core = ROM
 				remove_core = event_target:crisisPersia
+			}
+			JLR = {
+				if = {
+					limit = {
+						is_subject = yes
+					}
+					grant_independence = yes
+				}
 			}
 			remove_historical_rival = event_target:crisisPersia
 			remove_opinion = {
@@ -4329,6 +4400,7 @@ country_event = {
 		hidden_effect = {
 			every_country = {
 				limit = {
+					is_subject = no
 					capital_scope = {
 						OR = {
 							AND = {
@@ -4342,33 +4414,43 @@ country_event = {
 							region = hindusthan_region
 						}
 					}
+					has_opinion = {
+						who = ROM
+						value = 100
+					}
+					NOT = {
+						has_opinion = {
+							who = event_target:crisisPersia
+							value = 50
+						}
+					}
 				}
-				if = {
-					limit = {
+				join_all_offensive_wars_of = ROM
+			}
+			every_country = {
+				limit = {
+					is_subject = no
+					capital_scope = {
+						OR = {
+							AND = {
+								superregion = persia_superregion
+								NOT = { area = circassia_area }
+								NOT = { area = dagestan_area }
+							}
+							region = arabia_region
+							region = central_asia_region
+							region = west_india_region
+							region = hindusthan_region
+						}
+					}
+					NOT = {
 						has_opinion = {
 							who = ROM
 							value = 100
 						}
-						NOT = {
-							has_opinion = {
-								who = event_target:crisisPersia
-								value = 50
-							}
-						}
 					}
-					join_all_offensive_wars_of = ROM
 				}
-				else_if = {
-					limit = {
-						NOT = {
-							has_opinion = {
-								who = ROM
-								value = 100
-							}
-						}
-					}
-					join_all_defensive_wars_of = event_target:crisisPersia
-				}
+				join_all_defensive_wars_of = event_target:crisisPersia
 			}
 			every_subject_country = {
 				limit = {
@@ -4376,6 +4458,7 @@ country_event = {
 					has_country_flag = byz_persian_war_romeside
 				}
 				join_all_offensive_wars_of = ROM
+				clr_country_flag = byz_persian_war_romeside
 			}
 		}
 		
@@ -4416,6 +4499,7 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.82.a
+		custom_tooltip = BYZ_EASTERN_CONQUEST_LOST
 		set_country_flag = byz_crisis_persians
 	}
 }
@@ -4433,12 +4517,23 @@ country_event = {
 		name = ab_byzantium_disaster.83.a
 		set_country_flag = byz_persian_war_victory
 		swap_non_generic_missions = yes
-		persia_superregion  = {
-			limit = {
-				owned_by = ROOT
-			}
-			add_permanent_province_modifier = {
-				name = byz_integrate_persia
+		custom_tooltip = BYZ_CHEAPER_PERSIA_CORE
+		hidden_effect = {
+			persia_region  = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_permanent_province_modifier = {
+					name = byz_integrate_persia
+				}
+			}	
+			khorasan_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_permanent_province_modifier = {
+					name = byz_integrate_persia
+				}
 			}
 		}
 	}
@@ -4451,21 +4546,17 @@ country_event = {
 		}
 		set_country_flag = byz_persian_war_victory
 		swap_non_generic_missions = yes
+		custom_tooltip = BYZ_CHEAPER_PERSIA_CORE
 		hidden_effect = {
-			persia_superregion  = {
-				limit = {
-					owned_by = ROOT
-				}
-				add_permanent_province_modifier = {
-					name = byz_integrate_persia
-				}
-			}
-			persia_region = {
+			persia_region  = {
 				limit = {
 					owned_by = ROOT
 				}
 				cede_province = RDZ
-			}
+				add_permanent_province_modifier = {
+					name = byz_integrate_persia
+				}
+			}	
 			create_subject = {
 				who = RDZ
 				subject_type = diocese_vassal
@@ -4495,6 +4586,9 @@ country_event = {
 					owned_by = ROOT
 				}
 				cede_province = RDV
+				add_permanent_province_modifier = {
+					name = byz_integrate_persia
+				}
 			}
 			create_subject = {
 				who = RDV

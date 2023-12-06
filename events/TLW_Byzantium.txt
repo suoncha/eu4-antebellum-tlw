@@ -447,11 +447,42 @@ province_event = {
 		modifier = {
 			factor = 0.5
 			OR = {
-				superregion = europe_superregion
+				AND = {
+					superregion = europe_superregion
+					NOT = { area = carinthia_area }
+				}
 				region = maghreb_region
+				region = carpathia_region
 			}
 			ROM = {
 				mission_completed = byzantium_cities_latin
+			}
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				region = khorasan_region
+				region = persia_region
+				AND = {
+					OR = {
+						area = shirvan_area
+						area = armenia_area
+						area = imereti_area
+						area = samtskhe_area
+						area = kartli_kakheti_area
+					}
+					ROM = { has_country_flag = rom_caucasia_isof_persia }
+				}
+			}
+			ROM = {
+				mission_completed = byzantium_persosphere
+			}
+		}
+		modifier = {
+			factor = 0.5
+			superregion = india_superregion
+			ROM = {
+				has_country_flag = byz_faster_romanization_india
 			}
 		}
 		modifier = {
@@ -1610,6 +1641,66 @@ country_event = {
 	option = {
 		name = ab_byzantium.84.a
 		remove_country_modifier = byz_max_diocese_professionalism
+	}
+}
+
+#Remove Integrating Persia modifier
+province_event = {
+	id = ab_byzantium.85
+	title = ab_byzantium.85.t
+	desc = ab_byzantium.85.d
+	picture = AB_COURT_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		OR = {
+			region = persia_region
+			region = khorasan_region
+		}
+		has_province_modifier = byz_integrate_persia
+		OR = {
+			is_core = ROM
+			is_core = RDZ
+			is_core = RDV
+		}
+	}
+
+	option = {
+		name = ab_byzantium.85.a
+		remove_province_modifier = byz_integrate_persia
+	}
+}
+
+#Caucasia Identity
+country_event = { 
+	id = ab_byzantium.86
+	title = ab_byzantium.86.t 
+	desc = ab_byzantium.86.d 
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.86.a
+		ai_chance = { factor = 50 }
+		add_country_modifier = {
+			name = byz_caucasia_greek
+			duration = -1
+		}
+		custom_tooltip = BYZ_ANATOLIA_CAUCASIA
+		set_country_flag = rom_caucasia_isof_anatolia
+	}
+
+	option = {
+		name = ab_byzantium.86.b
+		ai_chance = { factor = 50 }
+		add_country_modifier = {
+			name = byz_caucasia_persian
+			duration = -1
+		}
+		custom_tooltip = BYZ_PERSIA_CAUCASIA
+		set_country_flag = rom_caucasia_isof_persia
 	}
 }
 

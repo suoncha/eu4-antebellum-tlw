@@ -25,18 +25,37 @@ po_roman_persian_war = {
 	}
 
 	effect = {
+		event_target:crisisPersia = {
+			every_subject_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							region = persia_region
+							region = khorasan_region
+						}
+					}
+				}
+				event_target:crisisPersia = { inherit = PREV }
+			}
+		}
+		persia_region = {
+			limit = {
+				owned_by = event_target:crisisPersia
+			}
+			cede_province = ROOT
+		}
+		khorasan_region = {
+			limit = {
+				owned_by = event_target:crisisPersia
+			}
+			cede_province = ROOT
+		}
 		persia_superregion  = {
 			limit = {
 				NOT = { is_permanent_claim = ROOT	}
 				NOT = { is_core = ROOT	}
 			}
 			add_permanent_claim = ROOT
-		}
-		persia_superregion  = {
-			limit = {
-				owned_by = event_target:crisisPersia
-			}
-			cede_province = ROOT
 		}
 		set_country_flag = byz_crisis_persians
 		country_event = {
