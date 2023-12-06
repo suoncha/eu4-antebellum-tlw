@@ -1,4 +1,4 @@
-version="0.3"
+version="0.4"
 tags={
 	"Alternative History"
 	"Missions And Decisions"
@@ -8,10 +8,9 @@ tags={
 	"Religion"
 	"Military"
 }
-name="Ante Bellum - The Lost World"
+name="Ante Bellum - The Lost World - Local"
 dependencies={
 	"Ante Bellum"
 }
 picture="thumbnail.png"
 supported_version="1.36.1"
-remote_file_id="3058707890"
