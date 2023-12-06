@@ -17,6 +17,15 @@ call_diocese_into_wars = {
 	is_allowed = {
 		if = {
 			limit = {
+				FROM = { has_country_modifier = byz_diocese_inward_perfection }
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_IS_FORBID_WAR_10YEARS_TT
+				FROM = { NOT = { has_country_modifier = byz_diocese_inward_perfection } }
+			}
+		}
+		if = {
+			limit = {
 				has_any_disaster = yes
 			}
 			custom_trigger_tooltip = {
@@ -180,7 +189,100 @@ call_diocese_into_wars = {
 	on_decline = {
 	}
 
-	ai_will_do = { # this is a trigger
+	ai_will_do = {
+		always = yes
+	}
+}
+
+befriend_diocese = {
+	category = influence
+
+	require_acceptance = no
+
+	is_visible = {
+		has_government_attribute = ab_has_dioceses
+		FROM = {
+			is_subject_of = ROOT
+			is_subject_of_type = diocese_vassal
+			NOT = { has_country_modifier = byz_friend_diocese }
+		}
+	}
+
+	is_allowed = {
+		if = {
+			limit = {
+				any_subject_country = {
+					has_country_modifier = byz_friend_diocese
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HAS_FRIEND_DIOCESE
+				NOT = {
+					any_subject_country = {
+						has_country_modifier = byz_friend_diocese
+					}
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		FROM = {
+			add_country_modifier = {
+				name = byz_friend_diocese
+				duration = -1
+			}
+			every_owned_province = {
+				add_province_modifier = {
+					name = byz_friend_diocese_province
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = {
+		always = yes
+	}
+}
+
+unfriend_diocese = {
+	category = influence
+
+	require_acceptance = no
+
+	is_visible = {
+		has_government_attribute = ab_has_dioceses
+		FROM = {
+			is_subject_of = ROOT
+			is_subject_of_type = diocese_vassal
+			has_country_modifier = byz_friend_diocese
+		}
+	}
+
+	is_allowed = {
+	}
+
+	on_accept = {
+		FROM = {
+			remove_country_modifier = byz_friend_diocese
+			every_owned_province = {
+				limit = {
+					has_province_modifier = byz_friend_diocese_province
+				}
+				remove_province_modifier = byz_friend_diocese_province
+			}
+			add_liberty_desire = 40
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = {
 		always = yes
 	}
 }

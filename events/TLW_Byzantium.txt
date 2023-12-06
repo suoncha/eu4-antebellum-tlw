@@ -445,6 +445,12 @@ province_event = {
 			religion = owner
 		}
 		modifier = {
+			factor = 0.8
+			owner = {
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+		modifier = {
 			factor = 0.5
 			OR = {
 				AND = {
@@ -1705,21 +1711,935 @@ country_event = {
 }
 
 #testing event
-country_event = {
-	id = ab_byzantium.100
-	title = ab_byzantium.100.t
-	desc = ab_byzantium.100.d
-	picture = AB_COURT_eventPicture
+# country_event = {
+# 	id = ab_byzantium.100
+# 	title = ab_byzantium.100.t
+# 	desc = ab_byzantium.100.d
+# 	picture = AB_COURT_eventPicture
 
+# 	is_triggered_only = yes
+
+# 	option = {
+# 		name = ab_byzantium.100.a
+# 		set_country_flag = byz_persian_war_victory
+# 		swap_non_generic_missions = yes
+# 	}
+# }
+
+## CULTURAL SPHERES FLAVOR
+#New advisor
+country_event = {
+	id = ab_byzantium.1000
+	title = ab_byzantium.1000.t
+	desc = ab_byzantium.1000.d
+	picture = ADVISOR_eventPicture
+	
 	is_triggered_only = yes
 
+	trigger = {
+		has_reform = byzculturalsphere
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
 	option = {
-		name = ab_byzantium.100.a
-		set_country_flag = byz_persian_war_victory
-		swap_non_generic_missions = yes
+		name = ab_byzantium.1000.a
+		random_list = {
+			20 = { 
+				define_advisor = {
+					type = in_advisor
+					skill = 3
+					culture = roman_new
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = ae_advisor
+					skill = 3
+					culture = roman_new
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = natural_scientist
+					skill = 3
+					culture = roman_new
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = commandant
+					skill = 3
+					culture = roman_new
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = army_reformer
+					skill = 3
+					culture = roman_new
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 2
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1000.b
+		random_list = {
+			20 = { 
+				define_advisor = {
+					type = colonist
+					skill = 3
+					culture = greco_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = visionary
+					skill = 3
+					culture = greco_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = scholar
+					skill = 3
+					culture = greco_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = trader
+					skill = 3
+					culture = greco_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = naval_reformer
+					skill = 3
+					culture = greco_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 2
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1000.c
+		trigger = { has_faction = faction_byzpersian }
+		random_list = {
+			20 = { 
+				define_advisor = {
+					type = fortification_expert
+					skill = 3
+					culture = perso_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = quartermaster
+					skill = 3
+					culture = perso_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = magistrate
+					skill = 3
+					culture = perso_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = architect
+					skill = 3
+					culture = perso_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = missionary
+					skill = 3
+					culture = perso_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 2
+		}
+	}	
+
+	# option = {
+	# 	name = ab_byzantium.1000.d
+	# 	trigger = { has_faction = faction_byzchinese }
+	# }	
+}
+
+#New general
+country_event = {
+	id = ab_byzantium.1001
+	title = ab_byzantium.1001.t
+	desc = ab_byzantium.1001.d
+	picture = LAND_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_reform = byzculturalsphere
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium.1001.a
+		create_general = {
+			tradition = 75
+			add_fire = 1
+			culture = roman_new
+		}
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1001.b
+		create_general = {
+			tradition = 75
+			add_shock = 1
+			culture = greco_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1001.c
+		trigger = { has_faction = faction_byzpersian }
+		create_general = {
+			tradition = 75
+			add_manuever = 1
+			culture = perso_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 1
+		}
+	}	
+
+	# option = {
+	# 	name = ab_byzantium.1000.d
+	# 	trigger = { has_faction = faction_byzchinese }
+	# }	
+}
+
+#New admiral
+country_event = {
+	id = ab_byzantium.1002
+	title = ab_byzantium.1002.t
+	desc = ab_byzantium.1002.d
+	picture = BARBARY_PIRATES_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_reform = byzculturalsphere
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium.1002.a
+		create_admiral = {
+			tradition = 75
+			add_fire = 1
+			culture = roman_new
+		}
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1002.b
+		create_admiral = {
+			tradition = 75
+			add_shock = 1
+			culture = greco_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1002.c
+		trigger = { has_faction = faction_byzpersian }
+		create_admiral = {
+			tradition = 75
+			add_manuever = 1
+			culture = perso_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 1
+		}
+	}	
+
+	# option = {
+	# 	name = ab_byzantium.1000.d
+	# 	trigger = { has_faction = faction_byzchinese }
+	# }	
+}
+
+#New trade fleet
+country_event = {
+	id = ab_byzantium.1003
+	title = ab_byzantium.1003.t
+	desc = ab_byzantium.1003.d
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_reform = byzculturalsphere
+		any_owned_province = {
+			has_port = yes
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium.1003.a
+		random_province = {
+			limit = {
+				has_port = yes
+				OR = {
+					culture = roman_new
+					culture = gallo_roman
+					culture = afro_roman
+					culture = romano_british
+					culture = hispano_roman
+					culture = romano_germanic
+					culture = romano_nordic
+					culture = daco_roman
+					culture = romano_polish
+				}
+			}
+			for = {
+				amount = 5
+				effect = "
+					light_ship = ROM
+				"
+			}
+		}
+		add_treasury = -100
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1003.b
+		random_province = {
+			limit = {
+				has_port = yes
+				OR = {
+					culture = illyro_roman
+					culture = greco_roman
+					culture = romano_arabic
+					culture = russo_roman
+					culture = romano_scythic
+				}
+			}
+			for = {
+				amount = 5
+				effect = "
+					light_ship = ROM
+				"
+			}
+		}
+		add_treasury = -100
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1003.c
+		trigger = { has_faction = faction_byzpersian }
+		random_province = {
+			limit = {
+				has_port = yes
+				OR = {
+					culture = perso_roman
+					culture = indo_roman
+				}
+			}
+			for = {
+				amount = 5
+				effect = "
+					light_ship = ROM
+				"
+			}
+		}
+		add_treasury = -100
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 1
+		}
+	}	
+
+	# option = {
+	# 	name = ab_byzantium.1000.d
+	# 	trigger = { has_faction = faction_byzchinese }
+	# }	
+}
+
+#New university
+country_event = {
+	id = ab_byzantium.1004
+	title = ab_byzantium.1004.t
+	desc = ab_byzantium.1004.d
+	picture = UNIVERSITY_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_reform = byzculturalsphere
+		adm_tech = 17
+		any_province = {
+			owner = {
+				OR = {
+					tag = ROM
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
+				}
+			}
+			NOT = { has_building = university }
+			culture_group = roman_g
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium.1004.a
+		random_province = {
+			limit = {
+				OR = {
+					culture = roman_new
+					culture = gallo_roman
+					culture = afro_roman
+					culture = romano_british
+					culture = hispano_roman
+					culture = romano_germanic
+					culture = romano_nordic
+					culture = daco_roman
+					culture = romano_polish
+				}
+			}
+			add_building_construction = {
+				building = university
+				speed = 0.5
+				cost = 0.5
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzlatin
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1004.b
+		random_province = {
+			limit = {
+				OR = {
+					culture = illyro_roman
+					culture = greco_roman
+					culture = romano_arabic
+					culture = russo_roman
+					culture = romano_scythic
+				}
+			}
+			add_building_construction = {
+				building = university
+				speed = 0.5
+				cost = 0.5
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzgreek
+			influence = 1
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.1004.c
+		trigger = { has_faction = faction_byzpersian }
+		random_province = {
+			limit = {
+				OR = {
+					culture = perso_roman
+					culture = indo_roman
+				}
+			}
+			add_building_construction = {
+				building = university
+				speed = 0.5
+				cost = 0.5
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzpersian
+			influence = 1
+		}
+	}	
+
+	# option = {
+	# 	name = ab_byzantium.1000.d
+	# 	trigger = { has_faction = faction_byzchinese }
+	# }	
+}
+
+## DIOCESES FLAVOR
+#Diocese fight corruption
+country_event = {
+	id = ab_byzantium.2000
+	title = ab_byzantium.2000.t
+	desc = ab_byzantium.2000.d
+	picture = CORRUPTION_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_government_attribute = ab_has_dioceses
+		any_subject_country = {
+			is_subject_of_type = diocese_vassal
+			corruption = 1
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					corruption = 1
+				}
+				save_event_target_as = flavorDiocese
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2000.a
+		trigger = {
+			event_target:flavorDiocese = {
+				corruption = 2
+			}
+		}
+		add_corruption = 2
+		add_years_of_income = -0.5
+		event_target:flavorDiocese = {
+			add_corruption = -2
+			add_years_of_income = 1.0
+			add_liberty_desire = -10
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2000.b
+		add_corruption = 1
+		add_years_of_income = -0.25
+		event_target:flavorDiocese = {
+			add_corruption = -1
+			add_years_of_income = 0.5
+			add_liberty_desire = -5
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2000.c
+		event_target:flavorDiocese = {
+			add_liberty_desire = 20
+		}
 	}
 }
 
-## CULTURAL SPHERES FLAVOR
+#Diocese develop capital
+country_event = {
+	id = ab_byzantium.2001
+	title = ab_byzantium.2001.t
+	desc = ab_byzantium.2001.d
+	picture = CITY_DEVELOPMENT_eventPicture
+	
+	is_triggered_only = yes
 
-## DIOCESES FLAVOR
+	trigger = {
+		has_government_attribute = ab_has_dioceses
+		any_subject_country = {
+			is_subject_of_type = diocese_vassal
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+				}
+				save_event_target_as = flavorDiocese
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2001.a
+		add_adm_power = -150
+		add_dip_power = -150
+		add_mil_power = -150
+		event_target:flavorDiocese = {
+			capital_scope = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			add_liberty_desire = -10
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2001.b
+		add_adm_power = -75
+		add_dip_power = -75
+		add_mil_power = -75
+		event_target:flavorDiocese = {
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			add_liberty_desire = -5
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2001.c
+		event_target:flavorDiocese = {
+			add_liberty_desire = 20
+		}
+	}
+}
+
+#Diocese border conflict
+country_event = {
+	id = ab_byzantium.2002
+	title = ab_byzantium.2002.t
+	desc = ab_byzantium.2002.d
+	picture = BORDER_TENSION_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_government_attribute = ab_has_dioceses
+		any_subject_country = {
+			is_subject_of_type = diocese_vassal
+			any_neighbor_country = {
+				is_subject_of_type = diocese_vassal
+				NOT = {
+					has_opinion_modifier = {
+						who = PREV
+						modifier = opinion_dioceses_border_clash
+					}
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					any_neighbor_country = {
+						is_subject_of_type = diocese_vassal
+						NOT = {
+							has_opinion_modifier = {
+								who = PREV
+								modifier = opinion_dioceses_border_clash
+							}
+						}
+					}
+				}
+				save_event_target_as = flavorDiocese1
+				random_neighbor_country = {
+					limit = {
+						is_subject_of_type = diocese_vassal
+						NOT = {
+							has_opinion_modifier = {
+								who = PREV
+								modifier = opinion_dioceses_border_clash
+							}
+						}
+					}
+					save_event_target_as = flavorDiocese2
+				}
+			}	
+			event_target:flavorDiocese1 = {
+				add_opinion = {
+					who = event_target:flavorDiocese2
+					modifier = opinion_dioceses_border_clash
+				}
+			}
+			event_target:flavorDiocese2 = {
+				add_opinion = {
+					who = event_target:flavorDiocese1
+					modifier = opinion_dioceses_border_clash
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2002.a
+		event_target:flavorDiocese1 = {
+			add_treasury = 200
+			add_manpower = 10
+			add_liberty_desire = -20
+		}
+		event_target:flavorDiocese2 = {
+			add_treasury = -200
+			add_manpower = -10
+			add_liberty_desire = 20
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2002.b
+		event_target:flavorDiocese1 = {
+			add_treasury = -200
+			add_manpower = -10
+			add_liberty_desire = 20
+		}
+		event_target:flavorDiocese2 = {
+			add_treasury = 200
+			add_manpower = 10
+			add_liberty_desire = -20
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2002.c
+		event_target:flavorDiocese1 = {
+			add_liberty_desire = 10
+		}
+		event_target:flavorDiocese2 = {
+			add_liberty_desire = 20
+		}
+	}
+}
+
+#Diocese assassinate rival Vicarius
+country_event = {
+	id = ab_byzantium.2003
+	title = ab_byzantium.2003.t
+	desc = ab_byzantium.2003.d
+	picture = ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_government_attribute = ab_has_dioceses
+		any_subject_country = {
+			is_subject_of_type = diocese_vassal
+			any_neighbor_country = {
+				is_subject_of_type = diocese_vassal
+				has_opinion_modifier = {
+					who = PREV
+					modifier = opinion_dioceses_border_clash
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					any_neighbor_country = {
+						is_subject_of_type = diocese_vassal
+						has_opinion_modifier = {
+							who = PREV
+							modifier = opinion_dioceses_border_clash
+						}
+					}
+				}
+				save_event_target_as = flavorDiocese1
+				random_neighbor_country = {
+					limit = {
+						is_subject_of_type = diocese_vassal
+						has_opinion_modifier = {
+							who = PREV
+							modifier = opinion_dioceses_border_clash
+						}
+					}
+					save_event_target_as = flavorDiocese2
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2003.a
+		event_target:flavorDiocese1 = {
+			add_liberty_desire = -10
+		}
+		event_target:flavorDiocese2 = {
+			kill_ruler = yes
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2003.b
+		event_target:flavorDiocese1 = {
+			add_liberty_desire = 5
+		}
+	}
+}
+
+#Diocese inward perfection
+country_event = {
+	id = ab_byzantium.2004
+	title = ab_byzantium.2004.t
+	desc = ab_byzantium.2004.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_government_attribute = ab_has_dioceses
+		any_subject_country = {
+			is_subject_of_type = diocese_vassal
+			NOT = { has_country_modifier = byz_diocese_inward_perfection }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = diocese_vassal
+					NOT = { has_country_modifier = byz_diocese_inward_perfection }
+				}
+				save_event_target_as = flavorDiocese
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2004.a
+		custom_tooltip = BYZ_ALLOW_DIOCESE_INWARD_PERFECTION
+		event_target:flavorDiocese = {
+			add_country_modifier = {
+				name = byz_diocese_inward_perfection
+				duration = 3650
+			}
+			hidden_effect = {
+				every_owned_province = {
+					add_province_modifier = {
+						name = byz_diocese_inward_perfection_province
+						duration = 3650
+					}
+				}
+			}
+			add_liberty_desire = -10
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.2004.b
+		event_target:flavorDiocese = {
+			add_liberty_desire = 15
+		}
+	}
+}
