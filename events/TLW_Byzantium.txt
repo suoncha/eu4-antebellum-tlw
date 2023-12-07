@@ -756,6 +756,70 @@ province_event = {
 			}
 			change_culture = romano_scythic
 		}
+		else_if = {
+			limit = {
+				OR = {
+					region = tibet_region
+					region = burma_region
+					AND = {
+						region = xinan_region
+						NOT = { area = chuanbei_area }
+						NOT = { area = sichuan_area }
+					}
+				}
+			}
+			change_culture = tibeto_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_china_region
+					region = south_china_region
+					area = chuanbei_area
+					area = sichuan_area
+				}
+			}
+			change_culture = sino_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+			change_culture = romano_korean
+		}
+		else_if = {
+			limit = {
+				region = japan_region
+			}
+			change_culture = romano_japanese
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indo_china_region
+					area = north_tenasserim_area
+					area = tenasserim_area
+				}
+			}
+			change_culture = romano_tai
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indonesia_region
+					region = moluccas_region
+					AND = {
+						region = malaya_region
+						NOT = { area = north_tenasserim_area }
+						NOT = { area = tenasserim_area }
+					}
+				}
+			}
+			change_culture = tibeto_roman
+		}
 		else = {
 			change_culture = roman_new
 		}
@@ -1354,6 +1418,66 @@ country_event = {
 	}
 }
 
+#Employing Sinosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.74
+	title = ab_byzantium.74.t
+	desc = ab_byzantium.74.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzchinese
+		NOT = { has_country_modifier = byz_advisorchinese }
+		OR = {
+			employed_advisor = { culture = tibeto_roman }
+			employed_advisor = { culture = sino_roman }
+			employed_advisor = { culture = romano_korean }
+			employed_advisor = { culture = romano_japanese }
+			employed_advisor = { culture = romano_tai }
+			employed_advisor = { culture = romano_malay }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.74.a
+		add_country_modifier = {
+			name = byz_advisorchinese
+			duration = -1
+		}
+	}
+}
+
+#No Sinosphere Advisor - Hidden
+country_event = {
+	id = ab_byzantium.75
+	title = ab_byzantium.75.t
+	desc = ab_byzantium.75.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_faction = faction_byzchinese
+		has_country_modifier = byz_advisorchinese
+		NOT = {
+			employed_advisor = { culture = tibeto_roman }
+			employed_advisor = { culture = sino_roman }
+			employed_advisor = { culture = romano_korean }
+			employed_advisor = { culture = romano_japanese }
+			employed_advisor = { culture = romano_tai }
+			employed_advisor = { culture = romano_malay }
+		}
+
+	}
+	
+	option = {
+		name = ab_byzantium.75.a
+		remove_country_modifier = byz_advisorchinese
+	}
+}
+
 #Roman Republic Election
 country_event = {
 	id = ab_byzantium.76
@@ -1373,9 +1497,61 @@ country_event = {
 	option = {
 		name = ab_byzantium.76.a
 		clr_country_flag = byzrepublic_death_election
-		define_ruler = {
-			hide_skills = yes
-			culture = roman_new
+		random_list = {
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = roman_new
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = gallo_roman
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = afro_roman
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_british
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = hispano_roman
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_germanic
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_nordic
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = daco_roman
+				}
+			}
+			11 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_polish
+				}
+			}
 		}
 		add_faction_influence = {
 			faction = faction_byzlatin
@@ -1386,9 +1562,37 @@ country_event = {
 	option = {
 		name = ab_byzantium.76.b
 		clr_country_flag = byzrepublic_death_election
-		define_ruler = {
-			hide_skills = yes
-			culture = greco_roman
+		random_list = {
+			20 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = illyro_roman
+				}
+			}
+			20 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = greco_roman
+				}
+			}
+			20 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_arabic
+				}
+			}
+			20 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = russo_roman
+				}
+			}
+			20 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_scythic
+				}
+			}
 		}
 		add_faction_influence = {
 			faction = faction_byzgreek
@@ -1400,9 +1604,19 @@ country_event = {
 		name = ab_byzantium.76.c
 		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzpersian }
-		define_ruler = {
-			hide_skills = yes
-			culture = perso_roman
+		random_list = {
+			50 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = perso_roman
+				}
+			}
+			50 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = indo_roman
+				}
+			}
 		}
 		add_faction_influence = {
 			faction = faction_byzpersian
@@ -1414,9 +1628,43 @@ country_event = {
 		name = ab_byzantium.76.d
 		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzchinese }
-		define_ruler = {
-			hide_skills = yes
-			culture = perso_roman
+		random_list = {
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = tibeto_roman
+				}
+			}
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = sino_roman
+				}
+			}
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_korean
+				}
+			}
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_japanese
+				}
+			}
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_tai
+				}
+			}
+			16 = { 
+				define_ruler = {
+					hide_skills = yes
+					culture = romano_malay
+				}
+			}
 		}
 		add_faction_influence = {
 			faction = faction_byzchinese
@@ -1710,22 +1958,6 @@ country_event = {
 	}
 }
 
-#testing event
-# country_event = {
-# 	id = ab_byzantium.100
-# 	title = ab_byzantium.100.t
-# 	desc = ab_byzantium.100.d
-# 	picture = AB_COURT_eventPicture
-
-# 	is_triggered_only = yes
-
-# 	option = {
-# 		name = ab_byzantium.100.a
-# 		set_country_flag = byz_persian_war_victory
-# 		swap_non_generic_missions = yes
-# 	}
-# }
-
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
@@ -1910,10 +2142,61 @@ country_event = {
 		}
 	}	
 
-	# option = {
-	# 	name = ab_byzantium.1000.d
-	# 	trigger = { has_faction = faction_byzchinese }
-	# }	
+	option = {
+		name = ab_byzantium.1000.e
+		trigger = { has_faction = faction_byzchinese }
+		random_list = {
+			20 = { 
+				define_advisor = {
+					type = planner
+					skill = 3
+					culture = sino_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = treasurer
+					skill = 3
+					culture = sino_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = statesman
+					skill = 3
+					culture = sino_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = diplomat
+					skill = 3
+					culture = sino_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			20 = { 
+				define_advisor = {
+					type = master_of_mint
+					skill = 3
+					culture = sino_roman
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 2
+		}
+	}	
 }
 
 #New general
@@ -1973,10 +2256,19 @@ country_event = {
 		}
 	}	
 
-	# option = {
-	# 	name = ab_byzantium.1000.d
-	# 	trigger = { has_faction = faction_byzchinese }
-	# }	
+	option = {
+		name = ab_byzantium.1001.e
+		trigger = { has_faction = faction_byzchinese }
+		create_general = {
+			tradition = 75
+			add_siege = 1
+			culture = sino_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 1
+		}
+	}	
 }
 
 #New admiral
@@ -2036,10 +2328,19 @@ country_event = {
 		}
 	}	
 
-	# option = {
-	# 	name = ab_byzantium.1000.d
-	# 	trigger = { has_faction = faction_byzchinese }
-	# }	
+	option = {
+		name = ab_byzantium.1002.e
+		trigger = { has_faction = faction_byzchinese }
+		create_admiral = {
+			tradition = 75
+			add_siege = 1
+			culture = sino_roman
+		}
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 1
+		}
+	}	
 }
 
 #New trade fleet
@@ -2145,10 +2446,34 @@ country_event = {
 		}
 	}	
 
-	# option = {
-	# 	name = ab_byzantium.1000.d
-	# 	trigger = { has_faction = faction_byzchinese }
-	# }	
+	option = {
+		name = ab_byzantium.1003.e
+		trigger = { has_faction = faction_byzchinese }
+		random_province = {
+			limit = {
+				has_port = yes
+				OR = {
+					culture = tibeto_roman
+					culture = sino_roman
+					culture = romano_korean
+					culture = romano_japanese
+					culture = romano_tai
+					culture = romano_malay
+				}
+			}
+			for = {
+				amount = 5
+				effect = "
+					light_ship = ROM
+				"
+			}
+		}
+		add_treasury = -100
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 1
+		}
+	}	
 }
 
 #New university
@@ -2254,10 +2579,31 @@ country_event = {
 		}
 	}	
 
-	# option = {
-	# 	name = ab_byzantium.1000.d
-	# 	trigger = { has_faction = faction_byzchinese }
-	# }	
+	option = {
+		name = ab_byzantium.1004.e
+		trigger = { has_faction = faction_byzchinese }
+		random_province = {
+			limit = {
+				OR = {
+					culture = tibeto_roman
+					culture = sino_roman
+					culture = romano_korean
+					culture = romano_japanese
+					culture = romano_tai
+					culture = romano_malay
+				}
+			}
+			add_building_construction = {
+				building = university
+				speed = 0.5
+				cost = 0.5
+			}
+		}
+		add_faction_influence = {
+			faction = faction_byzchinese
+			influence = 1
+		}
+	}	
 }
 
 ## DIOCESES FLAVOR
@@ -2643,3 +2989,21 @@ country_event = {
 		}
 	}
 }
+
+# #debugging event
+# country_event = {
+# 	id = ab_byzantium.10000
+# 	title = ab_byzantium.10000.t
+# 	desc = ab_byzantium.10000.d
+# 	picture = AB_COURT_eventPicture
+
+# 	is_triggered_only = yes
+
+# 	option = {
+# 		name = ab_byzantium.10000.a
+# 		set_country_flag = byz_persian_war_victory
+# 		swap_non_generic_missions = yes
+# 		add_faction = faction_byzpersian
+# 		add_faction = faction_byzchinese
+# 	}
+# }
