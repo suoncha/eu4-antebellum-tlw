@@ -857,7 +857,13 @@ country_decisions = {
 				exists = RD9 
 			}
 			any_owned_province = {
-				region = balkan_region
+				OR = {
+					AND = {
+						region = balkan_region
+						culture = illyro_roman
+					}
+					area = carinthia_area
+				}
 			}
 		}
 		
@@ -876,12 +882,6 @@ country_decisions = {
 					limit = {
 						owned_by = ROOT
 						culture = illyro_roman
-					}
-					add_core = RD9
-				}
-				carpathia_region = {
-					limit = {
-						owned_by = ROOT
 					}
 					add_core = RD9
 				}
@@ -911,15 +911,6 @@ country_decisions = {
 						duration = 7300 
 					}
 				}
-				if = {
-					limit = {
-						OR = {
-							overlord_of = WAL
-		    				overlord_of = MOL
-						}
-					}
-					country_event = { id = ab_byzantium.58 }
-				}
 			}
 		}
 
@@ -937,9 +928,13 @@ country_decisions = {
 			overlord_of = RD9
 			any_owned_province = {
 				OR = {
-					region = carpathia_region
+					AND = {
+						region = balkan_region
+						culture = illyro_roman
+					}
 					area = carinthia_area
 				}
+				culture = illyro_roman
 			}
 		}
 		
@@ -952,9 +947,10 @@ country_decisions = {
 
 		effect = {
 			hidden_effect = {
-				carpathia_region = {
+				balkan_region = {
 					limit = {
 						owned_by = ROOT
+						culture = illyro_roman
 					}
 					add_core = RD9
 					cede_province = RD9
@@ -2075,6 +2071,984 @@ country_decisions = {
 					}
 					add_core = UKR
 					cede_province = UKR
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_dacia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDR
+			}
+			any_owned_province = {
+				region = carpathia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 153
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_DACIA
+			hidden_effect = {	
+				carpathia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDR
+				}
+				release = RDR
+				create_subject = {
+					who = RDR
+					subject_type = diocese_vassal
+				}
+				RDR = {
+					change_primary_culture = daco_roman
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 153
+				}
+				153 = {
+					change_culture = daco_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							overlord_of = WAL
+		    				overlord_of = MOL
+						}
+					}
+					country_event = { id = ab_byzantium.58 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_dacia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDR
+			any_owned_province = {
+				region = carpathia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				carpathia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDR
+					cede_province = RDR
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_tibetum = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDP
+			}
+			any_owned_province = {
+				OR = {
+					region = tibet_region
+					region = burma_region
+					AND = {
+						region = xinan_region
+						NOT = { area = sichuan_area }
+						NOT = { area = chuanbei_area }
+					}
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 677
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_TIBETUM
+			hidden_effect = {	
+				tibet_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDP
+				}
+				burma_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDP
+				}
+				xinan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { area = sichuan_area }
+						NOT = { area = chuanbei_area }
+					}
+					add_core = RDP
+				}
+				release = RDP
+				create_subject = {
+					who = RDP
+					subject_type = diocese_vassal
+				}
+				RDP = {
+					change_primary_culture = tibeto_roman
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 677
+				}
+				677 = {
+					change_culture = tibeto_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_tibetum = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDP
+			any_owned_province = {
+				OR = {
+					region = tibet_region
+					region = burma_region
+					AND = {
+						region = xinan_region
+						NOT = { area = sichuan_area }
+						NOT = { area = chuanbei_area }
+					}
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				tibet_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDP
+					cede_province = RDP
+				}
+				burma_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDP
+					cede_province = RDP
+				}
+				xinan_region = {
+					limit = {
+						owned_by = ROOT
+						NOT = { area = sichuan_area }
+						NOT = { area = chuanbei_area }
+					}
+					add_core = RDP
+					cede_province = RDP
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_sina_septentrionalis = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDD
+			}
+			any_owned_province = {
+				OR = {
+					region = north_china_region
+					area = sichuan_area
+					area = chuanbei_area
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 1816
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_SINA_SEPTENTRIONALIS
+			hidden_effect = {	
+				north_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+				}
+				sichuan_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+				}
+				chuanbei_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+				}
+				release = RDD
+				create_subject = {
+					who = RDD
+					subject_type = diocese_vassal
+				}
+				RDD = {
+					change_primary_culture = sino_roman
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 1816
+				}
+				1816 = {
+					change_culture = sino_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_sina_septentrionalis = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDD
+			any_owned_province = {
+				OR = {
+					region = north_china_region
+					area = sichuan_area
+					area = chuanbei_area
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				north_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+					cede_province = RDD
+				}
+				sichuan_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+					cede_province = RDD
+				}
+				chuanbei_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDD
+					cede_province = RDD
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_sina_australis = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDF
+			}
+			any_owned_province = {
+				region = south_china_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 1821
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_SINA_AUSTRALIS
+			hidden_effect = {	
+				south_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDF
+				}
+				release = RDF
+				create_subject = {
+					who = RDF
+					subject_type = diocese_vassal
+				}
+				RDF = {
+					change_primary_culture = sino_roman
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 1821
+				}
+				1821 = {
+					change_culture = sino_roman 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_sina_australis = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDF
+			any_owned_province = {
+				region = south_china_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				south_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDF
+					cede_province = RDF
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_iaponia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDG
+			}
+			any_owned_province = {
+				OR = {
+					region = japan_region
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+		}
+		
+		allow = {
+			owns_core_province = 1020
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_IAPONIA
+			hidden_effect = {	
+				japan_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+				}
+				korea_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+				}
+				liaoning_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+				}
+				release = RDG
+				create_subject = {
+					who = RDG
+					subject_type = diocese_vassal
+				}
+				RDG = {
+					change_primary_culture = romano_japanese
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 1020
+				}
+				1020 = {
+					change_culture = romano_japanese 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_iaponia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDG
+			any_owned_province = {
+				OR = {
+					region = japan_region
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				japan_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+					cede_province = RDG
+				}
+				korea_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+					cede_province = RDG
+				}
+				liaoning_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDG
+					cede_province = RDG
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_indosina = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDH
+			}
+			any_owned_province = {
+				region = indo_china_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 600
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_INDOSINA
+			hidden_effect = {	
+				indo_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDH
+				}
+				release = RDH
+				create_subject = {
+					who = RDH
+					subject_type = diocese_vassal
+				}
+				RDH = {
+					change_primary_culture = romano_tai
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 600
+				}
+				600 = {
+					change_culture = romano_tai 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_indosina = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDH
+			any_owned_province = {
+				region = indo_china_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				indo_china_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDH
+					cede_province = RDH
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_malaesia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDB
+			}
+			any_owned_province = {
+				region = malaya_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 596
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_MALAESIA
+			hidden_effect = {	
+				malaya_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDB
+				}
+				release = RDB
+				create_subject = {
+					who = RDB
+					subject_type = diocese_vassal
+				}
+				RDB = {
+					change_primary_culture = romano_malay
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 596
+				}
+				596 = {
+					change_culture = romano_malay 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_malaesia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDB
+			any_owned_province = {
+				region = malaya_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				malaya_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDB
+					cede_province = RDB
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_indonesia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDN
+			}
+			any_owned_province = {
+				region = indonesia_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 630
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_INDONESIA
+			hidden_effect = {	
+				indonesia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDN
+				}
+				release = RDN
+				create_subject = {
+					who = RDN
+					subject_type = diocese_vassal
+				}
+				RDN = {
+					change_primary_culture = romano_malay
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 630
+				}
+				630 = {
+					change_culture = romano_malay 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_indonesia = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDN
+			any_owned_province = {
+				region = indonesia_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				indonesia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDN
+					cede_province = RDN
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_diocese_moluccae = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			NOT = { 
+				exists = RDS
+			}
+			any_owned_province = {
+				region = moluccas_region
+			}
+		}
+		
+		allow = {
+			owns_core_province = 651
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_MOLUCCAE
+			hidden_effect = {	
+				moluccas_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDS
+				}
+				release = RDS
+				create_subject = {
+					who = RDS
+					subject_type = diocese_vassal
+				}
+				RDS = {
+					change_primary_culture = romano_malay
+					change_religion = orthodox
+					change_government = republic
+					kill_ruler = yes
+					add_government_reform = rom_diocese
+					set_capital = 651
+				}
+				651 = {
+					change_culture = romano_malay 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	feed_diocese_moluccae = {
+		major = yes
+
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			has_country_flag = diocese_decisions_yes
+			overlord_of = RDS
+			any_owned_province = {
+				region = moluccas_region
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { overextension_percentage = 0.001 }
+		}
+
+		effect = {
+			hidden_effect = {
+				moluccas_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RDS
+					cede_province = RDS
 				}
 			}
 		}

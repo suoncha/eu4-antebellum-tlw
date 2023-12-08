@@ -250,10 +250,7 @@ country_event = {
 			capital_scope = {
 				controlled_by = ROOT
 			}
-		}
-		war_score_against = {
-			who = NCI
-			value = 60
+			NOT = { war_score = -60 }
 		}
 	}
 
@@ -395,10 +392,7 @@ country_event = {
 			capital_scope = {
 				controlled_by = ROOT
 			}
-		}
-		war_score_against = {
-			who = BUL
-			value = 40
+			NOT = { war_score = -40 }
 		}
 	}
 
@@ -894,7 +888,7 @@ country_event = {
 	}
 }
 
-#Diocesis Illyria annex Romanians
+#Diocesis Dacia annex Romanians
 country_event = { 
 	id = ab_byzantium.58
 	title = ab_byzantium.58.t 
@@ -906,7 +900,7 @@ country_event = {
 	option = {
 		name = ab_byzantium.58.a
 		ai_chance = { factor = 90 }
-		RD9 = {
+		RDR = {
 			if = {
 				limit = {
 					WAL = {
@@ -1958,6 +1952,69 @@ country_event = {
 	}
 }
 
+#Byzantine Reconquest of the Levant
+country_event = { 
+	id = ab_byzantium.87
+	title = ab_byzantium.87.t 
+	desc = ab_byzantium.87.d 
+	picture = AB_BATTLE_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		mission_completed = byzantium_manzikert
+		tag = BYZ
+		offensive_war_with = NAZ
+		NAZ = { ai = yes }
+	}
+
+	option = {
+		name = ab_byzantium.87.a
+		hidden_effect = {
+			add_country_modifier = {
+				name = byz_reconquest_of_the_levant
+				duration = -1
+			}
+			NAZ = {
+				add_country_modifier = {
+					name = byz_reconquest_of_the_levant_nizzarids
+					duration = -1
+				}
+			}
+		}
+		custom_tooltip = BYZ_RECONQUEST_LEVANT_NIZZARIDS
+	}
+}
+
+#Byzantine Reconquest of the Levant - Remove modifier
+country_event = { 
+	id = ab_byzantium.88
+	title = ab_byzantium.88.t 
+	desc = ab_byzantium.88.d 
+	picture = AB_BATTLE_eventPicture
+	
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = BYZ
+		has_country_modifier = byz_reconquest_of_the_levant
+		NOT = { offensive_war_with = NAZ }
+	}
+
+	option = {
+		name = ab_byzantium.88.a
+		remove_country_modifier = byz_reconquest_of_the_levant
+		if = {
+			limit = {
+				exists = NAZ
+			}
+			NAZ = { remove_country_modifier = byz_reconquest_of_the_levant_nizzarids }
+		}
+	}
+}
+
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
@@ -2990,7 +3047,7 @@ country_event = {
 	}
 }
 
-# #debugging event
+# # #debugging event
 # country_event = {
 # 	id = ab_byzantium.10000
 # 	title = ab_byzantium.10000.t

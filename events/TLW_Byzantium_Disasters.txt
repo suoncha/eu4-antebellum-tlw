@@ -65,6 +65,51 @@ country_event = {
 	picture = AB_JUSTINIAN_eventPicture
 	
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = byzantium_court
+					}
+				}
+				complete_mission = byzantium_court
+			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = byzantium_economy
+					}
+				}
+				complete_mission = byzantium_economy
+			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = byzantium_imperial_army
+					}
+				}
+				complete_mission = byzantium_imperial_army
+			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = byzantium_traitors
+					}
+				}
+				complete_mission = byzantium_traitors
+			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = byzantium_crisis
+					}
+				}
+				complete_mission = byzantium_crisis
+			}
+		}
+	}
 	
 	option = {
 		name = ab_byzantium_disaster.1.a
@@ -74,7 +119,9 @@ country_event = {
 					mission_completed = byzantium_court
 				}
 			}
-			complete_mission = byzantium_court
+			tooltip = {
+				complete_mission = byzantium_court
+			}
 		}
 		if = {
 			limit = {
@@ -82,7 +129,9 @@ country_event = {
 					mission_completed = byzantium_economy
 				}
 			}
-			complete_mission = byzantium_economy
+			tooltip = {
+				complete_mission = byzantium_court
+			}
 		}
 		if = {
 			limit = {
@@ -90,7 +139,9 @@ country_event = {
 					mission_completed = byzantium_imperial_army
 				}
 			}
-			complete_mission = byzantium_imperial_army
+			tooltip = {
+				complete_mission = byzantium_court
+			}
 		}
 		if = {
 			limit = {
@@ -98,7 +149,9 @@ country_event = {
 					mission_completed = byzantium_traitors
 				}
 			}
-			complete_mission = byzantium_traitors
+			tooltip = {
+				complete_mission = byzantium_court
+			}
 		}
 		if = {
 			limit = {
@@ -106,72 +159,56 @@ country_event = {
 					mission_completed = byzantium_crisis
 				}
 			}
-			complete_mission = byzantium_crisis
-		}
-		if = {
-			limit = {
-				has_country_flag = byz_epirus_ruler
-			}
-			inherit = EPI
-			if = {
-				limit = {
-					has_heir = yes
-				}
-				hidden_effect = {
-					kill_heir = {}
-				}
+			tooltip = {
+				complete_mission = byzantium_court
 			}
 		}
 		if = {
 			limit = {
 				has_country_flag = byz_epirus_war
+				has_country_flag = byz_epirus_venice
+				151 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				149 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				4779 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				4705 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				147 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				144 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				4699 = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				morea_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				ionian_islands_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
-			if = {
-				limit = {
-					has_country_flag = byz_epirus_venice
-					151 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					149 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					4779 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					4705 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					147 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					144 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					4699 = {
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					morea_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
-					ionian_islands_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT	
-					}
+			custom_tooltip = BYZ_RESTORER_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = BYZ_perma_pp
+					amount = 15
 				}
-				custom_tooltip = BYZ_RESTORER_PP
-				hidden_effect = {
-					add_power_projection = {
-						type = BYZ_perma_pp
-						amount = 15
-					}
-				}
-				add_country_modifier = {
-					name = byz_restorer_angelid
-					duration = 18250
-				}
-				add_ruler_personality = augustus_personality
 			}
+			add_country_modifier = {
+				name = byz_restorer_angelid
+				duration = 18250
+			}
+			add_ruler_personality = augustus_personality
 		}
 		remove_country_modifier = byz_revolt_mil
 		set_country_flag = byz_finished_angelid_crisis
@@ -270,15 +307,13 @@ country_event = {
 		name = ab_byzantium_disaster.3.a
 		set_country_flag = had_fall_angelid
 		add_stability = 4
-		hidden_effect = {
-			define_ruler = {
-				name = "Manuel III"
-				adm = 4
-				dip = 3
-				mil = 5
-				dynasty = "Palaiologos"
-				claim = 100
-			}
+		define_ruler = {
+			name = "Manuel III"
+			adm = 4
+			dip = 3
+			mil = 5
+			dynasty = "Palaiologos"
+			claim = 100
 		}
 		if = {
 			limit = {
@@ -286,6 +321,13 @@ country_event = {
 			}
 			set_country_flag = byz_epirus_ruler
 			clr_country_flag = byz_epirus_war
+		}
+		inherit = EPI
+		if = {
+			limit = {
+				has_heir = yes
+			}
+			kill_heir = {}
 		}
 		if = {
 			limit = {
@@ -638,6 +680,12 @@ country_event = {
 				dynasty = "Laskaris"
 				claim = 50
 			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
+			}
 		}
 	}
 
@@ -650,6 +698,12 @@ country_event = {
 				mil = 4
 				dynasty = "Doukas"
 				claim = 50
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
 			}
 		}
 	}
@@ -664,6 +718,12 @@ country_event = {
 				dynasty = "Komnenos"
 				claim = 50
 			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
+			}
 		}
 	}
 
@@ -675,6 +735,12 @@ country_event = {
 				dip = 4
 				mil = 4
 				claim = 30
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
 			}
 		}
 	}
@@ -777,10 +843,15 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = had_16th_crisis
+		}
+	}
+
 	option = {
 		name = ab_byzantium_disaster.16.a
 		add_stability = 1
-		set_country_flag = had_16th_crisis
 	}
 }
 
@@ -2155,19 +2226,24 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = byz_biased_start
+			set_country_flag = byz_biased_end
+			clr_country_flag = byz_revolt_latinsphere
+			clr_country_flag = byz_revolt_hellenosphere
+			clr_country_flag = byz_revolt_persosphere
+			clr_country_flag = byz_revolt_sinosphere
+			clr_country_flag = byz_war_latinsphere
+			clr_country_flag = byz_war_hellenosphere
+			clr_country_flag = byz_war_persosphere
+			clr_country_flag = byz_war_sinosphere
+		}
+	}
+
 	option = {
 		name = ab_byzantium_disaster.38.a
 		add_stability = 1
-		clr_country_flag = byz_biased_start
-		set_country_flag = byz_biased_end
-		clr_country_flag = byz_revolt_latinsphere
-		clr_country_flag = byz_revolt_hellenosphere
-		clr_country_flag = byz_revolt_persosphere
-		clr_country_flag = byz_revolt_sinosphere
-		clr_country_flag = byz_war_latinsphere
-		clr_country_flag = byz_war_hellenosphere
-		clr_country_flag = byz_war_persosphere
-		clr_country_flag = byz_war_sinosphere
 	}
 }
 
@@ -3730,6 +3806,12 @@ country_event = {
 				dynasty = event_target:dioceseLeader
 				culture = event_target:dioceseLeader
 			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
+			}
 			white_peace = event_target:dioceseLeader
 			inherit = event_target:dioceseLeader
 			every_country = {
@@ -4337,6 +4419,7 @@ country_event = {
 			NOT = { superregion = eastern_europe_superregion }
 			NOT = { superregion = near_east_superregion }
 		}
+		NOT = { has_country_flag = diocese_choice_persian_war }
 	}
 
 	mean_time_to_happen = {
@@ -4350,6 +4433,7 @@ country_event = {
 				id = ab_byzantium_disaster.76
 			}
 		}
+		set_country_flag = diocese_choice_persian_war
 	}
 }
 
@@ -4391,6 +4475,7 @@ country_event = {
 				superregion = near_east_superregion
 			}
 		}
+		NOT = { has_country_flag = diocese_choice_persian_war }
 	}
 
 	mean_time_to_happen = {
@@ -4407,6 +4492,7 @@ country_event = {
 				id = ab_byzantium_disaster.78
 			}
 		}
+		set_country_flag = diocese_choice_persian_war
 	}
 
 	option = {
@@ -4419,6 +4505,7 @@ country_event = {
 				id = ab_byzantium_disaster.79
 			}
 		}
+		set_country_flag = diocese_choice_persian_war
 	}
 }
 
