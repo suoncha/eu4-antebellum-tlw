@@ -35,29 +35,37 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.1
 	title = ab_byzantium_disaster.1.t
-	desc = ab_byzantium_disaster.1.d
+	desc = {
+		trigger = {
+			dynasty = "Angelos"
+		}
+		desc = ab_byzantium_disaster.1.d1
+	}
+	desc = {
+		trigger = {
+			has_country_flag = byz_epirus_ruler
+			NOT = { has_country_flag = byz_epirus_venice }
+		}
+		desc = ab_byzantium_disaster.1.d2
+	}
+	desc = {
+		trigger = {
+			has_country_flag = byz_epirus_ruler
+			has_country_flag = byz_epirus_venice
+		}
+		desc = ab_byzantium_disaster.1.d3
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = byz_epirus_ruler }
+			NOT = { dynasty = "Angelos" }
+		}
+		desc = ab_byzantium_disaster.1.d4
+	}
 	picture = AB_JUSTINIAN_eventPicture
 	
 	is_triggered_only = yes
 	
-	immediate = {
-		if = {
-			limit = {
-				has_country_flag = byz_epirus_ruler
-			}
-			hidden_effect = {
-				define_ruler = {
-					name = "Manuel III"
-					adm = 4
-					dip = 3
-					mil = 5
-					dynasty = "Palaiologos"
-					claim = 100
-				}
-			}
-		}
-	}
-
 	option = {
 		name = ab_byzantium_disaster.1.a
 		if = {
@@ -262,6 +270,16 @@ country_event = {
 		name = ab_byzantium_disaster.3.a
 		set_country_flag = had_fall_angelid
 		add_stability = 4
+		hidden_effect = {
+			define_ruler = {
+				name = "Manuel III"
+				adm = 4
+				dip = 3
+				mil = 5
+				dynasty = "Palaiologos"
+				claim = 100
+			}
+		}
 		if = {
 			limit = {
 				has_country_flag = byz_epirus_war
@@ -676,7 +694,6 @@ country_event = {
 	trigger = {
 		tag = BYZ
 		has_disaster = byzantium_fall_angelid
-		has_country_flag = byz_epirus_venice
 		142 = {
 			country_or_non_sovereign_subject_holds = ROOT	
 		}
