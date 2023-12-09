@@ -1964,8 +1964,21 @@ country_event = {
 	trigger = {
 		mission_completed = byzantium_manzikert
 		tag = BYZ
-		offensive_war_with = NAZ
-		NAZ = { ai = yes }
+		OR = {
+			AND = {
+				exists = NAZ
+				offensive_war_with = NAZ
+				NAZ = { ai = yes }
+			}
+			AND = {
+				exists = ABS
+				offensive_war_with = ABS
+				ABS = {
+					ai = yes
+					was_tag = NAZ
+				}
+			}
+		}
 	}
 
 	option = {
@@ -1975,14 +1988,28 @@ country_event = {
 				name = byz_reconquest_of_the_levant
 				duration = -1
 			}
-			NAZ = {
-				add_country_modifier = {
-					name = byz_reconquest_of_the_levant_nizzarids
-					duration = -1
+			if = {
+				limit = {
+					exists = NAZ
 				}
+				NAZ = {
+					add_country_modifier = {
+						name = byz_reconquest_of_the_levant_nizzarids
+						duration = -1
+					}
+				}
+				custom_tooltip = BYZ_RECONQUEST_LEVANT_NIZZARIDS
+			}
+			else = {
+				ABS = {
+					add_country_modifier = {
+						name = byz_reconquest_of_the_levant_nizzarids
+						duration = -1
+					}
+				}
+				custom_tooltip = BYZ_RECONQUEST_LEVANT_ABBASIDS
 			}
 		}
-		custom_tooltip = BYZ_RECONQUEST_LEVANT_NIZZARIDS
 	}
 }
 
@@ -2001,6 +2028,7 @@ country_event = {
 		tag = BYZ
 		has_country_modifier = byz_reconquest_of_the_levant
 		NOT = { offensive_war_with = NAZ }
+		NOT = { offensive_war_with = ABS }
 	}
 
 	option = {
@@ -2011,6 +2039,15 @@ country_event = {
 				exists = NAZ
 			}
 			NAZ = { remove_country_modifier = byz_reconquest_of_the_levant_nizzarids }
+		}
+		else_if = {
+			limit = {
+				exists = ABS
+				ABS = {
+					was_tag = NAZ
+				}
+			}
+			ABS = { remove_country_modifier = byz_reconquest_of_the_levant_nizzarids }
 		}
 	}
 }
