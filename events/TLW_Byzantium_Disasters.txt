@@ -745,6 +745,18 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			add_stability = -3
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							culture_group = latin
+							is_part_of_hre = yes
+							NOT = { tag = PAP }
+						}
+					}
+				}
+				set_country_flag = byz_no_italian_league
+			}
 		}
 	}
 	
@@ -941,7 +953,18 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.19
 	title = ab_byzantium_disaster.19.t
-	desc = ab_byzantium_disaster.19.d
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = byz_no_italian_league }
+		}
+		desc = ab_byzantium_disaster.19.d1
+	}
+	desc = {
+		trigger = {
+			has_country_flag = byz_no_italian_league
+		}
+		desc = ab_byzantium_disaster.19.d2
+	}
 	picture = DEBATE_REPUBLICAN_eventPicture
 	
 	fire_only_once = yes
@@ -971,13 +994,18 @@ country_event = {
 			limit = { region = balkan_region }
 			leadered_peasant_rebels = 2
 		}
-		random_owned_province = {
-			limit = { region = balkan_region }
-			leadered_peasant_rebels = 2
-		}
-		random_owned_province = {
-			limit = { region = balkan_region }
-			leadered_peasant_rebels = 2
+		if = {
+			limit = {
+				has_country_flag = byz_no_italian_league
+			}
+			random_owned_province = {
+				limit = { region = balkan_region }
+				leadered_peasant_rebels = 2
+			}
+			random_owned_province = {
+				limit = { region = balkan_region }
+				leadered_peasant_rebels = 2
+			}
 		}
 		149 = {
 			spawn_rebels = {
@@ -1097,7 +1125,18 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.21
 	title = ab_byzantium_disaster.21.t
-	desc = ab_byzantium_disaster.21.d
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = byz_no_italian_league }
+		}
+		desc = ab_byzantium_disaster.21.d1
+	}
+	desc = {
+		trigger = {
+			has_country_flag = byz_no_italian_league
+		}
+		desc = ab_byzantium_disaster.21.d2
+	}
 	picture = AB_CHARGE_eventPicture
 	
 	fire_only_once = yes
@@ -1608,6 +1647,7 @@ country_event = {
 				offensive_war_with = RYB
 				has_country_flag = byz_crisis_ayyubids
 			}
+			NOT = { has_country_flag = byz_no_italian_league }
 		}
 		NOT = { has_global_flag = byz_picked_italian_leader }
 	}
@@ -4265,7 +4305,7 @@ country_event = {
 				add_historical_rival = ROOT
 				add_opinion = {
 					who = ROOT
-					modifier = opinion_ancient_rivalry
+					modifier = opinion_superpowers_rivalry
 				}
 				country_event = {
 					id = ab_byzantium_disaster.74
@@ -4275,7 +4315,7 @@ country_event = {
 		add_historical_rival = event_target:crisisPersia
 		add_opinion = {
 			who = event_target:crisisPersia
-			modifier = opinion_ancient_rivalry
+			modifier = opinion_superpowers_rivalry
 		}
 		country_event = {
 			id = ab_byzantium_disaster.73
@@ -4720,14 +4760,14 @@ country_event = {
 			remove_historical_rival = event_target:crisisPersia
 			remove_opinion = {
 				who = event_target:crisisPersia
-				modifier = opinion_ancient_rivalry
+				modifier = opinion_superpowers_rivalry
 			}
 			event_target:crisisPersia = {
 				remove_historical_rival = ROM
 				add_historical_friend = ROM
 				remove_opinion = {
 					who = ROM
-					modifier = opinion_ancient_rivalry
+					modifier = opinion_superpowers_rivalry
 				}
 				add_opinion = {
 					who = ROM
@@ -4979,5 +5019,80 @@ country_event = {
 			}
 		}
 		custom_tooltip = BYZ_DIOCESE_IN_PERSIA
+	}
+}
+
+## THE DRAGON EMPEROR -----
+#The Dragon Emperor Start
+country_event = {
+	id = ab_byzantium_disaster.84
+	title = ab_byzantium_disaster.84.t
+	desc = ab_byzantium_disaster.84.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.84.a
+		custom_tooltip = BYZ_CHINESE_WAR_INFO
+		hidden_effect = {
+			event_target:EmperorOfChina = {
+				add_historical_rival = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_superpowers_rivalry
+				}
+				country_event = {
+					id = ab_byzantium_disaster.86
+				}
+			}
+		}
+		add_historical_rival = event_target:EmperorOfChina
+		add_opinion = {
+			who = event_target:EmperorOfChina
+			modifier = opinion_superpowers_rivalry
+		}
+		tooltip = {
+			custom_tooltip = BYZ_CHINESE_EMPEROR_BUFF
+		}
+	}
+}
+
+#The Dragon Emperor End
+country_event = {
+	id = ab_byzantium_disaster.85
+	title = ab_byzantium_disaster.85.t
+	desc = ab_byzantium_disaster.85.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes 
+
+	option = {
+		name = ab_byzantium_disaster.85.a
+		set_country_flag = had_byz_dragon_emperor
+	}
+}
+
+#The Dragon Emperor - China Nof
+country_event = {
+	id = ab_byzantium_disaster.86
+	title = ab_byzantium_disaster.86.t
+	desc = ab_byzantium_disaster.86.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium_disaster.86.a
+		custom_tooltip = BYZ_CHINESE_WAR_INFO
+		custom_tooltip = BYZ_CHINESE_EMPEROR_BUFF
+		hidden_effect = {
+			add_country_modifier = {
+				name = byz_china_defense
+				duration = -1
+			}
+		}
 	}
 }
