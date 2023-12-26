@@ -1,26 +1,4 @@
 country_decisions = {
-
-	show_romanization_info = {
-		major = yes
-
-		potential = {
-			culture_group = roman_g
-			ai = no
-		}
-		
-		allow = {
-			always = no
-		}
-
-		effect = {
-			custom_tooltip = AB_ROMANIZATION_INFO
-		}
-
-		ai_will_do = {
-			factor = 0
-		}
-	}
-
 	restore_roman_empire_byz = {
 		major = yes
 
@@ -292,19 +270,7 @@ country_decisions = {
 						duration = -1
 					}
 				}
-				country_event = { id = ab_byzantium.67 }
-				if = {
-					limit = {
-						UKR = {
-							is_subject_of_type = grand_diocese_vassal
-						}
-					}
-					UKR = {
-						change_country_color = {
-							country = ROM
-						}
-					}
-				}		
+				country_event = { id = ab_byzantium.67 }	
 			}
 			if = {
 				limit = { has_custom_ideas = no }
@@ -495,17 +461,14 @@ country_decisions = {
 
 		allow = {
 			dip_power = 50
-			custom_trigger_tooltip = {
-				tooltip = ROMANIAN_VASSALS_LOYAL
-				WAL = {
-					NOT = {
-						liberty_desire = 50
-					}
+			WAL = {
+				NOT = {
+					liberty_desire = 50
 				}
-				MOL = {
-					NOT = {
-						liberty_desire = 50
-					}
+			}
+			MOL = {
+				NOT = {
+					liberty_desire = 50
 				}
 			}
 			is_at_war = no
@@ -520,6 +483,96 @@ country_decisions = {
 			}
 		}
 
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	rule_rus_byz = {
+		major = yes
+
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = rule_rus_byz_flag }
+			mission_completed = byzantium_heal_schism
+			UKR = {
+				NOT = { is_subject_of_type = grand_diocese_vassal }
+				NOT = { is_subject_of_type = personal_union }
+			}
+			OR = {
+				overlord_of = UKR
+				any_subject_country = {
+					has_reform = principality
+					NOT = { is_subject_of_type = personal_union }
+				}
+			}
+		}
+
+		allow = {
+			patriarch_authority = 1.0
+			OR = {
+				AND = {
+					overlord_of = UKR
+					UKR = {
+						NOT = { is_subject_of_type = personal_union }
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+				}
+				calc_true_if = {
+					all_subject_country = {
+						has_reform = principality
+						NOT = { is_subject_of_type = personal_union }
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			add_patriarch_authority = -1.0
+			if = {
+				limit = {
+					exists = UKR
+					overlord_of = UKR
+				}
+				hidden_effect = {
+					UKR = {
+						grant_independence = yes
+					}
+				}
+				create_subject = {
+					who = UKR
+					subject_type = personal_union
+				}
+			}
+			else = {
+				every_subject_country = {
+					limit = {
+						has_reform = principality
+						is_subject_of = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+					ROOT = {
+						create_subject = {
+							who = PREV
+							subject_type = personal_union
+						}
+					}
+				}
+			}
+			set_country_flag = rule_rus_byz_flag
+		}
+		
 		ai_will_do = {
 			factor = 1
 		}
@@ -543,7 +596,7 @@ country_decisions = {
 		effect = {
 			add_mil_power = -50
 			country_event = {
-				id = ab_byzantium.80
+				id = ab_byzantium.72
 			}
 		}
 

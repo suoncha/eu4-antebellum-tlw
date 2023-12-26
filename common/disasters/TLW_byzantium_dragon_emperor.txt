@@ -1,0 +1,114 @@
+byzantium_dragon_emperor = {
+	potential = {
+		was_tag = BYZ
+		mission_completed = byzantium_ariana
+		NOT = { has_country_flag = had_byz_dragon_emperor }
+	}
+	
+	can_start = {
+		tag = ROM
+		mission_completed = byzantium_maharajas
+		custom_trigger_tooltip = {
+			tooltip = BYZ_NEIGHBOR_CHINA
+			OR = {
+				is_neighbor_of = event_target:EmperorOfChina
+				any_subject_country = {
+					OR = {
+						is_subject_of_type = diocese_vassal
+						is_subject_of_type = grand_diocese_vassal
+					}
+					is_neighbor_of = event_target:EmperorOfChina
+				}
+			}
+		}
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 3
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RIVAL_CHINA
+				is_rival = event_target:EmperorOfChina
+			}
+		} 
+		modifier = {
+			factor = 1
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN0_CHINA
+				event_target:EmperorOfChina = {
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = 0
+						}
+					}
+				}
+			}
+		} 
+		modifier = {
+			factor = 1
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN50_CHINA
+				event_target:EmperorOfChina = {
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = -50
+						}
+					}
+				}
+			}
+		} 
+		modifier = {
+			factor = 2
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN100_CHINA
+				event_target:EmperorOfChina = {
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = -100
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 3
+			custom_trigger_tooltip = {
+				tooltip = BYZ_LESSTHAN150_CHINA
+				event_target:EmperorOfChina = {
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = -150
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	modifier = {
+		diplomatic_reputation = -2
+		improve_relation_modifier = -0.5
+		reduced_liberty_desire = -10
+		trade_efficiency = -0.25
+		can_not_declare_war = yes
+	}
+	
+	can_end = {
+		is_at_war = no
+		custom_trigger_tooltip = {
+			tooltip = BYZ_CRISIS_CHINESES
+			has_country_flag = byz_crisis_chineses
+		}
+	}
+	
+	on_start = ab_byzantium_disaster.88
+	on_end = ab_byzantium_disaster.89
+}

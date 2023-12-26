@@ -128,21 +128,6 @@ declarewar = {
 			}
 		}
 	}
-	effect = {
-		if = {
-			limit = {
-				has_global_flag = grand_crusades_enabled
-				has_country_flag = grand_crusader_war_monger_flag
-				is_in_war = {
-					attacker_leader = ROOT
-					casus_belli = cb_grand_crusade
-				}
-			}
-			FROM = {
-				save_global_event_target_as = grand_crusade_target
-			}
-		}
-	}
 	condition = {
 		tooltip = AI_CANNOT_DECLARE_WHEN_STABILITY_LOSS
 		potential = {
@@ -243,6 +228,19 @@ declarewar = {
 		# }
 		# AB {{{
 		# Thanks Inferno
+		if = {
+			limit = {
+				has_global_flag = grand_crusades_enabled
+				has_country_flag = grand_crusader_war_monger_flag
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_grand_crusade
+				}
+			}
+			FROM = {
+				save_global_event_target_as = grand_crusade_target
+			}
+		}
 		if = {
 			limit = {
 				NOT = { has_country_flag = frc_had_morale_modifier }
@@ -425,111 +423,5 @@ allianceaction = {
 	# ]]] 
 	effect = {
 		change_asha_vahishta = { value = 2 }
-	}
-}
-
-annexationaction = {
-	condition = {
-		tooltip = ANNEX_TOO_LOW
-		potential = {
-			FROM = {
-				OR = {
-					is_subject_of_type = core_eyalet
-					is_subject_of_type = appanage
-					vassal_of = ROOT
-				}
-			}
-		}
-		allow = {
-			FROM = {
-				has_opinion = {
-					who = ROOT
-					value = 190
-				}
-			}
-		}
-	}
-	#condition = {
-	#	tooltip = ANNEXINVALID
-	#	potential = {
-	#		FROM = {
-	#			vassal_of = ROOT
-	#		}
-	#	}
-	#	allow = {
-	#		FROM = {
-	#			years_in_vassalage_under = {
-	#				who = ROOT
-	#				years = 10
-	#			}
-	#		}
-	#	}
-	#}
-	condition = {
-		tooltip = CANNOT_ANNEX
-		potential = {
-			FROM = {
-				has_country_modifier = tur_mamlukian_administration
-			}
-		}
-		allow = {
-			FROM = {
-				NOT = { has_country_modifier = tur_mamlukian_administration }
-			}
-		}
-	}
-	# condition = {
-	# 	tooltip = NEEDS_50_CROWNLAND_TT
-	# 	potential = {
-	# 		has_government_attribute = need_crownland_to_annex
-	# 		NOT = { crown_land_share = 50 }
-	# 	}
-	# 	allow = {
-	# 		crown_land_share = 50
-	# 	}
-	# }
-	condition = {
-		tooltip = NEEDS_TO_HAVE_SEIZED_LAND
-		potential = {
-			has_government_attribute = has_appanages
-			NOT = {
-				check_variable = {
-					which = can_annex_appanages_points
-					value = 1
-				}
-			}
-		}
-		allow = {
-			check_variable = {
-				which = can_annex_appanages_points
-				value = 1
-			}
-		}
-	}
-	# TLW [[[
-	condition = {
-		tooltip = CANNOT_ANNEX_FRIEND_DIOCESE
-		potential = {
-			FROM = {
-				has_country_modifier = byz_friend_diocese
-			}
-		}
-		allow = {
-			FROM = {
-				NOT = { has_country_modifier = byz_friend_diocese }
-			}
-		}
-	}
-	# ]]]
-	effect = {
-		if = {
-			limit = {
-				FROM = { is_subject_of_type = appanage }
-			}
-			subtract_variable = {
-				which = can_annex_appanages_points
-				value = 1
-			}
-		}
 	}
 }

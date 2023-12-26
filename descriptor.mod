@@ -1,4 +1,4 @@
-version="0.4"
+version="0.5"
 tags={
 	"Alternative History"
 	"Missions And Decisions"
@@ -13,4 +13,4 @@ dependencies={
 	"Ante Bellum"
 }
 picture="thumbnail.png"
-supported_version="1.36.1"
+supported_version="1.36.2"

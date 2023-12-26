@@ -486,6 +486,45 @@ province_event = {
 			}
 		}
 		modifier = {
+			factor = 0.5
+			superregion = china_superregion
+			ROM = {
+				mission_completed = byzantium_china
+			}
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				region = burma_region
+				region = indo_china_region
+			}
+			ROM = {
+				mission_completed = byzantium_indochina
+			}
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				region = malaya_region
+				region = indonesia_region
+				region = moluccas_region
+			}
+			ROM = {
+				mission_completed = byzantium_east_indies
+			}
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				region = korea_region
+				region = japan_region
+				area = liaoning_area
+			}
+			ROM = {
+				mission_completed = byzantium_far_east
+			}
+		}
+		modifier = {
 			factor = 0.75
 			OR = {
 				culture_group = french
@@ -961,7 +1000,12 @@ country_event = {
 	option = {
 		name = ab_byzantium.60.a
 		custom_tooltip = NRM_CNS
-		custom_tooltip = BYZ_SEVENSEAS_MODIFIER
+		tooltip = {
+			add_country_modifier = {
+				name = byz_seven_seas_subject
+				duration = 36500
+			}
+		}
 		hidden_effect = {
 			every_country = {
 				limit = {
@@ -1243,260 +1287,24 @@ country_event = {
 	}
 }
 
-#Employing Latinosphere Advisor - Hidden
+#Roman Republic Election
 country_event = {
 	id = ab_byzantium.68
 	title = ab_byzantium.68.t
-	desc = ab_byzantium.68.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzlatin
-		NOT = { has_country_modifier = byz_advisorlatin }
-		OR = {
-			employed_advisor = { culture = roman_new }
-			employed_advisor = { culture = gallo_roman }
-			employed_advisor = { culture = afro_roman }
-			employed_advisor = { culture = romano_british }
-			employed_advisor = { culture = hispano_roman }
-			employed_advisor = { culture = romano_germanic }
-			employed_advisor = { culture = romano_nordic }
-			employed_advisor = { culture = daco_roman }
-			employed_advisor = { culture = romano_polish }
-		}
-	}
-	
-	option = {
-		name = ab_byzantium.68.a
-		add_country_modifier = {
-			name = byz_advisorlatin
-			duration = -1
-		}
-	}
-}
-
-#No Latinosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.69
-	title = ab_byzantium.69.t
-	desc = ab_byzantium.69.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzlatin
-		has_country_modifier = byz_advisorlatin
-		NOT = {
-			employed_advisor = { culture = roman_new }
-			employed_advisor = { culture = gallo_roman }
-			employed_advisor = { culture = afro_roman }
-			employed_advisor = { culture = romano_british }
-			employed_advisor = { culture = hispano_roman }
-			employed_advisor = { culture = romano_germanic }
-			employed_advisor = { culture = romano_nordic }
-			employed_advisor = { culture = daco_roman }
-			employed_advisor = { culture = romano_polish }
-		}
-
-	}
-	
-	option = {
-		name = ab_byzantium.69.a
-		remove_country_modifier = byz_advisorlatin
-	}
-}
-
-#Employing Hellenosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.70
-	title = ab_byzantium.70.t
-	desc = ab_byzantium.70.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzgreek
-		NOT = { has_country_modifier = byz_advisorgreek }
-		OR = {
-			employed_advisor = { culture = illyro_roman }
-			employed_advisor = { culture = greco_roman }
-			employed_advisor = { culture = romano_arabic }
-			employed_advisor = { culture = russo_roman }
-			employed_advisor = { culture = romano_scythic }
-		}
-	}
-	
-	option = {
-		name = ab_byzantium.70.a
-		add_country_modifier = {
-			name = byz_advisorgreek
-			duration = -1
-		}
-	}
-}
-
-#No Hellenosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.71
-	title = ab_byzantium.71.t
-	desc = ab_byzantium.71.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzgreek
-		has_country_modifier = byz_advisorgreek
-		NOT = {
-			employed_advisor = { culture = illyro_roman }
-			employed_advisor = { culture = greco_roman }
-			employed_advisor = { culture = romano_arabic }
-			employed_advisor = { culture = russo_roman }
-			employed_advisor = { culture = romano_scythic }
-		}
-
-	}
-	
-	option = {
-		name = ab_byzantium.71.a
-		remove_country_modifier = byz_advisorgreek
-	}
-}
-
-#Employing Persosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.72
-	title = ab_byzantium.72.t
-	desc = ab_byzantium.72.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzpersian
-		NOT = { has_country_modifier = byz_advisorpersian }
-		OR = {
-			employed_advisor = { culture = perso_roman }
-			employed_advisor = { culture = indo_roman }
-		}
-	}
-	
-	option = {
-		name = ab_byzantium.72.a
-		add_country_modifier = {
-			name = byz_advisorpersian
-			duration = -1
-		}
-	}
-}
-
-#No Persosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.73
-	title = ab_byzantium.73.t
-	desc = ab_byzantium.73.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzpersian
-		has_country_modifier = byz_advisorpersian
-		NOT = {
-			employed_advisor = { culture = perso_roman }
-			employed_advisor = { culture = indo_roman }
-		}
-
-	}
-	
-	option = {
-		name = ab_byzantium.73.a
-		remove_country_modifier = byz_advisorpersian
-	}
-}
-
-#Employing Sinosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.74
-	title = ab_byzantium.74.t
-	desc = ab_byzantium.74.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzchinese
-		NOT = { has_country_modifier = byz_advisorchinese }
-		OR = {
-			employed_advisor = { culture = tibeto_roman }
-			employed_advisor = { culture = sino_roman }
-			employed_advisor = { culture = romano_korean }
-			employed_advisor = { culture = romano_japanese }
-			employed_advisor = { culture = romano_tai }
-			employed_advisor = { culture = romano_malay }
-		}
-	}
-	
-	option = {
-		name = ab_byzantium.74.a
-		add_country_modifier = {
-			name = byz_advisorchinese
-			duration = -1
-		}
-	}
-}
-
-#No Sinosphere Advisor - Hidden
-country_event = {
-	id = ab_byzantium.75
-	title = ab_byzantium.75.t
-	desc = ab_byzantium.75.d
-	picture = BAD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_faction = faction_byzchinese
-		has_country_modifier = byz_advisorchinese
-		NOT = {
-			employed_advisor = { culture = tibeto_roman }
-			employed_advisor = { culture = sino_roman }
-			employed_advisor = { culture = romano_korean }
-			employed_advisor = { culture = romano_japanese }
-			employed_advisor = { culture = romano_tai }
-			employed_advisor = { culture = romano_malay }
-		}
-
-	}
-	
-	option = {
-		name = ab_byzantium.75.a
-		remove_country_modifier = byz_advisorchinese
-	}
-}
-
-#Roman Republic Election
-country_event = {
-	id = ab_byzantium.76
-	title = ab_byzantium.76.t
 	desc = {
 		trigger = { NOT = { has_country_flag = byzrepublic_death_election } }
-		desc = ab_byzantium.76.d1
+		desc = ab_byzantium.68.d1
 	}
 	desc = {
 		trigger = { has_country_flag = byzrepublic_death_election }
-		desc = ab_byzantium.76.d2
+		desc = ab_byzantium.68.d2
 	}
 	picture = ELECTION_REPUBLICAN_eventPicture
 
 	is_triggered_only = yes
 
 	option = {
-		name = ab_byzantium.76.a
+		name = ab_byzantium.68.a
 		clr_country_flag = byzrepublic_death_election
 		random_list = {
 			11 = { 
@@ -1561,7 +1369,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.76.b
+		name = ab_byzantium.68.b
 		clr_country_flag = byzrepublic_death_election
 		random_list = {
 			20 = { 
@@ -1602,7 +1410,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.76.c
+		name = ab_byzantium.68.c
 		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzpersian }
 		random_list = {
@@ -1626,7 +1434,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.76.d
+		name = ab_byzantium.68.d
 		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzchinese }
 		random_list = {
@@ -1676,15 +1484,15 @@ country_event = {
 
 #Suppressed Diocese
 country_event = {
-	id = ab_byzantium.77
-	title = ab_byzantium.77.t
-	desc = ab_byzantium.77.d
+	id = ab_byzantium.69
+	title = ab_byzantium.69.t
+	desc = ab_byzantium.69.d
 	picture = CONQUEST_eventPicture
 
 	is_triggered_only = yes
 
 	option = {
-		name = ab_byzantium.77.a
+		name = ab_byzantium.69.a
 		inherit = event_target:suppressDiocese
 		every_subject_country = {
 			limit = { is_subject_of_type = diocese_vassal }
@@ -1696,7 +1504,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.77.b
+		name = ab_byzantium.69.b
 		create_subject = {
 			subject_type = diocese_vassal
 			subject = event_target:suppressDiocese
@@ -1718,9 +1526,9 @@ country_event = {
 
 #Unromanized Province modifier
 province_event = {
-	id = ab_byzantium.78
-	title = ab_byzantium.78.t
-	desc = ab_byzantium.78.d
+	id = ab_byzantium.70
+	title = ab_byzantium.70.t
+	desc = ab_byzantium.70.d
 	picture = AB_COURT_eventPicture
 
 	hidden = yes
@@ -1734,7 +1542,7 @@ province_event = {
 	}
 
 	option = {
-		name = ab_byzantium.78.a
+		name = ab_byzantium.70.a
 		add_province_modifier = {
 			name = byz_unromanized_province
 			duration = -1
@@ -1744,9 +1552,9 @@ province_event = {
 
 #Romanized Province modifier
 province_event = {
-	id = ab_byzantium.79
-	title = ab_byzantium.79.t
-	desc = ab_byzantium.79.d
+	id = ab_byzantium.71
+	title = ab_byzantium.71.t
+	desc = ab_byzantium.71.d
 	picture = AB_COURT_eventPicture
 
 	hidden = yes
@@ -1760,7 +1568,7 @@ province_event = {
 	}
 
 	option = {
-		name = ab_byzantium.79.a
+		name = ab_byzantium.71.a
 		remove_province_modifier = byz_unromanized_province
 		add_province_modifier = {
 			name = byz_romanized_province
@@ -1771,15 +1579,15 @@ province_event = {
 
 # General Focus
 country_event = {
-	id = ab_byzantium.80
-	title = ab_byzantium.80.t
-	desc = ab_byzantium.80.d
+	id = ab_byzantium.72
+	title = ab_byzantium.72.t
+	desc = ab_byzantium.72.d
 	picture = AB_BELISARIUS_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ab_byzantium.80.a
+		name = ab_byzantium.72.a
 		add_country_modifier = {
 			name = byz_fire_focused
 			duration = 3650
@@ -1787,7 +1595,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.80.b
+		name = ab_byzantium.72.b
 		add_country_modifier = {
 			name = byz_shock_focused
 			duration = 3650
@@ -1795,7 +1603,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.80.c
+		name = ab_byzantium.72.c
 		add_country_modifier = {
 			name = byz_manuever_focused
 			duration = 3650
@@ -1803,7 +1611,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.80.e
+		name = ab_byzantium.72.e
 		add_country_modifier = {
 			name = byz_siege_focused
 			duration = 3650
@@ -1813,15 +1621,15 @@ country_event = {
 
 # Max Legion Professionalism Reach
 country_event = {
-	id = ab_byzantium.81
-	title = ab_byzantium.81.t
-	desc = ab_byzantium.81.d
+	id = ab_byzantium.73
+	title = ab_byzantium.73.t
+	desc = ab_byzantium.73.d
 	picture = NOBLE_ESTATE_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ab_byzantium.81.a
+		name = ab_byzantium.73.a
 		add_country_modifier = {
 			name = byz_max_legion_professionalism
 			duration = -1
@@ -1832,15 +1640,15 @@ country_event = {
 
 # Max Diocese Professionalism Reach
 country_event = {
-	id = ab_byzantium.82
-	title = ab_byzantium.82.t
-	desc = ab_byzantium.82.d
+	id = ab_byzantium.74
+	title = ab_byzantium.74.t
+	desc = ab_byzantium.74.d
 	picture = NOBLE_ESTATE_TAKE_OVER_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ab_byzantium.82.a
+		name = ab_byzantium.74.a
 		add_country_modifier = {
 			name = byz_max_diocese_professionalism
 			duration = -1
@@ -1851,9 +1659,9 @@ country_event = {
 
 # Max Legion Professionalism Remove
 country_event = {
-	id = ab_byzantium.83
-	title = ab_byzantium.83.t
-	desc = ab_byzantium.83.d
+	id = ab_byzantium.75
+	title = ab_byzantium.75.t
+	desc = ab_byzantium.75.d
 	picture = NOBLE_ESTATE_eventPicture
 	
 	hidden = yes 
@@ -1870,16 +1678,16 @@ country_event = {
 	}
 	
 	option = {
-		name = ab_byzantium.83.a
+		name = ab_byzantium.75.a
 		remove_country_modifier = byz_max_legion_professionalism
 	}
 }
 
 # Max Diocese Professionalism Remove
 country_event = {
-	id = ab_byzantium.84
-	title = ab_byzantium.84.t
-	desc = ab_byzantium.84.d
+	id = ab_byzantium.76
+	title = ab_byzantium.76.t
+	desc = ab_byzantium.76.d
 	picture = NOBLE_ESTATE_eventPicture
 	
 	hidden = yes 
@@ -1894,16 +1702,16 @@ country_event = {
 	}
 	
 	option = {
-		name = ab_byzantium.84.a
+		name = ab_byzantium.76.a
 		remove_country_modifier = byz_max_diocese_professionalism
 	}
 }
 
 #Remove Integrating Persia modifier
 province_event = {
-	id = ab_byzantium.85
-	title = ab_byzantium.85.t
-	desc = ab_byzantium.85.d
+	id = ab_byzantium.77
+	title = ab_byzantium.77.t
+	desc = ab_byzantium.77.d
 	picture = AB_COURT_eventPicture
 
 	hidden = yes
@@ -1922,22 +1730,22 @@ province_event = {
 	}
 
 	option = {
-		name = ab_byzantium.85.a
+		name = ab_byzantium.77.a
 		remove_province_modifier = byz_integrate_persia
 	}
 }
 
 #Caucasia Identity
 country_event = { 
-	id = ab_byzantium.86
-	title = ab_byzantium.86.t 
-	desc = ab_byzantium.86.d 
+	id = ab_byzantium.78
+	title = ab_byzantium.78.t 
+	desc = ab_byzantium.78.d 
 	picture = AB_PERSIA_eventPicture
 	
 	is_triggered_only = yes
 
 	option = {
-		name = ab_byzantium.86.a
+		name = ab_byzantium.78.a
 		ai_chance = { factor = 50 }
 		add_country_modifier = {
 			name = byz_caucasia_greek
@@ -1948,7 +1756,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.86.b
+		name = ab_byzantium.78.b
 		ai_chance = { factor = 50 }
 		add_country_modifier = {
 			name = byz_caucasia_persian
@@ -1961,9 +1769,9 @@ country_event = {
 
 #Byzantine Reconquest of the Levant
 country_event = { 
-	id = ab_byzantium.87
-	title = ab_byzantium.87.t 
-	desc = ab_byzantium.87.d 
+	id = ab_byzantium.79
+	title = ab_byzantium.79.t 
+	desc = ab_byzantium.79.d 
 	picture = AB_BATTLE_eventPicture
 	
 	fire_only_once = yes
@@ -1989,32 +1797,31 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.87.a
-		hidden_effect = {
-			add_country_modifier = {
-				name = byz_reconquest_of_the_levant
-				duration = -1
+		name = ab_byzantium.79.a
+		add_country_modifier = {
+			name = byz_reconquest_of_the_levant
+			duration = -1
+			desc = "until the end of the war"
+		}
+		if = {
+			limit = {
+				exists = NAZ
 			}
-			if = {
-				limit = {
-					exists = NAZ
+			NAZ = {
+				add_country_modifier = {
+					name = byz_reconquest_of_the_levant_nizzarids
+					duration = -1
+					desc = "until the end of the war"
 				}
-				NAZ = {
-					add_country_modifier = {
-						name = byz_reconquest_of_the_levant_nizzarids
-						duration = -1
-					}
-				}
-				custom_tooltip = BYZ_RECONQUEST_LEVANT_NIZZARIDS
 			}
-			else = {
-				ABS = {
-					add_country_modifier = {
-						name = byz_reconquest_of_the_levant_nizzarids
-						duration = -1
-					}
+		}
+		else = {
+			ABS = {
+				add_country_modifier = {
+					name = byz_reconquest_of_the_levant_nizzarids
+					duration = -1
+					desc = "until the end of the war"
 				}
-				custom_tooltip = BYZ_RECONQUEST_LEVANT_ABBASIDS
 			}
 		}
 	}
@@ -2022,9 +1829,9 @@ country_event = {
 
 #Byzantine Reconquest of the Levant - Remove modifier
 country_event = { 
-	id = ab_byzantium.88
-	title = ab_byzantium.88.t 
-	desc = ab_byzantium.88.d 
+	id = ab_byzantium.80
+	title = ab_byzantium.80.t 
+	desc = ab_byzantium.80.d 
 	picture = AB_BATTLE_eventPicture
 	
 	hidden = yes
@@ -2039,7 +1846,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium.88.a
+		name = ab_byzantium.80.a
 		remove_country_modifier = byz_reconquest_of_the_levant
 		if = {
 			limit = {
@@ -2059,6 +1866,70 @@ country_event = {
 	}
 }
 
+#Center of Far East
+country_event = { 
+	id = ab_byzantium.81
+	title = ab_byzantium.81.t 
+	desc = ab_byzantium.81.d 
+	picture = AB_RISING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.81.a
+		ai_chance = { factor = 50 }
+		set_country_flag = byz_center_of_far_east_korea
+		custom_tooltip = BYZ_FAR_EAST_RENAME_KOREA
+		korea_region = {
+			limit = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			add_base_production = 1
+		}
+		custom_tooltip = JAP_ACCESS_GYEONGBOK
+		set_country_flag = enable_korean_palace_flag
+		add_country_modifier = {
+			name = japan_turtle_fleets
+			duration = -1
+		}
+	}
+
+	option = {
+		name = ab_byzantium.81.b
+		ai_chance = { factor = 50 }
+		set_country_flag = byz_center_of_far_east_japan
+		custom_tooltip = BYZ_FAR_EAST_RENAME_JAPAN
+		add_country_modifier = {
+			name = byz_roman_samurai
+			duration = -1
+		}
+		add_country_modifier = {
+			name = jap_reformed_samurai_modifier
+			duration = -1
+		}
+		custom_tooltip = BYZ_ENABLE_ROMAN_SAMURAI
+	}
+}
+
+#An Empire Across Asia
+country_event = { 
+	id = ab_byzantium.82
+	title = ab_byzantium.82.t 
+	desc = ab_byzantium.82.d 
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.82.a
+		add_adm_power = 150
+		add_country_modifier = {
+			name = byz_roman_asia
+			duration = -1
+		}
+	}
+}
+
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
@@ -2070,7 +1941,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_reform = byzculturalsphere
+		tag = ROM
 	}
 
 	mean_time_to_happen = {
@@ -2310,7 +2181,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_reform = byzculturalsphere
+		tag = ROM
 	}
 
 	mean_time_to_happen = {
@@ -2382,7 +2253,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_reform = byzculturalsphere
+		tag = ROM
 	}
 
 	mean_time_to_happen = {
@@ -2454,7 +2325,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_reform = byzculturalsphere
+		tag = ROM
 		any_owned_province = {
 			has_port = yes
 		}
@@ -2469,17 +2340,7 @@ country_event = {
 		random_province = {
 			limit = {
 				has_port = yes
-				OR = {
-					culture = roman_new
-					culture = gallo_roman
-					culture = afro_roman
-					culture = romano_british
-					culture = hispano_roman
-					culture = romano_germanic
-					culture = romano_nordic
-					culture = daco_roman
-					culture = romano_polish
-				}
+				province_is_latinsphere_trigger = yes
 			}
 			for = {
 				amount = 5
@@ -2500,13 +2361,7 @@ country_event = {
 		random_province = {
 			limit = {
 				has_port = yes
-				OR = {
-					culture = illyro_roman
-					culture = greco_roman
-					culture = romano_arabic
-					culture = russo_roman
-					culture = romano_scythic
-				}
+				province_is_hellenosphere_trigger = yes
 			}
 			for = {
 				amount = 5
@@ -2528,10 +2383,7 @@ country_event = {
 		random_province = {
 			limit = {
 				has_port = yes
-				OR = {
-					culture = perso_roman
-					culture = indo_roman
-				}
+				province_is_persosphere_trigger = yes
 			}
 			for = {
 				amount = 5
@@ -2553,14 +2405,7 @@ country_event = {
 		random_province = {
 			limit = {
 				has_port = yes
-				OR = {
-					culture = tibeto_roman
-					culture = sino_roman
-					culture = romano_korean
-					culture = romano_japanese
-					culture = romano_tai
-					culture = romano_malay
-				}
+				province_is_sinosphere_trigger = yes
 			}
 			for = {
 				amount = 5
@@ -2587,7 +2432,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_reform = byzculturalsphere
+		tag = ROM
 		adm_tech = 17
 		any_province = {
 			owner = {
@@ -2610,17 +2455,7 @@ country_event = {
 		name = ab_byzantium.1004.a
 		random_province = {
 			limit = {
-				OR = {
-					culture = roman_new
-					culture = gallo_roman
-					culture = afro_roman
-					culture = romano_british
-					culture = hispano_roman
-					culture = romano_germanic
-					culture = romano_nordic
-					culture = daco_roman
-					culture = romano_polish
-				}
+				province_is_latinsphere_trigger = yes
 			}
 			add_building_construction = {
 				building = university
@@ -2638,13 +2473,7 @@ country_event = {
 		name = ab_byzantium.1004.b
 		random_province = {
 			limit = {
-				OR = {
-					culture = illyro_roman
-					culture = greco_roman
-					culture = romano_arabic
-					culture = russo_roman
-					culture = romano_scythic
-				}
+				province_is_hellenosphere_trigger = yes
 			}
 			add_building_construction = {
 				building = university
@@ -2663,10 +2492,7 @@ country_event = {
 		trigger = { has_faction = faction_byzpersian }
 		random_province = {
 			limit = {
-				OR = {
-					culture = perso_roman
-					culture = indo_roman
-				}
+				province_is_persosphere_trigger = yes
 			}
 			add_building_construction = {
 				building = university
@@ -2685,14 +2511,7 @@ country_event = {
 		trigger = { has_faction = faction_byzchinese }
 		random_province = {
 			limit = {
-				OR = {
-					culture = tibeto_roman
-					culture = sino_roman
-					culture = romano_korean
-					culture = romano_japanese
-					culture = romano_tai
-					culture = romano_malay
-				}
+				province_is_sinosphere_trigger = yes
 			}
 			add_building_construction = {
 				building = university
@@ -3087,6 +2906,32 @@ country_event = {
 		name = ab_byzantium.2004.b
 		event_target:flavorDiocese = {
 			add_liberty_desire = 15
+		}
+	}
+}
+
+#Diocese annexation event
+country_event = {
+	id = ab_byzantium.2005
+	title = ab_byzantium.2005.t
+	desc = ab_byzantium.2005.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	
+	hidden = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_byzantium.2005.a
+		every_subject_country = {
+			limit = { 
+				is_subject_of_type = diocese_vassal
+			}
+			add_liberty_desire = 25
 		}
 	}
 }
