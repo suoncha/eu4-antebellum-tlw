@@ -9,7 +9,10 @@ country_decisions = {
 				ai = no
 				is_playing_custom_nation = no
 			}
-			tag = BYZ
+			OR = {
+				tag = BYZ
+				primary_culture = sclavinian
+			}
 			NOT = { exists = ROM }
 			OR = {
 				religion_group = christian
@@ -120,11 +123,16 @@ country_decisions = {
 					owned_by = ROOT
 				}
 			}
-			custom_trigger_tooltip = {
-				tooltip = BYZ_RESOLVED_16TH
-				has_country_flag = had_16th_crisis
+			if = {
+				limit = {
+					tag = BYZ
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RESOLVED_16TH
+					has_country_flag = had_16th_crisis
+				}
 			}
-			primary_culture = greek
+			culture_group = byzantine
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
 			is_nomad = no
@@ -140,6 +148,14 @@ country_decisions = {
 					override_country_name = ROMANREPUBLIC
 				}
 			}
+			else_if = {
+				limit = { primary_culture = sclavinian }
+				custom_tooltip = SER_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = SCLAVINIAROME
+				}
+			}
 			else = {
 				change_tag = ROM
 				hidden_effect = {
@@ -150,16 +166,49 @@ country_decisions = {
 			swap_non_generic_missions = yes
 			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
+				if = {
+					limit = { has_country_flag = byz_court_latin }
+					151 = { change_culture = roman_new }
+				}
+				else_if = {
+					limit = { primary_culture = sclavinian }
+					151 = { change_culture = illyro_roman }
+				}
+				else = {
+					151 = { change_culture = greco_roman }
+				}
+			}
+			if = {
+				limit = { has_country_flag = byz_court_greek }
+				change_primary_culture = greco_roman
+				hidden_effect = {
+					set_heir_culture = greco_roman
+					set_ruler_culture = greco_roman
+				}
+			}
+			else_if = {
+				limit = { primary_culture = sclavinian }
+				change_primary_culture = illyro_roman
+				hidden_effect = {
+					set_heir_culture = illyro_roman
+					set_ruler_culture = illyro_roman
+				}
+			}
+			else = {
+				change_primary_culture = roman_new
+				hidden_effect = {
+					set_heir_culture = roman_new
+					set_ruler_culture = roman_new
+				}
+			}
+			hidden_effect = {
 				every_province = {
 					limit = {
 						culture_group = byzantine
-						NOT = {
-							OR = {
-								culture = Illyrian
-								culture = albanian
-								province_id = 151
-							}
-						}
+						NOT = { province_id = 151 }
+						NOT = { culture = Illyrian }
+						NOT = { culture = albanian }
+						NOT = { culture = sclavinian }
 					}
 					change_culture = greco_roman
 				}
@@ -168,14 +217,14 @@ country_decisions = {
 						OR = {
 							culture = Illyrian
 							culture = albanian
+							culture = sclavinian
 						}
+						NOT = { province_id = 151 }
 					}
 					change_culture = illyro_roman
 				}
-				every_country = {
-					limit = {
-						culture_group = byzantine
-					}
+				every_subject_country = {
+					limit = { culture_group = byzantine }
 					change_primary_culture = greco_roman
 					set_heir_culture = greco_roman
 					set_ruler_culture = greco_roman
@@ -221,22 +270,6 @@ country_decisions = {
 					change_culture = roman_new
 				}
 			}
-			if = {
-				limit = { has_country_flag = byz_court_greek }
-				change_primary_culture = greco_roman
-			}
-			else = {
-				change_primary_culture = roman_new
-			}
-			if = {
-				limit = { has_country_flag = byz_court_latin }
-				151 = { change_culture = roman_new }
-			}
-			else = {
-				hidden_effect = {
-					151 = { change_culture = greco_roman }
-				}
-			}
 			add_ruler_personality = augustus_personality
 			if = {
 				limit = { has_country_flag = byz_restore_republic }
@@ -270,7 +303,6 @@ country_decisions = {
 						duration = -1
 					}
 				}
-				country_event = { id = ab_byzantium.67 }	
 			}
 			if = {
 				limit = { has_custom_ideas = no }
@@ -281,6 +313,7 @@ country_decisions = {
 				duration = 7300
 			}
 			set_country_flag = restored_rome_flag
+			country_event = { id = ab_byzantium.67 }
 		}
 		ai_will_do = {
 			factor = 1
@@ -542,9 +575,15 @@ country_decisions = {
 					exists = UKR
 					overlord_of = UKR
 				}
-				hidden_effect = {
+				if = {
+					limit = {
+						UKR = {
+							NOT = { government = monarchy }
+						}
+					}
 					UKR = {
-						grant_independence = yes
+						change_government = monarchy
+						add_government_reform = tsardom
 					}
 				}
 				create_subject = {
@@ -582,7 +621,10 @@ country_decisions = {
 		major = yes
 
 		potential = {
-		    mission_completed = byzantium_finest
+			OR = {
+				mission_completed = byzantium_finest
+				has_country_flag = unlock_decision_strategos_specialty
+			}
 			NOT = { has_country_modifier = byz_fire_focused }
 			NOT = { has_country_modifier = byz_shock_focused }
 			NOT = { has_country_modifier = byz_manuever_focused }
