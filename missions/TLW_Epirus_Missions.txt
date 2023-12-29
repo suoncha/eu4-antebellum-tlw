@@ -1,0 +1,216 @@
+ab_epirus_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = EPI
+	}
+	has_country_shield = yes
+	
+	epi_army = {
+		icon = mission_pf_soldier
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			is_year = 1446
+			is_subject_of = BYZ
+			manpower_percentage = 1
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = epi_ready_for_war
+				duration = 3650
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	epi_morea_revolt = {
+		icon = dom_ara_remensa_war
+		position = 2
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 1773
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					province_id = 4701
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					province_id = 145
+					NOT = { owned_by = ROOT }
+				}
+			}
+		}
+		
+		trigger = {
+			is_subject_of = BYZ
+			is_at_war = yes
+			exists = MOE
+			controls = 1773
+			controls = 4701
+			controls = 145
+		}
+		
+		effect = {
+			inherit = MOE
+			add_liberty_desire = 25
+			BYZ = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_angry
+				}
+			}
+		}
+	}
+
+	epi_venice_deal = {
+		icon = nuova_promissione_ducale
+		position = 3
+		required_missions = { }
+		
+		trigger = {
+			is_subject_of = BYZ
+			is_at_war = no
+			exists = VEN
+			VEN = {
+				has_opinion = {
+					who = ROOT
+					value = 200
+				}
+			}
+			146 = {
+				owned_by = BYZ
+			}
+			5152 = {
+				owned_by = BYZ
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EPI_ANGELIDREVOLT_VENICEDEAL
+			set_country_flag = epi_angelidrevolt_venicedeal
+		}
+	}
+
+	epi_smyrna_deal = {
+		icon = mission_nicaea
+		position = 4
+		required_missions = { }
+		
+		trigger = {
+			is_subject_of = BYZ
+			is_at_war = no
+			exists = NCI
+			NCI = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+			318 = {
+				owned_by = BYZ
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EPI_ANGELIDREVOLT_SMYRNADEAL
+			set_country_flag = epi_angelidrevolt_nicaeadeal
+			if = {
+				limit = {
+					4700 = {
+						owned_by = BYZ
+					}
+					2348 = {
+						owned_by = BYZ
+					}
+				}
+				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS
+			}
+			else = {
+				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS_NO
+			}
+		}
+	}
+
+	epi_fall_angelid = {
+		icon = mission_imperial
+		position = 5
+		required_missions = { }
+		
+		trigger = {
+			ai = no
+			is_subject_of = BYZ
+			is_year = 1450
+			has_country_modifier = epi_ready_for_war
+			BYZ = {
+				dynasty = "Angelos"
+			}
+		}
+		
+		effect = {
+			set_country_flag = epi_angelidrevolt_revolt
+			declare_war_with_cb = {
+			    who = BYZ
+			    casus_belli = cb_conquest
+				war_goal_province = 151
+		    }
+			if = {
+				limit = {
+					has_country_flag = epi_angelidrevolt_venicedeal
+				}
+				VEN = {
+					join_all_offensive_wars_of = ROOT
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = epi_angelidrevolt_nicaeadeal
+				}
+				NCI = {
+					join_all_offensive_wars_of = ROOT
+				}
+			}
+			custom_tooltip = EPI_ANGELIDREVOLT_UNLOCK_PO
+			if = {
+				limit = {
+					NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
+					NOT = { has_country_flag = epi_angelidrevolt_nicaeadeal }
+				}
+				custom_tooltip = EPI_ANGELIDREVOLT_GREAT_REWARD
+			}
+			else = {
+				custom_tooltip = EPI_ANGELIDREVOLT_GREAT_REWARD_NO
+			}
+			custom_tooltip = BYZ_RESTORER_PP
+			tooltip = {
+				add_country_modifier = {
+					name = byz_restorer_angelid
+					duration = 18250
+				}
+				add_ruler_personality = augustus_personality
+			}
+		}
+	}
+}

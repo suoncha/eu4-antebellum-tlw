@@ -43,15 +43,31 @@ country_event = {
 	}
 	desc = {
 		trigger = {
-			has_country_flag = byz_epirus_ruler
-			NOT = { has_country_flag = byz_epirus_venice }
+			OR = {
+				AND = {
+					has_country_flag = byz_epirus_ruler
+					NOT = { has_country_flag = byz_epirus_venice }
+				}
+				AND = {
+					has_country_flag = epi_angelidrevolt_revolt
+					NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
+				}
+			}
 		}
 		desc = ab_byzantium_disaster.1.d2
 	}
 	desc = {
 		trigger = {
-			has_country_flag = byz_epirus_ruler
-			has_country_flag = byz_epirus_venice
+			OR = {
+				AND = {
+					has_country_flag = byz_epirus_ruler
+					has_country_flag = byz_epirus_venice
+				}
+				AND = {
+					has_country_flag = epi_angelidrevolt_revolt
+					has_country_flag = epi_angelidrevolt_venicedeal
+				}
+			}
 		}
 		desc = ab_byzantium_disaster.1.d3
 	}
@@ -116,37 +132,46 @@ country_event = {
 		custom_tooltip = BYZ_COMPLETE_CRISIS_MISSIONS
 		if = {
 			limit = {
-				has_country_flag = byz_epirus_war
-				has_country_flag = byz_epirus_venice
-				151 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				149 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				4779 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				4705 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				147 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				144 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				4699 = {
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				morea_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
-				ionian_islands_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT	
-				}
+				OR = {
+					AND = {
+						has_country_flag = byz_epirus_war
+						has_country_flag = byz_epirus_venice
+						151 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						149 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						4779 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						4705 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						147 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						144 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						4699 = {
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						morea_area = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+						ionian_islands_area = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT	
+						}
+					}
+					AND = {
+						has_country_flag = epi_angelidrevolt_revolt
+						NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
+						NOT = { has_country_flag = epi_angelidrevolt_nicaeadeal }
+					}
+				}	
 			}
 			custom_tooltip = BYZ_RESTORER_PP
 			hidden_effect = {
