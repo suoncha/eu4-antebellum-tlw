@@ -1,0 +1,152 @@
+country_decisions = {
+	
+	rus_release_byzantium = {
+		major = yes
+		ai_will_do = {
+			factor = 0
+		}
+		potential = {
+			OR = {
+				tag = UKR
+				was_tag = UKR
+			}
+			mission_completed = ab_rus_restoration
+			NOT = {
+				has_country_flag = rus_released_byzantium
+			}
+			religion = orthodox
+			any_owned_province = {
+				culture = greek
+				NOT = { is_capital_of = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			NOT = {
+				exists = BYZ
+			}
+		}
+		effect = {
+			custom_tooltip = RUS_BYZANTIUM
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = greek
+						NOT = { is_capital_of = ROOT }
+					}
+					add_core = BYZ
+				}
+				release = BYZ
+				if = {
+					limit = {
+						government = monarchy
+					}
+					create_union = BYZ
+				}
+				else = {
+					vassalize = BYZ
+				}
+				BYZ = {
+					change_religion = orthodox
+					add_manpower = 10
+					add_treasury = 100
+					complete_mission = byzantium_roman
+					complete_mission = byzantium_reinforce
+					complete_mission = byzantium_court
+					complete_mission = byzantium_imperial_army
+					complete_mission = byzantium_economy
+					complete_mission = byzantium_crisis
+					complete_mission = byzantium_traitors
+					every_owned_province = {
+						remove_core = ROOT
+						remove_claim = ROOT
+					}
+					set_country_flag = had_16th_crisis
+				}
+			}
+			set_country_flag = rus_released_byzantium
+			BYZ = {
+				add_country_modifier = {
+					name = bul_loyal_subject
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	rus_release_latin = {
+		major = yes
+		ai_will_do = {
+			factor = 0
+		}
+		potential = {
+			OR = {
+				tag = UKR
+				was_tag = UKR
+			}
+			mission_completed = ab_rus_restoration
+			NOT = {
+				has_country_flag = rus_released_latin
+			}
+			religion = catholic
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			NOT = {
+				exists = LAT
+			}
+		}
+		effect = {
+			custom_tooltip = RUS_LATIN
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						is_core = ROOT
+						culture = greek
+						NOT = {
+							is_capital_of = ROOT
+						}
+					}
+					add_core = LAT
+				}
+				release = LAT
+				if = {
+					limit = {
+						government = monarchy
+					}
+					create_union = LAT
+				}
+				else = {
+					vassalize = LAT
+				}
+				LAT = {
+					set_country_flag = lat_cant_trigger_events
+					change_religion = catholic
+					add_manpower = 10
+					add_treasury = 100
+					complete_mission = byzantium_roman
+					complete_mission = byzantium_reinforce
+					complete_mission = byzantium_court
+					complete_mission = byzantium_imperial_army
+					complete_mission = byzantium_economy
+					complete_mission = byzantium_crisis
+					complete_mission = byzantium_traitors
+					every_owned_province = {
+						remove_core = ROOT
+						remove_claim = ROOT
+					}
+				}
+			}
+			set_country_flag = rus_released_latin
+			LAT = {
+				add_country_modifier = {
+					name = bul_loyal_subject
+					duration = -1
+				}
+			}
+		}
+	}
+
+}

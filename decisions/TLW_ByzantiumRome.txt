@@ -13,6 +13,10 @@ country_decisions = {
 			OR = {
 				tag = BYZ
 				primary_culture = sclavinian
+				AND = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
 			}
 			NOT = { exists = ROM }
 			religion = orthodox
@@ -40,7 +44,7 @@ country_decisions = {
 				province_id = 1232
 				province_id = 2324
 			}
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		allow = {
@@ -48,77 +52,77 @@ country_decisions = {
 				tooltip = BYZ_RESTORED_JUSTINIAN
 				italy_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				egypt_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				balkan_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				anatolia_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				syria_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				aleppo_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				palestine_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				carinthia_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				crimea_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				upper_andalucia_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				baleares_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				tripolitania_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				djerba_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				tunisia_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				kabylia_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				barbary_coast_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				northern_morocco_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				1232 = {
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				2324 = {
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
 			if = {
@@ -130,7 +134,16 @@ country_decisions = {
 					has_country_flag = had_16th_crisis
 				}
 			}
-			culture_group = byzantine
+			if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				overlord_of = BYZ
+			}
+			else = {
+				culture_group = byzantine
+			}
 			religion = orthodox
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
@@ -155,6 +168,18 @@ country_decisions = {
 					override_country_name = SCLAVINIAROME
 				}
 			}
+			else_if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				custom_tooltip = UKR_NAMECHANGE_ROME
+				inherit = BYZ
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = RUSSIAROME
+				}
+			}
 			else = {
 				change_tag = ROM
 				hidden_effect = {
@@ -163,6 +188,13 @@ country_decisions = {
 			}
 			set_government_rank = 3
 			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				custom_tooltip = UKR_FASTER_ROMANIZATION
+			}
 			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
 				if = {
@@ -193,6 +225,17 @@ country_decisions = {
 					set_ruler_culture = illyro_roman
 				}
 			}
+			else_if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				change_primary_culture = russo_roman
+				hidden_effect = {
+					set_heir_culture = russo_roman
+					set_ruler_culture = russo_roman
+				}
+			}
 			else = {
 				change_primary_culture = roman_new
 				hidden_effect = {
@@ -213,11 +256,8 @@ country_decisions = {
 				}
 				every_province = {
 					limit = {
-						OR = {
-							culture = Illyrian
-							culture = albanian
-							culture = sclavinian
-						}
+						region = balkan_region
+						NOT = { culture = greco_roman }	
 						NOT = { province_id = 151 }
 					}
 					change_culture = illyro_roman
@@ -313,6 +353,13 @@ country_decisions = {
 			}
 			set_country_flag = restored_rome_flag
 			country_event = { id = ab_byzantium.67 }
+			if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				country_event = { id = ab_byzantium.83 }
+			}
 		}
 		ai_will_do = {
 			factor = 1
