@@ -2236,6 +2236,12 @@ serbia_third_group2 = {
 				name = "byzantium_conversion_of_rome"
 				duration = 7300
 			}
+			custom_tooltip = BYZ_CENTER
+			hidden_effect = {
+				118 = {
+					add_reform_center = orthodox
+				}
+			}
 			custom_tooltip = BYZ_SCHISM_TOOLTIP
 			hidden_effect = {
 				every_country = {
@@ -2423,8 +2429,16 @@ serbia_third_group2 = {
 						add_permanent_claim = UKR
 					}
 				}
+				create_subject = {
+					subject_type = grand_diocese_vassal
+					who = UKR
+				}
 				UKR = {
 					override_country_name = DIOCESISRUSSIA
+					if = {
+						limit = { NOT = { government = monarchy } }
+						change_government = monarchy
+					}
 					add_government_reform = rom_grand_diocese
 					if = {
 						limit = { has_custom_ideas = no }
@@ -2434,10 +2448,6 @@ serbia_third_group2 = {
 					change_country_color = {
 						country = ROOT
 					}
-				}
-				create_subject = {
-					subject_type = grand_diocese_vassal
-					who = UKR
 				}
 				set_country_flag = byz_tsar_of_rus
 			}
@@ -2792,6 +2802,490 @@ serbia_first_group_rome = {
 			country_event = { id = ab_byzantium.63 }
 		}
 	}
+
+	ser_cities_byzantine = {
+		icon = develop_konigsberg
+		required_missions = { } 
+		position = 22
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 146
+			    province_id = 148
+		      	province_id = 145
+		      	province_id = 317
+				province_id = 318
+				province_id = 358
+				province_id = 2313
+			}
+		}
+
+		trigger = {
+		    146 = {
+				owned_by = ROOT 
+				development = 20
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			148 = {
+			    owned_by = ROOT 
+				development = 20
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			145 = {
+			    owned_by = ROOT 
+				development = 20
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			317 = {
+			    owned_by = ROOT 
+				development = 20
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			318 = {
+			    owned_by = ROOT 
+				development = 20
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			358 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RDQ
+				}
+				development = 30
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			2313 = {
+			    OR = {
+					owned_by = ROOT 
+					owned_by = RDX
+				}
+				development = 30
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+			}
+			hidden_effect = {
+				146 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+				}
+				148 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+				}
+				145 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { 
+								province_has_center_of_trade_of_level = 1 
+							}
+						}
+						center_of_trade = 1
+					}
+				}
+				317 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+				}
+				318 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+				}
+				358 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = byzantine }
+							ROOT = { tag = BYZ }
+						}
+						add_devastation = 15 
+						change_culture = greek 
+						add_province_modifier = {
+							name = byz_forced_hellenized
+							duration = 7300 
+						}
+					}
+					else_if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = greco_roman 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				2313 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { 
+								province_has_center_of_trade_of_level = 1 
+							}
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = byzantine }
+							ROOT = { tag = BYZ }
+						}
+						add_devastation = 15 
+						change_culture = greek 
+						add_province_modifier = {
+							name = byz_forced_hellenized
+							duration = 7300 
+						}
+					}
+					else_if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = greco_roman 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+			}
+		}
+	}
+
+	ser_cities_latin = {
+		icon = spa_new_capital
+		required_missions = { ser_cities_byzantine } 
+		position = 23
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 118
+			    province_id = 225
+		      	province_id = 341
+		      	province_id = 183
+				province_id = 236
+				province_id = 1876
+				province_id = 134
+				province_id = 12
+			}
+		}
+
+		trigger = {
+		    118 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD1
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			225 = {
+			    OR = {
+					owned_by = ROOT 
+					owned_by = RD2
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			341 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD3
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			183 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD4
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			236 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD5
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			1876 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD6
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			134 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD7
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			12 = {
+				OR = {
+					owned_by = ROOT 
+					owned_by = RD8
+				}
+				development = 35
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_LATIN_CAPITALS
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+			}
+			hidden_effect = {
+				118 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = roman_new 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				225 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = hispano_roman 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				341 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = afro_roman 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				183 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { 
+								province_has_center_of_trade_of_level = 1 
+							}
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = gallo_roman 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				236 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { 
+								province_has_center_of_trade_of_level = 1 
+							}
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = romano_british 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				1876 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = romano_germanic 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				134 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = romano_germanic 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+				12 = {
+					add_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { 
+								province_has_center_of_trade_of_level = 1 
+							}
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						change_culture = romano_nordic 
+						add_province_modifier = {
+							name = byz_forced_romanized
+							duration = 7300 
+						}
+					}
+				}
+			}
+			set_country_flag = byz_faster_romanization_latincities
+		}
+	}
 }
 
 serbia_second_group_rome = {
@@ -3047,6 +3541,58 @@ serbia_second_group_rome = {
 			}
 		}
 	}
+
+	ser_ministries = {
+		icon = empower_the_junkers
+		required_missions = { ser_sophia }
+		position = 23
+
+		trigger = {
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			OR = {
+				has_idea = ser_seventh
+				has_idea = ilr_seventh
+				has_idea = imperium_sine_fine
+			}
+		}
+
+		effect = {
+			add_stability_or_adm_power = yes
+			add_country_modifier = {
+				name = byzantium_ministries
+				duration = 9125
+			}
+		}
+	}
+	
+	ser_nomos = {
+		icon = mission_justinian
+		position = 24
+		required_missions = { ser_ministries } 
+
+		trigger = {
+			monthly_adm = 10
+			monthly_dip = 10
+			monthly_mil = 10
+			absolutism = 75
+		}
+
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = byzantium_law
+				duration = -1
+			}
+		}
+	}
 }
 
 serbia_third_group_rome = {
@@ -3069,6 +3615,7 @@ serbia_third_group_rome = {
 			prestige = 100
 			legitimacy = 100
 			NOT = { governing_capacity_percentage = 0.8 }
+			religious_unity = 0.85
 		}
 		
 		effect = {
@@ -3486,6 +4033,51 @@ serbia_third_group_rome = {
 			set_country_flag = rome_buffed_augustus
 		}
 	}
+
+	ser_sophia = {
+		icon = end_the_schism
+		required_missions = { } 
+		position = 22
+
+		provinces_to_highlight = { 
+			province_id = 151 
+		} 
+
+		trigger = {
+			151 = {
+				has_great_project = {
+					type = hagia_sophia
+					tier = 3
+				}
+			}
+		}
+
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+			custom_tooltip = BYZ_TRUST
+			hidden_effect = {
+				every_country = {
+					limit = { 
+						religion = orthodox 
+					} 
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
+					}
+				}
+			}
+			151 = {
+				add_province_modifier = {
+					name = byzantium_cathedral
+					duration = -1
+				}
+			}
+		}
+	}
 }
 
 serbia_fourth_group_rome = {
@@ -3689,490 +4281,6 @@ serbia_fourth_group_rome = {
 		}
 	}
 
-	ser_cities_byzantine = {
-		icon = develop_konigsberg
-		required_missions = { } 
-		position = 20
-
-		provinces_to_highlight = {
-		    OR = {
-				province_id = 146
-			    province_id = 148
-		      	province_id = 145
-		      	province_id = 317
-				province_id = 318
-				province_id = 358
-				province_id = 2313
-			}
-		}
-
-		trigger = {
-		    146 = {
-				owned_by = ROOT 
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			148 = {
-			    owned_by = ROOT 
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			145 = {
-			    owned_by = ROOT 
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			317 = {
-			    owned_by = ROOT 
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			318 = {
-			    owned_by = ROOT 
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			358 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDQ
-				}
-				development = 30
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			2313 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDX
-				}
-				development = 30
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
-			tooltip = {
-				add_province_modifier = {
-                    name = byz_city
-				    duration = -1
-				}
-			}
-			hidden_effect = {
-				146 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				148 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				145 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-				}
-				317 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				318 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				358 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = byzantine }
-							ROOT = { tag = BYZ }
-						}
-						add_devastation = 15 
-						change_culture = greek 
-						add_province_modifier = {
-							name = byz_forced_hellenized
-							duration = 7300 
-						}
-					}
-					else_if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = greco_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				2313 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = byzantine }
-							ROOT = { tag = BYZ }
-						}
-						add_devastation = 15 
-						change_culture = greek 
-						add_province_modifier = {
-							name = byz_forced_hellenized
-							duration = 7300 
-						}
-					}
-					else_if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = greco_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-			}
-		}
-	}
-
-	ser_cities_latin = {
-		icon = spa_new_capital
-		required_missions = { ser_cities_byzantine } 
-		position = 21
-
-		provinces_to_highlight = {
-		    OR = {
-				province_id = 118
-			    province_id = 225
-		      	province_id = 341
-		      	province_id = 183
-				province_id = 236
-				province_id = 1876
-				province_id = 134
-				province_id = 12
-			}
-		}
-
-		trigger = {
-		    118 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD1
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			225 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RD2
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			341 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD3
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			183 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD4
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			236 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD5
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			1876 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD6
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			134 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD7
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			12 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD8
-				}
-				development = 35
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_LATIN_CAPITALS
-			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
-			tooltip = {
-				add_province_modifier = {
-                    name = byz_city
-				    duration = -1
-				}
-			}
-			hidden_effect = {
-				118 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = roman_new 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				225 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = hispano_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				341 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = afro_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				183 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = gallo_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				236 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_british 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				1876 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_germanic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				134 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_germanic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				12 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_nordic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-			}
-			set_country_flag = byz_faster_romanization_latincities
-		}
-	}
-
 	ser_library = {
 		icon = bibliotheca_corviana
 		required_missions = { } 
@@ -4215,7 +4323,7 @@ serbia_fourth_group_rome = {
 	
 	ser_wall = {
 		icon = byz_reinforce_constantinople
-		required_missions = { ser_library } 
+		required_missions = { ser_sophia ser_library } 
 		position = 23
 
 		provinces_to_highlight = { 
@@ -5550,7 +5658,7 @@ serbia_fifth_group_persian = {
 }
 
 # Dragon Emperor
-serbia_first_group_chinese = {
+serbia_second_group_chinese = {
 	slot = 2
 	generic = no
 	ai = yes
@@ -5766,7 +5874,7 @@ serbia_first_group_chinese = {
 	}
 }
 
-serbia_second_group_chinese = {
+serbia_third_group_chinese = {
 	slot = 3
 	generic = no
 	ai = yes
@@ -6198,7 +6306,7 @@ serbia_second_group_chinese = {
 	}
 }
 
-serbia_third_group_chinese = {
+serbia_fourth_group_chinese = {
 	slot = 4
 	generic = no
 	ai = yes

@@ -63,6 +63,17 @@ custom_icon = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
         NOT = { was_tag = UKR }
+        religion_group = christian
+    }
+}
+
+custom_icon = {
+    name = ab_diocese_flag_glh
+    potential = {
+        ai = no
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        NOT = { religion_group = christian }
     }
 }
 
@@ -72,6 +83,16 @@ custom_icon = {
         ai = no
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
+    }
+}
+
+custom_icon = {
+    name = ab_diocese_flag_rdc
+    potential = {
+        ai = no
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        was_tag = UKR
     }
 }
 
@@ -301,12 +322,16 @@ custom_icon = {
 }
 
 custom_icon = {
-    name = ab_diocese_flag_rdc
+    name = ab_diocese_flag_rdcnotrus
     potential = {
         ai = no
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        was_tag = UKR
+        NOT = { was_tag = UKR }
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
     }
 }
 
@@ -317,6 +342,7 @@ custom_button = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
         overlord_of = UKR
+        UKR = { is_subject_of_type = grand_diocese_vassal }
     }
     trigger = { 
         any_owned_province = {
@@ -400,6 +426,97 @@ custom_button = {
     tooltip = AB_DIOCESE_RUSSIA_FEED
 }
 
+#Diocesis Tataria
+custom_button = {
+    name = ab_diocese_tataria_feed
+    potential = {
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        overlord_of = GLH
+        GLH = { is_subject_of_type = grand_diocese_vassal }
+    }
+    trigger = { 
+        any_owned_province = {
+            OR = {
+                AND = {
+                    superregion = eastern_europe_superregion
+                    NOT = { 
+                        OR = {
+                            region = balkan_region
+                            region = carpathia_region
+                            area = crimea_area
+                        }
+                    }
+                }
+                area = circassia_area
+                area = dagestan_area
+                AND = {
+                    superregion = tartary_superregion
+                    NOT = { region = tibet_region }
+                }
+                AND = {
+                    region = manchuria_region
+                    NOT = { area = liaoning_area }
+                }
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		is_nomad = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = { 
+        hidden_effect = {
+            eastern_europe_superregion = {
+                limit = {
+                    owned_by = ROOT
+                    NOT = { 
+                        OR = {
+                            region = balkan_region
+                            region = carpathia_region
+                            area = crimea_area
+                        }
+                    }
+                }
+                add_core = GLH
+                cede_province = GLH
+            }
+            circassia_area = {
+                limit = {
+                    owned_by = ROOT
+                }
+                add_core = GLH
+                cede_province = GLH
+            }
+            dagestan_area = {
+                limit = {
+                    owned_by = ROOT
+                }
+                add_core = GLH
+                cede_province = GLH
+            }
+            tartary_superregion = {
+                limit = {
+                    owned_by = ROOT
+                    NOT = { region = tibet_region }
+                }
+                add_core = GLH
+                cede_province = GLH
+            }
+            manchuria_region = {
+                limit = {
+                    owned_by = ROOT
+                    NOT = { area = liaoning_area }
+                }
+                add_core = GLH
+                cede_province = GLH
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_RUSSIA_FEED
+}
+
 #Diocesis Italia
 custom_button = {
     name = ab_diocese_italia_create
@@ -412,6 +529,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 118
+        capital_scope = {
+            NOT = { region = italy_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -526,6 +646,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 225
+        capital_scope = {
+            NOT = { region = iberia_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -647,6 +770,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 341
+        capital_scope = {
+            NOT = { region = maghreb_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -768,6 +894,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 183
+        capital_scope = {
+            NOT = { region = france_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -910,6 +1039,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 236
+        capital_scope = {
+            NOT = { region = british_isles_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1031,6 +1163,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 1876
+        capital_scope = {
+            NOT = { region = north_german_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1173,6 +1308,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 134
+        capital_scope = {
+            NOT = { region = south_german_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1303,6 +1441,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 12
+        capital_scope = {
+            NOT = { region = scandinavia_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1424,6 +1565,18 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 4239
+        capital_scope = {
+            NOT = { area = croatia_area }
+            NOT = { area = slavonia_area }
+            NOT = { area = bosnia_area }
+            NOT = { area = rascia_area }
+            NOT = { area = albania_area }
+            NOT = { area = serbia_area }
+            NOT = { area = bulgaria_area }
+            NOT = { area = silistria_area }
+            NOT = { area = east_adriatic_coast_area }
+            NOT = { area = carinthia_area }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1566,6 +1719,10 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 2313
+        capital_scope = {
+            NOT = { region = mashriq_region }
+        }
+        NOT = { religion = zoroastrian }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1586,7 +1743,15 @@ custom_button = {
                 subject_type = diocese_vassal
             }
             RDX = {
-                change_primary_culture = greco_roman
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_primary_culture = greco_roman
+                }
+                else = {
+                    change_primary_culture = romano_arabic
+                }
                 change_religion = ROOT
                 change_government = republic
                 kill_ruler = yes
@@ -1594,7 +1759,15 @@ custom_button = {
                 set_capital = 2313
             }
             2313 = {
-                change_culture = greco_roman 
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_culture = greco_roman 
+                }
+                else = {
+                    change_culture = romano_arabic 
+                }
                 add_province_modifier = {
                     name = byz_forced_romanized
                     duration = 7300 
@@ -1687,6 +1860,11 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 358
+        capital_scope = {
+            NOT = { region = egypt_region }
+            NOT = { province_id = 1232 }
+            NOT = { province_id = 2324 }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1719,7 +1897,15 @@ custom_button = {
                 subject_type = diocese_vassal
             }
             RDQ = {
-                change_primary_culture = greco_roman
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_primary_culture = greco_roman
+                }
+                else = {
+                    change_primary_culture = romano_arabic
+                }
                 change_religion = ROOT
                 change_government = republic
                 kill_ruler = yes
@@ -1727,7 +1913,15 @@ custom_button = {
                 set_capital = 358
             }
             358 = {
-                change_culture = greco_roman 
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_culture = greco_roman 
+                }
+                else = {
+                    change_culture = romano_arabic 
+                }
                 add_province_modifier = {
                     name = byz_forced_romanized
                     duration = 7300 
@@ -1842,6 +2036,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 388
+        capital_scope = {
+            NOT = { region = arabia_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -1963,6 +2160,10 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 2218
+        capital_scope = {
+            NOT = { region = persia_region }
+        }
+        NOT = { religion = zoroastrian }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2117,6 +2318,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 445
+        capital_scope = {
+            NOT = { region = khorasan_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2238,6 +2442,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 507
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2404,6 +2611,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 563
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2626,6 +2836,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 541
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2783,6 +2996,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 153
+        capital_scope = {
+            NOT = { region = carpathia_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -2927,6 +3143,11 @@ custom_button = {
                     has_country_flag = byz_conquer_burma_first
                 }
             }
+        }
+        capital_scope = {
+            NOT = { region = tibet_region }
+            NOT = { region = burma_region }
+            NOT = { region = xinan_region }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
@@ -3108,6 +3329,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 1816
+        capital_scope = {
+            NOT = { region = north_china_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -3259,6 +3483,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 1821
+        capital_scope = {
+            NOT = { region = south_china_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -3394,6 +3621,11 @@ custom_button = {
                     has_country_flag = byz_center_of_far_east_japan
                 }
             }
+        }
+        capital_scope = {
+            NOT = { region = japan_region }
+            NOT = { region = korea_region }
+            NOT = { area = liaoning_area }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
@@ -3579,6 +3811,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 600
+        capital_scope = {
+            NOT = { region = indo_china_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -3700,6 +3935,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 596
+        capital_scope = {
+            NOT = { region = malaya_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -3821,6 +4059,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 630
+        capital_scope = {
+            NOT = { region = indonesia_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -3942,6 +4183,9 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 651
+        capital_scope = {
+            NOT = { region = moluccas_region }
+        }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
@@ -4064,6 +4308,10 @@ custom_button = {
     }
     trigger = { 
         owns_core_province = 151
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
         custom_trigger_tooltip = {
             tooltip = AB_CAPITAL_OF_EMPIRE_KIEV
             has_country_flag = ukr_romancapital_kiev
@@ -4120,6 +4368,7 @@ custom_button = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDC
+        was_tag = UKR
     }
     trigger = { 
         any_owned_province = {
@@ -4196,6 +4445,221 @@ custom_button = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDC
+        was_tag = UKR
+    }
+    trigger = { 
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDC = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDC = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		is_nomad = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = { 
+        hidden_effect = {
+            inherit = RDC
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Graecia - Not Rus
+custom_button = {
+    name = ab_diocese_graecianotrus_create
+    potential = {
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        NOT = { 
+            exists = RDC
+        }
+        NOT = { was_tag = UKR }
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
+    }
+    trigger = { 
+        owns_core_province = 151
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		is_nomad = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = { 
+        hidden_effect = {	
+            balkan_region = {
+                limit = {
+                    owned_by = ROOT
+                    NOT = { culture = illyro_roman }
+                }
+                add_core = RDC
+            }
+            anatolia_region = {
+                limit = {
+                    owned_by = ROOT
+                }
+                add_core = RDC
+            }
+            release = RDC
+            create_subject = {
+                who = RDC
+                subject_type = diocese_vassal
+            }
+            if = {
+                limit = {
+                    religion = zoroastrian
+                }
+                RDC = {
+                    change_primary_culture = romano_scythic
+                    change_religion = ROOT
+                    change_government = republic
+                    kill_ruler = yes
+                    add_government_reform = rom_diocese
+                    set_capital = 151
+                }
+                151 = {
+                    change_culture = romano_scythic 
+                    add_province_modifier = {
+                        name = byz_forced_romanized
+                        duration = 7300 
+                    }
+                }
+            }
+            else = {
+                RDC = {
+                    change_primary_culture = greco_roman
+                    change_religion = ROOT
+                    change_government = republic
+                    kill_ruler = yes
+                    add_government_reform = rom_diocese
+                    set_capital = 151
+                }
+                151 = {
+                    change_culture = greco_roman 
+                    add_province_modifier = {
+                        name = byz_forced_romanized
+                        duration = 7300 
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_GRAECIA
+}
+
+custom_button = {
+    name = ab_diocese_graecianotrus_feed
+    potential = {
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        overlord_of = RDC
+        NOT = { was_tag = UKR }
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
+    }
+    trigger = { 
+        any_owned_province = {
+            OR = {
+                region = anatolia_region
+                AND = {
+                    region = balkan_region
+                    NOT = { culture = illyro_roman }
+                }
+                AND = {
+                    region = caucasia_region
+                    NOT = {
+                        OR = {
+                            area = circassia_area
+                            area = dagestan_area
+                        }
+                    }
+                    custom_trigger_tooltip = {
+                        tooltip = BYZ_CAUCASIA_PICKED_ANATOLIA
+                        ROM = { has_country_flag = rom_caucasia_isof_anatolia }
+                    }
+                }
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		is_nomad = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = { 
+        hidden_effect = {
+            balkan_region = {
+                limit = {
+                    owned_by = ROOT
+                    NOT = { culture = illyro_roman }
+                }
+                add_core = RDC
+                cede_province = RDC
+            }
+            anatolia_region = {
+                limit = {
+                    owned_by = ROOT
+                }
+                add_core = RDC
+                cede_province = RDC
+            }
+            if = {
+                limit = {
+                    has_country_flag = rom_caucasia_isof_anatolia
+                }
+                caucasia_region = {
+                    limit = {
+                        owned_by = ROOT
+                        NOT = {
+                            OR = {
+                                area = circassia_area
+                                area = dagestan_area
+                            }
+                        }
+                    }
+                    add_core = RDC
+                    cede_province = RDC
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_GRAECIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_graecianotrus_annex
+    potential = {
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        overlord_of = RDC
+        NOT = { was_tag = UKR }
+        capital_scope = {
+            NOT = { region = balkan_region }
+            NOT = { region = anatolia_region }
+        }
     }
     trigger = { 
         custom_trigger_tooltip = {

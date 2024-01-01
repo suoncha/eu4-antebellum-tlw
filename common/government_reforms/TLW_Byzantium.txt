@@ -33,10 +33,8 @@ byzcaesaropapism = {
 	icon = "byz_caesaropapism"
 	allow_normal_conversion = yes
 	potential = {
-		OR = {
-			tag = BYZ
-			was_tag = BYZ
-		}
+		tag = ROM
+		NOT = { was_tag = SER }
 		religion = orthodox
 	}
 
@@ -70,6 +68,7 @@ byzromanempire = {
 	legacy_equivalent = feudal_monarchy
 	potential = {
 		tag = ROM
+		NOT = { religion_group = muslim }
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -156,11 +155,14 @@ byzculturalsphere = {
 		advisor_pool = 1
 		all_estate_loyalty_equilibrium = 0.1
 		liberty_desire_from_subject_development = -0.05
+		ignore_coring_distance = yes
 	}
 
 	factions = {
 		faction_byzlatin
 		faction_byzgreek
+		faction_byzpersian
+		faction_byzchinese
 	}
 }
 
@@ -208,5 +210,67 @@ byzlegio = {
 		drill_gain_modifier = 0.5
 		reinforce_cost_modifier = 1.0
 		land_maintenance_modifier = 0.5
+	}
+}
+
+byzromancaliphate = {
+	icon = "turkoman_ottoman_institutions"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		tag = ROM
+		religion_group = muslim
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+
+	modifiers = {
+		advisor_cost = -0.1
+		unjustified_demands = -0.1
+		administrative_efficiency = 0.05
+		max_absolutism = 10
+		culture_conversion_cost = 10.0
+		max_possible_parliament_seats = 32
+		can_revoke_parliament_seats = yes
+	}
+
+	conditional = {
+		allow = { 
+			OR = {
+				has_dlc = "Common Sense"
+				has_dlc = "Domination"
+			}
+		}
+		has_parliament = yes
+	}
+	conditional = {
+		allow = { has_dlc = "Domination" }
+		has_pashas = yes
+		has_janissaries = yes
+		has_harem = yes
+		custom_attributes = {
+			has_harem_events = yes
+			enables_estate_janissaries = yes
+		}
+	}
+	conditional = {
+		allow = { 
+			has_dlc = "Cradle of Civilization"
+			NOT = { has_dlc = "Domination" }
+		}
+		has_pashas = yes
+		has_janissaries = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Rights of Man" 
+			NOT = { has_dlc = "Domination" }
+		}
+		has_harem = yes
+		custom_attributes = {
+			has_harem_events = yes
+		}
 	}
 }

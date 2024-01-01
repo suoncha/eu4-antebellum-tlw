@@ -17,6 +17,7 @@ country_decisions = {
 					government = monarchy
 					mission_completed = ab_rus_restoration
 				}
+				primary_culture = turkish_christian
 			}
 			NOT = { exists = ROM }
 			religion = orthodox
@@ -180,6 +181,14 @@ country_decisions = {
 					override_country_name = RUSSIAROME
 				}
 			}
+			else_if = {
+				limit = { primary_culture = turkish_christian }
+				custom_tooltip = RUM_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = RUMROME
+				}
+			}
 			else = {
 				change_tag = ROM
 				hidden_effect = {
@@ -204,6 +213,10 @@ country_decisions = {
 				else_if = {
 					limit = { primary_culture = sclavinian }
 					151 = { change_culture = illyro_roman }
+				}
+				else_if = {
+					limit = { primary_culture = turkish_christian }
+					151 = { change_culture = romano_scythic }
 				}
 				else = {
 					151 = { change_culture = greco_roman }
@@ -236,6 +249,14 @@ country_decisions = {
 					set_ruler_culture = russo_roman
 				}
 			}
+			else_if = {
+				limit = { primary_culture = turkish_christian }
+				change_primary_culture = romano_scythic
+				hidden_effect = {
+					set_heir_culture = romano_scythic
+					set_ruler_culture = romano_scythic
+				}
+			}
 			else = {
 				change_primary_culture = roman_new
 				hidden_effect = {
@@ -244,17 +265,18 @@ country_decisions = {
 				}
 			}
 			hidden_effect = {
-				every_province = {
+				every_owned_province = {
 					limit = {
-						culture_group = byzantine
 						NOT = { province_id = 151 }
-						NOT = { culture = Illyrian }
-						NOT = { culture = albanian }
-						NOT = { culture = sclavinian }
+						OR = {
+							culture = greek
+							culture = pontic_greek
+							culture = goths
+						}
 					}
 					change_culture = greco_roman
 				}
-				every_province = {
+				every_owned_province = {
 					limit = {
 						region = balkan_region
 						NOT = { culture = greco_roman }	
@@ -262,11 +284,24 @@ country_decisions = {
 					}
 					change_culture = illyro_roman
 				}
+				every_owned_province = {
+					limit = {
+						NOT = { province_id = 151 }
+						culture = turkish_christian
+					}
+					change_culture = romano_scythic
+				}
 				every_subject_country = {
 					limit = { culture_group = byzantine }
 					change_primary_culture = greco_roman
 					set_heir_culture = greco_roman
 					set_ruler_culture = greco_roman
+				}
+				every_subject_country = {
+					limit = { is_colonial_nation = yes }
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
 				}
 				random_owned_province = {
 					limit = { area = upper_andalucia_area }

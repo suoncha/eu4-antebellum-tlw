@@ -446,6 +446,16 @@ province_event = {
 		}
 		modifier = {
 			factor = 0.5
+			culture_group = iranian
+			ROM = { religion = zoroastrian }
+		}
+		modifier = {
+			factor = 0.5
+			culture_group = turko_semitic
+			ROM = { religion_group = muslim }
+		}
+		modifier = {
+			factor = 0.5
 			culture_group = east_slavic
 			ROM = { was_tag = UKR }
 		}
@@ -598,7 +608,14 @@ province_event = {
 			OR = {
 				tag = ROM
 				is_subject_of_type = diocese_vassal
-				primary_culture = russo_roman
+				AND = {
+					tag = UKR
+					primary_culture = russo_roman
+				}
+				AND = {
+					tag = GLH
+					primary_culture = romano_scythic
+				}
 			}
 		}
 		NOT = { culture_group = roman_g }
@@ -687,25 +704,42 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					culture_group = byzantine
-					region = anatolia_region
 					region = mashriq_region
 					region = egypt_region
 					province_id = 1232
 					province_id = 2324
-					AND = {
-						region = caucasia_region
-						NOT = {
-							OR = {
-								area = circassia_area
-								area = dagestan_area
-							}
-						}
-						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
-					}
+				}
+				NOT = { area = al_jazira_area }
+				NOT = { area = iraq_arabi_area }
+				NOT = { area = basra_area }
+			}
+			if = {
+				limit = { ROM = { religion_group = christian } }
+				change_culture = greco_roman
+			}
+			else = {
+				change_culture = romano_arabic
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = al_jazira_area
+					area = iraq_arabi_area
+					area = basra_area
 				}
 			}
-			change_culture = greco_roman
+			if = {
+				limit = { ROM = { religion = zoroastrian } }
+				change_culture = perso_roman
+			}
+			else_if = {
+				limit = { ROM = { religion_group = muslim } }
+				change_culture = romano_arabic
+			}
+			else = {
+				change_culture = greco_roman
+			}
 		}
 		else_if = {
 			limit = {
@@ -784,17 +818,28 @@ province_event = {
 					region = russia_region
 					AND = {
 						region = ruthenia_region
-						NOT = {
-							area = podlasie_area
-							area = red_ruthenia_area
-						}
+						NOT = { area = podlasie_area }
+						NOT = { area = red_ruthenia_area }
 					}
+				}
+			}
+			change_culture = russo_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
 					region = ural_region
 					region = west_siberia_region
 					region = east_siberia_region
 				}
 			}
-			change_culture = russo_roman
+			if = {
+				limit = { owner = { tag = GLH } }
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = russo_roman
+			}		
 		}
 		else_if = {
 			limit = {
@@ -811,6 +856,30 @@ province_event = {
 				}
 			}
 			change_culture = romano_scythic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = anatolia_region
+					AND = {
+						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
+						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
+					}
+				}
+			}
+			if = {
+				limit = { ROM = { NOT = { religion_group = christian } } }
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = greco_roman
+			}
 		}
 		else_if = {
 			limit = {
@@ -1022,18 +1091,10 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.60.a
-		custom_tooltip = NRM_CNS
-		tooltip = {
-			add_country_modifier = {
-				name = byz_seven_seas_subject
-				duration = 36500
-			}
-		}
+		custom_tooltip = BYZ_CNS_COLONIST
 		hidden_effect = {
-			every_country = {
-				limit = {
-					is_colonial_nation_of = ROOT
-				}
+			every_subject_country = {
+				limit = { is_colonial_nation = yes }
 				add_country_modifier = {
 					name = byz_seven_seas_subject
 					duration = 36500
@@ -1234,6 +1295,13 @@ country_event = {
 					duration = 7300 
 				}
 			}
+			if = {
+				limit = {
+					NOT = { technology_group = western }
+				}
+				change_technology_group = western
+				change_unit_type = western
+			}
 		}
 		custom_tooltip = BYZ_RUSSO_ROMAN
 	}
@@ -1272,18 +1340,15 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.67.a
-		if = {
-			limit = {
-				NOT = { was_tag = BYZ }
-			}
-			custom_tooltip = ROM_TRIGGERED_MODIFIERS_HERITAGE
-		}
+		custom_tooltip = ROM_TRIGGERED_MODIFIERS_HERITAGE
 		if = {
 			limit = { has_country_flag = byz_restore_republic }
-			hidden_effect = {
-				change_government = republic
-			}
+			hidden_effect = { change_government = republic }
 			add_government_reform = byzromanrepublic
+		}
+		else_if ={
+			limit = { religion_group = muslim }
+			add_government_reform = byzromancaliphate
 		}
 		else = {
 			add_government_reform = byzromanempire
@@ -1292,23 +1357,51 @@ country_event = {
 		add_government_reform = byzculturalsphere
 		hidden_effect = {
 			if = {
+				limit = { NOT = { religion = zoroastrian } }
+				remove_faction = faction_byzpersian
+			}
+			remove_faction = faction_byzchinese
+			if = {
 				limit = { has_country_flag = byz_court_latin }
 				add_faction_influence = {
-					faction = faction_byzgreek
-					influence = 10
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -40
 				}
 			}
 			else_if = {
 				limit = { has_country_flag = byz_court_mixed }
 				add_faction_influence = {
-					faction = faction_byzgreek
-					influence = 20
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -50
+				}
+			}
+			else_if = {
+				limit = { religion = zoroastrian }
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = -60
 				}
 			}
 			else = {
 				add_faction_influence = {
-					faction = faction_byzgreek
-					influence = 30
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -60
 				}
 			}
 			country_event = { id = ab_byzantium.59 }
@@ -1780,11 +1873,15 @@ country_event = {
 			name = byz_caucasia_greek
 			duration = -1
 		}
-		custom_tooltip = BYZ_ANATOLIA_CAUCASIA
 		if = {
-			limit = {
-				has_country_flag = ukr_romancapital_kiev
-			}
+			limit = { primary_culture = romano_scythic }
+			custom_tooltip = BYZ_ANATOLIA_CAUCASIA_RUM
+		}
+		else = {
+			custom_tooltip = BYZ_ANATOLIA_CAUCASIA
+		}
+		if = {
+			limit = { has_country_flag = ukr_romancapital_kiev }
 			custom_tooltip = BYZ_ANATOLIA_CAUCASIA_UKR
 		}
 		set_country_flag = rom_caucasia_isof_anatolia
@@ -2017,6 +2114,1053 @@ country_event = {
 		}
 		set_country_flag = ukr_romancapital_constantinople
 		swap_non_generic_missions = yes
+	}
+}
+
+#Romanization of Tataria
+country_event = {
+	id = ab_byzantium.84
+	title = ab_byzantium.84.t
+	desc = ab_byzantium.84.d
+	picture = AB_COURT_eventPicture
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.84.a
+		GLH = {
+			change_primary_culture = romano_scythic
+			capital_scope = {
+				change_culture = romano_scythic 
+				add_province_modifier = {
+					name = byz_forced_romanized
+					duration = 7300 
+				}
+			}
+			if = {
+				limit = {
+					NOT = { technology_group = western }
+				}
+				change_technology_group = western
+				change_unit_type = western
+			}
+		}
+		custom_tooltip = RUM_ROMANO_SCYTHIC
+	}
+}
+
+#Assimilation Culture Event ( Zoroastrian Rum )
+country_event = {
+	id = ab_byzantium.85
+	title = ab_byzantium.85.t
+	desc = ab_byzantium.85.d
+	picture = AB_BYZANTIUM_eventPicture
+
+	trigger = {
+		tag = ROM
+		religion = zoroastrian
+		OR = {
+			AND = {
+				mongolia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_mongolia }
+			}
+			AND = {
+				central_asia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_central_asia }
+			}
+			AND = {
+				baltic_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_baltic }
+			}
+			AND = {
+				low_countries_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_low_countries }
+			}
+			AND = {
+				burma_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_burma }
+			}
+			AND = {
+				anatolia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_anatolia }
+			}
+			AND = {
+				carpathia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_carpathia }
+			}
+			AND = {
+				caucasia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_caucasia }
+			}
+			AND = {
+				british_isles_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_britain }
+			}
+			AND = {
+				bengal_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_bengal }
+			}
+			AND = {
+				north_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				south_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_china }
+			}
+			AND = {
+				coromandel_region = {
+					type = all
+					culture_group = roman_g
+				}
+				deccan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_coromandel }
+			}
+			AND = {
+				ruthenia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				russia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_russia }
+			}
+			AND = {
+				manchuria_region = {
+					type = all
+					culture_group = roman_g
+				}
+				east_siberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_manchuria }
+			}
+			AND = {
+				france_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_france }
+			}
+			AND = {
+				north_german_region = {
+					type = all
+					culture_group = roman_g
+				}
+				south_german_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_germany }
+			}
+			AND = {
+				hindusthan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_hindustan }
+			}
+			AND = {
+				iberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_iberia }
+			}
+			AND = {
+				persia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				khorasan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_persia }
+			}
+			AND = {
+				japan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_japan }
+			}
+			AND = {
+				korea_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_korea }
+			}
+			AND = {
+				italy_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_italy }
+			}
+			AND = {
+				arabia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				egypt_region = {
+					type = all
+					culture_group = roman_g
+				}
+				mashriq_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_arabia }
+			}
+			AND = {
+				maghreb_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_maghreb }
+			}
+			AND = {
+				malaya_region = {
+					type = all
+					culture_group = roman_g
+				}
+				indonesia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				moluccas_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_malaya }
+			}
+			AND = {
+				scandinavia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_scandinavia }
+			}
+			AND = {
+				indo_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_indochina }
+			}
+			AND = {
+				balkan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_balkan }
+			}
+			AND = {
+				crimea_region = {
+					type = all
+					culture_group = roman_g
+				}
+				ural_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_pontic_steppe }
+			}
+			AND = {
+				tibet_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_tibet }
+			}
+			AND = {
+				west_siberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_ural }
+			}
+			AND = {
+				wendia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				poland_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_poland }
+			}
+			AND = {
+				west_india_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_western_india }
+			}
+		}
+		NOT = { has_country_flag = rum_romanassimilation_waiting }
+	}
+
+	immediate = {
+		set_country_flag = rum_romanassimilation_waiting
+	}
+
+	option = {
+		name = ab_byzantium.85.a
+		clr_country_flag = rum_romanassimilation_waiting
+		custom_tooltip = RUM_ROMANASSIMILATION_HIDDEN_MODIFIERS
+		if = {
+			limit = {
+				mongolia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_mongolia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_mongolia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_mongolia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				central_asia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_central_asia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_central_asia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_central_asia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				baltic_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_baltic }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_baltic
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_baltic
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				low_countries_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_low_countries }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_low_countries
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_low_countries
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				burma_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_burma }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_burma
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_burma
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				anatolia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_anatolia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_anatolia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_anatolia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				carpathia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_carpathia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_carpathia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_carpathia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				caucasia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_caucasia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_caucasia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_caucasia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				british_isles_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_britain }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_britain
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_britain
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				bengal_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_bengal }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_bengal
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_bengal
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				north_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				south_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_china }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_china
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_china
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				coromandel_region = {
+					type = all
+					culture_group = roman_g
+				}
+				deccan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_coromandel }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_coromandel
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_coromandel
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				ruthenia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				russia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_russia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_russia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_russia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				manchuria_region = {
+					type = all
+					culture_group = roman_g
+				}
+				east_siberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_manchuria }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_manchuria
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_manchuria
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				france_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_france }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_france
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_france
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				north_german_region = {
+					type = all
+					culture_group = roman_g
+				}
+				south_german_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_germany }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_germany
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_germany
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				hindusthan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_hindustan }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_hindustan
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_hindustan
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				iberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_iberia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_iberia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_iberia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				persia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				khorasan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_persia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_persia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_persia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				japan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_japan }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_japan
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_japan
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				korea_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_korea }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_korea
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_korea
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				italy_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_italy }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_italy
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_italy
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				arabia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				egypt_region = {
+					type = all
+					culture_group = roman_g
+				}
+				mashriq_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_arabia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_arabia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_arabia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				maghreb_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_maghreb }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_maghreb
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_maghreb
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				malaya_region = {
+					type = all
+					culture_group = roman_g
+				}
+				indonesia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				moluccas_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_malaya }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_malaya
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_malaya
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				scandinavia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_scandinavia }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_scandinavia
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_scandinavia
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				indo_china_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_indochina }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_indochina
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_indochina
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				balkan_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_balkan }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_balkan
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_balkan
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				crimea_region = {
+					type = all
+					culture_group = roman_g
+				}
+				ural_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_pontic_steppe }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_pontic_steppe
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_pontic_steppe
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				tibet_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_tibet }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_tibet
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_tibet
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				west_siberia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_ural }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_ural
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_ural
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				wendia_region = {
+					type = all
+					culture_group = roman_g
+				}
+				poland_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_poland }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_poland
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_poland
+				duration = -1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				west_india_region = {
+					type = all
+					culture_group = roman_g
+				}
+				NOT = { has_country_modifier = rum_romanassimilation_western_india }
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rum_romanassimilation_western_india
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_romanassimilation_western_india
+				duration = -1
+				hidden = yes
+			}
+		}
 	}
 }
 
