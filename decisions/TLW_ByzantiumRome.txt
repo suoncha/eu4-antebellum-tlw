@@ -1,5 +1,5 @@
 country_decisions = {
-	#Orthodox
+	#Orthodox/Latin Empire
 	restore_roman_empire_byz = {
 		major = yes
 
@@ -10,17 +10,17 @@ country_decisions = {
 				ai = no
 				is_playing_custom_nation = no
 			}
+			NOT = { exists = ROM }
 			OR = {
 				tag = BYZ
+				tag = LAT
 				primary_culture = sclavinian
+				primary_culture = turkish_christian
 				AND = {
 					government = monarchy
 					mission_completed = ab_rus_restoration
 				}
-				primary_culture = turkish_christian
 			}
-			NOT = { exists = ROM }
-			religion = orthodox
 		}
 
 		provinces_to_highlight = {
@@ -137,15 +137,32 @@ country_decisions = {
 			}
 			if = {
 				limit = {
+					tag = LAT
+				}
+				OR = {
+					culture_group = latin
+					culture_group = french
+					culture_group = iberian
+				}
+				religion = catholic
+				has_government_power = {
+					mechanic_type = latin_zealotry_mechanic
+					power_type = latin_zealotry
+					value = 100
+				}
+			}
+			else_if = {
+				limit = {
 					government = monarchy
 					mission_completed = ab_rus_restoration
 				}
 				overlord_of = BYZ
+				religion = orthodox
 			}
 			else = {
 				culture_group = byzantine
+				religion = orthodox
 			}
-			religion = orthodox
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
 			is_nomad = no
@@ -218,6 +235,10 @@ country_decisions = {
 					limit = { primary_culture = turkish_christian }
 					151 = { change_culture = romano_scythic }
 				}
+				else_if = {
+					limit = { culture_group = french }
+					151 = { change_culture = gallo_roman }
+				}
 				else = {
 					151 = { change_culture = greco_roman }
 				}
@@ -256,6 +277,15 @@ country_decisions = {
 					set_heir_culture = romano_scythic
 					set_ruler_culture = romano_scythic
 				}
+			}
+			else_if = {
+				limit = { culture_group = french }
+				change_primary_culture = gallo_roman
+				hidden_effect = {
+					set_heir_culture = gallo_roman
+					set_ruler_culture = gallo_roman
+				}
+				set_country_flag = byz_court_latin
 			}
 			else = {
 				change_primary_culture = roman_new

@@ -34,7 +34,10 @@ country_decisions = {
 			NOT = {
 				has_country_flag = renamed_imperium_romanum
 			}
-			mission_completed = byzantium_restoration
+			OR = {
+				mission_completed = byzantium_restoration
+				mission_completed = lat_restoration
+			}
 		}
 		allow = {
 			is_free_or_tributary_trigger = yes
@@ -42,13 +45,17 @@ country_decisions = {
 		}
 		effect = {
 			if = {
-				limit = {
-					government = monarchy
-				}
-				override_country_name = IMPERIUMROMANUM
+				limit = { mission_completed = lat_restoration }
+				override_country_name = IMPERIUMFRANCORUM
 			}
 			else = {
-				override_country_name = RESPUBLICAROMANA
+				if = {
+					limit = { government = monarchy }
+					override_country_name = IMPERIUMROMANUM
+				}
+				else = {
+					override_country_name = RESPUBLICAROMANA
+				}
 			}
 			set_country_flag = renamed_imperium_romanum
 			custom_tooltip = BYZ_RESTORER_PP

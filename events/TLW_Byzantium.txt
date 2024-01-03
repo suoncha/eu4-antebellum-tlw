@@ -978,8 +978,16 @@ province_event = {
 	
 	trigger = {
 		owner = {
-			mission_completed = byzantium_anatolia_dev
-			culture = greek
+			OR = {
+				AND = {
+					mission_completed = byzantium_anatolia_dev
+					primary_culture = greek
+				}
+				AND = {
+					mission_completed = lat_avenge
+					tag = LAT
+				}
+			}
 		}
 		region = anatolia_region
 		any_friendly_coast_border_province = {
@@ -1362,7 +1370,12 @@ country_event = {
 			}
 			remove_faction = faction_byzchinese
 			if = {
-				limit = { has_country_flag = byz_court_latin }
+				limit = { 
+					OR = {
+						has_country_flag = byz_court_latin
+						religion = catholic
+					}
+				}
 				add_faction_influence = {
 					faction = faction_byzlatin
 					influence = 100
@@ -3164,6 +3177,39 @@ country_event = {
 	}
 }
 
+#Westernization of Latin Empire
+country_event = {
+	id = ab_byzantium.86
+	title = ab_byzantium.86.t
+	desc = ab_byzantium.86.d
+	picture = AB_CHARLEMAGNE_eventPicture
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.86.a
+		if = {
+			limit = {
+				primary_culture = albanian
+			}
+			change_primary_culture = cosmopolitan_french
+			add_accepted_culture = albanian
+		}
+		else = {
+			change_primary_culture = cosmopolitan_french
+			add_accepted_culture = Illyrian
+		}
+		change_technology_group = western
+		change_unit_type = western
+		hidden_effect = {
+			set_heir_culture = cosmopolitan_french
+			set_ruler_culture = cosmopolitan_french	
+		}
+	}
+}
+
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
@@ -4166,6 +4212,51 @@ country_event = {
 				is_subject_of_type = diocese_vassal
 			}
 			add_liberty_desire = 25
+		}
+	}
+}
+
+#REMOVE LATER 
+#Byzantine Reconquest of the Levant - Remove modifier
+country_event = { 
+	id = ab_byzantium.6969
+	title = ab_byzantium.6969.t 
+	desc = ab_byzantium.6969.d 
+	picture = AB_BATTLE_eventPicture
+	
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = ROM
+		OR = {
+			AND = {
+				has_faction = faction_byzpersian
+				NOT = { has_country_flag = byz_faster_romanization_persia }
+			}
+			AND = {
+				has_faction = faction_byzchinese
+				NOT = { has_country_flag = byz_faster_romanization_china }
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.6969.a
+		if = {
+			limit = {
+				has_faction = faction_byzpersian
+				NOT = { has_country_flag = byz_faster_romanization_persia }
+			}
+			remove_faction = faction_byzpersian
+		}
+		if = {
+			limit = {
+				has_faction = faction_byzchinese
+				NOT = { has_country_flag = byz_faster_romanization_china }
+			}
+			remove_faction = faction_byzchinese
 		}
 	}
 }

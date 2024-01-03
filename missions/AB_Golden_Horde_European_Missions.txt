@@ -136,6 +136,7 @@ glh_eu_first_tengri_branching = {
 				has_country_flag = glh_picked_buddhist
 				has_country_flag = glh_picked_judaism
 				has_country_flag = glh_picked_nestorian
+				has_country_flag = glh_picked_zoroastrian
 			}
 		}
 	}
@@ -250,6 +251,7 @@ glh_eu_first_buddhist_branching = {
 				has_country_flag = glh_picked_tengri
 				has_country_flag = glh_picked_judaism
 				has_country_flag = glh_picked_nestorian
+				has_country_flag = glh_picked_zoroastrian
 			}
 		}
 	}
@@ -360,6 +362,7 @@ glh_eu_first_sunni_branching = {
 				has_country_flag = glh_picked_buddhist
 				has_country_flag = glh_picked_judaism
 				has_country_flag = glh_picked_nestorian
+				has_country_flag = glh_picked_zoroastrian
 			}
 		}
 	}
@@ -520,6 +523,7 @@ glh_eu_first_christian_branching = {
 				has_country_flag = glh_picked_sunni
 				has_country_flag = glh_picked_buddhist
 				has_country_flag = glh_picked_judaism
+				has_country_flag = glh_picked_zoroastrian
 			}
 		}
 	}
@@ -640,6 +644,7 @@ glh_eu_first_jewish_branching = {
 				has_country_flag = glh_picked_buddhist
 				has_country_flag = glh_picked_orthodox
 				has_country_flag = glh_picked_nestorian
+				has_country_flag = glh_picked_zoroastrian
 			}
 		}
 	}
@@ -742,6 +747,160 @@ glh_eu_first_jewish_branching = {
 			custom_tooltip = UNLOCK_KHAZARIA_RENAME
 			add_country_modifier = {
 				name = "gh_khazar_legacy"
+				duration = -1
+			}
+		}
+	}
+}
+
+glh_eu_first_zoroastrian_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_european_tree
+		NOT = { has_country_flag = glh_horde_tree }
+		has_country_flag = glh_picked_zoroastrian
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_orthodox
+				has_country_flag = glh_picked_nestorian
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_mobeds = {
+		icon = mission_rajput_trade_guilds
+		required_missions = { }
+		position = 4
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = AB_GLH_FAITH_QUESTION }
+			estate_loyalty = {
+				estate = estate_church 
+				loyalty = 60 
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_25_dip_per_privilege_church_max_4
+			hidden_effect = {
+				for_privilege_given_to_estate = {
+					estate = church
+					max_privileges = 4
+					effect = "add_dip_power = 25"
+				}
+			}
+			add_country_modifier = {
+				name = "per_faith"
+				duration = 5475
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	glh_eternal = {
+		icon = mission_fires
+		position = 5
+		required_missions = { glh_mobeds }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = AB_GLH_FAITH_QUESTION }
+			num_of_owned_provinces_with = {
+				value = 15
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PER_TEMPLES
+			add_country_modifier = {
+				name = per_blessing_atar
+				duration = 5475
+			}
+			hidden_effect = {
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									has_building = temple
+									has_building = cathedral
+								}
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	glh_birthplace = {
+		icon = mission_firetemple2
+		position = 6
+		required_missions = { glh_eternal }
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = AB_GLH_FAITH_QUESTION }
+			owns = 441
+			441 = {
+				has_building = cathedral
+			}
+			441 = {
+				development = 15
+			}
+			441 = {
+				has_great_project = {
+					type = itchan_kala
+					tier = 3
+				}
+			}
+        }
+		
+		effect = {
+			custom_tooltip = ZUN_DIASPORA
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								religion = zoroastrian
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+			add_country_modifier = {
+				name = "zun_yasna"
 				duration = -1
 			}
 		}
