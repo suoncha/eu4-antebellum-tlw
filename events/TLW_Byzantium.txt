@@ -1365,11 +1365,6 @@ country_event = {
 		add_government_reform = byzculturalsphere
 		hidden_effect = {
 			if = {
-				limit = { NOT = { religion = zoroastrian } }
-				remove_faction = faction_byzpersian
-			}
-			remove_faction = faction_byzchinese
-			if = {
 				limit = { 
 					OR = {
 						has_country_flag = byz_court_latin
@@ -3210,6 +3205,155 @@ country_event = {
 	}
 }
 
+#Restoration of West Rome
+country_event = {
+	id = ab_byzantium.87
+	title = ab_byzantium.87.t
+	desc = ab_byzantium.87.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.87.a
+		add_power_projection_mission = { amount = 25 }
+		custom_tooltip = SER_UNLOCK_FORMING_ROME
+		custom_tooltip = ROM_CATHOLIC_FORMATION_CLAIM
+		hidden_effect = {
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			balkan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tripolitania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			djerba_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tunisia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kabylia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			barbary_coast_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_morocco_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1232 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2324 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
@@ -4216,8 +4360,7 @@ country_event = {
 	}
 }
 
-#REMOVE LATER 
-#Byzantine Reconquest of the Levant - Remove modifier
+#DELETE LATER 
 country_event = { 
 	id = ab_byzantium.6969
 	title = ab_byzantium.6969.t 
@@ -4226,19 +4369,30 @@ country_event = {
 	
 	hidden = yes
 
-	fire_only_once = yes
-
 	trigger = {
 		tag = ROM
 		OR = {
 			AND = {
 				has_faction = faction_byzpersian
-				NOT = { has_country_flag = byz_faster_romanization_persia }
-				NOT = { religion = zoroastrian }
+				NOT = { has_country_flag = unlocked_faction_romepersian }
+				NOT = { mission_completed = lat_persosphere }
+				NOT = { mission_completed = rum_zoroastrian_roman_ambition }
+				NOT = { mission_completed = rum_christian_persosphere }
+				NOT = { mission_completed = rum_muslim_persosphere }
+				NOT = { mission_completed = byzantium_persosphere }
+				NOT = { mission_completed = ser_persosphere }
+				NOT = { mission_completed = ab_russia_persosphere }
 			}
 			AND = {
 				has_faction = faction_byzchinese
-				NOT = { has_country_flag = byz_faster_romanization_china }
+				NOT = { has_country_flag = unlocked_faction_romechinese }
+				NOT = { mission_completed = lat_china }
+				NOT = { mission_completed = rum_zoroastrian_china }
+				NOT = { mission_completed = rum_christian_china }
+				NOT = { mission_completed = rum_muslim_china }
+				NOT = { mission_completed = byzantium_china }
+				NOT = { mission_completed = ser_china }
+				NOT = { mission_completed = ab_russia_china }
 			}
 		}
 	}
@@ -4248,15 +4402,28 @@ country_event = {
 		if = {
 			limit = {
 				has_faction = faction_byzpersian
-				NOT = { has_country_flag = byz_faster_romanization_persia }
-				NOT = { religion = zoroastrian }
+				NOT = { has_country_flag = unlocked_faction_romepersian }
+				NOT = { mission_completed = lat_persosphere }
+				NOT = { mission_completed = rum_zoroastrian_roman_ambition }
+				NOT = { mission_completed = rum_christian_persosphere }
+				NOT = { mission_completed = rum_muslim_persosphere }
+				NOT = { mission_completed = byzantium_persosphere }
+				NOT = { mission_completed = ser_persosphere }
+				NOT = { mission_completed = ab_russia_persosphere }
 			}
 			remove_faction = faction_byzpersian
 		}
 		if = {
 			limit = {
 				has_faction = faction_byzchinese
-				NOT = { has_country_flag = byz_faster_romanization_china }
+				NOT = { has_country_flag = unlocked_faction_romechinese }
+				NOT = { mission_completed = lat_china }
+				NOT = { mission_completed = rum_zoroastrian_china }
+				NOT = { mission_completed = rum_christian_china }
+				NOT = { mission_completed = rum_muslim_china }
+				NOT = { mission_completed = byzantium_china }
+				NOT = { mission_completed = ser_china }
+				NOT = { mission_completed = ab_russia_china }
 			}
 			remove_faction = faction_byzchinese
 		}

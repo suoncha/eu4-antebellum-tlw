@@ -5,21 +5,13 @@ country_decisions = {
 		potential = {
 			normal_or_historical_nations = yes
 			NOT = { has_country_flag = restored_rome_flag }
-			owns = 118
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
 			}
-			NOT = { tag = HLR }
-			NOT = { tag = ROM }
-			NOT = { tag = PAP }
-			NOT = { tag = BYZ }
-			NOT = { tag = NCI }
-			NOT = { tag = HLE }
-			NOT = { tag = LAT }
-			NOT = { exists = ROM }
-			religion = catholic
+			tag = WRE
 		}
+
 		provinces_to_highlight = {
 			OR = {
 				#Core Regions
@@ -28,7 +20,6 @@ country_decisions = {
 				region = italy_region
 				region = france_region
 				region = iberia_region
-				region = mashriq_region
 				region = balkan_region
 				#England
 				area = east_midlands_area
@@ -39,80 +30,207 @@ country_decisions = {
 				area = east_anglia_area
 				area = wales_area
 				area = scottish_marches_area
-				#Areas within South Germany
-				area = romandie_area
-				area = upper_rhineland_area
-				area = romandie_area
-				area = alsace_area
-				area = palatinate_area
-				area = lower_rhineland_area
-				area = carinthia_area
-				province_id = 85 #cologne
-				area = north_brabant_area
-				area = brabant_area
-				area = flanders_area
-				area = wallonia_area
-				province_id = 96 #zeeland
-				area = inner_austria_area
-				area = austria_proper_area
-				area = tirol_area
-				area = east_bavaria_area
-				area = lower_bavaria_area
-				area = upper_bavaria_area
-				area = upper_swabia_area
-				area = lower_swabia_area
-				area = switzerland_area
-				#Carthage
-				area = barbary_coast_area
-				area = kabylia_area
-				area = tunisia_area
-				area = djerba_area
+				area = cornwall_area						
+				#Africa
 				area = tripolitania_area
+				area = djerba_area
+				area = tunisia_area
+				area = kabylia_area
+				area = barbary_coast_area
 				area = northern_morocco_area
-				area = algiers_area
-				province_id = 343
-				#Danubia
-				area = transdanubia_area
+				#Syria
+				area = syria_area
+				area = aleppo_area
+				area = palestine_area
+				#Etc
+				area = carinthia_area
+				province_id = 1232
+				province_id = 2324
 			}
-			NOT = { area = lower_nubia_area }
-			NOT = { area = iraq_arabi_area }
-			NOT = { area = basra_area }
-			NOT = { owned_by = ROOT }
 		}
+
 		allow = {
-			num_of_owned_provinces_with = {
-				custom_trigger_tooltip = {
-					tooltip = BYZ_highlighted_by_decision
-					BYZ_roman_empire_decision_trigger = yes
+			custom_trigger_tooltip = {
+				tooltip = ROME_CATHOLIC_RESTORED_BORDER
+				italy_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
 				}
-				value = 425
+				iberia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				france_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				egypt_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				balkan_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				anatolia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				carinthia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tripolitania_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				djerba_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tunisia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				kabylia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				barbary_coast_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				northern_morocco_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				1232 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				2324 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			tag = WRE
 			religion = catholic
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
 			is_nomad = no
-			118 = {
-				is_state = yes
-			}
 		}
+
 		effect = {
-			118 = {
-				move_capital_effect = yes
-			}
-			restore_country_name = yes
 			change_tag = ROM
-			on_change_tag_effect = yes
-			custom_tooltip = roman_culture_provinces_tooltip
+			hidden_effect = {
+				override_country_name = ROM
+			}
+			set_country_flag = rom_belgica_isof_gallia
+			set_government_rank = 3
+			swap_non_generic_missions = yes
+			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
+			if = {
+				limit = { culture_group = gaelic }
+				change_primary_culture = romano_british
+				hidden_effect = {
+					set_heir_culture = romano_british
+					set_ruler_culture = romano_british
+				}
+			}
+			else_if = {
+				limit = { culture_group = iberian }
+				change_primary_culture = hispano_roman
+				hidden_effect = {
+					set_heir_culture = hispano_roman
+					set_ruler_culture = hispano_roman
+				}
+			}
+			else_if = {
+				limit = { culture_group = french }
+				change_primary_culture = gallo_roman
+				hidden_effect = {
+					set_heir_culture = gallo_roman
+					set_ruler_culture = gallo_roman
+				}
+			}
+			else = {
+				change_primary_culture = roman_new
+				hidden_effect = {
+					set_heir_culture = roman_new
+					set_ruler_culture = roman_new
+				}
+			}
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
-						culture_group = ROOT
+						OR = {
+							culture = greek
+							culture = pontic_greek
+							culture = goths
+							province_id = 151
+						}
 					}
-					change_culture = roman
+					change_culture = greco_roman
+				}
+				every_owned_province = {
+					limit = {
+						region = balkan_region
+						NOT = { culture = greco_roman }	
+						NOT = { province_id = 151 }
+					}
+					change_culture = illyro_roman
+				}
+				if = {
+					limit = { primary_culture = romano_british }
+					every_owned_province = {
+						limit = { culture_group = gaelic }
+						change_culture = romano_british
+					}
+				}
+				else_if = {
+					limit = { primary_culture = hispano_roman }
+					every_owned_province = {
+						limit = { culture_group = iberian }
+						change_culture = hispano_roman
+					}
+				}
+				else_if = {
+					limit = { primary_culture = gallo_roman }
+					every_owned_province = {
+						limit = { culture_group = french }
+						change_culture = gallo_roman
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = { culture_group = latin }
+						change_culture = roman_new
+					}
+				}
+				every_subject_country = {
+					limit = { culture_group = byzantine }
+					change_primary_culture = greco_roman
+					set_heir_culture = greco_roman
+					set_ruler_culture = greco_roman
+				}
+				every_subject_country = {
+					limit = { is_colonial_nation = yes }
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
 				}
 			}
-			change_primary_culture = roman
+			add_ruler_personality = augustus_personality
+			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
@@ -121,66 +239,15 @@ country_decisions = {
 					}
 					set_in_empire = no
 				}
-			}
-			set_government_rank = 3
-			add_prestige_or_monarch_power = { amount = 50 }
-			if = {
-				limit = {
-					has_dlc = "Domination"
-				}
-				if = {
-					limit = {
-						government = monarchy
-						is_revolutionary = no
-						NOT = { has_reform = celestial_empire }
-					}
-					hidden_effect = {
-						unlock_government_reform = {
-							government_reform = roman_empire_reform
-						}
-						unlock_government_reform = {
-							government_reform = roman_republic_government
-						}
-					}
-					add_government_reform = roman_empire_reform
-				}
-				else_if = {
-					limit = {
-						government = republic
-						is_revolutionary = no
-					}
-					hidden_effect = {
-						unlock_government_reform = {
-							government_reform = roman_empire_reform
-						}
-						unlock_government_reform = {
-							government_reform = roman_republic_government
-						}
-					}
-					add_government_reform = roman_republic_government
-				}
-				else = {
-					unlock_government_reform = {
-						government_reform = roman_empire_reform
-					}
-					unlock_government_reform = {
-						government_reform = roman_republic_government
+				118 = {
+					add_core = ROOT
+					change_culture = roman_new 
+					add_province_modifier = {
+						name = byz_forced_romanized
+						duration = 7300 
 					}
 				}
 			}
-			add_core = 118 # Rome
-			#if = {
-			#	limit = {
-			#		is_part_of_hre = yes
-			#		is_elector = no
-			#	}
-			#	every_owned_province = {
-			#		limit = {
-			#			is_part_of_hre = yes
-			#		}
-			#		set_in_empire = no
-			#	}
-			#}
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
@@ -190,9 +257,10 @@ country_decisions = {
 				duration = 7300
 			}
 			set_country_flag = restored_rome_flag
+			country_event = { id = ab_byzantium.67 }
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 	}
 	
