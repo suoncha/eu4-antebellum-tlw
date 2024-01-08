@@ -41,7 +41,7 @@ country_decisions = {
 		}
 		provinces_to_highlight = {
 			if = {
-				limit = { culture_group = gaelic }
+				limit = { ROOT = { culture_group = gaelic } }
 				OR = {
 					region = british_isles_region
 					region = france_region
@@ -62,6 +62,10 @@ country_decisions = {
 			is_free_or_tributary_trigger = yes
 			is_at_war = no
 			religion = catholic
+			if = {
+				limit = { culture_group = iberian }
+				tag = VSG
+			}
 			if = {
 				limit = { culture_group = gaelic }
 				british_isles_region = {
@@ -115,6 +119,29 @@ country_decisions = {
 			change_tag = WRE
 			hidden_effect = {
 				override_country_name = WRE
+			}
+			hidden_effect = {
+				if = {
+					limit = { culture_group = iberian }
+					if = {
+						limit = { overlord_of = VSV }
+						VSV = {
+							change_country_color = { country = WRE }
+						}
+					}
+					if = {
+						limit = { overlord_of = VSO }
+						VSO = {
+							change_country_color = { country = WRE }
+						}
+					}
+					if = {
+						limit = { overlord_of = VSS }
+						VSS = {
+							change_country_color = { country = WRE }
+						}
+					}
+				}
 			}
 			set_country_flag = formed_westrome_flag
 			set_government_rank = 3

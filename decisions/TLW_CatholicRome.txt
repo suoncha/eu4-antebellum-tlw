@@ -47,6 +47,7 @@ country_decisions = {
 				province_id = 1232
 				province_id = 2324
 			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		allow = {
@@ -134,7 +135,29 @@ country_decisions = {
 			hidden_effect = {
 				override_country_name = ROM
 			}
-			set_country_flag = rom_belgica_isof_gallia
+			if = {
+				limit = { was_tag = VSG }
+				if = {
+					limit = { overlord_of = VSV }
+					inherit = VSV
+				}
+				if = {
+					limit = { overlord_of = VSO }
+					inherit = VSO
+				}
+				if = {
+					limit = { overlord_of = VSS }
+					inherit = VSS
+				}
+				if = {
+					limit = { overlord_of = LAT }
+					inherit = LAT
+				}
+			}
+			else_if = {
+				limit = { was_tag = BRN }
+				set_country_flag = rom_belgica_isof_gallia
+			}
 			set_government_rank = 3
 			swap_non_generic_missions = yes
 			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION

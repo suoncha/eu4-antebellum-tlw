@@ -1,0 +1,529 @@
+ibemin_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = ASU
+			tag = NAV
+			tag = GAL
+			tag = CAS
+			tag = ARA
+			tag = CAT
+			tag = LON
+			tag = VAL
+			tag = MJO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	ibe_army = {
+	    icon = knights_of_the_new_world
+		required_missions = { ibe_north }
+		position = 2
+		
+		trigger = {
+			army_size_percentage = 0.8
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_preparation"
+				duration = 7300
+			}
+		}
+	}
+		
+	ibe_reconquistador = {
+	    icon = shield_of_christendom
+		required_missions = { ibe_army }
+		position = 4
+		
+		trigger = {
+			army_size_percentage = 1
+			army_tradition = 45
+		}
+		
+		effect = {
+			create_general = { tradition = 65 }
+			add_country_modifier = {
+				name = "ibe_reconquistadors"
+				duration = -1
+			}
+		}
+	}
+
+	ibe_iberian_identity = {
+	    icon = mission_iberia
+		required_missions = { ibe_reconquistador }
+		position = 5
+		
+		trigger = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			owns_core_province = 213	# Barcelona
+			owns_core_province = 214	# Aragón
+			owns_core_province = 215	# Castilla La Vieja
+			owns_core_province = 216	# Salamanca
+			owns_core_province = 219	# Toledo
+			owns_core_province = 220	# Valencia
+			owns_core_province = 231
+			owns_core_province = 227
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 213	# Barcelona
+				province_id = 214	# Aragón
+				province_id = 215	# Castilla La Vieja
+				province_id = 216	# Salamanca
+				province_id = 219	# Toledo
+				province_id = 220	# Valencia
+				province_id = 231
+				province_id = 227
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.89
+			}
+		}
+	}
+}
+
+ibemin_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = ASU
+			tag = NAV
+			tag = GAL
+			tag = CAS
+			tag = ARA
+			tag = CAT
+			tag = LON
+			tag = VAL
+			tag = MJO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_north = {
+	    icon = mission_invade_island
+		required_missions = {  }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				area = galicia_area
+				area = asturias_area
+				area = basque_country
+				province_id = 208
+				province_id = 4553
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 208
+			owns = 4553
+		    asturias_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    basque_country = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    galicia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "ibe_united"
+				duration = 7300
+			}
+			if = {
+				limit = { has_country_modifier = vsg_defeat_of_valencia }
+				remove_country_modifier = vsg_defeat_of_valencia
+			}
+			if = {
+				limit = { has_country_modifier = vsg_defeat_of_valencia_asturias }
+				remove_country_modifier = vsg_defeat_of_valencia_asturias
+			}
+			iberia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = { is_year = 1450 }
+				}
+				custom_tooltip = VSG_MISSION_BY_1450
+			}
+			else = {
+				custom_tooltip = VSG_MISSION_BY_1450_NO
+			}
+			tooltip = {
+				add_casus_belli = {
+					type = cb_grand_crusade_reconquista
+					months = 120
+					target = ADU
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { is_year = 1450 }
+					}
+					add_casus_belli = {
+						type = cb_grand_crusade_reconquista
+						months = 120
+						target = ADU
+					}
+				}
+			}
+		}
+	}
+	
+	ibe_castille = {
+	    icon = mission_castillian_aggression
+		required_missions = { ibe_north }
+		position = 2
+		
+		trigger = {
+		    castille_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = castille_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_manpower = 7.5
+		}
+	}
+	
+	ibe_leon = {
+	    icon = mission_golden_century
+		required_missions = { ibe_castille }
+		position = 3
+		
+		trigger = {
+		    leon_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    extremadura_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = leon_area
+				area = extremadura_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_crusade"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_aragon = {
+	    icon = mission_raid_on_valencia
+		required_missions = { ibe_leon }
+		position = 4
+		
+		trigger = {
+		    aragon_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = aragon_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_dip_power = 150
+		}
+	}
+	
+	ibe_tide = {
+	    icon = mission_turning_the_tables
+		required_missions = { ibe_aragon ibe_lisboa }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = IBE_MORE_ARMY_DEV
+				NOT = {
+					ADU = {
+						army_size = ROOT
+						total_development = ROOT
+					}
+				}
+			}
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_reconquista"
+				duration = 7300
+			}
+		}
+	}
+}
+
+ibemin_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = ASU
+			tag = NAV
+			tag = GAL
+			tag = CAS
+			tag = ARA
+			tag = CAT
+			tag = LON
+			tag = VAL
+			tag = MJO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_porto = {
+	    icon = mission_valencian_silk
+		required_missions = { ibe_north }
+		position = 2
+		
+		trigger = {
+		    beieras_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = beieras_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			beieras_area = {
+				add_province_modifier = {
+					name = "ibe_portugal"
+					duration = 7300
+				}
+			}
+		}
+	}
+	
+	ibe_lisboa = {
+	    icon = mission_lusitanian_empire
+		required_missions = { ibe_porto }
+		position = 4
+		
+		trigger = {
+		    alentejo_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = alentejo_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			alentejo_area = {
+				add_province_modifier = {
+					name = "ibe_portugal"
+					duration = 7300
+				}
+			}
+		}
+	}
+}
+
+ibemin_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = ASU
+			tag = NAV
+			tag = GAL
+			tag = CAS
+			tag = ARA
+			tag = CAT
+			tag = LON
+			tag = VAL
+			tag = MJO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_fleet_minor = {
+	    icon = crusader_fleet
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_fleet"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_quest = {
+	    icon = mission_consulate_of_the_sea
+		required_missions = { ibe_fleet_minor }
+		position = 3
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_quest
+				duration = 7300
+			}
+		}
+	}
+	
+	ibe_make_colony = {
+	    icon = mission_iberian_conquistador
+		required_missions = { ibe_quest }
+		position = 5
+		
+		trigger = {
+			num_of_colonies = 1
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_colonization
+				duration = 7300
+			}
+		}
+	}
+}
+
+ibemin_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = ASU
+			tag = NAV
+			tag = GAL
+			tag = CAS
+			tag = ARA
+			tag = CAT
+			tag = LON
+			tag = VAL
+			tag = MJO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_ally = {
+	    icon = mission_alliances
+		required_missions = { }
+		position = 3
+		
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = ibe_has_christian_allies
+				calc_true_if = {
+					all_ally = {
+						religion = catholic
+					}
+					amount = 2
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_alliances"
+				duration = 7300
+			}
+		}
+	}
+	
+	ibe_hre = {
+	    icon = switzerland_and_the_empire
+		required_missions = { ibe_ally }
+		position = 5
+		
+		trigger = {
+		    is_part_of_hre = yes
+		}
+		
+		effect = {
+			add_dip_power = 75
+			add_country_modifier = {
+				name = "ibe_hre"
+				duration = 7300
+			}
+		}
+	}
+}
