@@ -435,14 +435,18 @@ province_event = {
 	mean_time_to_happen = {
 		months = 1200
 		modifier = {
+			factor = 2.5
+			NOT = {
+				any_neighbor_province = { culture_group = roman_g }
+			}
+		}
+		modifier = {
 			factor = 0.9
 			religion = owner
 		}
 		modifier = {
 			factor = 0.8
-			owner = {
-				has_country_modifier = byz_friend_diocese
-			}
+			owner = { has_country_modifier = byz_friend_diocese }
 		}
 		modifier = {
 			factor = 0.5
@@ -620,7 +624,6 @@ province_event = {
 		}
 		NOT = { culture_group = roman_g }
 		any_friendly_coast_border_province = {
-			owned_by = ROOT
 			culture_group = roman_g
 		}
 		OR = {
@@ -3643,6 +3646,30 @@ province_event = {
 		else = {
 			change_culture = basque
 			change_original_culture = basque
+		}
+	}
+}
+
+#Fall of Rome - Zoroastrian Rum
+country_event = {
+	id = ab_byzantium.93
+	title = ab_byzantium.93.t
+	desc = ab_byzantium.93.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_byzantium.93.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = "rum_fall_rome"
+			duration = -1
 		}
 	}
 }

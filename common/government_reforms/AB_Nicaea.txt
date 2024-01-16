@@ -1,0 +1,294 @@
+nicene_dictatorship = {
+	icon = "nicaea"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		tag = NCI
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	maintain_dynasty = yes
+
+	modifiers = {
+		country_military_power = 1
+	}
+	government_abilities = {
+        nicene_militarization_mechanic
+    }
+}
+
+nicene_hellenic_empire = {
+	icon = "nicene_hellenic_empire"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		OR = {
+			tag = HLE
+			tag = MAC
+		}
+		NOT = { has_country_flag = had_diadochi_war }
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	fixed_rank = 3
+	maintain_dynasty = yes
+
+	modifiers = {
+		infantry_shock = 0.5
+		ignore_coring_distance = yes
+		country_military_power = 1
+		culture_conversion_cost = 10.0
+	}
+
+	custom_attributes = {
+		ab_has_diadochi = yes
+		locked_government_type = yes
+	}
+
+	government_abilities = {
+        nicene_militarization_mechanic
+    }
+
+	factions = {
+		faction_nciseleukos
+		faction_nciptolemaios
+		faction_nciantigonos
+	}
+}
+
+nicene_absolute_hellenic_empire = {
+	icon = "nicene_hellenic_empire"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		OR = {
+			tag = HLE
+			tag = MAC
+		}
+		has_country_flag = had_diadochi_war
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	fixed_rank = 3
+	maintain_dynasty = yes
+
+	modifiers = {
+		infantry_shock = 1.0
+		ignore_coring_distance = yes
+		country_military_power = 1
+		culture_conversion_cost = 10.0
+		morale_damage = 0.1
+		infantry_power = 0.1
+		land_maintenance_modifier = -0.20
+	}
+
+	custom_attributes = {
+		ab_has_diadochi = yes
+		locked_government_type = yes
+	}
+}
+
+nicene_diadochi = {
+	icon = "nicene_hellenic_empire"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		culture_group = hellenic_g
+		NOT = { tag = HLE }
+		NOT = { tag = MAC }
+	}
+	fixed_rank = 2
+	maintain_dynasty = yes
+
+	modifiers = {
+		discipline = 0.05
+		siege_ability = 0.1
+		global_missionary_strength = 0.02
+		culture_conversion_cost = 10.0
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+	}
+}
+
+nicene_stratocracy = {
+	icon = "soldiers_4"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	modifiers = {
+		army_tradition = 1
+		nobles_influence_modifier = 0.2
+	}
+	custom_attributes = {
+		enables_stratocratic_missions = yes
+	}
+	effect = {
+		swap_non_generic_missions = yes
+	}
+	post_removed_effect = {
+		swap_non_generic_missions = yes
+	}
+	ai = {
+		factor = 100
+	}
+}
+
+nicene_control = {
+	icon = "ncipatriarch"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	trigger = {
+		owns = 151
+		religion = orthodox
+	}
+	modifiers = {
+		yearly_patriarch_authority = 0.005
+		church_influence_modifier = -0.15
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_abolish = {
+	icon = "latlatinokratia"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	trigger = {
+		owns = 151
+	}
+	modifiers = {
+		max_absolutism = 10
+		church_loyalty_modifier = -0.15
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_islamization = {
+	icon = "adulegalsystem"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	trigger = {
+		owns = 151
+		religion = shiite
+	}
+	modifiers = {
+		global_heretic_missionary_strength = 0.03
+		tolerance_heathen = 2
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_agoge = {
+	icon = "soldiers_3"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	modifiers = {
+		drill_decay_modifier = -0.1
+		monthly_nicene_militarized_society = 0.025
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_classical_revival = {
+	icon = "parliament"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	trigger = {
+		OR = {
+			religion = hellenic
+			religion = reformed_hellenic
+		}
+	}
+	modifiers = {
+		idea_cost = -0.05
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_administration = {
+	icon = "soldiers_5"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	modifiers = {
+		free_mil_policy = 1
+		nobles_loyalty_modifier = 0.05
+		nobles_influence_modifier = 0.1
+	}
+	ai = {
+		factor = 1
+	}
+}
+
+nicene_diarchy = {
+	icon = "nicene_diarchy"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = NCI
+			was_tag = NCI
+		}
+	}
+	modifiers = {
+		legitimacy = 1
+		governing_capacity_modifier = 0.1
+	}
+	ai = {
+		factor = 1
+	}
+}

@@ -425,3 +425,100 @@ allianceaction = {
 		change_asha_vahishta = { value = 2 }
 	}
 }
+
+annexationaction = {
+	condition = {
+		tooltip = ANNEX_TOO_LOW
+		potential = {
+			FROM = {
+				OR = {
+					is_subject_of_type = core_eyalet
+					is_subject_of_type = appanage
+					vassal_of = ROOT
+				}
+			}
+		}
+		allow = {
+			FROM = {
+				has_opinion = {
+					who = ROOT
+					value = 190
+				}
+			}
+		}
+	}
+	condition = {
+		tooltip = CANNOT_ANNEX
+		potential = {
+			FROM = {
+				has_country_modifier = tur_mamlukian_administration
+			}
+		}
+		allow = {
+			FROM = {
+				NOT = { has_country_modifier = tur_mamlukian_administration }
+			}
+		}
+	}
+	# TLW [[[
+	condition = {
+		tooltip = CANNOT_ANNEX_CORE_DIADOCHI
+		potential = {
+			FROM = {
+				OR = {
+					tag = AEG
+					tag = HLS
+					tag = HLM
+				}
+				is_subject_of_type = diadochi_vassal
+			}
+		}
+		allow = {
+			FROM = {
+				NOT = { tag = AEG }
+				NOT = { tag = HLS }
+				NOT = { tag = HLM }
+			}
+		}
+	}
+	# ]]]
+	condition = {
+		tooltip = NEEDS_50_CROWNLAND_TT
+		potential = {
+			has_government_attribute = need_crownland_to_annex
+			NOT = { crown_land_share = 50 }
+		}
+		allow = {
+			crown_land_share = 50
+		}
+	}
+	condition = {
+		tooltip = NEEDS_TO_HAVE_SEIZED_LAND
+		potential = {
+			has_government_attribute = has_appanages
+			NOT = {
+				check_variable = {
+					which = can_annex_appanages_points
+					value = 1
+				}
+			}
+		}
+		allow = {
+			check_variable = {
+				which = can_annex_appanages_points
+				value = 1
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				FROM = { is_subject_of_type = appanage }
+			}
+			subtract_variable = {
+				which = can_annex_appanages_points
+				value = 1
+			}
+		}
+	}
+}

@@ -33,6 +33,7 @@ TLW_on_new_monarch_effect = {
 }
 
 TLW_on_adm_development_effect = {
+	# Rome
 	if = {
 		limit = {
 			owner = { 
@@ -87,12 +88,41 @@ TLW_on_adm_development_effect = {
 					faction = faction_byzchinese
 					influence = 1
 				}
+			}
+		}
+	}
+	# Nicaea
+	if = {
+		limit = { has_province_modifier = nci_antigonos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciantigonos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_seleukos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciseleukos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_ptolemaios_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciptolemaios
+				influence = 1
 			}
 		}
 	}
 }
 
 TLW_on_dip_development_effect = {
+	# Rome
 	if = {
 		limit = {
 			owner = { 
@@ -150,9 +180,38 @@ TLW_on_dip_development_effect = {
 			}
 		}
 	}
+	# Nicaea
+	if = {
+		limit = { has_province_modifier = nci_antigonos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciantigonos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_seleukos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciseleukos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_ptolemaios_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciptolemaios
+				influence = 1
+			}
+		}
+	}
 }
 
 TLW_on_mil_development_effect = {
+	# Rome
 	if = {
 		limit = {
 			owner = { 
@@ -240,6 +299,34 @@ TLW_on_mil_development_effect = {
 			}
 		}
 	}
+	# Nicaea
+	if = {
+		limit = { has_province_modifier = nci_antigonos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciantigonos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_seleukos_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciseleukos
+				influence = 1
+			}
+		}
+	}
+	else_if = {
+		limit = { has_province_modifier = nci_ptolemaios_province }
+		owner = {
+			add_faction_influence = {
+				faction = faction_nciptolemaios
+				influence = 1
+			}
+		}
+	}
 }
 
 TLW_on_new_term_election = {
@@ -258,6 +345,7 @@ TLW_on_death_election = {
 }
 
 TLW_on_siege_won_province = {
+	# Rome
 	if = {
 		limit = {
 			ROM = { has_disaster = byzantium_biased_cultural_sphere }
@@ -450,6 +538,179 @@ TLW_on_siege_won_province = {
 			}
 		}
 	}
+	# Nicaea
+	if = {
+		limit = {
+			OR = {
+				superregion = near_east_superregion
+				superregion = persia_superregion
+			}
+			OR = {
+				is_permanent_claim = HLE
+				is_permanent_claim = MAC
+			}
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		if = {
+			limit = { exists = MAC }
+			add_core = MAC
+		}
+		else = {
+			add_core = HLE
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				NOT = { culture_group = hellenic_g }
+				is_at_war = yes
+			}
+			controller = {
+				is_subject_of_type = diadochi_vassal
+				is_at_war = yes
+			}
+		}
+		cede_province = controller
+	}
+	if = {
+		limit = {
+			OR = {
+				HLE = { mission_completed = nicene_malta }
+				MAC = { mission_completed = nicene_malta }
+			}
+			region = italy_region
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		add_permanent_claim = HLM
+	}
+	if = {
+		limit = {
+			OR = {
+				HLE = { mission_completed = nicene_maharajas }
+				MAC = { mission_completed = nicene_maharajas }
+			}
+			superregion = india_superregion
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		if = {
+			limit = { exists = MAC }
+			add_permanent_claim = MAC
+		}
+		else = {
+			add_permanent_claim = HLE
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				HLE = { mission_completed = nicene_east_indies }
+				MAC = { mission_completed = nicene_east_indies }
+			}
+			superregion = east_indies_superregion
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		if = {
+			limit = { exists = MAC }
+			add_permanent_claim = MAC
+		}
+		else = {
+			add_permanent_claim = HLE
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				HLE = { mission_completed = nicene_arelat }
+				MAC = { mission_completed = nicene_arelat }
+			}
+			region = france_region
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		if = {
+			limit = { exists = MAC }
+			add_permanent_claim = MAC
+		}
+		else = {
+			add_permanent_claim = HLE
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				HLE = { mission_completed = nicene_hercules }
+				MAC = { mission_completed = nicene_hercules }
+			}
+			region = iberia_region
+			controller = {
+				OR = {
+					tag = HLE
+					tag = MAC
+					is_subject_of = HLE
+					is_subject_of = MAC
+				}
+				is_in_war = {
+					casus_belli = cb_hellenic_conquest
+				}
+			}
+		}
+		if = {
+			limit = { exists = MAC }
+			add_permanent_claim = MAC
+		}
+		else = {
+			add_permanent_claim = HLE
+		}
+	}
 }
 
 TLW_on_battle_won_country = {
@@ -481,19 +742,28 @@ TLW_on_battle_won_country = {
 	}
 }
 
-TLW_on_annexed_effect = {
+TLW_on_province_owner_change = {
 	if = {
-		limit = {
-			FROM = { 
-				is_subject_of_type = diocese_vassal	
+		limit = { owner = { has_reform = nicene_hellenic_empire } }
+		random_list = {
+			33 = { 
+				add_province_modifier = {
+					name = nci_antigonos_province
+					duration = -1
+				}
 			}
-		}
-		every_subject_country = {
-			limit = { 
-				NOT = { tag = FROM }
-				is_subject_of_type = diocese_vassal
+			33 = { 
+				add_province_modifier = {
+					name = nci_seleukos_province
+					duration = -1
+				}
 			}
-			add_liberty_desire = 25
+			33 = { 
+				add_province_modifier = {
+					name = nci_ptolemaios_province
+					duration = -1
+				}
+			}
 		}
 	}
 }
