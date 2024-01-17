@@ -261,20 +261,9 @@ country_event = {
 				}
 			}
 		}
-		hidden_effect = {
-			if = {
-				limit = { religion = reformed_hellenic }
-				358 = {
-					change_religion = ROOT
-					add_reform_center = reformed_hellenic
-				}
-				358 = {
-					province_event = {
-						id = ab_nicaea.11
-						days = 9125
-					}
-				}
-			}
+		if = {
+			limit = { religion = reformed_hellenic }
+			358 = { change_religion = ROOT }
 		}
 	}
 }
@@ -852,7 +841,7 @@ province_event = {
 	}
 }
 
-#Hellenic Reform Center Removal
+#Center of Hellenisation Auto Convert
 province_event = {
 	id = ab_nicaea.11
 	title = ab_nicaea.11.t
@@ -861,11 +850,30 @@ province_event = {
 
 	hidden = yes	
 
-	is_triggered_only = yes
+	trigger = {
+		region_for_scope_province = {
+			type = any
+			has_province_modifier = nci_center_of_hellenisation
+		}
+		NOT = { religion = reformed_hellenic }
+		owner = {
+			culture_group = hellenic_g
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 2.5
+			NOT = {
+				any_neighbor_province = { culture_group = hellenic_g }
+			}
+		}
+	}
 	
 	option = {
 		name = ab_nicaea.11.a
-		remove_reform_center = reformed_hellenic
+		change_religion = reformed_hellenic
 	}
 }
 
@@ -1192,6 +1200,19 @@ country_event = {
 						set_country_flag = nci_diadochi_war_ptolemaios_side
 					}
 				}
+			}
+			random_province = {
+				limit = {
+					owner = {
+						OR = {
+							tag = MAC
+							tag = HLE
+							is_subject_of_type = diadochi_vassal
+						}
+					}
+					has_province_modifier = nci_center_of_hellenisation
+				}
+				remove_province_modifier = nci_center_of_hellenisation
 			}
 		}
 	}

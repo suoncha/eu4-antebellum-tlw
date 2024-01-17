@@ -1,0 +1,214 @@
+#Hellenization Info
+custom_icon = {
+    name = ab_hellenization_info_button
+    potential = {
+        ai = no
+        culture_group = hellenic_g
+    }
+    tooltip = AB_HELLENIZATION_INFO
+}
+
+#Spawn Center of Hellenisation
+custom_button = {
+    name = ab_hellenization_center_spawn_button
+    potential = {
+        owner = {
+            OR = {
+                religion = hellenic
+                religion = reformed_hellenic
+            }
+        }
+        NOT = { has_province_modifier = nci_center_of_hellenisation }
+        HLE = {
+            NOT = { has_disaster = nicene_diadochi_war }
+        }
+    }
+    trigger = {
+        owner = {
+            religion = reformed_hellenic
+        }
+        religion = reformed_hellenic
+        custom_trigger_tooltip = {
+            tooltip = AB_ALREADY_HAVE_HELLENISATION_CENTER
+            NOT = {
+                any_province = {
+                    owner = {
+                        OR = {
+                            tag = MAC
+                            tag = HLE
+                            is_subject_of_type = diadochi_vassal
+                        }
+                    }
+                    has_province_modifier = nci_center_of_hellenisation
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_THIS_REGION_DOESNT_ALLOW_HELLENISATION_CENTER
+            OR = {
+                AND = {
+                    region = egypt_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_egypt
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_egypt
+                        }
+                    }
+                }
+                AND = {
+                    region = italy_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_isles
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_isles
+                        }
+                    }
+                }
+                AND = {
+                    region = france_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_massillia
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_massillia
+                        }
+                    }
+                }
+                AND = {
+                    region = iberia_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_valencia
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_valencia
+                        }
+                    }
+                }
+                AND = {
+                    region = balkan_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_serbia
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_serbia
+                        }
+                    }
+                }
+                AND = {
+                    region = crimea_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_pontic_steppe
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_pontic_steppe
+                        }
+                    }
+                }
+                AND = {
+                    region = maghreb_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_hercules
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_hercules
+                        }
+                    }
+                }
+                AND = {
+                    region = khorasan_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_bactria
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_bactria
+                        }
+                    }
+                }
+                AND = {
+                    superregion = india_superregion
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_india
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_india
+                        }
+                    }
+                }
+                AND = {
+                    region = mashriq_region
+                    if = {
+                        limit = { exists = MAC }
+                        MAC = {
+                            mission_completed = nicene_mesopotamia
+                        }
+                    }
+                    else = {
+                        HLE = {
+                            mission_completed = nicene_mesopotamia
+                        }
+                    }
+                }
+            }
+        }
+    }
+    effect = { 
+        custom_tooltip = AB_EFFECT_HELLENISATION_CENTER
+        add_province_modifier = {
+            name = nci_center_of_hellenisation
+            duration = -1
+        }
+    }
+    tooltip = AB_SPAWN_HELLENISATION_CENTER
+}
+
+#Remove Center of Hellenisation
+custom_button = {
+    name = ab_hellenization_center_remove_button
+    potential = {
+        has_province_modifier = nci_center_of_hellenisation
+    }
+    trigger = { }
+    effect = { 
+        custom_tooltip = AB_REMOVE_EFFECT_HELLENISATION_CENTER
+        remove_province_modifier = nci_center_of_hellenisation
+    }
+    tooltip = AB_REMOVE_HELLENISATION_CENTER
+}
