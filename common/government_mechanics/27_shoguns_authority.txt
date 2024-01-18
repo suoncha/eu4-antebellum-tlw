@@ -1,0 +1,67 @@
+shoguns_authority_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Rights of Man"
+	}
+
+	powers = {
+		shoguns_authority = {
+			gui = shoguns_authority_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					infantry_power = 0.1
+					allowed_samurai_fraction = 0.1
+					max_absolutism_effect = 0.2
+					liberty_desire_from_subject_development = -0.2
+					monthly_shoguns_authority = -0.5
+				}
+			}
+		}
+	}
+
+	interactions = {
+		boost_shoguns_authority = {
+			gui = shoguns_authority_gov_mech
+			cost_type = shoguns_authority
+			center = no
+			trigger = {
+				mil_power_cost = 50
+				NOT = {
+					has_government_power = {
+						mechanic_type = shoguns_authority_mechanic
+						power_type = shoguns_authority
+						value = 100
+					}
+				}
+			}
+			effect = { 
+				mil_power_cost = 50
+				add_government_power = {
+					mechanic_type = shoguns_authority_mechanic
+					power_type = shoguns_authority
+					value = 10
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					NOT = {
+						has_government_power = {
+							mechanic_type = shoguns_authority_mechanic
+							power_type = shoguns_authority
+							value = 90
+						}
+					}
+					mil_power_cost = 500
+					is_at_war = yes
+				}
+			}
+		}
+	}
+}
+	

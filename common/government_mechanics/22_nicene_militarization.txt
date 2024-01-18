@@ -1,0 +1,65 @@
+nicene_militarization_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Rights of Man"
+	}
+
+	powers = {
+		nicene_militarized_society = {
+			gui = nicene_militarization_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					morale_damage = 0.1
+					infantry_power = 0.1
+					land_maintenance_modifier = -0.20
+					monthly_nicene_militarized_society = -0.25
+				}
+			}
+		}
+	}
+	
+	interactions = {
+		nicene_militarization_boost_militarization = {
+			gui = nicene_militarization_gov_mech
+			cost_type = nicene_militarized_society
+			center = no
+			trigger = {
+				mil_power_cost = 50
+				not = {
+					has_government_power = {
+						mechanic_type = nicene_militarization_mechanic
+						power_type = nicene_militarized_society
+						value = 100
+					}
+				}
+			}
+			effect = { 
+				mil_power_cost = 50
+				add_government_power = {
+					mechanic_type = nicene_militarization_mechanic
+					power_type = nicene_militarized_society
+					value = 10
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					not = {
+						has_government_power = {
+							mechanic_type = nicene_militarization_mechanic
+							power_type = nicene_militarized_society
+							value = 90
+						}
+					}
+					mil_power_cost = 500
+					is_at_war = yes
+				}
+			}
+		}
+	}
+}

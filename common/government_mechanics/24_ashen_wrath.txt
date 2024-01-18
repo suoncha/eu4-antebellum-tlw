@@ -1,0 +1,81 @@
+ashen_wrath_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Rights of Man"
+	}
+
+	powers = {
+		ashen_wrath = {
+			gui = ashen_wrath_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					shock_damage = 0.1
+					raze_power_gain = 0.25
+					warscore_from_battles_modifier = 0.2
+					monthly_ashen_wrath = -0.5
+				}
+			}
+			scaled_modifier = {
+				trigger = {
+					has_government_power = {
+						mechanic_type = ashen_wrath_mechanic
+						power_type = ashen_wrath
+						value = 100
+					}
+				}
+				modifier = {
+					horde_unity = 1
+				}
+			}
+			on_max_reached = {
+				custom_tooltip = MAX_ASHEN_WRATH
+			}
+		}
+	}
+
+	interactions = {
+		boost_ashen_wrath = {
+			gui = ashen_wrath_gov_mech
+			cost_type = ashen_wrath
+			center = no
+			trigger = {
+				mil_power_cost = 50
+				not = {
+					has_government_power = {
+						mechanic_type = ashen_wrath_mechanic
+						power_type = ashen_wrath
+						value = 100
+					}
+				}
+			}
+			effect = { 
+				mil_power_cost = 50
+				add_government_power = {
+					mechanic_type = ashen_wrath_mechanic
+					power_type = ashen_wrath
+					value = 10
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					not = {
+						has_government_power = {
+							mechanic_type = ashen_wrath_mechanic
+							power_type = ashen_wrath
+							value = 90
+						}
+					}
+					mil_power_cost = 500
+					is_at_war = yes
+				}
+			}
+		}
+	}
+}
+	

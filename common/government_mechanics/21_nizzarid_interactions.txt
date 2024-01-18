@@ -1,0 +1,157 @@
+nizzarid_interaction_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 3
+	available = {
+		has_dlc = "Domination"
+	}
+	
+	powers = {
+		nizzarid_adm_power = {
+			max = 150
+			monarch_power = ADM
+			reset_on_new_ruler = yes
+			base_monthly_growth = 0.25
+		}
+		nizzarid_dip_power = {
+			max = 150
+			monarch_power = DIP
+			reset_on_new_ruler = yes
+			base_monthly_growth = 0.25
+		}
+		nizzarid_mil_power = {
+			max = 150
+			monarch_power = MIL
+			reset_on_new_ruler = yes
+			base_monthly_growth = 0.25
+		}
+	}
+	
+	interactions = {
+		nizzarid_admin_interaction = {
+			gui = nizzarid_interaction_button_1
+			icon = GFX_nizzarid_adm
+			cost_type = nizzarid_adm_power
+			cost = 100
+			trigger = {
+				has_estate = estate_dhimmi
+				estate_loyalty = {
+					estate = estate_dhimmi
+					loyalty = 50
+				}
+				any_owned_province = {
+					NOT = {
+						religion = ROOT
+					}
+				}
+			}
+			effect = {
+				custom_tooltip = NAZ_ABILITY_NATIONALISM
+				add_country_modifier = {
+					name = naz_heathens
+					duration = 3650
+				}
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							NOT = {
+								religion_group = muslim
+							}
+						}
+						add_nationalism = -10
+					}
+				}
+			}
+			cooldown_years = 1
+			ai_chance = {
+				factor = 100	#Never a reason to say no to this either
+			}
+		}
+		nizzarid_dip_interaction = {
+			gui = nizzarid_interaction_button_2
+			icon = GFX_nizzarid_dip
+			cost_type = nizzarid_dip_power
+			cost = 100
+			trigger = { 
+				owns = 361
+			}
+			effect = { 
+				custom_tooltip = NAZ_ABILITY_TRUST
+				add_country_modifier = {
+					name = naz_abbasid_caliph
+					duration = 3650
+				}
+				hidden_effect = {
+					every_known_country = {
+						limit = {
+							religion_group = muslim
+							NOT = {
+								OR = {
+									is_rival = ROOT
+									is_enemy = ROOT
+								}
+							}
+						}
+						add_trust = {
+							who = ROOT
+							value = 10
+						}
+					}
+				}
+			}
+			cooldown_years = 1
+			ai_chance = {
+				factor = 100	#There is never a reason to say no to money
+			}
+		}
+		nizzarid_mil_interaction = {
+			gui = nizzarid_interaction_button_3
+			icon = GFX_nizzarid_mil
+			cost_type = nizzarid_mil_power
+			cost = 100
+			trigger = { 
+				has_estate = estate_nobles
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 50
+				}
+			}
+			effect = { 
+				if = {
+					limit = {
+						NOT = {
+							army_tradition = 30
+						}
+					}
+					create_general = { tradition = 30 }
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							army_tradition = 50
+						}
+					}
+					create_general = { tradition = 50 }
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							army_tradition = 75
+						}
+					}
+					create_general = { tradition = 75 }
+				}
+				else = {
+					create_general = { tradition = 100 }
+				}
+				add_country_modifier = {
+					name = naz_general
+					duration = 3650
+				}
+			}
+			cooldown_years = 1
+			ai_chance = {
+				factor = 100	#Say yes to manpower
+			}
+		}
+	}
+}

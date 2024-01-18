@@ -1201,18 +1201,21 @@ country_event = {
 					}
 				}
 			}
-			random_province = {
-				limit = {
-					owner = {
-						OR = {
-							tag = MAC
-							tag = HLE
-							is_subject_of_type = diadochi_vassal
+			if = {
+				limit = { religion = reformed_hellenic }
+				random_province = {
+					limit = {
+						owner = {
+							OR = {
+								tag = MAC
+								tag = HLE
+								is_subject_of_type = diadochi_vassal
+							}
 						}
+						has_province_modifier = nci_center_of_hellenisation
 					}
-					has_province_modifier = nci_center_of_hellenisation
+					remove_province_modifier = nci_center_of_hellenisation
 				}
-				remove_province_modifier = nci_center_of_hellenisation
 			}
 		}
 	}
@@ -1242,6 +1245,26 @@ country_event = {
 				ROOT = { free_vassal = PREV }
 			}
 		}
+		hidden_effect = {
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
+				HLS = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
+				AEG = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+		}
 		declare_war_with_cb = {
 			casus_belli = cb_diadochi_war
 			who = HLS
@@ -1262,6 +1285,14 @@ country_event = {
 						"
 					}
 				}
+				declare_war_with_cb = {
+					casus_belli = cb_diadochi_war
+					who = AEG
+				}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
+				}
 			}
 			AEG = {
 				add_treasury = 5000
@@ -1274,26 +1305,10 @@ country_event = {
 						"
 					}
 				}
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
-				HLS = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
 				}
-				join_all_defensive_wars_of = HLS
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
-				AEG = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
-				}
-				join_all_defensive_wars_of = AEG
 			}
 			every_subject_country = {
 				limit = { is_subject_of_type = diadochi_vassal }
@@ -1327,6 +1342,26 @@ country_event = {
 				ROOT = { free_vassal = PREV }
 			}
 		}
+		hidden_effect = {
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
+				HLM = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
+				AEG = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+		}
 		declare_war_with_cb = {
 			casus_belli = cb_diadochi_war
 			who = HLM
@@ -1347,6 +1382,14 @@ country_event = {
 						"
 					}
 				}
+				declare_war_with_cb = {
+					casus_belli = cb_diadochi_war
+					who = AEG
+				}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
+				}
 			}
 			AEG = {
 				add_treasury = 5000
@@ -1359,26 +1402,10 @@ country_event = {
 						"
 					}
 				}
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
-				HLM = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
 				}
-				join_all_defensive_wars_of = HLM
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
-				AEG = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
-				}
-				join_all_defensive_wars_of = AEG
 			}
 			every_subject_country = {
 				limit = { is_subject_of_type = diadochi_vassal }
@@ -1412,6 +1439,26 @@ country_event = {
 				ROOT = { free_vassal = PREV }
 			}
 		}
+		hidden_effect = {
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
+				HLM = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+			every_country = {
+				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
+				HLS = {
+					create_subject = {
+						who = PREV
+						subject_type = vassal
+					}
+				}
+			}
+		}
 		declare_war_with_cb = {
 			casus_belli = cb_diadochi_war
 			who = HLM
@@ -1432,6 +1479,14 @@ country_event = {
 						"
 					}
 				}
+				declare_war_with_cb = {
+					casus_belli = cb_diadochi_war
+					who = HLM
+				}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
+				}
 			}
 			HLM = {
 				add_treasury = 5000
@@ -1444,26 +1499,10 @@ country_event = {
 						"
 					}
 				}
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
-				HLM = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
+				add_country_modifier = {
+					name = nci_diadochi_war_loyal_vassal
+					duration = -1
 				}
-				join_all_defensive_wars_of = HLM
-			}
-			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
-				HLS = {
-					create_subject = {
-						who = PREV
-						subject_type = diadochi_vassal
-					}
-				}
-				join_all_defensive_wars_of = HLS
 			}
 			every_subject_country = {
 				limit = { is_subject_of_type = diadochi_vassal }

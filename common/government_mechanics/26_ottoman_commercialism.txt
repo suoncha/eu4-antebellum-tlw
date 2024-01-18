@@ -1,0 +1,195 @@
+ottoman_commercialism_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Domination"
+	}
+
+	powers = {
+		ottoman_commercial_power = {
+            gui = ottoman_commercialism_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					placed_merchant_power = 10
+					global_ship_trade_power = 0.25
+					trade_steering = 0.3
+				}
+			}
+		}
+	}
+	
+	interactions = {
+		centers_button = {
+			gui = ottoman_commercialism_gov_interaction_1
+			cost_type = ottoman_commercial_power
+			trigger = {
+				has_government_power = {
+					mechanic_type = ottoman_commercialism_mechanic
+					power_type = ottoman_commercial_power
+					value = 25
+				}
+			}
+			effect = { 
+				add_government_power = {
+					mechanic_type = ottoman_commercialism_mechanic
+					power_type = ottoman_commercial_power
+					value = -25
+				}
+				custom_tooltip = AB_EMPTY
+				add_estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 20
+				}
+				custom_tooltip = AB_OTTOMAN_CENTERS
+				tooltip = {
+					add_province_modifier = {
+						name = tur_invest_centers
+						duration = 3650
+					}
+				}
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							province_has_center_of_trade_of_level = 1
+						}
+						add_province_modifier = {
+							name = tur_invest_centers
+							duration = 3650
+						}
+					}
+					if = {
+						limit = {
+							mission_completed = tur_network
+						}
+						random_owned_province = {
+							limit = {
+								province_has_center_of_trade_of_level = 1
+							}
+							add_base_production = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						mission_completed = tur_network
+					}
+					custom_tooltip = TUR_EVOLVED_COT_YES
+				}
+				else = {
+					custom_tooltip = TUR_EVOLVED_COT_NO
+				}
+			}
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+			cooldown_years = 10
+		}
+		
+		boost_commercial_power = {
+			gui = ottoman_commercialism_gov_interaction_2
+			cost_type = ottoman_commercial_power
+			trigger = {
+				years_of_income = 0.5
+				not = {
+					has_government_power = {
+						mechanic_type = ottoman_commercialism_mechanic
+						power_type = ottoman_commercial_power
+						value = 100
+					}
+				}
+				mission_completed = tur_topple_angelids
+			}
+			effect = { 
+				add_years_of_income = -0.25
+				add_government_power = {
+					mechanic_type = ottoman_commercialism_mechanic
+					power_type = ottoman_commercial_power
+					value = 10
+				}
+			}
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+		}
+		
+		janissary_button = {
+			gui = ottoman_commercialism_gov_interaction_3
+			cost_type = ottoman_commercial_power
+			trigger = {
+				has_government_power = {
+					mechanic_type = ottoman_commercialism_mechanic
+					power_type = ottoman_commercial_power
+					value = 25
+				}
+			}
+			effect = { 
+				add_government_power = {
+					mechanic_type = ottoman_commercialism_mechanic
+					power_type = ottoman_commercial_power
+					value = -25
+				}
+				custom_tooltip = AB_EMPTY
+				capital_scope = {
+					janissary_infantry = ROOT
+					janissary_infantry = ROOT
+					janissary_infantry = ROOT
+				}
+				add_country_modifier = {
+					name = tur_bolstered_janissaries
+					duration = 3650
+				}
+				if = {
+					limit = {
+						mission_completed = tur_corsairs
+					}
+					custom_tooltip = TUR_NAVAL_PROTECT_YES
+					tooltip = {
+						add_country_modifier = {
+							name = tur_protect_naval_trade
+							duration = 3650
+						}
+					}
+				}
+				else = {
+					custom_tooltip = TUR_NAVAL_PROTECT_NO
+					tooltip = {
+						add_country_modifier = {
+							name = tur_protect_naval_trade
+							duration = 3650
+						}
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							mission_completed = tur_corsairs
+						}
+						add_country_modifier = {
+							name = tur_protect_naval_trade
+							duration = 3650
+						}
+					}
+				}
+			}
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+			cooldown_years = 10
+		}
+		
+	}
+}
