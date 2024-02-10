@@ -25,11 +25,9 @@ wls_branch_1 = {
 		}
 		trigger = {
 			OR = {
-				calc_true_if = {
-					all_owned_province = {
-						has_fort_building_trigger = yes
-					}
-					amount = 2
+				num_of_owned_provinces_with = {
+					value = 2
+					has_fort_building_trigger = yes
 				}
 				242 = {
 					has_great_project = {
@@ -62,10 +60,7 @@ wls_branch_1 = {
 			242 = {
 				development = 10
 				has_trade_building_trigger = yes
-				OR = {
-					has_building = temple
-					has_building = cathedral
-				}
+				has_tax_building_trigger = yes
 			}
 		}
 		effect = {
@@ -94,11 +89,9 @@ wls_branch_1 = {
 			}
 		}
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_building = farm_estate
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				has_building = farm_estate
 			}
 		}
 		effect = {
@@ -123,11 +116,9 @@ wls_branch_1 = {
 			}
 		}
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_building = furnace
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				has_building = furnace
 			}
 			has_institution = industrialization
 		}
@@ -334,15 +325,15 @@ wls_branch_3 = {
 			}
 			scottish_marches_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			yorkshire_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -449,7 +440,7 @@ wls_branch_4 = {
 		required_missions = { gather_allies_wls }
 		trigger = {
 			calc_true_if = {
-				all_country = {
+				all_known_country = {
 					dynasty = ROOT
 					marriage_with = ROOT
 				}
@@ -587,8 +578,8 @@ wls_branch_4_unlocked = {
 			}
 			north_america_superregion  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -733,15 +724,9 @@ wls_branch_5 = {
 		position = 4
 		required_missions = { explore_new_world_wls }
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = colonial_wls_tt
-				calc_true_if = {
-					all_subject_country = {
-						is_colonial_nation = yes
-						num_of_cities = 10
-					}
-					amount = 1
-				}
+			any_subject_country = {
+				is_colonial_nation = yes
+				num_of_cities = 10
 			}	
 		}
 		effect = {
@@ -760,7 +745,7 @@ wls_branch_5 = {
 			  }
 			every_subject_country = {
 			  limit = {
-				is_colonial_nation_of = ROOT
+				is_colonial_nation = yes
 				num_of_cities = 10
 			  }
 			  add_country_modifier = {
@@ -821,7 +806,7 @@ wls_branch_5_unlocked = {
 		trigger = {
 			calc_true_if = {
 				all_subject_country = {
-					is_colonial_nation_of = ROOT
+					is_colonial_nation = yes
 				}
 				amount = 12
 			}
@@ -1007,9 +992,7 @@ BRN_branch_1 = {
 				area = inner_austria_area
 				area = austria_proper_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1102,12 +1085,10 @@ BRN_branch_2 = {
 		
 		trigger = {
 			crown_land_share = 40
-			calc_true_if = {
-				all_owned_province = {
-					culture = highland_scottish
-					development = 8
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				culture = highland_scottish
+				development = 8
 			}
 		}
 		
@@ -1230,9 +1211,7 @@ BRN_branch_2 = {
 				area = lower_rhineland_area
 				area = palatinate_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1496,28 +1475,14 @@ BRN_branch_3 = {
 		}
 		
 		trigger = {
-			calc_true_if = {
-				desc = north_ital_tt
-				amount = 15
-				lombardy_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				piedmont_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				emilia_romagna_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				liguria_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				po_valley_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = lombardy_area
+					area = piedmont_area
+					area = emilia_romagna_area
+					area = liguria_area 
+					area = po_valley_area 
 				}
 			}
 		}
@@ -1585,9 +1550,7 @@ BRN_branch_3 = {
 				area = central_italy_area
 				area = lazio_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1668,8 +1631,8 @@ BRN_branch_3 = {
 			custom_tooltip = BYZ_LATIN_RENAME
 			scandinavia_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1701,12 +1664,10 @@ BRN_branch_4 = {
 		}
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					region = british_isles_region
-					culture = briton
-				}
-				amount = 25
+			num_of_owned_provinces_with = {
+				value = 25
+				region = british_isles_region
+				culture = briton
 			}
 			stability = 1
 			num_of_rebel_controlled_provinces = 0
@@ -1739,9 +1700,7 @@ BRN_branch_4 = {
 				area = basque_country
 				area = catalonia_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1752,8 +1711,8 @@ BRN_branch_4 = {
 			}
 			iberia_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1811,8 +1770,8 @@ BRN_branch_4 = {
 			}
 			maghreb_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1869,9 +1828,7 @@ BRN_branch_4 = {
 				area = western_sicily_area
 				area = sicily_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1884,8 +1841,8 @@ BRN_branch_4 = {
 			}
 			balkan_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1930,15 +1887,15 @@ BRN_branch_4 = {
 			}
 			anatolia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			crimea_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -2075,15 +2032,12 @@ BRN_branch_5 = {
 					current_age = age_of_reformation
 				}
 			}
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						culture = welsh
-						culture = cornish
-					}
-					country_or_non_sovereign_subject_holds = ROOT
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					culture = welsh
+					culture = cornish
 				}
-				amount = 10
 			}
 		}
 		effect = {
@@ -2219,9 +2173,7 @@ BRN_branch_5 = {
 				area = kabylia_area
 				area = barbary_coast_area
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -2232,8 +2184,8 @@ BRN_branch_5 = {
 			}
 			egypt_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -2267,29 +2219,29 @@ BRN_branch_5 = {
 			country_event = { id = ab_latin.3 }
 			mashriq_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			tabuk_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			mecca_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			medina_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -2337,8 +2289,8 @@ BRN_branch_5 = {
 			country_event = { id = ab_latin.9 }
 			arabia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -2379,7 +2331,7 @@ BRN_branch_1_rome = {
 				duration = -1
 			}
 			if = {
-				limit = { infrastructure_ideas = 7 }
+				limit = { full_idea_group = infrastructure_ideas }
 				custom_tooltip = BYZ_COMPLETE_INFRA
 				tooltip = {
 					add_country_modifier = {
@@ -2399,7 +2351,7 @@ BRN_branch_1_rome = {
 			}
 			hidden_effect = {
 				if = {
-					limit = { infrastructure_ideas = 7 }
+					limit = { full_idea_group = infrastructure_ideas }
 					add_country_modifier = {
 						name = byz_siege_engines
 						duration = -1
@@ -2620,11 +2572,9 @@ BRN_branch_2_rome = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_road_building_trigger = yes
-				}
-				amount = 100
+			num_of_owned_provinces_with = {
+				value = 100
+				has_road_building_trigger = yes
 			}
 		}
 
@@ -2647,7 +2597,7 @@ BRN_branch_2_rome = {
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 12
-				province_is_diocese_land = yes
+				province_is_diocese_land_trigger = yes
 				has_great_project = {
 					type = any
 					tier = 3
@@ -2808,15 +2758,15 @@ BRN_branch_3_rome = {
 			}
 			ruthenia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_claim = ROOT
 			}
 			russia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_claim = ROOT
 			}
@@ -3658,7 +3608,7 @@ BRN_branch_1_persian = {
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 12
-				province_is_diocese_land = yes
+				province_is_diocese_land_trigger = yes
 				culture = perso_roman
 			}
 		}
@@ -3727,43 +3677,43 @@ BRN_branch_2_persian = {
 			}
 			northern_sindh_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			sindh_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			multan_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			lahore_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			sind_sagar_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			kashmir_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -3944,7 +3894,7 @@ BRN_branch_3_persian = {
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 100
-				province_is_diocese_land = yes
+				province_is_diocese_land_trigger = yes
 				superregion = india_superregion
 			}
 		}
@@ -3956,8 +3906,8 @@ BRN_branch_3_persian = {
 			}
 			india_superregion = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -4409,15 +4359,15 @@ BRN_branch_2_chinese = {
 			}
 			xinan_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			north_china_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -4488,22 +4438,22 @@ BRN_branch_2_chinese = {
 			}
 			liaoning_area  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			korea_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			japan_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -4555,18 +4505,10 @@ BRN_branch_2_chinese = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT 
 			}
-			calc_true_if = {
-				all_province = {
-					superregion = far_east_superregion
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-				}
-				amount = 50
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				province_is_diocese_land_trigger = yes
+				superregion = far_east_superregion
 			}
 		}
 
@@ -4577,8 +4519,8 @@ BRN_branch_2_chinese = {
 			custom_tooltip = BYZ_FAR_EAST_CAPITALS
 			oceanea_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -4609,18 +4551,10 @@ BRN_branch_3_chinese = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					superregion = china_superregion
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-				}
-				amount = 50
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				province_is_diocese_land_trigger = yes
+				superregion = china_superregion
 			}
 		}
 
@@ -4630,8 +4564,8 @@ BRN_branch_3_chinese = {
 			}
 			china_superregion = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -5052,15 +4986,15 @@ BRN_branch_4_chinese = {
 			country_event = { id = flavor_mch.12 }
 			xinan_region  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			indo_china_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -5106,8 +5040,8 @@ BRN_branch_4_chinese = {
 			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
 			east_indies_superregion  = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -5126,18 +5060,10 @@ BRN_branch_4_chinese = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					superregion = east_indies_superregion
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-				}
-				amount = 100
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				province_is_diocese_land_trigger = yes
+				superregion = east_indies_superregion
 			}
 		}
 
@@ -5155,8 +5081,8 @@ BRN_branch_4_chinese = {
             }
 			oceanea_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
