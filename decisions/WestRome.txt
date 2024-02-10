@@ -2,6 +2,7 @@ country_decisions = {
 
 	westrome = {
 		major = yes
+
 		potential = {
 			normal_or_historical_nations = yes
 			NOT = { has_country_flag = formed_westrome_flag }
@@ -12,38 +13,33 @@ country_decisions = {
 			NOT = { exists = WRE }
 			NOT = { tag = PAP }
 			NOT = { tag = HLR }
-			NOT = { tag = NCI }
-			NOT = { tag = HLE }
 			NOT = { tag = LAT }
 			OR = {
 				culture_group = french
 				culture_group = iberian
 				culture_group = latin
-				tag = BRN
-				tag = WLS
+				culture_group = germanic
+				culture = welsh
+				culture = briton
 			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 15
-				}
-			}
+			num_of_cities = 15
 			is_colonial_nation = no
 			religion_group = christian
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
 		}
+
 		provinces_to_highlight = {
 			if = {
 				limit = { ROOT = { culture_group = gaelic } }
 				OR = {
 					region = british_isles_region
+					region = france_region
+					region = italy_region
+				}
+			}
+			else_if = {
+				limit = { ROOT = { culture_group = germanic } }
+				OR = {
+					region = south_german_region
 					region = france_region
 					region = italy_region
 				}
@@ -69,6 +65,21 @@ country_decisions = {
 			if = {
 				limit = { culture_group = gaelic }
 				british_isles_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				france_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				italy_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else_if = {
+				limit = { culture_group = germanic }
+				south_german_region = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
@@ -155,6 +166,7 @@ country_decisions = {
 			}
 			country_event = { id = ab_byzantium.87 }
 		}
+		
 		ai_will_do = {
 			factor = 1
 		}

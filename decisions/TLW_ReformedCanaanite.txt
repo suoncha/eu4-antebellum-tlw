@@ -2,34 +2,37 @@ country_decisions = {
 
 	reform_canaanite_religion = {
 		major = yes
+
 		potential = {
 			religion = canaanite
 			tag = CTG
 		}
+
 		provinces_to_highlight = {
 			OR = {
 				province_id = 226
 				province_id = 341
 				province_id = 1751
 			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
+
 		allow = {
 			full_idea_group = religious_ideas
-			owns = 226
-			owns = 341
-			owns = 1751
+			owns_or_non_sovereign_subject_of = 226
+			owns_or_non_sovereign_subject_of = 341
+			owns_or_non_sovereign_subject_of = 1751
 		}
+
 		effect = {
 			add_stability = -2
 			change_religion = reformed_canaanite
-			capital_scope = {
-				change_religion = reformed_canaanite
-			}
 			add_country_modifier = {
 				name = "wee_conversion_zeal"
 				duration = 3650
 			}	
 			custom_tooltip = reform_canaanite_subjects_switch_too
+			custom_tooltip = CANAANITE_CHANGE_TO_REFORMED_CANAANITE
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
@@ -37,16 +40,17 @@ country_decisions = {
 						NOT = { is_subject_of_type = tributary_state }
 					}
 					change_religion = reformed_canaanite
-					capital_scope = {
-						change_religion = reformed_canaanite
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = canaanite
 					}
-					add_country_modifier = {
-						name = wee_conversion_zeal
-						duration = 3650
-					}
+					change_religion = reformed_canaanite
 				}
 			}
 		}
+
 		ai_will_do = {
 			factor = 1
 		}

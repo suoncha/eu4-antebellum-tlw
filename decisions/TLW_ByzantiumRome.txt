@@ -127,18 +127,14 @@ country_decisions = {
 				}
 			}
 			if = {
-				limit = {
-					tag = BYZ
-				}
+				limit = { tag = BYZ }
 				custom_trigger_tooltip = {
 					tooltip = BYZ_RESOLVED_16TH
 					has_country_flag = had_16th_crisis
 				}
 			}
-			if = {
-				limit = {
-					tag = LAT
-				}
+			else_if = {
+				limit = { tag = LAT }
 				OR = {
 					culture_group = latin
 					culture_group = french
@@ -432,6 +428,7 @@ country_decisions = {
 				country_event = { id = ab_byzantium.83 }
 			}
 		}
+
 		ai_will_do = {
 			factor = 1
 		}
@@ -660,21 +657,20 @@ country_decisions = {
 
 		allow = {
 			patriarch_authority = 1.0
-			OR = {
-				AND = {
-					overlord_of = UKR
-					UKR = {
-						NOT = { is_subject_of_type = personal_union }
-						has_opinion = {
-							who = ROOT
-							value = 200
-						}
+			if = {
+				limit = { overlord_of = UKR }
+				UKR = {
+					NOT = { is_subject_of_type = personal_union }
+					has_opinion = {
+						who = ROOT
+						value = 200
 					}
 				}
+			}
+			else = {
 				calc_true_if = {
 					all_subject_country = {
 						has_reform = principality
-						NOT = { is_subject_of_type = personal_union }
 						has_opinion = {
 							who = ROOT
 							value = 200
@@ -688,15 +684,10 @@ country_decisions = {
 		effect = {
 			add_patriarch_authority = -1.0
 			if = {
-				limit = {
-					exists = UKR
-					overlord_of = UKR
-				}
+				limit = { overlord_of = UKR }
 				if = {
 					limit = {
-						UKR = {
-							NOT = { government = monarchy }
-						}
+						UKR = { NOT = { government = monarchy } }
 					}
 					UKR = {
 						change_government = monarchy
