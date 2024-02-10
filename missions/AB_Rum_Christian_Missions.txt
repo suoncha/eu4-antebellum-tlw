@@ -849,31 +849,28 @@ ab_rum_christian_second = {
 			owns_or_non_sovereign_subject_of = 280
 			owns_or_non_sovereign_subject_of = 295
 			owns_or_non_sovereign_subject_of = 310
-			OR = {
-				AND = {
-					exists = UKR
-					overlord_of = UKR
-					UKR = {
+			if = {
+				limit = { exists = UKR }
+				overlord_of = UKR
+				UKR = {
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					NOT = { liberty_desire = 50 }
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						has_reform = principality
 						has_opinion = {
 							who = ROOT
 							value = 200
 						}
 						NOT = { liberty_desire = 50 }
 					}
-				}
-				AND = {
-					NOT = { exists = UKR }
-					calc_true_if = {
-						all_subject_country = {
-							has_reform = principality
-							has_opinion = {
-								who = ROOT
-								value = 200
-							}
-							NOT = { liberty_desire = 50 }
-						}
-						amount = 3
-					}
+					amount = 3
 				}
 			}
 		}
@@ -4343,27 +4340,13 @@ ab_rum_christian_fifth_rome = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					owner = {
-						OR = {
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal
-						}
-						is_subject_of = ROOT
-					}
-					has_great_project = {
-						type = any
-						tier = 3
-					}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land = yes
+				has_great_project = {
+					type = any
+					tier = 3
 				}
-				all_owned_province = {
-					has_great_project = {
-						type = any
-						tier = 3
-					}
-				}
-				amount = 12
 			}
 		}
 
@@ -4446,9 +4429,11 @@ ab_rum_christian_fifth_rome = {
 		required_missions = { rum_christian_newworld_base }
 		
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_HAVE_12_COLONIAL_SUBJECTS
-				colony = 12
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation_of = ROOT
+				}
+				amount = 12
 			}
 		}
 		
@@ -4575,18 +4560,10 @@ ab_rum_christian_first_persian = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-					culture = perso_roman
-				}
-				amount = 12
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land = yes
+				culture = perso_roman
 			}
 		}
 
@@ -4871,18 +4848,10 @@ ab_rum_christian_third_persian = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					superregion = india_superregion
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-				}
-				amount = 100
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				province_is_diocese_land = yes
+				superregion = india_superregion
 			}
 		}
 

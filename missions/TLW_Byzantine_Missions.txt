@@ -913,14 +913,9 @@ byz_slot1_third = {
 		trigger = {
 			adm = 5
 			adm_power = 150
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_building = courthouse
-						has_building = town_hall
-					}
-				}
-				amount = 15
+			num_of_owned_provinces_with = {
+				value = 15
+				has_courthouse_building_trigger = yes
 			}
 		}
 
@@ -954,16 +949,11 @@ byz_slot1_third = {
 			patriarch_authority = 0.75
 			num_of_owned_provinces_with = {
 				value = 25
-				OR = {
-					has_building = temple
-					has_building = cathedral
-				}
+				has_tax_building_trigger = yes
 			}
-			calc_true_if = {
-				all_owned_province = { 
-					has_state_patriach = yes 
-				} 
-				amount = 50
+			num_of_owned_provinces_with = {
+				value = 50
+				has_state_patriach = yes 
 			}
 		}
 
@@ -1009,12 +999,10 @@ byz_slot1_third = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_manufactory_trigger = yes
-					has_production_building_trigger = yes
-				}
-				amount = 25
+			num_of_owned_provinces_with = {
+				value = 25
+				has_manufactory_trigger = yes
+				has_production_building_trigger = yes
 			}
 		}
 		
@@ -1035,11 +1023,9 @@ byz_slot1_third = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_road_building_trigger = yes
-				}
-				amount = 100
+			num_of_owned_provinces_with = {
+				value = 100
+				has_road_building_trigger = yes
 			}
 		}
 
@@ -1060,28 +1046,13 @@ byz_slot1_third = {
 		}
 
 		trigger = {
-			tag = ROM
-			calc_true_if = {
-				all_province = {
-					owner = {
-						OR = {
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal
-						}
-						is_subject_of = ROOT
-					}
-					has_great_project = {
-						type = any
-						tier = 3
-					}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land = yes
+				has_great_project = {
+					type = any
+					tier = 3
 				}
-				all_owned_province = {
-					has_great_project = {
-						type = any
-						tier = 3
-					}
-				}
-				amount = 12
 			}
 		}
 
@@ -2618,12 +2589,10 @@ byz_slot3_first = {
 		position = 6
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					region = balkan_region
-					development = 15
-				}
-				amount = 15
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = balkan_region
+				development = 15
 			}
 		}
 		
@@ -2667,12 +2636,10 @@ byz_slot3_first = {
 		position = 7
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					region = anatolia_region
-					development = 15
-				}
-				amount = 15
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = anatolia_region
+				development = 15
 			}
 		}
 		
@@ -2867,39 +2834,31 @@ byz_slot3_unlocked1 = {
 		} 		
 
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						area = al_jazira_area
-						area = basra_area
-						area = iraq_arabi_area
-					}
-					base_production = 7
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = al_jazira_area
+					area = basra_area
+					area = iraq_arabi_area
 				}
-				amount = 8
+				base_production = 7
 			}
 			basra_area = {
 				type = all 
 				country_or_non_sovereign_subject_holds = ROOT 
-				NOT = { 
-					devastation = 1 
-				}
+				NOT = { devastation = 1 }
 				is_prosperous = yes 
 			}
 			al_jazira_area = {
 				type = all 
 				country_or_non_sovereign_subject_holds = ROOT 
-				NOT = { 
-					devastation = 1 
-				}
+				NOT = { devastation = 1 }
 				is_prosperous = yes 
 			}
 			iraq_arabi_area = {
 				type = all 
 				country_or_non_sovereign_subject_holds = ROOT 
-				NOT = { 
-					devastation = 1 
-				}
+				NOT = { devastation = 1 }
 				is_prosperous = yes 
 			}
 		} 
@@ -3202,31 +3161,28 @@ byz_slot3_second = {
 			owns_or_non_sovereign_subject_of = 280
 			owns_or_non_sovereign_subject_of = 295
 			owns_or_non_sovereign_subject_of = 310
-			OR = {
-				AND = {
-					exists = UKR
-					overlord_of = UKR
-					UKR = {
+			if = {
+				limit = { exists = UKR }
+				overlord_of = UKR
+				UKR = {
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					NOT = { liberty_desire = 50 }
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						has_reform = principality
 						has_opinion = {
 							who = ROOT
 							value = 200
 						}
 						NOT = { liberty_desire = 50 }
 					}
-				}
-				AND = {
-					NOT = { exists = UKR }
-					calc_true_if = {
-						all_subject_country = {
-							has_reform = principality
-							has_opinion = {
-								who = ROOT
-								value = 200
-							}
-							NOT = { liberty_desire = 50 }
-						}
-						amount = 3
-					}
+					amount = 3
 				}
 			}
 		}
@@ -3844,21 +3800,13 @@ byz_slot3_third = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_terrain = mountain
-						has_terrain = highlands
-					}
-					OR = {
-						has_building = fort_15th
-						has_building = fort_16th
-						has_building = fort_17th
-						has_building = fort_18th
-						has_building = fort_19th
-					}
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					has_terrain = mountain
+					has_terrain = highlands
 				}
-				amount = 10
+				has_fort_building_trigger = yes
 			}
 		}
 
@@ -6168,9 +6116,11 @@ byz_slot5_second = {
 		required_missions = { byzantium_newworld_base }
 		
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_HAVE_12_COLONIAL_SUBJECTS
-				colony = 12
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation_of = ROOT
+				}
+				amount = 12
 			}
 		}
 		
@@ -6992,18 +6942,10 @@ byz_slot1_fourth = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-					culture = perso_roman
-				}
-				amount = 12
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land = yes
+				culture = perso_roman
 			}
 		}
 
@@ -7285,18 +7227,10 @@ byz_slot3_fourth = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_province = {
-					superregion = india_superregion
-					owner = {
-						OR = {
-							tag = ROM
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal	
-						}
-					}
-				}
-				amount = 100
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				province_is_diocese_land = yes
+				superregion = india_superregion
 			}
 		}
 
