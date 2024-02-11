@@ -143,9 +143,9 @@ NCI_missions_1_stratocracy_unlocked = {
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = {
-				has_manpower_building_trigger = yes
-				has_forcelimit_building_trigger = yes
+			OR = {
+				has_manpower_building_trigger = no
+				has_forcelimit_building_trigger = no
 			}
 		}
 		
@@ -168,18 +168,24 @@ NCI_missions_1_stratocracy_unlocked = {
 	}
 	
 	nicene_education = {
-		icon = unite_the_realm
+		icon = mission_educated_people
 		required_missions = { nicene_infrastructure }
 		position = 3
 		
 		provinces_to_highlight = {
 			OR = {
-				province_id = 317
+				AND = {
+					province_id = 317
+					NOT = {
+						has_great_project = {
+							type = nicene_academy
+							tier = 3
+						}
+					}
+				}
 				AND = {
 					owned_by = ROOT
-					NOT = {
-						has_building = university
-					}
+					NOT = { has_building = university }
 				}
 			}
 		}
@@ -227,6 +233,13 @@ NCI_missions_1_stratocracy_unlocked = {
 		required_missions = { nicene_strategos }
 		position = 5
 		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = { continent = europe }
+				army_size = ROOT
+			}
+		}
+
 		trigger = {
 			has_reform = nicene_stratocracy
 			custom_trigger_tooltip = {
@@ -346,16 +359,17 @@ HLE_missions_1 = {
 		
 		provinces_to_highlight = {
 			province_id = 126
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { base_manpower = 6 }
+				province_has_current_tech_fort_trigger = no
+			}
 		}
 		
 		trigger = {
 			owns_or_non_sovereign_subject_of = 126
-			126 = {
-				base_manpower = 6
-			}
-			126 = {
-				province_has_current_tech_fort_trigger = yes
-			}
+			126 = { base_manpower = 6 }
+			126 = { province_has_current_tech_fort_trigger = yes }
 		}
 		
 		effect = {
@@ -366,7 +380,7 @@ HLE_missions_1 = {
 				duration = 9125
 			}
 			hidden_effect = {
-			  126 = { upgrade_fort_building = yes }
+			  	126 = { upgrade_fort_building = yes }
 			}
 		}
 	}
@@ -389,8 +403,8 @@ HLE_missions_1 = {
 		}
 		
 		effect = {
-			2986 = { change_culture = hellenic_italian }
 			2986 = {
+				change_culture = hellenic_italian
 				add_unit_construction = {
 					type = galley
 					amount = 10
@@ -457,29 +471,30 @@ HLE_missions_1 = {
 		
 		provinces_to_highlight = {
 			province_id = 201
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { development = 20 }
+				has_shipyard_building_trigger = no
+				has_dock_building_trigger = no
+			}
 		}
 
 		trigger = {
 			201 = { country_or_non_sovereign_subject_holds = ROOT }
-			201 = {
-				development = 20
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
-			}
+			201 = { development = 20 }
+			201 = { has_shipyard_building_trigger = yes }
+			201 = { has_dock_building_trigger = yes }
 		}
 		
 		effect = {
-			201 = { change_culture = hellenic_french }
 			201 = {
+				change_culture = hellenic_french
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 3 }
 					}
 					add_center_of_trade_level = 1
 				}
-			}
-			201 = {
 				add_province_modifier = {
 					name = nci_massilia_city
 					duration = -1
@@ -623,9 +638,7 @@ NCI_missions_2 = {
 		
 		trigger = {
 		    all_neighbor_country = { 
-				NOT = {
-					navy_size = ROOT
-				}
+				NOT = { navy_size = ROOT }
 			}
 		}
 
@@ -642,7 +655,7 @@ NCI_missions_2 = {
 				name = "nicaea_ambition"
 				duration = 5475
 			}
-			aegean_archipelago_area  = {
+			aegean_archipelago_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -658,10 +671,7 @@ NCI_missions_2 = {
 		position = 4
 		
 		provinces_to_highlight = {
-			OR = {
-				area = aegean_archipelago_area
-				province_id = 163
-			}
+			area = aegean_archipelago_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -682,28 +692,28 @@ NCI_missions_2 = {
 					key = aegean_dominance
 				}
 			}
-			western_sicily_area  = {
+			western_sicily_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			sicily_area  = {
+			sicily_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			apulia_area  = {
+			apulia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			calabria_area  = {
+			calabria_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -731,6 +741,16 @@ HLE_missions_2 = {
 		required_missions = { nicene_hellenic }
 		position = 6
 		
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = {
+				trade_share = {
+					country = ROOT
+					share = 51
+				}
+			}
+		}
+
 		trigger = {
 			mercantilism = 10
 			151 = {
@@ -748,14 +768,6 @@ HLE_missions_2 = {
 			}
 			317 = {
 				if = {
-					limit = {	
-						NOT = {
-							province_has_center_of_trade_of_level = 2
-						}
-					}
-					add_center_of_trade_level = 2
-				}
-				else_if = {
 					limit = {	
 						NOT = {
 							province_has_center_of_trade_of_level = 3
@@ -867,18 +879,18 @@ HLE_missions_2 = {
 		}
 
 		trigger = {
-			213 = { country_or_non_sovereign_subject_holds = ROOT }
-			220 = { country_or_non_sovereign_subject_holds = ROOT }
 			baleares_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 			213 = {
+				country_or_non_sovereign_subject_holds = ROOT
 				development = 20
 				has_shipyard_building_trigger = yes
 				has_dock_building_trigger = yes
 			}
 			220 = {
+				country_or_non_sovereign_subject_holds = ROOT
 				development = 20
 				has_shipyard_building_trigger = yes
 				has_dock_building_trigger = yes
@@ -886,37 +898,33 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
-			213 = { change_culture = hellenic_iberian }
 			213 = {
+				change_culture = hellenic_iberian
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 3 }
 					}
 					add_center_of_trade_level = 1
 				}
+				add_province_modifier = {
+					name = nci_massilia_city
+					duration = -1
+				}
 			}
-			213 = {
+			220 = {
+				change_culture = hellenic_iberian
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
 				add_province_modifier = {
 					name = nci_massilia_city
 					duration = -1
 				}
 			}
 			custom_tooltip = AB_EMPTY
-			220 = { change_culture = hellenic_iberian }
-			220 = {
-				if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 3 }
-					}
-					add_center_of_trade_level = 1
-				}
-			}
-			220 = {
-				add_province_modifier = {
-					name = nci_massilia_city
-					duration = -1
-				}
-			}
 			1751 = {
 				if = {
 					limit = {
@@ -988,6 +996,7 @@ HLE_missions_2 = {
 				province_id = 341
 				province_id = 220
 			}
+			NOT = { is_strongest_trade_power = ROOT }
 		}
 		
 		effect = {
@@ -1043,14 +1052,14 @@ HLE_missions_2 = {
 				name = byz_america_base
 				duration = 10950
 			}
-			northeast_america_region  = {
+			northeast_america_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			southeast_america_region  = {
+			southeast_america_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -1090,7 +1099,7 @@ HLE_missions_2 = {
 				name = byz_punics_defeated
 				duration = 7300
 			}
-			north_america_superregion  = {
+			north_america_superregion = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -1099,9 +1108,7 @@ HLE_missions_2 = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						exists = CTG
-					}
+					NOT = { exists = CTG }
 				}
 				custom_tooltip = BYZ_PUNICS_GONE
 			}
@@ -1111,23 +1118,15 @@ HLE_missions_2 = {
 			hidden_effect = {
 				if = {
 					limit = {
-						NOT = {
-							exists = CTG
-						}
+						NOT = { exists = CTG }
 					}
 					every_province = {
-						limit = {
-							culture = punic
-						}
+						limit = { culture = punic }
 						add_devastation = 100
 						add_base_tax = -10
 						add_base_production = -10
 						add_base_manpower = -10
 						change_culture = owner
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
 					}
 				}
 			}
@@ -1149,7 +1148,7 @@ NCI_missions_3 = {
 	has_country_shield = yes
 	
 	nicene_greek_fire = {
-		icon = mission_greekfire
+		icon = byz_greek_fire
 		required_missions = { }
 		position = 1
 
@@ -1185,16 +1184,12 @@ NCI_missions_3 = {
 		position = 2
 		
 		provinces_to_highlight = {
-			OR = {
-				province_id = 318
-			}
+			province_id = 318
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-		    318 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+		    318 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1246,16 +1241,12 @@ NCI_missions_3 = {
 		position = 3
 		
 		provinces_to_highlight = {
-			OR = {
-				province_id = 151
-			}
+			province_id = 151
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-		    151 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+		    151 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -1270,13 +1261,16 @@ NCI_missions_3 = {
 		
 		provinces_to_highlight = {
 			province_id = 151
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+				NOT = { development = 40 }
+			}
 		}
 		
 		trigger = {
 			owns_core_province = 151
-			151 = {
-				development = 40
-			}
+			151 = { development = 40 }
 		}
 		
 		effect = {
@@ -1318,6 +1312,7 @@ NCI_missions_3 = {
 		
 		provinces_to_highlight = {
 			OR = {
+				owned_by = BYZ
 				area = northern_greece_area
 				area = morea_area
 				area = ionian_islands_area
@@ -1385,6 +1380,7 @@ HLE_missions_3 = {
 		
 		provinces_to_highlight = {
 			OR = {
+				owned_by = BUL
 				area = bulgaria_area
 				area = silistria_area
 			}
@@ -1392,9 +1388,7 @@ HLE_missions_3 = {
 		}
 		
 		trigger = {
-			NOT = {
-				exists = BUL
-			}
+			NOT = { exists = BUL }
 		    bulgaria_area = {
 			    type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1421,9 +1415,7 @@ HLE_missions_3 = {
 			custom_tooltip = NICENE_MOLDAVIA
 			hidden_effect = {
 				if = {
-					limit = {
-						exists = SER
-					}
+					limit = { exists = SER }
 					add_casus_belli = { 
 						target = SER
 						type = cb_vassalize_mission 
@@ -1446,9 +1438,7 @@ HLE_missions_3 = {
 					}
 				}
 				if = {
-					limit = {
-						exists = WAL
-					}
+					limit = { exists = WAL }
 					add_casus_belli = { 
 						target = WAL
 						type = cb_vassalize_mission 
@@ -1464,9 +1454,7 @@ HLE_missions_3 = {
 					}
 				}
 				if = {
-					limit = {
-						exists = MOL
-					}
+					limit = { exists = MOL }
 					add_casus_belli = { 
 						target = MOL
 						type = cb_vassalize_mission 
@@ -1684,9 +1672,9 @@ HLE_missions_3 = {
 		}
 		
 		effect = {
-			285 = { change_culture = hellenic_scythian }
 			add_navy_tradition = 10
 			285 = {
+				change_culture = hellenic_scythian
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 1 }
@@ -1735,6 +1723,7 @@ HLE_missions_3 = {
 				province_id = 377
 				province_id = 358
 			}
+			NOT = { is_strongest_trade_power = ROOT }
 		}
 		
 		trigger = {
@@ -1806,7 +1795,12 @@ HLE_missions_3 = {
 		icon = mission_look_west
 		position = 14
 		required_missions = { nicene_hercules }
-		
+				
+		provinces_to_highlight = {
+			owned_by = ROOT
+			is_colony = yes
+		}
+
 		trigger = {
 			num_of_colonies = 3
 		}
@@ -1901,6 +1895,11 @@ NCI_missions_4 = {
 		required_missions = { }
 		position = 2
 		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture = greek
+		}
+
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = NICENE_REFUGEE
@@ -1931,16 +1930,21 @@ NCI_missions_4 = {
 		
 		provinces_to_highlight = {
 			province_id = 319
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = {
+					has_great_project = {
+						type = mausoleum_at_halicarnassus
+						tier = 1
+					}
+				}
+			}
 		}
 		
 		trigger = {
-			319 = {
-				owned_by = ROOT
-			}
+			319 = { owned_by = ROOT }
 			OR = {
-				319 = {
-					development = 20
-				}
+				319 = { development = 20 }
 				319 = {
 					has_great_project = {
 						type = mausoleum_at_halicarnassus
@@ -1949,6 +1953,7 @@ NCI_missions_4 = {
 				}
 			}
 		}
+
 		effect = {
 			add_country_modifier = {
 				name = nicene_classical
@@ -1982,24 +1987,12 @@ NCI_missions_4 = {
 		}
 		
 		trigger = {
-		    4779 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    149 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    4705 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    4702 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    148 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    4961 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+		    4779 = { country_or_non_sovereign_subject_holds = ROOT }
+		    149 = { country_or_non_sovereign_subject_holds = ROOT }
+		    4705 = { country_or_non_sovereign_subject_holds = ROOT }
+		    4702 = { country_or_non_sovereign_subject_holds = ROOT }
+		    148 = { country_or_non_sovereign_subject_holds = ROOT }
+		    4961 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -2008,35 +2001,35 @@ NCI_missions_4 = {
 				name = nicene_unite_greece
 				duration = 5475
 			}
-			northern_greece_area  = {
+			northern_greece_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			morea_area  = {
+			morea_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			macedonia_area  = {
+			macedonia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			ionian_islands_area  = {
+			ionian_islands_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			albania_area  = {
+			albania_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2062,7 +2055,7 @@ NCI_missions_4 = {
 			owned_by = ROOT
 			AND = {
 				has_port = yes
-				NOT = { has_coast_defense_building_trigger = yes }
+				has_coast_defense_building_trigger = no
 			}
 		}
 		
@@ -2070,9 +2063,7 @@ NCI_missions_4 = {
 			custom_tooltip = FRC_COASTLINE
 			hidden_effect = {
 				every_owned_province = {
-					limit = {
-						has_coast_defense_building_trigger = yes
-					}
+					limit = { has_coast_defense_building_trigger = yes }
 					add_base_manpower = 1
 				}
 			}
@@ -2242,17 +2233,26 @@ HLE_missions_4_religion_orthodox = {
 	}
 
 	nicene_hagia_sophia = {
-		icon = end_the_schism
+		icon = mission_hagia_sophia
 		required_missions = { nicene_christianity_leader }
 		position = 8
 		
 		provinces_to_highlight = { 
-			province_id = 151 
+			province_id = 151
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = {
+					has_great_project = {
+						type = hagia_sophia
+						tier = 3
+					}
+				}
+			}
 		} 
 
 		trigger = {
+			151 = { country_or_non_sovereign_subject_holds = ROOT }
 			151 = {
-				country_or_non_sovereign_subject_holds = ROOT
 				has_great_project = {
 					type = hagia_sophia
 					tier = 3
@@ -2309,7 +2309,6 @@ HLE_missions_4_religion_shiite = {
 		position = 6
 		
 		trigger = {
-			has_institution = renaissance
 			has_adm_advisor_3 = yes
 			has_dip_advisor_3 = yes
 			has_mil_advisor_3 = yes
@@ -2377,14 +2376,23 @@ HLE_missions_4_religion_shiite = {
 		
 		provinces_to_highlight = {
 			province_id = 410
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = {
+					has_great_project = {
+						type = baghdad
+						tier = 3
+					}
+				}
+			}
 		} 
 
 		trigger = {
 			innovativeness = 25
 			monthly_dip = 12
 			has_had_golden_age = yes
+			410 = { country_or_non_sovereign_subject_holds = ROOT }
 			410 = {
-				country_or_non_sovereign_subject_holds = ROOT
 				has_great_project = {
 					type = baghdad
 					tier = 3
@@ -2419,17 +2427,26 @@ HLE_missions_4_religion_hellenic = {
 		position = 6
 		
 		provinces_to_highlight = {
-			owned_by = ROOT
 			OR = {
-				NOT = { 
+				AND = {
+					is_institution_origin = renaissance
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					owned_by = ROOT
 					OR = {
-						religion = hellenic
-						religion = reformed_hellenic
+						NOT = { 
+							OR = {
+								religion = hellenic
+								religion = reformed_hellenic
+							}
+						}
+						NOT = { culture_group = hellenic_g }
 					}
 				}
-				NOT = { culture_group = hellenic_g }
 			}
-		} 
+
+		}
 
 		trigger = {
 			prestige = 50
@@ -2464,7 +2481,7 @@ HLE_missions_4_religion_hellenic = {
 		} 
 
 		trigger = {
-			NOT = { current_age = age_of_discovery}
+			NOT = { current_age = age_of_discovery }
 			religion = reformed_hellenic
 			num_of_owned_provinces_with = {
 				value = 30
@@ -2487,7 +2504,16 @@ HLE_missions_4_religion_hellenic = {
 		position = 8
 		
 		provinces_to_highlight = { 
-			province_id = 5152 
+			province_id = 5152
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = {
+					has_great_project = {
+						type = apollo
+						tier = 3
+					}
+				}
+			}
 		} 
 
 		trigger = {
@@ -2533,6 +2559,7 @@ HLE_missions_4 = {
 		icon = mission_conquer_alexandria
 		required_missions = { nicene_levantine }
 		position = 9
+
 		provinces_to_highlight = {
 			region = egypt_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
@@ -2657,14 +2684,14 @@ HLE_missions_4 = {
 				name = "nicene_shahanshah"
 				duration = -1
 			}
-			caucasia_region  = {
+			caucasia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			khorasan_region  = {
+			khorasan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2718,35 +2745,35 @@ HLE_missions_4 = {
 				name = "nicene_hellenic_world"
 				duration = 18250
 			}
-			northern_sindh_area  = {
+			northern_sindh_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			sindh_area  = {
+			sindh_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			multan_area  = {
+			multan_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			lahore_area  = {
+			lahore_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			sind_sagar_area  = {
+			sind_sagar_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2764,9 +2791,7 @@ HLE_missions_4 = {
 			hidden_effect = {
 				set_country_flag = hle_evolved_ideas1
 				if = {
-					limit = {
-						tag = HLE
-					}
+					limit = { tag = HLE }
 					country_event = {
 						id = ideagroups.1
 					}
@@ -2805,6 +2830,7 @@ HLE_missions_4 = {
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
+
 		trigger = {
 			sind_sagar_area = {
 				type = all
@@ -2834,14 +2860,14 @@ HLE_missions_4 = {
 				name = ilk_invade_india
 				duration = 9125
 			}
-			west_india_region  = {
+			west_india_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			hindusthan_region  = {
+			hindusthan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2910,7 +2936,7 @@ HLE_missions_4 = {
 
 		effect = {
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_INDIA
-			malaya_region  = {
+			malaya_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2943,7 +2969,9 @@ HLE_missions_4 = {
 		position = 16
 		
 		provinces_to_highlight = {
-			owner = { is_emperor_of_china = yes }
+			owner = {
+				is_emperor_of_china = yes
+			}
 		}
 		
 		trigger = {
@@ -3173,10 +3201,11 @@ NCI_missions_5 = {
 		}
 		
 		provinces_to_highlight = {
+			region = anatolia_region
 			OR = {
-				region = anatolia_region
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -3206,6 +3235,7 @@ NCI_missions_5 = {
 		icon = revenge_for_nicopolis
 		required_missions = { nicene_menace }
 		position = 4
+
 		provinces_to_highlight = {
 			OR = {
 				area = karaman_area
@@ -3213,6 +3243,7 @@ NCI_missions_5 = {
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
+
 		trigger = {
 			karaman_area = {
 				type = all
@@ -3273,10 +3304,11 @@ HLE_missions_5 = {
 		position = 6
 		
 		provinces_to_highlight = {
+			region = anatolia_region
 			OR = {
-				region = anatolia_region
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -3296,7 +3328,7 @@ HLE_missions_5 = {
 				name = "nicene_minor"
 				duration = 9125
 			}
-			mashriq_region  = {
+			mashriq_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3327,6 +3359,7 @@ HLE_missions_5 = {
 		icon = jerusalem
 		required_missions = { nicene_asia_minor }
 		position = 8
+
 		provinces_to_highlight = {
 			OR = {
 				area = aleppo_area
@@ -3337,6 +3370,7 @@ HLE_missions_5 = {
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
+
 		trigger = {
 			aleppo_area = {
 				type = all
@@ -3372,7 +3406,7 @@ HLE_missions_5 = {
 				name = "nicene_levantine_invasion"
 				duration = 9125
 			}
-			egypt_region  = {
+			egypt_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3441,7 +3475,7 @@ HLE_missions_5 = {
 					}
 				}
 			}
-			khuzestan_area  = {
+			khuzestan_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3455,7 +3489,7 @@ HLE_missions_5 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			farsistan_area  = {
+			farsistan_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3519,14 +3553,14 @@ HLE_missions_5 = {
 				name = "nicene_alexander"
 				duration = 9125
 			}
-			persia_region  = {
+			persia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			arabia_region  = {
+			arabia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3589,8 +3623,8 @@ HLE_missions_5 = {
 				custom_tooltip = NCI_SERBIA_REWARD_SHIA_NO
 			}
 			tooltip = {
-				385 = { change_religion = shiite }
 				385 = {
+					change_religion = shiite
 					add_province_modifier = {
 						name = nci_kaaba
 						duration = -1
@@ -3614,8 +3648,8 @@ HLE_missions_5 = {
 				}
 				else_if = {
 					limit = { religion = shiite }
-					385 = { change_religion = shiite }
 					385 = {
+						change_religion = shiite
 						add_province_modifier = {
 							name = nci_kaaba
 							duration = -1
@@ -3633,28 +3667,29 @@ HLE_missions_5 = {
 		required_missions = { nicene_nemesis } 
 		
 		provinces_to_highlight = {
-			area = bahrain_area
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_id = 396
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { development = 20 }
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+				has_shipyard_building_trigger = no
+				has_dock_building_trigger = no
+			}
 		} 
 
-		trigger = {  
-		    bahrain_area = {
-				 type = all
-				 country_or_non_sovereign_subject_holds = ROOT	
-			}
-			396 = {
-				development = 20
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
-			}
-		} 
+		trigger = { 
+			396 = { country_or_non_sovereign_subject_holds = ROOT } 
+			396 = { development = 20 }
+			396 = { has_production_building_trigger = yes }
+			396 = { has_trade_building_trigger = yes }
+			396 = { has_shipyard_building_trigger = yes }
+			396 = { has_dock_building_trigger = yes }
+		}
 
 		effect = {
-			396 = { change_culture = hellenic_semitic }
 			396 = {
+				change_culture = hellenic_semitic
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 1 }
@@ -3688,7 +3723,7 @@ HLE_missions_5 = {
 		position = 14
 		
 		trigger = {
-			num_of_owned_provinces_with = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 35
 				region = central_asia_region
 			}
@@ -3708,7 +3743,7 @@ HLE_missions_5 = {
 				name = nci_scythia_tactics
 				duration = 18250
 			}
-			central_asia_region  = {
+			central_asia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3729,7 +3764,7 @@ HLE_missions_5 = {
 		}
 
 		trigger = {
-			num_of_owned_provinces_with = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 25
 				region = malaya_region
 			}

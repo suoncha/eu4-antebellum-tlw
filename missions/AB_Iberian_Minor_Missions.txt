@@ -84,7 +84,10 @@ ibemin_first = {
 				province_id = 231
 				province_id = 227
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
 		}
 		
 		effect = {
@@ -117,7 +120,7 @@ ibemin_second = {
 	
 	ibe_north = {
 	    icon = mission_invade_island
-		required_missions = {  }
+		required_missions = { }
 		position = 1
 		
 		provinces_to_highlight = {
@@ -132,19 +135,19 @@ ibemin_second = {
 		}
 		
 		trigger = {
-			owns = 208
-			owns = 4553
+			208 = { owned_by = ROOT }
+			4553 = { owned_by = ROOT }
 		    asturias_area = {
 			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+				owned_by = ROOT
 			}
 		    basque_country = {
 			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+				owned_by = ROOT
 			}
 		    galicia_area = {
 			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+				owned_by = ROOT
 			}
 		}
 		
@@ -213,9 +216,7 @@ ibemin_second = {
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				area = castille_area
-			}
+			area = castille_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -269,9 +270,7 @@ ibemin_second = {
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				area = aragon_area
-			}
+			area = aragon_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -297,7 +296,6 @@ ibemin_second = {
 				}
 			}
 		}
-		
 		
 		effect = {
 			add_country_modifier = {
@@ -341,9 +339,7 @@ ibemin_third = {
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				area = beieras_area
-			}
+			area = beieras_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -370,9 +366,7 @@ ibemin_third = {
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				area = alentejo_area
-			}
+			area = alentejo_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -448,11 +442,15 @@ ibemin_fourth = {
 	    icon = mission_iberian_conquistador
 		required_missions = { ibe_quest }
 		position = 5
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			is_colony = yes
+		}
 		
 		trigger = {
 			num_of_colonies = 1
 		}
-		
 		
 		effect = {
 			add_country_modifier = {
@@ -488,6 +486,11 @@ ibemin_fifth = {
 		required_missions = { }
 		position = 3
 		
+		provinces_to_highlight = {
+			owner = {
+				religion = catholic
+			}
+		}
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -514,6 +517,10 @@ ibemin_fifth = {
 		required_missions = { ibe_ally }
 		position = 5
 		
+		provinces_to_highlight = {
+			is_part_of_hre = yes
+		}
+
 		trigger = {
 		    is_part_of_hre = yes
 		}

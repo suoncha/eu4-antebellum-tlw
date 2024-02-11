@@ -467,6 +467,7 @@ province_event = {
 			}
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_cities_latin
 					has_country_flag = byz_faster_romanization_latincities
 				}
@@ -490,6 +491,7 @@ province_event = {
 			}
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_persosphere
 					has_country_flag = byz_faster_romanization_persia
 				}
@@ -507,6 +509,7 @@ province_event = {
 			superregion = china_superregion
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_china
 					has_country_flag = byz_faster_romanization_china
 				}
@@ -520,6 +523,7 @@ province_event = {
 			}
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_indochina
 					has_country_flag = byz_faster_romanization_indochina
 				}
@@ -534,6 +538,7 @@ province_event = {
 			}
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_east_indies
 					has_country_flag = byz_faster_romanization_eastindies
 				}
@@ -548,6 +553,7 @@ province_event = {
 			}
 			ROM = {
 				OR = {
+					# DELETE LATER
 					mission_completed = byzantium_far_east
 					has_country_flag = byz_faster_romanization_fareast
 				}
@@ -661,9 +667,7 @@ province_event = {
 			change_culture = gallo_roman
 		}
 		else_if = {
-			limit = {
-				region = maghreb_region
-			}
+			limit = { region = maghreb_region }
 			change_culture = afro_roman
 		}
 		else_if = {
@@ -679,21 +683,15 @@ province_event = {
 			change_culture = illyro_roman
 		}
 		else_if = {
-			limit = {
-				region = british_isles_region
-			}
+			limit = { region = british_isles_region }
 			change_culture = romano_british
 		}
 		else_if = {
-			limit = {
-				region = iberia_region
-			}
+			limit = { region = iberia_region }
 			change_culture = hispano_roman
 		}
 		else_if = {
-			limit = {
-				region = carpathia_region
-			}
+			limit = { region = carpathia_region }
 			change_culture = daco_roman
 		}
 		else_if = {
@@ -755,9 +753,7 @@ province_event = {
 			change_culture = romano_germanic
 		}
 		else_if = {
-			limit = {
-				region = scandinavia_region
-			}
+			limit = { region = scandinavia_region }
 			change_culture = romano_nordic
 		}
 		else_if = {
@@ -780,21 +776,11 @@ province_event = {
 			change_culture = perso_roman
 		}
 		else_if = {
-			limit = {
-				OR = {
-					region = west_india_region
-					region = hindusthan_region
-					region = bengal_region
-					region = deccan_region
-					region = coromandel_region
-				}
-			}
+			limit = { superregion = india_superregion }
 			change_culture = indo_roman
 		}
 		else_if = {
-			limit = {
-				region = arabia_region
-			}
+			limit = { region = arabia_region }
 			change_culture = romano_arabic
 		}
 		else_if = {
@@ -1294,11 +1280,9 @@ country_event = {
 		UKR = {
 			change_primary_culture = russo_roman
 			capital_scope = {
-				change_culture = russo_roman 
-				add_province_modifier = {
-					name = byz_forced_romanized
-					duration = 7300 
-				}
+                province_event = {
+                    id = ab_byzantium.108
+                }
 			}
 			if = {
 				limit = {
@@ -1883,7 +1867,12 @@ country_event = {
 			duration = -1
 		}
 		if = {
-			limit = { primary_culture = romano_scythic }
+			limit = {
+				OR = {
+					primary_culture = romano_scythic
+					primary_culture = romano_arabic
+				}
+			}
 			custom_tooltip = BYZ_ANATOLIA_CAUCASIA_RUM
 		}
 		else = {
@@ -1945,9 +1934,7 @@ country_event = {
 			desc = "until the end of the war"
 		}
 		if = {
-			limit = {
-				exists = NAZ
-			}
+			limit = { exists = NAZ }
 			NAZ = {
 				add_country_modifier = {
 					name = byz_reconquest_of_the_levant_nizzarids
@@ -1990,9 +1977,7 @@ country_event = {
 		name = ab_byzantium.80.a
 		remove_country_modifier = byz_reconquest_of_the_levant
 		if = {
-			limit = {
-				exists = NAZ
-			}
+			limit = { exists = NAZ }
 			NAZ = { remove_country_modifier = byz_reconquest_of_the_levant_nizzarids }
 		}
 		else_if = {
@@ -2022,9 +2007,7 @@ country_event = {
 		set_country_flag = byz_center_of_far_east_korea
 		custom_tooltip = BYZ_FAR_EAST_RENAME_KOREA
 		korea_region = {
-			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			limit = { country_or_non_sovereign_subject_holds = ROOT }
 			add_base_production = 1
 		}
 		custom_tooltip = JAP_ACCESS_GYEONGBOK
@@ -2142,10 +2125,8 @@ country_event = {
 		GLH = {
 			change_primary_culture = romano_scythic
 			capital_scope = {
-				change_culture = romano_scythic 
-				add_province_modifier = {
-					name = byz_forced_romanized
-					duration = 7300 
+				province_event = {
+					id = ab_byzantium.108
 				}
 			}
 			if = {
@@ -4060,6 +4041,307 @@ country_event = {
         name = ab_byzantium.107.a
 		remove_country_modifier = rome_diocesedebuff3
     }
+}
+
+#Romanization - Trigger for Rewards
+province_event = {
+	id = ab_byzantium.108
+	title = ab_byzantium.108.t
+	desc = ab_byzantium.108.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { culture_group = roman_g }
+	}
+
+	option = {
+		name = ab_byzantium.108.a
+		if = {
+			limit = {
+				OR = {
+					region = france_region
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_gallia }
+					}
+				}
+			}
+			change_culture = gallo_roman
+		}
+		else_if = {
+			limit = { region = maghreb_region }
+			change_culture = afro_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					AND = {
+						region = balkan_region
+						culture_group = south_slavic
+					}
+					area = carinthia_area
+				}
+			}
+			change_culture = illyro_roman
+		}
+		else_if = {
+			limit = { region = british_isles_region }
+			change_culture = romano_british
+		}
+		else_if = {
+			limit = { region = iberia_region }
+			change_culture = hispano_roman
+		}
+		else_if = {
+			limit = { region = carpathia_region }
+			change_culture = daco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = mashriq_region
+					region = egypt_region
+					area = saharan_oases
+					area = dongola_area
+					province_id = 1232
+					province_id = 2324
+				}
+				NOT = { area = al_jazira_area }
+				NOT = { area = iraq_arabi_area }
+				NOT = { area = basra_area }
+			}
+			if = {
+				limit = { ROM = { religion_group = christian } }
+				change_culture = greco_roman
+			}
+			else = {
+				change_culture = romano_arabic
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = al_jazira_area
+					area = iraq_arabi_area
+					area = basra_area
+				}
+			}
+			if = {
+				limit = { ROM = { religion = zoroastrian } }
+				change_culture = perso_roman
+			}
+			else_if = {
+				limit = { ROM = { religion_group = muslim } }
+				change_culture = romano_arabic
+			}
+			else = {
+				change_culture = greco_roman
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_german_region
+					AND = {
+						region = south_german_region
+						NOT = { area = carinthia_area }
+					}
+					AND = {
+						region = low_countries_region
+						ROM = { has_country_flag = rom_belgica_isof_germania }
+					}
+				}
+			}
+			change_culture = romano_germanic
+		}
+		else_if = {
+			limit = { region = scandinavia_region }
+			change_culture = romano_nordic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = persia_region
+					region = khorasan_region
+					AND = {
+						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
+						ROM = { has_country_flag = rom_caucasia_isof_persia }
+					}
+				}
+			}
+			change_culture = perso_roman
+		}
+		else_if = {
+			limit = { superregion = india_superregion }
+			change_culture = indo_roman
+		}
+		else_if = {
+			limit = { region = arabia_region }
+			change_culture = romano_arabic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = wendia_region
+					region = poland_region
+					region = baltic_region
+					area = podlasie_area
+					area = red_ruthenia_area
+				}
+			}
+			change_culture = romano_polish
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = russia_region
+					AND = {
+						region = ruthenia_region
+						NOT = { area = podlasie_area }
+						NOT = { area = red_ruthenia_area }
+					}
+				}
+			}
+			change_culture = russo_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = ural_region
+					region = west_siberia_region
+					region = east_siberia_region
+				}
+			}
+			if = {
+				limit = { owner = { tag = GLH } }
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = russo_roman
+			}		
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = crimea_region
+					region = central_asia_region
+					region = mongolia_region
+					AND = {
+						region = manchuria_region
+						NOT = { area = liaoning_area }
+					}
+					area = circassia_area
+					area = dagestan_area
+				}
+			}
+			change_culture = romano_scythic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = anatolia_region
+					AND = {
+						region = caucasia_region
+						NOT = {
+							OR = {
+								area = circassia_area
+								area = dagestan_area
+							}
+						}
+						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
+					}
+				}
+			}
+			if = {
+				limit = { ROM = { NOT = { religion_group = christian } } }
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = greco_roman
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = tibet_region
+					region = burma_region
+					AND = {
+						region = xinan_region
+						NOT = { area = chuanbei_area }
+						NOT = { area = sichuan_area }
+					}
+				}
+			}
+			change_culture = tibeto_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_china_region
+					region = south_china_region
+					area = chuanbei_area
+					area = sichuan_area
+				}
+			}
+			change_culture = sino_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+			change_culture = romano_korean
+		}
+		else_if = {
+			limit = {
+				region = japan_region
+			}
+			change_culture = romano_japanese
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indo_china_region
+					area = north_tenasserim_area
+					area = tenasserim_area
+				}
+			}
+			change_culture = romano_tai
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indonesia_region
+					region = moluccas_region
+					AND = {
+						region = malaya_region
+						NOT = { area = north_tenasserim_area }
+						NOT = { area = tenasserim_area }
+					}
+				}
+			}
+			change_culture = romano_malay
+		}
+		else = {
+			change_culture = roman_new
+		}
+		add_province_modifier = {
+			name = byz_forced_romanized
+			duration = 7300 
+		}
+	}
 }
 
 ## CULTURAL SPHERES FLAVOR

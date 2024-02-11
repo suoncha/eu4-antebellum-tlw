@@ -8,9 +8,7 @@ ab_galiciavolhynia_first = {
 			was_tag = VOL 
 		}
 		NOT = { map_setup = map_setup_random }
-		NOT = {
-			has_country_flag = VOL_pope_reject
-		}
+		NOT = { has_country_flag = VOL_pope_reject }
 	}
 	has_country_shield = yes
 	
@@ -48,9 +46,7 @@ ab_galiciavolhynia_first = {
 
 		trigger = {
 			owns = 280
-			280 = {
-				religion = catholic
-			}
+			280 = { religion = catholic }
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 12
 				region = ruthenia_region
@@ -60,11 +56,9 @@ ab_galiciavolhynia_first = {
 		
 		provinces_to_highlight = {
 			region = ruthenia_region
-			NOT = {
-				AND = {
-					country_or_non_sovereign_subject_holds = ROOT
-					religion = catholic
-				}
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { religion = catholic }
 			}
 		}
 
@@ -88,7 +82,6 @@ ab_galiciavolhynia_first = {
 		}
 		
 	}
-	
 }
 
 ab_russia_first = {
@@ -345,9 +338,7 @@ ab_russia_first_formable = {
 			tag = UKR
 			was_tag = UKR
 		}
-		NOT = {
-			was_tag = NOV
-		}
+		NOT = { was_tag = NOV }
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -359,25 +350,23 @@ ab_russia_first_formable = {
 		
 		provinces_to_highlight = {
 			province_id = 2410
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { culture_group = east_slavic }
+				NOT = { religion = ROOT }
+				NOT = { development = 20 }
+				has_dock_building_trigger = no
+				has_shipyard_building_trigger = no
+			}
 		}
 		
 		trigger = {
 			owns = 2410
-			2410 = {
-				culture_group = east_slavic
-			}
-			2410 = {
-				religion = ROOT
-			}
-			2410 = {
-				development = 20
-			}
-			2410 = {
-				has_dock_building_trigger = yes
-			}
-			2410 = {
-				has_shipyard_building_trigger = yes
-			}
+			2410 = { culture_group = east_slavic }
+			2410 = { religion = ROOT }
+			2410 = { development = 20 }
+			2410 = { has_dock_building_trigger = yes }
+			2410 = { has_shipyard_building_trigger = yes }
 		}
 		
 		effect = {
@@ -436,19 +425,18 @@ ab_russia_first_formable = {
 		}
 		
 		provinces_to_highlight = {
-		  is_capital = yes
-		  owner = { 
-			technology_group = western
-			any_owned_province = {
-			  has_port = yes
+			OR = {
+				owner = {
+					technology_group = western
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+				trade_goods = naval_supplies
 			}
-			NOT = {
-			  has_opinion = {
-				who = ROOT
-				value = 100
-			  }
-			}
-		  }
 		}
 		
 		effect = {
@@ -462,21 +450,21 @@ ab_russia_first_formable = {
 	
 	rus_churches_mission = {
 		icon = mission_land_of_churches
-		required_missions = {  }
+		required_missions = { }
 		position = 10
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = {
-				has_tax_building_trigger = yes
-			}
+			has_tax_building_trigger = no
 		}
+
 		trigger = {
 			num_of_owned_provinces_with = {
 				value = 15
 				has_tax_building_trigger = yes
 			}
 		}
+
 		effect = {
 			add_patriarch_authority = 0.1
 			add_estate_loyalty = {
@@ -485,9 +473,7 @@ ab_russia_first_formable = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						religion = orthodox
-					}
+					NOT = { religion = orthodox }
 				}
 				add_papal_influence = 10
 			}
@@ -510,17 +496,10 @@ ab_russia_first_formable = {
 				inquisitor = 1
 			}
 			if = {
-				limit = {
-					has_estate = estate_church
-				}
+				limit = { has_estate = estate_church }
 				num_of_estate_agendas_completed = {
 					estate = estate_church
 					value = 2
-				}
-			}
-			if = {
-				limit = {
-					has_estate = estate_church
 				}
 				num_of_estate_privileges = {
 					estate = estate_church
@@ -602,7 +581,6 @@ ab_russia_first_formable = {
 		}
 	}
 	
-
 	ab_russia_bread = {
 		icon = mission_pol_breadbasket_europe
 		position = 16
@@ -612,7 +590,7 @@ ab_russia_first_formable = {
 			owned_by = ROOT
 			culture_group = east_slavic
 			trade_goods = grain
-			NOT = { has_production_building_trigger = yes }
+			has_production_building_trigger = no
 		}
 		
 		trigger = {
@@ -641,8 +619,10 @@ ab_russia_first_formable = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			trade_goods = fur
-			NOT = { has_trade_building_trigger = yes }
-			NOT = { base_production = 5 }
+			OR = {
+				has_trade_building_trigger = no
+				NOT = { base_production = 5 }
+			}
 		}
 		
 		trigger = {
@@ -677,40 +657,32 @@ ab_russia_first_formable = {
 		
 		provinces_to_highlight = {
 			province_id = 33
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 20 }
+				has_tax_building_trigger = no
+				has_trade_building_trigger = no
+				has_production_building_trigger = no
+				has_road_building_trigger = no
+			}
 		}
 		
 		trigger = {
-			33 = {
-				owned_by = ROOT
-			}
-			33 = {
-				development = 20
-			}
-			33 = {
-				has_tax_building_trigger = yes
-			}
-			33 = {
-				has_trade_building_trigger = yes
-			}
-			33 = {
-				has_production_building_trigger = yes
-			}
-			33 = {
-				has_road_building_trigger = yes
-			}
+			33 = { owned_by = ROOT }
+			33 = { development = 20 }
+			33 = { has_tax_building_trigger = yes }
+			33 = { has_trade_building_trigger = yes }
+			33 = { has_production_building_trigger = yes }
+			33 = { has_road_building_trigger = yes }
 		}
 		
 		effect = {
 			33 = {
 				change_culture = ROOT
-			}
-			33 = {
 				add_province_modifier = {
 					name = rus_window
 					duration = -1
 				}
-			}
-			33 = {
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 1 }
@@ -726,7 +698,6 @@ ab_russia_first_formable = {
 			}
 		}
 	}
-	
 }
 
 ab_russia_second = {
@@ -804,9 +775,7 @@ ab_russia_second = {
 			}
 			hidden_effect = {
 				every_country = {
-					limit = {
-						has_country_modifier = rus_tatar_yoke
-					}
+					limit = { has_country_modifier = rus_tatar_yoke }
 					remove_country_modifier = rus_tatar_yoke
 				}
 			}
@@ -900,7 +869,6 @@ ab_russia_second = {
 			}
 		}
 	}
-	
 }
 
 ab_russia_second_formable = {
@@ -912,9 +880,7 @@ ab_russia_second_formable = {
 			tag = UKR
 			was_tag = UKR
 		}
-		NOT = {
-			was_tag = NOV
-		}
+		NOT = { was_tag = NOV }
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -931,14 +897,15 @@ ab_russia_second_formable = {
 				province_id = 1322
 				province_id = 1321
 			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { galleys_in_province = 10 }
+				NOT = { light_ships_in_province = 10 }
+			}
 		}
 		
 		trigger = {
 			navy_size_percentage = 0.75
-			OR = {
-				num_of_galley = 10
-				num_of_light_ship = 10
-			}
 			custom_trigger_tooltip = {
 				tooltip = RUS_BLACK_SEA_FLEET
 				OR = {
@@ -987,8 +954,7 @@ ab_russia_second_formable = {
 			}
 		}
 	}
-	
-	
+		
 	ab_rus_tsargrad = {
 		icon = end_the_schism
 		required_missions = { ab_rus_black_sea_fleet }
@@ -996,18 +962,15 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			province_id = 151
-			NOT = {
-				owned_by = ROOT	
+			OR = {
+				NOT = { owned_by = ROOT	}
+				has_any_ongoing_construction = yes
 			}
 		}
 		
 		trigger = {
 			owns = 151
-			151 = {
-				NOT = {
-					has_construction = great_project
-				}
-			}
+			151 = { has_any_ongoing_construction = no }
 		}
 		
 		effect = {
@@ -1071,9 +1034,7 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			is_core = BYZ
-			NOT = {
-				owned_by = ROOT	
-			}
+			NOT = { owned_by = ROOT	}
 		}
 		
 		trigger = {
@@ -1087,21 +1048,15 @@ ab_russia_second_formable = {
 		
 		effect = {
 			if = {
-				limit = {
-					religion = orthodox
-				}
+				limit = { religion = orthodox }
 				custom_tooltip = RUS_RESTORE_BYZANTIUM
 			}
 			else_if = {
-				limit = {
-					religion = catholic
-				}
+				limit = { religion = catholic }
 				custom_tooltip = RUS_RESTORE_LATIN
 			}
 			if = {
-				limit = {
-					government = monarchy
-				}
+				limit = { government = monarchy }
 				custom_tooltip = AB_EMPTY
 				custom_tooltip = SER_UNLOCK_FORMING_ROME
 			}
@@ -1119,6 +1074,15 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			province_id = 280
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = {
+					has_great_project = {
+						type = kiev_pechersk_lavra
+						tier = 2
+					}
+				}
+			}
 		}
 		
 		trigger = {
@@ -1152,9 +1116,7 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = {
-				has_state_patriach = yes
-			}
+			has_state_patriach = no
 		}
 		
 		trigger = {
@@ -1164,9 +1126,7 @@ ab_russia_second_formable = {
 				patriarch_authority = 0.75
 			}
 			if = {
-				limit = {
-					religion = orthodox
-				}
+				limit = { religion = orthodox }
 				num_of_owned_provinces_with = {
 					value = 50
 					has_state_patriach = yes
@@ -1186,9 +1146,7 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = {
-				has_tax_building_trigger = yes
-			}
+			has_tax_building_trigger = no
 		}
 		
 		trigger = {
@@ -1238,18 +1196,13 @@ ab_russia_second_formable = {
 				province_id = 33
 				province_id = 1652
 			}
+			NOT = { is_strongest_trade_power = ROOT }
 		}
 		
 		trigger = {
-			280 = {
-				is_strongest_trade_power = ROOT
-			}
-			33 = {
-				is_strongest_trade_power = ROOT
-			}
-			1652 = {
-				is_strongest_trade_power = ROOT
-			}
+			280 = { is_strongest_trade_power = ROOT }
+			33 = { is_strongest_trade_power = ROOT }
+			1652 = { is_strongest_trade_power = ROOT }
 		}
 		
 		effect = {
@@ -1271,40 +1224,30 @@ ab_russia_second_formable = {
 				province_id = 280
 				province_id = 310
 			}
+			OR = {
+				NOT = { development = 25 }
+				has_tax_building_trigger = no
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+				has_road_building_trigger = no
+			}
 		}
 		
 		trigger = {
 			280 = {
 				owned_by = ROOT
-			}
-			280 = {
 				development = 25
-			}
-			280 = {
 				has_tax_building_trigger = yes
-			}
-			280 = {
 				has_trade_building_trigger = yes
-			}
-			280 = {
 				has_production_building_trigger = yes
-			}
-			280 = {
 				has_road_building_trigger = yes
 			}
 			310 = {
+				owned_by = ROOT
 				development = 25
-			}
-			310 = {
 				has_tax_building_trigger = yes
-			}
-			310 = {
 				has_trade_building_trigger = yes
-			}
-			310 = {
 				has_production_building_trigger = yes
-			}
-			310 = {
 				has_road_building_trigger = yes
 			}
 		}
@@ -1334,7 +1277,6 @@ ab_russia_second_formable = {
 			}
 		}
 	}
-	
 }
 
 ab_russia_third = {
@@ -1377,7 +1319,7 @@ ab_russia_third = {
 
 	ab_shade_khan = {
 		icon = mission_noble_council
-		required_missions = {  }
+		required_missions = { }
 		position = 1
 		
 		provinces_to_highlight = {
@@ -1469,7 +1411,6 @@ ab_russia_third = {
 			}
 		}
 	}
-	
 }
 
 ab_russia_third_formable = {
@@ -1481,9 +1422,7 @@ ab_russia_third_formable = {
 			tag = UKR
 			was_tag = UKR
 		}
-		NOT = {
-			was_tag = NOV
-		}
+		NOT = { was_tag = NOV }
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -1789,21 +1728,15 @@ ab_russia_third_formable = {
 				}
 				AND = {
 					region = west_siberia_region
-					NOT = {
-						country_or_non_sovereign_subject_holds = ROOT
-					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 			}
 			has_discovered = ROOT
 		}
 		
 		trigger = {
-			1074 = {
-				owned_by = ROOT
-			}
-			1075 = {
-				owned_by = ROOT
-			}
+			1074 = { owned_by = ROOT }
+			1075 = { owned_by = ROOT }
 			west_siberia_region = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1850,10 +1783,8 @@ ab_russia_third_formable = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			OR = {
-				NOT = {
-					has_production_building_trigger = yes
-				}
-				NOT = { has_manufactory_trigger = yes }
+				has_production_building_trigger = no
+				has_manufactory_trigger = no
 			}
 		}
 		
@@ -1916,9 +1847,14 @@ ab_russia_fourth = {
 		required_missions = { ab_shade_khan ab_russia_consolidate }
 		position = 2 
 
+		provinces_to_highlight = {
+			owned_by = ROOT
+		}
+
 		trigger = {
 			grown_by_development = 75
 		}
+
 		effect = {
 			create_general = { tradition = 40 }
 			add_country_modifier = {
@@ -1999,6 +1935,7 @@ ab_russia_fourth = {
 		trigger = {
 			tag = UKR
 		}
+
 		effect = {
 			country_event = { id = ab_rus.5 }
 			custom_tooltip = AB_EMPTY
@@ -2017,18 +1954,14 @@ ab_russia_fourth = {
 				add_permanent_claim = ROOT
 			}
 			if = {
-				limit = {
-					exists = WAL
-				}
+				limit = { exists = WAL }
 				custom_tooltip = RUS_WALLACHIA_CB
 			}
 			else = {
 				custom_tooltip = RUS_WALLACHIA_CB_NO
 			}
 			if = {
-				limit = {
-					exists = MOL
-				}
+				limit = { exists = MOL }
 				custom_tooltip = RUS_MOLDAVIA_CB
 			}
 			else = {
@@ -2036,9 +1969,7 @@ ab_russia_fourth = {
 			}
 			hidden_effect = {
 				if = {
-					limit = {
-						exists = WAL
-					}
+					limit = { exists = WAL }
 					add_casus_belli = { 
 						target = WAL
 						type = cb_vassalize_mission 
@@ -2054,9 +1985,7 @@ ab_russia_fourth = {
 					}
 				}
 				if = {
-					limit = {
-						exists = MOL
-					}
+					limit = { exists = MOL }
 					add_casus_belli = { 
 						target = MOL
 						type = cb_vassalize_mission 
@@ -2092,9 +2021,7 @@ ab_russia_fourth_formable = {
 			tag = UKR
 			was_tag = UKR
 		}
-		NOT = {
-			was_tag = NOV
-		}
+		NOT = { was_tag = NOV }
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -2319,46 +2246,17 @@ ab_russia_fourth_formable = {
 		position = 11
 		
 		provinces_to_highlight = {
-		  country_or_non_sovereign_subject_holds = ROOT
-		  has_terrain = steppe
-		  OR = {
-			AND = {
-			  NOT = {
-				ROOT = {
-				  development_in_provinces = {
-					value = 100
-					has_terrain = steppe
-				  }
-				}
-			  }
-			  owned_by = ROOT
-			}
-			AND = {
-			  NOT = {
-				ROOT = {
-				  num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 8
-					has_terrain = steppe
-					num_of_buildings_in_province = 2
-				  }
-				}
-			  }
-			  country_or_non_sovereign_subject_holds = ROOT
-			  NOT = { num_of_buildings_in_province = 2 }
-			}
-		  }
+		  	owned_by = ROOT
+		  	has_terrain = steppe
 		}
+
 		trigger = {
 			development_in_provinces = {
 				value = 100 
 				has_terrain = steppe
 			}
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				has_terrain = steppe 
-				num_of_buildings_in_province = 2 
-				value = 8
-			}
 		}
+
 		effect = {
 			custom_tooltip = lit_every_overlord_owned_or_subject_prov_1_random_dev
 			tooltip = {
@@ -2398,7 +2296,7 @@ ab_russia_fourth_formable = {
 		provinces_to_highlight = {
 			region = east_siberia_region
 			has_discovered = ROOT
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = { owned_by = ROOT }
 		}
 		
 		trigger = {
@@ -2460,17 +2358,20 @@ ab_russia_fourth_formable = {
 		icon = mission_extent_yasak_to_the_east
 		required_missions = { tr_russian_colony_in_east_siberia }
 		position = 13
+
 		provinces_to_highlight = {
 			region = east_siberia_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 			has_discovered = ROOT
 		}
+
 		trigger = {
 			east_siberia_region = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
+
 		effect = {
 			custom_tooltip = RUS_EAST_SIBERIA
 			east_siberia_region = {
@@ -2503,17 +2404,20 @@ ab_russia_fourth_formable = {
 		icon = mission_colonize_alaska
 		required_missions = { rus_complete_east_siberia }
 		position = 15
+
 		provinces_to_highlight = {
 			colonial_region = colonial_alaska
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 			has_discovered = ROOT
 		}
+
 		trigger = {
 			colonial_alaska = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
+
 		effect = {
 			add_country_modifier = {
 				name = "rus_alaska_modifier"
@@ -2536,15 +2440,11 @@ ab_russia_fourth_formable = {
 	
 		trigger = {
 			if = {
-				limit = {
-					is_revolutionary = no
-				}
+				limit = { is_revolutionary = no }
 				absolutism = 50
 			}
 			if = {
-				limit = {
-					has_estate = estate_church
-				}
+				limit = { has_estate = estate_church }
 				NOT = {
 					estate_influence = {
 						estate = estate_church
@@ -2553,9 +2453,7 @@ ab_russia_fourth_formable = {
 				}
 			}
 			if = {
-				limit = {
-					has_estate = estate_burghers
-				}
+				limit = { has_estate = estate_burghers }
 				NOT = {
 					estate_influence = {
 						estate = estate_burghers
@@ -2564,9 +2462,7 @@ ab_russia_fourth_formable = {
 				}
 			}
 			if = {
-				limit = {
-					has_estate = estate_nobles
-				}
+				limit = { has_estate = estate_nobles }
 				NOT = {
 					estate_influence = {
 						estate = estate_nobles
@@ -2576,6 +2472,7 @@ ab_russia_fourth_formable = {
 			}
 			crown_land_share = 60
 		}
+
 		effect = {
 			custom_tooltip = add_5_crown_land_share
 			hidden_effect = {
@@ -2589,9 +2486,7 @@ ab_russia_fourth_formable = {
 				duration = 7300
 			}
 			if = {
-				limit = {
-					MIL = 6
-				}
+				limit = { MIL = 6 }
 				custom_tooltip = RUS_ALL_BELONG
 			}
 			else = {
@@ -2606,9 +2501,7 @@ ab_russia_fourth_formable = {
 			custom_tooltip = RUS_OCCUPY_CLAIM
 			hidden_effect = {
 				if = {
-					limit = {
-						MIL = 6
-					}
+					limit = { MIL = 6 }
 					add_country_modifier = {
 						name = "rus_all_belongs"
 						duration = 7300
@@ -2628,6 +2521,7 @@ ab_russia_fourth_formable = {
 			army_size_percentage = 0.75
 			army_tradition = 80
 		}
+
 		effect = {
 			add_army_professionalism = 0.05
 			add_country_modifier = {
@@ -2678,35 +2572,32 @@ ab_russia_fourth_formable = {
 				province_id = 2413
 				province_id = 291
 			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { has_building = furnace }
+				NOT = { base_production = 10 }
+			}
 		}
 		
 		trigger = {
-			owns = 1065
-			owns = 2102
-			owns = 2413
-			owns = 291
 			1065 = {
+				owned_by = ROOT
 				has_building = furnace
-			}
-			2102 = {
-				has_building = furnace
-			}
-			2413 = {
-				has_building = furnace
-			}
-			291 = {
-				has_building = furnace
-			}
-			1065 = {
 				base_production = 10
 			}
 			2102 = {
+				owned_by = ROOT
+				has_building = furnace
 				base_production = 10
 			}
 			2413 = {
+				owned_by = ROOT
+				has_building = furnace
 				base_production = 10
 			}
 			291 = {
+				owned_by = ROOT
+				has_building = furnace
 				base_production = 10
 			}
 		}
@@ -2724,8 +2615,14 @@ ab_russia_fourth_formable = {
 		icon = mission_russian_revolution
 		required_missions = { ab_russia_industrial }
 		position = 19
+
 		provinces_to_highlight = {
+			owner = {
+				is_revolution_target = yes
+				war_with = ROOT
+			}
 		}
+
 		trigger = {
 			OR = {
 				has_reform = revolutionary_empire_reform
@@ -2744,6 +2641,7 @@ ab_russia_fourth_formable = {
 			}
 			
 		}
+
 		effect = {
 			add_army_tradition = 25
 			if = {
@@ -2808,9 +2706,8 @@ ab_russia_fifth = {
 	
 	ab_russia_consolidate = {
 		icon = mission_consolidate_the_state
-		required_missions = {  }
-		provinces_to_highlight = {
-		}
+		required_missions = { }
+
 		trigger = {
 			stability = 1
 			OR = {
@@ -2818,6 +2715,7 @@ ab_russia_fifth = {
 				army_size_percentage = 1
 			}
 		}
+
 		effect = {
 			add_country_modifier = {
 				name = rus_consolidate
@@ -2854,6 +2752,7 @@ ab_russia_fifth = {
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
+
 		effect = {
 			custom_tooltip = RUS_AE
 			define_advisor = {
@@ -2879,7 +2778,6 @@ ab_russia_fifth = {
 			}
 		}
 	}
-	
 }
 
 ab_russia_fifth_formable = {
@@ -2891,9 +2789,7 @@ ab_russia_fifth_formable = {
 			tag = UKR
 			was_tag = UKR
 		}
-		NOT = {
-			was_tag = NOV
-		}
+		NOT = { was_tag = NOV }
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -3007,7 +2903,7 @@ ab_russia_fifth_formable = {
 	}
 	
 	ab_russia_central_asia = {
-		icon = mission_chinese_general_riding
+		icon = mission_central_asian_city
 		required_missions = { ab_russia_tame_steppe }
 		position = 10
 
@@ -3026,9 +2922,7 @@ ab_russia_fifth_formable = {
 		effect = {
 			custom_tooltip = RUS_CENTRAL_ASIA
 			central_asia_region = {
-				limit = {
-					owned_by = ROOT
-				}
+				limit = { owned_by = ROOT }
 				add_province_modifier = {
 					name = rus_integrating_central_asia
 					duration = 7300
@@ -3058,21 +2952,22 @@ ab_russia_fifth_formable = {
 		position = 13
 
 		provinces_to_highlight = {
-		  OR = {
-			AND = {
-			  province_id = 2106
-			  NOT = { is_core = ROOT }
+			OR = {
+				AND = {
+					region = manchuria_region
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					province_id = 730
+					NOT = { is_strongest_trade_power = ROOT }
+				}
 			}
-			region = manchuria_region
-		  }
-		  NOT = { owned_by = ROOT }
+			
 		}
 		
 		trigger = {
-			owns_core_province = 2106
-			730 = {
-				is_strongest_trade_power = ROOT
-			}
+			owns = 2106
+			730 = { is_strongest_trade_power = ROOT }
 			num_of_owned_provinces_with = {
 				value = 15
 				region = manchuria_region
@@ -3269,16 +3164,17 @@ ab_russia_fifth_formable = {
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = { has_courthouse_building_trigger = yes }
+			OR = {
+				has_courthouse_building_trigger = no
+				NOT = { has_building = state_house }
+			}
 		}
 		
 		trigger = {
 			has_adm_advisor_3 = yes
 			has_dip_advisor_3 = yes
 			has_mil_advisor_3 = yes
-			NOT = {
-				num_of_loans = 1
-			}
+			NOT = { num_of_loans = 1 }
 			is_in_deficit = no
 			num_of_owned_provinces_with = {
 				value = 20
@@ -3289,6 +3185,7 @@ ab_russia_fifth_formable = {
 				has_building = state_house
 			}
 		}
+
 		effect = {
 			custom_tooltip = RUS_PRIKAZY
 			add_country_modifier = {
@@ -3310,8 +3207,6 @@ ab_russia_fifth_formable = {
 			}
 		}
 	}
-	
-	
 }
 
 #Rome
@@ -3400,6 +3295,7 @@ ab_russia_first_rome = {
 				amount = 4
 			}
 		}
+
 		effect = {
 			country_event = { 
 				id = ab_byzantium.47
@@ -3413,6 +3309,12 @@ ab_russia_first_rome = {
 		icon = establish_a_standing_army
 		position = 22
 		required_missions = { ab_russia_finest }
+
+		provinces_to_highlight = {
+			owner = {
+				army_size = ROOT
+			}
+		}
 
 		trigger = {
 			army_size = 1200
@@ -3455,6 +3357,7 @@ ab_russia_first_rome = {
 				}
 			}
 		}
+
 		effect = {
 			if = {
 				limit = {
@@ -3551,42 +3454,42 @@ ab_russia_first_rome = {
 				name = byzantium_western_campaigns
 				duration = 7300
 			}
-			alsace_area  = {
+			alsace_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			lorraine_area  = {
+			lorraine_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			lower_rhineland_area  = {
+			lower_rhineland_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			wallonia_area  = {
+			wallonia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			flanders_area  = {
+			flanders_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			brabant_area  = {
+			brabant_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3649,7 +3552,7 @@ ab_russia_first_rome = {
 				name = byzantium_imperial_border
 				duration = -1
 			}
-			low_countries_region  = {
+			low_countries_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3698,6 +3601,21 @@ ab_russia_second_rome = {
 		position = 20
 		required_missions = { } 
 
+		provinces_to_highlight = {
+			owner = {
+				technology_group = western
+				OR = {
+					NOT = { alliance_with = ROOT }
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+				}
+			}
+		}
+		
 		trigger = { 
 			any_country = {
 				alliance_with = ROOT
@@ -3761,7 +3679,7 @@ ab_russia_second_rome = {
 				name = byzantium_western
 				duration = 9125
 			}
-			france_region  = {
+			france_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3804,53 +3722,56 @@ ab_russia_second_rome = {
 				area = brabant_area
 				area = flanders_area
 			}
-			NOT = { base_manpower = 5 }
-			province_has_current_tech_fort_trigger = no
+			OR = {
+				NOT = { base_manpower = 5 }
+				province_has_current_tech_fort_trigger = no
+			}
+			province_is_diocese_land_trigger = yes
 		}
 		
 		trigger = {
-			any_province = {
-				area = inner_austria_area
+			inner_austria_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = austria_proper_area
+			austria_proper_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = switzerland_area
+			switzerland_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = alsace_area
+			alsace_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = lorraine_area
+			lorraine_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = lower_rhineland_area
+			lower_rhineland_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = wallonia_area
+			wallonia_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = brabant_area
+			brabant_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
-			any_province = {
-				area = flanders_area
+			flanders_area = {
+				province_is_diocese_land_trigger = yes
 				province_has_current_tech_fort_trigger = yes
 				base_manpower = 5
 			}
@@ -3874,6 +3795,7 @@ ab_russia_second_rome = {
 						}
 						province_has_current_tech_fort_trigger = yes
 						base_manpower = 5
+						province_is_diocese_land_trigger = yes
 					}
 					upgrade_fort_building = yes
 				}
@@ -3885,7 +3807,7 @@ ab_russia_second_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			south_german_region  = {
+			south_german_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3925,7 +3847,7 @@ ab_russia_second_rome = {
 				name = byz_german_conquest
 				duration = 7300
 			}
-			scandinavia_region  = {
+			scandinavia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3950,6 +3872,7 @@ ab_russia_second_rome = {
 			}
 			absolutism = 70
 		}
+
 		effect = {
 			add_country_modifier = {
 				name = byz_caesaropapism
@@ -3980,18 +3903,16 @@ ab_russia_third_rome_constantinople = {
 		provinces_to_highlight = {
 			province_id = 151
 			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { owned_by = ROOT }
 				NOT = { development = 65 }
 				NOT = { num_of_buildings_in_province = 10 }
 			}
 		}
 		
 		trigger = {
-			151 = {
-				owned_by = ROOT
-				development = 65
-				num_of_buildings_in_province = 10
-			}
+			151 = { owned_by = ROOT }
+			151 = { development = 65 }
+			151 = { num_of_buildings_in_province = 10 }
 		}
 		
 		effect = {
@@ -4001,14 +3922,11 @@ ab_russia_third_rome_constantinople = {
 					duration = -1
 				}
 				hidden_effect = {
-					add_province_triggered_modifier = BYZ_megalopolis_updater #hidden Ptm that updates the modifier
+					add_province_triggered_modifier = BYZ_megalopolis_updater
 				}
 			}
-			
 			custom_tooltip = BYZ_modifier_will_double
-			
-			custom_tooltip = " "
-			
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = BYZ_monarch_reigns_in_byzantium
 				duration = -1
@@ -4023,8 +3941,20 @@ ab_russia_third_rome_constantinople = {
 		
 		provinces_to_highlight = {
 			OR = {
-				province_id = 151
-				province_id = 316
+				AND = {
+					province_id = 151
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 85 }
+					}
+				}
+				AND = {
+					province_id = 316
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 40 }
+					}
+				}
 			}
 		}
 		
@@ -4058,18 +3988,14 @@ ab_russia_third_rome_constantinople = {
 				}
 				if = {
 					limit = {
-						NOT = { 
-							province_has_center_of_trade_of_level = 1 
-						}
+						NOT = { province_has_center_of_trade_of_level = 1 }
 					}
 					center_of_trade = 1
 				}
 			}
 			if = {
 				limit = {
-					316 = {
-						development = 50
-					}
+					316 = { development = 50 }
 				}
 				custom_tooltip = BYZ_GREATER_AREA1
 				
@@ -4085,9 +4011,7 @@ ab_russia_third_rome_constantinople = {
 			hidden_effect = {
 				if = {
 					limit = {
-						316 = {
-							development = 50
-						}
+						316 = { development = 50 }
 					}
 					316 = {
 						change_trade_goods = coal
@@ -4104,10 +4028,34 @@ ab_russia_third_rome_constantinople = {
 		
 		provinces_to_highlight = {
 			OR = {
-				province_id = 151
-				province_id = 316
-				province_id = 149
-				province_id = 4779
+				AND = {
+					province_id = 151
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 120 }
+					}
+				}
+				AND = {
+					province_id = 316
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 70 }
+					}
+				}
+				AND = {
+					province_id = 149
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 50 }
+					}
+				}
+				AND = {
+					province_id = 4779
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { development = 50 }
+					}
+				}
 			}
 		}
 		
@@ -4153,9 +4101,7 @@ ab_russia_third_rome_constantinople = {
 				}
 				if = {
 					limit = {
-						NOT = { 
-							province_has_center_of_trade_of_level = 1 
-						}
+						NOT = { province_has_center_of_trade_of_level = 1 }
 					}
 					center_of_trade = 1
 				}
@@ -4167,18 +4113,14 @@ ab_russia_third_rome_constantinople = {
 				}
 				if = {
 					limit = {
-						NOT = { 
-							province_has_center_of_trade_of_level = 1 
-						}
+						NOT = { province_has_center_of_trade_of_level = 1 }
 					}
 					center_of_trade = 1
 				}
 			}
 			if = {
 				limit = {
-					149 = {
-						development = 60
-					}
+					149 = { development = 60 }
 				}
 				custom_tooltip = BYZ_GREATER_AREA2
 				
@@ -4193,9 +4135,7 @@ ab_russia_third_rome_constantinople = {
 			}
 			if = {
 				limit = {
-					4779 = {
-						development = 60
-					}
+					4779 = { development = 60 }
 				}
 				custom_tooltip = BYZ_GREATER_AREA3
 				
@@ -4211,9 +4151,7 @@ ab_russia_third_rome_constantinople = {
 			hidden_effect = {
 				if = {
 					limit = {
-						149 = {
-							development = 60
-						}
+						149 = { development = 60 }
 					}
 					149 = {
 						change_trade_goods = coal
@@ -4221,9 +4159,7 @@ ab_russia_third_rome_constantinople = {
 				}
 				if = {
 					limit = {
-						4779 = {
-							development = 60
-						}
+						4779 = { development = 60 }
 					}
 					4779 = {
 						change_trade_goods = coal
@@ -4262,56 +4198,56 @@ ab_russia_third_rome = {
 				name = byzantium_umayyad
 				duration = 9125
 			}
-			iberia_region  = {
+			iberia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			maghreb_region  = {
+			maghreb_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			switzerland_area  = {
+			switzerland_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			romandie_area  = {
+			romandie_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			provence_area  = {
+			provence_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			savoy_dauphine_area  = {
+			savoy_dauphine_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			west_burgundy_area  = {
+			west_burgundy_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			bourgogne_area  = {
+			bourgogne_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -4380,14 +4316,14 @@ ab_russia_third_rome = {
 		}
 		
 		trigger = {
-			owns = 384
-			owns = 385
+			384 = { country_or_non_sovereign_subject_holds = ROOT }
+			385 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
 			add_power_projection_mission = { amount = 25 }
 			country_event = { id = MEE_Byzantine_Events.9 }
-			arabia_region  = {
+			arabia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -4497,9 +4433,7 @@ ab_russia_third_rome = {
 			hidden_effect = {
 				if = {
 					limit = {
-						NOT = {
-							hre_size = 1
-						}
+						NOT = { hre_size = 1 }
 					}
 					add_country_modifier = {
 						name = byzantium_bane
@@ -4623,13 +4557,22 @@ ab_russia_third_rome = {
 		
 		provinces_to_highlight = {
 			OR = {
-				region = scandinavia_region
-				region = british_isles_region
-				region = wendia_region
-				region = poland_region
-				region = baltic_region
+				AND = {
+					OR = {
+						region = scandinavia_region
+						region = british_isles_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					OR = {
+						region = wendia_region
+						region = poland_region
+						region = baltic_region
+					}
+					NOT = { owned_by = ROOT }
+				}
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -4677,10 +4620,40 @@ ab_russia_fourth_rome = {
 		required_missions = { } 
 		position = 20
 
-		trigger = {  
-		    NOT = {
-				num_of_loans = 1
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 151
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				}
+				AND = {
+					province_id = 358
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+				AND = {
+					province_id = 377
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
 			}
+		}
+		
+		trigger = {  
+		    NOT = { num_of_loans = 1 }
 			151 = {
 				trade_share = {
 					country = ROOT
@@ -4740,28 +4713,28 @@ ab_russia_fourth_rome = {
 					duration = -1
 				}
 			}
-			pyrenees_area  = {
+			pyrenees_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			guyenne_area  = {
+			guyenne_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			languedoc_area  = {
+			languedoc_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			massif_central_area  = {
+			massif_central_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -4817,7 +4790,7 @@ ab_russia_fourth_rome = {
 				name = byz_punics_defeated
 				duration = 7300
 			}
-			north_america_superregion  = {
+			north_america_superregion = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -4826,9 +4799,7 @@ ab_russia_fourth_rome = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						exists = CTG
-					}
+					NOT = { exists = CTG }
 				}
 				custom_tooltip = BYZ_PUNICS_GONE
 			}
@@ -4838,23 +4809,15 @@ ab_russia_fourth_rome = {
 			hidden_effect = {
 				if = {
 					limit = {
-						NOT = {
-							exists = CTG
-						}
+						NOT = { exists = CTG }
 					}
 					every_province = {
-						limit = {
-							culture = punic
-						}
+						limit = { culture = punic }
 						add_devastation = 100
 						add_base_tax = -10
 						add_base_production = -10
 						add_base_manpower = -10
 						change_culture = owner
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
 					}
 				}
 			}
@@ -4876,75 +4839,61 @@ ab_russia_fourth_rome = {
 				province_id = 358
 				province_id = 2313
 			}
+			OR = {
+				province_is_diocese_land_trigger = no
+				NOT = { development = 22 }
+				has_tax_building_trigger = no
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+			}
 		}
 
 		trigger = {
 		    146 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDC
-				}
-				development = 20
+				province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			148 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDC
-				}
-				development = 20
+			    province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			145 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDC
-				}
-				development = 20
+				province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			317 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDC
-				}
-				development = 20
+				province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			318 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDC
-				}
-				development = 20
+			    province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			358 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDQ
-				}
-				development = 30
+				province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
 			}
 			2313 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDX
-				}
-				development = 30
+			    province_is_diocese_land_trigger = yes
+				development = 22
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -4960,107 +4909,33 @@ ab_russia_fourth_rome = {
 				}
 			}
 			hidden_effect = {
-				146 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 146
+							province_id = 148
+							province_id = 145
+							province_id = 317
+							province_id = 318
+							province_id = 358
+							province_id = 2313
+						}
 					}
-				}
-				148 = {
-					add_province_modifier = {
+					add_permanent_province_modifier = {
 						name = byz_city
-						duration = -1
-					}
-				}
-				145 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
 					}
 					if = {
 						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-				}
-				317 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				318 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-				}
-				358 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = byzantine }
-							ROOT = { tag = BYZ }
-						}
-						add_devastation = 15 
-						change_culture = greek 
-						add_province_modifier = {
-							name = byz_forced_hellenized
-							duration = 7300 
-						}
-					}
-					else_if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = greco_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				2313 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
+							NOT = { province_has_center_of_trade_of_level = 1 }
 						}
 						center_of_trade = 1
 					}
 					if = {
 						limit = {
-							NOT = { culture_group = byzantine }
-							ROOT = { tag = BYZ }
-						}
-						add_devastation = 15 
-						change_culture = greek 
-						add_province_modifier = {
-							name = byz_forced_hellenized
-							duration = 7300 
-						}
-					}
-					else_if = {
-						limit = {
 							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
 						}
-						change_culture = greco_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
+						province_event = {
+							id = ab_byzantium.108
 						}
 					}
 				}
@@ -5084,15 +4959,21 @@ ab_russia_fourth_rome = {
 				province_id = 134
 				province_id = 12
 			}
+			OR = {
+				province_is_diocese_land_trigger = no
+				NOT = { development = 32 }
+				has_tax_building_trigger = no
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+				has_courthouse_building_trigger = no
+				NOT = { has_building = university }
+			}
 		}
 
 		trigger = {
 		    118 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD1
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5100,11 +4981,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			225 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RD2
-				}
-				development = 35
+			    province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5112,11 +4990,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			341 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD3
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5124,11 +4999,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			183 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD4
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5136,11 +5008,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			236 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD5
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5148,11 +5017,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			1876 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD6
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5160,11 +5026,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			134 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD7
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5172,11 +5035,8 @@ ab_russia_fourth_rome = {
 				has_building = university
 			}
 			12 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RD8
-				}
-				development = 35
+				province_is_diocese_land_trigger = yes
+				development = 32
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5195,163 +5055,34 @@ ab_russia_fourth_rome = {
 				}
 			}
 			hidden_effect = {
-				118 = {
-					add_province_modifier = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 118
+							province_id = 225
+							province_id = 341
+							province_id = 183
+							province_id = 236
+							province_id = 1876
+							province_id = 134
+							province_id = 12
+						}
+					}
+					add_permanent_province_modifier = {
 						name = byz_city
-						duration = -1
 					}
 					if = {
 						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = roman_new 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				225 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = hispano_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				341 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = afro_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				183 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
+							NOT = { province_has_center_of_trade_of_level = 1 }
 						}
 						center_of_trade = 1
 					}
 					if = {
 						limit = {
 							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
 						}
-						change_culture = gallo_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				236 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_british 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				1876 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_germanic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				134 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_germanic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				12 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { 
-								province_has_center_of_trade_of_level = 1 
-							}
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = romano_nordic 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
+						province_event = {
+							id = ab_byzantium.108
 						}
 					}
 				}
@@ -5374,12 +5105,13 @@ ab_russia_fifth_rome = {
 	ab_russia_industry = {
 		icon = mission_rb_central_belt_coal_mining
 		position = 20
-		required_missions = { } 
+		required_missions = { }
+
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = { 
-				has_manufactory_trigger = yes 
-				has_production_building_trigger = yes
+			OR = { 
+				has_manufactory_trigger = no 
+				has_production_building_trigger = no
 			}
 		}
 
@@ -5403,8 +5135,10 @@ ab_russia_fifth_rome = {
 		icon = mission_pol_develop_countryside
 		position = 21
 		required_missions = { ab_russia_money ab_russia_industry }
+
 		provinces_to_highlight = {
 			owned_by = ROOT
+			has_road_building_trigger = no
 		}
 
 		trigger = {
@@ -5426,8 +5160,19 @@ ab_russia_fifth_rome = {
 		icon = mission_romanwonders
 		position = 22
 		required_missions = { ab_russia_roads }
+
 		provinces_to_highlight = {
-			owned_by = ROOT
+			province_is_diocese_land_trigger = yes
+			has_great_project = {
+				type = any
+				tier = 0
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
 		}
 
 		trigger = {
@@ -5451,7 +5196,12 @@ ab_russia_fifth_rome = {
 		icon = mission_look_west
 		position = 24
 		required_missions = { ab_russia_restored_rome }
-		
+				
+		provinces_to_highlight = {
+			owned_by = ROOT
+			is_colony = yes
+		}
+
 		trigger = {
 			num_of_colonies = 3
 		}
@@ -5497,14 +5247,14 @@ ab_russia_fifth_rome = {
 				name = byz_america_base
 				duration = 10950
 			}
-			northeast_america_region  = {
+			northeast_america_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			southeast_america_region  = {
+			southeast_america_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -5518,6 +5268,12 @@ ab_russia_fifth_rome = {
 		icon = mission_sail_to_the_east_indies
 		position = 26
 		required_missions = { ab_russia_newworld_base }
+				
+		provinces_to_highlight = {
+			owner_is_colonial_nation = yes
+			country_or_non_sovereign_subject_holds = ROOT
+			has_discovered = ROOT
+		}
 		
 		trigger = {
 			calc_true_if = {
@@ -5553,10 +5309,24 @@ ab_russia_first_persian = {
 
 		provinces_to_highlight = {
 			OR = {
+				area = al_jazira_area
+				area = iraq_arabi_area
+				area = basra_area
 				region = persia_region
 				region = khorasan_region
+				AND = {
+					region = caucasia_region
+					NOT = {
+						OR = {
+							area = circassia_area
+							area = dagestan_area
+						}
+					}
+					ROM = { has_country_flag = rom_caucasia_isof_persia }
+				}
 			}
-			country_or_non_sovereign_subject_holds = ROOT
+			province_is_diocese_land_trigger = yes
+			NOT = { culture = perso_roman }
 		}
 
 		trigger = {
@@ -5616,7 +5386,7 @@ ab_russia_second_persian = {
 		trigger = {
 			khorasan_region = {
 				type = all
-				country_or_subject_holds = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 
@@ -5629,42 +5399,42 @@ ab_russia_second_persian = {
 				culture = perso_roman
 				cost_multiplier = 0.75
 			}
-			northern_sindh_area  = {
+			northern_sindh_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			sindh_area  = {
+			sindh_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			multan_area  = {
+			multan_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			lahore_area  = {
+			lahore_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			sind_sagar_area  = {
+			sind_sagar_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			kashmir_area  = {
+			kashmir_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -5688,6 +5458,7 @@ ab_russia_third_persian = {
 
 	ab_russia_persia = {
 		icon = mission_iran
+		required_missions = { }
 		position = 29
 
 		provinces_to_highlight = {
@@ -5719,14 +5490,14 @@ ab_russia_third_persian = {
 
 		provinces_to_highlight = {
 			region = central_asia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = { owned_by = ROOT }
 		}
 
 		trigger = {
 			num_of_mercenaries = 100
 			central_asia_region = {
 				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
+				owned_by = ROOT
 			}
 		}
 
@@ -5819,7 +5590,7 @@ ab_russia_third_persian = {
 
 		provinces_to_highlight = {
 			superregion = india_superregion
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_is_diocese_land_trigger = no
 		}
 
 		trigger = {
@@ -5843,9 +5614,7 @@ ab_russia_third_persian = {
 				add_permanent_claim = ROOT
 			}
 			if = {
-				limit = {
-					has_country_modifier = byz_invade_india
-				}
+				limit = { has_country_modifier = byz_invade_india }
 				custom_tooltip = BYZ_SPEEDRUN_INDIA
 			}
 			else = {
@@ -5853,9 +5622,7 @@ ab_russia_third_persian = {
 			}
 			hidden_effect = {
 				if = {
-					limit = {
-						has_country_modifier = byz_invade_india
-					}
+					limit = { has_country_modifier = byz_invade_india }
 					set_country_flag = byz_faster_romanization_india
 				}
 			}
@@ -5948,15 +5715,22 @@ ab_russia_fifth_persian = {
 				province_id = 445
 				province_id = 451
 			}
+			OR = {
+				province_is_diocese_land_trigger = no
+				NOT = { development = 42 }
+				has_tax_building_trigger = no
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+				has_courthouse_building_trigger = no
+				has_manufactory_trigger = no
+				NOT = { has_building = university }
+			}
 		}
 
 		trigger = {
 		    416 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 40
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5965,11 +5739,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			428 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 40
+			    province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5978,11 +5749,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			429 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 40
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -5991,11 +5759,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			2218 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 50
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6004,11 +5769,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			431 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 40
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6017,11 +5779,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			4341 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDZ
-				}
-				development = 40
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6030,11 +5789,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			445 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDV
-				}
-				development = 50
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6043,11 +5799,8 @@ ab_russia_fifth_persian = {
 				has_building = university
 			}
 			451 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDV
-				}
-				development = 40
+				province_is_diocese_land_trigger = yes
+				development = 42
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6066,139 +5819,34 @@ ab_russia_fifth_persian = {
 				}
 			}
 			hidden_effect = {
-				416 = {
-					add_province_modifier = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 416
+							province_id = 428
+							province_id = 429
+							province_id = 2218
+							province_id = 431
+							province_id = 4341
+							province_id = 445
+							province_id = 451
+						}
+					}
+					add_permanent_province_modifier = {
 						name = byz_city
-						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
 					}
 					if = {
 						limit = {
 							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
 						}
-						change_culture = perso_roman
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				428 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				429 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				2218 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				431 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				4341 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				445 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				451 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = perso_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
+						province_event = {
+							id = ab_byzantium.108
 						}
 					}
 				}
@@ -6244,21 +5892,21 @@ ab_russia_second_group_chinese = {
 				culture = tibeto_roman
 				cost_multiplier = 0.25
 			}
-			xinan_region  = {
+			xinan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			north_china_region  = {
+			north_china_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			mongolia_region  = {
+			mongolia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -6292,13 +5940,13 @@ ab_russia_second_group_chinese = {
 
 		provinces_to_highlight = {
 			region = mongolia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = { owned_by = ROOT }
 		}
 
 		trigger = {
 			mongolia_region = {
 				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+				owned_by = ROOT
 			}
 		}
 
@@ -6307,21 +5955,21 @@ ab_russia_second_group_chinese = {
 				name = china_integrate_mongol
 				duration = -1
 			}
-			liaoning_area  = {
+			liaoning_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			korea_region  = {
+			korea_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			japan_region  = {
+			japan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -6338,16 +5986,12 @@ ab_russia_second_group_chinese = {
 
 		provinces_to_highlight = {
 			superregion = far_east_superregion
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_is_diocese_land_trigger = no
 		}
 
 		trigger = {
-			735 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			1020 = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			735 = { country_or_non_sovereign_subject_holds = ROOT }
+			1020 = { country_or_non_sovereign_subject_holds = ROOT }
 			liaoning_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT 
@@ -6394,7 +6038,7 @@ ab_russia_third_group_chinese = {
 
 		provinces_to_highlight = {
 			superregion = china_superregion
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_is_diocese_land_trigger = no
 		}
 
 		trigger = {
@@ -6472,23 +6116,31 @@ ab_russia_third_group_chinese = {
 		provinces_to_highlight = {
 		    OR = {
 				province_id = 1816
-			    province_id = 667
-		      	province_id = 1821
-		      	province_id = 679
+				province_id = 667
+		    	province_id = 1821
+		    	province_id = 679
 				province_id = 700
 				province_id = 672
 				province_id = 682
 				province_id = 684
 			}
+			OR = {
+				province_is_diocese_land_trigger = no
+				NOT = { development = 48 }
+				has_tax_building_trigger = no
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+				has_courthouse_building_trigger = no
+				has_manufactory_trigger = no
+				has_road_building_trigger = no
+				NOT = { has_building = university }
+			}
 		}
 
 		trigger = {
 		    1816 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDD
-				}
-				development = 55
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6498,11 +6150,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			667 = {
-			    OR = {
-					owned_by = ROOT 
-					owned_by = RDF
-				}
-				development = 55
+			    province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6512,11 +6161,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			1821 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDF
-				}
-				development = 55
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6526,11 +6172,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			679 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDD
-				}
-				development = 45
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6540,11 +6183,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			700 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDD
-				}
-				development = 45
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6554,11 +6194,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			672 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDF
-				}
-				development = 45
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6568,11 +6205,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			682 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDF
-				}
-				development = 45
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6582,11 +6216,8 @@ ab_russia_third_group_chinese = {
 				has_road_building_trigger = yes
 			}
 			684 = {
-				OR = {
-					owned_by = ROOT 
-					owned_by = RDF
-				}
-				development = 45
+				province_is_diocese_land_trigger = yes
+				development = 48
 				has_tax_building_trigger = yes
 				has_production_building_trigger = yes
 				has_trade_building_trigger = yes
@@ -6606,139 +6237,34 @@ ab_russia_third_group_chinese = {
 				}
 			}
 			hidden_effect = {
-				1816 = {
-					add_province_modifier = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 1816
+							province_id = 667
+							province_id = 1821
+							province_id = 679
+							province_id = 700
+							province_id = 672
+							province_id = 682
+							province_id = 684
+						}
+					}
+					add_permanent_province_modifier = {
 						name = byz_city
-						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
 					}
 					if = {
 						limit = {
 							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
 						}
-						change_culture = sino_roman
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				667 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				1821 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				679 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				700 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				672 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				682 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
-						}
-					}
-				}
-				684 = {
-					add_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-							ROOT = { tag = ROM }
-						}
-						change_culture = sino_roman 
-						add_province_modifier = {
-							name = byz_forced_romanized
-							duration = 7300 
+						province_event = {
+							id = ab_byzantium.108
 						}
 					}
 				}
@@ -6747,13 +6273,26 @@ ab_russia_third_group_chinese = {
 	}
 
 	ab_russia_asia = {
-		icon = mission_defy_the_dragon
+		icon = mng_heavens_will
 		required_missions = { ab_russia_far_east ab_russia_east_indies } 
 		position = 38
 
 		provinces_to_highlight = {
-			continent = asia
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			OR = {
+				AND = {
+					OR = {
+						superregion = far_east_superregion
+						superregion = china_superregion
+						superregion = east_indies_superregion
+						region = oceanea_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					region = east_siberia_region
+					NOT = { owned_by = ROOT }
+				}
+			}
 		}
 
 		trigger = {
@@ -6775,7 +6314,7 @@ ab_russia_third_group_chinese = {
 			}
 			east_siberia_region = {
 				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
+				owned_by = ROOT
 			}
 		}
 
@@ -6831,7 +6370,7 @@ ab_russia_fourth_group_chinese = {
 
 		effect = {
 			country_event = { id = flavor_mch.12 }
-			xinan_region  = {
+			xinan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -6885,7 +6424,7 @@ ab_russia_fourth_group_chinese = {
 		effect = {
 			add_absolutism = 10
 			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
-			east_indies_superregion  = {
+			east_indies_superregion = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -6903,7 +6442,7 @@ ab_russia_fourth_group_chinese = {
 
 		provinces_to_highlight = {
 			superregion = east_indies_superregion
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_is_diocese_land_trigger = no
 		}
 
 		trigger = {

@@ -119,12 +119,8 @@ country_decisions = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
-				1232 = {
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				2324 = {
-					country_or_non_sovereign_subject_holds = ROOT
-				}
+				1232 = { country_or_non_sovereign_subject_holds = ROOT }
+				2324 = { country_or_non_sovereign_subject_holds = ROOT }
 			}
 			if = {
 				limit = { tag = BYZ }
@@ -335,46 +331,24 @@ country_decisions = {
 					set_heir_culture = ROOT
 					set_ruler_culture = ROOT
 				}
-				random_owned_province = {
-					limit = { area = upper_andalucia_area }
-					change_culture = hispano_roman
-				}
-				random_owned_province = {
-					limit = { area = northern_morocco_area }
-					change_culture = afro_roman
-				}
-				random_owned_province = {
-					limit = { area = barbary_coast_area }
-					change_culture = afro_roman
-				}
-				random_owned_province = {
-					limit = { area = djerba_area }
-					change_culture = afro_roman
-				}
-				random_owned_province = {
-					limit = { area = western_sicily_area }
-					change_culture = roman_new
-				}
-				random_owned_province = {
-					limit = { area = lombardy_area }
-					change_culture = roman_new
-				}
-				random_owned_province = {
-					limit = { area = emilia_romagna_area }
-					change_culture = roman_new
-				}
-				random_owned_province = {
-					limit = { area = corsica_sardinia_area }
-					change_culture = roman_new
-				}
-				random_owned_province = {
-					limit = { area = naples_area }
-					change_culture = roman_new
-				}
-				random_owned_province = {
-					limit = { area = central_italy_area }
-					change_culture = roman_new
-				}
+				for = {
+                    amount = 10
+                    effect = "
+						random_owned_province = {
+							limit = {
+								OR = {
+									region = italy_region
+									region = maghreb_region
+									region = iberia_region
+								}
+								NOT = { culture_group = roman_g }
+							}
+							province_event = {
+								id = ab_byzantium.108
+							}
+						}
+                    "
+                }
 			}
 			add_ruler_personality = augustus_personality
 			if = {
@@ -387,23 +361,17 @@ country_decisions = {
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
-					limit = {
-						is_part_of_hre = yes
-					}
+					limit = { is_part_of_hre = yes }
 					set_in_empire = no
 				}
 				118 = {
 					add_core = ROOT
-					change_culture = roman_new 
-					add_province_modifier = {
-						name = byz_forced_romanized
-						duration = 7300 
+					province_event = {
+						id = ab_byzantium.108
 					}
 				}
 				if = {
-					limit = { 
-						mission_completed = byzantium_general_staff 
-					}
+					limit = { mission_completed = byzantium_general_staff }
 					add_country_modifier = {
 						name = byz_general_staff_rome
 						duration = -1
@@ -694,10 +662,7 @@ country_decisions = {
 						add_government_reform = tsardom
 					}
 				}
-				create_subject = {
-					who = UKR
-					subject_type = personal_union
-				}
+				create_union = UKR
 			}
 			else = {
 				every_subject_country = {
@@ -710,10 +675,7 @@ country_decisions = {
 						}
 					}
 					ROOT = {
-						create_subject = {
-							who = PREV
-							subject_type = personal_union
-						}
+						create_union = PREV
 					}
 				}
 			}
@@ -730,6 +692,7 @@ country_decisions = {
 
 		potential = {
 			OR = {
+				# DELETE LATER
 				mission_completed = byzantium_finest
 				has_country_flag = unlock_decision_strategos_specialty
 			}
