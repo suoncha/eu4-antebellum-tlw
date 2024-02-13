@@ -4344,6 +4344,37 @@ province_event = {
 	}
 }
 
+#Update Favored Diocese Province
+country_event = {
+	id = ab_byzantium.109
+	title = ab_byzantium.109.t
+	desc = ab_byzantium.109.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes	
+
+	trigger = {
+		is_subject_of_type = diocese_vassal
+		has_country_modifier = byz_friend_diocese
+		any_owned_province = {
+			NOT = { has_province_modifier = byz_friend_diocese_province }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.109.a
+		every_owned_province = {
+			limit = {
+				NOT = { has_province_modifier = byz_friend_diocese_province }
+			}
+			add_province_modifier = {
+				name = byz_friend_diocese_province
+				duration = -1
+			}
+		}
+	}
+}
+
 ## CULTURAL SPHERES FLAVOR
 #New advisor
 country_event = {
