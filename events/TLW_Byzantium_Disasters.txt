@@ -1350,7 +1350,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 3
+		months = 4
 	}
 
 	immediate = {
@@ -1446,7 +1446,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 6
+		months = 8
 	}
 
 	immediate = {
@@ -1541,7 +1541,7 @@ country_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 6
+		months = 12
 	}
 
 	immediate = {
@@ -2261,7 +2261,7 @@ country_event = {
 	}
 }
 
-#Centre of Revolt Formed - Latin
+#Center of Revolt Formed - Latin
 country_event = {
 	id = ab_byzantium_disaster.39
 	title = ab_byzantium_disaster.39.t
@@ -2555,7 +2555,7 @@ country_event = {
 	}
 }
 
-#Centre of Revolt Formed - Hellenic
+#Center of Revolt Formed - Hellenic
 country_event = {
 	id = ab_byzantium_disaster.44
 	title = ab_byzantium_disaster.44.t
@@ -2881,7 +2881,7 @@ country_event = {
 	}
 }
 
-#Centre of Revolt Formed - Persic
+#Center of Revolt Formed - Persic
 country_event = {
 	id = ab_byzantium_disaster.48
 	title = ab_byzantium_disaster.48.t
@@ -3171,7 +3171,7 @@ country_event = {
 	}
 }
 
-#Centre of Revolt Formed - Sinic
+#Center of Revolt Formed - Sinic
 country_event = {
 	id = ab_byzantium_disaster.52
 	title = ab_byzantium_disaster.52.t
@@ -3681,9 +3681,15 @@ country_event = {
 			casus_belli = cb_roman_civil_war
 		}
 		offensive_war_with = event_target:dioceseLeader
-		UKR = {
-			is_subject_of_type = grand_diocese_vassal
-			is_at_war = no
+		OR = {
+			UKR = {
+				is_subject_of_type = grand_diocese_vassal
+				is_at_war = no
+			}
+			GLH = {
+				is_subject_of_type = grand_diocese_vassal
+				is_at_war = no
+			}
 		}
 		NOT = { has_country_flag = byz_rus_join_civil_war_3years }
 		NOT = { has_country_flag = byz_rus_join_civil_war_5years }
@@ -3697,60 +3703,122 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.63.a
 		trigger = {
-			UKR = {
-				owes_favors = {
-					who = ROOT
-					value = 30
+			OR = {
+				UKR = {
+					is_subject_of_type = grand_diocese_vassal
+					owes_favors = {
+						who = ROOT
+						value = 30
+					}
+				}
+				GLH = {
+					is_subject_of_type = grand_diocese_vassal
+					owes_favors = {
+						who = ROOT
+						value = 30
+					}
 				}
 			}
 		}
 		set_country_flag = byz_rus_join_civil_war_3years
 		add_years_of_income = -2.0
-		add_favors = {
-			who = UKR
-			amount = -30
-		}
 		add_corruption = 2
 		add_adm_power = -200
 		add_dip_power = -200
 		add_mil_power = -200
-		UKR = { 
-			add_years_of_income = 4.0
-			add_corruption = -2
-			add_adm_power = 200
-			add_dip_power = 200
-			add_mil_power = 200
-			join_all_offensive_wars_of = ROM 
+		if = {
+			limit = {
+				UKR = {
+					is_subject_of_type = grand_diocese_vassal
+				}
+			}
+			add_favors = {
+				who = UKR
+				amount = -30
+			}
+			UKR = { 
+				add_years_of_income = 4.0
+				add_corruption = -2
+				add_adm_power = 200
+				add_dip_power = 200
+				add_mil_power = 200
+				join_all_offensive_wars_of = ROM 
+			}
+		}
+		else = {
+			add_favors = {
+				who = GLH
+				amount = -30
+			}
+			GLH = { 
+				add_years_of_income = 4.0
+				add_corruption = -2
+				add_adm_power = 200
+				add_dip_power = 200
+				add_mil_power = 200
+				join_all_offensive_wars_of = ROM 
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.63.b
 		trigger = {
-			UKR = {
-				owes_favors = {
-					who = ROOT
-					value = 50
+			OR = {
+				UKR = {
+					is_subject_of_type = grand_diocese_vassal
+					owes_favors = {
+						who = ROOT
+						value = 50
+					}
+				}
+				GLH = {
+					is_subject_of_type = grand_diocese_vassal
+					owes_favors = {
+						who = ROOT
+						value = 50
+					}
 				}
 			}
 		}
 		set_country_flag = byz_rus_join_civil_war_5years
 		add_years_of_income = -4.0
-		add_favors = {
-			who = UKR
-			amount = -50
-		}
 		add_corruption = 4
 		add_adm_power = -400
 		add_dip_power = -400
 		add_mil_power = -400
-		UKR = { 
-			add_years_of_income = 8.0
-			add_corruption = -4
-			add_adm_power = 400
-			add_dip_power = 400
-			add_mil_power = 400
-			join_all_offensive_wars_of = ROM 
+		if = {
+			limit = {
+				UKR = {
+					is_subject_of_type = grand_diocese_vassal
+				}
+			}
+			add_favors = {
+				who = UKR
+				amount = -50
+			}
+			UKR = { 
+				add_years_of_income = 8.0
+				add_corruption = -4
+				add_adm_power = 400
+				add_dip_power = 400
+				add_mil_power = 400
+				join_all_offensive_wars_of = ROM 
+			}
+		}
+		else = {
+			add_favors = {
+				who = GLH
+				amount = -50
+			}
+			GLH = { 
+				add_years_of_income = 8.0
+				add_corruption = -4
+				add_adm_power = 400
+				add_dip_power = 400
+				add_mil_power = 400
+				join_all_offensive_wars_of = ROM 
+			}
 		}
 	}
 
@@ -3775,12 +3843,23 @@ country_event = {
 			casus_belli = cb_roman_civil_war
 		}
 		offensive_war_with = event_target:dioceseLeader
-		UKR = {
-			is_in_war = {
-				attacker_leader = ROM
-				casus_belli = cb_roman_civil_war
+		OR = {
+			UKR = {
+				is_subject_of_type = grand_diocese_vassal
+				is_in_war = {
+					attacker_leader = ROM
+					casus_belli = cb_roman_civil_war
+				}
+				offensive_war_with = event_target:dioceseLeader
 			}
-			offensive_war_with = event_target:dioceseLeader
+			GLH = {
+				is_subject_of_type = grand_diocese_vassal
+				is_in_war = {
+					attacker_leader = ROM
+					casus_belli = cb_roman_civil_war
+				}
+				offensive_war_with = event_target:dioceseLeader
+			}
 		}
 		OR = {
 			AND = {
@@ -3802,11 +3881,25 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			every_province = {
-				limit = { controlled_by = UKR }
-				change_controller = ROM
+			if = {
+				limit = {
+					UKR = {
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				every_province = {
+					limit = { controlled_by = UKR }
+					change_controller = ROM
+				}
+				UKR = { white_peace = event_target:dioceseLeader }
 			}
-			UKR = { white_peace = event_target:dioceseLeader }
+			else = {
+				every_province = {
+					limit = { controlled_by = GLH }
+					change_controller = ROM
+				}
+				GLH = { white_peace = event_target:dioceseLeader }
+			}
 		}
 	}
 
@@ -5316,10 +5409,17 @@ country_event = {
 	trigger = {
 		tag = ROM
 		has_disaster = byzantium_dragon_emperor
-		UKR = {
-			is_subject_of_type = grand_diocese_vassal
-			is_at_war = no
-			is_neighbor_of = event_target:EmperorOfChina
+		OR = {
+			UKR = {
+				is_subject_of_type = grand_diocese_vassal
+				is_at_war = no
+				is_neighbor_of = event_target:EmperorOfChina
+			}
+			GLH = {
+				is_subject_of_type = grand_diocese_vassal
+				is_at_war = no
+				is_neighbor_of = event_target:EmperorOfChina
+			}
 		}
 	}
 
@@ -5330,8 +5430,20 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.94.a
 		hidden_effect = {
-			UKR = {
-				set_country_flag = byz_chinese_war_romeside
+			if = {
+				limit = {
+					UKR = {
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				UKR = {
+					set_country_flag = byz_chinese_war_romeside
+				}
+			}
+			else = {
+				GLH = {
+					set_country_flag = byz_chinese_war_romeside
+				}
 			}
 		}
 		custom_tooltip = BYZ_CHINA_CAN_SEIZE_RUSSIA
@@ -5399,11 +5511,23 @@ country_event = {
 		}
 		if = {
 			limit = {
-				event_target:targetHorde = {
-					is_neighbor_of = UKR
-				}
-				UKR = {
-					has_country_flag = byz_chinese_war_romeside
+				OR = {
+					AND = {
+						event_target:targetHorde = {
+							is_neighbor_of = UKR
+						}
+						UKR = {
+							has_country_flag = byz_chinese_war_romeside
+						}
+					}
+					AND = {
+						event_target:targetHorde = {
+							is_neighbor_of = GLH
+						}
+						GLH = {
+							has_country_flag = byz_chinese_war_romeside
+						}
+					}
 				}
 			}
 			custom_tooltip = BYZ_HORDE_CAN_SEIZE_RUSSIA
