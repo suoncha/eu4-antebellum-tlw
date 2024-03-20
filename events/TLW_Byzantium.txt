@@ -52,7 +52,7 @@ country_event = {
 	desc = ab_byzantium.49.d 
 	picture = BYZ_COURT_eventPicture
 	
-	is_triggered_only = yes 
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium.49.a 
@@ -106,16 +106,18 @@ country_event = {
 	desc = ab_byzantium.50.d 
 	picture = BYZ_COURT_eventPicture
 	
-	is_triggered_only = yes 
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium.50.a 
 	    custom_tooltip = BYZ_HELLENIZED_BALKANS
-		replace_culture_with_effect = {
-			new_culture = Illyrian
-			old_culture_1 = bosnian
-			old_culture_2 = serbian
-			old_culture_3 = croatian
+		hidden_effect = {
+			replace_culture_with_effect = {
+				new_culture = Illyrian
+				old_culture_1 = bosnian
+				old_culture_2 = serbian
+				old_culture_3 = croatian
+			}
 		}
 		east_adriatic_coast_area = {
 			add_devastation = 15 
@@ -153,6 +155,7 @@ country_event = {
 			limit = {
 				defensive_war_with = NCI
 			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = AB_WAR_NICAEA_ALLIES
 		}
 		set_country_flag = byz_timelimit_nicaea
@@ -290,10 +293,21 @@ country_event = {
 	option = {
 		name = ab_byzantium.53.a
 		custom_tooltip = AB_WAR_BULGARIA_INFO
+		tooltip = {
+			BUL = {
+				every_owned_province = {
+					limit = {
+						is_core = BYZ
+					}
+					cede_province = BYZ
+				}
+			}
+		}
 		if = {
 			limit = {
 				defensive_war_with = NCI
 			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = AB_WAR_NICAEA_ALLIES
 		}
 		set_country_flag = byz_timelimit_bulgaria
@@ -394,17 +408,16 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.54.a
-		custom_tooltip = BYZ_TAKE_CORE_BULGARIA
+		BUL = {
+			every_owned_province = {
+				limit = {
+					is_core = BYZ
+				}
+				cede_province = BYZ
+			}
+		}
 		hidden_effect = {
 			white_peace = BUL
-			BUL = {
-				every_owned_province = {
-					limit = {
-						is_core = BYZ
-					}
-					cede_province = BYZ
-				}
-			}
 			every_owned_province = {
 				limit = {
 					is_core = BUL
@@ -466,11 +479,7 @@ province_event = {
 				region = carpathia_region
 			}
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_cities_latin
-					has_country_flag = byz_faster_romanization_latincities
-				}
+				has_country_flag = byz_faster_romanization_latincities
 			}
 		}
 		modifier = {
@@ -490,11 +499,7 @@ province_event = {
 				}
 			}
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_persosphere
-					has_country_flag = byz_faster_romanization_persia
-				}
+				has_country_flag = byz_faster_romanization_persia
 			}
 		}
 		modifier = {
@@ -508,11 +513,7 @@ province_event = {
 			factor = 0.5
 			superregion = china_superregion
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_china
-					has_country_flag = byz_faster_romanization_china
-				}
+				has_country_flag = byz_faster_romanization_china
 			}
 		}
 		modifier = {
@@ -522,11 +523,7 @@ province_event = {
 				region = indo_china_region
 			}
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_indochina
-					has_country_flag = byz_faster_romanization_indochina
-				}
+				has_country_flag = byz_faster_romanization_indochina
 			}
 		}
 		modifier = {
@@ -537,11 +534,7 @@ province_event = {
 				region = moluccas_region
 			}
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_east_indies
-					has_country_flag = byz_faster_romanization_eastindies
-				}
+				has_country_flag = byz_faster_romanization_eastindies
 			}
 		}
 		modifier = {
@@ -552,11 +545,7 @@ province_event = {
 				area = liaoning_area
 			}
 			ROM = {
-				OR = {
-					# DELETE LATER
-					mission_completed = byzantium_far_east
-					has_country_flag = byz_faster_romanization_fareast
-				}
+				has_country_flag = byz_faster_romanization_fareast
 			}
 		}
 		modifier = {
@@ -590,10 +579,6 @@ province_event = {
 		modifier = {
 			factor = 0.5
 			has_seat_in_parliament = yes
-		}
-		modifier = {
-			factor = 0.9
-			owner = { has_idea = rd_seven }
 		}
 		modifier = {
 			factor = 0.9
@@ -1053,7 +1038,6 @@ country_event = {
 	option = {
 		name = ab_byzantium.58.b
 		ai_chance = { factor = 10 }
-		custom_tooltip = ab_diocese_annex_romanians
 	}
 }
 
@@ -4376,6 +4360,59 @@ country_event = {
 				duration = -1
 			}
 		}
+	}
+}
+
+#Timed Mission Unlock - Byzantium
+country_event = {
+	id = ab_byzantium.110
+	title = ab_byzantium.110.t
+	desc = ab_byzantium.110.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.110.a
+		set_country_flag = byz_timed_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail - Byzantium
+country_event = {
+	id = ab_byzantium.111
+	title = ab_byzantium.111.t
+	desc = ab_byzantium.111.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = BYZ
+			was_tag = BYZ
+		}
+		has_country_flag = byz_timed_mission_unlocked
+		had_country_flag = {
+			flag = byz_timed_mission_unlocked
+			days = 1825
+		}
+		NOT = { mission_completed = byzantium_italian_war }
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = byz_timed_mission_unlocked
+			set_country_flag = byz_timed_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.111.a
 	}
 }
 

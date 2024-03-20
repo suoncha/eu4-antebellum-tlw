@@ -460,7 +460,19 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.7.a
 		add_prestige = 10
-		custom_tooltip = BYZ_VEN_SURRENDER		
+		tooltip = {
+			add_truce_with = BYZ
+			146 = {
+				cede_province = VEN
+				add_core = VEN
+				remove_core = BYZ
+			}
+			5152 = {
+				cede_province = VEN
+				add_core = VEN
+				remove_core = BYZ
+			}
+		}
 	}
 }
 
@@ -1168,14 +1180,13 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			every_province = {
+			every_owned_province = {
 				limit = {
 					OR = {
 						area = syria_area
 						area = aleppo_area
 						area = syrian_desert_area
 					}
-					country_or_non_sovereign_subject_holds = ROOT
 				}
 				add_core = RYB
 			}
@@ -1610,7 +1621,7 @@ country_event = {
 	desc = ab_byzantium_disaster.25.d
 	picture = PHEONIX_ASCENDANT_eventPicture
 
-	is_triggered_only = yes 
+	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium_disaster.25.a
@@ -1733,7 +1744,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.27.a
 		ai_chance = { factor = 90 }
-		set_country_flag = byz_timelimit_italians
 		event_target:ItalianLeagueLeader = {
 			add_claim = 118
 			declare_war_with_cb = {
@@ -1744,7 +1754,9 @@ country_event = {
 		}
 		custom_tooltip = BYZ_WAR_ITALIANS
 		hidden_effect = {
-			swap_non_generic_missions = yes
+			country_event = {
+				id = ab_byzantium.110
+			}
 			every_country = {
 				limit = {
 					culture_group = latin
@@ -1881,12 +1893,11 @@ country_event = {
 	desc = ab_byzantium_disaster.31.d
 	picture = PHEONIX_ASCENDANT_eventPicture
 	
-	is_triggered_only = yes 
+	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium_disaster.31.a
 		set_country_flag = byz_crisis_italians
-		clr_country_flag = byz_timelimit_italians
 		clear_global_event_target = ItalianLeagueLeader
 		custom_tooltip = BYZ_CHEAPER_ITALY_CONQUEST
 	}
@@ -1904,7 +1915,7 @@ country_event = {
 		has_disaster = byzantium_16th_crisis
 		defensive_war_with = event_target:ItalianLeagueLeader
 		had_country_flag = {
-			flag = byz_timelimit_italians
+			flag = byz_timed_mission_unlocked
 			days = 3650
 		}
 	}
@@ -1918,7 +1929,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.32.a
 		set_country_flag = byz_crisis_italians
-		clr_country_flag = byz_timelimit_italians
 		clear_global_event_target = ItalianLeagueLeader
 	}
 }
@@ -2044,7 +2054,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.34.a
 		set_country_flag = byz_crisis_italians
-		clr_country_flag = byz_timelimit_italians
 		clear_global_event_target = ItalianLeagueLeader
 	}
 }
@@ -3632,9 +3641,8 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			add_stability = -1
-			define_ruler = {
-				dynasty = event_target:dioceseLeader
-				culture = event_target:dioceseLeader
+			event_target:dioceseLeader = {
+				exile_ruler_as = { name = rom_diocese_civil_war_ruler }
 			}
 			if = {
 				limit = {
@@ -3644,6 +3652,7 @@ country_event = {
 			}
 			white_peace = event_target:dioceseLeader
 			inherit = event_target:dioceseLeader
+			set_ruler = rom_diocese_civil_war_ruler
 			every_country = {
 				limit = { has_reform = rom_former_diocese }
 				ROOT = {
@@ -5786,6 +5795,7 @@ country_event = {
 		set_country_flag = byz_chinese_war_victory
 		swap_non_generic_missions = yes
 		custom_tooltip = BYZ_REVOLT_CHINA
+		custom_tooltip = AB_EMPTY
 		tibet_region = {
 			limit = {
 				NOT = { owned_by = ROOT }

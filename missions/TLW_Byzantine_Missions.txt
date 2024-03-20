@@ -986,6 +986,7 @@ byz_slot1_third = {
 		}
 
 		trigger = {
+			tag = ROM
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 12
 				province_is_diocese_land_trigger = yes
@@ -1405,9 +1406,6 @@ byz_slot2_first = {
 			if = {
 				limit = {
 					exists = HUN
-					HUN = {
-						religion = ROOT
-					}
 				}
 				custom_tooltip = BYZ_CB_HUN
 			}
@@ -1418,9 +1416,6 @@ byz_slot2_first = {
 				if = {
 					limit = {
 						exists = HUN
-						HUN = {
-							religion = ROOT
-						}
 					}
 					add_casus_belli = {
 						type = cb_vassalize_mission
@@ -1797,13 +1792,8 @@ byz_slot2_timed1_locked1 = {
 	ai = yes
 	potential = {
 		tag = BYZ
-		NOT = {
-			is_in_war = {
-				defender_leader = ROOT
-				casus_belli = cb_italian_league_to_byz
-			}
-		}
-		NOT = { has_country_flag = byz_crisis_italians }
+		NOT = { has_country_flag = byz_timed_mission_unlocked }
+		NOT = { has_country_flag = byz_timed_mission_failed }
 	}
 	has_country_shield = yes
 
@@ -1815,13 +1805,7 @@ byz_slot2_timed1_locked1 = {
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = BYZ_TIMED
-				OR = {
-					is_in_war = {
-						defender_leader = ROOT
-						casus_belli = cb_italian_league_to_byz
-					}
-					has_country_flag = byz_crisis_italians
-				}
+				has_country_flag = crn_you_cant_get_this
 			}
 		}
 		
@@ -1837,12 +1821,11 @@ byz_slot2_timed1_unlocked1 = {
 	ai = yes
 	potential = {
 		OR = {
-			is_in_war = {
-				defender_leader = ROOT
-				casus_belli = cb_italian_league_to_byz
-			}
-			has_country_flag = byz_crisis_italians
+			tag = BYZ
+			was_tag = BYZ
 		}
+		has_country_flag = byz_timed_mission_unlocked
+		NOT = { has_country_flag = byz_timed_mission_failed }
 	}
 	has_country_shield = yes
 
@@ -1903,6 +1886,20 @@ byz_slot2_timed1_unlocked1 = {
 			}
 		}
 	}
+}
+
+byz_slot2_timed1_failed = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BYZ
+			was_tag = BYZ
+		}
+		has_country_flag = byz_timed_mission_failed
+	}
+	has_country_shield = yes
 }
 
 byz_slot2_second = {
@@ -6521,7 +6518,7 @@ byz_slot5_second = {
 					duration = -1
 				}
 			}
-            custom_tooltip = BYZ_MARINES
+            custom_tooltip = JAPAN_MARINES
 			add_country_modifier = {
 				name = byz_marines
 				duration = -1
