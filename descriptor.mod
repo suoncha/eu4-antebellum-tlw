@@ -1,4 +1,4 @@
-version="0.6"
+version="0.7"
 tags={
 	"Alternative History"
 	"Missions And Decisions"

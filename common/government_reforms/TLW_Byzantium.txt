@@ -3,22 +3,53 @@ byzengineering = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		OR = {
-			tag = BYZ
-			tag = ROM
+		has_unlocked_government_reform = {
+			government_reform = byzengineering
 		}
 	}
 
 	trigger = {
 		custom_trigger_tooltip = {
-			tooltip = AB_UNLOCK_VIA_MISSIONS
-			has_country_flag = unlock_reform_byzengineering
+			tooltip = BYZ_UNLOCK_REFORM_ENGINEERING
+			has_unlocked_government_reform = {
+				government_reform = byzengineering
+			}
 		}
 	}
 
 	modifiers = {
 		great_project_upgrade_cost = -0.15
 		great_project_upgrade_time = -0.25
+	}
+
+	effect = {
+		hidden_effect = {
+			every_province = {
+				limit = {
+					has_great_project = {
+						type = any
+						tier = 1
+					}
+					province_is_diocese_land_trigger = yes
+					NOT = { owned_by = ROM }
+				}
+				TLW_rome_monument_upgrade_effect = yes
+			}
+		}
+	}
+
+	post_removed_effect = {
+		hidden_effect = {
+			every_province = {
+				limit = {
+					has_great_project = {
+						type = any
+					}
+					province_is_diocese_land_trigger = yes
+				}
+				TLW_rome_monument_downgrade_effect = yes
+			}
+		}
 	}
 
 	custom_attributes = {
@@ -30,17 +61,16 @@ byzcaesaropapism = {
 	icon = "byz_caesaropapism"
 	allow_normal_conversion = yes
 	potential = {
-		tag = ROM
-		NOT = { was_tag = SER }
-		religion = orthodox
+		has_unlocked_government_reform = {
+			government_reform = byzcaesaropapism
+		}
 	}
 
 	trigger = {
 		custom_trigger_tooltip = {
-			tooltip = AB_UNLOCK_VIA_MISSIONS
-			OR = {
-				mission_completed = byzantium_caesaropapism
-				has_country_flag = unlock_reform_byzcaesaropapism
+			tooltip = BYZ_UNLOCK_REFORM_CAESAROPAPISM
+			has_unlocked_government_reform = {
+				government_reform = byzcaesaropapism
 			}
 		}
 		absolutism = 70
@@ -58,7 +88,7 @@ byzcaesaropapism = {
 }
 
 byzromanempire = {
-	icon = "roman_empire"
+	icon = "byz_romanempire"
 	allow_convert = no
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
@@ -92,7 +122,7 @@ byzromanempire = {
 }
 
 byzromanrepublic = {
-	icon = "roman_empire"
+	icon = "byz_romanempire"
 	allow_convert = no
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
@@ -130,81 +160,6 @@ byzromanrepublic = {
 	}
 
 	duration = 5
-}
-
-byzculturalsphere = {
-	icon = "ibecouncils"
-	allow_convert = no
-	allow_normal_conversion = no
-	lock_level_when_selected = yes
-	potential = {
-		tag = ROM
-	}
-	valid_for_nation_designer = no
-	nation_designer_cost = 0
-
-	custom_attributes = {
-		ab_has_dioceses = yes
-		locked_government_type = yes
-	}
-
-	modifiers = {
-		advisor_pool = 1
-		all_estate_loyalty_equilibrium = 0.1
-		liberty_desire_from_subject_development = -0.05
-		ignore_coring_distance = yes
-	}
-
-	factions = {
-		faction_byzlatin
-		faction_byzgreek
-		faction_byzpersian
-		faction_byzchinese
-	}
-}
-
-byzprofessionalism = {
-	icon = "byz_professionalism"
-	allow_normal_conversion = no
-	lock_level_when_selected = yes
-	potential = {
-		tag = ROM
-	}
-
-	trigger = {
-		custom_trigger_tooltip = {
-			tooltip = AB_UNLOCK_VIA_MISSIONS
-			has_country_flag = unlock_reform_byzprofessionalism
-		}
-	}
-
-	modifiers = {
-		yearly_army_professionalism = 0.01
-		leader_cost = -0.10
-	}
-
-	government_abilities = {
-		roman_professionalism_mechanic
-	}
-}
-
-byzlegio = {
-	icon = "sparapet_office"
-	allow_normal_conversion = yes
-	potential = {
-		tag = ROM
-		has_country_flag = byz_grand_army_legion
-	}
-
-	modifiers = {
-		land_morale = 0.1
-		movement_speed = 0.1
-		fire_damage_received = -0.05
-		shock_damage_received = -0.05
-		drill_gain_modifier = 0.5
-		reinforce_cost_modifier = 1.0
-		land_maintenance_modifier = 0.5
-	}
 }
 
 byzromancaliphate = {
@@ -266,5 +221,94 @@ byzromancaliphate = {
 		custom_attributes = {
 			has_harem_events = yes
 		}
+	}
+}
+
+byzculturalsphere = {
+	icon = "byz_culturalsphere"
+	allow_convert = no
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		tag = ROM
+	}
+	valid_for_nation_designer = no
+	nation_designer_cost = 0
+
+	custom_attributes = {
+		ab_has_dioceses = yes
+		locked_government_type = yes
+	}
+
+	modifiers = {
+		advisor_pool = 1
+		all_estate_loyalty_equilibrium = 0.1
+		liberty_desire_from_subject_development = -0.05
+		ignore_coring_distance = yes
+	}
+
+	factions = {
+		faction_byzlatin
+		faction_byzgreek
+		faction_byzpersian
+		faction_byzchinese
+	}
+}
+
+byzprofessionalism = {
+	icon = "byz_professionalism"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		has_unlocked_government_reform = {
+			government_reform = byzprofessionalism
+		}
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = BYZ_UNLOCK_REFORM_PROFESSIONALISM
+			has_unlocked_government_reform = {
+				government_reform = byzprofessionalism
+			}
+		}
+	}
+
+	modifiers = {
+		yearly_army_professionalism = 0.01
+		leader_cost = -0.10
+	}
+
+	government_abilities = {
+		roman_professionalism_mechanic
+	}
+}
+
+byzlegio = {
+	icon = "sparapet_office"
+	allow_normal_conversion = yes
+	potential = {
+		has_unlocked_government_reform = {
+			government_reform = byzlegio
+		}
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = BYZ_UNLOCK_REFORM_LEGIO
+			has_unlocked_government_reform = {
+				government_reform = byzlegio
+			}
+		}
+	}
+
+	modifiers = {
+		land_morale = 0.1
+		movement_speed = 0.1
+		fire_damage_received = -0.05
+		shock_damage_received = -0.05
+		drill_gain_modifier = 0.5
+		reinforce_cost_modifier = 1.0
+		land_maintenance_modifier = 0.5
 	}
 }

@@ -27,46 +27,21 @@ hagia_sophia = {
 
 	#can we build it?
 	build_trigger = {
-		custom_trigger_tooltip = {
-			tooltip = hagia_sophia_tt
-			OR = {
-				AND = {
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-					}
-					has_owner_religion = yes
-				}
-				AND = {
-					owner = {
-						OR = {
-							secondary_religion = orthodox
-							secondary_religion = coptic
-							secondary_religion = catholic
-							# AB {{{
-							secondary_religion = nestorian
-							# }}}
-							secondary_religion = sunni
-							secondary_religion = shiite
-							secondary_religion = ibadi
-						}
-					}
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-						has_owner_religion = yes
-					}
-				}
+		OR = {
+			province_is_or_accepts_religion = {
+				religion = orthodox
+			}
+			province_is_or_accepts_religion = {
+				religion = coptic
+			}
+			province_is_or_accepts_religion = {
+				religion = catholic
+			}
+			province_is_or_accepts_religion = {
+				religion = nestorian
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
 			}
 		}
 	}
@@ -92,92 +67,42 @@ hagia_sophia = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		custom_trigger_tooltip = {
-			tooltip = hagia_sophia_tt
-			OR = {
-				AND = {
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-					}
-					has_owner_religion = yes
-				}
-				AND = {
-					owner = {
-						OR = {
-							secondary_religion = orthodox
-							secondary_religion = coptic
-							secondary_religion = catholic
-							# AB {{{
-							secondary_religion = nestorian
-							# }}}
-							secondary_religion = sunni
-							secondary_religion = shiite
-							secondary_religion = ibadi
-						}
-					}
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-						has_owner_religion = yes
-					}
-				}
+		OR = {
+			province_is_or_accepts_religion = {
+				religion = orthodox
+			}
+			province_is_or_accepts_religion = {
+				religion = coptic
+			}
+			province_is_or_accepts_religion = {
+				religion = catholic
+			}
+			province_is_or_accepts_religion = {
+				religion = nestorian
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
 			}
 		}
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		custom_trigger_tooltip = {
-			tooltip = hagia_sophia_tt
-			OR = {
-				AND = {
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-					}
-					has_owner_religion = yes
-				}
-				AND = {
-					owner = {
-						OR = {
-							secondary_religion = orthodox
-							secondary_religion = coptic
-							secondary_religion = catholic
-							# AB {{{
-							secondary_religion = nestorian
-							# }}}
-							secondary_religion = sunni
-							secondary_religion = shiite
-							secondary_religion = ibadi
-						}
-					}
-					OR = {
-						religion = orthodox
-						religion = coptic
-						religion = catholic
-						# AB {{{
-						religion = nestorian
-						# }}}
-						religion_group = muslim
-						has_owner_religion = yes
-					}
-				}
+		OR = {
+			province_is_or_accepts_religion = {
+				religion = orthodox
+			}
+			province_is_or_accepts_religion = {
+				religion = coptic
+			}
+			province_is_or_accepts_religion = {
+				religion = catholic
+			}
+			province_is_or_accepts_religion = {
+				religion = nestorian
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
 			}
 		}
 	}
@@ -243,6 +168,7 @@ hagia_sophia = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -283,6 +209,7 @@ hagia_sophia = {
 					loyalty = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -323,6 +250,7 @@ hagia_sophia = {
 					loyalty = 10
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -357,31 +285,33 @@ stonehenge = {
 	#can we build it?
 	build_trigger = {
 		OR = {
-			OR = {
-				province_is_or_accepts_religion_group = {
-					religion_group = pagan
-				}
-				province_is_or_accepts_religion_group = {
-					religion_group = reformed_pagan
-				}
+			province_is_or_accepts_religion_group = {
+				religion_group = pagan
 			}
-			
+			province_is_or_accepts_religion_group = {
+				religion_group = reformed_pagan
+			}
 			AND = {
-				OR = {
-					culture = english
-					# AB [[[
-					# culture = anglois
-					culture = Anglois
-					# ]]]
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = english
+						culture = Anglois
+					}
 				}
 				province_is_or_accepts_culture = yes
 			}
 			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -405,22 +335,27 @@ stonehenge = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				OR = {
-					culture = english
-					# AB [[[
-					# culture = anglois
-					culture = Anglois
-					# ]]]
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = english
+						culture = Anglois
+					}
 				}
 				province_is_or_accepts_culture = yes
 			}
 			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
-		}	
+		}
 	}
 
 	#can our country upgrade it?
@@ -433,21 +368,26 @@ stonehenge = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				OR = {
-					culture = english
-					# AB [[[
-					# culture = anglois
-					culture = Anglois
-					# ]]]
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = english
+						culture = Anglois
+					}
 				}
 				province_is_or_accepts_culture = yes
 			}
 			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -511,6 +451,7 @@ stonehenge = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -542,6 +483,7 @@ stonehenge = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -574,6 +516,7 @@ stonehenge = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -610,24 +553,24 @@ tower_of_london = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture = normand
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				# AB {{{
-				culture = Anglois
-				# }}}
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = normand
+				culture = Anglois
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -642,46 +585,46 @@ tower_of_london = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture = normand
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				# AB {{{
-				culture = Anglois
-				# }}}
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = normand
+				culture = Anglois
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture = normand
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				# AB {{{
-				culture = Anglois
-				# }}}	
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = normand
+				culture = Anglois
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -744,6 +687,7 @@ tower_of_london = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -775,6 +719,7 @@ tower_of_london = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -806,6 +751,7 @@ tower_of_london = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1028,24 +974,26 @@ parthenon = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture = greek
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = greek
+						culture = athenian
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = athenian
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
-		}	
+		}
 	}
 
 	#what to do when it's built
@@ -1077,23 +1025,25 @@ parthenon = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture = greek
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = greek
+						culture = athenian
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = athenian
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -1107,23 +1057,25 @@ parthenon = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture = greek
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = greek
+						culture = athenian
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = athenian
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -1187,6 +1139,7 @@ parthenon = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1218,6 +1171,7 @@ parthenon = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1250,6 +1204,7 @@ parthenon = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1655,22 +1610,24 @@ petra = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture = al_suryah_arabic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				culture = bedouin_arabic
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = al_suryah_arabic
+				culture = bedouin_arabic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -1685,42 +1642,46 @@ petra = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture = al_suryah_arabic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				culture = bedouin_arabic
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = al_suryah_arabic
+				culture = bedouin_arabic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture = al_suryah_arabic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			AND = {
-				culture = bedouin_arabic
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = al_suryah_arabic
+				culture = bedouin_arabic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -1783,6 +1744,7 @@ petra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1814,6 +1776,7 @@ petra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1846,6 +1809,7 @@ petra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1970,6 +1934,7 @@ cologne_cathedral = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -2008,6 +1973,7 @@ cologne_cathedral = {
 					loyalty = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -2046,6 +2012,7 @@ cologne_cathedral = {
 					loyalty = 15
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -2079,18 +2046,21 @@ kremlin = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -2105,34 +2075,40 @@ kremlin = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -2257,6 +2233,7 @@ kremlin = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -2760,6 +2737,7 @@ himeji_castle = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -2793,6 +2771,7 @@ himeji_castle = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -2826,7 +2805,8 @@ himeji_castle = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {			
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes	
 		}
 	}
 }
@@ -2860,7 +2840,20 @@ moai = {
 
 	#can we build it?
 	build_trigger = {
-		culture = polynesian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = polynesian
+		}
 		province_is_or_accepts_culture = yes
 	}
 
@@ -2876,13 +2869,39 @@ moai = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		culture = polynesian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = polynesian
+		}
 		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		culture = polynesian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = polynesian
+		}
 		province_is_or_accepts_culture = yes
 	}
 
@@ -2947,6 +2966,7 @@ moai = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -2984,6 +3004,7 @@ moai = {
 					loyalty = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -3016,6 +3037,7 @@ moai = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -3138,6 +3160,7 @@ stpeters_cathedral = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -3175,6 +3198,7 @@ stpeters_cathedral = {
 					loyalty = 15
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -3213,6 +3237,7 @@ stpeters_cathedral = {
 					loyalty = 20
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -3844,6 +3869,7 @@ notre_dame_cathedral = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -3876,6 +3902,7 @@ notre_dame_cathedral = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -3909,6 +3936,7 @@ notre_dame_cathedral = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -4128,18 +4156,21 @@ the_great_wall_of_china = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -4154,34 +4185,40 @@ the_great_wall_of_china = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -4276,6 +4313,7 @@ the_great_wall_of_china = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -4308,6 +4346,7 @@ the_great_wall_of_china = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -4431,6 +4470,7 @@ ambras_castle = {
 					loyalty = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -4469,6 +4509,7 @@ ambras_castle = {
 					loyalty = 10
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -4507,6 +4548,7 @@ ambras_castle = {
 					loyalty = 15
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -4727,21 +4769,19 @@ taj_mahal = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = muslim
@@ -4765,21 +4805,19 @@ taj_mahal = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = muslim
@@ -4793,21 +4831,19 @@ taj_mahal = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = muslim
@@ -4877,6 +4913,7 @@ taj_mahal = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -4909,6 +4946,7 @@ taj_mahal = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -4941,7 +4979,8 @@ taj_mahal = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -5058,6 +5097,7 @@ alhambra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5089,6 +5129,7 @@ alhambra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5120,7 +5161,8 @@ alhambra = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -5237,6 +5279,7 @@ the_grand_palace = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5268,6 +5311,7 @@ the_grand_palace = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5299,7 +5343,8 @@ the_grand_palace = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -5597,6 +5642,7 @@ ait_benhaddou = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5628,6 +5674,7 @@ ait_benhaddou = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5659,7 +5706,8 @@ ait_benhaddou = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -5785,6 +5833,7 @@ registan_square = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5816,6 +5865,7 @@ registan_square = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -5846,7 +5896,8 @@ registan_square = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -5883,21 +5934,19 @@ golden_temple = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -5921,21 +5970,19 @@ golden_temple = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -5949,21 +5996,19 @@ golden_temple = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -6311,17 +6356,24 @@ borobudur_temple = {
 	build_trigger = {
 		OR = {
 			AND = {
-				culture_group = malay
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = malay
+				}
 				province_is_or_accepts_culture = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 			province_is_buddhist_or_accepts_buddhism = yes
-		}	
+		}
 	}
 
 	#what to do when it's built
@@ -6338,15 +6390,22 @@ borobudur_temple = {
 	can_use_modifiers_trigger = {
 		OR = {
 			AND = {
-				culture_group = malay
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = malay
+				}
 				province_is_or_accepts_culture = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
 	}
@@ -6355,15 +6414,22 @@ borobudur_temple = {
 	can_upgrade_trigger = {
 		OR = {
 			AND = {
-				culture_group = malay
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = malay
+				}
 				province_is_or_accepts_culture = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
 	}
@@ -6428,6 +6494,7 @@ borobudur_temple = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -6459,6 +6526,7 @@ borobudur_temple = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -6490,7 +6558,8 @@ borobudur_temple = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -6840,6 +6909,7 @@ murud_janjira = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -6871,6 +6941,7 @@ murud_janjira = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -6902,7 +6973,8 @@ murud_janjira = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -7204,6 +7276,7 @@ kanbawzathadi_palace = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -7235,6 +7308,7 @@ kanbawzathadi_palace = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -7265,7 +7339,8 @@ kanbawzathadi_palace = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -7307,19 +7382,22 @@ pyramid_of_cheops = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture_group = turko_semitic
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = turko_semitic
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -7343,19 +7421,22 @@ pyramid_of_cheops = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture_group = turko_semitic
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = turko_semitic
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -7369,19 +7450,22 @@ pyramid_of_cheops = {
 				religion_group = reformed_pagan
 			}
 			AND = {
-				culture_group = turko_semitic
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture_group = turko_semitic
+				}
 				province_is_or_accepts_culture = yes
 			}
-			AND = {
-				culture = roman
-				province_is_or_accepts_culture = yes
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
 		}
 	}
 
@@ -7446,6 +7530,7 @@ pyramid_of_cheops = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -7477,6 +7562,7 @@ pyramid_of_cheops = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -7508,7 +7594,8 @@ pyramid_of_cheops = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -8162,6 +8249,7 @@ fire_temple_of_ateshgah = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8193,6 +8281,7 @@ fire_temple_of_ateshgah = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8224,7 +8313,8 @@ fire_temple_of_ateshgah = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -8426,6 +8516,7 @@ kiev_pechersk_lavra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8458,6 +8549,7 @@ kiev_pechersk_lavra = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8497,6 +8589,7 @@ kiev_pechersk_lavra = {
 					loyalty = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -8809,6 +8902,7 @@ belem_tower = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8841,6 +8935,7 @@ belem_tower = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -8873,6 +8968,7 @@ belem_tower = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -8906,18 +9002,21 @@ sankin_kotai_palaces = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -8932,34 +9031,40 @@ sankin_kotai_palaces = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -9023,6 +9128,7 @@ sankin_kotai_palaces = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9054,6 +9160,7 @@ sankin_kotai_palaces = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9085,7 +9192,8 @@ sankin_kotai_palaces = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -9203,6 +9311,7 @@ mausoleum_at_halicarnassus = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9234,6 +9343,7 @@ mausoleum_at_halicarnassus = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9264,7 +9374,8 @@ mausoleum_at_halicarnassus = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -9388,6 +9499,7 @@ heddal_stave_church = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9420,6 +9532,7 @@ heddal_stave_church = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9451,7 +9564,8 @@ heddal_stave_church = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -9485,18 +9599,21 @@ versailles = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = french
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = french
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -9511,34 +9628,40 @@ versailles = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = french
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = french
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = french
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = french
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -9604,6 +9727,7 @@ versailles = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9637,6 +9761,7 @@ versailles = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9669,7 +9794,8 @@ versailles = {
 		}
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {	
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -9703,18 +9829,21 @@ el_escorial = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = iberian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = iberian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -9729,34 +9858,40 @@ el_escorial = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = iberian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = iberian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = iberian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = iberian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -9821,6 +9956,7 @@ el_escorial = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9853,6 +9989,7 @@ el_escorial = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -9885,6 +10022,7 @@ el_escorial = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -10257,6 +10395,7 @@ kaaba = {
 		
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -10313,6 +10452,7 @@ kaaba = {
 		#}
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -10370,6 +10510,7 @@ kaaba = {
 		
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -10540,6 +10681,7 @@ holy_city_jerusalem = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -10574,6 +10716,7 @@ holy_city_jerusalem = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -10609,6 +10752,7 @@ holy_city_jerusalem = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11054,6 +11198,7 @@ baiturrahman_grand_mosque = {
 			church_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11075,6 +11220,7 @@ baiturrahman_grand_mosque = {
 			church_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11096,6 +11242,7 @@ baiturrahman_grand_mosque = {
 			church_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11161,6 +11308,7 @@ bam_citadel = {
 			caravan_power = 0.1			
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11181,6 +11329,7 @@ bam_citadel = {
 			merchants = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11201,6 +11350,7 @@ bam_citadel = {
 			merchants = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11216,43 +11366,48 @@ bara_katra = {
 	type = monument
 
 	build_trigger = {
-		# AB {{{
+		# AB [[[
 		OR = {
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
+			}
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			AND = {
-				province_is_or_accepts_religion_group = {
-					religion_group = muslim
-				}
-				OR = {
-					culture_group = eastern_aryan
-					culture_group = hindusthani
-				}
 				# TLW [[[
-				AND = {
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
 					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
 				}
 				# ]]]
+				else = {
+					OR = {
+						culture_group = eastern_aryan
+						culture_group = hindusthani
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
 		}
-		# }}}
+		# ]]]
 	}
 
 	on_built = {
@@ -11262,83 +11417,93 @@ bara_katra = {
 	}
 
 	can_use_modifiers_trigger = {
-		# AB {{{
+		# AB [[[
 		OR = {
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
+			}
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			AND = {
-				province_is_or_accepts_religion_group = {
-					religion_group = muslim
-				}
-				OR = {
-					culture_group = eastern_aryan
-					culture_group = hindusthani
-				}
 				# TLW [[[
-				AND = {
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
 					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
 				}
 				# ]]]
+				else = {
+					OR = {
+						culture_group = eastern_aryan
+						culture_group = hindusthani
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
 		}
-		# }}}
+		# ]]]
 	}
 
 	can_upgrade_trigger = {
-		# AB {{{
+		# AB [[[
 		OR = {
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
+			}
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			AND = {
-				province_is_or_accepts_religion_group = {
-					religion_group = muslim
-				}
-				OR = {
-					culture_group = eastern_aryan
-					culture_group = hindusthani
-				}
 				# TLW [[[
-				AND = {
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
 					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
 				}
 				# ]]]
+				else = {
+					OR = {
+						culture_group = eastern_aryan
+						culture_group = hindusthani
+					}
+				}
 				province_is_or_accepts_culture = yes
 			}
 		}
-		# }}}
+		# ]]]
 	}
 
 	keep_trigger = {
@@ -11379,6 +11544,7 @@ bara_katra = {
 			jains_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11400,6 +11566,7 @@ bara_katra = {
 			jains_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11422,6 +11589,7 @@ bara_katra = {
 			jains_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11446,25 +11614,25 @@ bran_castle = {
 					NOT = { has_country_flag = teu_can_utilize_bran_castle }
 				}
 			}
-			# AB {{{
-			# We also have a romanian culture group
-			OR = {
-				AND = {
-					OR = {
-						culture = slavichungarian
-						culture_group = carpathian
-						culture_group = romanian_culture_group
+			# TLW [[[
+			if = {
+				limit = {
+					ROM = {
+						has_reform = byzengineering
 					}
-					# }}}
-					province_is_or_accepts_culture = yes
+					province_is_diocese_land_trigger = yes
 				}
-				# TLW [[[
-				AND = {
-					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
-				}
-				# ]]]
+				culture_group = roman_g
 			}
+			# ]]]
+			else = {
+				OR = {
+					culture = slavichungarian
+					culture_group = carpathian
+					culture_group = romanian_culture_group
+				}
+			}
+			province_is_or_accepts_culture = yes
 		}
 	}
 
@@ -11481,25 +11649,25 @@ bran_castle = {
 					NOT = { has_country_flag = teu_can_utilize_bran_castle }
 				}
 			}
-			# AB {{{
-			# We also have a romanian culture group
-			OR = {
-				AND = {
-					OR = {
-						culture = slavichungarian
-						culture_group = carpathian
-						culture_group = romanian_culture_group
+			# TLW [[[
+			if = {
+				limit = {
+					ROM = {
+						has_reform = byzengineering
 					}
-					# }}}
-					province_is_or_accepts_culture = yes
+					province_is_diocese_land_trigger = yes
 				}
-				# TLW [[[
-				AND = {
-					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
-				}
-				# ]]]
+				culture_group = roman_g
 			}
+			# ]]]
+			else = {
+				OR = {
+					culture = slavichungarian
+					culture_group = carpathian
+					culture_group = romanian_culture_group
+				}
+			}
+			province_is_or_accepts_culture = yes
 		}
 	}
 
@@ -11510,25 +11678,25 @@ bran_castle = {
 					NOT = { has_country_flag = teu_can_utilize_bran_castle }
 				}
 			}
-			# AB {{{
-			# We also have a romanian culture group
-			OR = {
-				AND = {
-					OR = {
-						culture = slavichungarian
-						culture_group = carpathian
-						culture_group = romanian_culture_group
+			# TLW [[[
+			if = {
+				limit = {
+					ROM = {
+						has_reform = byzengineering
 					}
-					# }}}
-					province_is_or_accepts_culture = yes
+					province_is_diocese_land_trigger = yes
 				}
-				# TLW [[[
-				AND = {
-					culture_group = roman_g
-					ROM = { has_reform = byzengineering }
-				}
-				# ]]]
+				culture_group = roman_g
 			}
+			# ]]]
+			else = {
+				OR = {
+					culture = slavichungarian
+					culture_group = carpathian
+					culture_group = romanian_culture_group
+				}
+			}
+			province_is_or_accepts_culture = yes
 		}
 	}
 
@@ -11569,6 +11737,7 @@ bran_castle = {
 			global_garrison_growth = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11589,6 +11758,7 @@ bran_castle = {
 			global_garrison_growth = 0.2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11609,6 +11779,7 @@ bran_castle = {
 			global_garrison_growth = 0.3
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11677,6 +11848,7 @@ brandenburg_gate = {
 			prestige_from_land = 0.5	
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11700,6 +11872,7 @@ brandenburg_gate = {
 			monthly_prussian_militarized_society_3 = 0.02
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11723,6 +11896,7 @@ brandenburg_gate = {
 			monthly_prussian_militarized_society_3 = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -11787,6 +11961,7 @@ buda_castle = {
 			global_institution_spread = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11806,6 +11981,7 @@ buda_castle = {
 			embracement_cost = -0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -11826,6 +12002,7 @@ buda_castle = {
 			idea_cost = -0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -12230,6 +12407,7 @@ doges_palace = {
 			republican_tradition = 0.1 
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -12250,6 +12428,7 @@ doges_palace = {
 			prestige = 0.5
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -12270,6 +12449,7 @@ doges_palace = {
 			prestige = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -12349,6 +12529,7 @@ duomo_milano = {
 			church_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -12372,7 +12553,8 @@ duomo_milano = {
 			global_religious_conversion_resistance = 0.30
 			church_loyalty_modifier = 0.1
 		}
-		on_upgraded = {			
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes		
 		}
 	}
 
@@ -12396,7 +12578,8 @@ duomo_milano = {
 			global_religious_conversion_resistance = 0.5
 			church_loyalty_modifier = 0.15
 		}
-		on_upgraded = {			
+		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -12412,22 +12595,25 @@ dutch_polders = {
 	type = monument
 
 	build_trigger = {
-		OR = {
-			AND = {
-				OR = {
-					culture = dutch
-					culture = flemish
-					culture = frisian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = dutch
+				culture = flemish
+				culture = frisian
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	on_built = {
@@ -12437,41 +12623,47 @@ dutch_polders = {
 	}
 
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				OR = {
-					culture = dutch
-					culture = flemish
-					culture = frisian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = dutch
+				culture = flemish
+				culture = frisian
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				OR = {
-					culture = dutch
-					culture = flemish
-					culture = frisian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = dutch
+				culture = flemish
+				culture = frisian
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	keep_trigger = {
@@ -12512,6 +12704,7 @@ dutch_polders = {
 			burghers_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -12533,6 +12726,7 @@ dutch_polders = {
 			burghers_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -12554,6 +12748,7 @@ dutch_polders = {
 			burghers_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -12572,25 +12767,22 @@ ellora_caves = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -12607,25 +12799,22 @@ ellora_caves = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -12636,25 +12825,22 @@ ellora_caves = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -12757,9 +12943,8 @@ erdene_zuu = {
 
 	build_trigger = {
 		OR = {
-			AND = {
+			province_is_or_accepts_religion = {
 				religion = tengri_pagan_reformed
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 			owner = { mission_completed = mgs_capital }
@@ -12774,9 +12959,8 @@ erdene_zuu = {
 
 	can_use_modifiers_trigger = {
 		OR = {
-			AND = {
+			province_is_or_accepts_religion = {
 				religion = tengri_pagan_reformed
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 			owner = { mission_completed = mgs_capital }
@@ -12785,9 +12969,8 @@ erdene_zuu = {
 
 	can_upgrade_trigger = {
 		OR = {
-			AND = {
+			province_is_or_accepts_religion = {
 				religion = tengri_pagan_reformed
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 			owner = { mission_completed = mgs_capital }
@@ -13120,21 +13303,19 @@ gomateshwara_statue = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13153,21 +13334,19 @@ gomateshwara_statue = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13180,21 +13359,19 @@ gomateshwara_statue = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13310,21 +13487,19 @@ chola_temples = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13343,21 +13518,19 @@ chola_temples = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13370,21 +13543,19 @@ chola_temples = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -13598,6 +13769,7 @@ gyeongbok_palace = {
 			global_autonomy = -0.025
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -13620,6 +13792,7 @@ gyeongbok_palace = {
 			global_autonomy = -0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -13642,6 +13815,7 @@ gyeongbok_palace = {
 			global_autonomy = -0.1	
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -13660,25 +13834,22 @@ hampi = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -13695,25 +13866,22 @@ hampi = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -13724,25 +13892,22 @@ hampi = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
 			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
-			}
-			AND = {
+			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
-				has_owner_religion = yes
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -13904,6 +14069,7 @@ prague = {
 			tolerance_heretic = 0.25
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -13927,6 +14093,7 @@ prague = {
 			church_power_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -13950,6 +14117,7 @@ prague = {
 			church_power_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -14024,6 +14192,7 @@ holy_city_kairouan = {
 			institution_spread_from_true_faith = 0.2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14044,6 +14213,7 @@ holy_city_kairouan = {
 			institution_spread_from_true_faith = 0.33
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14064,6 +14234,7 @@ holy_city_kairouan = {
 			institution_spread_from_true_faith = 0.5
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -14197,21 +14368,19 @@ kashi_vishwanath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14230,21 +14399,19 @@ kashi_vishwanath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14257,21 +14424,19 @@ kashi_vishwanath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14374,21 +14539,19 @@ khajuraho = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14407,21 +14570,19 @@ khajuraho = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14434,21 +14595,19 @@ khajuraho = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -14732,6 +14891,7 @@ krakow_cloth_hall = {
 			global_trade_power = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14752,6 +14912,7 @@ krakow_cloth_hall = {
 			global_trade_power = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -14827,6 +14988,7 @@ maidan-e_naqsh-e_jahan = {
 			prestige_per_development_from_conversion = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14847,6 +15009,7 @@ maidan-e_naqsh-e_jahan = {
 			prestige_per_development_from_conversion = 0.2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14867,6 +15030,7 @@ maidan-e_naqsh-e_jahan = {
 			prestige_per_development_from_conversion = 0.3
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -14939,6 +15103,7 @@ malbork_castle = {
 			garrison_size = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14962,6 +15127,7 @@ malbork_castle = {
 			garrison_size = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -14985,6 +15151,7 @@ malbork_castle = {
 			garrison_size = 0.25
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -15051,6 +15218,7 @@ malta_forts = {
 			warscore_cost_vs_other_religion = -0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15072,6 +15240,7 @@ malta_forts = {
 			warscore_cost_vs_other_religion = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15093,6 +15262,7 @@ malta_forts = {
 			warscore_cost_vs_other_religion = -0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -15159,6 +15329,7 @@ mehrangarh_fort = {
 			prestige = 0.25
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15180,6 +15351,7 @@ mehrangarh_fort = {
 			advisor_cost = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15202,6 +15374,7 @@ mehrangarh_fort = {
 			special_unit_forcelimit = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -15320,18 +15493,21 @@ porcelain_tower_nanjing = {
 	type = monument
 
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	on_built = {
@@ -15341,33 +15517,39 @@ porcelain_tower_nanjing = {
 	}
 
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_asian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_asian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	keep_trigger = {
@@ -15407,6 +15589,7 @@ porcelain_tower_nanjing = {
 			global_institution_spread = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15428,6 +15611,7 @@ porcelain_tower_nanjing = {
 			embracement_cost = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15449,6 +15633,7 @@ porcelain_tower_nanjing = {
 			embracement_cost = -0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -15654,6 +15839,7 @@ rila_monasteries = {
 			church_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15674,6 +15860,7 @@ rila_monasteries = {
 			church_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15694,6 +15881,7 @@ rila_monasteries = {
 			church_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -15873,6 +16061,7 @@ royal_palace_caserta = {
 			reform_progress_growth = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15893,6 +16082,7 @@ royal_palace_caserta = {
 			governing_capacity = 50
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -15913,6 +16103,7 @@ royal_palace_caserta = {
 			governing_capacity = 100
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -16213,6 +16404,7 @@ santa_maria_del_fiore = {
 			prestige_decay = -0.005
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16233,6 +16425,7 @@ santa_maria_del_fiore = {
 			prestige_decay = -0.01
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16253,6 +16446,7 @@ santa_maria_del_fiore = {
 			prestige_decay = -0.01
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -16328,6 +16522,7 @@ spiral_minaret_samarra = {
 			church_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16348,6 +16543,7 @@ spiral_minaret_samarra = {
 			church_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16368,6 +16564,7 @@ spiral_minaret_samarra = {
 			church_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -16443,6 +16640,7 @@ sultan_ahmed_mosque = {
 			tolerance_own = 0.25
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16463,6 +16661,7 @@ sultan_ahmed_mosque = {
 			tolerance_own = 0.5
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -16483,6 +16682,7 @@ sultan_ahmed_mosque = {
 			tolerance_own = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -16501,21 +16701,19 @@ sun_temple_konarak = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -16534,21 +16732,19 @@ sun_temple_konarak = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -16561,21 +16757,19 @@ sun_temple_konarak = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_or_accepts_religion_group = {
 				religion_group = dharmic
@@ -16678,21 +16872,19 @@ swayambhunath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -16709,21 +16901,19 @@ swayambhunath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -16734,21 +16924,19 @@ swayambhunath = {
 		# AB {{{
 		OR = {
 			owner = {
-				custom_trigger_tooltip = {
-					tooltip = completed_mission_persia_architecture
-					OR = {
-						mission_completed = per_architecture
-						mission_completed = perc_architecture
-						mission_completed = perm_architecture
-						mission_completed = mper_architecture
+				OR = {
+					custom_trigger_tooltip = {
+						tooltip = completed_mission_persia_architecture
+						OR = {
+							mission_completed = per_architecture
+							mission_completed = perc_architecture
+							mission_completed = perm_architecture
+							mission_completed = mper_architecture
+						}
 					}
+					mission_completed = zun_integrate
+					has_reform = shhdharmic
 				}
-			}
-			owner = {
-				has_reform = shhdharmic
-			}
-			owner = {
-				mission_completed = zun_integrate
 			}
 			province_is_buddhist_or_accepts_buddhism = yes
 		}
@@ -17342,18 +17530,21 @@ ulm_minster_great_project = {
 	type = monument
 
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = germanic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = germanic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	on_built = {
@@ -17363,33 +17554,39 @@ ulm_minster_great_project = {
 	}
 
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = germanic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = germanic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = germanic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = germanic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	keep_trigger = {
@@ -17428,6 +17625,7 @@ ulm_minster_great_project = {
 			church_loyalty_modifier = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -17449,6 +17647,7 @@ ulm_minster_great_project = {
 			church_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -17470,6 +17669,7 @@ ulm_minster_great_project = {
 			church_loyalty_modifier = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -17617,18 +17817,21 @@ winter_palace = {
 	type = monument
 
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	on_built = {
@@ -17638,33 +17841,39 @@ winter_palace = {
 	}
 
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = east_slavic
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = east_slavic
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	keep_trigger = {
@@ -17704,6 +17913,7 @@ winter_palace = {
 			reform_progress_growth = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -17725,6 +17935,7 @@ winter_palace = {
 			reform_progress_growth = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -17746,6 +17957,7 @@ winter_palace = {
 			reform_progress_growth = 0.2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -17938,6 +18150,7 @@ falun_copper_mine = {
 			artillery_cost = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -17959,6 +18172,7 @@ falun_copper_mine = {
 			artillery_cost = -0.2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18030,6 +18244,7 @@ kronborg = {
 			owner = {
 				add_mercantilism = 1
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18053,6 +18268,7 @@ kronborg = {
 			owner = {
 				add_mercantilism = 3
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18076,6 +18292,7 @@ kronborg = {
 			owner = {
 				add_mercantilism = 6
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18142,6 +18359,7 @@ visby_city = {
 			privateer_efficiency = 0.2	
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18163,6 +18381,7 @@ visby_city = {
 			global_own_trade_power = 0.15
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18184,6 +18403,7 @@ visby_city = {
 			global_own_trade_power = 0.25
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18251,6 +18471,7 @@ trakai_castle = {
 			reform_progress_growth = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18270,6 +18491,7 @@ trakai_castle = {
 			advisor_pool = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18289,6 +18511,7 @@ trakai_castle = {
 			advisor_pool = 2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18734,6 +18957,7 @@ dujiangyan = {
 			global_monthly_devastation = -0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18861,6 +19085,7 @@ palace_of_the_popes = {
 				}
 				202 = { add_cardinal = yes }
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -18900,6 +19125,7 @@ palace_of_the_popes = {
 				}
 				202 = { add_cardinal = yes }
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -18916,41 +19142,32 @@ edinburgh_castle = {
 
 	build_trigger = {
 		OR = {
-			AND = {
-				culture = scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = highland_scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				# AB [[[
-				# british -> west_germanic
-				# anglois -> Anglois
-				OR = {
-					culture_group = west_germanic
-					culture = Anglois
-				}
-				# ]]]
-				province_is_or_accepts_culture = yes
-			}
-			# AB [[[
-			AND = {
-				culture = goidelic
-				province_is_or_accepts_culture = yes
-			}
-			# ]]]
 			custom_trigger_tooltip = {
 				tooltip = enabled_via_mission
 				owner = { has_country_flag = enable_edinburgh_castle_flag }
 			}
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = highland_scottish
+						culture = goidelic
+						culture = Anglois
+						culture_group = west_germanic
+					}
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
@@ -18962,81 +19179,63 @@ edinburgh_castle = {
 
 	can_use_modifiers_trigger = {
 		OR = {
-			AND = {
-				culture = scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = highland_scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				# AB [[[
-				# british -> west_germanic
-				# anglois -> Anglois
-				OR = {
-					culture_group = west_germanic
-					culture = Anglois
-				}
-				# ]]]
-				province_is_or_accepts_culture = yes
-			}
-			# AB [[[
-			AND = {
-				culture = goidelic
-				province_is_or_accepts_culture = yes
-			}
-			# ]]]
 			custom_trigger_tooltip = {
 				tooltip = enabled_via_mission
 				owner = { has_country_flag = enable_edinburgh_castle_flag }
 			}
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = highland_scottish
+						culture = goidelic
+						culture = Anglois
+						culture_group = west_germanic
+					}
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
 	can_upgrade_trigger = {
 		OR = {
-			AND = {
-				culture = scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				culture = highland_scottish
-				province_is_or_accepts_culture = yes
-			}
-			AND = {
-				# AB [[[
-				# british -> west_germanic
-				# anglois -> Anglois
-				OR = {
-					culture_group = west_germanic
-					culture = Anglois
-				}
-				# ]]]
-				province_is_or_accepts_culture = yes
-			}
-			# AB [[[
-			AND = {
-				culture = goidelic
-				province_is_or_accepts_culture = yes
-			}
-			# ]]]
 			custom_trigger_tooltip = {
 				tooltip = enabled_via_mission
 				owner = { has_country_flag = enable_edinburgh_castle_flag }
 			}
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					OR = {
+						culture = highland_scottish
+						culture = goidelic
+						culture = Anglois
+						culture_group = west_germanic
+					}
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
@@ -19097,6 +19296,7 @@ edinburgh_castle = {
 			nobles_loyalty_modifier = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19121,6 +19321,7 @@ edinburgh_castle = {
 			free_mil_policy = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -19197,6 +19398,7 @@ aljaferia_palace = {
 					}
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19231,6 +19433,7 @@ aljaferia_palace = {
 					}
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19271,6 +19474,7 @@ aljaferia_palace = {
 					owner = { set_country_flag = empower_inquisitors_flag }
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -19337,6 +19541,7 @@ divrigi_hospital_mosque = {
 			reinforce_speed = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19362,6 +19567,7 @@ divrigi_hospital_mosque = {
 			reinforce_speed = 0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19385,6 +19591,7 @@ divrigi_hospital_mosque = {
 		on_upgraded = {
 			custom_tooltip = fewer_plagues_tt
 			owner = { set_country_flag = has_competent_doctors }
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -19460,6 +19667,7 @@ st_basil_cathedral = {
 			tolerance_own = 2
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19484,6 +19692,7 @@ st_basil_cathedral = {
 			all_estate_loyalty_equilibrium = 0.05
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19516,6 +19725,7 @@ st_basil_cathedral = {
 				custom_tooltip = orthodox_icon_events_bonuses_tt
 				owner = { set_country_flag = orthodox_icon_events_bonuses_flag }
 			}
+			AB_monument_upgrade_effect = yes
 		}	
 	}
 }
@@ -19531,18 +19741,21 @@ imperial_city_kyoto = {
 	type = monument
 
 	build_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	on_built = {
@@ -19552,33 +19765,39 @@ imperial_city_kyoto = {
 	}
 
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture_group = japanese_g
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture_group = japanese_g
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	keep_trigger = {
@@ -19619,6 +19838,7 @@ imperial_city_kyoto = {
 			legitimacy = 0.3
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19644,6 +19864,7 @@ imperial_city_kyoto = {
 		}	
 		on_upgraded = {
 			center_of_trade = 1
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19679,6 +19900,7 @@ imperial_city_kyoto = {
 					points = 1
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -19741,6 +19963,7 @@ kazan_kremlin = {
 			garrison_damage = 0.5
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19765,6 +19988,7 @@ kazan_kremlin = {
 			garrison_damage = 1
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -19789,6 +20013,7 @@ kazan_kremlin = {
 			garrison_damage = 1
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -19914,50 +20139,59 @@ golestan_palace = {
 	starting_tier = 0
 	type = monument
 	build_trigger = {
-		OR = {
-			AND = {
-				culture = persian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture = persian
+		}
+		province_is_or_accepts_culture = yes
 	}
 	on_built = {
 	}
 	on_destroyed = {
 	}
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				culture = persian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture = persian
+		}
+		province_is_or_accepts_culture = yes
 	}
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				culture = persian
-				province_is_or_accepts_culture = yes
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			culture = persian
+		}
+		province_is_or_accepts_culture = yes
 	}
 	keep_trigger = {
 		
@@ -19998,6 +20232,7 @@ golestan_palace = {
 			monthly_splendor = 1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20023,6 +20258,7 @@ golestan_palace = {
 			monthly_splendor = 1
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20044,7 +20280,7 @@ golestan_palace = {
 			monthly_splendor = 2
 		}
 		on_upgraded = {
-			
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -20106,6 +20342,7 @@ itchan_kala = {
 			center_of_trade_upgrade_cost = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20131,6 +20368,7 @@ itchan_kala = {
 			reduced_trade_penalty_on_non_main_tradenode = 0.1
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20152,7 +20390,7 @@ itchan_kala = {
 			reduced_trade_penalty_on_non_main_tradenode = 0.25 
 		}
 		on_upgraded = {
-			
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -20221,6 +20459,7 @@ shah_rukn_e_alam_tomb = {
 			relation_with_heretics = 10
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20245,6 +20484,7 @@ shah_rukn_e_alam_tomb = {
 			relation_with_heretics = 20
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20271,6 +20511,7 @@ shah_rukn_e_alam_tomb = {
 				set_country_flag = no_scholar_adm_cost
 				set_country_flag = enabled_baseline_invite_scholar
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -20334,6 +20575,7 @@ nizwa_fort = {
 		}
 		on_upgraded = {
 			add_base_manpower = 1
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20359,6 +20601,7 @@ nizwa_fort = {
 		}	
 		on_upgraded = {
 			add_base_manpower = 2
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20381,6 +20624,7 @@ nizwa_fort = {
 		}
 		on_upgraded = {
 			add_base_manpower = 3
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -20441,6 +20685,7 @@ city_of_sanaa = {
 			mercantilism_cost = -0.1
 		}
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20464,6 +20709,7 @@ city_of_sanaa = {
 			mercantilism_cost = -0.2
 		}	
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20486,6 +20732,7 @@ city_of_sanaa = {
 		}
 		on_upgraded = {
 			center_of_trade = 1
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -20584,6 +20831,7 @@ al_azhar_university = {
 					change_innovativeness = 3
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -20611,6 +20859,7 @@ al_azhar_university = {
 					change_innovativeness = 5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }

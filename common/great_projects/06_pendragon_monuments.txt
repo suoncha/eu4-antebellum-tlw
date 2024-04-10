@@ -108,6 +108,7 @@ hadrian = {
 			owner = {
 				add_mil_power = 50
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -142,6 +143,7 @@ hadrian = {
 			owner = {
 				add_mil_power = 100
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -176,6 +178,7 @@ hadrian = {
 			owner = {
 				add_mil_power = 150
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -296,6 +299,7 @@ portesmutha = {
 					cost = 0
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -336,6 +340,7 @@ portesmutha = {
 					cost = 0
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -376,6 +381,7 @@ portesmutha = {
 					cost = 0
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -490,6 +496,7 @@ sound_toll = {
 			owner = {
 				add_mercantilism = 3
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -524,6 +531,7 @@ sound_toll = {
 			owner = {
 				add_mercantilism = 3
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -558,6 +566,7 @@ sound_toll = {
 			owner = {
 				add_mercantilism = 3
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -840,34 +849,26 @@ hill_tara = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			373 = {
-				OR = {
-					culture = irish
-					culture = norse_gael
-					culture = goidelic
-					culture = norse_gael_nordic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				owner = {
-					OR = {
-						primary_culture = irish
-						primary_culture = norse_gael
-						primary_culture = goidelic
-						primary_culture = norse_gael_nordic
-						accepted_culture = norse_gael
-						accepted_culture = irish
-						accepted_culture = goidelic
-						accepted_culture = norse_gael_nordic
-					}
-				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = irish
+				culture = norse_gael
+				culture = goidelic
+				culture = norse_gael_nordic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -880,66 +881,50 @@ hill_tara = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			373 = {
-				OR = {
-					culture = irish
-					culture = norse_gael
-					culture = goidelic
-					culture = norse_gael_nordic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				owner = {
-					OR = {
-						primary_culture = irish
-						primary_culture = norse_gael
-						primary_culture = goidelic
-						primary_culture = norse_gael_nordic
-						accepted_culture = norse_gael
-						accepted_culture = irish
-						accepted_culture = goidelic
-						accepted_culture = norse_gael_nordic
-					}
-				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = irish
+				culture = norse_gael
+				culture = goidelic
+				culture = norse_gael_nordic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			373 = {
-				OR = {
-					culture = irish
-					culture = norse_gael
-					culture = goidelic
-					culture = norse_gael_nordic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				owner = {
-					OR = {
-						primary_culture = irish
-						primary_culture = norse_gael
-						primary_culture = goidelic
-						primary_culture = norse_gael_nordic
-						accepted_culture = norse_gael
-						accepted_culture = irish
-						accepted_culture = goidelic
-						accepted_culture = norse_gael_nordic
-					}
-				}
+				province_is_diocese_land_trigger = yes
 			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = irish
+				culture = norse_gael
+				culture = goidelic
+				culture = norse_gael_nordic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -1014,6 +999,7 @@ hill_tara = {
 					}
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1055,6 +1041,7 @@ hill_tara = {
 					}
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1097,6 +1084,7 @@ hill_tara = {
 					}
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1129,22 +1117,25 @@ iron_ring = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			242 = {
-				OR = {
-					culture = welsh
-					culture = briton
-					culture = goidelic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
-			}	
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				province_is_diocese_land_trigger = yes
 			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = welsh
+				culture = briton
+				culture = goidelic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -1157,42 +1148,48 @@ iron_ring = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			242 = {
-				OR = {
-					culture = welsh
-					culture = briton
-					culture = goidelic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
-			}	
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				province_is_diocese_land_trigger = yes
 			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = welsh
+				culture = briton
+				culture = goidelic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			242 = {
-				OR = {
-					culture = welsh
-					culture = briton
-					culture = goidelic
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
 				}
-				province_is_or_accepts_culture = yes
-			}	
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				province_is_diocese_land_trigger = yes
 			}
-			# ]]]
+			culture_group = roman_g
 		}
+		# ]]]
+		else = {
+			OR = {
+				culture = welsh
+				culture = briton
+				culture = goidelic
+			}
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -1256,6 +1253,7 @@ iron_ring = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1288,6 +1286,7 @@ iron_ring = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1320,6 +1319,7 @@ iron_ring = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }

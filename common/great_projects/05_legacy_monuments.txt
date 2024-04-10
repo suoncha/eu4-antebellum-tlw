@@ -28,22 +28,26 @@ tsarevets = {
 	#can we build it?
 	build_trigger = {
 		OR = {
-			AND = {
-				culture = bulgarian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
 			owner = {
                 mission_completed = ser_dissolve_bulgaria
             }
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture = bulgarian
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
@@ -58,67 +62,79 @@ tsarevets = {
 	#can our country use it?
 	can_use_modifiers_trigger = {
 		OR = {
-			AND = {
-				culture = bulgarian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
 			owner = {
                 mission_completed = ser_dissolve_bulgaria
             }
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture = bulgarian
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
 		OR = {
-			AND = {
-				culture = bulgarian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
 			owner = {
                 mission_completed = ser_dissolve_bulgaria
             }
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture = bulgarian
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
 		}
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
 	keep_trigger = {
 		OR = {
-            AND = {
-                culture = bulgarian
-                OR = {
-                    has_owner_culture = yes
-                    has_owner_accepted_culture = yes
-                }
-            }
-            owner = {
+			owner = {
                 mission_completed = ser_dissolve_bulgaria
             }
-			# TLW [[[
 			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
+				# TLW [[[
+				if = {
+					limit = {
+						ROM = {
+							has_reform = byzengineering
+						}
+						province_is_diocese_land_trigger = yes
+					}
+					culture_group = roman_g
+				}
+				# ]]]
+				else = {
+					culture = bulgarian
+				}
+				province_is_or_accepts_culture = yes
 			}
-			# ]]]
-        }
+		}
 	}
 
 	#tier data
@@ -147,7 +163,6 @@ tsarevets = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
-			
 		}
 	}
 
@@ -217,6 +232,7 @@ tsarevets = {
 			owner = {
 				add_army_tradition = 10
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -253,6 +269,7 @@ tsarevets = {
 			owner = {
 				add_army_tradition = 10
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -286,11 +303,9 @@ saladin = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			owner = {
+		owner = {
+			OR = {
 				tag = HSN
-			}
-			owner = {
 				AND = {
 					religion_group = muslim
 					full_idea_group = religious_ideas
@@ -309,11 +324,9 @@ saladin = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			owner = {
+		owner = {
+			OR = {
 				tag = HSN
-			}
-			owner = {
 				AND = {
 					religion_group = muslim
 					full_idea_group = religious_ideas
@@ -324,11 +337,9 @@ saladin = {
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			owner = {
+		owner = {
+			OR = {
 				tag = HSN
-			}
-			owner = {
 				AND = {
 					religion_group = muslim
 					full_idea_group = religious_ideas
@@ -407,6 +418,7 @@ saladin = {
 					cost_multiplier = 0.5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -447,6 +459,7 @@ saladin = {
 					cost_multiplier = 0.5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -487,6 +500,7 @@ saladin = {
 					cost_multiplier = 0.5
 				}
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -520,22 +534,29 @@ sivas = {
 
 	#can we build it?
 	build_trigger = {
-		owner = {
+		province_is_or_accepts_religion_group = {
 			religion_group = muslim
 		}
-		OR = {
-			culture = turkish
-			culture = turkish_new
-			culture = turkish_christian
-			culture = turkish_iranian
-			# TLW [[[
-			culture = romano_scythic
-			# ]]]
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = turkish
+				culture = turkish_new
+				culture = turkish_christian
+				culture = turkish_iranian
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -548,36 +569,56 @@ sivas = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		owner = {
+		province_is_or_accepts_religion_group = {
 			religion_group = muslim
 		}
-		OR = {
-			culture = turkish
-			culture = turkish_new
-			culture = turkish_christian
-			culture = turkish_iranian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = turkish
+				culture = turkish_new
+				culture = turkish_christian
+				culture = turkish_iranian
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		owner = {
+		province_is_or_accepts_religion_group = {
 			religion_group = muslim
 		}
-		OR = {
-			culture = turkish
-			culture = turkish_new
-			culture = turkish_christian
-			culture = turkish_iranian
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = turkish
+				culture = turkish_new
+				culture = turkish_christian
+				culture = turkish_iranian
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -780,23 +821,24 @@ gelati = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			AND = {
-				owner = { religion = orthodox }
-				religion = orthodox
-				culture = georgian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+		province_is_or_accepts_religion = {
+			religion = orthodox
 		}
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = georgian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -809,44 +851,46 @@ gelati = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			AND = {
-				owner = { religion = orthodox }
-				religion = orthodox
-				culture = georgian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+		province_is_or_accepts_religion = {
+			religion = orthodox
 		}
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = georgian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			AND = {
-				owner = { religion = orthodox }
-				religion = orthodox
-				culture = georgian
-				OR = {
-					has_owner_culture = yes
-					has_owner_accepted_culture = yes
-				}
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+		province_is_or_accepts_religion = {
+			religion = orthodox
 		}
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+			}
+			culture_group = roman_g
+		}
+		# ]]]
+		else = {
+			culture = georgian
+		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -913,6 +957,7 @@ gelati = {
 			owner = {
 				add_patriarch_authority = 0.1
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -947,6 +992,7 @@ gelati = {
 			owner = {
 				add_patriarch_authority = 0.1
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -982,6 +1028,7 @@ gelati = {
 			owner = {
 				add_patriarch_authority = 0.1
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1015,25 +1062,29 @@ rhodes = {
 
 	#can we build it?
 	build_trigger = {
-		OR = {
-			culture = greek
-			owner = {
-				tag = KNI
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			owner = {
-				tag = LAT
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = greek
+				owner = {
+					OR = {
+						tag = KNI
+						tag = LAT
+					}
+				}
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#what to do when it's built
@@ -1046,48 +1097,56 @@ rhodes = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		OR = {
-			culture = greek
-			owner = {
-				tag = KNI
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			owner = {
-				tag = LAT
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = greek
+				owner = {
+					OR = {
+						tag = KNI
+						tag = LAT
+					}
+				}
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		OR = {
-			culture = greek
-			owner = {
-				tag = KNI
+		# TLW [[[
+		if = {
+			limit = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
 			}
-			owner = {
-				tag = LAT
-			}
-			# TLW [[[
-			AND = {
-				culture_group = roman_g
-				ROM = { has_reform = byzengineering }
-			}
-			# ]]]
+			culture_group = roman_g
 		}
-		OR = {
-			has_owner_culture = yes
-			has_owner_accepted_culture = yes
+		# ]]]
+		else = {
+			OR = {
+				culture = greek
+				owner = {
+					OR = {
+						tag = KNI
+						tag = LAT
+					}
+				}
+			}
 		}
+		province_is_or_accepts_culture = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -1155,6 +1214,7 @@ rhodes = {
 				add_army_tradition = 5
 				add_navy_tradition = 5
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1191,6 +1251,7 @@ rhodes = {
 				add_army_tradition = 5
 				add_navy_tradition = 5
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 
@@ -1227,6 +1288,7 @@ rhodes = {
 				add_army_tradition = 10
 				add_navy_tradition = 10
 			}
+			AB_monument_upgrade_effect = yes
 		}
 	}
 }
@@ -1261,10 +1323,13 @@ apollo = {
 	#can we build it?
 	build_trigger = {
 		OR = {
-			religion_group = pagan
-			religion_group = reformed_pagan
+			province_is_or_accepts_religion_group = {
+				religion_group = pagan
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = reformed_pagan
+			}
 		}
-		has_owner_religion = yes
 	}
 
 	#what to do when it's built
@@ -1278,19 +1343,25 @@ apollo = {
 	#can our country use it?
 	can_use_modifiers_trigger = {
 		OR = {
-			religion_group = pagan
-			religion_group = reformed_pagan
+			province_is_or_accepts_religion_group = {
+				religion_group = pagan
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = reformed_pagan
+			}
 		}
-		has_owner_religion = yes
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
 		OR = {
-			religion_group = pagan
-			religion_group = reformed_pagan
+			province_is_or_accepts_religion_group = {
+				religion_group = pagan
+			}
+			province_is_or_accepts_religion_group = {
+				religion_group = reformed_pagan
+			}
 		}
-		has_owner_religion = yes
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?

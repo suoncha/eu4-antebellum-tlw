@@ -2285,8 +2285,11 @@ ab_rum_christian_first_rome = {
 			country_event = { 
 				id = ab_byzantium.47
 			}
-			set_country_flag = unlock_decision_strategos_specialty
-			set_country_flag = unlock_reform_byzprofessionalism
+			unlock_government_reform = {
+				government_reform = byzprofessionalism
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzprofessionalism
 		} 
 	}
 
@@ -2295,23 +2298,12 @@ ab_rum_christian_first_rome = {
 		position = 14
 		required_missions = { rum_christian_finest }
 
-		provinces_to_highlight = {
-			owner = {
-				army_size = ROOT
-			}
-		}
-
 		trigger = {
 			army_size = 1200
 			manpower = 1000
 			mil_tech = 23
 			is_hegemon_of_type = military_hegemon
 			hegemon_strength = 100
-			NOT = { 
-				any_country = { 
-					army_size = ROOT
-				}
-			}
 			calc_true_if = {
 				all_subject_country = {
 					OR = {
@@ -2352,11 +2344,24 @@ ab_rum_christian_first_rome = {
 						value = 75
 					}
 				}
-				custom_tooltip = BYZ_GRAND_ARMY_LEGION
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = byzlegio
+					}
+					add_government_reform = byzlegio
+				}
 			}
 			else = {
 				custom_tooltip = BYZ_GRAND_ARMY_LEGION_NO
 			}
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = byzlegio
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					has_government_mechanic = roman_professionalism_mechanic
@@ -2368,34 +2373,11 @@ ab_rum_christian_first_rome = {
 						}
 					}
 				}
-				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE
-			}
-			else = {
-				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_government_power = { 
-							mechanic_type = roman_professionalism_mechanic
-							power_type = romanprofessionalism
-							value = 75
-						}
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = rom_legio
 					}
-					set_country_flag = byz_grand_army_legion
-					add_government_reform = byzlegio
-				}
-				if = {
-					limit = {
-						NOT = {
-							has_government_power = { 
-								mechanic_type = roman_professionalism_mechanic
-								power_type = romanprofessionalism
-								value = -75
-							}
-						}
-					}
-					set_country_flag = byz_grand_army_diocese
 					every_subject_country = {
 						limit = {
 							OR = {
@@ -2407,7 +2389,16 @@ ab_rum_christian_first_rome = {
 					}
 				}
 			}
-		} 
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_NO
+			}
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = rom_legio
+				}
+			}
+		}
 	}
 
 	rum_christian_alpine = {
@@ -2591,8 +2582,9 @@ ab_rum_christian_first_rome = {
 				name = byz_caesaropapism
 				duration = 36500 
 			}
-			custom_tooltip = BYZ_REFORM_CHURCH
-			set_country_flag = unlock_reform_byzcaesaropapism
+			unlock_government_reform = {
+				government_reform = byzcaesaropapism
+			}
 		}
 	}
 
@@ -4171,7 +4163,10 @@ ab_rum_christian_fifth_rome = {
 		}
 
 		effect = {
-			set_country_flag = unlock_reform_byzengineering
+			unlock_government_reform = {
+				government_reform = byzengineering
+			}
+			custom_tooltip = AB_EMPTY
 			add_government_reform = byzengineering
 		} 
 	}
