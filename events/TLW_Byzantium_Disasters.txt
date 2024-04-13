@@ -15,6 +15,10 @@ country_event = {
 		hidden_effect = {
 			add_stability = -2
 			add_manpower = -8
+			country_event = {
+				id = ab_byzantium_disaster.2
+				days = 30
+			}
 		}
 	}
 	
@@ -189,20 +193,29 @@ country_event = {
 	desc = ab_byzantium_disaster.2.d
 	picture = AB_CHARGE_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 	
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_fall_angelid
-		EPI = {
-			is_subject_of = ROOT
-			has_ruler = "Manuel III"
-			dynasty = "Palaiologos"
+	immediate = {
+		hidden_effect = {
+			142 = {
+				add_core = EPI
+			}
+			144 = {
+				add_core = EPI
+			}
+			4698 = {
+				add_core = EPI
+			}
+			4699 = {
+				add_core = EPI
+			}
+			if = {
+				limit = {
+					NOT = { exists = EPI }
+				}
+				release = EPI
+			}
 		}
-	}
-	
-	mean_time_to_happen = {
-		months = 1
 	}
 
 	option = {
@@ -223,7 +236,12 @@ country_event = {
 			}
 		}
 		EPI = {
-			grant_independence = yes
+			if = {
+				limit = {
+					is_subject_of = ROOT
+				}
+				grant_independence = yes
+			}
 			declare_war_with_cb = {
 			    who = BYZ
 			    casus_belli = cb_conquest
