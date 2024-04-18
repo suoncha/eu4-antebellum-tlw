@@ -283,9 +283,7 @@ TLW_on_mil_development_effect = {
 			}
 			if = {
 				limit = {
-					owner = {
-						tag = ROM
-					}
+					owned_by = ROM
 				}
 				ROM = {
 					add_government_power = {
@@ -295,15 +293,7 @@ TLW_on_mil_development_effect = {
 					}
 				}
 			}
-			else_if = {
-				limit = {
-					owner = { 
-						OR = {
-							is_subject_of_type = diocese_vassal
-							is_subject_of_type = grand_diocese_vassal
-						}
-					}
-				}
+			else = {
 				ROM = {
 					add_government_power = {
 						mechanic_type = roman_professionalism_mechanic
@@ -320,7 +310,7 @@ TLW_on_mil_development_effect = {
 				has_estate_privilege = estate_nobles_theme_system
 			}
 			has_fort_building_trigger = yes
-			base_manpower = 4
+			base_manpower = 5
 		}
 		add_province_modifier = {
 			name = byz_estate_theme
@@ -368,7 +358,9 @@ TLW_on_new_term_election_effect = {
 		limit = {
 			has_reform = byzromanrepublic
 		}
-		country_event = { id = ab_byzantium.68 }
+		country_event = {
+			id = ab_byzantium.68
+		}
 	}
 }
 
@@ -378,7 +370,9 @@ TLW_on_death_election_effect = {
 			has_reform = byzromanrepublic
 		}
 		set_country_flag = byzrepublic_death_election
-		country_event = { id = ab_byzantium.68 }
+		country_event = {
+			id = ab_byzantium.68
+		}
 	}
 }
 
@@ -386,10 +380,82 @@ TLW_on_siege_won_province_effect = {
 	# Rome
 	if = {
 		limit = {
-			ROM = {
-				has_disaster = byzantium_biased_cultural_sphere
+			controller = {
+				is_in_war = {
+					casus_belli = cb_roman_persian_war
+				}
+				war_with = ROM
 			}
+			superregion = near_east_superregion
 			province_is_diocese_land_trigger = yes
+		}
+		add_core = event_target:crisisPersia
+		cede_province = event_target:crisisPersia
+	}
+	else_if = {
+		limit = {
+			owner = {
+				is_in_war = {
+					casus_belli = cb_roman_chinese_war
+				}
+			}
+			controller = {
+				is_in_war = {
+					casus_belli = cb_roman_chinese_war
+				}
+			}
+			OR = {
+				AND = {
+					owner = {
+						OR = {
+							is_subject_of_type_with_overlord = {
+								who = ROM
+								type = grand_diocese_vassal
+							}
+							tag = event_target:romanChinaInvasionHorde
+						}
+						war_with = event_target:EmperorOfChina
+					}
+					controller = {
+						OR = {
+							is_emperor_of_china = yes
+							tag = event_target:romanChinaInvasionHorde
+						}
+						war_with = ROM
+					}
+				}
+				AND = {
+					owned_by = event_target:EmperorOfChina
+					controller = {
+						OR = {
+							has_country_flag = byz_chinese_war_tributary
+							tag = event_target:romanChinaInvasionHorde
+						}
+						war_with = event_target:EmperorOfChina
+					}
+				}
+				AND = {
+					OR = {
+						region = korea_region
+						owned_by = event_target:romanChinaInvasionKorea
+					}
+					controller = {
+						tag = event_target:romanChinaInvasionJapan
+					}
+				}
+				AND = {
+					owned_by = event_target:romanChinaInvasionJapan
+					controller = {
+						tag = event_target:romanChinaInvasionKorea
+					}
+				}
+			}
+		}
+		add_core = controller
+		cede_province = controller
+	}
+	else_if = {
+		limit = {
 			controller = {
 				OR = {
 					tag = RSL
@@ -398,6 +464,10 @@ TLW_on_siege_won_province_effect = {
 					tag = RSS
 				}
 			}
+			ROM = {
+				has_disaster = byzantium_biased_cultural_sphere
+			}
+			province_is_diocese_land_trigger = yes
 		}
 		add_core = controller
 		cede_province = controller
@@ -408,194 +478,13 @@ TLW_on_siege_won_province_effect = {
 			"
 		}
 	}
-	if = {
-		limit = {
-			ROM = {
-				has_disaster = byzantium_persian_war
-			}
-			superregion = near_east_superregion
-			province_is_diocese_land_trigger = yes
-			controller = {
-				is_in_war = {
-					attacker_leader = ROM
-					casus_belli = cb_roman_persian_war
-				}
-				defensive_war_with = ROM
-			}
-		}
-		add_core = event_target:crisisPersia
-		cede_province = event_target:crisisPersia
-	}
-	if = {
-		limit = {
-			ROM = {
-				has_disaster = byzantium_dragon_emperor
-			}
-			OR = {
-				AND = {
-					owner = {
-						OR = {
-							tag = UKR
-							tag = GLH
-						}
-						is_subject_of_type = grand_diocese_vassal
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-					}
-					controller = {
-						OR = {
-							is_emperor_of_china = yes
-							has_country_flag = byz_chinese_war_horde
-						}
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						defensive_war_with = ROM
-					}
-				}
-				AND = {
-					owner = {
-						has_country_flag = byz_chinese_war_horde
-						has_country_flag = byz_chinese_war_romeside
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-					}
-					controller = {
-						is_emperor_of_china = yes
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						defensive_war_with = ROM
-					}
-				}
-				AND = {
-					owner = {
-						is_emperor_of_china = yes
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						defensive_war_with = ROM
-					}
-					controller = {
-						OR = {
-							has_country_flag = byz_chinese_war_horde
-							has_country_flag = byz_chinese_war_tributary
-						}
-						has_country_flag = byz_chinese_war_romeside
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-					}
-				}
-				AND = {
-					region = korea_region
-					owner = {
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						defensive_war_with = ROM
-					}
-					controller = {
-						tag = event_target:romanChinaInvasionJapan
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						has_country_flag = byz_chinese_war_romeside
-					}
-				}
-				AND = {
-					owner = {
-						tag = event_target:romanChinaInvasionJapan
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						has_country_flag = byz_chinese_war_romeside
-					}
-					controller = {
-						tag = event_target:romanChinaInvasionKorea
-						is_in_war = {
-							attacker_leader = ROM
-							casus_belli = cb_roman_chinese_war
-						}
-						has_country_flag = byz_chinese_war_chinaside
-					}
-				}
-			}
-		}
-		add_core = controller
-		cede_province = controller
-	}
-	if = {
-		limit = { 
-			ROM = {
-				has_government_mechanic = roman_professionalism_mechanic
-			} 
-			owner = {
-				NOT = { tag = ROM }
-				NOT = { is_subject_of_type = diocese_vassal }
-				NOT = { is_subject_of_type = grand_diocese_vassal }
-			}
-		}
-		if = {
-			limit = {
-				controller = {
-					tag = ROM
-				}
-			}
-			ROM = {
-				add_government_power = {
-					mechanic_type = roman_professionalism_mechanic
-					power_type = romanprofessionalism
-					value = 0.2
-				}
-			}
-		}
-		else_if = {
-			limit = { 
-				controller = {
-					OR = {
-						is_subject_of_type = diocese_vassal
-						is_subject_of_type = grand_diocese_vassal
-					}
-				}
-			}
-			ROM = {
-				add_government_power = {
-					mechanic_type = roman_professionalism_mechanic
-					power_type = romanprofessionalism
-					value = -0.2
-				}
-			}
-		}
-	}
 	# Nicaea
 	if = {
 		limit = {
-			OR = {
-				superregion = near_east_superregion
-				superregion = persia_superregion
-			}
-			OR = {
-				is_permanent_claim = HLE
-				is_permanent_claim = MAC
-			}
 			controller = {
 				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
+					tag = event_target:hellenicEmpire
+					is_subject_of = event_target:hellenicEmpire
 				}
 				is_in_war = {
 					casus_belli = cb_hellenic_conquest
@@ -604,171 +493,69 @@ TLW_on_siege_won_province_effect = {
 		}
 		if = {
 			limit = {
-				exists = MAC
-			}
-			add_core = MAC
-		}
-		else = {
-			add_core = HLE
-		}
-	}
-	if = {
-		limit = {
-			owner = {
-				NOT = { culture_group = hellenic_g }
-				is_at_war = yes
-			}
-			controller = {
-				is_subject_of_type = diadochi_vassal
-				is_at_war = yes
-			}
-		}
-		cede_province = controller
-	}
-	if = {
-		limit = {
-			OR = {
-				HLE = { mission_completed = nicene_malta }
-				MAC = { mission_completed = nicene_malta }
-			}
-			region = italy_region
-			controller = {
 				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
+					superregion = near_east_superregion
+					superregion = persia_superregion
 				}
-				is_in_war = {
-					casus_belli = cb_hellenic_conquest
-				}
+				is_permanent_claim = event_target:hellenicEmpire
 			}
-		}
-		add_permanent_claim = HLM
-	}
-	if = {
-		limit = {
-			OR = {
-				HLE = { mission_completed = nicene_maharajas }
-				MAC = { mission_completed = nicene_maharajas }
-			}
-			superregion = india_superregion
-			controller = {
-				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
-				}
-				is_in_war = {
-					casus_belli = cb_hellenic_conquest
-				}
-			}
+			add_core = event_target:hellenicEmpire
 		}
 		if = {
 			limit = {
-				exists = MAC
-			}
-			add_permanent_claim = MAC
-		}
-		else = {
-			add_permanent_claim = HLE
-		}
-	}
-	if = {
-		limit = {
-			OR = {
-				HLE = { mission_completed = nicene_east_indies }
-				MAC = { mission_completed = nicene_east_indies }
-			}
-			superregion = east_indies_superregion
-			controller = {
-				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
+				event_target:hellenicEmpire = {
+					mission_completed = nicene_malta
+					overlord_of = HLM
 				}
-				is_in_war = {
-					casus_belli = cb_hellenic_conquest
-				}
+				region = italy_region
 			}
+			add_permanent_claim = HLM
 		}
 		if = {
 			limit = {
-				exists = MAC
-			}
-			add_permanent_claim = MAC
-		}
-		else = {
-			add_permanent_claim = HLE
-		}
-	}
-	if = {
-		limit = {
-			OR = {
-				HLE = { mission_completed = nicene_arelat }
-				MAC = { mission_completed = nicene_arelat }
-			}
-			region = france_region
-			controller = {
 				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
-				}
-				is_in_war = {
-					casus_belli = cb_hellenic_conquest
-				}
-			}
-		}
-		if = {
-			limit = {
-				exists = MAC
-			}
-			add_permanent_claim = MAC
-		}
-		else = {
-			add_permanent_claim = HLE
-		}
-	}
-	if = {
-		limit = {
-			OR = {
-				HLE = { mission_completed = nicene_hercules }
-				MAC = { mission_completed = nicene_hercules }
-			}
-			region = iberia_region
-			controller = {
-				OR = {
-					tag = HLE
-					tag = MAC
-					is_subject_of = HLE
-					is_subject_of = MAC
-				}
-				is_in_war = {
-					casus_belli = cb_hellenic_conquest
+					AND = {
+						event_target:hellenicEmpire = {
+							mission_completed = nicene_maharajas
+						}
+						superregion = india_superregion
+					}
+					AND = {
+						event_target:hellenicEmpire = {
+							mission_completed = nicene_east_indies
+						}
+						superregion = east_indies_superregion
+					}
+					AND = {
+						event_target:hellenicEmpire = {
+							mission_completed = nicene_arelat
+						}
+						region = france_region
+					}
+					AND = {
+						event_target:hellenicEmpire = {
+							mission_completed = nicene_hercules
+						}
+						region = iberia_region
+					}
 				}
 			}
-		}
-		if = {
-			limit = {
-				exists = MAC
-			}
-			add_permanent_claim = MAC
-		}
-		else = {
-			add_permanent_claim = HLE
+			add_permanent_claim = event_target:hellenicEmpire
 		}
 	}
 }
 
 TLW_on_battle_won_country_effect = {
 	if = {
-		limit = { ROM = { has_government_mechanic = roman_professionalism_mechanic } }
+		limit = {
+			ROM = {
+				has_government_mechanic = roman_professionalism_mechanic
+			}
+		}
 		if = {
-			limit = { tag = ROM }
+			limit = {
+				tag = ROM
+			}
 			add_government_power = {
 				mechanic_type = roman_professionalism_mechanic
 				power_type = romanprofessionalism
@@ -778,8 +565,14 @@ TLW_on_battle_won_country_effect = {
 		else_if = {
 			limit = { 
 				OR = {
-					is_subject_of_type = diocese_vassal
-					is_subject_of_type = grand_diocese_vassal
+					is_subject_of_type_with_overlord = {
+						who = ROM
+						type = diocese_vassal
+					}
+					is_subject_of_type_with_overlord = {
+						who = ROM
+						type = grand_diocese_vassal
+					}
 				}
 			}
 			ROM = {
@@ -789,6 +582,19 @@ TLW_on_battle_won_country_effect = {
 					value = -0.5
 				}
 			}
+		}
+	}
+}
+
+TLW_on_general_recruited = {
+	if = {
+		limit = {
+			has_government_mechanic = roman_professionalism_mechanic
+		}
+		add_government_power = {
+			mechanic_type = roman_professionalism_mechanic
+			power_type = romanprofessionalism
+			value = 1
 		}
 	}
 }
@@ -815,8 +621,19 @@ TLW_on_province_owner_change_effect = {
 			TLW_rome_monument_downgrade_effect = yes
 		}
 	}
-	# Nicaea
 	if = {
+		limit = {
+			owner = {
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+		add_province_modifier = {
+			name = byz_friend_diocese_province
+			duration = -1
+		}
+	}
+	# Nicaea
+	else_if = {
 		limit = {
 			owner = {
 				has_reform = nicene_hellenic_empire
@@ -900,8 +717,12 @@ TLW_on_province_religion_changed = {
 TLW_on_dependency_gained_effect = {
 	if = {
 		limit = {
-			FROM = { has_country_flag = byz_independent_diocese }
-			ROOT = { has_government_attribute = ab_has_dioceses }
+			FROM = {
+				has_country_flag = byz_independent_diocese
+			}
+			ROOT = {
+				has_government_attribute = ab_has_dioceses
+			}
 		}
 		FROM = { 
 			clr_country_flag = byz_independent_diocese
@@ -913,7 +734,15 @@ TLW_on_dependency_gained_effect = {
 TLW_on_dependency_lost_effect = {
 	if = {
 		limit = { 
-			FROM = { is_subject_of_type = diocese_vassal } 
+			FROM = {
+				is_subject_of_type_with_overlord = {
+					who = ROM
+					type = diocese_vassal
+				}
+			}
+			ROOT = {
+				has_government_attribute = ab_has_dioceses
+			}
 		}
 		FROM = { 
 			set_country_flag = byz_independent_diocese

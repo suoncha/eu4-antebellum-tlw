@@ -1404,9 +1404,14 @@ country_event = {
 
 	is_triggered_only = yes
 
+	after = {
+		hidden_effect = {
+			clr_country_flag = byzrepublic_death_election
+		}
+	}
+
 	option = {
 		name = ab_byzantium.68.a
-		clr_country_flag = byzrepublic_death_election
 		random_list = {
 			11 = { 
 				define_ruler = {
@@ -1471,7 +1476,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.68.b
-		clr_country_flag = byzrepublic_death_election
 		random_list = {
 			20 = { 
 				define_ruler = {
@@ -1512,7 +1516,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.68.c
-		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzpersian }
 		random_list = {
 			50 = { 
@@ -1536,7 +1539,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.68.d
-		clr_country_flag = byzrepublic_death_election
 		trigger = { has_faction = faction_byzchinese }
 		random_list = {
 			16 = { 
@@ -1592,6 +1594,12 @@ country_event = {
 
 	is_triggered_only = yes
 
+	after = {
+		hidden_effect = {
+			clear_global_event_target = suppressDiocese
+		}
+	}
+
 	option = {
 		name = ab_byzantium.69.a
 		inherit = event_target:suppressDiocese
@@ -1599,9 +1607,6 @@ country_event = {
 			limit = { is_subject_of_type = diocese_vassal }
 			add_liberty_desire = 10
 		}
-		hidden_effect = {
-			clear_global_event_target = suppressDiocese
-		}	
 	}
 
 	option = {
@@ -1618,9 +1623,6 @@ country_event = {
 			}
 			add_government_reform = rom_diocese
 			kill_ruler = yes
-		}
-		hidden_effect = {
-			clear_global_event_target = suppressDiocese
 		}
 	}
 }
@@ -1864,10 +1866,6 @@ country_event = {
 		else = {
 			custom_tooltip = BYZ_ANATOLIA_CAUCASIA
 		}
-		if = {
-			limit = { has_country_flag = ukr_romancapital_kiev }
-			custom_tooltip = BYZ_ANATOLIA_CAUCASIA_UKR
-		}
 		set_country_flag = rom_caucasia_isof_anatolia
 	}
 
@@ -2068,7 +2066,6 @@ country_event = {
 				duration = -1
 			}
 		}
-		set_country_flag = ukr_romancapital_kiev
 	}
 
 	option = {
@@ -4328,37 +4325,6 @@ province_event = {
 		add_province_modifier = {
 			name = byz_forced_romanized
 			duration = 7300 
-		}
-	}
-}
-
-#Update Favored Diocese Province
-country_event = {
-	id = ab_byzantium.109
-	title = ab_byzantium.109.t
-	desc = ab_byzantium.109.d
-	picture = CULTURE_eventPicture
-
-	hidden = yes	
-
-	trigger = {
-		is_subject_of_type = diocese_vassal
-		has_country_modifier = byz_friend_diocese
-		any_owned_province = {
-			NOT = { has_province_modifier = byz_friend_diocese_province }
-		}
-	}
-	
-	option = {
-		name = ab_byzantium.109.a
-		every_owned_province = {
-			limit = {
-				NOT = { has_province_modifier = byz_friend_diocese_province }
-			}
-			add_province_modifier = {
-				name = byz_friend_diocese_province
-				duration = -1
-			}
 		}
 	}
 }

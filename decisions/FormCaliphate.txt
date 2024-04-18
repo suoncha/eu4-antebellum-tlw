@@ -30,25 +30,27 @@ country_decisions = {
 			override_country_name = TCL
 			if = {
 				limit = {
-					has_custom_ideas = no
-				}
-				country_event = { id = ideagroups.1 } #Swap Ideas
-			}
-			if = {
-				limit = {
 					NOT = { government_rank = 3 }
 				}
 				set_government_rank = 3
 			}
 			if = {
 				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
 					government = monarchy
-					NOT = {
-						has_reform = caliphate_reform
-					}
-					is_revolutionary = no
 				}
 				add_government_reform = caliphate_reform
+			}
+			else_if = {
+				limit = {
+					government = theocracy
+				}
+				add_government_reform = caliphate_theocracy_reform
 			}
 			set_country_flag = formed_caliphate_flag
 		}

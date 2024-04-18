@@ -22,6 +22,9 @@ country_decisions = {
 				culture = welsh
 				culture = briton
 			}
+			capital_scope = {
+				superregion = europe_superregion
+			}
 			num_of_cities = 15
 			is_colonial_nation = no
 			religion_group = christian
@@ -29,7 +32,11 @@ country_decisions = {
 
 		provinces_to_highlight = {
 			if = {
-				limit = { ROOT = { culture_group = gaelic } }
+				limit = {
+					ROOT = {
+						culture_group = gaelic
+					}
+				}
 				OR = {
 					region = british_isles_region
 					region = france_region
@@ -37,7 +44,11 @@ country_decisions = {
 				}
 			}
 			else_if = {
-				limit = { ROOT = { culture_group = germanic } }
+				limit = {
+					ROOT = {
+						culture_group = germanic
+					}
+				}
 				OR = {
 					region = south_german_region
 					region = france_region
@@ -59,35 +70,25 @@ country_decisions = {
 			is_at_war = no
 			religion = catholic
 			if = {
-				limit = { culture_group = iberian }
+				limit = {
+					culture_group = iberian
+				}
 				tag = VSG
 			}
 			if = {
-				limit = { culture_group = gaelic }
+				limit = {
+					culture_group = gaelic
+				}
 				british_isles_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				france_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				italy_region = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
 			else_if = {
-				limit = { culture_group = germanic }
+				limit = {
+					culture_group = germanic
+				}
 				south_german_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				france_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				italy_region = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
@@ -97,19 +98,29 @@ country_decisions = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
-				france_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				italy_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
+			}
+			france_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			italy_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 
 		effect = {
+			change_tag = WRE
+			on_change_tag_effect = yes
 			add_prestige = 25
+			set_country_flag = formed_westrome_flag
+			if = {
+				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					is_part_of_hre = yes
@@ -118,7 +129,7 @@ country_decisions = {
 				}
 				emperor = {
 					add_opinion = {
-						who = root
+						who = ROOT
 						modifier = opinion_left_empire
 					}
 				}
@@ -127,35 +138,50 @@ country_decisions = {
 					country_event = { id = hre_event.5 }
 				}
 			}
-			change_tag = WRE
 			hidden_effect = {
-				override_country_name = WRE
-			}
-			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					set_in_empire = no
+				}
 				if = {
-					limit = { culture_group = iberian }
+					limit = {
+						culture_group = iberian
+					}
 					if = {
-						limit = { overlord_of = VSV }
+						limit = {
+							overlord_of = VSV
+						}
 						VSV = {
-							change_country_color = { country = WRE }
+							change_country_color = {
+								country = WRE
+							}
 						}
 					}
 					if = {
-						limit = { overlord_of = VSO }
+						limit = {
+							overlord_of = VSO
+						}
 						VSO = {
-							change_country_color = { country = WRE }
+							change_country_color = {
+								country = WRE
+							}
 						}
 					}
 					if = {
-						limit = { overlord_of = VSS }
+						limit = {
+							overlord_of = VSS
+						}
 						VSS = {
-							change_country_color = { country = WRE }
+							change_country_color = {
+								country = WRE
+							}
 						}
 					}
 				}
 			}
-			set_country_flag = formed_westrome_flag
-			set_government_rank = 3
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
@@ -164,7 +190,9 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			country_event = { id = ab_byzantium.87 }
+			country_event = {
+				id = ab_byzantium.87
+			}
 		}
 		
 		ai_will_do = {

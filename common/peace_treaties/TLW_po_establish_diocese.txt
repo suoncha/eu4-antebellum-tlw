@@ -3,7 +3,7 @@ po_establish_diocese = {
 	power_projection = humiliated_rival
 	power_cost_base = 1.0
 	prestige_base = 1.0
-	ae_base = 0.6
+	ae_base = 0.5
 	warscore_cost = {
 		all_provinces = 0
 		no_provinces = 100.0 
@@ -28,20 +28,19 @@ po_establish_diocese = {
 		if = {
 			limit = {
 				FROM = {
-					OR = {
-						tag = ADU
-						tag = IBE
-					}
+					owns = 225
 				}
 			}
 			custom_tooltip = AB_DIOCESE_HISPANIA
-			hidden_effect = {	
-				iberia_region = {
-					limit = {
-						owned_by = FROM
+			hidden_effect = {
+				FROM = {
+					every_owned_province = {
+						limit = {
+							region = iberia_region
+						}
+						add_core = RD2
 					}
-					add_core = RD2
-					cede_province = RD2
+					release = RD2
 				}
 				create_subject = {
 					who = RD2
@@ -51,8 +50,8 @@ po_establish_diocese = {
 					change_primary_culture = hispano_roman
 					change_religion = ROOT
 					change_government = republic
-					kill_ruler = yes
 					add_government_reform = rom_diocese
+					kill_ruler = yes
 					set_capital = 225
 				}
 				225 = {
@@ -62,23 +61,22 @@ po_establish_diocese = {
 				}
 			}
 		}
-		else_if = {
+		if = {
 			limit = {
 				FROM = {
-					OR = {
-						tag = FRA
-						tag = FRC
-					}
+					owns = 183
 				}
 			}
 			custom_tooltip = AB_DIOCESE_GALLIA
-			hidden_effect = {	
-				france_region = {
-					limit = {
-						owned_by = FROM
+			hidden_effect = {
+				FROM = {
+					every_owned_province = {
+						limit = {
+							region = france_region
+						}
+						add_core = RD4
 					}
-					add_core = RD4
-					cede_province = RD4
+					release = RD4
 				}
 				create_subject = {
 					who = RD4
@@ -88,8 +86,8 @@ po_establish_diocese = {
 					change_primary_culture = gallo_roman
 					change_religion = ROOT
 					change_government = republic
-					kill_ruler = yes
 					add_government_reform = rom_diocese
+					kill_ruler = yes
 					set_capital = 183
 				}
 				183 = {
@@ -99,23 +97,22 @@ po_establish_diocese = {
 				}
 			}
 		}
-		else_if = {
+		if = {
 			limit = {
 				FROM = {
-					OR = {
-						tag = ENG
-						tag = GBR
-					}
+					owns = 236
 				}
 			}
 			custom_tooltip = AB_DIOCESE_BRITANNIA
-			hidden_effect = {	
-				british_isles_region = {
-					limit = {
-						owned_by = FROM
+			hidden_effect = {
+				FROM = {
+					every_owned_province = {
+						limit = {
+							region = british_isles_region
+						}
+						add_core = RD5
 					}
-					add_core = RD5
-					cede_province = RD5
+					release = RD5
 				}
 				create_subject = {
 					who = RD5
@@ -125,8 +122,8 @@ po_establish_diocese = {
 					change_primary_culture = romano_british
 					change_religion = ROOT
 					change_government = republic
-					kill_ruler = yes
 					add_government_reform = rom_diocese
+					kill_ruler = yes
 					set_capital = 236
 				}
 				236 = {
@@ -156,7 +153,9 @@ po_establish_diocese = {
 						modifier = they_force_unioned_us 
 					}
 					if = {
-						limit = { NOT = { government = monarchy } }
+						limit = {
+							NOT = { government = monarchy }
+						}
 						change_government = monarchy
 					}
 					add_government_reform = rom_grand_diocese

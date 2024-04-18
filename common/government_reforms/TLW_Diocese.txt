@@ -3,11 +3,10 @@ rom_diocese = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		culture_group = roman_g
-		NOT = { has_country_flag = byz_independent_diocese }
-		NOT = { tag = ROM }
-		NOT = { tag = UKR }
-		NOT = { tag = GLH }
+		is_subject_of_type_with_overlord = {
+			who = ROM
+			type = diocese_vassal
+		}
 	}
 	fixed_rank = 2
 	duration = 10
@@ -33,11 +32,7 @@ rom_former_diocese = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		culture_group = roman_g
 		has_country_flag = byz_independent_diocese
-		NOT = { tag = ROM }
-		NOT = { tag = UKR }
-		NOT = { tag = GLH }
 	}
 	has_term_election = no
 
@@ -62,10 +57,9 @@ rom_grand_diocese = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		is_subject_of = ROM
-		OR = {
-			tag = UKR
-			tag = GLH
+		is_subject_of_type_with_overlord = {
+			who = ROM
+			type = grand_diocese_vassal
 		}
 	}
 	fixed_rank = 3
@@ -110,8 +104,14 @@ rom_legio = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			is_subject_of_type = diocese_vassal
-			is_subject_of_type = grand_diocese_vassal
+			is_subject_of_type_with_overlord = {
+				who = ROM
+				type = diocese_vassal
+			}
+			is_subject_of_type_with_overlord = {
+				who = ROM
+				type = grand_diocese_vassal
+			}
 		}
 		ROM = {
 			has_unlocked_government_reform = {

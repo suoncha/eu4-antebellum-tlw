@@ -1,0 +1,757 @@
+country_decisions = {
+	#Orthodox/Latin Empire
+	restore_roman_empire_byz = {
+		major = yes
+
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = restored_rome_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = ROM }
+			OR = {
+				tag = BYZ
+				tag = LAT
+				primary_culture = sclavinian
+				primary_culture = turkish_christian
+				mission_completed = ab_rus_restoration
+			}
+		}
+
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				region = egypt_region
+				region = balkan_region
+				region = anatolia_region
+				area = syria_area
+				area = aleppo_area
+				area = palestine_area
+				area = carinthia_area
+				area = crimea_area
+				area = upper_andalucia_area
+				area = baleares_area
+				area = tripolitania_area
+				area = djerba_area
+				area = tunisia_area
+				area = kabylia_area
+				area = barbary_coast_area
+				area = northern_morocco_area
+				province_id = 1232
+				province_id = 2324
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		allow = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_RESTORED_JUSTINIAN
+				italy_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				egypt_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				balkan_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				anatolia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				carinthia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				crimea_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				upper_andalucia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				baleares_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tripolitania_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				djerba_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tunisia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				kabylia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				barbary_coast_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				northern_morocco_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				1232 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				2324 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			if = {
+				limit = {
+					tag = BYZ
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RESOLVED_16TH
+					has_country_flag = had_16th_crisis
+				}
+			}
+			else_if = {
+				limit = {
+					tag = LAT
+				}
+				OR = {
+					culture_group = latin
+					culture_group = french
+					culture_group = iberian
+				}
+				religion = catholic
+				has_government_power = {
+					mechanic_type = latin_zealotry_mechanic
+					power_type = latin_zealotry
+					value = 100
+				}
+			}
+			else_if = {
+				limit = {
+					mission_completed = ab_rus_restoration
+				}
+				if = {
+					limit = {
+						religion = catholic
+					}
+					religion = catholic
+					overlord_of = LAT
+				}
+				else = {
+					religion = orthodox
+					overlord_of = BYZ
+				}
+			}
+			else = {
+				culture_group = byzantine
+				religion = orthodox
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			add_prestige = 25
+			if = {
+				limit = { has_country_flag = byz_restore_republic }
+				custom_tooltip = BYZ_NAMECHANGE_REPUBLIC
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = ROMANREPUBLIC
+				}
+			}
+			else_if = {
+				limit = { primary_culture = sclavinian }
+				custom_tooltip = SER_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = SCLAVINIAROME
+				}
+			}
+			else_if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				custom_tooltip = UKR_NAMECHANGE_ROME
+				inherit = BYZ
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = RUSSIAROME
+				}
+			}
+			else_if = {
+				limit = { primary_culture = turkish_christian }
+				custom_tooltip = RUM_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = RUMROME
+				}
+			}
+			else = {
+				change_tag = ROM
+				hidden_effect = {
+					override_country_name = ROM
+				}
+			}
+			set_government_rank = 3
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				custom_tooltip = UKR_FASTER_ROMANIZATION
+			}
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
+			hidden_effect = {
+				if = {
+					limit = { has_country_flag = byz_court_latin }
+					151 = { change_culture = roman_new }
+				}
+				else_if = {
+					limit = { primary_culture = sclavinian }
+					151 = { change_culture = illyro_roman }
+				}
+				else_if = {
+					limit = { primary_culture = turkish_christian }
+					151 = { change_culture = romano_scythic }
+				}
+				else_if = {
+					limit = { culture_group = french }
+					151 = { change_culture = gallo_roman }
+				}
+				else = {
+					151 = { change_culture = greco_roman }
+				}
+			}
+			if = {
+				limit = { has_country_flag = byz_court_greek }
+				change_primary_culture = greco_roman
+				hidden_effect = {
+					set_heir_culture = greco_roman
+					set_ruler_culture = greco_roman
+				}
+			}
+			else_if = {
+				limit = { primary_culture = sclavinian }
+				change_primary_culture = illyro_roman
+				hidden_effect = {
+					set_heir_culture = illyro_roman
+					set_ruler_culture = illyro_roman
+				}
+			}
+			else_if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				change_primary_culture = russo_roman
+				hidden_effect = {
+					set_heir_culture = russo_roman
+					set_ruler_culture = russo_roman
+				}
+			}
+			else_if = {
+				limit = { primary_culture = turkish_christian }
+				change_primary_culture = romano_scythic
+				hidden_effect = {
+					set_heir_culture = romano_scythic
+					set_ruler_culture = romano_scythic
+				}
+			}
+			else_if = {
+				limit = { culture_group = french }
+				change_primary_culture = gallo_roman
+				hidden_effect = {
+					set_heir_culture = gallo_roman
+					set_ruler_culture = gallo_roman
+				}
+				set_country_flag = byz_court_latin
+			}
+			else = {
+				change_primary_culture = roman_new
+				hidden_effect = {
+					set_heir_culture = roman_new
+					set_ruler_culture = roman_new
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						NOT = { province_id = 151 }
+						OR = {
+							culture = greek
+							culture = pontic_greek
+							culture = goths
+						}
+					}
+					change_culture = greco_roman
+				}
+				every_owned_province = {
+					limit = {
+						region = balkan_region
+						NOT = { culture = greco_roman }	
+						NOT = { province_id = 151 }
+					}
+					change_culture = illyro_roman
+				}
+				every_owned_province = {
+					limit = {
+						NOT = { province_id = 151 }
+						culture = turkish_christian
+					}
+					change_culture = romano_scythic
+				}
+				every_subject_country = {
+					limit = { culture_group = byzantine }
+					change_primary_culture = greco_roman
+					set_heir_culture = greco_roman
+					set_ruler_culture = greco_roman
+				}
+				every_subject_country = {
+					limit = { is_colonial_nation = yes }
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
+				}
+				for = {
+                    amount = 10
+                    effect = "
+						random_owned_province = {
+							limit = {
+								OR = {
+									region = italy_region
+									region = maghreb_region
+									region = iberia_region
+								}
+								NOT = { culture_group = roman_g }
+							}
+							province_event = {
+								id = ab_byzantium.108
+							}
+						}
+                    "
+                }
+			}
+			add_ruler_personality = augustus_personality
+			if = {
+				limit = { has_country_flag = byz_restore_republic }
+				custom_tooltip = BYZ_ALWAYS_AUGUSTUS_REPUBLIC
+			}
+			else = {
+				custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			}
+			custom_tooltip = restore_roman_empire_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { is_part_of_hre = yes }
+					set_in_empire = no
+				}
+				118 = {
+					add_core = ROOT
+					province_event = {
+						id = ab_byzantium.108
+					}
+				}
+				if = {
+					limit = { mission_completed = byzantium_general_staff }
+					add_country_modifier = {
+						name = byz_general_staff_rome
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 }
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = restored_rome_flag
+			country_event = { id = ab_byzantium.67 }
+			if = {
+				limit = {
+					government = monarchy
+					mission_completed = ab_rus_restoration
+				}
+				country_event = { id = ab_byzantium.83 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	italy_greek = {
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = italy_greek_flag }
+			mission_completed = byzantium_landfall
+			culture = greek
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 122
+				province_id = 1934
+				province_id = 2984
+				province_id = 123
+				area = sicily_area
+				area = western_sicily_area
+			}
+		}
+
+		allow = {
+			dip_power = 250
+			owns_all_provinces = {
+				OR = {
+					area = sicily_area
+					area = western_sicily_area
+					province_id = 122
+					province_id = 1934
+					province_id = 2984
+					province_id = 123
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+
+		effect = {
+			add_dip_power = -250
+			122 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			1934 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			2984 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			123 = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			sicily_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			western_sicily_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			set_country_flag = italy_greek_flag
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	levant_greek = {
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = levant_greek_flag }
+		    mission_completed = byzantium_syria
+			culture = greek
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+		}
+
+		allow = {
+			dip_power = 300
+			owns_all_provinces = {
+				OR = {
+					area = palestine_area
+					area = syria_area
+					area = aleppo_area
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+		
+		effect = {
+			add_dip_power = -300
+			palestine_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			syria_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			aleppo_area = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			set_country_flag = levant_greek_flag
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	unite_romanian_vassals = {
+		potential = {
+			normal_or_historical_nations = yes
+			overlord_of = WAL
+		    overlord_of = MOL
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = WAL
+				owned_by = MOL
+			}
+		}
+
+		allow = {
+			dip_power = 50
+			WAL = {
+				NOT = {
+					liberty_desire = 50
+				}
+			}
+			MOL = {
+				NOT = {
+					liberty_desire = 50
+				}
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+		}
+		
+		effect = {
+			add_dip_power = -50
+			WAL = {
+				inherit = MOL
+				add_liberty_desire = -25
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	rule_rus_byz = {
+		major = yes
+
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = rule_rus_byz_flag }
+			mission_completed = byzantium_heal_schism
+			UKR = {
+				NOT = { is_subject_of_type = grand_diocese_vassal }
+				NOT = { is_subject_of_type = personal_union }
+			}
+			OR = {
+				overlord_of = UKR
+				any_subject_country = {
+					has_reform = principality
+					NOT = { is_subject_of_type = personal_union }
+				}
+			}
+		}
+
+		allow = {
+			patriarch_authority = 1.0
+			if = {
+				limit = { overlord_of = UKR }
+				UKR = {
+					NOT = { is_subject_of_type = personal_union }
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						has_reform = principality
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			add_patriarch_authority = -1.0
+			if = {
+				limit = { overlord_of = UKR }
+				if = {
+					limit = {
+						UKR = { NOT = { government = monarchy } }
+					}
+					UKR = {
+						change_government = monarchy
+						add_government_reform = tsardom
+					}
+				}
+				create_union = UKR
+			}
+			else = {
+				every_subject_country = {
+					limit = {
+						has_reform = principality
+						is_subject_of = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+					ROOT = {
+						create_union = PREV
+					}
+				}
+			}
+			set_country_flag = rule_rus_byz_flag
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	strategos_specialty = {
+		major = yes
+
+		potential = {
+			has_country_flag = unlock_decision_strategos_specialty
+			NOT = { has_country_modifier = byz_fire_focused }
+			NOT = { has_country_modifier = byz_shock_focused }
+			NOT = { has_country_modifier = byz_manuever_focused }
+			NOT = { has_country_modifier = byz_siege_focused }
+		}
+
+		allow = {
+			mil_power = 50
+		}
+		
+		effect = {
+			add_mil_power = -50
+			country_event = {
+				id = ab_byzantium.72
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	show_favored_diocese = {
+		potential = {
+			has_government_attribute = ab_has_dioceses
+			any_subject_country = {
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				is_subject_of_type_with_overlord = {
+					who = ROOT
+					type = diocese_vassal
+				}
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+
+		allow = {
+			custom_trigger_tooltip = {
+				tooltip = SHOW_FAVORED_DIOCESE_TT
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SHOW_FAVORED_DIOCESE_TT
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

@@ -7,10 +7,15 @@ call_diocese_into_wars = {
 	is_visible = {
 		has_government_attribute = ab_has_dioceses
 		FROM = {
-			is_subject_of = ROOT
 			OR = {
-				is_subject_of_type = diocese_vassal
-				is_subject_of_type = grand_diocese_vassal
+				is_subject_of_type_with_overlord = {
+					who = ROOT
+					type = diocese_vassal
+				}
+				is_subject_of_type_with_overlord = {
+					who = ROOT
+					type = grand_diocese_vassal
+				}
 			}
 		}
 	}
@@ -18,11 +23,15 @@ call_diocese_into_wars = {
 	is_allowed = {
 		if = {
 			limit = {
-				FROM = { has_country_modifier = byz_diocese_inward_perfection }
+				FROM = {
+					has_country_modifier = byz_diocese_inward_perfection
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = FROM_IS_FORBID_WAR_10YEARS_TT
-				FROM = { NOT = { has_country_modifier = byz_diocese_inward_perfection } }
+				FROM = {
+					NOT = { has_country_modifier = byz_diocese_inward_perfection }
+				}
 			}
 		}
 		if = {
@@ -36,11 +45,15 @@ call_diocese_into_wars = {
 		}
 		if = {
 			limit = {
-				FROM = { liberty_desire = 50 }
+				FROM = {
+					liberty_desire = 50
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = FROM_IS_REBELLIOUS_TT
-				FROM = { NOT = { liberty_desire = 50 } }
+				FROM = {
+					NOT = { liberty_desire = 50 }
+				}
 			}
 		}
 		if = {
@@ -102,11 +115,15 @@ call_diocese_into_wars = {
 		}
 		if = {
 			limit = {
-				FROM = { is_at_war = yes }
+				FROM = {
+					is_at_war = yes
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = FROM_IS_AT_WAR_TT
-				FROM = { is_at_war = no }
+				FROM = {
+					is_at_war = no
+				}
 			}
 		}
 	}
@@ -118,71 +135,57 @@ call_diocese_into_wars = {
 					attacker_leader = ROOT
 				}
 			}
+			add_favors = {
+				who = FROM
+				amount = -50
+			}
+			FROM = {
+				join_all_offensive_wars_of = ROOT
+				add_liberty_desire = 10
+			}
 			if = {
 				limit = {
-					has_country_flag = byz_grand_army_diocese
-				}
-				FROM = {
-					ROOT = {
-						add_favors = {
-							who = PREV
-							amount = -50
+					NOT = {
+						has_unlocked_government_reform = {
+							government_reform = rom_legio
 						}
 					}
-					join_all_offensive_wars_of = ROOT
+				}
+				FROM = {
 					add_liberty_desire = 10
-				}
-			}
-			else = {
-				FROM = {
-					ROOT = {
-						add_favors = {
-							who = PREV
-							amount = -50
-						}
-					}
-					join_all_offensive_wars_of = ROOT
-					add_liberty_desire = 20
 				}
 			}
 		}
 		else = {
+			add_favors = {
+				who = FROM
+				amount = -25
+			}
+			FROM = {
+				join_all_defensive_wars_of = ROOT
+				add_liberty_desire = 5
+			}
 			if = {
 				limit = {
-					has_country_flag = byz_grand_army_diocese
-				}
-				FROM = {
-					ROOT = {
-						add_favors = {
-							who = PREV
-							amount = -25
+					NOT = {
+						has_unlocked_government_reform = {
+							government_reform = rom_legio
 						}
 					}
-					join_all_defensive_wars_of = ROOT
-					add_liberty_desire = 10
 				}
-			}
-			else = {
 				FROM = {
-					ROOT = {
-						add_favors = {
-							who = PREV
-							amount = -25
-						}
-					}
-					join_all_defensive_wars_of = ROOT
 					add_liberty_desire = 5
 				}
 			}
 		}
 		if = {
-			limit = { ROOT = { has_government_mechanic = roman_professionalism_mechanic } }
-			ROOT = {
-				add_government_power = {
-					mechanic_type = roman_professionalism_mechanic
-					power_type = romanprofessionalism
-					value = -3
-				}
+			limit = {
+				has_government_mechanic = roman_professionalism_mechanic
+			}
+			add_government_power = {
+				mechanic_type = roman_professionalism_mechanic
+				power_type = romanprofessionalism
+				value = -3
 			}
 		}
 	}
@@ -203,8 +206,10 @@ befriend_diocese = {
 	is_visible = {
 		has_government_attribute = ab_has_dioceses
 		FROM = {
-			is_subject_of = ROOT
-			is_subject_of_type = diocese_vassal
+			is_subject_of_type_with_overlord = {
+				who = ROOT
+				type = diocese_vassal
+			}
 			NOT = { has_country_modifier = byz_friend_diocese }
 		}
 	}
@@ -264,8 +269,10 @@ unfriend_diocese = {
 	is_visible = {
 		has_government_attribute = ab_has_dioceses
 		FROM = {
-			is_subject_of = ROOT
-			is_subject_of_type = diocese_vassal
+			is_subject_of_type_with_overlord = {
+				who = ROOT
+				type = diocese_vassal
+			}
 			has_country_modifier = byz_friend_diocese
 		}
 	}
@@ -277,7 +284,9 @@ unfriend_diocese = {
 		FROM = {
 			remove_country_modifier = byz_friend_diocese
 			every_owned_province = {
-				limit = { has_province_modifier = byz_friend_diocese_province }
+				limit = {
+					has_province_modifier = byz_friend_diocese_province
+				}
 				remove_province_modifier = byz_friend_diocese_province
 			}
 			add_liberty_desire = 40
@@ -304,8 +313,10 @@ promote_vassal_to_diadochi = {
 	is_visible = {
 		has_government_attribute = ab_has_diadochi
 		FROM = {
-			is_subject_of = ROOT
-			is_subject_of_type = vassal
+			is_subject_of_type_with_overlord = {
+				who = ROOT
+				type = vassal
+			}
 		}
 	}
 
@@ -374,7 +385,9 @@ promote_vassal_to_diadochi = {
 		}
 		FROM = {
 			if = {
-				limit = { NOT = { government = monarchy } }
+				limit = {
+					NOT = { government = monarchy }
+				}
 				change_government = monarchy
 			}
 			change_primary_culture = ROOT
@@ -394,8 +407,8 @@ promote_vassal_to_diadochi = {
 	on_decline = {
 	}
 
-	ai_will_do = { # this is a trigger
-		always = no	#Too risky to test this out with the AI
+	ai_will_do = {
+		always = yes
 	}
 
 	ai_acceptance = {
@@ -465,8 +478,10 @@ call_diadochi_into_wars = {
 	is_visible = {
 		has_government_attribute = ab_has_diadochi
 		FROM = {
-			is_subject_of = ROOT
-			is_subject_of_type = diadochi_vassal
+			is_subject_of_type_with_overlord = {
+				who = ROOT
+				type = diadochi_vassal
+			}
 		}
 	}
 
@@ -512,11 +527,11 @@ call_diadochi_into_wars = {
 		}
 		if = {
 			limit = {
-				NOT = { mil_power = 150 }
+				NOT = { mil_power = 50 }
 			}
 			custom_trigger_tooltip = {
-				tooltip = ROOT_HAS_150MIL_TT
-				mil_power = 150
+				tooltip = ROOT_HAS_50MIL_TT
+				mil_power = 50
 			}
 		}
 		if = {
@@ -531,17 +546,15 @@ call_diadochi_into_wars = {
 	}
 
 	on_accept = {
+		add_favors = {
+			who = FROM
+			amount = -20
+		}
+		add_mil_power = -50
 		FROM = {
-			ROOT = {
-				add_favors = {
-					who = PREV
-					amount = -20
-				}
-				add_mil_power = -150
-			}
 			join_all_offensive_wars_of = ROOT
 			join_all_defensive_wars_of = ROOT
-			add_mil_power = 150
+			add_mil_power = 50
 		}
 	}
 	

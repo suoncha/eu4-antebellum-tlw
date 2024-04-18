@@ -18,9 +18,11 @@ custom_button = {
                 religion = reformed_hellenic
             }
             OR = {
-                tag = MAC
-                tag = HLE
-                is_subject_of_type = diadochi_vassal
+                tag = event_target:hellenicEmpire
+                is_subject_of_type_with_overlord = {
+                    who = event_target:hellenicEmpire
+                    type = diadochi_vassal
+                }
             }
         }
         NOT = { has_province_modifier = nci_center_of_hellenisation }
@@ -39,83 +41,94 @@ custom_button = {
                 }
             }
         }
-        custom_trigger_tooltip = {
-            tooltip = AB_THIS_REGION_DOESNT_ALLOW_HELLENISATION_CENTER
-            OR = {
-                AND = {
-                    region = egypt_region
-                    OR = {
-                        owner = { mission_completed = nicene_egypt }
-                        overlord = { mission_completed = nicene_egypt }
-                    }
-                }
-                AND = {
-                    region = italy_region
-                    OR = {
-                        owner = { mission_completed = nicene_isles }
-                        overlord = { mission_completed = nicene_isles }
-                    }
-                }
-                AND = {
-                    region = france_region
-                    OR = {
-                        owner = { mission_completed = nicene_massillia }
-                        overlord = { mission_completed = nicene_massillia }
-                    }
-                }
-                AND = {
-                    region = iberia_region
-                    OR = {
-                        owner = { mission_completed = nicene_valencia }
-                        overlord = { mission_completed = nicene_valencia }
-                    }
-                }
-                AND = {
-                    region = balkan_region
-                    OR = {
-                        owner = { mission_completed = nicene_serbia }
-                        overlord = { mission_completed = nicene_serbia }
-                    }
-                }
-                AND = {
-                    region = crimea_region
-                    OR = {
-                        owner = { mission_completed = nicene_pontic_steppe }
-                        overlord = { mission_completed = nicene_pontic_steppe }
-                    }
-                }
-                AND = {
-                    region = maghreb_region
-                    OR = {
-                        owner = { mission_completed = nicene_hercules }
-                        overlord = { mission_completed = nicene_hercules }
-                    }
-                }
-                AND = {
-                    region = khorasan_region
-                    OR = {
-                        owner = { mission_completed = nicene_bactria }
-                        overlord = { mission_completed = nicene_bactria }
-                    }
-                }
-                AND = {
-                    superregion = india_superregion
-                    OR = {
-                        owner = { mission_completed = nicene_india }
-                        overlord = { mission_completed = nicene_india }
-                    }
-                }
-                AND = {
-                    region = mashriq_region
-                    OR = {
-                        owner = { mission_completed = nicene_mesopotamia }
-                        overlord = { mission_completed = nicene_mesopotamia }
-                    }
-                }
+        if = {
+            limit = {
+                region = egypt_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_egypt
+            }
+        }
+        else_if = {
+            limit = {
+                region = italy_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_isles
+            }
+        }
+        else_if = {
+            limit = {
+                region = france_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_massillia
+            }
+        }
+        else_if = {
+            limit = {
+                region = iberia_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_valencia
+            }
+        }
+        else_if = {
+            limit = {
+                region = balkan_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_serbia
+            }
+        }
+        else_if = {
+            limit = {
+                region = crimea_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_pontic_steppe
+            }
+        }
+        else_if = {
+            limit = {
+                region = maghreb_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_hercules
+            }
+        }
+        else_if = {
+            limit = {
+                region = khorasan_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_bactria
+            }
+        }
+        else_if = {
+            limit = {
+                superregion = india_superregion
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_india
+            }
+        }
+        else_if = {
+            limit = {
+                region = mashriq_region
+            }
+            event_target:hellenicEmpire = {
+                mission_completed = nicene_mesopotamia
+            }
+        }
+        else = {
+            custom_trigger_tooltip = {
+                tooltip = AB_THIS_REGION_DOESNT_ALLOW_HELLENISATION_CENTER
+                always = no
             }
         }
     }
-    effect = { 
+    effect = {
         custom_tooltip = AB_EFFECT_HELLENISATION_CENTER
         add_province_modifier = {
             name = nci_center_of_hellenisation
@@ -132,7 +145,7 @@ custom_button = {
         has_province_modifier = nci_center_of_hellenisation
     }
     trigger = { }
-    effect = { 
+    effect = {
         custom_tooltip = AB_REMOVE_EFFECT_HELLENISATION_CENTER
         remove_province_modifier = nci_center_of_hellenisation
     }

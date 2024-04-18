@@ -35,12 +35,7 @@ country_decisions = {
 		potential = {
 			tag = ROM
 			NOT = { has_country_flag = renamed_imperium_romanum }
-			OR = {
-				mission_completed = byzantium_restoration
-				mission_completed = lat_restoration
-				mission_completed = ave_imperator_wls
-				mission_completed = vsg_europe
-			}
+			has_country_flag = byz_rename_imperium_romanum
 		}
 
 		allow = {
@@ -50,24 +45,41 @@ country_decisions = {
 
 		effect = {
 			if = {
-				limit = { mission_completed = lat_restoration }
+				limit = {
+					was_tag = LAT
+				}
 				override_country_name = IMPERIUMFRANCORUM
 			}
 			else_if = {
-				limit = { mission_completed = ave_imperator_wls }
+				limit = {
+					was_tag = BRN
+				}
 				override_country_name = IMPERIUMBRITANNIUM
 			}
 			else_if = {
-				limit = { mission_completed = vsg_europe }
+				limit = {
+					was_tag = VSG
+				}
 				override_country_name = IMPERIUMVISIGOTHIUM
 			}
 			else = {
 				if = {
-					limit = { government = monarchy }
+					limit = {
+						government = monarchy
+					}
 					override_country_name = IMPERIUMROMANUM
 				}
-				else = {
+				else_if = {
+					limit = {
+						government = republic
+					}
 					override_country_name = RESPUBLICAROMANA
+				}
+				else_if = {
+					limit = {
+						government = theocracy
+					}
+					override_country_name = THEOCRATIAROMANA
 				}
 			}
 			set_country_flag = renamed_imperium_romanum
@@ -88,7 +100,7 @@ country_decisions = {
 		potential = {
 			tag = ROM
 			NOT = { has_country_flag = renamed_coruscant }
-			mission_completed = byzantium_ecumenopolis
+			has_country_flag = byz_unlock_coruscant_rename
 		}
 
 		allow = {
@@ -165,10 +177,7 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			OR = {
-				tag = SER
-				was_tag = SER
-			}
+			tag = SER
 			NOT = { has_country_flag = renamed_sclavinia }
 			mission_completed = ser_legacy_of_the_sclavinians
 			NOT = { tag = ROM }

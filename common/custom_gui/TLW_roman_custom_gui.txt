@@ -25,7 +25,7 @@ custom_button = {
         has_government_attribute = ab_has_dioceses
         NOT = { has_country_flag = byz_diocese_menu_opened }
     }
-    trigger = { }
+    trigger = {}
     effect = {
         set_country_flag = byz_diocese_menu_opened
     }
@@ -39,8 +39,8 @@ custom_button = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
     }
-    trigger = { }
-    effect = { 
+    trigger = {}
+    effect = {
         clr_country_flag = byz_diocese_menu_opened
     }
     tooltip = AB_CLOSE_DIOCESE_MENU
@@ -56,23 +56,11 @@ custom_icon = {
 }
 
 custom_icon = {
-    name = ab_diocese_flag_ukr
+    name = ab_diocese_flag_rdc
     potential = {
         ai = no
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        NOT = { was_tag = UKR }
-        religion_group = christian
-    }
-}
-
-custom_icon = {
-    name = ab_diocese_flag_glh
-    potential = {
-        ai = no
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        NOT = { religion_group = christian }
     }
 }
 
@@ -82,16 +70,6 @@ custom_icon = {
         ai = no
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-    }
-}
-
-custom_icon = {
-    name = ab_diocese_flag_rdc
-    potential = {
-        ai = no
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        was_tag = UKR
     }
 }
 
@@ -321,191 +299,216 @@ custom_icon = {
 }
 
 custom_icon = {
-    name = ab_diocese_flag_rdcnotrus
+    name = ab_diocese_flag_ukr
     potential = {
         ai = no
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
         NOT = { was_tag = UKR }
+        religion_group = christian
+    }
+}
+
+custom_icon = {
+    name = ab_diocese_flag_glh
+    potential = {
+        ai = no
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        NOT = { religion_group = christian }
+    }
+}
+
+#Diocesis Graecia
+custom_button = {
+    name = ab_diocese_graecia_create
+    potential = {
+        has_government_attribute = ab_has_dioceses
+        has_country_flag = byz_diocese_menu_opened
+        NOT = { exists = RDC }
+    }
+    trigger = {
+        owns_core_province = 151
         capital_scope = {
             NOT = { region = balkan_region }
             NOT = { region = anatolia_region }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_caucasia_isof_anatolia
+                    }
+                }
+                NOT = { region = caucasia_region }
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = anatolia_region
+                        area = macedonia_area
+                        area = northern_greece_area
+                        area = morea_area
+                        area = thrace_area
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_caucasia_isof_anatolia
+                                }
+                            }
+                            region = caucasia_region
+                        }
+                    }
+                    NOT = { area = circassia_area }
+                    NOT = { area = dagestan_area }
+                }
+                add_core = RDC
+                remove_core = ROOT
+            }
+            release = RDC
+            create_subject = {
+                who = RDC
+                subject_type = diocese_vassal
+            }
+            RDC = {
+                change_primary_culture = greco_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 151
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
         }
     }
+    tooltip = AB_DIOCESE_GRAECIA
 }
 
-#Diocesis Russia
 custom_button = {
-    name = ab_diocese_russia_feed
+    name = ab_diocese_graecia_feed
     potential = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        overlord_of = UKR
-        UKR = { is_subject_of_type = grand_diocese_vassal }
+        overlord_of = RDC
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
-            OR = {
-                AND = {
-                    superregion = eastern_europe_superregion
-                    NOT = { 
-                        OR = {
-                            region = balkan_region
-                            region = carpathia_region
-                            area = crimea_area
-                        }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_caucasia_isof_anatolia
                     }
                 }
-                area = circassia_area
-                area = dagestan_area
-                AND = {
-                    superregion = tartary_superregion
-                    NOT = { region = tibet_region }
+                OR = {
+                    region = anatolia_region
+                    region = caucasia_region
+                    area = macedonia_area
+                    area = northern_greece_area
+                    area = morea_area
+                    area = thrace_area
                 }
-                AND = {
-                    region = manchuria_region
-                    NOT = { area = liaoning_area }
+                NOT = { area = circassia_area }
+                NOT = { area = dagestan_area }
+            }
+            else = {
+                OR = {
+                    region = anatolia_region
+                    area = macedonia_area
+                    area = northern_greece_area
+                    area = morea_area
+                    area = thrace_area
                 }
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            eastern_europe_superregion = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            region = balkan_region
-                            region = carpathia_region
-                            area = crimea_area
+                    OR = {
+                        region = anatolia_region
+                        area = macedonia_area
+                        area = northern_greece_area
+                        area = morea_area
+                        area = thrace_area
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_caucasia_isof_anatolia
+                                }
+                            }
+                            region = caucasia_region
                         }
                     }
+                    NOT = { area = circassia_area }
+                    NOT = { area = dagestan_area }
                 }
-                add_core = UKR
-                cede_province = UKR
-            }
-            circassia_area = {
-                limit = { owned_by = ROOT }
-                add_core = UKR
-                cede_province = UKR
-            }
-            dagestan_area = {
-                limit = { owned_by = ROOT }
-                add_core = UKR
-                cede_province = UKR
-            }
-            tartary_superregion = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { region = tibet_region }
-                }
-                add_core = UKR
-                cede_province = UKR
-            }
-            manchuria_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { area = liaoning_area }
-                }
-                add_core = UKR
-                cede_province = UKR
+                add_core = RDC
+                cede_province = RDC
+                remove_core = ROOT
             }
         }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
+        }
     }
-    tooltip = AB_DIOCESE_RUSSIA_FEED
+    tooltip = AB_DIOCESE_GRAECIA_FEED
 }
 
-#Diocesis Tataria
 custom_button = {
-    name = ab_diocese_tataria_feed
+    name = ab_diocese_graecia_annex
     potential = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        overlord_of = GLH
-        GLH = { is_subject_of_type = grand_diocese_vassal }
+        overlord_of = RDC
     }
-    trigger = { 
-        any_owned_province = {
-            OR = {
-                AND = {
-                    superregion = eastern_europe_superregion
-                    NOT = { 
-                        OR = {
-                            region = balkan_region
-                            region = carpathia_region
-                            area = crimea_area
-                        }
-                    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDC = {
+                all_owned_province = {
+                    culture_group = roman_g
                 }
-                area = circassia_area
-                area = dagestan_area
-                AND = {
-                    superregion = tartary_superregion
-                    NOT = { region = tibet_region }
-                }
-                AND = {
-                    region = manchuria_region
-                    NOT = { area = liaoning_area }
-                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDC = {
+                NOT = { has_country_modifier = byz_friend_diocese }
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            eastern_europe_superregion = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            region = balkan_region
-                            region = carpathia_region
-                            area = crimea_area
-                        }
-                    }
-                }
-                add_core = GLH
-                cede_province = GLH
-            }
-            circassia_area = {
-                limit = { owned_by = ROOT }
-                add_core = GLH
-                cede_province = GLH
-            }
-            dagestan_area = {
-                limit = { owned_by = ROOT }
-                add_core = GLH
-                cede_province = GLH
-            }
-            tartary_superregion = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { region = tibet_region }
-                }
-                add_core = GLH
-                cede_province = GLH
-            }
-            manchuria_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { area = liaoning_area }
-                }
-                add_core = GLH
-                cede_province = GLH
+            inherit = RDC
+            country_event = {
+                id = ab_byzantium.2005
             }
         }
     }
-    tooltip = AB_DIOCESE_RUSSIA_FEED
+    tooltip = AB_DIOCESE_ANNEX
 }
 
 #Diocesis Italia
@@ -516,7 +519,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD1 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 118
         capital_scope = {
             NOT = { region = italy_region }
@@ -524,15 +527,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            italy_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+            every_owned_province = {
+                limit = {
+                    region = italy_region
+                }
                 add_core = RD1
+                remove_core = ROOT
             }
             release = RD1
             create_subject = {
@@ -543,8 +547,8 @@ custom_button = {
                 change_primary_culture = roman_new
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 118
             }
         }
@@ -559,22 +563,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD1
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = italy_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            italy_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = italy_region
+                }
                 add_core = RD1
                 cede_province = RD1
+                remove_core = ROOT
             }
         }
     }
@@ -588,7 +594,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD1
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD1 = {
@@ -606,10 +612,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD1
             country_event = {
@@ -628,7 +633,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD2 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 225
         capital_scope = {
             NOT = { region = iberia_region }
@@ -636,15 +641,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            iberia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = iberia_region
+                }
                 add_core = RD2
+                remove_core = ROOT
             }
             release = RD2
             create_subject = {
@@ -655,13 +661,13 @@ custom_button = {
                 change_primary_culture = hispano_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 225
-            }
-            225 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -676,22 +682,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD2
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = iberia_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            iberia_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = iberia_region
+                }
                 add_core = RD2
                 cede_province = RD2
+                remove_core = ROOT
             }
         }
     }
@@ -705,7 +713,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD2
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD2 = {
@@ -723,10 +731,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD2
             country_event = {
@@ -745,7 +752,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD3 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 341
         capital_scope = {
             NOT = { region = maghreb_region }
@@ -753,15 +760,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            maghreb_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = maghreb_region
+                }
                 add_core = RD3
+                remove_core = ROOT
             }
             release = RD3
             create_subject = {
@@ -772,13 +780,13 @@ custom_button = {
                 change_primary_culture = afro_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 341
-            }
-            341 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -793,22 +801,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD3
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = maghreb_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            maghreb_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = maghreb_region
+                }
                 add_core = RD3
                 cede_province = RD3
+                remove_core = ROOT
             }
         }
     }
@@ -822,7 +832,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD3
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD3 = {
@@ -840,10 +850,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD3
             country_event = {
@@ -862,23 +871,42 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD4 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 183
         capital_scope = {
             NOT = { region = france_region }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_belgica_isof_gallia
+                    }
+                }
+                NOT = { region = low_countries_region }
+            }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            france_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = france_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_belgica_isof_gallia
+                                }
+                            }
+                            region = low_countries_region
+                        }
+                    }
+                }
                 add_core = RD4
+                remove_core = ROOT
             }
             release = RD4
             create_subject = {
@@ -889,15 +917,21 @@ custom_button = {
                 change_primary_culture = gallo_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 183
-            }
-            183 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
         }
     }
     tooltip = AB_DIOCESE_GALLIA
@@ -910,40 +944,54 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD4
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
-            OR = {
-                region = france_region
-                AND = {
-                    region = low_countries_region
-                    custom_trigger_tooltip = {
-                        tooltip = BYZ_BELGICA_PICKED_GALLIA
-                        ROM = { has_country_flag = rom_belgica_isof_gallia }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_belgica_isof_gallia
                     }
                 }
+                OR = {
+                    region = france_region
+                    region = low_countries_region
+                }
+            }
+            else = {
+                region = france_region
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            france_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = france_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_belgica_isof_gallia
+                                }
+                            }
+                            region = low_countries_region
+                        }
+                    }
+                }
                 add_core = RD4
                 cede_province = RD4
+                remove_core = ROOT
             }
-            if = {
-                limit = { has_country_flag = rom_belgica_isof_gallia }
-                low_countries_region = {
-                    limit = { owned_by = ROOT }
-                    add_core = RD4
-                    cede_province = RD4
-                }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
             }
+            custom_tooltip = AB_DIOCESE_BELGICA
         }
     }
     tooltip = AB_DIOCESE_GALLIA_FEED
@@ -956,7 +1004,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD4
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD4 = {
@@ -974,10 +1022,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD4
             country_event = {
@@ -996,7 +1043,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD5 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 236
         capital_scope = {
             NOT = { region = british_isles_region }
@@ -1004,15 +1051,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            british_isles_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = british_isles_region
+                }
                 add_core = RD5
+                remove_core = ROOT
             }
             release = RD5
             create_subject = {
@@ -1023,13 +1071,13 @@ custom_button = {
                 change_primary_culture = romano_british
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 236
-            }
-            236 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1044,22 +1092,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD5
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = british_isles_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            british_isles_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = british_isles_region
+                }
                 add_core = RD5
                 cede_province = RD5
+                remove_core = ROOT
             }
         }
     }
@@ -1073,7 +1123,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD5
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD5 = {
@@ -1091,10 +1141,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD5
             country_event = {
@@ -1113,23 +1162,42 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD6 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 1876
         capital_scope = {
             NOT = { region = north_german_region }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_belgica_isof_germania
+                    }
+                }
+                NOT = { region = low_countries_region }
+            }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            north_german_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_german_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_belgica_isof_germania
+                                }
+                            }
+                            region = low_countries_region
+                        }
+                    }
+                }
                 add_core = RD6
+                remove_core = ROOT
             }
             release = RD6
             create_subject = {
@@ -1140,15 +1208,21 @@ custom_button = {
                 change_primary_culture = romano_germanic
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 1876
-            }
-            1876 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
         }
     }
     tooltip = AB_DIOCESE_GERMANIA
@@ -1161,40 +1235,54 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD6
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
-            OR = {
-                region = north_german_region
-                AND = {
-                    region = low_countries_region
-                    custom_trigger_tooltip = {
-                        tooltip = BYZ_BELGICA_PICKED_GERMANIA
-                        ROM = { has_country_flag = rom_belgica_isof_germania }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_belgica_isof_germania
                     }
                 }
+                OR = {
+                    region = north_german_region
+                    region = low_countries_region
+                }
+            }
+            else = {
+                region = north_german_region
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            north_german_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_german_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_belgica_isof_germania
+                                }
+                            }
+                            region = low_countries_region
+                        }
+                    }
+                }
                 add_core = RD6
                 cede_province = RD6
+                remove_core = ROOT
             }
-            if = {
-                limit = { has_country_flag = rom_belgica_isof_germania }
-                low_countries_region = {
-                    limit = { owned_by = ROOT }
-                    add_core = RD6
-                    cede_province = RD6
-                }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
             }
+            custom_tooltip = AB_DIOCESE_BELGICA
         }
     }
     tooltip = AB_DIOCESE_GERMANIA_FEED
@@ -1207,7 +1295,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD6
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD6 = {
@@ -1225,10 +1313,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD6
             country_event = {
@@ -1247,7 +1334,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD7 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 134
         capital_scope = {
             NOT = { region = south_german_region }
@@ -1255,18 +1342,17 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            south_german_region = {
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
+                    region = south_german_region
                     NOT = { area = carinthia_area }
                 }
-                remove_core = ROOT
                 add_core = RD7
+                remove_core = ROOT
             }
             release = RD7
             create_subject = {
@@ -1277,13 +1363,13 @@ custom_button = {
                 change_primary_culture = romano_germanic
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 134
-            }
-            134 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1298,30 +1384,26 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD7
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = south_german_region
-            NOT = { 
-                area = carinthia_area 
-            }
+            NOT = { area = carinthia_area }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            south_german_region = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        area = carinthia_area 
-                    }
+                    region = south_german_region
+                    NOT = { area = carinthia_area }
                 }
                 add_core = RD7
                 cede_province = RD7
+                remove_core = ROOT
             }
         }
     }
@@ -1335,7 +1417,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD7
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD7 = {
@@ -1353,10 +1435,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD7
             country_event = {
@@ -1375,7 +1456,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD8 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 12
         capital_scope = {
             NOT = { region = scandinavia_region }
@@ -1383,15 +1464,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            scandinavia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = scandinavia_region
+                }
                 add_core = RD8
+                remove_core = ROOT
             }
             release = RD8
             create_subject = {
@@ -1402,13 +1484,13 @@ custom_button = {
                 change_primary_culture = romano_nordic
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 12
-            }
-            12 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1423,22 +1505,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD8
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = scandinavia_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            scandinavia_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = scandinavia_region
+                }
                 add_core = RD8
                 cede_province = RD8
+                remove_core = ROOT
             }
         }
     }
@@ -1452,7 +1536,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD8
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD8 = {
@@ -1470,10 +1554,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD8
             country_event = {
@@ -1492,7 +1575,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RD9 }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 4239
         capital_scope = {
             NOT = { area = croatia_area }
@@ -1509,23 +1592,27 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            balkan_region = {
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    culture = illyro_roman
+                    OR = {
+                        area = croatia_area
+                        area = slavonia_area
+                        area = bosnia_area
+                        area = rascia_area
+                        area = albania_area
+                        area = serbia_area
+                        area = bulgaria_area
+                        area = silistria_area
+                        area = east_adriatic_coast_area
+                        area = carinthia_area
+                    }
                 }
-                remove_core = ROOT
                 add_core = RD9
-            }
-            carinthia_area = {
-                limit = { owned_by = ROOT }
                 remove_core = ROOT
-                add_core = RD9
             }
             release = RD9
             create_subject = {
@@ -1536,13 +1623,13 @@ custom_button = {
                 change_primary_culture = illyro_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 4239
-            }
-            4239 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1557,36 +1644,46 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD9
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
-                AND = {
-                    region = balkan_region
-                    culture = illyro_roman
-                }
+                area = croatia_area
+                area = slavonia_area
+                area = bosnia_area
+                area = rascia_area
+                area = albania_area
+                area = serbia_area
+                area = bulgaria_area
+                area = silistria_area
+                area = east_adriatic_coast_area
                 area = carinthia_area
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            balkan_region = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    culture = illyro_roman
+                    OR = {
+                        area = croatia_area
+                        area = slavonia_area
+                        area = bosnia_area
+                        area = rascia_area
+                        area = albania_area
+                        area = serbia_area
+                        area = bulgaria_area
+                        area = silistria_area
+                        area = east_adriatic_coast_area
+                        area = carinthia_area
+                    }
                 }
                 add_core = RD9
                 cede_province = RD9
-            }
-            carinthia_area = {
-                limit = { owned_by = ROOT }
-                add_core = RD9
-                cede_province = RD9
+                remove_core = ROOT
             }
         }
     }
@@ -1600,7 +1697,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RD9
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RD9 = {
@@ -1618,10 +1715,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RD9
             country_event = {
@@ -1640,7 +1736,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDX }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 2313
         capital_scope = {
             NOT = { region = mashriq_region }
@@ -1649,15 +1745,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            mashriq_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = mashriq_region
+                }
                 add_core = RDX
+                remove_core = ROOT
             }
             release = RDX
             create_subject = {
@@ -1667,20 +1764,22 @@ custom_button = {
             RDX = {
                 change_religion = ROOT
                 if = {
-                    limit = { religion_group = christian }
+                    limit = {
+                        religion_group = christian
+                    }
                     change_primary_culture = greco_roman
                 }
                 else = {
                     change_primary_culture = romano_arabic
                 }
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 2313
-            }
-            2313 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1695,22 +1794,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDX
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = mashriq_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            mashriq_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = mashriq_region
+                }
                 add_core = RDX
                 cede_province = RDX
+                remove_core = ROOT
             }
         }
     }
@@ -1724,7 +1825,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDX
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDX = {
@@ -1742,10 +1843,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDX
             country_event = {
@@ -1764,49 +1864,34 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDQ }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 358
         capital_scope = {
             NOT = { region = egypt_region }
+            NOT = { area = saharan_oases }
+            NOT = { area = dongola_area }
             NOT = { province_id = 1232 }
             NOT = { province_id = 2324 }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            egypt_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDQ
-            }
-            saharan_oases = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDQ
-            }
-            dongola_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDQ
-            }
-            1232 = {
-                if = { 
-                    limit = { owned_by = ROOT }
-                    remove_core = ROOT
-                    add_core = RDQ
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = egypt_region
+                        area = saharan_oases
+                        area = dongola_area
+                        province_id = 1232
+                        province_id = 2324
+                    }
                 }
-            }
-            2324 = {
-                if = { 
-                    limit = { owned_by = ROOT }
-                    remove_core = ROOT
-                    add_core = RDQ
-                }
+                add_core = RDQ
+                remove_core = ROOT
             }
             release = RDQ
             create_subject = {
@@ -1816,20 +1901,22 @@ custom_button = {
             RDQ = {
                 change_religion = ROOT
                 if = {
-                    limit = { religion_group = christian }
+                    limit = {
+                        religion_group = christian
+                    }
                     change_primary_culture = greco_roman
                 }
                 else = {
                     change_primary_culture = romano_arabic
                 }
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 358
-            }
-            358 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1844,7 +1931,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDQ
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = egypt_region
@@ -1857,39 +1944,23 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            egypt_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDQ
-                cede_province = RDQ
-            }
-            saharan_oases = {
-                limit = { owned_by = ROOT }
-                add_core = RDQ
-                cede_province = RDQ
-            }
-            dongola_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDQ
-                cede_province = RDQ
-            }
-            1232 = {
-                if = {
-                    limit = { owned_by = ROOT }
-                    add_core = RDQ
-                    cede_province = RDQ
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = egypt_region
+                        area = saharan_oases
+                        area = dongola_area
+                        province_id = 1232
+                        province_id = 2324
+                    }
                 }
-            }
-            2324 = {
-                if = {
-                    limit = { owned_by = ROOT }
-                    add_core = RDQ
-                    cede_province = RDQ
-                }
+                add_core = RDQ
+                cede_province = RDQ
+                remove_core = ROOT
             }
         }
     }
@@ -1903,7 +1974,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDQ
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDQ = {
@@ -1921,10 +1992,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDQ
             country_event = {
@@ -1943,7 +2013,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDW }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 388
         capital_scope = {
             NOT = { region = arabia_region }
@@ -1951,15 +2021,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            arabia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = arabia_region
+                }
                 add_core = RDW
+                remove_core = ROOT
             }
             release = RDW
             create_subject = {
@@ -1970,13 +2041,13 @@ custom_button = {
                 change_primary_culture = romano_arabic
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 388
-            }
-            388 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -1991,22 +2062,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDW
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = arabia_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            arabia_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = arabia_region
+                }
                 add_core = RDW
                 cede_province = RDW
+                remove_core = ROOT
             }
         }
     }
@@ -2020,7 +2093,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDW
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDW = {
@@ -2038,10 +2111,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDW
             country_event = {
@@ -2060,24 +2132,45 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDZ }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 2218
         capital_scope = {
             NOT = { region = persia_region }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_caucasia_isof_persia
+                    }
+                }
+                NOT = { region = caucasia_region }
+            }
         }
         NOT = { religion = zoroastrian }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            persia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = persia_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_caucasia_isof_persia
+                                }
+                            }
+                            region = caucasia_region
+                        }
+                    }
+                    NOT = { area = circassia_area }
+                    NOT = { area = dagestan_area }
+                }
                 add_core = RDZ
+                remove_core = ROOT
             }
             release = RDZ
             create_subject = {
@@ -2088,15 +2181,21 @@ custom_button = {
                 change_primary_culture = perso_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 2218
-            }
-            2218 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
         }
     }
     tooltip = AB_DIOCESE_PERSIA
@@ -2109,54 +2208,58 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDZ
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
-            OR = {
-                region = persia_region
-                AND = {
-                    region = caucasia_region
-                    NOT = {
-                        OR = {
-                            area = circassia_area
-                            area = dagestan_area
-                        }
-                    }
-                    custom_trigger_tooltip = {
-                        tooltip = BYZ_CAUCASIA_PICKED_PERSIA
-                        ROM = { has_country_flag = rom_caucasia_isof_persia }
+            if = {
+                limit = {
+                    ROOT = {
+                        has_country_flag = rom_caucasia_isof_persia
                     }
                 }
+                OR = {
+                    region = persia_region
+                    region = caucasia_region
+                }
+                NOT = { area = circassia_area }
+                NOT = { area = dagestan_area }
+            }
+            else = {
+                region = persia_region
             }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            persia_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDZ
-                cede_province = RDZ
-            }
-            if = {
-                limit = { has_country_flag = rom_caucasia_isof_persia }
-                caucasia_region = {
-                    limit = {
-                        owned_by = ROOT
-                        NOT = {
-                            OR = {
-                                area = circassia_area
-                                area = dagestan_area
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = persia_region
+                        if = {
+                            limit = {
+                                ROOT = {
+                                    has_country_flag = rom_caucasia_isof_persia
+                                }
                             }
+                            region = caucasia_region
                         }
                     }
-                    add_core = RDZ
-                    cede_province = RDZ
+                    NOT = { area = circassia_area }
+                    NOT = { area = dagestan_area }
                 }
+                add_core = RDZ
+                cede_province = RDZ
+                remove_core = ROOT
             }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
         }
     }
     tooltip = AB_DIOCESE_PERSIA_FEED
@@ -2169,7 +2272,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDZ
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDZ = {
@@ -2187,10 +2290,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDZ
             country_event = {
@@ -2209,7 +2311,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDV }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 445
         capital_scope = {
             NOT = { region = khorasan_region }
@@ -2217,15 +2319,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            khorasan_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = khorasan_region
+                }
                 add_core = RDV
+                remove_core = ROOT
             }
             release = RDV
             create_subject = {
@@ -2236,13 +2339,13 @@ custom_button = {
                 change_primary_culture = perso_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 445
-            }
-            445 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -2257,22 +2360,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDV
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = khorasan_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            khorasan_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = khorasan_region
+                }
                 add_core = RDV
                 cede_province = RDV
+                remove_core = ROOT
             }
         }
     }
@@ -2286,7 +2391,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDV
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDV = {
@@ -2304,10 +2409,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDV
             country_event = {
@@ -2326,7 +2430,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDJ }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 507
         capital_scope = {
             NOT = { superregion = india_superregion }
@@ -2334,31 +2438,24 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            west_india_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDJ
-            }
-            hindusthan_region = {
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            area = baghelkhand_area
-                            area = purvanchal_area
-                            area = bihar_area
-                            area = mithila_area
-                            area = nepal_area 
-                        }
+                    OR = {
+                        region = west_india_region
+                        region = hindusthan_region
                     }
+                    NOT = { area = baghelkhand_area }
+                    NOT = { area = purvanchal_area }
+                    NOT = { area = bihar_area }
+                    NOT = { area = mithila_area }
+                    NOT = { area = nepal_area }
                 }
-                remove_core = ROOT
                 add_core = RDJ
+                remove_core = ROOT
             }
             release = RDJ
             create_subject = {
@@ -2369,13 +2466,13 @@ custom_button = {
                 change_primary_culture = indo_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 507
-            }
-            507 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -2390,52 +2487,40 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDJ
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = west_india_region
-                AND = {
-                    region = hindusthan_region
-                    NOT = { 
-                        OR = {
-                            area = baghelkhand_area
-                            area = purvanchal_area
-                            area = bihar_area
-                            area = mithila_area
-                            area = nepal_area 
-                        }
-                    }
-                }
+                region = hindusthan_region
             }
+            NOT = { area = baghelkhand_area }
+            NOT = { area = purvanchal_area }
+            NOT = { area = bihar_area }
+            NOT = { area = mithila_area }
+            NOT = { area = nepal_area }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            west_india_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDJ
-                cede_province = RDJ
-            }
-            hindusthan_region = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            area = baghelkhand_area
-                            area = purvanchal_area
-                            area = bihar_area
-                            area = mithila_area
-                            area = nepal_area 
-                        }
+                    OR = {
+                        region = west_india_region
+                        region = hindusthan_region
                     }
+                    NOT = { area = baghelkhand_area }
+                    NOT = { area = purvanchal_area }
+                    NOT = { area = bihar_area }
+                    NOT = { area = mithila_area }
+                    NOT = { area = nepal_area }
                 }
                 add_core = RDJ
                 cede_province = RDJ
+                remove_core = ROOT
             }
         }
     }
@@ -2449,7 +2534,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDJ
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDJ = {
@@ -2467,10 +2552,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDJ
             country_event = {
@@ -2489,7 +2573,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDK }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 563
         capital_scope = {
             NOT = { superregion = india_superregion }
@@ -2497,50 +2581,25 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            bengal_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = bengal_region
+                        area = baghelkhand_area
+                        area = purvanchal_area
+                        area = bihar_area
+                        area = mithila_area
+                        area = nepal_area
+                        area = berar_area
+                        area = gondwana_area
+                    }
+                }
                 add_core = RDK
-            }
-            baghelkhand_area = {
-                limit = { owned_by = ROOT }
                 remove_core = ROOT
-                add_core = RDK
-            }
-            purvanchal_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
-            }
-            bihar_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
-            }
-            mithila_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
-            }
-            nepal_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
-            }
-            berar_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
-            }
-            gondwana_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDK
             }
             release = RDK
             create_subject = {
@@ -2551,13 +2610,13 @@ custom_button = {
                 change_primary_culture = indo_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 563
-            }
-            563 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -2572,7 +2631,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDK
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = bengal_region
@@ -2584,55 +2643,30 @@ custom_button = {
                 area = berar_area
                 area = gondwana_area
             }
-            
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            bengal_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = bengal_region
+                        area = baghelkhand_area
+                        area = purvanchal_area
+                        area = bihar_area
+                        area = mithila_area
+                        area = nepal_area
+                        area = berar_area
+                        area = gondwana_area
+                    }
+                }
                 add_core = RDK
                 cede_province = RDK
-            }
-            baghelkhand_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            purvanchal_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            bihar_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            mithila_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            nepal_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            berar_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
-            }
-            gondwana_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDK
-                cede_province = RDK
+                remove_core = ROOT
             }
         }
     }
@@ -2646,7 +2680,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDK
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDK = {
@@ -2664,10 +2698,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDK
             country_event = {
@@ -2686,7 +2719,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDL }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 541
         capital_scope = {
             NOT = { superregion = india_superregion }
@@ -2694,28 +2727,21 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            coromandel_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDL
-            }
-            deccan_region = {
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            area = berar_area
-                            area = gondwana_area
-                        }
+                    OR = {
+                        region = coromandel_region
+                        region = deccan_region
                     }
+                    NOT = { area = berar_area }
+                    NOT = { area = gondwana_area }
                 }
-                remove_core = ROOT
                 add_core = RDL
+                remove_core = ROOT
             }
             release = RDL
             create_subject = {
@@ -2726,13 +2752,13 @@ custom_button = {
                 change_primary_culture = indo_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 541
-            }
-            541 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -2747,46 +2773,34 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDL
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = coromandel_region
-                AND = {
-                    region = deccan_region
-                    NOT = { 
-                        OR = {
-                            area = berar_area
-                            area = gondwana_area
-                        }
-                    }
-                }
+                region = deccan_region
             }
+            NOT = { area = berar_area }
+            NOT = { area = gondwana_area }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            coromandel_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDL
-                cede_province = RDL
-            }
-            deccan_region = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
-                    NOT = { 
-                        OR = {
-                            area = berar_area
-                            area = gondwana_area
-                        }
+                    OR = {
+                        region = coromandel_region
+                        region = deccan_region
                     }
+                    NOT = { area = berar_area }
+                    NOT = { area = gondwana_area }
                 }
                 add_core = RDL
                 cede_province = RDL
+                remove_core = ROOT
             }
         }
     }
@@ -2800,7 +2814,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDL
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDL = {
@@ -2818,10 +2832,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDL
             country_event = {
@@ -2840,7 +2853,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDR }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 153
         capital_scope = {
             NOT = { region = carpathia_region }
@@ -2848,15 +2861,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            carpathia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = carpathia_region
+                }
                 add_core = RDR
+                remove_core = ROOT
             }
             release = RDR
             create_subject = {
@@ -2867,23 +2881,25 @@ custom_button = {
                 change_primary_culture = daco_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 153
-            }
-            153 = {
-                province_event = {
-                    id = ab_byzantium.108
-                }
-            }
-            if = {
-                limit = {
-                    OR = {
-                        overlord_of = WAL
-                        overlord_of = MOL
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
                     }
                 }
-                country_event = { id = ab_byzantium.58 }
+            }
+        }
+        if = {
+            limit = {
+                OR = {
+                    overlord_of = WAL
+                    overlord_of = MOL
+                }
+            }
+            country_event = {
+                id = ab_byzantium.58
             }
         }
     }
@@ -2897,22 +2913,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDR
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = carpathia_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            carpathia_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = carpathia_region
+                }
                 add_core = RDR
                 cede_province = RDR
+                remove_core = ROOT
             }
         }
     }
@@ -2926,7 +2944,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDR
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDR = {
@@ -2944,10 +2962,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDR
             country_event = {
@@ -2966,7 +2983,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDP }
     }
-    trigger = { 
+    trigger = {
         OR = {
             AND = {
                 owns_core_province = 677
@@ -2991,65 +3008,55 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            tibet_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDP
-            }
-            burma_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDP
-            }
-            xinan_region = {
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
+                    OR = {
+                        region = tibet_region
+                        region = burma_region
+                        region = xinan_region
+                    }
                     NOT = { area = sichuan_area }
                     NOT = { area = chuanbei_area }
                 }
-                remove_core = ROOT
                 add_core = RDP
+                remove_core = ROOT
             }
             release = RDP
             create_subject = {
                 who = RDP
                 subject_type = diocese_vassal
             }
-            RDP = {
-                change_primary_culture = tibeto_roman
-                change_religion = ROOT
-                change_government = republic
-                kill_ruler = yes
-                add_government_reform = rom_diocese
-            }
             if = {
-                limit = { has_country_flag = byz_conquer_tibet_first }
-                RDP = {
-                    set_capital = 677
-                    override_country_name = DIOCESISTIBETUM
+                limit = {
+                    has_country_flag = byz_conquer_tibet_first
                 }
-                677 = {
-                    province_event = {
-                        id = ab_byzantium.108
-                    }
+                RDP = {
+                    override_country_name = DIOCESISTIBETUM
+                    set_capital = 677
                 }
             }
             else = {
                 RDP = {
-                    set_capital = 586
                     override_country_name = DIOCESISBIRMANIA
+                    set_capital = 586
                 }
-                586 = {
+            }
+            RDP = {
+                change_primary_culture = tibeto_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                capital_scope = {
                     province_event = {
                         id = ab_byzantium.108
                     }
                 }
-            }  
+            }
         }
     }
     tooltip = AB_DIOCESE_TIBETUM
@@ -3062,44 +3069,36 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDP
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = tibet_region
                 region = burma_region
-                AND = {
-                    region = xinan_region
-                    NOT = { area = sichuan_area }
-                    NOT = { area = chuanbei_area }
-                }
+                region = xinan_region
             }
+            NOT = { area = sichuan_area }
+            NOT = { area = chuanbei_area }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            tibet_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDP
-                cede_province = RDP
-            }
-            burma_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDP
-                cede_province = RDP
-            }
-            xinan_region = {
+            every_owned_province = {
                 limit = {
-                    owned_by = ROOT
+                    OR = {
+                        region = tibet_region
+                        region = burma_region
+                        region = xinan_region
+                    }
                     NOT = { area = sichuan_area }
                     NOT = { area = chuanbei_area }
                 }
                 add_core = RDP
                 cede_province = RDP
+                remove_core = ROOT
             }
         }
     }
@@ -3113,7 +3112,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDP
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDP = {
@@ -3131,10 +3130,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDP
             country_event = {
@@ -3153,33 +3151,28 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDD }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 1816
         capital_scope = {
-            NOT = { region = north_china_region }
+            NOT = { superregion = china_superregion }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            north_china_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_china_region
+                        area = sichuan_area
+                        area = chuanbei_area
+                    }
+                }
                 add_core = RDD
-            }
-            sichuan_area = {
-                limit = { owned_by = ROOT }
                 remove_core = ROOT
-                add_core = RDD
-            }
-            chuanbei_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDD
             }
             release = RDD
             create_subject = {
@@ -3190,15 +3183,13 @@ custom_button = {
                 change_primary_culture = sino_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 1816
-            }
-            1816 = {
-                change_culture = sino_roman 
-                add_province_modifier = {
-                    name = byz_forced_romanized
-                    duration = 7300 
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3213,7 +3204,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDD
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = north_china_region
@@ -3224,25 +3215,21 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            north_china_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_china_region
+                        area = sichuan_area
+                        area = chuanbei_area
+                    }
+                }
                 add_core = RDD
                 cede_province = RDD
-            }
-            sichuan_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDD
-                cede_province = RDD
-            }
-            chuanbei_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDD
-                cede_province = RDD
+                remove_core = ROOT
             }
         }
     }
@@ -3256,7 +3243,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDD
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDD = {
@@ -3274,10 +3261,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDD
             country_event = {
@@ -3296,23 +3282,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDF }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 1821
         capital_scope = {
-            NOT = { region = south_china_region }
+            NOT = { superregion = china_superregion }
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            south_china_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = south_china_region
+                }
                 add_core = RDF
+                remove_core = ROOT
             }
             release = RDF
             create_subject = {
@@ -3323,13 +3310,13 @@ custom_button = {
                 change_primary_culture = sino_roman
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 1821
-            }
-            1821 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3344,22 +3331,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDF
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = south_china_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            south_china_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = south_china_region
+                }
                 add_core = RDF
                 cede_province = RDF
+                remove_core = ROOT
             }
         }
     }
@@ -3373,7 +3362,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDF
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDF = {
@@ -3391,10 +3380,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDF
             country_event = {
@@ -3413,7 +3401,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDG }
     }
-    trigger = { 
+    trigger = {
         OR = {
             AND = {
                 owns_core_province = 735
@@ -3438,25 +3426,20 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            japan_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = japan_region
+                        region = korea_region
+                        area = liaoning_area
+                    }
+                }
                 add_core = RDG
-            }
-            korea_region = {
-                limit = { owned_by = ROOT }
                 remove_core = ROOT
-                add_core = RDG
-            }
-            liaoning_area = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDG
             }
             release = RDG
             create_subject = {
@@ -3464,32 +3447,21 @@ custom_button = {
                 subject_type = diocese_vassal
             }
             if = {
-                limit = { has_country_flag = byz_center_of_far_east_korea }
+                limit = {
+                    has_country_flag = byz_center_of_far_east_korea
+                }
                 RDG = {
-                    set_capital = 735
                     override_country_name = DIOCESISCOREA
                     change_primary_culture = romano_korean
-                    change_religion = ROOT
-                    change_government = republic
-                    kill_ruler = yes
-                    add_government_reform = rom_diocese
+                    set_capital = 735
                     set_country_flag = enable_korean_palace_flag
-                }
-                735 = {
-                    province_event = {
-                        id = ab_byzantium.108
-                    }
                 }
             }
             else = {
                 RDG = {
-                    set_capital = 1020
                     override_country_name = DIOCESISIAPONIA
                     change_primary_culture = romano_japanese
-                    change_religion = ROOT
-                    change_government = republic
-                    kill_ruler = yes
-                    add_government_reform = rom_diocese
+                    set_capital = 1020
                     add_country_modifier = {
                         name = byz_roman_samurai
                         duration = -1
@@ -3499,12 +3471,18 @@ custom_button = {
                         duration = -1
                     }
                 }
-                1020 = {
+            }
+            RDG = {
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                capital_scope = {
                     province_event = {
                         id = ab_byzantium.108
                     }
                 }
-            }  
+            }
         }
     }
     tooltip = AB_DIOCESE_IAPONIA
@@ -3517,7 +3495,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDG
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
                 region = japan_region
@@ -3528,25 +3506,21 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            japan_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = japan_region
+                        region = korea_region
+                        area = liaoning_area
+                    }
+                }
                 add_core = RDG
                 cede_province = RDG
-            }
-            korea_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDG
-                cede_province = RDG
-            }
-            liaoning_area = {
-                limit = { owned_by = ROOT }
-                add_core = RDG
-                cede_province = RDG
+                remove_core = ROOT
             }
         }
     }
@@ -3560,7 +3534,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDG
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDG = {
@@ -3578,10 +3552,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDG
             country_event = {
@@ -3600,7 +3573,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDH }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 600
         capital_scope = {
             NOT = { region = indo_china_region }
@@ -3608,15 +3581,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            indo_china_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indo_china_region
+                }
                 add_core = RDH
+                remove_core = ROOT
             }
             release = RDH
             create_subject = {
@@ -3627,13 +3601,13 @@ custom_button = {
                 change_primary_culture = romano_tai
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 600
-            }
-            600 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3648,22 +3622,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDH
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = indo_china_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            indo_china_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = indo_china_region
+                }
                 add_core = RDH
                 cede_province = RDH
+                remove_core = ROOT
             }
         }
     }
@@ -3677,7 +3653,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDH
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDH = {
@@ -3695,10 +3671,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDH
             country_event = {
@@ -3717,7 +3692,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDB }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 596
         capital_scope = {
             NOT = { region = malaya_region }
@@ -3725,15 +3700,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            malaya_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = malaya_region
+                }
                 add_core = RDB
+                remove_core = ROOT
             }
             release = RDB
             create_subject = {
@@ -3744,13 +3720,13 @@ custom_button = {
                 change_primary_culture = romano_malay
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 596
-            }
-            596 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3765,22 +3741,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDB
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = malaya_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            malaya_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = malaya_region
+                }
                 add_core = RDB
                 cede_province = RDB
+                remove_core = ROOT
             }
         }
     }
@@ -3794,7 +3772,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDB
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDB = {
@@ -3812,10 +3790,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDB
             country_event = {
@@ -3834,7 +3811,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDN }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 630
         capital_scope = {
             NOT = { region = indonesia_region }
@@ -3842,15 +3819,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            indonesia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indonesia_region
+                }
                 add_core = RDN
+                remove_core = ROOT
             }
             release = RDN
             create_subject = {
@@ -3861,13 +3839,13 @@ custom_button = {
                 change_primary_culture = romano_malay
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 630
-            }
-            630 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3882,22 +3860,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDN
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = indonesia_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            indonesia_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = indonesia_region
+                }
                 add_core = RDN
                 cede_province = RDN
+                remove_core = ROOT
             }
         }
     }
@@ -3911,7 +3891,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDN
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDN = {
@@ -3929,10 +3909,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDN
             country_event = {
@@ -3951,7 +3930,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         NOT = { exists = RDS }
     }
-    trigger = { 
+    trigger = {
         owns_core_province = 651
         capital_scope = {
             NOT = { region = moluccas_region }
@@ -3959,15 +3938,16 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
-        hidden_effect = {	
-            moluccas_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = moluccas_region
+                }
                 add_core = RDS
+                remove_core = ROOT
             }
             release = RDS
             create_subject = {
@@ -3978,13 +3958,13 @@ custom_button = {
                 change_primary_culture = romano_malay
                 change_religion = ROOT
                 change_government = republic
-                kill_ruler = yes
                 add_government_reform = rom_diocese
+                kill_ruler = yes
                 set_capital = 651
-            }
-            651 = {
-                province_event = {
-                    id = ab_byzantium.108
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.108
+                    }
                 }
             }
         }
@@ -3999,22 +3979,24 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDS
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             region = moluccas_region
         }
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
-            moluccas_region = {
-                limit = { owned_by = ROOT }
+            every_owned_province = {
+                limit = {
+                    region = moluccas_region
+                }
                 add_core = RDS
                 cede_province = RDS
+                remove_core = ROOT
             }
         }
     }
@@ -4028,7 +4010,7 @@ custom_button = {
         has_country_flag = byz_diocese_menu_opened
         overlord_of = RDS
     }
-    trigger = { 
+    trigger = {
         custom_trigger_tooltip = {
             tooltip = AB_ALL_PROVINCES_ROMANIZED
             RDS = {
@@ -4046,10 +4028,9 @@ custom_button = {
 		is_at_war = no
 		is_free_or_tributary_trigger = yes
 		has_any_disaster = no
-		is_nomad = no
 		NOT = { overextension_percentage = 0.001 }
     }
-    effect = { 
+    effect = {
         hidden_effect = {
             inherit = RDS
             country_event = {
@@ -4060,365 +4041,136 @@ custom_button = {
     tooltip = AB_DIOCESE_ANNEX
 }
 
-#Diocesis Graecia
+#Diocesis Russia
 custom_button = {
-    name = ab_diocese_graecia_create
+    name = ab_diocese_russia_feed
     potential = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        NOT = { exists = RDC }
-        was_tag = UKR
-    }
-    trigger = { 
-        owns_core_province = 151
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
-        }
-        custom_trigger_tooltip = {
-            tooltip = AB_CAPITAL_OF_EMPIRE_KIEV
-            has_country_flag = ukr_romancapital_kiev
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {	
-            balkan_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { culture = illyro_roman }
-                }
-                remove_core = ROOT
-                add_core = RDC
-            }
-            anatolia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDC
-            }
-            release = RDC
-            create_subject = {
-                who = RDC
-                subject_type = diocese_vassal
-            }
-            RDC = {
-                change_primary_culture = greco_roman
-                change_religion = ROOT
-                change_government = republic
-                kill_ruler = yes
-                add_government_reform = rom_diocese
-                set_capital = 151
+        UKR = {
+            is_subject_of_type_with_overlord = {
+                who = ROOT
+                type = grand_diocese_vassal
             }
         }
     }
-    tooltip = AB_DIOCESE_GRAECIA
-}
-
-custom_button = {
-    name = ab_diocese_graecia_feed
-    potential = {
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        overlord_of = RDC
-        was_tag = UKR
-    }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
-                region = anatolia_region
-                AND = {
+                superregion = eastern_europe_superregion
+                superregion = tartary_superregion
+                region = manchuria_region
+                area = circassia_area
+                area = dagestan_area
+            }
+            NOT = {
+                OR = {
                     region = balkan_region
-                    NOT = { culture = illyro_roman }
+                    region = carpathia_region
+                    region = tibet_region
+                    area = crimea_area
+                    area = liaoning_area
                 }
-                AND = {
-                    region = caucasia_region
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        superregion = eastern_europe_superregion
+                        superregion = tartary_superregion
+                        region = manchuria_region
+                        area = circassia_area
+                        area = dagestan_area
+                    }
                     NOT = {
                         OR = {
-                            area = circassia_area
-                            area = dagestan_area
+                            region = balkan_region
+                            region = carpathia_region
+                            region = tibet_region
+                            area = crimea_area
+                            area = liaoning_area
                         }
                     }
-                    custom_trigger_tooltip = {
-                        tooltip = BYZ_CAUCASIA_PICKED_ANATOLIA
-                        ROM = { has_country_flag = rom_caucasia_isof_anatolia }
-                    }
                 }
-            }
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {
-            balkan_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { culture = illyro_roman }
-                }
-                add_core = RDC
-                cede_province = RDC
-            }
-            anatolia_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDC
-                cede_province = RDC
-            }
-            if = {
-                limit = { has_country_flag = rom_caucasia_isof_anatolia }
-                caucasia_region = {
-                    limit = {
-                        owned_by = ROOT
-                        NOT = {
-                            OR = {
-                                area = circassia_area
-                                area = dagestan_area
-                            }
-                        }
-                    }
-                    add_core = RDC
-                    cede_province = RDC
-                }
-            }
-        }
-    }
-    tooltip = AB_DIOCESE_GRAECIA_FEED
-}
-
-custom_button = {
-    name = ab_diocese_graecia_annex
-    potential = {
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        overlord_of = RDC
-        was_tag = UKR
-    }
-    trigger = { 
-        custom_trigger_tooltip = {
-            tooltip = AB_ALL_PROVINCES_ROMANIZED
-            RDC = {
-                all_owned_province = {
-                    culture_group = roman_g
-                }
-            }
-        }
-        custom_trigger_tooltip = {
-            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
-            RDC = {
-                NOT = { has_country_modifier = byz_friend_diocese }
-            }
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {
-            inherit = RDC
-            country_event = {
-                id = ab_byzantium.2005
-            }
-        }
-    }
-    tooltip = AB_DIOCESE_ANNEX
-}
-
-#Diocesis Graecia - Not Rus
-custom_button = {
-    name = ab_diocese_graecianotrus_create
-    potential = {
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        NOT = { exists = RDC }
-        NOT = { was_tag = UKR }
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
-        }
-    }
-    trigger = { 
-        owns_core_province = 151
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {	
-            balkan_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { culture = illyro_roman }
-                }
+                add_core = UKR
+                cede_province = UKR
                 remove_core = ROOT
-                add_core = RDC
-            }
-            anatolia_region = {
-                limit = { owned_by = ROOT }
-                remove_core = ROOT
-                add_core = RDC
-            }
-            release = RDC
-            create_subject = {
-                who = RDC
-                subject_type = diocese_vassal
-            }
-            if = {
-                limit = { religion = zoroastrian }
-                RDC = {
-                    change_primary_culture = romano_scythic
-                    change_religion = ROOT
-                    change_government = republic
-                    kill_ruler = yes
-                    add_government_reform = rom_diocese
-                    set_capital = 151
-                }
-            }
-            else = {
-                RDC = {
-                    change_primary_culture = greco_roman
-                    change_religion = ROOT
-                    change_government = republic
-                    kill_ruler = yes
-                    add_government_reform = rom_diocese
-                    set_capital = 151
-                }
             }
         }
     }
-    tooltip = AB_DIOCESE_GRAECIA
+    tooltip = AB_DIOCESE_RUSSIA_FEED
 }
 
+#Diocesis Tataria
 custom_button = {
-    name = ab_diocese_graecianotrus_feed
+    name = ab_diocese_tataria_feed
     potential = {
         has_government_attribute = ab_has_dioceses
         has_country_flag = byz_diocese_menu_opened
-        overlord_of = RDC
-        NOT = { was_tag = UKR }
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
+        GLH = {
+            is_subject_of_type_with_overlord = {
+                who = ROOT
+                type = grand_diocese_vassal
+            }
         }
     }
-    trigger = { 
+    trigger = {
         any_owned_province = {
             OR = {
-                region = anatolia_region
-                AND = {
+                superregion = eastern_europe_superregion
+                superregion = tartary_superregion
+                region = manchuria_region
+                area = circassia_area
+                area = dagestan_area
+            }
+            NOT = {
+                OR = {
                     region = balkan_region
-                    NOT = { culture = illyro_roman }
+                    region = carpathia_region
+                    region = tibet_region
+                    area = crimea_area
+                    area = liaoning_area
                 }
-                AND = {
-                    region = caucasia_region
+            }
+        }
+		is_at_war = no
+		is_free_or_tributary_trigger = yes
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        superregion = eastern_europe_superregion
+                        superregion = tartary_superregion
+                        region = manchuria_region
+                        area = circassia_area
+                        area = dagestan_area
+                    }
                     NOT = {
                         OR = {
-                            area = circassia_area
-                            area = dagestan_area
+                            region = balkan_region
+                            region = carpathia_region
+                            region = tibet_region
+                            area = crimea_area
+                            area = liaoning_area
                         }
                     }
-                    custom_trigger_tooltip = {
-                        tooltip = BYZ_CAUCASIA_PICKED_ANATOLIA
-                        ROM = { has_country_flag = rom_caucasia_isof_anatolia }
-                    }
                 }
-            }
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {
-            balkan_region = {
-                limit = {
-                    owned_by = ROOT
-                    NOT = { culture = illyro_roman }
-                }
-                add_core = RDC
-                cede_province = RDC
-            }
-            anatolia_region = {
-                limit = { owned_by = ROOT }
-                add_core = RDC
-                cede_province = RDC
-            }
-            if = {
-                limit = { has_country_flag = rom_caucasia_isof_anatolia }
-                caucasia_region = {
-                    limit = {
-                        owned_by = ROOT
-                        NOT = {
-                            OR = {
-                                area = circassia_area
-                                area = dagestan_area
-                            }
-                        }
-                    }
-                    add_core = RDC
-                    cede_province = RDC
-                }
+                add_core = GLH
+                cede_province = GLH
+                remove_core = ROOT
             }
         }
     }
-    tooltip = AB_DIOCESE_GRAECIA_FEED
-}
-
-custom_button = {
-    name = ab_diocese_graecianotrus_annex
-    potential = {
-        has_government_attribute = ab_has_dioceses
-        has_country_flag = byz_diocese_menu_opened
-        overlord_of = RDC
-        NOT = { was_tag = UKR }
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
-        }
-    }
-    trigger = { 
-        custom_trigger_tooltip = {
-            tooltip = AB_ALL_PROVINCES_ROMANIZED
-            RDC = {
-                all_owned_province = {
-                    culture_group = roman_g
-                }
-            }
-        }
-        custom_trigger_tooltip = {
-            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
-            RDC = {
-                NOT = { has_country_modifier = byz_friend_diocese }
-            }
-        }
-		is_at_war = no
-		is_free_or_tributary_trigger = yes
-		has_any_disaster = no
-		is_nomad = no
-		NOT = { overextension_percentage = 0.001 }
-    }
-    effect = { 
-        hidden_effect = {
-            inherit = RDC
-            country_event = {
-                id = ab_byzantium.2005
-            }
-        }
-    }
-    tooltip = AB_DIOCESE_ANNEX
+    tooltip = AB_DIOCESE_RUSSIA_FEED
 }
