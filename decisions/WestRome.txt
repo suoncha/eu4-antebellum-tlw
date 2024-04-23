@@ -19,8 +19,9 @@ country_decisions = {
 				culture_group = iberian
 				culture_group = latin
 				culture_group = germanic
-				culture = welsh
-				culture = briton
+				culture_group = scandinavian
+				primary_culture = welsh
+				primary_culture = briton
 			}
 			capital_scope = {
 				superregion = europe_superregion
@@ -34,7 +35,10 @@ country_decisions = {
 			if = {
 				limit = {
 					ROOT = {
-						culture_group = gaelic
+						OR = {
+							culture_group = gaelic
+							culture_group = scandinavian
+						}
 					}
 				}
 				OR = {
@@ -77,7 +81,10 @@ country_decisions = {
 			}
 			if = {
 				limit = {
-					culture_group = gaelic
+					OR = {
+						culture_group = gaelic
+						culture_group = scandinavian
+					}
 				}
 				british_isles_region = {
 					type = all
@@ -110,10 +117,10 @@ country_decisions = {
 		}
 
 		effect = {
+			set_country_flag = formed_westrome_flag
 			change_tag = WRE
 			on_change_tag_effect = yes
 			add_prestige = 25
-			set_country_flag = formed_westrome_flag
 			if = {
 				limit = {
 					NOT = { government_rank = 3 }
@@ -121,23 +128,7 @@ country_decisions = {
 				set_government_rank = 3
 			}
 			custom_tooltip = AB_EMPTY
-			if = {
-				limit = {
-					is_part_of_hre = yes
-					is_elector = no
-					is_emperor = no
-				}
-				emperor = {
-					add_opinion = {
-						who = ROOT
-						modifier = opinion_left_empire
-					}
-				}
-				set_in_empire = no
-				emperor = {
-					country_event = { id = hre_event.5 }
-				}
-			}
+			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -190,8 +181,10 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			country_event = {
-				id = ab_byzantium.87
+			hidden_effect = {
+				country_event = {
+					id = ab_byzantium.87
+				}
 			}
 		}
 		

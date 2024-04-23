@@ -2,6 +2,7 @@ country_decisions = {
 	#Catholic
 	restore_roman_empire = {
 		major = yes
+
 		potential = {
 			normal_or_historical_nations = yes
 			NOT = { has_country_flag = restored_rome_flag }
@@ -9,7 +10,7 @@ country_decisions = {
 				ai = no
 				is_playing_custom_nation = no
 			}
-			NOT = { tag = ROM }
+			NOT = { exists = ROM }
 			tag = WRE
 		}
 
@@ -128,15 +129,29 @@ country_decisions = {
 			religion = catholic
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			is_nomad = no
 		}
 
 		effect = {
+			set_country_flag = restored_rome_flag
 			change_tag = ROM
 			on_change_tag_effect = yes
 			if = {
 				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			swap_non_generic_missions = yes
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
 					was_tag = VSG
+					OR = {
+						overlord_of = VSV
+						overlord_of = VSO
+						overlord_of = VSS
+						overlord_of = LAT
+					}
 				}
 				if = {
 					limit = {
@@ -162,6 +177,7 @@ country_decisions = {
 					}
 					inherit = LAT
 				}
+				custom_tooltip = AB_EMPTY
 			}
 			else_if = {
 				limit = {
@@ -169,39 +185,72 @@ country_decisions = {
 				}
 				set_country_flag = rom_belgica_isof_gallia
 			}
-			set_government_rank = 3
-			swap_non_generic_missions = yes
-			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
 			if = {
-				limit = { culture_group = gaelic }
+				limit = {
+					culture_group = gaelic
+				}
 				change_primary_culture = romano_british
 				hidden_effect = {
 					set_heir_culture = romano_british
 					set_ruler_culture = romano_british
+					every_province = {
+						limit = {
+							culture_group = gaelic
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = romano_british
+					}
 				}
 			}
 			else_if = {
-				limit = { culture_group = iberian }
+				limit = {
+					culture_group = iberian
+				}
 				change_primary_culture = hispano_roman
 				hidden_effect = {
 					set_heir_culture = hispano_roman
 					set_ruler_culture = hispano_roman
+					every_province = {
+						limit = {
+							culture_group = iberian
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = hispano_roman
+					}
 				}
 			}
 			else_if = {
-				limit = { culture_group = french }
+				limit = {
+					culture_group = french
+				}
 				change_primary_culture = gallo_roman
 				hidden_effect = {
 					set_heir_culture = gallo_roman
 					set_ruler_culture = gallo_roman
+					every_province = {
+						limit = {
+							culture_group = french
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = gallo_roman
+					}
 				}
 			}
 			else_if = {
-				limit = { culture_group = germanic }
+				limit = {
+					culture_group = germanic
+				}
 				change_primary_culture = romano_germanic
 				hidden_effect = {
 					set_heir_culture = romano_germanic
 					set_ruler_culture = romano_germanic
+					every_province = {
+						limit = {
+							culture_group = germanic
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = romano_germanic
+					}
 				}
 			}
 			else = {
@@ -209,70 +258,45 @@ country_decisions = {
 				hidden_effect = {
 					set_heir_culture = roman_new
 					set_ruler_culture = roman_new
-				}
-			}
-			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						OR = {
-							culture = greek
-							culture = pontic_greek
-							culture = goths
-							province_id = 151
+					every_province = {
+						limit = {
+							culture_group = latin
+							country_or_non_sovereign_subject_holds = ROOT
 						}
-					}
-					change_culture = greco_roman
-				}
-				every_owned_province = {
-					limit = {
-						region = balkan_region
-						NOT = { culture = greco_roman }	
-						NOT = { province_id = 151 }
-					}
-					change_culture = illyro_roman
-				}
-				if = {
-					limit = { primary_culture = romano_british }
-					every_owned_province = {
-						limit = { culture_group = gaelic }
-						change_culture = romano_british
-					}
-				}
-				else_if = {
-					limit = { primary_culture = hispano_roman }
-					every_owned_province = {
-						limit = { culture_group = iberian }
-						change_culture = hispano_roman
-					}
-				}
-				else_if = {
-					limit = { primary_culture = gallo_roman }
-					every_owned_province = {
-						limit = { culture_group = french }
-						change_culture = gallo_roman
-					}
-				}
-				else_if = {
-					limit = { primary_culture = romano_germanic }
-					every_owned_province = {
-						limit = { culture_group = germanic }
-						change_culture = romano_germanic
-					}
-				}
-				else = {
-					every_owned_province = {
-						limit = { culture_group = latin }
 						change_culture = roman_new
 					}
 				}
-				every_subject_country = {
-					limit = { culture_group = byzantine }
-					change_primary_culture = greco_roman
-					set_heir_culture = greco_roman
-					set_ruler_culture = greco_roman
+			}
+			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							culture_group = byzantine
+							province_id = 151
+						}
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = turkish_christian
+								culture = goths
+								province_id = 151
+							}
+						}
+						change_culture = greco_roman
+					}
+					else = {
+						change_culture = illyro_roman
+					}
 				}
 				every_subject_country = {
-					limit = { is_colonial_nation = yes }
+					limit = {
+						is_colonial_nation = yes
+					}
 					change_primary_culture = ROOT
 					set_heir_culture = ROOT
 					set_ruler_culture = ROOT
@@ -280,10 +304,13 @@ country_decisions = {
 			}
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
-					limit = { is_part_of_hre = yes }
+					limit = {
+						is_part_of_hre = yes
+					}
 					set_in_empire = no
 				}
 				118 = {
@@ -293,6 +320,7 @@ country_decisions = {
 					}
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
@@ -301,8 +329,11 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			set_country_flag = restored_rome_flag
-			country_event = { id = ab_byzantium.67 }
+			hidden_effect = {
+				country_event = {
+					id = ab_byzantium.67
+				}
+			}
 		}
 		
 		ai_will_do = {
