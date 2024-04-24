@@ -14,9 +14,7 @@ country_decisions = {
 			OR = {
 				tag = BYZ
 				tag = LAT
-				primary_culture = sclavinian
-				primary_culture = turkish_christian
-				mission_completed = ab_rus_restoration
+				has_country_flag = ab_unlock_byzantine_rome
 			}
 		}
 
@@ -131,6 +129,7 @@ country_decisions = {
 					tooltip = BYZ_RESOLVED_16TH
 					has_country_flag = had_16th_crisis
 				}
+				religion = orthodox
 			}
 			else_if = {
 				limit = {
@@ -150,18 +149,21 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					mission_completed = ab_rus_restoration
+					OR = {
+						tag = UKR
+						tag = PLC
+					}
 				}
 				if = {
 					limit = {
 						religion = catholic
 					}
-					religion = catholic
 					overlord_of = LAT
+					religion = catholic
 				}
 				else = {
-					religion = orthodox
 					overlord_of = BYZ
+					religion = orthodox
 				}
 			}
 			else = {
@@ -170,13 +172,75 @@ country_decisions = {
 			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			is_nomad = no
 		}
 
 		effect = {
-			add_prestige = 25
+			set_country_flag = restored_rome_flag
+			# Name
 			if = {
-				limit = { has_country_flag = byz_restore_republic }
+				limit = {
+					primary_culture = sclavinian
+				}
+				custom_tooltip = SER_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = IMPERIUMSCLAVINIUM
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture_group = east_slavic
+						culture_group = west_slavic
+					}
+				}
+				if = {
+					limit = {
+						overlord_of = BYZ
+					}
+					inherit = BYZ
+				}
+				else_if = {
+					limit = {
+						overlord_of = LAT
+					}
+					inherit = LAT
+				}
+				if = {
+					limit = {
+						culture_group = east_slavic
+					}
+					custom_tooltip = UKR_NAMECHANGE_ROME
+					hidden_effect = {
+						change_tag = ROM
+						override_country_name = IMPERIUMRUSSIUM
+					}
+				}
+				else = {
+					custom_tooltip = POL_NAMECHANGE_ROME
+					hidden_effect = {
+						change_tag = ROM
+						override_country_name = IMPERIUMPOLONIUM
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = turkish_christian
+				}
+				custom_tooltip = RUM_NAMECHANGE_ROME
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = IMPERIUMTURCIUM
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						government = republic
+						has_country_flag = byz_restore_republic
+					}
+				}
 				custom_tooltip = BYZ_NAMECHANGE_REPUBLIC
 				hidden_effect = {
 					change_tag = ROM
@@ -184,72 +248,88 @@ country_decisions = {
 				}
 			}
 			else_if = {
-				limit = { primary_culture = sclavinian }
-				custom_tooltip = SER_NAMECHANGE_ROME
-				hidden_effect = {
-					change_tag = ROM
-					override_country_name = SCLAVINIAROME
-				}
-			}
-			else_if = {
 				limit = {
-					government = monarchy
-					mission_completed = ab_rus_restoration
+					government = theocracy
 				}
-				custom_tooltip = UKR_NAMECHANGE_ROME
-				inherit = BYZ
+				custom_tooltip = BYZ_NAMECHANGE_THEOCRACY
 				hidden_effect = {
 					change_tag = ROM
-					override_country_name = RUSSIAROME
-				}
-			}
-			else_if = {
-				limit = { primary_culture = turkish_christian }
-				custom_tooltip = RUM_NAMECHANGE_ROME
-				hidden_effect = {
-					change_tag = ROM
-					override_country_name = RUMROME
+					override_country_name = ROMANTHEOCRACY
 				}
 			}
 			else = {
 				change_tag = ROM
-				hidden_effect = {
-					override_country_name = ROM
-				}
+				on_change_tag_effect = yes
 			}
-			set_government_rank = 3
-			swap_non_generic_missions = yes
 			if = {
 				limit = {
-					government = monarchy
-					mission_completed = ab_rus_restoration
+					NOT = { government_rank = 3 }
 				}
-				custom_tooltip = UKR_FASTER_ROMANIZATION
+				set_government_rank = 3
 			}
-			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
+			swap_non_generic_missions = yes
+			custom_tooltip = AB_EMPTY
+			# Constantinople
 			hidden_effect = {
 				if = {
-					limit = { has_country_flag = byz_court_latin }
-					151 = { change_culture = roman_new }
+					limit = {
+						has_country_flag = byz_court_latin
+					}
+					151 = {
+						change_culture = roman_new
+					}
 				}
 				else_if = {
-					limit = { primary_culture = sclavinian }
-					151 = { change_culture = illyro_roman }
+					limit = {
+						primary_culture = sclavinian
+					}
+					151 = {
+						change_culture = illyro_roman
+					}
 				}
 				else_if = {
-					limit = { primary_culture = turkish_christian }
-					151 = { change_culture = romano_scythic }
+					limit = {
+						culture_group = east_slavic
+					}
+					151 = {
+						change_culture = russo_roman
+					}
 				}
 				else_if = {
-					limit = { culture_group = french }
-					151 = { change_culture = gallo_roman }
+					limit = {
+						culture_group = west_slavic
+					}
+					151 = {
+						change_culture = romano_polish
+					}
+				}
+				else_if = {
+					limit = {
+						primary_culture = turkish_christian
+					}
+					151 = {
+						change_culture = romano_scythic
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = french
+					}
+					151 = {
+						change_culture = gallo_roman
+					}
 				}
 				else = {
-					151 = { change_culture = greco_roman }
+					151 = {
+						change_culture = greco_roman
+					}
 				}
 			}
+			# Culture
 			if = {
-				limit = { has_country_flag = byz_court_greek }
+				limit = {
+					has_country_flag = byz_court_greek
+				}
 				change_primary_culture = greco_roman
 				hidden_effect = {
 					set_heir_culture = greco_roman
@@ -257,7 +337,9 @@ country_decisions = {
 				}
 			}
 			else_if = {
-				limit = { primary_culture = sclavinian }
+				limit = {
+					primary_culture = sclavinian
+				}
 				change_primary_culture = illyro_roman
 				hidden_effect = {
 					set_heir_culture = illyro_roman
@@ -266,17 +348,30 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					government = monarchy
-					mission_completed = ab_rus_restoration
+					culture_group = east_slavic
 				}
 				change_primary_culture = russo_roman
 				hidden_effect = {
 					set_heir_culture = russo_roman
 					set_ruler_culture = russo_roman
 				}
+				custom_tooltip = UKR_FASTER_ROMANIZATION
 			}
 			else_if = {
-				limit = { primary_culture = turkish_christian }
+				limit = {
+					culture_group = west_slavic
+				}
+				change_primary_culture = romano_polish
+				hidden_effect = {
+					set_heir_culture = romano_polish
+					set_ruler_culture = romano_polish
+				}
+				custom_tooltip = POL_FASTER_ROMANIZATION
+			}
+			else_if = {
+				limit = {
+					primary_culture = turkish_christian
+				}
 				change_primary_culture = romano_scythic
 				hidden_effect = {
 					set_heir_culture = romano_scythic
@@ -284,13 +379,14 @@ country_decisions = {
 				}
 			}
 			else_if = {
-				limit = { culture_group = french }
+				limit = {
+					culture_group = french
+				}
 				change_primary_culture = gallo_roman
 				hidden_effect = {
 					set_heir_culture = gallo_roman
 					set_ruler_culture = gallo_roman
 				}
-				set_country_flag = byz_court_latin
 			}
 			else = {
 				change_primary_culture = roman_new
@@ -299,41 +395,37 @@ country_decisions = {
 					set_ruler_culture = roman_new
 				}
 			}
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
-				every_owned_province = {
+				every_province = {
 					limit = {
-						NOT = { province_id = 151 }
-						OR = {
-							culture = greek
-							culture = pontic_greek
-							culture = goths
+						culture_group = byzantine
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = goths
+							}
 						}
+						change_culture = greco_roman
 					}
-					change_culture = greco_roman
-				}
-				every_owned_province = {
-					limit = {
-						region = balkan_region
-						NOT = { culture = greco_roman }	
-						NOT = { province_id = 151 }
+					else_if = {
+						limit = {
+							culture = turkish_christian
+						}
+						change_culture = romano_scythic
 					}
-					change_culture = illyro_roman
-				}
-				every_owned_province = {
-					limit = {
-						NOT = { province_id = 151 }
-						culture = turkish_christian
+					else = {
+						change_culture = illyro_roman
 					}
-					change_culture = romano_scythic
 				}
 				every_subject_country = {
-					limit = { culture_group = byzantine }
-					change_primary_culture = greco_roman
-					set_heir_culture = greco_roman
-					set_ruler_culture = greco_roman
-				}
-				every_subject_country = {
-					limit = { is_colonial_nation = yes }
+					limit = {
+						is_colonial_nation = yes
+					}
 					change_primary_culture = ROOT
 					set_heir_culture = ROOT
 					set_ruler_culture = ROOT
@@ -344,10 +436,11 @@ country_decisions = {
 						random_owned_province = {
 							limit = {
 								OR = {
-									region = italy_region
+									superregion = europe_superregion
 									region = maghreb_region
-									region = iberia_region
+									region = carpathia_region
 								}
+								NOT = { area = carinthia_area }
 								NOT = { culture_group = roman_g }
 							}
 							province_event = {
@@ -357,18 +450,17 @@ country_decisions = {
                     "
                 }
 			}
+			custom_tooltip = AB_EMPTY
+			# The rest
 			add_ruler_personality = augustus_personality
-			if = {
-				limit = { has_country_flag = byz_restore_republic }
-				custom_tooltip = BYZ_ALWAYS_AUGUSTUS_REPUBLIC
-			}
-			else = {
-				custom_tooltip = BYZ_ALWAYS_AUGUSTUS
-			}
+			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
 				every_owned_province = {
-					limit = { is_part_of_hre = yes }
+					limit = {
+						is_part_of_hre = yes
+					}
 					set_in_empire = no
 				}
 				118 = {
@@ -377,30 +469,37 @@ country_decisions = {
 						id = ab_byzantium.108
 					}
 				}
-				if = {
-					limit = { mission_completed = byzantium_general_staff }
-					add_country_modifier = {
-						name = byz_general_staff_rome
-						duration = -1
-					}
-				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = { has_custom_ideas = no }
-				country_event = { id = ideagroups.1 }
+				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			set_country_flag = restored_rome_flag
-			country_event = { id = ab_byzantium.67 }
-			if = {
-				limit = {
-					government = monarchy
-					mission_completed = ab_rus_restoration
+			hidden_effect = {
+				country_event = {
+					id = ab_byzantium.67
 				}
-				country_event = { id = ab_byzantium.83 }
+				if = {
+					limit = {
+						mission_completed = byzantium_general_staff
+					}
+					add_country_modifier = {
+						name = byz_general_staff_rome
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						was_tag = UKR
+					}
+					country_event = {
+						id = ab_byzantium.83
+					}
+				}
 			}
 		}
 
@@ -412,8 +511,7 @@ country_decisions = {
 	italy_greek = {
 		potential = {
 			normal_or_historical_nations = yes
-			NOT = { has_country_flag = italy_greek_flag }
-			mission_completed = byzantium_landfall
+			has_country_flag = italy_greek_flag
 			culture = greek
 		}
 		
@@ -442,12 +540,13 @@ country_decisions = {
 			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			is_nomad = no
 		}
 
 		effect = {
+			clr_country_flag = italy_greek_flag
 			add_dip_power = -250
-			122 = {
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
 				add_devastation = 15 
 				change_culture = ROOT 
 				add_province_modifier = {
@@ -455,47 +554,26 @@ country_decisions = {
 					duration = 7300 
 				}
 			}
-			1934 = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = sicily_area
+							area = western_sicily_area
+							province_id = 122
+							province_id = 1934
+							province_id = 2984
+							province_id = 123
+						}
+					}
+					add_devastation = 15 
+					change_culture = ROOT 
+					add_province_modifier = {
+						name = byz_forced_hellenized
+						duration = 7300 
+					}
 				}
 			}
-			2984 = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
-				}
-			}
-			123 = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
-				}
-			}
-			sicily_area = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
-				}
-			}
-			western_sicily_area = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
-				}
-			}
-			set_country_flag = italy_greek_flag
 		}
 		
 		ai_will_do = {
@@ -506,8 +584,7 @@ country_decisions = {
 	levant_greek = {
 		potential = {
 			normal_or_historical_nations = yes
-			NOT = { has_country_flag = levant_greek_flag }
-		    mission_completed = byzantium_syria
+			has_country_flag = levant_greek_flag
 			culture = greek
 		}
 		
@@ -530,12 +607,13 @@ country_decisions = {
 			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			is_nomad = no
 		}
 		
 		effect = {
+			clr_country_flag = levant_greek_flag
 			add_dip_power = -300
-			palestine_area = {
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
 				add_devastation = 15 
 				change_culture = ROOT 
 				add_province_modifier = {
@@ -543,23 +621,23 @@ country_decisions = {
 					duration = 7300 
 				}
 			}
-			syria_area = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = palestine_area
+							area = syria_area
+							area = aleppo_area
+						}
+					}
+					add_devastation = 15 
+					change_culture = ROOT 
+					add_province_modifier = {
+						name = byz_forced_hellenized
+						duration = 7300 
+					}
 				}
 			}
-			aleppo_area = {
-				add_devastation = 15 
-				change_culture = ROOT 
-				add_province_modifier = {
-					name = byz_forced_hellenized
-					duration = 7300 
-				}
-			}
-			set_country_flag = levant_greek_flag
 		}
 
 		ai_will_do = {
@@ -584,14 +662,10 @@ country_decisions = {
 		allow = {
 			dip_power = 50
 			WAL = {
-				NOT = {
-					liberty_desire = 50
-				}
+				NOT = { liberty_desire = 50 }
 			}
 			MOL = {
-				NOT = {
-					liberty_desire = 50
-				}
+				NOT = { liberty_desire = 50 }
 			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
@@ -616,26 +690,33 @@ country_decisions = {
 		potential = {
 			normal_or_historical_nations = yes
 			NOT = { has_country_flag = rule_rus_byz_flag }
-			mission_completed = byzantium_heal_schism
 			UKR = {
 				NOT = { is_subject_of_type = grand_diocese_vassal }
-				NOT = { is_subject_of_type = personal_union }
 			}
 			OR = {
 				overlord_of = UKR
 				any_subject_country = {
 					has_reform = principality
-					NOT = { is_subject_of_type = personal_union }
 				}
 			}
+			religion_group = christian
 		}
 
 		allow = {
-			patriarch_authority = 1.0
 			if = {
-				limit = { overlord_of = UKR }
+				limit = {
+					religion = catholic
+				}
+				papal_influence = 100
+			}
+			else = {
+				patriarch_authority = 1
+			}
+			if = {
+				limit = {
+					overlord_of = UKR
+				}
 				UKR = {
-					NOT = { is_subject_of_type = personal_union }
 					has_opinion = {
 						who = ROOT
 						value = 200
@@ -657,40 +738,55 @@ country_decisions = {
 		}
 
 		effect = {
-			add_patriarch_authority = -1.0
+			set_country_flag = rule_rus_byz_flag
 			if = {
-				limit = { overlord_of = UKR }
-				if = {
-					limit = {
-						UKR = { NOT = { government = monarchy } }
-					}
-					UKR = {
-						change_government = monarchy
-						add_government_reform = tsardom
-					}
+				limit = {
+					religion = catholic
 				}
-				create_union = UKR
+				add_papal_influence = -100
 			}
 			else = {
-				every_subject_country = {
-					limit = {
-						has_reform = principality
-						is_subject_of = ROOT
-						has_opinion = {
-							who = ROOT
-							value = 200
-						}
-					}
-					ROOT = {
-						create_union = PREV
+				add_patriarch_authority = -1
+			}
+			if = {
+				limit = {
+					overlord_of = UKR
+				}
+				UKR = {
+					add_country_modifier = {
+						name = byz_loyal_union
+						duration = -1
 					}
 				}
 			}
-			set_country_flag = rule_rus_byz_flag
+			else = {
+				custom_tooltip = EVERY_REQUIRE_SUBJECT
+				tooltip = {
+					add_country_modifier = {
+						name = byz_loyal_union
+						duration = -1
+					}
+				}
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							has_reform = principality
+							has_opinion = {
+								who = ROOT
+								value = 200
+							}
+						}
+						add_country_modifier = {
+							name = byz_loyal_union
+							duration = -1
+						}
+					}
+				}
+			}
 		}
 		
 		ai_will_do = {
-			factor = 1
+			factor = 0
 		}
 	}
 
@@ -699,10 +795,14 @@ country_decisions = {
 
 		potential = {
 			has_country_flag = unlock_decision_strategos_specialty
-			NOT = { has_country_modifier = byz_fire_focused }
-			NOT = { has_country_modifier = byz_shock_focused }
-			NOT = { has_country_modifier = byz_manuever_focused }
-			NOT = { has_country_modifier = byz_siege_focused }
+			NOT = {
+				OR = {
+					has_country_modifier = byz_fire_focused
+					has_country_modifier = byz_shock_focused
+					has_country_modifier = byz_manuever_focused
+					has_country_modifier = byz_siege_focused
+				}
+			}
 		}
 
 		allow = {
@@ -710,6 +810,7 @@ country_decisions = {
 		}
 		
 		effect = {
+			clr_country_flag = unlock_decision_strategos_specialty
 			add_mil_power = -50
 			country_event = {
 				id = ab_byzantium.72

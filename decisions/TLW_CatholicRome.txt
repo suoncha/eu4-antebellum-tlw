@@ -133,25 +133,10 @@ country_decisions = {
 
 		effect = {
 			set_country_flag = restored_rome_flag
-			change_tag = ROM
-			on_change_tag_effect = yes
-			if = {
-				limit = {
-					NOT = { government_rank = 3 }
-				}
-				set_government_rank = 3
-			}
-			swap_non_generic_missions = yes
-			custom_tooltip = AB_EMPTY
+			# Inherit & Flag
 			if = {
 				limit = {
 					was_tag = VSG
-					OR = {
-						overlord_of = VSV
-						overlord_of = VSO
-						overlord_of = VSS
-						overlord_of = LAT
-					}
 				}
 				if = {
 					limit = {
@@ -177,7 +162,6 @@ country_decisions = {
 					}
 					inherit = LAT
 				}
-				custom_tooltip = AB_EMPTY
 			}
 			else_if = {
 				limit = {
@@ -185,6 +169,40 @@ country_decisions = {
 				}
 				set_country_flag = rom_belgica_isof_gallia
 			}
+			# Name
+			if = {
+				limit = {
+					government = republic
+				}
+				custom_tooltip = BYZ_NAMECHANGE_REPUBLIC
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = ROMANREPUBLIC
+				}
+			}
+			else_if = {
+				limit = {
+					government = theocracy
+				}
+				custom_tooltip = BYZ_NAMECHANGE_THEOCRACY
+				hidden_effect = {
+					change_tag = ROM
+					override_country_name = ROMANTHEOCRACY
+				}
+			}
+			else = {
+				change_tag = ROM
+				on_change_tag_effect = yes
+			}
+			if = {
+				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			swap_non_generic_missions = yes
+			custom_tooltip = AB_EMPTY
+			# Culture
 			if = {
 				limit = {
 					culture_group = gaelic
@@ -253,6 +271,23 @@ country_decisions = {
 					}
 				}
 			}
+			else_if = {
+				limit = {
+					culture_group = scandinavian
+				}
+				change_primary_culture = romano_nordic
+				hidden_effect = {
+					set_heir_culture = romano_nordic
+					set_ruler_culture = romano_nordic
+					every_province = {
+						limit = {
+							culture_group = scandinavian
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = romano_nordic
+					}
+				}
+			}
 			else = {
 				change_primary_culture = roman_new
 				hidden_effect = {
@@ -302,6 +337,8 @@ country_decisions = {
 					set_ruler_culture = ROOT
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			# The rest
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = AB_EMPTY

@@ -855,6 +855,7 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = had_16th_crisis
+			clear_global_event_target = italianLeagueLeader
 		}
 	}
 
@@ -1812,7 +1813,6 @@ country_event = {
 					remove_core = BYZ
 				}
 			}
-			clear_global_event_target = italianLeagueLeader
 		}
 
 	}
@@ -1916,7 +1916,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.31.a
 		set_country_flag = byz_crisis_italians
-		clear_global_event_target = italianLeagueLeader
 		custom_tooltip = BYZ_CHEAPER_ITALY_CONQUEST
 	}
 }
@@ -1947,7 +1946,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.32.a
 		set_country_flag = byz_crisis_italians
-		clear_global_event_target = italianLeagueLeader
 	}
 }
 
@@ -2072,7 +2070,6 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.34.a
 		set_country_flag = byz_crisis_italians
-		clear_global_event_target = italianLeagueLeader
 	}
 }
 
@@ -2352,13 +2349,11 @@ country_event = {
 			limit = {
 				province_is_diocese_land_trigger = yes
 				OR = {
-					AND = {
-						superregion = europe_superregion
-						NOT = { area = carinthia_area }
-					}
+					superregion = europe_superregion
 					region = maghreb_region
 					region = carpathia_region
 				}
+				NOT = { area = carinthia_area }
 			}
 			add_permanent_province_modifier = {
 				name = byz_revolting_province_centre
@@ -2379,13 +2374,11 @@ province_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				superregion = europe_superregion
-				NOT = { area = carinthia_area }
-			}
+			superregion = europe_superregion
 			region = maghreb_region
 			region = carpathia_region
 		}
+		NOT = { area = carinthia_area }
 		ROM = {
 			has_disaster = byzantium_biased_cultural_sphere
 			has_country_flag = byz_revolt_latinsphere
@@ -2444,13 +2437,11 @@ country_event = {
 				limit = {
 					province_is_diocese_land_trigger = yes
 					OR = {
-						AND = {
-							superregion = europe_superregion
-							NOT = { area = carinthia_area }
-						}
+						superregion = europe_superregion
 						region = maghreb_region
 						region = carpathia_region
 					}
+					NOT = { area = carinthia_area }
 					OR = {
 						has_province_modifier = byz_revolting_province_centre
 						has_province_modifier = byz_revolting_province
@@ -2563,13 +2554,11 @@ country_event = {
 					limit = {
 						province_is_diocese_land_trigger = yes
 						OR = {
-							AND = {
-								superregion = europe_superregion
-								NOT = { area = carinthia_area }
-							}
+							superregion = europe_superregion
 							region = maghreb_region
 							region = carpathia_region
 						}
+						NOT = { area = carinthia_area }
 					}
 					spawn_rebels = {
 						type = leadered_peasant_rebels
@@ -4185,7 +4174,6 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
-			clear_global_event_target = dioceseLeader
 			clr_country_flag = byz_rus_join_civil_war_3years
 			clr_country_flag = byz_rus_join_civil_war_5years
 			clr_country_flag = byz_rus_join_civil_war_no
@@ -4239,19 +4227,33 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			if = {
-				limit = { exists = PER }
-				PER = { save_global_event_target_as = crisisPersia }
+				limit = {
+					exists = PER
+				}
+				PER = {
+					save_global_event_target_as = crisisPersia
+				}
 			}
 			else_if = {
-				limit = { exists = PRC }
-				PRC = { save_global_event_target_as = crisisPersia }
+				limit = {
+					exists = PRC
+				}
+				PRC = {
+					save_global_event_target_as = crisisPersia
+				}
 			}
 			else_if = {
-				limit = { exists = PMN }
-				PMN = { save_global_event_target_as = crisisPersia }
+				limit = {
+					exists = PMN
+				}
+				PMN = {
+					save_global_event_target_as = crisisPersia
+				}
 			}
 			else = {
-				PRZ = { save_global_event_target_as = crisisPersia }
+				PRZ = {
+					save_global_event_target_as = crisisPersia
+				}
 			}
 		}
 	}
@@ -4305,6 +4307,12 @@ country_event = {
 	is_triggered_only = yes
 
 	hidden = yes 
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = byz_crisis_persians
+		}
+	}
 
 	option = {
 		name = ab_byzantium_disaster.72.a
@@ -5253,23 +5261,36 @@ country_event = {
 	
 	is_triggered_only = yes
 
-	hidden = yes 
+	hidden = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_country_flag = had_byz_dragon_emperor
+			clr_country_flag = byz_crisis_chineses
+			remove_country_modifier = byz_disaster_debuff1
+			remove_country_modifier = byz_disaster_debuff2
+			remove_country_modifier = byz_disaster_debuff3
+			remove_country_modifier = byz_disaster_debuff4
+			clear_global_event_target = romanChinaInvasionHorde
+			clear_global_event_target = romanChinaInvasionJapan
+			clear_global_event_target = romanChinaInvasionKorea
+		}
+	}
 
 	option = {
 		name = ab_byzantium_disaster.89.a
-		set_country_flag = had_byz_dragon_emperor
-		remove_country_modifier = byz_disaster_debuff1
-		remove_country_modifier = byz_disaster_debuff2
-		remove_country_modifier = byz_disaster_debuff3
-		remove_country_modifier = byz_disaster_debuff4
+		tooltip = {
+			remove_country_modifier = byz_disaster_debuff1
+			remove_country_modifier = byz_disaster_debuff2
+			remove_country_modifier = byz_disaster_debuff3
+			remove_country_modifier = byz_disaster_debuff4
+		}
 		if = {
 			limit = { exists = event_target:EmperorOfChina }
 			event_target:EmperorOfChina = {
 				remove_country_modifier = byz_china_defense
 			}
 		}
-		clear_global_event_target = romanChinaInvasionJapan
-		clear_global_event_target = romanChinaInvasionKorea
 	}
 }
 

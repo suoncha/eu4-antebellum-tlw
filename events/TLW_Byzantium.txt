@@ -470,14 +470,17 @@ province_event = {
 		}
 		modifier = {
 			factor = 0.5
+			culture_group = west_slavic
+			ROM = { was_tag = PLC }
+		}
+		modifier = {
+			factor = 0.5
 			OR = {
-				AND = {
-					superregion = europe_superregion
-					NOT = { area = carinthia_area }
-				}
+				superregion = europe_superregion
 				region = maghreb_region
 				region = carpathia_region
 			}
+			NOT = { area = carinthia_area }
 			ROM = {
 				has_country_flag = byz_faster_romanization_latincities
 			}
@@ -1313,6 +1316,21 @@ country_event = {
 
 	is_triggered_only = yes
 
+	# Flag clearing to optimize performance
+	after = {
+		hidden_effect = {
+			clr_country_flag = byz_court_latin
+			clr_country_flag = byz_court_mixed
+			clr_country_flag = byz_court_greek
+			clr_country_flag = byz_restore_republic
+			clr_country_flag = rus_released_byzantium
+			clr_country_flag = rus_released_latin
+			clr_country_flag = lat_cant_trigger_events
+			clr_country_flag = restored_rome_flag
+			clr_country_flag = formed_westrome_flag
+		}
+	}
+
 	option = {
 		name = ab_byzantium.67.a
 		custom_tooltip = ROM_TRIGGERED_MODIFIERS_HERITAGE
@@ -1400,11 +1418,15 @@ country_event = {
 	id = ab_byzantium.68
 	title = ab_byzantium.68.t
 	desc = {
-		trigger = { NOT = { has_country_flag = byzrepublic_death_election } }
+		trigger = {
+			NOT = { has_country_flag = byzrepublic_death_election }
+		}
 		desc = ab_byzantium.68.d1
 	}
 	desc = {
-		trigger = { has_country_flag = byzrepublic_death_election }
+		trigger = {
+			has_country_flag = byzrepublic_death_election
+		}
 		desc = ab_byzantium.68.d2
 	}
 	picture = ELECTION_REPUBLICAN_eventPicture
@@ -1695,6 +1717,12 @@ country_event = {
 	picture = AB_BELISARIUS_eventPicture
 	
 	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			set_country_flag = unlock_decision_strategos_specialty
+		}
+	}
 	
 	option = {
 		name = ab_byzantium.72.a
