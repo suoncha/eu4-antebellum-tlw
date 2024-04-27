@@ -1,7 +1,7 @@
 namespace = ab_byzantium
 normal_or_historical_nations = yes
 
-# Belisarius
+# Belisarius Reborn
 country_event = {
 	id = ab_byzantium.47
 	title = ab_byzantium.47.t
@@ -20,6 +20,7 @@ country_event = {
 			name = "Belisarius"
 			trait = inspirational_leader_general_personality
 		}
+		custom_tooltip = AB_EMPTY
 		set_country_flag = unlock_decision_strategos_specialty
 		custom_tooltip = BYZSTRATEGOSRECRUIT
 	}
@@ -36,8 +37,7 @@ country_event = {
 	
 	option = {
 		name = ab_byzantium.48.a
-		add_army_professionalism = 0.05
-		add_army_tradition = 20
+		add_army_tradition_or_mil_power = { amount = 20 }
 		add_country_modifier = {
 			name = byz_militarization
 			duration = 3650
@@ -45,71 +45,50 @@ country_event = {
 	}
 }
 
-#Hellenization of Roman Thracia
-country_event = { 
+#Hellenization of the Bulgars
+country_event = {
 	id = ab_byzantium.49
-	title = ab_byzantium.49.t 
-	desc = ab_byzantium.49.d 
+	title = ab_byzantium.49.t
+	desc = ab_byzantium.49.d
 	picture = BYZ_COURT_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ab_byzantium.49.a 
-		silistria_area = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
-			}
+		name = ab_byzantium.49.a
+		add_mil_power = 100
+		add_ruler_modifier = {
+			name = byzantium_slayer
+			duration = -1
 		}
-		bulgaria_area = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
-			}
-		}
-		3001 = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
-			}
-		}
-		4780 = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
-			}
-		}
-		1764 = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
+		custom_tooltip = BYZ_HELLENIZED_BULGARIANS
+		hidden_effect = {
+			replace_culture_with_effect = {
+				new_culture = Illyrian
+				old_culture_1 = bulgarian
 			}
 		}
 	}
 }
 
 #Hellenization of the Balkans
-country_event = { 
+country_event = {
 	id = ab_byzantium.50
-	title = ab_byzantium.50.t 
-	desc = ab_byzantium.50.d 
+	title = ab_byzantium.50.t
+	desc = ab_byzantium.50.d
 	picture = BYZ_COURT_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
-		name = ab_byzantium.50.a 
+		name = ab_byzantium.50.a
+		define_advisor = {
+			type = commandant
+			skill = 2
+			culture = Illyrian
+			cost_multiplier = 0.5
+		}
+		custom_tooltip = AB_EMPTY
 	    custom_tooltip = BYZ_HELLENIZED_BALKANS
 		hidden_effect = {
 			replace_culture_with_effect = {
@@ -117,167 +96,202 @@ country_event = {
 				old_culture_1 = bosnian
 				old_culture_2 = serbian
 				old_culture_3 = croatian
-			}
-		}
-		east_adriatic_coast_area = {
-			add_devastation = 15 
-			change_culture = Illyrian 
-			add_province_modifier = {
-				name = byz_forced_hellenized
-				duration = 7300 
+				old_culture_4 = dalmatian
 			}
 		}
 	}
 }
 
-#War with Nicaea Info
-country_event = { 
+#Nicaean Invasion
+country_event = {
 	id = ab_byzantium.51
-	title = ab_byzantium.51.t 
-	desc = ab_byzantium.51.d 
+	title = ab_byzantium.51.t
+	desc = ab_byzantium.51.d
 	picture = BATTLE_eventPicture
 	
 	fire_only_once = yes
 	
 	trigger = {
 		tag = BYZ
-		NOT = { mission_completed = byzantium_crisis }
 		NCI = {
 			ai = yes
-			offensive_war_with = BYZ
+			offensive_war_with = ROOT
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NCI = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 3
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 1545
+				}
+			}
+			else_if = {
+				limit = {
+					NCI = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 2
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 1180
+				}
+			}
+			else_if = {
+				limit = {
+					NCI = {
+						any_ally = {
+							offensive_war_with = ROOT
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 815
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 450
+				}
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium.51.a
 		custom_tooltip = AB_WAR_NICAEA_INFO
-		if = {
-			limit = {
-				defensive_war_with = NCI
+		custom_tooltip = AB_EMPTY
+		tooltip = {
+			if = {
+				limit = {
+					NCI = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 3
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 1545
+				}
 			}
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = AB_WAR_NICAEA_ALLIES
+			else_if = {
+				limit = {
+					NCI = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 2
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 1180
+				}
+			}
+			else_if = {
+				limit = {
+					NCI = {
+						any_ally = {
+							offensive_war_with = ROOT
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 815
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = byz_nci_war_timer
+					duration = 450
+				}
+			}
 		}
-		set_country_flag = byz_timelimit_nicaea
+		custom_tooltip = AB_WAR_NICAEA_ALLIES
 	}
 }
 
 #Occupation of Nicaea
-country_event = { 
+country_event = {
 	id = ab_byzantium.52
-	title = ab_byzantium.52.t 
-	desc = ab_byzantium.52.d 
+	title = ab_byzantium.52.t
+	desc = ab_byzantium.52.d
 	picture = ABAD5_eventPicture
 	
 	fire_only_once = yes
 	
 	trigger = {
 		tag = BYZ
-		NOT = { mission_completed = byzantium_crisis }
-		has_country_flag = byz_timelimit_nicaea
-		OR = {
-			AND = {
-				NCI = {
-					NOT = {
-						any_ally = {
-							offensive_war_with = BYZ
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_nicaea
-						days = 450
-					}
-				}
-			}
-			AND = {
-				NCI = {
-					any_ally = {
-						offensive_war_with = BYZ
-					}
-					NOT = {
-						calc_true_if = {
-							all_ally = { offensive_war_with = BYZ }
-							amount = 2
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_nicaea
-						days = 815
-					}
-				}
-			}
-			AND = {
-				NCI = {
-					calc_true_if = {
-						all_ally = { offensive_war_with = BYZ }
-						amount = 2
-					}
-					NOT = {
-						calc_true_if = {
-							all_ally = { offensive_war_with = BYZ }
-							amount = 3
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_nicaea
-						days = 1180
-					}
-				}
-			}
-			AND = {
-				NCI = {
-					calc_true_if = {
-						all_ally = { offensive_war_with = BYZ }
-						amount = 3
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_nicaea
-						days = 1545
-					}
-				}
-			}
-		}
+		has_country_modifier = byz_nci_war_timer
 		NCI = {
 			ai = yes
-			offensive_war_with = BYZ
+			offensive_war_with = ROOT
 			capital_scope = {
 				controlled_by = ROOT
 			}
-			NOT = { war_score = -60 }
+			NOT = {
+				war_score_against = {
+					who = ROOT
+					value = -60
+				}
+			}
 		}
 	}
 
-	option = {
-		name = ab_byzantium.52.a
+	immediate = {
 		hidden_effect = {
 			white_peace = NCI
-		}
-		inherit = NCI
-		hidden_effect = {
+			inherit = NCI
 			every_owned_province = {
 				limit = {
 					is_core = NCI
 				}
 				remove_core = NCI
 			}
+			add_years_of_income = 1
+			remove_country_modifier = byz_nci_war_timer
 		}
-		add_years_of_income = 1.0
+	}
+
+	option = {
+		name = ab_byzantium.52.a
+		tooltip = {
+			add_years_of_income = 1
+			inherit = NCI
+		}
 	}
 }
 
-#War with Bulgaria Info
-country_event = { 
+#Bulgarian Invasion
+country_event = {
 	id = ab_byzantium.53
-	title = ab_byzantium.53.t 
-	desc = ab_byzantium.53.d 
+	title = ab_byzantium.53.t
+	desc = ab_byzantium.53.d
 	picture = BATTLE_eventPicture
 	
 	fire_only_once = yes
@@ -286,137 +300,169 @@ country_event = {
 		tag = BYZ
 		BUL = {
 			ai = yes
-			offensive_war_with = BYZ
+			offensive_war_with = ROOT
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					BUL = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 3
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 1545
+				}
+			}
+			else_if = {
+				limit = {
+					BUL = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 2
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 1180
+				}
+			}
+			else_if = {
+				limit = {
+					BUL = {
+						any_ally = {
+							offensive_war_with = ROOT
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 815
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 450
+				}
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium.53.a
 		custom_tooltip = AB_WAR_BULGARIA_INFO
+		BUL = {
+			custom_tooltip = AB_BULGARIAN_INVASION_REWARD
+		}
+		custom_tooltip = AB_EMPTY
 		tooltip = {
-			BUL = {
-				every_owned_province = {
-					limit = {
-						is_core = BYZ
+			if = {
+				limit = {
+					BUL = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 3
+						}
 					}
-					cede_province = BYZ
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 1545
+				}
+			}
+			else_if = {
+				limit = {
+					BUL = {
+						calc_true_if = {
+							all_ally = {
+								offensive_war_with = ROOT
+							}
+							amount = 2
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 1180
+				}
+			}
+			else_if = {
+				limit = {
+					BUL = {
+						any_ally = {
+							offensive_war_with = ROOT
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 815
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = byz_bul_war_timer
+					duration = 450
 				}
 			}
 		}
-		if = {
-			limit = {
-				defensive_war_with = NCI
-			}
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = AB_WAR_NICAEA_ALLIES
-		}
-		set_country_flag = byz_timelimit_bulgaria
+		custom_tooltip = AB_WAR_NICAEA_ALLIES
 	}
 }
 
 #Occupation of Tarnovo
-country_event = { 
+country_event = {
 	id = ab_byzantium.54
-	title = ab_byzantium.54.t 
-	desc = ab_byzantium.54.d 
+	title = ab_byzantium.54.t
+	desc = ab_byzantium.54.d
 	picture = ABAD5_eventPicture
 	
 	fire_only_once = yes
 	
 	trigger = {
 		tag = BYZ
-		has_country_flag = byz_timelimit_bulgaria
-		OR = {
-			AND = {
-				BUL = {
-					NOT = {
-						any_ally = {
-							offensive_war_with = BYZ
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_bulgaria
-						days = 450
-					}
-				}
-			}
-			AND = {
-				BUL = {
-					any_ally = {
-						offensive_war_with = BYZ
-					}
-					NOT = {
-						calc_true_if = {
-							all_ally = { offensive_war_with = BYZ }
-							amount = 2
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_bulgaria
-						days = 815
-					}
-				}
-			}
-			AND = {
-				BUL = {
-					calc_true_if = {
-						all_ally = { offensive_war_with = BYZ }
-						amount = 2
-					}
-					NOT = {
-						calc_true_if = {
-							all_ally = { offensive_war_with = BYZ }
-							amount = 3
-						}
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_bulgaria
-						days = 1180
-					}
-				}
-			}
-			AND = {
-				BUL = {
-					calc_true_if = {
-						all_ally = { offensive_war_with = BYZ }
-						amount = 3
-					}
-				}
-				NOT = {
-					had_country_flag = {
-						flag = byz_timelimit_bulgaria
-						days = 1545
-					}
-				}
-			}
-		}
+		has_country_modifier = byz_bul_war_timer
 		BUL = {
 			ai = yes
-			offensive_war_with = BYZ
+			offensive_war_with = ROOT
 			capital_scope = {
 				controlled_by = ROOT
 			}
-			NOT = { war_score = -40 }
+			NOT = {
+				war_score_against = {
+					who = ROOT
+					value = -40
+				}
+			}
 		}
 	}
 
-	option = {
-		name = ab_byzantium.54.a
-		BUL = {
-			every_owned_province = {
-				limit = {
-					is_core = BYZ
-				}
-				cede_province = BYZ
-			}
-		}
+	immediate = {
 		hidden_effect = {
+			BUL = {
+				add_treasury = -250
+				every_owned_province = {
+					limit = {
+						culture = greek
+					}
+					cede_province = ROOT
+				}
+			}
+			add_treasury = 250
 			white_peace = BUL
 			every_owned_province = {
 				limit = {
@@ -424,10 +470,17 @@ country_event = {
 				}
 				remove_core = BUL
 			}
+			remove_country_modifier = byz_bul_war_timer
 		}
-		add_treasury = 250
-		BUL = {
-			add_treasury = -250
+	}
+
+	option = {
+		name = ab_byzantium.54.a
+		tooltip = {
+			add_treasury = 250
+			BUL = {
+				custom_tooltip = AB_BULGARIAN_INVASION_REWARD
+			}
 		}
 	}
 }
@@ -440,38 +493,99 @@ province_event = {
 	picture = CULTURE_eventPicture
 	
 	hidden = yes
-	
+		
+	trigger = {
+		province_is_diocese_land_trigger = yes
+		if = {
+			limit = {
+				owner = {
+					is_subject_of_type_with_overlord = {
+						who = ROM
+						type = grand_diocese_vassal
+					}
+				}
+			}
+			owner = {
+				culture_group = roman_g
+			}
+		}
+		NOT = { culture_group = roman_g }
+		any_friendly_coast_border_province = {
+			culture_group = roman_g
+		}
+		if = {
+			limit = {
+				region = low_countries_region
+			}
+			ROM = {
+				OR = {
+					has_country_flag = rom_belgica_isof_gallia
+					has_country_flag = rom_belgica_isof_germania
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = shirvan_area
+					area = armenia_area
+					area = imereti_area
+					area = samtskhe_area
+					area = kartli_kakheti_area
+				}
+			}
+			ROM = {
+				OR = {
+					has_country_flag = rom_caucasia_isof_anatolia
+					has_country_flag = rom_caucasia_isof_persia
+				}
+			}
+		}
+	}
+
 	mean_time_to_happen = {
 		months = 1200
 		modifier = {
 			factor = 2.5
 			NOT = {
-				any_neighbor_province = { culture_group = roman_g }
+				any_neighbor_province = {
+					culture_group = roman_g
+				}
 			}
 		}
 		modifier = {
 			factor = 0.8
-			owner = { has_country_modifier = byz_friend_diocese }
+			owner = {
+				has_country_modifier = byz_friend_diocese
+			}
 		}
 		modifier = {
 			factor = 0.5
 			culture_group = iranian
-			ROM = { religion = zoroastrian }
+			ROM = {
+				religion = zoroastrian
+			}
 		}
 		modifier = {
 			factor = 0.5
 			culture_group = turko_semitic
-			ROM = { religion_group = muslim }
+			ROM = {
+				religion_group = muslim
+			}
 		}
 		modifier = {
 			factor = 0.5
 			culture_group = east_slavic
-			ROM = { was_tag = UKR }
+			ROM = {
+				was_tag = UKR
+			}
 		}
 		modifier = {
 			factor = 0.5
 			culture_group = west_slavic
-			ROM = { was_tag = PLC }
+			ROM = {
+				was_tag = PLC
+			}
 		}
 		modifier = {
 			factor = 0.5
@@ -490,16 +604,6 @@ province_event = {
 			OR = {
 				region = khorasan_region
 				region = persia_region
-				AND = {
-					OR = {
-						area = shirvan_area
-						area = armenia_area
-						area = imereti_area
-						area = samtskhe_area
-						area = kartli_kakheti_area
-					}
-					ROM = { has_country_flag = rom_caucasia_isof_persia }
-				}
 			}
 			ROM = {
 				has_country_flag = byz_faster_romanization_persia
@@ -555,16 +659,9 @@ province_event = {
 			factor = 0.75
 			OR = {
 				culture_group = french
-				AND = {
-					culture_group = iberian
-					NOT = { culture = andalucian }
-				}
-				culture = welsh
-				culture = briton
-				culture = breton
+				culture_group = iberian
 				culture_group = latin
 				culture_group = romanian_culture_group
-				culture_group = byzantine
 			}
 		}
 		modifier = {
@@ -585,57 +682,14 @@ province_event = {
 		}
 		modifier = {
 			factor = 0.9
-			ROM = { stability = 2 }
+			ROM = {
+				stability = 2
+			}
 		}
 		modifier = {
 			factor = 0.9
-			ROM = { absolutism = 50 }
-		}
-	}
-	
-	trigger = {
-		owner = {
-			OR = {
-				tag = ROM
-				is_subject_of_type = diocese_vassal
-				AND = {
-					tag = UKR
-					primary_culture = russo_roman
-				}
-				AND = {
-					tag = GLH
-					primary_culture = romano_scythic
-				}
-			}
-		}
-		NOT = { culture_group = roman_g }
-		any_friendly_coast_border_province = {
-			culture_group = roman_g
-		}
-		OR = {
 			ROM = {
-				OR = {
-					has_country_flag = rom_belgica_isof_gallia
-					has_country_flag = rom_belgica_isof_germania
-				}
-			}
-			NOT = { region = low_countries_region }
-		}
-		OR = {
-			ROM = {
-				OR = {
-					has_country_flag = rom_caucasia_isof_anatolia
-					has_country_flag = rom_caucasia_isof_persia
-				}
-			}
-			NOT = { 
-				OR = {
-					area = shirvan_area
-					area = armenia_area
-					area = imereti_area
-					area = samtskhe_area
-					area = kartli_kakheti_area
-				}
+				absolutism = 50
 			}
 		}
 	}
@@ -648,39 +702,97 @@ province_event = {
 					region = france_region
 					AND = {
 						region = low_countries_region
-						ROM = { has_country_flag = rom_belgica_isof_gallia }
+						ROM = {
+							has_country_flag = rom_belgica_isof_gallia
+						}
 					}
 				}
 			}
 			change_culture = gallo_roman
 		}
 		else_if = {
-			limit = { region = maghreb_region }
+			limit = {
+				region = maghreb_region
+			}
 			change_culture = afro_roman
 		}
 		else_if = {
 			limit = {
 				OR = {
-					AND = {
-						region = balkan_region
-						culture_group = south_slavic
-					}
+					area = croatia_area
+					area = slavonia_area
+					area = bosnia_area
+					area = rascia_area
+					area = albania_area
+					area = serbia_area
+					area = bulgaria_area
+					area = silistria_area
+					area = east_adriatic_coast_area
 					area = carinthia_area
+					province_id = 4780
+					province_id = 3001
+					province_id = 1764
 				}
 			}
 			change_culture = illyro_roman
 		}
 		else_if = {
-			limit = { region = british_isles_region }
+			limit = {
+				OR = {
+					area = northern_greece_area
+					area = morea_area
+					area = ionian_islands_area
+					area = macedonia_area
+					area = thrace_area
+				}
+			}
+			change_culture = greco_roman
+		}
+		else_if = {
+			limit = {
+				region = british_isles_region
+			}
 			change_culture = romano_british
 		}
 		else_if = {
-			limit = { region = iberia_region }
+			limit = {
+				region = iberia_region
+			}
 			change_culture = hispano_roman
 		}
 		else_if = {
-			limit = { region = carpathia_region }
+			limit = {
+				region = carpathia_region
+			}
 			change_culture = daco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = al_jazira_area
+					area = iraq_arabi_area
+					area = basra_area
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						religion = zoroastrian
+					}
+				}
+				change_culture = perso_roman
+			}
+			else_if = {
+				limit = {
+					ROM = {
+						religion_group = muslim
+					}
+				}
+				change_culture = romano_arabic
+			}
+			else = {
+				change_culture = greco_roman
+			}
 		}
 		else_if = {
 			limit = {
@@ -692,57 +804,61 @@ province_event = {
 					province_id = 1232
 					province_id = 2324
 				}
-				NOT = { area = al_jazira_area }
-				NOT = { area = iraq_arabi_area }
-				NOT = { area = basra_area }
 			}
 			if = {
-				limit = { ROM = { religion_group = christian } }
-				change_culture = greco_roman
-			}
-			else = {
-				change_culture = romano_arabic
-			}
-		}
-		else_if = {
-			limit = {
-				OR = {
-					area = al_jazira_area
-					area = iraq_arabi_area
-					area = basra_area
+				limit = {
+					ROM = {
+						religion_group = christian
+					}
 				}
-			}
-			if = {
-				limit = { ROM = { religion = zoroastrian } }
-				change_culture = perso_roman
-			}
-			else_if = {
-				limit = { ROM = { religion_group = muslim } }
-				change_culture = romano_arabic
+				change_culture = greco_roman
 			}
 			else = {
-				change_culture = greco_roman
+				change_culture = romano_arabic
 			}
 		}
 		else_if = {
 			limit = {
 				OR = {
 					region = north_german_region
-					AND = {
-						region = south_german_region
-						NOT = { area = carinthia_area }
-					}
+					region = south_german_region
 					AND = {
 						region = low_countries_region
-						ROM = { has_country_flag = rom_belgica_isof_germania }
+						ROM = {
+							has_country_flag = rom_belgica_isof_germania
+						}
 					}
 				}
 			}
 			change_culture = romano_germanic
 		}
 		else_if = {
-			limit = { region = scandinavia_region }
+			limit = {
+				region = scandinavia_region
+			}
 			change_culture = romano_nordic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+			change_culture = romano_korean
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = crimea_region
+					region = central_asia_region
+					region = mongolia_region
+					region = manchuria_region
+					area = circassia_area
+					area = dagestan_area
+				}
+			}
+			change_culture = romano_scythic
 		}
 		else_if = {
 			limit = {
@@ -751,24 +867,24 @@ province_event = {
 					region = khorasan_region
 					AND = {
 						region = caucasia_region
-						NOT = {
-							OR = {
-								area = circassia_area
-								area = dagestan_area
-							}
+						ROM = {
+							has_country_flag = rom_caucasia_isof_persia
 						}
-						ROM = { has_country_flag = rom_caucasia_isof_persia }
 					}
 				}
 			}
 			change_culture = perso_roman
 		}
 		else_if = {
-			limit = { superregion = india_superregion }
+			limit = {
+				superregion = india_superregion
+			}
 			change_culture = indo_roman
 		}
 		else_if = {
-			limit = { region = arabia_region }
+			limit = {
+				region = arabia_region
+			}
 			change_culture = romano_arabic
 		}
 		else_if = {
@@ -787,11 +903,7 @@ province_event = {
 			limit = {
 				OR = {
 					region = russia_region
-					AND = {
-						region = ruthenia_region
-						NOT = { area = podlasie_area }
-						NOT = { area = red_ruthenia_area }
-					}
+					region = ruthenia_region
 				}
 			}
 			change_culture = russo_roman
@@ -805,7 +917,11 @@ province_event = {
 				}
 			}
 			if = {
-				limit = { owner = { tag = GLH } }
+				limit = {
+					owner = {
+						tag = GLH
+					}
+				}
 				change_culture = romano_scythic
 			}
 			else = {
@@ -815,56 +931,26 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					region = crimea_region
-					region = central_asia_region
-					region = mongolia_region
-					AND = {
-						region = manchuria_region
-						NOT = { area = liaoning_area }
-					}
-					area = circassia_area
-					area = dagestan_area
-				}
-			}
-			change_culture = romano_scythic
-		}
-		else_if = {
-			limit = {
-				OR = {
 					region = anatolia_region
 					AND = {
 						region = caucasia_region
-						NOT = {
-							OR = {
-								area = circassia_area
-								area = dagestan_area
-							}
+						ROM = {
+							has_country_flag = rom_caucasia_isof_anatolia
 						}
-						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 					}
 				}
 			}
 			if = {
-				limit = { ROM = { NOT = { religion_group = christian } } }
+				limit = {
+					ROM = {
+						was_tag = RUM
+					}
+				}
 				change_culture = romano_scythic
 			}
 			else = {
 				change_culture = greco_roman
 			}
-		}
-		else_if = {
-			limit = {
-				OR = {
-					region = tibet_region
-					region = burma_region
-					AND = {
-						region = xinan_region
-						NOT = { area = chuanbei_area }
-						NOT = { area = sichuan_area }
-					}
-				}
-			}
-			change_culture = tibeto_roman
 		}
 		else_if = {
 			limit = {
@@ -880,11 +966,12 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					region = korea_region
-					area = liaoning_area
+					region = tibet_region
+					region = burma_region
+					region = xinan_region
 				}
 			}
-			change_culture = romano_korean
+			change_culture = tibeto_roman
 		}
 		else_if = {
 			limit = {
@@ -907,11 +994,7 @@ province_event = {
 				OR = {
 					region = indonesia_region
 					region = moluccas_region
-					AND = {
-						region = malaya_region
-						NOT = { area = north_tenasserim_area }
-						NOT = { area = tenasserim_area }
-					}
+					region = malaya_region
 				}
 			}
 			change_culture = romano_malay
@@ -934,7 +1017,27 @@ province_event = {
 	picture = CULTURE_eventPicture
 	
 	hidden = yes
-	
+		
+	trigger = {
+		owner = {
+			OR = {
+				AND = {
+					mission_completed = byzantium_anatolia_dev
+					tag = BYZ
+				}
+				AND = {
+					mission_completed = lat_avenge
+					tag = LAT
+				}
+			}
+		}
+		region = anatolia_region
+		any_friendly_coast_border_province = {
+			culture = greek
+		}
+		NOT = { culture = greek }
+	}
+
 	mean_time_to_happen = {
 		months = 240
 		modifier = {
@@ -945,27 +1048,6 @@ province_event = {
 			factor = 0.1
 			culture_group = byzantine
 		}
-	}
-	
-	trigger = {
-		owner = {
-			OR = {
-				AND = {
-					mission_completed = byzantium_anatolia_dev
-					primary_culture = greek
-				}
-				AND = {
-					mission_completed = lat_avenge
-					tag = LAT
-				}
-			}
-		}
-		region = anatolia_region
-		any_friendly_coast_border_province = {
-			owned_by = ROOT
-			culture = greek
-		}
-		NOT = { culture = greek }
 	}
 	
 	option = {
@@ -986,6 +1068,8 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.57.a
+		add_prestige_or_monarch_power = { amount = 10 }
+		custom_tooltip = AB_EMPTY
 		apulia_area = {
 			limit = {
 				NOT = { is_permanent_claim = ROOT }
@@ -1000,23 +1084,20 @@ country_event = {
 			}
 			add_permanent_claim = ROOT
 		}
-		add_mil_power = 50
-		add_prestige = 10
 	}
 }
 
 #Diocesis Dacia annex Romanians
-country_event = { 
+country_event = {
 	id = ab_byzantium.58
-	title = ab_byzantium.58.t 
-	desc = ab_byzantium.58.d 
+	title = ab_byzantium.58.t
+	desc = ab_byzantium.58.d
 	picture = SEJM_eventPicture
 	
 	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium.58.a
-		ai_chance = { factor = 90 }
 		RDR = {
 			if = {
 				limit = {
@@ -1040,7 +1121,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.58.b
-		ai_chance = { factor = 10 }
 	}
 }
 
@@ -1172,10 +1252,10 @@ country_event = {
 }
 
 #Belgica Identity
-country_event = { 
+country_event = {
 	id = ab_byzantium.63
-	title = ab_byzantium.63.t 
-	desc = ab_byzantium.63.d 
+	title = ab_byzantium.63.t
+	desc = ab_byzantium.63.d
 	picture = AB_BELGICA_eventPicture
 	
 	is_triggered_only = yes
@@ -1874,10 +1954,10 @@ province_event = {
 }
 
 #Caucasia Identity
-country_event = { 
+country_event = {
 	id = ab_byzantium.78
-	title = ab_byzantium.78.t 
-	desc = ab_byzantium.78.d 
+	title = ab_byzantium.78.t
+	desc = ab_byzantium.78.d
 	picture = AB_PERSIA_eventPicture
 	
 	is_triggered_only = yes
@@ -1891,10 +1971,7 @@ country_event = {
 		}
 		if = {
 			limit = {
-				OR = {
-					primary_culture = romano_scythic
-					primary_culture = romano_arabic
-				}
+				was_tag = RUM
 			}
 			custom_tooltip = BYZ_ANATOLIA_CAUCASIA_RUM
 		}
@@ -1917,10 +1994,10 @@ country_event = {
 }
 
 #Byzantine Reconquest of the Levant
-country_event = { 
+country_event = {
 	id = ab_byzantium.79
-	title = ab_byzantium.79.t 
-	desc = ab_byzantium.79.d 
+	title = ab_byzantium.79.t
+	desc = ab_byzantium.79.d
 	picture = AB_BATTLE_eventPicture
 	
 	fire_only_once = yes
@@ -1975,10 +2052,10 @@ country_event = {
 }
 
 #Byzantine Reconquest of the Levant - Remove modifier
-country_event = { 
+country_event = {
 	id = ab_byzantium.80
-	title = ab_byzantium.80.t 
-	desc = ab_byzantium.80.d 
+	title = ab_byzantium.80.t
+	desc = ab_byzantium.80.d
 	picture = AB_BATTLE_eventPicture
 	
 	hidden = yes
@@ -2012,10 +2089,10 @@ country_event = {
 }
 
 #Epitome of Far East
-country_event = { 
+country_event = {
 	id = ab_byzantium.81
-	title = ab_byzantium.81.t 
-	desc = ab_byzantium.81.d 
+	title = ab_byzantium.81.t
+	desc = ab_byzantium.81.d
 	picture = AB_RISING_eventPicture
 	
 	is_triggered_only = yes
@@ -2055,10 +2132,10 @@ country_event = {
 }
 
 #An Empire Across Asia
-country_event = { 
+country_event = {
 	id = ab_byzantium.82
-	title = ab_byzantium.82.t 
-	desc = ab_byzantium.82.d 
+	title = ab_byzantium.82.t
+	desc = ab_byzantium.82.d
 	picture = AB_DRAGON_eventPicture
 	
 	is_triggered_only = yes
@@ -2074,10 +2151,10 @@ country_event = {
 }
 
 #Rus - Select Capital After Forming Rome
-country_event = { 
+country_event = {
 	id = ab_byzantium.83
-	title = ab_byzantium.83.t 
-	desc = ab_byzantium.83.d 
+	title = ab_byzantium.83.t
+	desc = ab_byzantium.83.d
 	picture = BYZANTINE_EAGLE_eventPicture
 	
 	is_triggered_only = yes
@@ -4086,39 +4163,97 @@ province_event = {
 					region = france_region
 					AND = {
 						region = low_countries_region
-						ROM = { has_country_flag = rom_belgica_isof_gallia }
+						ROM = {
+							has_country_flag = rom_belgica_isof_gallia
+						}
 					}
 				}
 			}
 			change_culture = gallo_roman
 		}
 		else_if = {
-			limit = { region = maghreb_region }
+			limit = {
+				region = maghreb_region
+			}
 			change_culture = afro_roman
 		}
 		else_if = {
 			limit = {
 				OR = {
-					AND = {
-						region = balkan_region
-						culture_group = south_slavic
-					}
+					area = croatia_area
+					area = slavonia_area
+					area = bosnia_area
+					area = rascia_area
+					area = albania_area
+					area = serbia_area
+					area = bulgaria_area
+					area = silistria_area
+					area = east_adriatic_coast_area
 					area = carinthia_area
+					province_id = 4780
+					province_id = 3001
+					province_id = 1764
 				}
 			}
 			change_culture = illyro_roman
 		}
 		else_if = {
-			limit = { region = british_isles_region }
+			limit = {
+				OR = {
+					area = northern_greece_area
+					area = morea_area
+					area = ionian_islands_area
+					area = macedonia_area
+					area = thrace_area
+				}
+			}
+			change_culture = greco_roman
+		}
+		else_if = {
+			limit = {
+				region = british_isles_region
+			}
 			change_culture = romano_british
 		}
 		else_if = {
-			limit = { region = iberia_region }
+			limit = {
+				region = iberia_region
+			}
 			change_culture = hispano_roman
 		}
 		else_if = {
-			limit = { region = carpathia_region }
+			limit = {
+				region = carpathia_region
+			}
 			change_culture = daco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = al_jazira_area
+					area = iraq_arabi_area
+					area = basra_area
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						religion = zoroastrian
+					}
+				}
+				change_culture = perso_roman
+			}
+			else_if = {
+				limit = {
+					ROM = {
+						religion_group = muslim
+					}
+				}
+				change_culture = romano_arabic
+			}
+			else = {
+				change_culture = greco_roman
+			}
 		}
 		else_if = {
 			limit = {
@@ -4130,57 +4265,61 @@ province_event = {
 					province_id = 1232
 					province_id = 2324
 				}
-				NOT = { area = al_jazira_area }
-				NOT = { area = iraq_arabi_area }
-				NOT = { area = basra_area }
 			}
 			if = {
-				limit = { ROM = { religion_group = christian } }
-				change_culture = greco_roman
-			}
-			else = {
-				change_culture = romano_arabic
-			}
-		}
-		else_if = {
-			limit = {
-				OR = {
-					area = al_jazira_area
-					area = iraq_arabi_area
-					area = basra_area
+				limit = {
+					ROM = {
+						religion_group = christian
+					}
 				}
-			}
-			if = {
-				limit = { ROM = { religion = zoroastrian } }
-				change_culture = perso_roman
-			}
-			else_if = {
-				limit = { ROM = { religion_group = muslim } }
-				change_culture = romano_arabic
+				change_culture = greco_roman
 			}
 			else = {
-				change_culture = greco_roman
+				change_culture = romano_arabic
 			}
 		}
 		else_if = {
 			limit = {
 				OR = {
 					region = north_german_region
-					AND = {
-						region = south_german_region
-						NOT = { area = carinthia_area }
-					}
+					region = south_german_region
 					AND = {
 						region = low_countries_region
-						ROM = { has_country_flag = rom_belgica_isof_germania }
+						ROM = {
+							has_country_flag = rom_belgica_isof_germania
+						}
 					}
 				}
 			}
 			change_culture = romano_germanic
 		}
 		else_if = {
-			limit = { region = scandinavia_region }
+			limit = {
+				region = scandinavia_region
+			}
 			change_culture = romano_nordic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+			change_culture = romano_korean
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = crimea_region
+					region = central_asia_region
+					region = mongolia_region
+					region = manchuria_region
+					area = circassia_area
+					area = dagestan_area
+				}
+			}
+			change_culture = romano_scythic
 		}
 		else_if = {
 			limit = {
@@ -4189,24 +4328,24 @@ province_event = {
 					region = khorasan_region
 					AND = {
 						region = caucasia_region
-						NOT = {
-							OR = {
-								area = circassia_area
-								area = dagestan_area
-							}
+						ROM = {
+							has_country_flag = rom_caucasia_isof_persia
 						}
-						ROM = { has_country_flag = rom_caucasia_isof_persia }
 					}
 				}
 			}
 			change_culture = perso_roman
 		}
 		else_if = {
-			limit = { superregion = india_superregion }
+			limit = {
+				superregion = india_superregion
+			}
 			change_culture = indo_roman
 		}
 		else_if = {
-			limit = { region = arabia_region }
+			limit = {
+				region = arabia_region
+			}
 			change_culture = romano_arabic
 		}
 		else_if = {
@@ -4225,11 +4364,7 @@ province_event = {
 			limit = {
 				OR = {
 					region = russia_region
-					AND = {
-						region = ruthenia_region
-						NOT = { area = podlasie_area }
-						NOT = { area = red_ruthenia_area }
-					}
+					region = ruthenia_region
 				}
 			}
 			change_culture = russo_roman
@@ -4243,7 +4378,11 @@ province_event = {
 				}
 			}
 			if = {
-				limit = { owner = { tag = GLH } }
+				limit = {
+					owner = {
+						tag = GLH
+					}
+				}
 				change_culture = romano_scythic
 			}
 			else = {
@@ -4253,56 +4392,26 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					region = crimea_region
-					region = central_asia_region
-					region = mongolia_region
-					AND = {
-						region = manchuria_region
-						NOT = { area = liaoning_area }
-					}
-					area = circassia_area
-					area = dagestan_area
-				}
-			}
-			change_culture = romano_scythic
-		}
-		else_if = {
-			limit = {
-				OR = {
 					region = anatolia_region
 					AND = {
 						region = caucasia_region
-						NOT = {
-							OR = {
-								area = circassia_area
-								area = dagestan_area
-							}
+						ROM = {
+							has_country_flag = rom_caucasia_isof_anatolia
 						}
-						ROM = { has_country_flag = rom_caucasia_isof_anatolia }
 					}
 				}
 			}
 			if = {
-				limit = { ROM = { NOT = { religion_group = christian } } }
+				limit = {
+					ROM = {
+						was_tag = RUM
+					}
+				}
 				change_culture = romano_scythic
 			}
 			else = {
 				change_culture = greco_roman
 			}
-		}
-		else_if = {
-			limit = {
-				OR = {
-					region = tibet_region
-					region = burma_region
-					AND = {
-						region = xinan_region
-						NOT = { area = chuanbei_area }
-						NOT = { area = sichuan_area }
-					}
-				}
-			}
-			change_culture = tibeto_roman
 		}
 		else_if = {
 			limit = {
@@ -4318,11 +4427,12 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					region = korea_region
-					area = liaoning_area
+					region = tibet_region
+					region = burma_region
+					region = xinan_region
 				}
 			}
-			change_culture = romano_korean
+			change_culture = tibeto_roman
 		}
 		else_if = {
 			limit = {
@@ -4345,11 +4455,7 @@ province_event = {
 				OR = {
 					region = indonesia_region
 					region = moluccas_region
-					AND = {
-						region = malaya_region
-						NOT = { area = north_tenasserim_area }
-						NOT = { area = tenasserim_area }
-					}
+					region = malaya_region
 				}
 			}
 			change_culture = romano_malay
