@@ -1,18 +1,22 @@
 TLW_on_startup_effect = {
 	if = {
-		limit = { 
+		limit = {
 			primary_culture = punic
 			NOT = { is_year = 1445 }
 		}
-		country_event = { id = ab_punic.1 }
+		country_event = {
+			id = ab_punic.1
+		}
 	}
-	if = {
-		limit = { 
+	else_if = {
+		limit = {
 			culture_group = iberian
 			NOT = { tag = ADU }
 			NOT = { is_year = 1445 }
 		}
-		country_event = { id = ab_byzantium.88 }
+		country_event = {
+			id = ab_byzantium.88
+		}
 	}
 }
 
@@ -563,7 +567,7 @@ TLW_on_battle_won_country_effect = {
 			}
 		}
 		else_if = {
-			limit = { 
+			limit = {
 				OR = {
 					is_subject_of_type_with_overlord = {
 						who = ROM
@@ -582,6 +586,36 @@ TLW_on_battle_won_country_effect = {
 					value = -0.5
 				}
 			}
+		}
+	}
+}
+
+TLW_on_war_won_effect = {
+	if = {
+		limit = {
+			has_country_modifier = byz_reconquest_of_the_levant
+			FROM = {
+				has_country_modifier = byz_reconquest_of_the_levant_nizzarids
+			}
+		}
+		remove_country_modifier = byz_reconquest_of_the_levant
+		FROM = {
+			remove_country_modifier = byz_reconquest_of_the_levant_nizzarids
+		}
+	}
+}
+
+TLW_on_war_lost_effect = {
+	if = {
+		limit = {
+			has_country_modifier = byz_reconquest_of_the_levant
+			FROM = {
+				has_country_modifier = byz_reconquest_of_the_levant_nizzarids
+			}
+		}
+		remove_country_modifier = byz_reconquest_of_the_levant
+		FROM = {
+			remove_country_modifier = byz_reconquest_of_the_levant_nizzarids
 		}
 	}
 }
@@ -623,6 +657,32 @@ TLW_on_province_owner_change_effect = {
 	}
 	if = {
 		limit = {
+			province_is_diocese_land_trigger = yes
+			NOT = { owned_by = ROM }
+			NOT = { culture_group = roman_g }
+			NOT = { has_province_modifier = byz_unromanized_province }
+		}
+		remove_province_modifier = byz_romanized_province
+		add_province_modifier = {
+			name = byz_unromanized_province
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			province_is_diocese_land_trigger = yes
+			NOT = { owned_by = ROM }
+			culture_group = roman_g
+			NOT = { has_province_modifier = byz_romanized_province }
+		}
+		remove_province_modifier = byz_unromanized_province
+		add_province_modifier = {
+			name = byz_romanized_province
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
 			owner = {
 				has_country_modifier = byz_friend_diocese
 			}
@@ -640,19 +700,19 @@ TLW_on_province_owner_change_effect = {
 			}
 		}
 		random_list = {
-			33 = { 
+			33 = {
 				add_province_modifier = {
 					name = nci_antigonos_province
 					duration = -1
 				}
 			}
-			33 = { 
+			33 = {
 				add_province_modifier = {
 					name = nci_seleukos_province
 					duration = -1
 				}
 			}
-			33 = { 
+			33 = {
 				add_province_modifier = {
 					name = nci_ptolemaios_province
 					duration = -1
@@ -686,6 +746,32 @@ TLW_on_province_culture_changed = {
 			TLW_rome_monument_downgrade_effect = yes
 		}
 	}
+	if = {
+		limit = {
+			province_is_diocese_land_trigger = yes
+			NOT = { owned_by = ROM }
+			NOT = { culture_group = roman_g }
+			NOT = { has_province_modifier = byz_unromanized_province }
+		}
+		remove_province_modifier = byz_romanized_province
+		add_province_modifier = {
+			name = byz_unromanized_province
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			province_is_diocese_land_trigger = yes
+			NOT = { owned_by = ROM }
+			culture_group = roman_g
+			NOT = { has_province_modifier = byz_romanized_province }
+		}
+		remove_province_modifier = byz_unromanized_province
+		add_province_modifier = {
+			name = byz_romanized_province
+			duration = -1
+		}
+	}
 }
 
 TLW_on_province_religion_changed = {
@@ -717,14 +803,12 @@ TLW_on_province_religion_changed = {
 TLW_on_dependency_gained_effect = {
 	if = {
 		limit = {
+			has_government_attribute = ab_has_dioceses
 			FROM = {
 				has_country_flag = byz_independent_diocese
 			}
-			ROOT = {
-				has_government_attribute = ab_has_dioceses
-			}
 		}
-		FROM = { 
+		FROM = {
 			clr_country_flag = byz_independent_diocese
 			add_government_reform = rom_diocese
 		}
@@ -733,18 +817,16 @@ TLW_on_dependency_gained_effect = {
 
 TLW_on_dependency_lost_effect = {
 	if = {
-		limit = { 
+		limit = {
+			has_government_attribute = ab_has_dioceses
 			FROM = {
 				is_subject_of_type_with_overlord = {
 					who = ROM
 					type = diocese_vassal
 				}
 			}
-			ROOT = {
-				has_government_attribute = ab_has_dioceses
-			}
 		}
-		FROM = { 
+		FROM = {
 			set_country_flag = byz_independent_diocese
 			add_government_reform = rom_former_diocese
 		}
