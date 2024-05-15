@@ -13,8 +13,12 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			add_stability = -2
+			add_stability = -1
 			add_manpower = -8
+			add_country_modifier = {
+				name = byz_revolt_mil
+				duration = -1
+			}
 			country_event = {
 				id = ab_byzantium_disaster.2
 				days = 30
@@ -25,12 +29,12 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.0.a
 		tooltip = {
-			add_stability = -2
+			add_stability = -1
 			add_manpower = -8
-		}
-		add_country_modifier = {
-			name = byz_revolt_mil
-			duration = -1
+			add_country_modifier = {
+				name = byz_revolt_mil
+				duration = -1
+			}
 		}
 	}
 }
@@ -39,49 +43,7 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.1
 	title = ab_byzantium_disaster.1.t
-	desc = {
-		trigger = {
-			dynasty = "Angelos"
-		}
-		desc = ab_byzantium_disaster.1.d1
-	}
-	desc = {
-		trigger = {
-			OR = {
-				AND = {
-					has_country_flag = byz_epirus_ruler
-					NOT = { has_country_flag = byz_epirus_venice }
-				}
-				AND = {
-					has_country_flag = epi_angelidrevolt_revolt
-					NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
-				}
-			}
-		}
-		desc = ab_byzantium_disaster.1.d2
-	}
-	desc = {
-		trigger = {
-			OR = {
-				AND = {
-					has_country_flag = byz_epirus_ruler
-					has_country_flag = byz_epirus_venice
-				}
-				AND = {
-					has_country_flag = epi_angelidrevolt_revolt
-					has_country_flag = epi_angelidrevolt_venicedeal
-				}
-			}
-		}
-		desc = ab_byzantium_disaster.1.d3
-	}
-	desc = {
-		trigger = {
-			NOT = { has_country_flag = byz_epirus_ruler }
-			NOT = { dynasty = "Angelos" }
-		}
-		desc = ab_byzantium_disaster.1.d4
-	}
+	desc = ab_byzantium_disaster.1.d
 	picture = AB_JUSTINIAN_eventPicture
 	
 	is_triggered_only = yes
@@ -120,52 +82,24 @@ country_event = {
 			}
 		}
 	}
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = had_fall_angelid
+			clr_country_flag = byz_angelid_great_rewards
+			clr_country_flag = epi_angelidrevolt_venicedeal
+			clr_country_flag = epi_angelidrevolt_nicaeadeal
+		}
+	}
 	
 	option = {
 		name = ab_byzantium_disaster.1.a
 		custom_tooltip = BYZ_COMPLETE_CRISIS_MISSIONS
 		if = {
 			limit = {
-				OR = {
-					AND = {
-						has_country_flag = byz_epirus_war
-						has_country_flag = byz_epirus_venice
-						151 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						149 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						4779 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						4705 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						147 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						144 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						4699 = {
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						morea_area = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-						ionian_islands_area = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT	
-						}
-					}
-					AND = {
-						has_country_flag = epi_angelidrevolt_revolt
-						NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
-						NOT = { has_country_flag = epi_angelidrevolt_nicaeadeal }
-					}
-				}	
+				has_country_flag = byz_angelid_great_rewards
+				NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
+				NOT = { has_country_flag = epi_angelidrevolt_nicaeadeal }
 			}
 			custom_tooltip = BYZ_RESTORER_PP
 			hidden_effect = {
@@ -180,8 +114,8 @@ country_event = {
 			}
 			add_ruler_personality = augustus_personality
 		}
+		custom_tooltip = AB_EMPTY
 		remove_country_modifier = byz_revolt_mil
-		set_country_flag = byz_finished_angelid_crisis
 		add_government_reform = imperial_autocracy
 	}
 }
@@ -197,16 +131,15 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
-			142 = {
-				add_core = EPI
-			}
-			144 = {
-				add_core = EPI
-			}
-			4698 = {
-				add_core = EPI
-			}
-			4699 = {
+			every_province = {
+				limit = {
+					OR = {
+						province_id = 142
+						province_id = 144
+						province_id = 4698
+						province_id = 4699
+					}
+				}
 				add_core = EPI
 			}
 			if = {
@@ -215,12 +148,15 @@ country_event = {
 				}
 				release = EPI
 			}
+			country_event = {
+				id = ab_byzantium_disaster.4
+				days = 60
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.2.a
-		ai_chance = { factor = 90 }
 		hidden_effect = {
 			151 = {
 				add_claim = EPI
@@ -248,49 +184,37 @@ country_event = {
 				war_goal_province = 151
 		    }
 		}
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_EPIRUS_FIGHT
-		set_country_flag = byz_epirus_war
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.2.b
-		ai_chance = { factor = 10 }
+		add_stability = -2
 		custom_tooltip = BYZ_EPIRUS_SURRENDER
-		set_country_flag = byz_epirus_ruler
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium_disaster.3
+			}
+		}
 	}
 }
 
-#Manuel Palaiologos Crowned - Hidden event
+#Epirote Victory
 country_event = {
 	id = ab_byzantium_disaster.3
 	title = ab_byzantium_disaster.3.t
 	desc = ab_byzantium_disaster.3.d
 	picture = COUNTRY_COLLAPSE_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	hidden = yes
-	
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_fall_angelid
-		OR = {
-			AND = {
-				defensive_war_with = EPI
-				capital_scope = { controlled_by = EPI }
-			}
-			has_country_flag = byz_epirus_ruler
-		}
-	}
-	
-	mean_time_to_happen = {
-		days = 21
-	}
-	
+
 	option = {
 		name = ab_byzantium_disaster.3.a
 		set_country_flag = had_fall_angelid
-		add_stability = 4
+		inherit = EPI
 		define_ruler = {
 			name = "Manuel III"
 			adm = 4
@@ -299,14 +223,6 @@ country_event = {
 			dynasty = "Palaiologos"
 			claim = 100
 		}
-		if = {
-			limit = {
-				has_country_flag = byz_epirus_war
-			}
-			set_country_flag = byz_epirus_ruler
-			clr_country_flag = byz_epirus_war
-		}
-		inherit = EPI
 		if = {
 			limit = {
 				has_heir = yes
@@ -318,9 +234,7 @@ country_event = {
 				defensive_war_with = VEN
 			}
 			add_prestige = -10
-			hidden_effect = {
-				white_peace = VEN
-			}
+			white_peace = VEN
 			146 = {
 				cede_province = VEN
 				add_core = VEN
@@ -333,37 +247,53 @@ country_event = {
 	}
 }
 
-#Noble Uprising
+#Nobles Take Arms
 country_event = {
 	id = ab_byzantium_disaster.4
 	title = ab_byzantium_disaster.4.t
 	desc = ab_byzantium_disaster.4.d
 	picture = BAD_WITH_MONARCH_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_fall_angelid
-		has_country_flag = byz_epirus_war
-	}
-	
-	mean_time_to_happen = {
-		months = 2
+	immediate = {
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -20
+			}
+			random_owned_province = {
+				noble_rebels = 1
+			}
+			random_owned_province = {
+				noble_rebels = 1
+			}
+			VEN = {
+				country_event = {
+					id = ab_byzantium_disaster.5
+					days = 60
+				}
+			}
+			country_event = {
+				id = ab_byzantium_disaster.11
+				days = 210
+			}
+		}
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.4.a
-		set_country_flag = byz_epirus_revolt
-		add_estate_loyalty = {
-			estate = estate_nobles
-			loyalty = -20
-		}
-		random_owned_province = {
-			noble_rebels = 1
-		}
-		random_owned_province = {
-			noble_rebels = 1
+		tooltip = {
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -20
+			}
+			random_owned_province = {
+				noble_rebels = 1
+			}
+			random_owned_province = {
+				noble_rebels = 1
+			}
 		}
 	}
 }
@@ -375,34 +305,27 @@ country_event = {
 	desc = ab_byzantium_disaster.5.d
 	picture = BATTLE_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 2
-	}
+	is_triggered_only = yes
 
 	trigger = {
-		tag = VEN
 		BYZ = {
 			has_disaster = byzantium_fall_angelid
-			has_country_flag = byz_epirus_revolt
 			owns = 146
 			owns = 5152
-			defensive_war_with = EPI
 		}
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.5.a
-		ai_chance = { factor = 90 }
 		BYZ = {
-			country_event = { id = ab_byzantium_disaster.6 }
+			country_event = {
+				id = ab_byzantium_disaster.6
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.5.b
-		ai_chance = { factor = 10 }
 		add_prestige = -10
 	}
 }
@@ -418,51 +341,37 @@ country_event = {
 		
 	option = {
 		name = ab_byzantium_disaster.6.a
-		ai_chance = {
-			factor = 50
-			modifier = {
-				factor = 0
-				NOT = {
-					VEN = {
-						army_size = ROOT
-					}
-				}
-			}
-		}
 		add_prestige = -10
 		add_truce_with = VEN
 		146 = {
 			cede_province = VEN
 			add_core = VEN
-			remove_core = BYZ
+			remove_core = ROOT
 		}
+		custom_tooltip = AB_EMPTY
 		5152 = {
 			cede_province = VEN
 			add_core = VEN
-			remove_core = BYZ
+			remove_core = ROOT
 		}
+		custom_tooltip = AB_EMPTY
 		VEN = {
-			country_event = { id = ab_byzantium_disaster.7 }
+			country_event = {
+				id = ab_byzantium_disaster.7
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.6.b
-		ai_chance = {
-			factor = 50
-			modifier = {
-				factor = 0
-				VEN = {
-					army_size = ROOT
-				}
-			}
-		}
 		add_legitimacy = 10
 		VEN = {
-			country_event = { id = ab_byzantium_disaster.8 }
+			country_event = {
+				id = ab_byzantium_disaster.8
+			}
 		}
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_VEN_WAR
-		set_country_flag = byz_epirus_venice
 	}
 }
 
@@ -485,6 +394,7 @@ country_event = {
 				add_core = VEN
 				remove_core = BYZ
 			}
+			custom_tooltip = AB_EMPTY
 			5152 = {
 				cede_province = VEN
 				add_core = VEN
@@ -502,9 +412,8 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	is_triggered_only = yes
-	
-	option = {
-		name = ab_byzantium_disaster.8.a
+
+	immediate = {
 		hidden_effect = {
 			146 = {
 				add_claim = VEN
@@ -512,43 +421,78 @@ country_event = {
 			5152 = {
 				add_claim = VEN
 			}
+			declare_war_with_cb = {
+				who = BYZ
+				casus_belli = cb_conquest
+				war_goal_province = 146
+			}
+			if = {
+				limit = {
+					exists = NCI
+				}
+				NCI = {
+					country_event = {
+						id = ab_byzantium_disaster.9
+						days = 90
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = BUL
+				}
+				BUL = {
+					country_event = {
+						id = ab_byzantium_disaster.9
+						days = 180
+					}
+				}
+			}
 		}
-		declare_war_with_cb = {
-			who = BYZ
-			casus_belli = cb_conquest
-			war_goal_province = 146
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.8.a
+		tooltip = {
+			declare_war_with_cb = {
+				who = BYZ
+				casus_belli = cb_conquest
+				war_goal_province = 146
+			}
 		}
 	}	
 }
 
-#Venice demands Athens and Thebes 5 - Nicaea joins
+#Venice demands Athens and Thebes 5 - Nicaea/Bulgaria joins
 country_event = {
 	id = ab_byzantium_disaster.9
 	title = ab_byzantium_disaster.9.t
 	desc = ab_byzantium_disaster.9.d
 	picture = BYZ_CIVIL_WAR_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = NCI
 		BYZ = {
 			has_disaster = byzantium_fall_angelid
 			defensive_war_with = VEN
 		}
-		is_at_war = no
-	}
-	
-	mean_time_to_happen = {
-		months = 3
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.9.a
-		ai_chance = { factor = 70 }
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0
+				has_country_flag = bul_byzantium_refused
+			}
+		}
 		join_all_offensive_wars_of = VEN
 		BYZ = {
-			country_event = { id = ab_byzantium_disaster.10 }
+			country_event = {
+				id = ab_byzantium_disaster.10
+			}
 		}
 	}	
 
@@ -559,7 +503,7 @@ country_event = {
 	}	
 }
 
-#Venice demands Athens and Thebes 6 - Nicaea joins - Inform Byz
+#Venice demands Athens and Thebes 6 - Nicaea/Bulgaria joins - Inform Byz
 country_event = {
 	id = ab_byzantium_disaster.10
 	title = ab_byzantium_disaster.10.t
@@ -573,85 +517,21 @@ country_event = {
 	}
 }
 
-#Venice demands Athens and Thebes 7 - Bulgaria joins
+#Ioannes Assassination
 country_event = {
 	id = ab_byzantium_disaster.11
 	title = ab_byzantium_disaster.11.t
 	desc = ab_byzantium_disaster.11.d
-	picture = BYZ_CIVIL_WAR_eventPicture
+	picture = ASSASSINATION_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BUL
-		BYZ = {
-			has_disaster = byzantium_fall_angelid
-			defensive_war_with = VEN
-		}
-		is_at_war = no
-	}
-	
-	mean_time_to_happen = {
-		months = 6
+		has_disaster = byzantium_fall_angelid
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.11.a
-		ai_chance = {
-			factor = 70
-			modifier = {
-				factor = 0
-				has_country_flag = bul_byzantium_refused
-			}
-		}
-		join_all_offensive_wars_of = VEN
-		BYZ = {
-			country_event = { id = ab_byzantium_disaster.12 }
-		}
-	}	
-
-	option = {
-		name = ab_byzantium_disaster.11.b
-		ai_chance = { factor = 30 }
-		add_prestige = -10
-	}	
-}
-
-#Venice demands Athens and Thebes 8 - Bulgaria joins - Inform Byz
-country_event = {
-	id = ab_byzantium_disaster.12
-	title = ab_byzantium_disaster.12.t
-	desc = ab_byzantium_disaster.12.d
-	picture = BYZ_CIVIL_WAR_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ab_byzantium_disaster.12.a
-	}
-}
-
-#Ioannes Assassination
-country_event = {
-	id = ab_byzantium_disaster.13
-	title = ab_byzantium_disaster.13.t
-	desc = ab_byzantium_disaster.13.d
-	picture = ASSASSINATION_eventPicture
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 5
-	}
-
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_fall_angelid
-		defensive_war_with = VEN
-	}
-	
-	option = {
-		name = ab_byzantium_disaster.13.a
 		change_monarch_points_or_power = {
 			points = 1
 			power = adm
@@ -667,7 +547,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium_disaster.13.b
+		name = ab_byzantium_disaster.11.b
 		hidden_effect = {
 			define_ruler = {
 				adm = 4
@@ -686,7 +566,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium_disaster.13.c
+		name = ab_byzantium_disaster.11.c
 		hidden_effect = {
 			define_ruler = {
 				adm = 4
@@ -705,7 +585,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium_disaster.13.de
+		name = ab_byzantium_disaster.11.de
 		hidden_effect = {
 			define_ruler = {
 				adm = 4
@@ -724,7 +604,7 @@ country_event = {
 	}
 
 	option = {
-		name = ab_byzantium_disaster.13.e
+		name = ab_byzantium_disaster.11.e
 		hidden_effect = {
 			define_ruler = {
 				adm = 4
@@ -742,41 +622,7 @@ country_event = {
 	}
 }
 
-#Defeat Epirus - Hidden 
-country_event = {
-	id = ab_byzantium_disaster.14
-	title = ab_byzantium_disaster.14.t
-	desc = ab_byzantium_disaster.14.d
-	picture = COUNTRY_COLLAPSE_eventPicture
-
-	fire_only_once = yes
-
-	hidden = yes
-	
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_fall_angelid
-		has_country_flag = byz_epirus_war
-		142 = {
-			country_or_non_sovereign_subject_holds = ROOT	
-		}
-		144 = {
-			country_or_non_sovereign_subject_holds = ROOT	
-		}
-		4698 = {
-			country_or_non_sovereign_subject_holds = ROOT	
-		}
-		4699 = {
-			country_or_non_sovereign_subject_holds = ROOT	
-		}
-	}
-	
-	option = {
-		name = ab_byzantium_disaster.14.a
-		set_country_flag = had_fall_angelid
-		add_stability = 4
-	}
-}
+# TODO: EMPTY SLOT 12-14
 
 ## CRISIS OF THE SIXTEENTH CENTURY -----
 #Crisis of the Sixteenth Century Start

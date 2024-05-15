@@ -384,6 +384,20 @@ TLW_on_siege_won_province_effect = {
 	# Rome
 	if = {
 		limit = {
+			province_id = 151
+			controlled_by = EPI
+			owner = {
+				has_disaster = byzantium_fall_angelid
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_byzantium_disaster.3
+			}
+		}
+	}
+	if = {
+		limit = {
 			controller = {
 				is_in_war = {
 					casus_belli = cb_roman_persian_war
@@ -591,6 +605,28 @@ TLW_on_battle_won_country_effect = {
 }
 
 TLW_on_war_won_effect = {
+	# Rome
+	if = {
+		limit = {
+			has_disaster = byzantium_fall_angelid
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = VEN
+				}
+			}
+			set_country_flag = byz_angelid_great_rewards
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					tag = EPI
+				}
+			}
+			set_country_flag = had_fall_angelid
+		}
+	}
 	if = {
 		limit = {
 			has_country_modifier = byz_reconquest_of_the_levant
