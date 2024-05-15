@@ -401,7 +401,13 @@ panama_canal = {
 		FROM = {
 			owns_or_vassal_of = 835
 			is_subject = no
-			adm_tech = 22
+            if = {
+                limit = {
+                    NOT = { mission_completed = SUN_panama_canal }
+                    NOT = { mission_completed = SUNm_panama_canal }
+                }
+                adm_tech = 22
+            }
 		}
 	}
 
@@ -543,6 +549,24 @@ panama_canal = {
 		country_modifiers = {
 			global_trade_power = 0.05
 		}
+
+		conditional_modifier = {
+            trigger = {
+                owner = {
+                    custom_trigger_tooltip = {
+                        tooltip = SUN_completed_panama_canal_mission
+                        OR = {
+                            mission_completed = SUN_panama_canal
+                            mission_completed = SUNm_panama_canal
+                        }
+                    }
+                }
+            }
+            modifier = {
+                reduced_trade_penalty_on_non_main_tradenode = 0.5
+                trade_efficiency = 0.05
+            }
+        }
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
