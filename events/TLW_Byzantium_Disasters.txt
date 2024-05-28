@@ -231,7 +231,7 @@ country_event = {
 		}
 		if = {
 			limit = {
-				defensive_war_with = VEN
+				war_with = VEN
 			}
 			add_prestige = -10
 			white_peace = VEN
@@ -475,7 +475,7 @@ country_event = {
 	trigger = {
 		BYZ = {
 			has_disaster = byzantium_fall_angelid
-			defensive_war_with = VEN
+			war_with = VEN
 		}
 	}
 	
@@ -637,35 +637,6 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			add_stability = -3
-			if = {
-				limit = {
-					NOT = {
-						any_country = {
-							culture_group = latin
-							is_part_of_hre = yes
-							NOT = { tag = PAP }
-						}
-					}
-				}
-				set_country_flag = byz_no_italian_league
-			}
-		}
-	}
-	
-	option = {
-		name = ab_byzantium_disaster.15.a
-		tooltip = {
-			add_stability = -3
-		}
-		custom_tooltip = BYZ_ASHES_THERA
-		tooltip = {
-			add_devastation = 50
-			add_province_modifier = {
-				name = byz_ashes_thera
-				duration = 3650
-			}
-		}
-		hidden_effect = {
 			every_province = {
 				limit = {
 					OR = {
@@ -685,6 +656,37 @@ country_event = {
 					duration = 3650
 				}
 			}
+			country_event = {
+				id = ab_byzantium_disaster.17
+				days = 30
+			}
+			country_event = {
+				id = ab_byzantium_disaster.18
+				days = 90
+			}
+			country_event = {
+				id = ab_byzantium_disaster.19
+				days = 180
+			}
+			country_event = {
+				id = ab_byzantium_disaster.21
+				days = 365
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.15.a
+		tooltip = {
+			add_stability = -3
+		}
+		custom_tooltip = BYZ_ASHES_THERA
+		tooltip = {
+			add_devastation = 50
+			add_province_modifier = {
+				name = byz_ashes_thera
+				duration = 3650
+			}
 		}
 	}
 }
@@ -701,13 +703,21 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = had_16th_crisis
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = byz_crisis_ayyubids
+			clr_country_flag = byz_crisis_italians
+			clr_country_flag = byz_occupied_roma
 			clear_global_event_target = italianLeagueLeader
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.16.a
-		add_stability = 1
+		add_stability_or_adm_power = yes
 	}
 }
 
@@ -718,21 +728,12 @@ country_event = {
 	desc = ab_byzantium_disaster.17.d
 	picture = FAMINE_eventPicture
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-	}
-
-	mean_time_to_happen = {
-		days = 21
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium_disaster.17.a
 		ai_chance = { factor = 50 }
-		add_years_of_income = -2.00
+		add_years_of_income = -2
 		custom_tooltip = BYZ_THERA_PROVINCES
 		tooltip = {
 			add_province_modifier = {
@@ -765,7 +766,7 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.17.b
 		ai_chance = { factor = 30 }
-		add_years_of_income = -1.00
+		add_years_of_income = -1
 		custom_tooltip = BYZ_THERA_PROVINCES
 		tooltip = {
 			add_province_modifier = {
@@ -809,16 +810,7 @@ country_event = {
 	desc = ab_byzantium_disaster.18.d
 	picture = COURT_eventPicture
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-	}
-
-	mean_time_to_happen = {
-		months = 3
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium_disaster.18.a
@@ -846,30 +838,10 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.19
 	title = ab_byzantium_disaster.19.t
-	desc = {
-		trigger = {
-			NOT = { has_country_flag = byz_no_italian_league }
-		}
-		desc = ab_byzantium_disaster.19.d1
-	}
-	desc = {
-		trigger = {
-			has_country_flag = byz_no_italian_league
-		}
-		desc = ab_byzantium_disaster.19.d2
-	}
+	desc = ab_byzantium_disaster.19.d
 	picture = DEBATE_REPUBLICAN_eventPicture
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-	}
-
-	mean_time_to_happen = {
-		months = 6
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium_disaster.19.a
@@ -887,18 +859,13 @@ country_event = {
 			limit = { region = balkan_region }
 			leadered_peasant_rebels = 2
 		}
-		if = {
-			limit = {
-				has_country_flag = byz_no_italian_league
-			}
-			random_owned_province = {
-				limit = { region = balkan_region }
-				leadered_peasant_rebels = 2
-			}
-			random_owned_province = {
-				limit = { region = balkan_region }
-				leadered_peasant_rebels = 2
-			}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
+		}
+		random_owned_province = {
+			limit = { region = balkan_region }
+			leadered_peasant_rebels = 2
 		}
 		149 = {
 			spawn_rebels = {
@@ -907,7 +874,11 @@ country_event = {
 				leader = "Ioannis Kapodistrias"
 			}
 		}
-		country_event = { id = ab_byzantium_disaster.20 }
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium_disaster.20
+			}
+		}
 	}
 
 	option = {
@@ -915,6 +886,7 @@ country_event = {
 		ai_chance = { factor = 10 }
 		add_stability = -3
 		add_prestige = -10
+		custom_tooltip = AB_EMPTY
 		add_estate_influence_modifier = {
 			estate = estate_burghers
 			desc = BYZ_SUPREMACY
@@ -925,12 +897,13 @@ country_event = {
 			estate = estate_burghers
 			share = 15
 		}
+		custom_tooltip = AB_EMPTY
 		set_country_flag = byz_restore_republic
 		custom_tooltip = BYZ_RESTORE_REPUBLIC
 	}
 }
 
-#Nobles demand power
+#Eugeneis Deal
 country_event = {
 	id = ab_byzantium_disaster.20
 	title = ab_byzantium_disaster.20.t
@@ -1018,44 +991,25 @@ country_event = {
 country_event = {
 	id = ab_byzantium_disaster.21
 	title = ab_byzantium_disaster.21.t
-	desc = {
-		trigger = {
-			NOT = { has_country_flag = byz_no_italian_league }
-		}
-		desc = ab_byzantium_disaster.21.d1
-	}
-	desc = {
-		trigger = {
-			has_country_flag = byz_no_italian_league
-		}
-		desc = ab_byzantium_disaster.21.d2
-	}
+	desc = ab_byzantium_disaster.21.d
 	picture = AB_CHARGE_eventPicture
 	
-	fire_only_once = yes
-
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-	}
-
-	mean_time_to_happen = {
-		months = 12
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			every_owned_province = {
+			every_province = {
 				limit = {
 					OR = {
 						area = syria_area
 						area = aleppo_area
 						area = syrian_desert_area
 					}
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				add_core = RYB
+				cede_province = RYB
 			}
-			release = RYB
 			RYB = {
 				set_country_flag = disaster_tag_cannot_ally
 				change_primary_culture = al_suryah_arabic
@@ -1143,13 +1097,48 @@ country_event = {
 					}
 				}
 			}
+			country_event = {
+				id = ab_byzantium_disaster.22
+				days = 120
+			}
+			country_event = {
+				id = ab_byzantium_disaster.23
+				days = 240
+			}
+			country_event = {
+				id = ab_byzantium_disaster.24
+				days = 605
+			}
+			country_event = {
+				id = ab_byzantium_disaster.33
+				days = 3650
+			}
+			if = {
+				limit = {
+					any_country = {
+						culture_group = latin
+						is_part_of_hre = yes
+						NOT = { tag = PAP }
+					}
+				}
+				random_country = {
+					limit = {
+						culture_group = latin
+						is_part_of_hre = yes
+						NOT = { tag = PAP }
+					}
+					country_event = {
+						id = ab_byzantium_disaster.26
+						days = 180
+					}
+				}
+			}
 		}		
 	}
 
 	option = {
 		name = ab_byzantium_disaster.21.a
 		ai_chance = { factor = 95 }
-		set_country_flag = byz_timelimit_ayyubids
 		declare_war_with_cb = {
 			who = RYB
 			casus_belli = cb_suppress_revolt
@@ -1211,22 +1200,18 @@ country_event = {
 	desc = ab_byzantium_disaster.22.d
 	picture = ABAD7_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		offensive_war_with = RYB
-		any_owned_province = {
+		NOT = { has_country_flag = byz_crisis_ayyubids }
+		any_province = {
 			OR = {
 				area = palestine_area
 				area = trans_jordan_area
 			}
+			country_or_non_sovereign_subject_holds = ROOT
 		}
-	}
-
-	mean_time_to_happen = {
-		months = 4
 	}
 
 	immediate = {
@@ -1307,22 +1292,18 @@ country_event = {
 	desc = ab_byzantium_disaster.23.d
 	picture = ABAD7_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		offensive_war_with = RYB
-		any_owned_province = {
+		NOT = { has_country_flag = byz_crisis_ayyubids }
+		any_province = {
 			OR = {
 				area = delta_area
 				area = bahari_area
 			}
+			country_or_non_sovereign_subject_holds = ROOT
 		}
-	}
-
-	mean_time_to_happen = {
-		months = 8
 	}
 
 	immediate = {
@@ -1393,7 +1374,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.23.a
-		set_country_flag = byz_egypt_revolt
 	}
 }
 
@@ -1404,20 +1384,15 @@ country_event = {
 	desc = ab_byzantium_disaster.24.d
 	picture = ABAD7_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		offensive_war_with = RYB
-		has_country_flag = byz_egypt_revolt
-		any_owned_province = {
+		NOT = { has_country_flag = byz_crisis_ayyubids }
+		any_province = {
 			region = egypt_region
+			country_or_non_sovereign_subject_holds = ROOT
 		}
-	}
-
-	mean_time_to_happen = {
-		months = 12
 	}
 
 	immediate = {
@@ -1488,10 +1463,9 @@ country_event = {
 
 	is_triggered_only = yes
 
-	option = {
-		name = ab_byzantium_disaster.25.a
-		custom_tooltip = BYZ_PACIFIED_LEVANT
+	immediate = {
 		hidden_effect = {
+			set_country_flag = byz_crisis_ayyubids
 			every_owned_province = {
 				limit = {
 					is_core = RYB
@@ -1503,8 +1477,17 @@ country_event = {
 				remove_core = RYB
 			}
 		}
-		set_country_flag = byz_crisis_ayyubids
-		clr_country_flag = byz_timelimit_ayyubids
+	}
+
+	option = {
+		name = ab_byzantium_disaster.25.a
+		custom_tooltip = BYZ_PACIFIED_LEVANT
+		tooltip = {
+			add_province_modifier = {
+				name = byz_pacified_levant
+				duration = 3650
+			}
+		}
 	}
 }
 
@@ -1515,56 +1498,30 @@ country_event = {
 	desc = ab_byzantium_disaster.26.d
 	picture = LIBERUM_VETO_eventPicture
 
+	is_triggered_only = yes
+
 	trigger = {
-		OR = {
-			AND = {
-				tag = LOM
-				NOT = { has_country_flag = byz_refused_italian_leader }
-				is_part_of_hre = yes
-			}
-			AND = {
-				OR = {
-					NOT = { exists = LOM }
-					LOM = { 
-						OR = {
-							has_country_flag = byz_refused_italian_leader 
-							is_part_of_hre = no
-						}
-					}
-				}
-				culture_group = latin
-				is_part_of_hre = yes
-				NOT = { has_country_flag = byz_refused_italian_leader }
-				NOT = { tag = PAP }
-			}
-		}
 		BYZ = {
 			has_disaster = byzantium_16th_crisis
-			OR = {
-				offensive_war_with = RYB
-				has_country_flag = byz_crisis_ayyubids
-			}
-			NOT = { has_country_flag = byz_no_italian_league }
-		}
-		NOT = { has_global_flag = byz_picked_italian_leader }
-	}
-
-	mean_time_to_happen = {
-		months = 6
-		modifier = {
-			factor = 0.1
-			has_country_flag = byz_italian_league_candidate
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.26.a
 		ai_chance = { factor = 50 }
-		BYZ = { country_event = { id = ab_byzantium_disaster.27 } }
-		set_global_flag = byz_picked_italian_leader
-		clr_country_flag = byz_italian_league_candidate
 		hidden_effect = {
 			save_global_event_target_as = italianLeagueLeader
+			BYZ = {
+				country_event = {
+					id = ab_byzantium_disaster.27
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = byz_refused_italian_leader
+				}
+				clr_country_flag = byz_refused_italian_leader
+			}
 		}
 	}
 
@@ -1575,25 +1532,26 @@ country_event = {
 			any_country = {
 				culture_group = latin
 				is_part_of_hre = yes
-				NOT = { has_country_flag = byz_refused_italian_leader }
 				NOT = { tag = ROOT }
 				NOT = { tag = PAP }
+				NOT = { has_country_flag = byz_refused_italian_leader }
 			}
 		}
+		set_country_flag = byz_refused_italian_leader
 		hidden_effect = {
 			random_country = {
 				limit = {
 					culture_group = latin
 					is_part_of_hre = yes
-					NOT = { has_country_flag = byz_refused_italian_leader }
 					NOT = { tag = ROOT }
 					NOT = { tag = PAP }
+					NOT = { has_country_flag = byz_refused_italian_leader }
 				}
-				set_country_flag = byz_italian_league_candidate
+				country_event = {
+					id = ab_byzantium_disaster.26
+				}
 			}
 		}
-		set_country_flag = byz_refused_italian_leader
-		clr_country_flag = byz_italian_league_candidate
 	}
 }
 
@@ -1622,6 +1580,16 @@ country_event = {
 			country_event = {
 				id = ab_byzantium.92
 			}
+			country_event = {
+				id = ab_byzantium_disaster.32
+				days = 3650
+			}
+			emperor = {
+				country_event = {
+					id = ab_byzantium_disaster.29
+					days = 30
+				}
+			}
 			every_country = {
 				limit = {
 					culture_group = latin
@@ -1629,7 +1597,9 @@ country_event = {
 					NOT = { tag = event_target:italianLeagueLeader }
 					NOT = { tag = PAP }
 				}
-				country_event = { id = ab_byzantium_disaster.28 }
+				country_event = {
+					id = ab_byzantium_disaster.28
+				}
 			}
 		}
 	}
@@ -1660,7 +1630,6 @@ country_event = {
 				}
 			}
 		}
-
 	}
 }
 
@@ -1675,13 +1644,13 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.28.a
-		ai_chance = { factor = 80 }
+		ai_chance = { factor = 100 }
 		join_all_offensive_wars_of = event_target:italianLeagueLeader
 	}
 
 	option = {
 		name = ab_byzantium_disaster.28.b
-		ai_chance = { factor = 20 }
+		ai_chance = { factor = 0 }
 		add_prestige = -20
 	}
 }
@@ -1693,31 +1662,23 @@ country_event = {
 	desc = ab_byzantium_disaster.29.d
 	picture = BATTLE_eventPicture
 
-	fire_only_once = yes
-
-	trigger = {
-		is_emperor = yes
-		BYZ = {
-			has_disaster = byzantium_16th_crisis
-			defensive_war_with = event_target:italianLeagueLeader
-		}
-	}
-
-	mean_time_to_happen = {
-		months = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = ab_byzantium_disaster.29.a
-		ai_chance = { factor = 90 }
-		BYZ = { 
-			country_event = { id = ab_byzantium_disaster.30 } 
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+			BYZ = { 
+				country_event = {
+					id = ab_byzantium_disaster.30
+				}
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.29.b
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 0 }
 		add_prestige = -20
 	}
 }
@@ -1759,10 +1720,37 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = byz_crisis_italians
+			if = {
+				limit = {
+					NOT = { has_country_flag = byz_timed_mission_failed }
+				}
+				set_country_flag = byz_won_italians_5years
+			}
+			italy_region = {
+				limit = {
+					NOT = { owned_by = BYZ }
+				}
+				add_permanent_province_modifier = {
+					name = byz_cheaper_italy_conquest
+					duration = -1
+				}
+			}
+		}
+	}
+
 	option = {
 		name = ab_byzantium_disaster.31.a
-		set_country_flag = byz_crisis_italians
 		custom_tooltip = BYZ_CHEAPER_ITALY_CONQUEST
+		tooltip = {
+			add_province_modifier = {
+				name = byz_cheaper_italy_conquest
+				duration = -1
+				desc = "until conquered by us"
+			}
+		}
 	}
 }
 
@@ -1772,26 +1760,23 @@ country_event = {
 	title = ab_byzantium_disaster.32.t
 	desc = ab_byzantium_disaster.32.d
 	picture = WOUNDED_SOLDIERS_eventPicture
+
+	is_triggered_only = yes
 	
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		defensive_war_with = event_target:italianLeagueLeader
-		had_country_flag = {
-			flag = byz_timed_mission_unlocked
-			days = 3650
-		}
+		NOT = { has_country_flag = byz_crisis_italians }
 	}
 
 	immediate = {
 		hidden_effect = {
+			set_country_flag = byz_crisis_italians
 			white_peace = event_target:italianLeagueLeader
 		}
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.32.a
-		set_country_flag = byz_crisis_italians
 	}
 }
 
@@ -1802,27 +1787,16 @@ country_event = {
 	desc = ab_byzantium_disaster.33.d
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		offensive_war_with = RYB
-		OR = {
-			had_country_flag = {
-				flag = byz_timelimit_ayyubids
-				days = 3650
-			}
-			num_of_owned_provinces_with = {
-				value = 10
-				region = anatolia_region
-				controlled_by = RYB
-			}
-		}
+		NOT = { has_country_flag = byz_crisis_ayyubids }
 	}
 
 	immediate = {
 		hidden_effect = {
+			set_country_flag = byz_crisis_ayyubids
 			white_peace = RYB
 			if = {
 				limit = {
@@ -1853,8 +1827,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.33.a
-		set_country_flag = byz_crisis_ayyubids
-		clr_country_flag = byz_timelimit_ayyubids
 	}
 }
 
@@ -1865,12 +1837,11 @@ country_event = {
 	desc = ab_byzantium_disaster.34.d
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = BYZ
 		has_disaster = byzantium_16th_crisis
-		defensive_war_with = event_target:italianLeagueLeader
+		NOT = { has_country_flag = byz_crisis_italians }
 		OR = {
 			AND = {
 				has_country_flag = byz_occupied_roma
@@ -1883,7 +1854,7 @@ country_event = {
 				num_of_owned_provinces_with = {
 					value = 1
 					region = italy_region
-					controlled_by = BYZ
+					controlled_by = owner
 				}
 			}
 		}
@@ -1891,6 +1862,7 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
+			set_country_flag = byz_crisis_italians
 			white_peace = event_target:italianLeagueLeader
 			every_province = {
 				limit = {
@@ -1915,7 +1887,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.34.a
-		set_country_flag = byz_crisis_italians
 	}
 }
 
@@ -1926,16 +1897,16 @@ country_event = {
 	desc = ab_byzantium_disaster.35.d
 	picture = ABAD5_eventPicture
 
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-		defensive_war_with = event_target:italianLeagueLeader
-		NOT = { has_country_flag = byz_occupied_roma }
-		118 = { NOT = { controlled_by = BYZ } }
-	}
+	is_triggered_only = yes
 
 	immediate = {
-		set_country_flag = byz_occupied_roma
+		hidden_effect = {
+			set_country_flag = byz_occupied_roma
+			country_event = {
+				id = ab_byzantium_disaster.34
+				days = 730
+			}
+		}
 	}
 
 	option = {
@@ -1950,16 +1921,12 @@ country_event = {
 	desc = ab_byzantium_disaster.36.d
 	picture = ABAD5_eventPicture
 
-	trigger = {
-		tag = BYZ
-		has_disaster = byzantium_16th_crisis
-		defensive_war_with = event_target:italianLeagueLeader
-		has_country_flag = byz_occupied_roma
-		118 = { controlled_by = BYZ }
-	}
+	is_triggered_only = yes
 
 	immediate = {
-		clr_country_flag = byz_occupied_roma
+		hidden_effect = {
+			clr_country_flag = byz_occupied_roma
+		}
 	}
 
 	option = {

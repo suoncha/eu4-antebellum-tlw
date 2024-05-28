@@ -396,7 +396,80 @@ TLW_on_siege_won_province_effect = {
 			}
 		}
 	}
-	if = {
+	else_if = {
+		limit = {
+			region = anatolia_region
+			controlled_by = RYB
+			owner = {
+				has_disaster = byzantium_16th_crisis
+				num_of_owned_provinces_with = {
+					value = 10
+					region = anatolia_region
+					controlled_by = RYB
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_byzantium_disaster.33
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			region = italy_region
+			owned_by = BYZ
+			BYZ = {
+				has_disaster = byzantium_16th_crisis
+				war_with = event_target:italianLeagueLeader
+			}
+		}
+		if = {
+			limit = {
+				BYZ = {
+					NOT = {
+						num_of_owned_provinces_with = {
+							value = 1
+							region = italy_region
+							controlled_by = BYZ
+						}
+					}
+				}
+			}
+			BYZ = {
+				country_event = {
+					id = ab_byzantium_disaster.34
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 118
+				controller = {
+					war_with = BYZ
+				}
+			}
+			BYZ = {
+				country_event = {
+					id = ab_byzantium_disaster.35
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 118
+				controller = {
+					war_with = event_target:italianLeagueLeader
+				}
+			}
+			BYZ = {
+				country_event = {
+					id = ab_byzantium_disaster.36
+				}
+			}
+		}
+	}
+	else_if = {
 		limit = {
 			controller = {
 				is_in_war = {
