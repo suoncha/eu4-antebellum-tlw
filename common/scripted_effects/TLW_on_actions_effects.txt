@@ -426,13 +426,9 @@ TLW_on_siege_won_province_effect = {
 		}
 		if = {
 			limit = {
-				BYZ = {
-					NOT = {
-						num_of_owned_provinces_with = {
-							value = 1
-							region = italy_region
-							controlled_by = BYZ
-						}
+				NOT = {
+					italy_region = {
+						controlled_by = BYZ
 					}
 				}
 			}
@@ -473,6 +469,71 @@ TLW_on_siege_won_province_effect = {
 		limit = {
 			controller = {
 				is_in_war = {
+					casus_belli = cb_roman_civil_war
+				}
+				war_with = event_target:dioceseLeader
+			}
+			is_capital = yes
+			owner = {
+				NOT = { tag = event_target:dioceseLeader }
+				is_in_war = {
+					casus_belli = cb_roman_civil_war
+				}
+				war_with = ROM
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_byzantium_disaster.58
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			controller = {
+				is_in_war = {
+					casus_belli = cb_roman_civil_war
+				}
+				war_with = ROM
+			}
+			is_capital = yes
+			owner = {
+				is_subject_of_type_with_overlord = {
+					who = ROM
+					type = diocese_vassal
+				}
+				is_in_war = {
+					casus_belli = cb_roman_civil_war
+				}
+				war_with = event_target:dioceseLeader
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_byzantium_disaster.60
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			controller = {
+				is_in_war = {
+					casus_belli = cb_roman_civil_war
+				}
+				war_with = ROM
+			}
+			is_capital_of = ROM
+		}
+		ROM = {
+			country_event = {
+				id = ab_byzantium_disaster.62
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			controller = {
+				is_in_war = {
 					casus_belli = cb_roman_persian_war
 				}
 				war_with = ROM
@@ -482,6 +543,20 @@ TLW_on_siege_won_province_effect = {
 		}
 		add_core = event_target:crisisPersia
 		cede_province = event_target:crisisPersia
+		if = {
+			limit = {
+				NOT = {
+					near_east_superregion = {
+						province_is_diocese_land_trigger = yes
+					}
+				}
+			}
+			ROM = {
+				country_event = {
+					id = ab_byzantium_disaster.82
+				}
+			}
+		}
 	}
 	else_if = {
 		limit = {

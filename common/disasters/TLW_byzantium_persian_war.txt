@@ -4,12 +4,7 @@ byzantium_persian_war = {
 			tag = BYZ
 			tag = ROM
 		}
-		rum_area = {
-			type = all
-			country_or_non_sovereign_subject_holds = ROOT	
-		}
-		erzurum_area = {
-			type = all
+		mashriq_region = {
 			country_or_non_sovereign_subject_holds = ROOT	
 		}
 		NOT = { has_country_flag = had_persian_war }
@@ -18,7 +13,9 @@ byzantium_persian_war = {
 	can_start = {
 		has_any_disaster = no
 		if = {
-			limit = { tag = BYZ }
+			limit = { 
+				tag = BYZ 
+			}
 			tag = ROM
 		}
 		iraq_arabi_area = {
@@ -33,19 +30,61 @@ byzantium_persian_war = {
 			type = all
 			country_or_non_sovereign_subject_holds = ROOT	
 		}
-		custom_trigger_tooltip = {
-			tooltip = BYZ_NEIGHBOR_PERSIA
-			OR = {
-				any_neighbor_country = {
+		if = {
+			limit = {
+				any_country = {
 					ab_is_persia_trigger = yes
 				}
-				any_subject_country = {
+			}
+			custom_trigger_tooltip = {
+				tooltip = BYZ_NEIGHBOR_PERSIA
+				any_country = {
+					ab_is_persia_trigger = yes
+					any_neighbor_country = {
+						OR = {
+							tag = ROOT
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = diocese_vassal
+							}
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = grand_diocese_vassal
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_NEIGHBOR_LARGEST_PERSIAN_PRINCE
+				any_country = {
 					OR = {
-						is_subject_of_type = diocese_vassal
-						is_subject_of_type = grand_diocese_vassal
+						has_reform = persianprince
+						has_reform = persianprincet
+					}
+					NOT = {
+						any_country = {
+							OR = {
+								has_reform = persianprince
+								has_reform = persianprincet
+							}
+							total_development = PREV
+						}
 					}
 					any_neighbor_country = {
-						ab_is_persia_trigger = yes
+						OR = {
+							tag = ROOT
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = diocese_vassal
+							}
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = grand_diocese_vassal
+							}
+						}
 					}
 				}
 			}
@@ -59,51 +98,43 @@ byzantium_persian_war = {
 	progress = {
 		modifier = {
 			factor = 3
-			custom_trigger_tooltip = {
-				tooltip = BYZ_RIVAL_PERSIA
-				OR = {
-					is_rival = PER
-					is_rival = PRC
-					is_rival = PMN
-					is_rival = PRZ
+			if = {
+				limit = {
+					any_country = {
+						ab_is_persia_trigger = yes
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RIVAL_PERSIA
+					any_country = {
+						ab_is_persia_trigger = yes
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
+						}
+					}
 				}
 			}
-		} 
-		modifier = {
-			factor = 1
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN0_PERSIA
-				OR = {
-					PER = {
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RIVAL_LARGEST_PERSIAN_PRINCE
+					any_country = {
+						OR = {
+							has_reform = persianprince
+							has_reform = persianprincet
+						}
 						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = 0
+							any_country = {
+								OR = {
+									has_reform = persianprince
+									has_reform = persianprincet
+								}
+								total_development = PREV
 							}
 						}
-					}
-					PRC = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = 0
-							}
-						}
-					}
-					PMN = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = 0
-							}
-						}
-					}
-					PRZ = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = 0
-							}
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
 						}
 					}
 				}
@@ -111,10 +142,64 @@ byzantium_persian_war = {
 		} 
 		modifier = {
 			factor = 1
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN50_PERSIA
-				OR = {
-					PER = {
+			if = {
+				limit = {
+					any_country = {
+						ab_is_persia_trigger = yes
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN0_PERSIA
+					any_country = {
+						ab_is_persia_trigger = yes
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN0_LARGEST_PERSIAN_PRINCE
+					any_country = {
+						OR = {
+							has_reform = persianprince
+							has_reform = persianprincet
+						}
+						NOT = {
+							any_country = {
+								OR = {
+									has_reform = persianprince
+									has_reform = persianprincet
+								}
+								total_development = PREV
+							}
+						}
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+				}
+			}
+		} 
+		modifier = {
+			factor = 1
+			if = {
+				limit = {
+					any_country = {
+						ab_is_persia_trigger = yes
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN50_PERSIA
+					any_country = {
+						ab_is_persia_trigger = yes
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -122,23 +207,25 @@ byzantium_persian_war = {
 							}
 						}
 					}
-					PRC = {
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN50_LARGEST_PERSIAN_PRINCE
+					any_country = {
+						OR = {
+							has_reform = persianprince
+							has_reform = persianprincet
+						}
 						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -50
+							any_country = {
+								OR = {
+									has_reform = persianprince
+									has_reform = persianprincet
+								}
+								total_development = PREV
 							}
 						}
-					}
-					PMN = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -50
-							}
-						}
-					}
-					PRZ = {
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -151,10 +238,16 @@ byzantium_persian_war = {
 		} 
 		modifier = {
 			factor = 2
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN100_PERSIA
-				OR = {
-					PER = {
+			if = {
+				limit = {
+					any_country = {
+						ab_is_persia_trigger = yes
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN100_PERSIA
+					any_country = {
+						ab_is_persia_trigger = yes
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -162,23 +255,25 @@ byzantium_persian_war = {
 							}
 						}
 					}
-					PRC = {
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN100_LARGEST_PERSIAN_PRINCE
+					any_country = {
+						OR = {
+							has_reform = persianprince
+							has_reform = persianprincet
+						}
 						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -100
+							any_country = {
+								OR = {
+									has_reform = persianprince
+									has_reform = persianprincet
+								}
+								total_development = PREV
 							}
 						}
-					}
-					PMN = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -100
-							}
-						}
-					}
-					PRZ = {
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -191,10 +286,16 @@ byzantium_persian_war = {
 		}
 		modifier = {
 			factor = 3
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN150_PERSIA
-				OR = {
-					PER = {
+			if = {
+				limit = {
+					any_country = {
+						ab_is_persia_trigger = yes
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN150_PERSIA
+					any_country = {
+						ab_is_persia_trigger = yes
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -202,23 +303,25 @@ byzantium_persian_war = {
 							}
 						}
 					}
-					PRC = {
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN150_LARGEST_PERSIAN_PRINCE
+					any_country = {
+						OR = {
+							has_reform = persianprince
+							has_reform = persianprincet
+						}
 						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -150
+							any_country = {
+								OR = {
+									has_reform = persianprince
+									has_reform = persianprincet
+								}
+								total_development = PREV
 							}
 						}
-					}
-					PMN = {
-						NOT = {
-							has_opinion = {
-								who = ROOT
-								value = -150
-							}
-						}
-					}
-					PRZ = {
 						NOT = {
 							has_opinion = {
 								who = ROOT
@@ -243,7 +346,7 @@ byzantium_persian_war = {
 		is_at_war = no
 		custom_trigger_tooltip = {
 			tooltip = BYZ_CRISIS_PERSIANS
-			has_country_flag = byz_crisis_persians
+			has_country_flag = had_persian_war
 		}
 	}
 	
