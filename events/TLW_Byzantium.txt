@@ -3197,7 +3197,289 @@ country_event = {
 }
 
 #Establish Diocese Peace Treaty
+country_event = {
+	id = ab_byzantium.94
+	title = ab_byzantium.94.t
+	desc = ab_byzantium.94.d
+	picture = AB_ROMANDIOCESE_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					event_target:establishDioceseTarget = {
+						owns = 225
+					}
+				}
+				set_country_flag = byz_establish_diocese_hispania
+				event_target:establishDioceseTarget = {
+					every_owned_province = {
+						limit = {
+							region = iberia_region
+						}
+						cede_province = ROOT
+					}
+				}
+				every_owned_province = {
+					limit = {
+						region = iberia_region
+					}
+					add_core = RD2
+					remove_core = ROOT
+				}
+				release = RD2
+				create_subject = {
+					who = RD2
+					subject_type = diocese_vassal
+				}
+				RD2 = {
+					change_primary_culture = hispano_roman
+					change_religion = ROOT
+					change_government = republic
+					add_government_reform = rom_diocese
+					kill_ruler = yes
+					set_capital = 225
+					capital_scope = {
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:establishDioceseTarget = {
+						owns = 183
+					}
+				}
+				set_country_flag = byz_establish_diocese_gallia
+				event_target:establishDioceseTarget = {
+					every_owned_province = {
+						limit = {
+							region = france_region
+						}
+						cede_province = ROOT
+					}
+				}
+				every_owned_province = {
+					limit = {
+						region = france_region
+					}
+					add_core = RD4
+					remove_core = ROOT
+				}
+				release = RD4
+				create_subject = {
+					who = RD4
+					subject_type = diocese_vassal
+				}
+				RD4 = {
+					change_primary_culture = gallo_roman
+					change_religion = ROOT
+					change_government = republic
+					add_government_reform = rom_diocese
+					kill_ruler = yes
+					set_capital = 183
+					capital_scope = {
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:establishDioceseTarget = {
+						owns = 236
+					}
+				}
+				set_country_flag = byz_establish_diocese_britannia
+				event_target:establishDioceseTarget = {
+					every_owned_province = {
+						limit = {
+							region = british_isles_region
+						}
+						cede_province = ROOT
+					}
+				}
+				every_owned_province = {
+					limit = {
+						region = british_isles_region
+					}
+					add_core = RD5
+					remove_core = ROOT
+				}
+				release = RD5
+				create_subject = {
+					who = RD5
+					subject_type = diocese_vassal
+				}
+				RD5 = {
+					change_primary_culture = romano_british
+					change_religion = ROOT
+					change_government = republic
+					add_government_reform = rom_diocese
+					kill_ruler = yes
+					set_capital = 236
+					capital_scope = {
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:establishDioceseTarget = {
+						tag = UKR
+						religion = catholic
+					}
+				}
+				set_country_flag = byz_establish_diocese_russia
+				create_subject = {
+					who = UKR
+					subject_type = grand_diocese_vassal
+				}
+				UKR = {
+					override_country_name = DIOCESISRUSSIA
+					add_opinion = {
+						who = ROOT
+						modifier = they_force_unioned_us 
+					}
+					if = {
+						limit = {
+							NOT = { government = monarchy }
+						}
+						change_government = monarchy
+					}
+					add_government_reform = rom_grand_diocese
+				}
+			}
+		}
+	}
 
+	after = {
+		hidden_effect = {
+			clear_global_event_target = establishDioceseTarget
+			clr_country_flag = byz_establish_diocese_hispania
+			clr_country_flag = byz_establish_diocese_gallia
+			clr_country_flag = byz_establish_diocese_britannia
+			clr_country_flag = byz_establish_diocese_russia
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.94.a
+		if = {
+			limit = {
+				has_country_flag = byz_establish_diocese_hispania
+			}
+			custom_tooltip = AB_DIOCESE_HISPANIA
+			custom_tooltip = AB_EMPTY
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_establish_diocese_gallia
+			}
+			custom_tooltip = AB_DIOCESE_GALLIA
+			custom_tooltip = AB_EMPTY
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_establish_diocese_britannia
+			}
+			custom_tooltip = AB_DIOCESE_BRITANNIA
+			custom_tooltip = AB_EMPTY
+		}
+		if = {
+			limit = {
+				has_country_flag = byz_establish_diocese_russia
+			}
+			custom_tooltip = AB_DIOCESE_RUSSIA_CB
+			custom_tooltip = AB_EMPTY
+		}
+	}
+}
+
+#Epirus Overthrow Angelids Peace Treaty
+country_event = {
+	id = ab_byzantium.95
+	title = ab_byzantium.95.t
+	desc = ab_byzantium.95.d
+	picture = AB_ROMANCIVILWAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	hidden = yes
+	
+	option = {
+		name = ab_byzantium.95.a
+		inherit = BYZ
+		change_tag = BYZ
+		on_change_tag_effect = yes
+		swap_non_generic_missions = yes
+		set_government_rank = 3
+		if = {
+			limit = {
+				has_country_flag = epi_angelidrevolt_venicedeal
+			}
+			146 = {
+				if = {
+					limit = {
+						owned_by = ROOT
+					}
+					cede_province = VEN
+				}
+			}
+			5152 = {
+				if = {
+					limit = {
+						owned_by = ROOT
+					}
+					cede_province = VEN
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = epi_angelidrevolt_nicaeadeal
+			}
+			318 = {
+				if = {
+					limit = {
+						owned_by = ROOT
+					}
+					cede_province = NCI
+				}
+			}
+			4700 = {
+				if = {
+					limit = {
+						owned_by = ROOT
+					}
+					cede_province = NCI
+				}
+			}
+			2348 = {
+				if = {
+					limit = {
+						owned_by = ROOT
+					}
+					cede_province = NCI
+				}
+			}
+		}
+		if = {
+			limit = { has_custom_ideas = no }
+			country_event = { id = ideagroups.1 }
+		}
+		country_event = {
+			id = ab_byzantium_disaster.1
+		}
+	}
+}
 
 ## CULTURAL SPHERES FLAVOR
 #Roman advisor
@@ -4269,312 +4551,13 @@ country_event = {
 # TODO: migrate
 #Assimilation Culture Event ( Zoroastrian Rum )
 country_event = {
-	id = ab_byzantium.1000
-	title = ab_byzantium.1000.t
-	desc = ab_byzantium.1000.d
+	id = ab_byzantium.10000
+	title = ab_byzantium.10000.t
+	desc = ab_byzantium.10000.d
 	picture = AB_BYZANTIUM_eventPicture
 
-	trigger = {
-		tag = ROM
-		religion = zoroastrian
-		OR = {
-			AND = {
-				mongolia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_mongolia }
-			}
-			AND = {
-				central_asia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_central_asia }
-			}
-			AND = {
-				baltic_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_baltic }
-			}
-			AND = {
-				low_countries_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_low_countries }
-			}
-			AND = {
-				burma_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_burma }
-			}
-			AND = {
-				anatolia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_anatolia }
-			}
-			AND = {
-				carpathia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_carpathia }
-			}
-			AND = {
-				caucasia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_caucasia }
-			}
-			AND = {
-				british_isles_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_britain }
-			}
-			AND = {
-				bengal_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_bengal }
-			}
-			AND = {
-				north_china_region = {
-					type = all
-					culture_group = roman_g
-				}
-				south_china_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_china }
-			}
-			AND = {
-				coromandel_region = {
-					type = all
-					culture_group = roman_g
-				}
-				deccan_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_coromandel }
-			}
-			AND = {
-				ruthenia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				russia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_russia }
-			}
-			AND = {
-				manchuria_region = {
-					type = all
-					culture_group = roman_g
-				}
-				east_siberia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_manchuria }
-			}
-			AND = {
-				france_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_france }
-			}
-			AND = {
-				north_german_region = {
-					type = all
-					culture_group = roman_g
-				}
-				south_german_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_germany }
-			}
-			AND = {
-				hindusthan_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_hindustan }
-			}
-			AND = {
-				iberia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_iberia }
-			}
-			AND = {
-				persia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				khorasan_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_persia }
-			}
-			AND = {
-				japan_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_japan }
-			}
-			AND = {
-				korea_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_korea }
-			}
-			AND = {
-				italy_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_italy }
-			}
-			AND = {
-				arabia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				egypt_region = {
-					type = all
-					culture_group = roman_g
-				}
-				mashriq_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_arabia }
-			}
-			AND = {
-				maghreb_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_maghreb }
-			}
-			AND = {
-				malaya_region = {
-					type = all
-					culture_group = roman_g
-				}
-				indonesia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				moluccas_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_malaya }
-			}
-			AND = {
-				scandinavia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_scandinavia }
-			}
-			AND = {
-				indo_china_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_indochina }
-			}
-			AND = {
-				balkan_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_balkan }
-			}
-			AND = {
-				crimea_region = {
-					type = all
-					culture_group = roman_g
-				}
-				ural_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_pontic_steppe }
-			}
-			AND = {
-				tibet_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_tibet }
-			}
-			AND = {
-				west_siberia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_ural }
-			}
-			AND = {
-				wendia_region = {
-					type = all
-					culture_group = roman_g
-				}
-				poland_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_poland }
-			}
-			AND = {
-				west_india_region = {
-					type = all
-					culture_group = roman_g
-				}
-				NOT = { has_country_modifier = rum_romanassimilation_western_india }
-			}
-		}
-		NOT = { has_country_flag = rum_romanassimilation_waiting }
-	}
-
-	immediate = {
-		hidden_effect = {
-			set_country_flag = rum_romanassimilation_waiting
-		}
-	}
-
-	after = {
-		hidden_effect = {
-			clr_country_flag = rum_romanassimilation_waiting
-		}
-	}
-
 	option = {
-		name = ab_byzantium.1000.a
+		name = ab_byzantium.10000.a
 		if = {
 			limit = {
 				mongolia_region = {

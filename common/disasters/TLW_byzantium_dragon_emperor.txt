@@ -2,10 +2,9 @@ byzantium_dragon_emperor = {
 	potential = {
 		tag = ROM
 		khorasan_region = {
-			type = all
 			country_or_non_sovereign_subject_holds = ROOT
 		}
-		NOT = { has_country_flag = had_byz_dragon_emperor }
+		NOT = { has_country_flag = had_dragon_emperor }
 	}
 	
 	can_start = {
@@ -15,16 +14,54 @@ byzantium_dragon_emperor = {
 			province_is_diocese_land_trigger = yes
 			superregion = india_superregion
 		}
-		custom_trigger_tooltip = {
-			tooltip = BYZ_NEIGHBOR_CHINA
-			OR = {
-				is_neighbor_of = event_target:EmperorOfChina
-				any_subject_country = {
-					OR = {
-						is_subject_of_type = diocese_vassal
-						is_subject_of_type = grand_diocese_vassal
+		if = {
+			limit = {
+				has_saved_global_event_target = EmperorOfChina
+			}
+			custom_trigger_tooltip = {
+				tooltip = BYZ_NEIGHBOR_CHINA
+				event_target:EmperorOfChina = {
+					any_neighbor_country = {
+						OR = {
+							tag = ROOT
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = diocese_vassal
+							}
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = grand_diocese_vassal
+							}
+						}
 					}
-					is_neighbor_of = event_target:EmperorOfChina
+				}
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_NEIGHBOR_LARGEST_CHINESE_WARLORD
+				any_country = {
+					has_reform = chinawarlord
+					NOT = {
+						any_country = {
+							has_reform = chinawarlord
+							NOT = { tag = PREV }
+							total_development = PREV
+						}
+					}
+					any_neighbor_country = {
+						OR = {
+							tag = ROOT
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = diocese_vassal
+							}
+							is_subject_of_type_with_overlord = {
+								who = ROOT
+								type = grand_diocese_vassal
+							}
+						}
+					}
 				}
 			}
 		}
@@ -37,48 +74,155 @@ byzantium_dragon_emperor = {
 	progress = {
 		modifier = {
 			factor = 3
-			custom_trigger_tooltip = {
-				tooltip = BYZ_RIVAL_CHINA
-				is_rival = event_target:EmperorOfChina
-			}
-		} 
-		modifier = {
-			factor = 1
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN0_CHINA
-				event_target:EmperorOfChina = {
-					NOT = {
-						has_opinion = {
-							who = ROOT
-							value = 0
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RIVAL_CHINA
+					event_target:EmperorOfChina = {
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
 						}
 					}
 				}
 			}
-		} 
-		modifier = {
-			factor = 1
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN50_CHINA
-				event_target:EmperorOfChina = {
-					NOT = {
-						has_opinion = {
-							who = ROOT
-							value = -50
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_RIVAL_LARGEST_CHINESE_WARLORD
+					any_country = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
 						}
 					}
 				}
 			}
-		} 
+		}
+		modifier = {
+			factor = 1
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN0_CHINA
+					event_target:EmperorOfChina = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN0_LARGEST_CHINESE_WARLORD
+					any_country = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = 0
+							}
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 1
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN50_CHINA
+					event_target:EmperorOfChina = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN50_LARGEST_CHINESE_WARLORD
+					any_country = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -50
+							}
+						}
+					}
+				}
+			}
+		}
 		modifier = {
 			factor = 2
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN100_CHINA
-				event_target:EmperorOfChina = {
-					NOT = {
-						has_opinion = {
-							who = ROOT
-							value = -100
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN100_CHINA
+					event_target:EmperorOfChina = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN100_LARGEST_CHINESE_WARLORD
+					any_country = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -100
+							}
 						}
 					}
 				}
@@ -86,13 +230,39 @@ byzantium_dragon_emperor = {
 		}
 		modifier = {
 			factor = 3
-			custom_trigger_tooltip = {
-				tooltip = BYZ_LESSTHAN150_CHINA
-				event_target:EmperorOfChina = {
-					NOT = {
-						has_opinion = {
-							who = ROOT
-							value = -150
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN150_CHINA
+					event_target:EmperorOfChina = {
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_LESSTHAN150_LARGEST_CHINESE_WARLORD
+					any_country = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+						NOT = {
+							has_opinion = {
+								who = ROOT
+								value = -150
+							}
 						}
 					}
 				}
@@ -112,7 +282,7 @@ byzantium_dragon_emperor = {
 		is_at_war = no
 		custom_trigger_tooltip = {
 			tooltip = BYZ_CRISIS_CHINESES
-			has_country_flag = byz_crisis_chineses
+			has_country_flag = had_dragon_emperor
 		}
 	}
 	

@@ -366,6 +366,27 @@ TLW_on_new_term_election_effect = {
 			id = ab_byzantium.68
 		}
 	}
+	else_if = {
+		limit = {
+			tag = HLS
+			NOT = { dynasty = "Seleukos" }
+		}
+		set_dynasty = "Seleukos"
+	}
+	else_if = {
+		limit = {
+			tag = HLM
+			NOT = { dynasty = "Antigonos" }
+		}
+		set_dynasty = "Antigonos"
+	}
+	else_if = {
+		limit = {
+			tag = AEG
+			NOT = { dynasty = "Ptolemaios" }
+		}
+		set_dynasty = "Ptolemaios"
+	}
 }
 
 TLW_on_death_election_effect = {
@@ -570,55 +591,73 @@ TLW_on_siege_won_province_effect = {
 					casus_belli = cb_roman_chinese_war
 				}
 			}
-			OR = {
-				AND = {
-					owner = {
-						OR = {
-							is_subject_of_type_with_overlord = {
-								who = ROM
-								type = grand_diocese_vassal
+
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						owner = {
+							OR = {
+								is_subject_of_type_with_overlord = {
+									who = ROM
+									type = grand_diocese_vassal
+								}
+								tag = event_target:romanChinaInvasionHorde
 							}
-							tag = event_target:romanChinaInvasionHorde
+							war_with = event_target:crisisChina
 						}
-						war_with = event_target:EmperorOfChina
+						controller = {
+							OR = {
+								is_emperor_of_china = yes
+								tag = event_target:romanChinaInvasionHorde
+							}
+							war_with = ROM
+						}
 					}
-					controller = {
+					AND = {
+						owned_by = event_target:crisisChina
+						controller = {
+							OR = {
+								has_country_flag = byz_chinese_war_tributary
+								tag = event_target:romanChinaInvasionHorde
+							}
+							war_with = event_target:crisisChina
+						}
+					}
+					AND = {
 						OR = {
-							is_emperor_of_china = yes
-							tag = event_target:romanChinaInvasionHorde
+							region = korea_region
+							owned_by = event_target:romanChinaInvasionKorea
 						}
-						war_with = ROM
-					}
-				}
-				AND = {
-					owned_by = event_target:EmperorOfChina
-					controller = {
-						OR = {
-							has_country_flag = byz_chinese_war_tributary
-							tag = event_target:romanChinaInvasionHorde
+						controller = {
+							tag = event_target:romanChinaInvasionJapan
 						}
-						war_with = event_target:EmperorOfChina
 					}
-				}
-				AND = {
-					OR = {
-						region = korea_region
-						owned_by = event_target:romanChinaInvasionKorea
-					}
-					controller = {
-						tag = event_target:romanChinaInvasionJapan
-					}
-				}
-				AND = {
-					owned_by = event_target:romanChinaInvasionJapan
-					controller = {
-						tag = event_target:romanChinaInvasionKorea
+					AND = {
+						owned_by = event_target:romanChinaInvasionJapan
+						controller = {
+							tag = event_target:romanChinaInvasionKorea
+						}
 					}
 				}
 			}
+			add_core = controller
+			cede_province = controller
 		}
-		add_core = controller
-		cede_province = controller
+		else_if = {
+			limit = {
+				is_capital = yes
+				owner = {
+					has_country_flag = byz_chinese_war_tributary
+				}
+			}
+			owner = {
+				country_event = {
+					id = ab_byzantium_disaster.100
+				}
+			}
+		}
 	}
 	else_if = {
 		limit = {

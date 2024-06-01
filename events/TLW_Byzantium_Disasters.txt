@@ -3687,8 +3687,7 @@ country_event = {
 					limit = {
 						ab_is_persia_trigger = yes
 					}
-					save_global_event_target_as = crisisPersia
-					
+					save_global_event_target_as = crisisPersia		
 				}
 			}
 			else = {
@@ -3704,6 +3703,7 @@ country_event = {
 									has_reform = persianprince
 									has_reform = persianprincet
 								}
+								NOT = { tag = PREV }
 								total_development = PREV
 							}
 						}
@@ -3853,6 +3853,11 @@ country_event = {
 	option = {
 		name = ab_byzantium_disaster.74.a
 		tooltip = {
+			add_historical_rival = ROM
+			add_opinion = {
+				who = ROM
+				modifier = opinion_superpowers_rivalry
+			}
 			add_country_modifier = {
 				name = byz_persia_defense
 				duration = -1
@@ -3871,6 +3876,8 @@ country_event = {
 	picture = AB_PERSIA_eventPicture
 
 	is_triggered_only = yes
+
+	hidden = yes
 
 	trigger = {
 		is_at_war = no
@@ -4570,31 +4577,108 @@ country_event = {
 	
 	is_triggered_only = yes
 
-	option = {
-		name = ab_byzantium_disaster.88.a
-		custom_tooltip = BYZ_CHINESE_WAR_INFO
+	immediate = {
 		hidden_effect = {
-			event_target:EmperorOfChina = {
-				add_historical_rival = ROOT
-				add_opinion = {
-					who = ROOT
-					modifier = opinion_superpowers_rivalry
+			if = {
+				limit = {
+					has_saved_global_event_target = EmperorOfChina
 				}
+				event_target:EmperorOfChina = {
+					save_global_event_target_as = crisisChina
+				}
+			}
+			else = {
+				random_country = {
+					limit = {
+						has_reform = chinawarlord
+						NOT = {
+							any_country = {
+								has_reform = chinawarlord
+								NOT = { tag = PREV }
+								total_development = PREV
+							}
+						}
+					}
+					save_global_event_target_as = crisisChina
+				}
+			}
+			event_target:crisisChina = {
 				country_event = {
 					id = ab_byzantium_disaster.90
 				}
 			}
-		}
-		add_historical_rival = event_target:EmperorOfChina
-		add_opinion = {
-			who = event_target:EmperorOfChina
-			modifier = opinion_superpowers_rivalry
-		}
-		tooltip = {
-			event_target:EmperorOfChina = {
-				country_event = {
-					id = ab_byzantium_disaster.90
+			add_historical_rival = event_target:crisisChina
+			add_opinion = {
+				who = event_target:crisisChina
+				modifier = opinion_superpowers_rivalry
+			}
+			if = {
+				limit = {
+					any_subject_country = {
+						is_subject_of_type = diocese_vassal
+						NOT = {is_neighbor_of = event_target:crisisChina }
+					}
 				}
+				country_event = {
+					id = ab_byzantium_disaster.91
+					days = 30
+				}
+			}
+			if = {
+				limit = {
+					any_subject_country = {
+						is_subject_of_type = diocese_vassal
+						is_neighbor_of = event_target:crisisChina
+						NOT = { liberty_desire = 50 }
+					}
+				}
+				country_event = {
+					id = ab_byzantium_disaster.92
+					days = 30
+				}
+			}
+			if = {
+				limit = {
+					any_subject_country = {
+						is_subject_of_type = diocese_vassal
+						is_neighbor_of = event_target:crisisChina
+						liberty_desire = 50
+					}
+				}
+				country_event = {
+					id = ab_byzantium_disaster.93
+					days = 60
+				}
+			}
+			country_event = {
+				id = ab_byzantium_disaster.94
+				days = 90
+			}
+			country_event = {
+				id = ab_byzantium_disaster.95
+				days = 180
+			}
+			country_event = {
+				id = ab_byzantium_disaster.96
+				days = 270
+			}
+			country_event = {
+				id = ab_byzantium_disaster.98
+				days = 365
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium_disaster.88.a
+		tooltip = {
+			add_historical_rival = event_target:crisisChina
+			add_opinion = {
+				who = event_target:crisisChina
+				modifier = opinion_superpowers_rivalry
+			}
+			custom_tooltip = AB_EMPTY
+			event_target:crisisChina = {
 				add_country_modifier = {
 					name = byz_china_defense
 					duration = -1
@@ -4602,6 +4686,7 @@ country_event = {
 				}
 			}
 		}
+		custom_tooltip = BYZ_CHINESE_WAR_INFO
 	}
 }
 
@@ -4618,23 +4703,34 @@ country_event = {
 
 	option = {
 		name = ab_byzantium_disaster.89.a
-		set_country_flag = had_byz_dragon_emperor
-		clr_country_flag = byz_crisis_chineses
 		remove_country_modifier = byz_disaster_debuff1
 		remove_country_modifier = byz_disaster_debuff2
 		remove_country_modifier = byz_disaster_debuff3
 		remove_country_modifier = byz_disaster_debuff4
 		if = {
 			limit = {
-				exists = event_target:EmperorOfChina
+				exists = event_target:crisisChina
 			}
-			event_target:EmperorOfChina = {
+			event_target:crisisChina = {
 				remove_country_modifier = byz_china_defense
 			}
 		}
+		clear_global_event_target = crisisChina
 		clear_global_event_target = romanChinaInvasionHorde
 		clear_global_event_target = romanChinaInvasionJapan
 		clear_global_event_target = romanChinaInvasionKorea
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = byz_chinese_war_romeside
+					has_country_flag = byz_chinese_war_chinaside
+					has_country_flag = byz_chinese_war_tributary
+				}
+			}
+			clr_country_flag = byz_chinese_war_romeside
+			clr_country_flag = byz_chinese_war_chinaside
+			clr_country_flag = byz_chinese_war_tributary
+		}
 	}
 }
 
@@ -4647,14 +4743,36 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			add_historical_rival = ROM
+			add_opinion = {
+				who = ROM
+				modifier = opinion_superpowers_rivalry
+			}
+			add_country_modifier = {
+				name = byz_china_defense
+				duration = -1
+				desc = "until the end of the disaster"
+			}
+		}
+	}
+
 	option = {
 		name = ab_byzantium_disaster.90.a
-		custom_tooltip = BYZ_CHINESE_WAR_INFO
-		add_country_modifier = {
-			name = byz_china_defense
-			duration = -1
-			desc = "until the end of the disaster"
+		tooltip = {
+			add_historical_rival = ROM
+			add_opinion = {
+				who = ROM
+				modifier = opinion_superpowers_rivalry
+			}
+			add_country_modifier = {
+				name = byz_china_defense
+				duration = -1
+				desc = "until the end of the disaster"
+			}
 		}
+		custom_tooltip = BYZ_CHINESE_WAR_INFO
 	}
 }
 
@@ -4665,70 +4783,39 @@ country_event = {
 	desc = ab_byzantium_disaster.91.d
 	picture = DIPLOMACY_eventPicture
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
-		any_subject_country = {
-			is_subject_of_type = diocese_vassal
-			NOT = { is_neighbor_of = event_target:EmperorOfChina }
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium_disaster.91.a
 		every_subject_country = {
 			limit = {
 				is_subject_of_type = diocese_vassal
-				NOT = { is_neighbor_of = event_target:EmperorOfChina }
+				NOT = { is_neighbor_of = event_target:crisisChina }
 			}
 			add_liberty_desire = 10
 		}
 	}
 }
 
-#The Dragon Emperor - Dioceses Want to Join
+#The Dragon Emperor - Dioceses Will Join
 country_event = {
 	id = ab_byzantium_disaster.92
 	title = ab_byzantium_disaster.92.t
 	desc = ab_byzantium_disaster.92.d
 	picture = DIPLOMACY_eventPicture
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
-		any_subject_country = {
-			is_subject_of_type = diocese_vassal
-			is_neighbor_of = event_target:EmperorOfChina
-			NOT = { liberty_desire = 50 }
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium_disaster.92.a
 		every_subject_country = {
 			limit = {
 				is_subject_of_type = diocese_vassal
-				is_neighbor_of = event_target:EmperorOfChina
+				is_neighbor_of = event_target:crisisChina
 				NOT = { liberty_desire = 50 }
 			}
 			add_liberty_desire = -10
 			set_country_flag = byz_chinese_war_romeside
-		}
-		if = {
-			limit = {
-				any_subject_country = {
-					is_subject_of_type = diocese_vassal
-					is_neighbor_of = event_target:EmperorOfChina
-					liberty_desire = 50
-				}
-			}
-			country_event = {
-				id = ab_byzantium_disaster.93
-			}
 		}
 	}
 }
@@ -4740,38 +4827,23 @@ country_event = {
 	desc = ab_byzantium_disaster.93.d
 	picture = DIPLOMACY_eventPicture
 
-	fire_only_once = yes
-
-	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
-		any_subject_country = {
-			is_subject_of_type = diocese_vassal
-			is_neighbor_of = event_target:EmperorOfChina
-			liberty_desire = 50
-			NOT = { has_country_flag = byz_chinese_war_romeside }
-		}
-	}
-
-	mean_time_to_happen = {
-		months = 3
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_byzantium_disaster.93.a
 		every_subject_country = {
 			limit = {
 				is_subject_of_type = diocese_vassal
-				is_neighbor_of = event_target:EmperorOfChina
+				is_neighbor_of = event_target:crisisChina
 				liberty_desire = 50
 			}
-			add_liberty_desire = -10
-			add_years_of_income = 1.0
 			set_country_flag = byz_chinese_war_romeside
+			add_liberty_desire = -10
+			add_years_of_income = 1
 			ROM = {
 				add_dip_power = -100
 				add_years_of_income = -0.5
-				add_corruption = 1.0
+				add_corruption = 1
 			}
 		}
 	}
@@ -4781,7 +4853,7 @@ country_event = {
 		every_subject_country = {
 			limit = {
 				is_subject_of_type = diocese_vassal
-				is_neighbor_of = event_target:EmperorOfChina
+				is_neighbor_of = event_target:crisisChina
 				liberty_desire = 50
 			}
 			add_liberty_desire = 20
@@ -4796,49 +4868,26 @@ country_event = {
 	desc = ab_byzantium_disaster.94.d
 	picture = AB_RUS_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
-		OR = {
-			UKR = {
-				is_subject_of_type = grand_diocese_vassal
-				is_at_war = no
-				is_neighbor_of = event_target:EmperorOfChina
-			}
-			GLH = {
-				is_subject_of_type = grand_diocese_vassal
-				is_at_war = no
-				is_neighbor_of = event_target:EmperorOfChina
-			}
+		any_subject_country = {
+			is_subject_of_type = grand_diocese_vassal
+			is_neighbor_of = event_target:crisisChina
 		}
-	}
-
-	mean_time_to_happen = {
-		months = 3
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.94.a
+		custom_tooltip = BYZ_CHINA_CAN_SEIZE_RUSSIA
 		hidden_effect = {
-			if = {
+			random_subject_country = {
 				limit = {
-					UKR = {
-						is_subject_of_type = grand_diocese_vassal
-					}
+					is_subject_of_type = grand_diocese_vassal
 				}
-				UKR = {
-					set_country_flag = byz_chinese_war_romeside
-				}
-			}
-			else = {
-				GLH = {
-					set_country_flag = byz_chinese_war_romeside
-				}
+				set_country_flag = byz_chinese_war_romeside
 			}
 		}
-		custom_tooltip = BYZ_CHINA_CAN_SEIZE_RUSSIA
 	}
 
 	option = {
@@ -4853,19 +4902,12 @@ country_event = {
 	desc = ab_byzantium_disaster.95.d
 	picture = CHINESE_GENERAL_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
 		any_country = {
 			has_reform = steppe_horde
-			is_neighbor_of = event_target:EmperorOfChina
 		}
-	}
-
-	mean_time_to_happen = {
-		months = 6
 	}
 
 	immediate = {
@@ -4873,7 +4915,13 @@ country_event = {
 			random_country = {
 				limit = {
 					has_reform = steppe_horde
-					is_neighbor_of = event_target:EmperorOfChina
+					NOT = {
+						any_country = {
+							has_reform = steppe_horde
+							NOT = { tag = PREV }
+							total_development = PREV
+						}
+					}
 				}
 				save_global_event_target_as = romanChinaInvasionHorde
 			}
@@ -4882,14 +4930,16 @@ country_event = {
 	
 	option = {
 		name = ab_byzantium_disaster.95.a
-		event_target:romanChinaInvasionHorde = {
-			set_country_flag = byz_chinese_war_romeside
-			add_treasury = 1000
-			add_prestige = 10
-		}
 		add_treasury = -1000
 		add_prestige = -10
 		custom_tooltip = BYZ_HORDE_CAN_SEIZE_CHINA
+		hidden_effect = {
+			event_target:romanChinaInvasionHorde = {
+				set_country_flag = byz_chinese_war_romeside
+				add_treasury = 1000
+				add_prestige = 10
+			}
+		}
 	}
 
 	option = {
@@ -4902,28 +4952,16 @@ country_event = {
 		}
 		if = {
 			limit = {
-				OR = {
-					AND = {
-						event_target:romanChinaInvasionHorde = {
-							is_neighbor_of = UKR
-						}
-						UKR = {
-							has_country_flag = byz_chinese_war_romeside
-						}
-					}
-					AND = {
-						event_target:romanChinaInvasionHorde = {
-							is_neighbor_of = GLH
-						}
-						GLH = {
-							has_country_flag = byz_chinese_war_romeside
-						}
-					}
+				any_subject_country = {
+					is_subject_of_type = grand_diocese_vassal
+					has_country_flag = byz_chinese_war_romeside
 				}
 			}
 			custom_tooltip = BYZ_HORDE_CAN_SEIZE_RUSSIA
-			event_target:romanChinaInvasionHorde = {
-				set_country_flag = byz_chinese_war_chinaside
+			hidden_effect = {
+				event_target:romanChinaInvasionHorde = {
+					set_country_flag = byz_chinese_war_chinaside
+				}
 			}
 		}
 	}
@@ -4936,11 +4974,9 @@ country_event = {
 	desc = ab_byzantium_disaster.96.d
 	picture = SHOGUNATE_AUTHORITY_INCIDENT_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
 		OR = {
 			exists = JAP
 			AND = {
@@ -4964,14 +5000,12 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = {
-		months = 9
-	}
-
 	immediate = {
 		hidden_effect = {
 			if = {
-				limit = { exists = JAP }
+				limit = {
+					exists = JAP
+				}
 				JAP = {
 					save_global_event_target_as = romanChinaInvasionJapan
 				}
@@ -5007,9 +5041,9 @@ country_event = {
 			value = 20
 			mutual = yes
 		}
+		custom_tooltip = AB_EMPTY
 		event_target:romanChinaInvasionJapan = {
 			set_country_flag = byz_chinese_war_romeside
-			add_prestige = 10
 			if = {
 				limit = {
 					ROOT = {
@@ -5038,10 +5072,12 @@ country_event = {
 				add_mil_power = 200
 			}
 		}
-		add_prestige = -10
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_JAPAN_CAN_SEIZE_CHINA
-		country_event = {
-			id = ab_byzantium_disaster.97
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium_disaster.97
+			}
 		}
 	}
 
@@ -5069,18 +5105,25 @@ country_event = {
 		hidden_effect = {
 			event_target:romanChinaInvasionKorea = {
 				set_country_flag = byz_chinese_war_chinaside
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_angry
+				}
 			}
 		}
 	}
 	
 	option = {
 		name = ab_byzantium_disaster.97.a
-		event_target:romanChinaInvasionKorea = {
-			add_opinion = {
-				who = ROOT
-				modifier = opinion_angry
+		tooltip = {
+			event_target:romanChinaInvasionKorea = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_angry
+				}
 			}
 		}
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_KOREA_CAN_SEIZE_JAPAN
 	}
 }
@@ -5092,20 +5135,11 @@ country_event = {
 	desc = ab_byzantium_disaster.98.d
 	picture = AB_PERSIANWAR_eventPicture
 
-	fire_only_once = yes
-	
-	trigger = {
-		tag = ROM
-		has_disaster = byzantium_dragon_emperor
-	}
-
-	mean_time_to_happen = {
-		months = 12
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			event_target:EmperorOfChina = {
+			event_target:crisisChina = {
 				every_subject_country = {
 					limit = {
 						is_subject_of_type = tributary_state
@@ -5136,21 +5170,15 @@ country_event = {
 					set_country_flag = byz_chinese_war_tributary
 				}
 			}
-		}
-	}
-	
-	option = {
-		name = ab_byzantium_disaster.98.a
-		declare_war_with_cb = {
-			who = event_target:EmperorOfChina
-			casus_belli = cb_roman_chinese_war
-		}
-		hidden_effect = {
+			declare_war_with_cb = {
+				who = event_target:crisisChina
+				casus_belli = cb_roman_chinese_war
+			}
 			every_country = {
 				limit = {
 					has_country_flag = byz_chinese_war_chinaside
 				}
-				join_all_defensive_wars_of = event_target:EmperorOfChina
+				join_all_defensive_wars_of = event_target:crisisChina
 			}
 			every_country = {
 				limit = {
@@ -5161,6 +5189,20 @@ country_event = {
 			country_event = {
 				id = ab_byzantium_disaster.84
 				days = 548
+			}
+			country_event = {
+				id = ab_byzantium_disaster.101
+				days = 3650
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium_disaster.98.a
+		tooltip = {
+			declare_war_with_cb = {
+				who = event_target:crisisChina
+				casus_belli = cb_roman_chinese_war
 			}
 		}
 		custom_tooltip = BYZ_WAR_CHINA
@@ -5175,10 +5217,26 @@ country_event = {
 	picture = AB_DRAGON_eventPicture
 	
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = had_dragon_emperor
+			set_country_flag = byz_chinese_war_victory
+			event_target:EmperorOfChina = {
+				every_owned_province = {
+					remove_core = event_target:EmperorOfChina
+					spawn_rebels = {
+						type = nationalist_rebels
+						size = 3
+					}
+				}
+			}
+			dismantle_empire_of_china = yes
+		}
+	}
 	
 	option = {
 		name = ab_byzantium_disaster.99.a
-		set_country_flag = byz_chinese_war_victory
 		swap_non_generic_missions = yes
 		custom_tooltip = BYZ_REVOLT_CHINA
 		custom_tooltip = AB_EMPTY
@@ -5206,18 +5264,9 @@ country_event = {
 	desc = ab_byzantium_disaster.100.d
 	picture = AB_PERSIANWAR_eventPicture
 
+	is_triggered_only = yes
+
 	hidden = yes
-	
-	trigger = {
-		has_country_flag = byz_chinese_war_tributary
-		is_in_war = {
-			attacker_leader = ROM
-			casus_belli = cb_roman_chinese_war
-		}
-		capital_scope = {
-			NOT = { controlled_by = ROOT }
-		}
-	}
 
 	option = {
 		name = ab_byzantium_disaster.100.a
@@ -5225,7 +5274,7 @@ country_event = {
 			limit = {
 				has_country_flag = byz_chinese_war_romeside
 			}
-			white_peace = event_target:EmperorOfChina
+			white_peace = event_target:crisisChina
 		}
 		else = {
 			white_peace = ROM
@@ -5240,29 +5289,46 @@ country_event = {
 	desc = ab_byzantium_disaster.101.d
 	picture = AB_DRAGON_eventPicture
 	
+	is_triggered_only = yes
+
 	trigger = {
-		tag = ROM
 		has_disaster = byzantium_dragon_emperor
 		is_in_war = {
-			attacker_leader = ROM
 			casus_belli = cb_roman_chinese_war
-			duration = 3650
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = had_dragon_emperor
+			white_peace = event_target:crisisChina
+			add_prestige = -200
+			add_stability = -6
+			add_adm_power = -1000
+			add_dip_power = -1000
+			add_mil_power = -1000
+			add_legitimacy = -100
+			add_country_modifier = {
+				name = byz_failed_invasion_of_china
+				duration = 7300
+			}
 		}
 	}
 
 	option = {
 		name = ab_byzantium_disaster.101.a
-		set_country_flag = byz_crisis_chineses
-		white_peace = event_target:EmperorOfChina
-		add_prestige = -200
-		add_stability = -6
-		add_adm_power = -1000
-		add_dip_power = -1000
-		add_mil_power = -1000
-		add_legitimacy = -100
-		add_country_modifier = {
-			name = byz_failed_invasion_of_china
-			duration = 7300
+		tooltip = {
+			white_peace = event_target:crisisChina
+			add_prestige = -200
+			add_stability = -6
+			add_adm_power = -1000
+			add_dip_power = -1000
+			add_mil_power = -1000
+			add_legitimacy = -100
+			add_country_modifier = {
+				name = byz_failed_invasion_of_china
+				duration = 7300
+			}
 		}
 		custom_tooltip = BYZ_LOCKED_ASIAN_MISSIONS
 	}

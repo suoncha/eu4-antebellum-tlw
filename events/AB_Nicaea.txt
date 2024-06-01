@@ -8,16 +8,22 @@ country_event = {
 	desc = ab_nicaea.0.d
 	picture = BORDER_TENSION_eventPicture
 	
+	fire_only_once = yes
+
 	trigger = {
 		tag = NCI
 		is_year = 1446
 	}
 	
 	mean_time_to_happen = {
-		months = 24
+		years = 2
 	}
 	
-	fire_only_once = yes
+	after = {
+		hidden_effect = {
+			set_country_flag = accepted_byzantine_refugees
+		}
+	}
 
 	option = {
 		name = ab_nicaea.0.a
@@ -26,7 +32,6 @@ country_event = {
 			add_base_production = 2
 			add_base_manpower = 1
 		}
-		set_country_flag = accepted_byzantine_refugees
 	}
 	
 	option = {
@@ -35,7 +40,6 @@ country_event = {
 			name = nicene_influx
 			duration = 5475
 		}
-		set_country_flag = accepted_byzantine_refugees
 	}
 }
 
@@ -60,7 +64,6 @@ country_event = {
 		hidden_effect = {
 			# prevents forming via decision
 			set_global_flag = byzantium_completely_destroyed
-			# remove all cores
 			every_owned_province = {
 				limit = {
 					is_core = BYZ
@@ -86,6 +89,15 @@ country_event = {
 
 	major = yes
 
+	immediate = {
+		hidden_effect = {
+			country_event = {
+				id = ab_nicaea.8
+				days = 365
+			}
+		}
+	}
+
 	option = {
 		name = ab_nicaea.2.a
 		add_prestige = 25
@@ -93,11 +105,11 @@ country_event = {
 		set_government_rank = 3
 		custom_tooltip = NICENE_IDEAS
 		swap_non_generic_missions = yes
-		hidden_effect = { swap_free_idea_group = yes }
 		custom_tooltip = AB_EMPTY
 		add_government_reform = nicene_hellenic_empire
 		hidden_effect = {
 			save_global_event_target_as = hellenicEmpire
+			swap_free_idea_group = yes
 			add_faction_influence = {
 				faction = faction_nciantigonos
 				influence = 100
@@ -189,7 +201,7 @@ country_event = {
 		anatolia_region = {
 			limit = {
 				NOT = { is_core = ROOT }
-				NOT = { is_claim = ROOT }
+				NOT = { is_permanent_claim = ROOT }
 			}
 			add_permanent_claim = ROOT
 		}
@@ -209,6 +221,14 @@ country_event = {
 	
 	option = {
 		name = ab_nicaea.5.a
+		if = {
+			limit = {
+				religion = reformed_hellenic
+			}
+			358 = {
+				change_religion = ROOT
+			}
+		}
 		custom_tooltip = NCI_RELEASE_EGYPT
 		hidden_effect = {
 			every_owned_province = {
@@ -224,7 +244,6 @@ country_event = {
 				}
 				add_core = AEG
 				remove_core = ROOT
-				remove_claim = ROOT
 			}
 			release = AEG
 			create_subject = {
@@ -236,35 +255,31 @@ country_event = {
 				change_primary_culture = ROOT
 				change_religion = ROOT
 				if = {
-					limit = { NOT = { government = monarchy } }
+					limit = {
+						NOT = { government = monarchy }
+					}
 					change_government = monarchy
 				}
 				change_technology_group = eastern
 				change_unit_type = eastern
 				set_capital = 358
-				hidden_effect = {
-					define_ruler = {
-						culture = ROOT
-						religion = ROOT
-					}
-					capital_scope = {
-						province_event = {
-							id = ab_nicaea.10
-						}
-					}
-					set_dynasty = "Ptolemaios"
-					define_heir = {
-						dynasty = THIS
-						culture = ROOT
-						religion = ROOT
+				capital_scope = {
+					province_event = {
+						id = ab_nicaea.10
 					}
 				}
 				add_government_reform = nicene_diadochi
+				define_ruler = {
+					culture = ROOT
+					religion = ROOT
+				}
+				set_dynasty = "Ptolemaios"
+				define_heir = {
+					dynasty = THIS
+					culture = ROOT
+					religion = ROOT
+				}	
 			}
-		}
-		if = {
-			limit = { religion = reformed_hellenic }
-			358 = { change_religion = ROOT }
 		}
 	}
 }
@@ -278,10 +293,15 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	after = {
+		hidden_effect = {
+			set_country_flag = relocated_capital_greece
+		}
+	}
+
 	option = {
 		name = ab_nicaea.6.a
 		add_adm_power = -100
-		set_country_flag = relocated_capital_greece
 		151 = {
 			move_capital_effect = yes
 		}
@@ -295,7 +315,6 @@ country_event = {
 	option = {
 		name = ab_nicaea.6.b
 		add_adm_power = -100
-		set_country_flag = relocated_capital_greece
 		148 = {
 			move_capital_effect = yes
 		}
@@ -309,7 +328,6 @@ country_event = {
 	option = {
 		name = ab_nicaea.6.c
 		add_adm_power = -100
-		set_country_flag = relocated_capital_greece
 		146 = {
 			move_capital_effect = yes
 		}
@@ -322,7 +340,6 @@ country_event = {
 	
 	option = {
 		name = ab_nicaea.6.de
-		set_country_flag = relocated_capital_greece
 		317 = {
 			add_base_tax = 1
 			add_base_production = 1
@@ -338,27 +355,25 @@ country_event = {
 	title = ab_nicaea.7.t
 	desc = ab_nicaea.7.d
 	picture = AB_ALEXANDER_eventPicture
-	
-	fire_only_once = yes
-	
+		
 	is_triggered_only = yes
 
 	option = {
 		name = ab_nicaea.7.a
-		add_patriarch_authority = 0.1
 		set_country_flag = nci_religion_orthodox
+		add_patriarch_authority = 0.1
 		swap_non_generic_missions = yes
 	}
 	
 	option = {
 		name = ab_nicaea.7.b
+		set_country_flag = nci_religion_hellenic
 		add_stability = -4
 		change_religion = hellenic
 		add_country_modifier = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		set_country_flag = nci_religion_hellenic
 		swap_non_generic_missions = yes
 		hidden_effect = {
 			random_owned_province = {
@@ -387,6 +402,7 @@ country_event = {
 	option = {
 		name = ab_nicaea.7.c
 		highlight = yes
+		set_country_flag = nci_religion_shiite
 		override_country_name = HELLENICCALIPHATE
 		play_sound = nci_islamearrape
 		add_stability = -4
@@ -395,7 +411,6 @@ country_event = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		set_country_flag = nci_religion_shiite
 		swap_non_generic_missions = yes
 		hidden_effect = {
 			random_owned_province = {
@@ -429,23 +444,17 @@ country_event = {
 	desc = ab_nicaea.8.d
 	picture = AB_ALEXANDER_eventPicture
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = HLE
-		NOT = { exists = BYZ }
-	}
-	
-	mean_time_to_happen = {
-		months = 12
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_nicaea.8.a
-		custom_tooltip = NCI_HELLENIZATION_INFO
 		change_primary_culture = hellenic_greek
-		capital_scope = { change_culture = hellenic_greek }
+		capital_scope = {
+			change_culture = hellenic_greek
+		}
 		add_accepted_culture = greek
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = NCI_HELLENIZATION_INFO
 		hidden_effect = {
 			set_heir_culture = hellenic_greek
 			set_ruler_culture = hellenic_greek
@@ -461,8 +470,10 @@ country_event = {
 				set_heir_culture = ROOT
 				set_ruler_culture = ROOT
 			}
+			country_event = {
+				id = ab_nicaea.7
+			}
 		}
-		country_event = { id = ab_nicaea.7 }
 	}
 }
 
@@ -480,7 +491,9 @@ province_event = {
 		modifier = {
 			factor = 2.5
 			NOT = {
-				any_neighbor_province = { culture_group = hellenic_g }
+				any_neighbor_province = {
+					culture_group = hellenic_g
+				}
 			}
 		}
 		modifier = {
@@ -492,15 +505,23 @@ province_event = {
 		}
 		modifier = {
 			factor = 0.5
-			owner = { is_subject_of_type = diadochi_vassal }
+			owner = {
+				is_subject_of_type = diadochi_vassal
+			}
 		}
 	}
 	
 	trigger = {
-		owner = { culture_group = hellenic_g }
-		NOT = { culture_group = hellenic_g }
+		owner = {
+			culture_group = hellenic_g
+		}
+		NOT = {
+			culture_group = hellenic_g
+		}
 		has_owner_accepted_culture = yes
-		any_friendly_coast_border_province = { culture_group = hellenic_g }
+		any_friendly_coast_border_province = {
+			culture_group = hellenic_g
+		}
 	}
 
 	option = {
@@ -526,28 +547,24 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					AND = {
-						region = balkan_region
-						NOT = { culture = greek }
-					}
+					region = balkan_region
 					region = carpathia_region
 					area = carinthia_area
 				}
+				NOT = { culture = greek }
 			}
 			change_culture = hellenic_illyrian
 		}
 		else_if = {
 			limit = {
 				OR = {
+					region = caucasia_region
 					area = erzurum_area
 					area = north_kurdistan_area
 					area = dulkadir_area
-					AND = {
-						region = caucasia_region
-						NOT = { area = circassia_area }
-						NOT = { area = dagestan_area }
-					}
 				}
+				NOT = { area = circassia_area }
+				NOT = { area = dagestan_area }
 			}
 			change_culture = hellenic_pontic
 		}
@@ -592,11 +609,9 @@ province_event = {
 		}
 		else_if = {
 			limit = {
-				AND = {
-					superregion = india_superregion
-					NOT = { area = sind_sagar_area }
-					NOT = { area = kashmir_area }
-				}
+				superregion = india_superregion
+				NOT = { area = sind_sagar_area }
+				NOT = { area = kashmir_area }
 			}
 			change_culture = hellenic_indian
 		}
@@ -700,28 +715,24 @@ province_event = {
 		else_if = {
 			limit = {
 				OR = {
-					AND = {
-						region = balkan_region
-						NOT = { culture = greek }
-					}
+					region = balkan_region
 					region = carpathia_region
 					area = carinthia_area
 				}
+				NOT = { culture = greek }
 			}
 			change_culture = hellenic_illyrian
 		}
 		else_if = {
 			limit = {
 				OR = {
+					region = caucasia_region
 					area = erzurum_area
 					area = north_kurdistan_area
 					area = dulkadir_area
-					AND = {
-						region = caucasia_region
-						NOT = { area = circassia_area }
-						NOT = { area = dagestan_area }
-					}
 				}
+				NOT = { area = circassia_area }
+				NOT = { area = dagestan_area }
 			}
 			change_culture = hellenic_pontic
 		}
@@ -766,11 +777,9 @@ province_event = {
 		}
 		else_if = {
 			limit = {
-				AND = {
-					superregion = india_superregion
-					NOT = { area = sind_sagar_area }
-					NOT = { area = kashmir_area }
-				}
+				superregion = india_superregion
+				NOT = { area = sind_sagar_area }
+				NOT = { area = kashmir_area }
 			}
 			change_culture = hellenic_indian
 		}
@@ -865,7 +874,9 @@ province_event = {
 		modifier = {
 			factor = 2.5
 			NOT = {
-				any_neighbor_province = { culture_group = hellenic_g }
+				any_neighbor_province = {
+					culture_group = hellenic_g
+				}
 			}
 		}
 	}
@@ -892,10 +903,11 @@ country_event = {
 		custom_tooltip = NCI_RELEASE_ITALY
 		hidden_effect = {
 			every_owned_province = {
-				limit = { region = italy_region }
+				limit = {
+					region = italy_region
+				}
 				add_core = HLM
 				remove_core = ROOT
-				remove_claim = ROOT
 			}
 			release = HLM
 			create_subject = {
@@ -907,30 +919,30 @@ country_event = {
 				change_primary_culture = ROOT
 				change_religion = ROOT
 				if = {
-					limit = { NOT = { government = monarchy } }
+					limit = {
+						NOT = { government = monarchy }
+					}
 					change_government = monarchy
 				}
 				change_technology_group = eastern
 				change_unit_type = eastern
 				set_capital = 125
-				hidden_effect = {
-					define_ruler = {
-						culture = ROOT
-						religion = ROOT
-					}
-					capital_scope = {
-						province_event = {
-							id = ab_nicaea.10
-						}
-					}
-					set_dynasty = "Antigonos"
-					define_heir = {
-						dynasty = THIS
-						culture = ROOT
-						religion = ROOT
+				capital_scope = {
+					province_event = {
+						id = ab_nicaea.10
 					}
 				}
 				add_government_reform = nicene_diadochi
+				define_ruler = {
+					culture = ROOT
+					religion = ROOT
+				}
+				set_dynasty = "Antigonos"
+				define_heir = {
+					dynasty = THIS
+					culture = ROOT
+					religion = ROOT
+				}
 			}
 		}
 	}
@@ -962,7 +974,6 @@ country_event = {
 				}
 				add_core = HLS
 				remove_core = ROOT
-				remove_claim = ROOT
 			}
 			release = HLS
 			create_subject = {
@@ -974,70 +985,187 @@ country_event = {
 				change_primary_culture = ROOT
 				change_religion = ROOT
 				if = {
-					limit = { NOT = { government = monarchy } }
+					limit = {
+						NOT = { government = monarchy }
+					}
 					change_government = monarchy
 				}
 				change_technology_group = eastern
 				change_unit_type = eastern
 				set_capital = 410
-				hidden_effect = {
-					define_ruler = {
-						culture = ROOT
-						religion = ROOT
-					}
-					capital_scope = {
-						province_event = {
-							id = ab_nicaea.10
-						}
-					}
-					set_dynasty = "Seleukos"
-					define_heir = {
-						dynasty = THIS
-						culture = ROOT
-						religion = ROOT
+				capital_scope = {
+					province_event = {
+						id = ab_nicaea.10
 					}
 				}
 				add_government_reform = nicene_diadochi
+				define_ruler = {
+					culture = ROOT
+					religion = ROOT
+				}
+				set_dynasty = "Seleukos"
+				define_heir = {
+					dynasty = THIS
+					culture = ROOT
+					religion = ROOT
+				}
 			}
 		}
 	}
 }
 
-#Unhappy Antigonos
+#Displeased Great House - Start
 country_event = {
 	id = ab_nicaea.14
 	title = ab_nicaea.14.t
 	desc = ab_nicaea.14.d
 	picture = NOBLE_ESTATE_eventPicture
 	
-	trigger = {
-		NOT = { has_country_modifier = nci_unhappy_antigonos }
-		has_faction = faction_nciantigonos
-		NOT = {
-			faction_influence = {
-				faction = faction_nciantigonos
-				influence = 20
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_stability = -2
+			if = {
+				limit = {
+					NOT = {
+						faction_influence = {
+							faction = faction_nciantigonos
+							influence = 20
+						}
+					}
+				}
+				remove_country_modifier = nci_unhappy_antigonos
+				add_country_modifier = {
+					name = nci_unhappy_antigonos
+					duration = 3650
+				}
+				every_owned_province = {
+					limit = {
+						has_province_modifier = nci_antigonos_province
+					}
+					remove_province_modifier = nci_unhappy_province
+					add_province_modifier = {
+						name = nci_unhappy_province
+						duration = 3650
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						faction_influence = {
+							faction = faction_nciseleukos
+							influence = 20
+						}
+					}
+				}
+				remove_country_modifier = nci_unhappy_seleukos
+				add_country_modifier = {
+					name = nci_unhappy_seleukos
+					duration = 3650
+				}
+				every_owned_province = {
+					limit = {
+						has_province_modifier = nci_seleukos_province
+					}
+					remove_province_modifier = nci_unhappy_province
+					add_province_modifier = {
+						name = nci_unhappy_province
+						duration = 3650
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						faction_influence = {
+							faction = faction_nciptolemaios
+							influence = 20
+						}
+					}
+				}
+				remove_country_modifier = nci_unhappy_ptolemaios
+				add_country_modifier = {
+					name = nci_unhappy_ptolemaios
+					duration = 3650
+				}
+				every_owned_province = {
+					limit = {
+						has_province_modifier = nci_ptolemaios_province
+					}
+					remove_province_modifier = nci_unhappy_province
+					add_province_modifier = {
+						name = nci_unhappy_province
+						duration = 3650
+					}
+				}
 			}
 		}
 	}
 
 	option = {
 		name = ab_nicaea.14.a
-		custom_tooltip = NCI_OVER_20_INFLUENCE
-		add_country_modifier = {
-			name = nci_unhappy_antigonos
-			duration = 3650
-		}
-		custom_tooltip = NCI_EVERY_ANTIGONOS_PROVINCE
 		tooltip = {
-			add_province_modifier = {
-				name = nci_unhappy_province
-				duration = 3650
+			add_stability = -2
+		}
+		if = {
+			limit = {
+				NOT = {
+					faction_influence = {
+						faction = faction_nciantigonos
+						influence = 20
+					}
+				}
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = nci_unhappy_antigonos
+					duration = 3650
+				}
+				custom_tooltip = NCI_EVERY_ANTIGONOS_PROVINCE
+				add_province_modifier = {
+					name = nci_unhappy_province
+					duration = 3650
+				}
 			}
 		}
-		hidden_effect = {
-			every_owned_province = {
-				limit = { has_province_modifier = nci_antigonos_province }
+		if = {
+			limit = {
+				NOT = {
+					faction_influence = {
+						faction = faction_nciseleukos
+						influence = 20
+					}
+				}
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = nci_unhappy_seleukos
+					duration = 3650
+				}
+				custom_tooltip = NCI_EVERY_SELEUKOS_PROVINCE
+				add_province_modifier = {
+					name = nci_unhappy_province
+					duration = 3650
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					faction_influence = {
+						faction = faction_nciptolemaios
+						influence = 20
+					}
+				}
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = nci_unhappy_ptolemaios
+					duration = 3650
+				}
+				custom_tooltip = NCI_EVERY_PTOLEMAIOS_PROVINCE
 				add_province_modifier = {
 					name = nci_unhappy_province
 					duration = 3650
@@ -1047,105 +1175,34 @@ country_event = {
 	}
 }
 
-#Unhappy Seleukos
+#Displease Great House - End
 country_event = {
 	id = ab_nicaea.15
 	title = ab_nicaea.15.t
 	desc = ab_nicaea.15.d
 	picture = NOBLE_ESTATE_eventPicture
 	
-	trigger = {
-		NOT = { has_country_modifier = nci_unhappy_seleukos }
-		has_faction = faction_nciseleukos
-		NOT = {
-			faction_influence = {
-				faction = faction_nciseleukos
-				influence = 20
-			}
-		}
-	}
+	is_triggered_only = yes
+
+	hidden = yes
 
 	option = {
 		name = ab_nicaea.15.a
-		custom_tooltip = NCI_OVER_20_INFLUENCE
-		add_country_modifier = {
-			name = nci_unhappy_seleukos
-			duration = 3650
-		}
-		custom_tooltip = NCI_EVERY_SELEUKOS_PROVINCE
-		tooltip = {
-			add_province_modifier = {
-				name = nci_unhappy_province
-				duration = 3650
-			}
-		}
-		hidden_effect = {
-			every_owned_province = {
-				limit = { has_province_modifier = nci_seleukos_province }
-				add_province_modifier = {
-					name = nci_unhappy_province
-					duration = 3650
-				}
-			}
-		}
-	}
-}
-
-#Unhappy Ptolemaios
-country_event = {
-	id = ab_nicaea.16
-	title = ab_nicaea.16.t
-	desc = ab_nicaea.16.d
-	picture = NOBLE_ESTATE_eventPicture
-	
-	trigger = {
-		NOT = { has_country_modifier = nci_unhappy_ptolemaios }
-		has_faction = faction_nciptolemaios
-		NOT = {
-			faction_influence = {
-				faction = faction_nciptolemaios
-				influence = 20
-			}
-		}
-	}
-
-	option = {
-		name = ab_nicaea.16.a
-		custom_tooltip = NCI_OVER_20_INFLUENCE
-		add_country_modifier = {
-			name = nci_unhappy_ptolemaios
-			duration = 3650
-		}
-		custom_tooltip = NCI_EVERY_PTOLEMAIOS_PROVINCE
-		tooltip = {
-			add_province_modifier = {
-				name = nci_unhappy_province
-				duration = 3650
-			}
-		}
-		hidden_effect = {
-			every_owned_province = {
-				limit = { has_province_modifier = nci_ptolemaios_province }
-				add_province_modifier = {
-					name = nci_unhappy_province
-					duration = 3650
-				}
-			}
-		}
 	}
 }
 
 #Diadochi War Start
 country_event = {
-	id = ab_nicaea.17
-	title = ab_nicaea.17.t
-	desc = ab_nicaea.17.d
+	id = ab_nicaea.16
+	title = ab_nicaea.16.t
+	desc = ab_nicaea.16.d
 	picture = AB_ALEXANDER_eventPicture
 	
 	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
+			add_stability = -2
 			if = {
 				limit = { has_heir = yes }
 				kill_heir = {}
@@ -1156,34 +1213,32 @@ country_event = {
 				religion = ROOT
 				regency = yes
 			}
-			add_stability = -2
 			every_owned_province = {
 				limit = {
-					has_province_modifier = nci_antigonos_province
-					NOT = { province_id = capital }
+					is_capital = no
 				}
-				add_core = HLM
-				cede_province = HLM
-			}
-			every_owned_province = {
-				limit = {
-					has_province_modifier = nci_seleukos_province
-					NOT = { province_id = capital }
+				if = {
+					limit = {
+						has_province_modifier = nci_antigonos_province
+					}
+					add_core = HLM
+					cede_province = HLM
 				}
-				add_core = HLS
-				cede_province = HLS
-			}
-			every_owned_province = {
-				limit = {
-					has_province_modifier = nci_ptolemaios_province
-					NOT = { province_id = capital }
+				else_if = {
+					limit = {
+						has_province_modifier = nci_seleukos_province
+					}
+					add_core = HLS
+					cede_province = HLS
 				}
-				add_core = AEG
-				cede_province = AEG
+				else = {
+					add_core = AEG
+					cede_province = AEG
+				}
 			}
 			every_subject_country = {
 				limit = {
-					NOT = { has_reform = colonial_government }
+					is_colonial_nation = no
 					NOT = { tag = HLM }
 					NOT = { tag = HLS }
 					NOT = { tag = AEG }
@@ -1201,16 +1256,11 @@ country_event = {
 				}
 			}
 			if = {
-				limit = { religion = reformed_hellenic }
-				random_province = {
+				limit = {
+					religion = reformed_hellenic
+				}
+				every_province = {
 					limit = {
-						owner = {
-							OR = {
-								tag = MAC
-								tag = HLE
-								is_subject_of_type = diadochi_vassal
-							}
-						}
 						has_province_modifier = nci_center_of_hellenisation
 					}
 					remove_province_modifier = nci_center_of_hellenisation
@@ -1220,14 +1270,18 @@ country_event = {
 	}
 	
 	option = {
-		name = ab_nicaea.17.a
+		name = ab_nicaea.16.a
 		tooltip = {
 			add_stability = -2
 		}
 		set_country_flag = nci_picked_antigonos
 		custom_tooltip = NCI_CONTINUE_AS_ANTIGONOS
 		hidden_effect = {
-			HLM = { exile_ruler_as = { name = nci_diadochi_new_ruler } }
+			HLM = {
+				exile_ruler_as = {
+					name = nci_diadochi_new_ruler
+				}
+			}
 			inherit = HLM
 			change_tag = HLM
 			add_government_reform = nicene_diadochi
@@ -1241,18 +1295,24 @@ country_event = {
 						has_country_flag = nci_diadochi_war_ptolemaios_side
 					}
 				}
-				ROOT = { free_vassal = PREV }
+				ROOT = {
+					free_vassal = PREV
+				}
 			}
 		}
 		hidden_effect = {
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_seleukos_side
+				}
 				HLS = {
 					vassalize = PREV
 				}
 			}
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_ptolemaios_side
+				}
 				AEG = {
 					vassalize = PREV
 				}
@@ -1304,21 +1364,27 @@ country_event = {
 				}
 			}
 			every_subject_country = {
-				limit = { is_subject_of_type = diadochi_vassal }
+				limit = {
+					is_subject_of_type = diadochi_vassal
+				}
 				join_all_offensive_wars_of = ROOT
 			}
 		}
 	}
 
 	option = {
-		name = ab_nicaea.17.b
+		name = ab_nicaea.16.b
 		tooltip = {
 			add_stability = -2
 		}
 		set_country_flag = nci_picked_seleukos
 		custom_tooltip = NCI_CONTINUE_AS_SELEUKOS
 		hidden_effect = {
-			HLS = { exile_ruler_as = { name = nci_diadochi_new_ruler } }
+			HLS = {
+				exile_ruler_as = {
+					name = nci_diadochi_new_ruler
+				}
+			}
 			inherit = HLS
 			change_tag = HLS
 			add_government_reform = nicene_diadochi
@@ -1332,18 +1398,24 @@ country_event = {
 						has_country_flag = nci_diadochi_war_ptolemaios_side
 					}
 				}
-				ROOT = { free_vassal = PREV }
+				ROOT = {
+					free_vassal = PREV
+				}
 			}
 		}
 		hidden_effect = {
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_antigonos_side
+				}
 				HLM = {
 					vassalize = PREV
 				}
 			}
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_ptolemaios_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_ptolemaios_side
+				}
 				AEG = {
 					vassalize = PREV
 				}
@@ -1395,21 +1467,27 @@ country_event = {
 				}
 			}
 			every_subject_country = {
-				limit = { is_subject_of_type = diadochi_vassal }
+				limit = {
+					is_subject_of_type = diadochi_vassal
+				}
 				join_all_offensive_wars_of = ROOT
 			}
 		}
 	}
 
 	option = {
-		name = ab_nicaea.17.c
+		name = ab_nicaea.16.c
 		tooltip = {
 			add_stability = -2
 		}
 		set_country_flag = nci_picked_ptolemaios
 		custom_tooltip = NCI_CONTINUE_AS_PTOLEMAIOS
 		hidden_effect = {
-			AEG = { exile_ruler_as = { name = nci_diadochi_new_ruler } }
+			AEG = {
+				exile_ruler_as = {
+					name = nci_diadochi_new_ruler
+				}
+			}
 			inherit = AEG
 			change_tag = AEG
 			add_government_reform = nicene_diadochi
@@ -1423,18 +1501,24 @@ country_event = {
 						has_country_flag = nci_diadochi_war_seleukos_side
 					}
 				}
-				ROOT = { free_vassal = PREV }
+				ROOT = {
+					free_vassal = PREV
+				}
 			}
 		}
 		hidden_effect = {
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_antigonos_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_antigonos_side
+				}
 				HLM = {
 					vassalize = PREV
 				}
 			}
 			every_country = {
-				limit = { has_country_flag = nci_diadochi_war_seleukos_side }
+				limit = {
+					has_country_flag = nci_diadochi_war_seleukos_side
+				}
 				HLS = {
 					vassalize = PREV
 				}
@@ -1486,7 +1570,9 @@ country_event = {
 				}
 			}
 			every_subject_country = {
-				limit = { is_subject_of_type = diadochi_vassal }
+				limit = {
+					is_subject_of_type = diadochi_vassal
+				}
 				join_all_offensive_wars_of = ROOT
 			}
 		}
@@ -1495,9 +1581,9 @@ country_event = {
 
 #Diadochi War End
 country_event = {
-	id = ab_nicaea.18
-	title = ab_nicaea.18.t
-	desc = ab_nicaea.18.d
+	id = ab_nicaea.17
+	title = ab_nicaea.17.t
+	desc = ab_nicaea.17.d
 	picture = AB_ALEXANDER_eventPicture
 	
 	is_triggered_only = yes
@@ -1507,20 +1593,33 @@ country_event = {
 			set_country_flag = had_diadochi_war
 		}
 	}
+
+	after = {
+		hidden_effect = {
+			save_global_event_target_as = hellenicEmpire
+			clr_country_flag = nci_picked_antigonos
+			clr_country_flag = nci_picked_seleukos
+			clr_country_flag = nci_picked_ptolemaios
+		}
+	}
 	
 	option = {
-		name = ab_nicaea.18.a
+		name = ab_nicaea.17.a
 		add_stability = 1
 		restore_country_name = yes
 		change_tag = MAC
 		if = {
-			limit = { has_country_flag = nci_picked_antigonos }
+			limit = {
+				has_country_flag = nci_picked_antigonos
+			}
 			change_country_color = {
 				country = HLM
 			}
 		}
 		else_if = {
-			limit = { has_country_flag = nci_picked_seleukos }
+			limit = {
+				has_country_flag = nci_picked_seleukos
+			}
 			change_country_color = {
 				country = HLS
 			}
@@ -1530,69 +1629,7 @@ country_event = {
 				country = AEG
 			}
 		}
+		custom_tooltip = AB_EMPTY
 		add_government_reform = nicene_absolute_hellenic_empire
-		hidden_effect = {
-			save_global_event_target_as = hellenicEmpire
-		}
-	}
-}
-
-#Fix Seleukos dynasty
-country_event = {
-	id = ab_nicaea.19
-	title = ab_nicaea.19.t
-	desc = ab_nicaea.19.d
-	picture = AB_ALEXANDER_eventPicture
-	
-	hidden = yes
-
-	trigger = {
-		tag = HLS
-		NOT = { dynasty = "Seleukos" }
-	}
-	
-	option = {
-		name = ab_nicaea.19.a
-		set_dynasty = "Seleukos"
-	}
-}
-
-#Fix Antigonos dynasty
-country_event = {
-	id = ab_nicaea.20
-	title = ab_nicaea.20.t
-	desc = ab_nicaea.20.d
-	picture = AB_ALEXANDER_eventPicture
-	
-	hidden = yes
-
-	trigger = {
-		tag = HLM
-		NOT = { dynasty = "Antigonos" }
-	}
-	
-	option = {
-		name = ab_nicaea.20.a
-		set_dynasty = "Antigonos"
-	}
-}
-
-#Fix Ptolemaios dynasty
-country_event = {
-	id = ab_nicaea.21
-	title = ab_nicaea.21.t
-	desc = ab_nicaea.21.d
-	picture = AB_ALEXANDER_eventPicture
-	
-	hidden = yes
-
-	trigger = {
-		tag = AEG
-		NOT = { dynasty = "Ptolemaios" }
-	}
-	
-	option = {
-		name = ab_nicaea.21.a
-		set_dynasty = "Ptolemaios"
 	}
 }

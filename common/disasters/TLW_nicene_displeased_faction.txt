@@ -1,0 +1,90 @@
+nicene_displeased_faction = {
+	potential = {
+		has_reform = nicene_hellenic_empire
+	}
+	
+	can_start = {
+		has_any_disaster = no
+		custom_trigger_tooltip = {
+			tooltip = BYZ_FACTION_BELOW20
+			OR = {
+				NOT = {
+					faction_influence = {
+						faction = faction_nciantigonos
+						influence = 20
+					}
+				}
+				NOT = {
+					faction_influence = {
+						faction = faction_nciptolemaios
+						influence = 20
+					}
+				}
+				NOT = {
+					faction_influence = {
+						faction = faction_nciseleukos
+						influence = 20
+					}
+				}
+			}
+		}
+	}
+	
+	can_stop = {
+		OR = {
+			has_any_disaster = yes
+			custom_trigger_tooltip = {
+				tooltip = BYZ_FACTION_OVER20
+				faction_influence = {
+					faction = faction_nciantigonos
+					influence = 20
+				}
+				faction_influence = {
+					faction = faction_nciptolemaios
+					influence = 20
+				}
+				faction_influence = {
+					faction = faction_nciseleukos
+					influence = 20
+				}
+			}
+		}
+	}
+	
+	progress = {
+		modifier = {
+			factor = 100
+			always = yes
+		}
+	}
+	
+	modifier = {
+		all_power_cost = 0.2
+		global_unrest = 10
+	}
+	
+	can_end = {
+		is_at_war = no
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		stability = 1
+		custom_trigger_tooltip = {
+			tooltip = BYZ_FACTION_OVER20
+			faction_influence = {
+				faction = faction_nciantigonos
+				influence = 20
+			}
+			faction_influence = {
+				faction = faction_nciptolemaios
+				influence = 20
+			}
+			faction_influence = {
+				faction = faction_nciseleukos
+				influence = 20
+			}
+		}
+	}
+	
+	on_start = ab_nicaea.14
+	on_end = ab_nicaea.15
+}
