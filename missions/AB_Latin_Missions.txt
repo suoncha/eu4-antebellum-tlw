@@ -1435,7 +1435,7 @@ latin_fourth_group = {
 	}
 
 	lat_barbary = {
-		icon = mission_sponsor_piracy
+		icon = mission_combat_barbary_piracy
 		position = 9
 		required_missions = { lat_sicily lat_egypt }
 	
@@ -1549,67 +1549,29 @@ latin_fourth_group = {
 			if = {
 				limit = {
 					tag = ROM
-					225 = {
-						OR = {
-							owned_by = ADU
-							owned_by = IBE
+				}
+				custom_tooltip = BYZ_COMPLETE_AS_ROME_YES
+				225 = {
+					owner = {
+						reverse_add_casus_belli = {
+							target = ROOT
+							type = cb_establish_diocese
+							months = 240
 						}
 					}
 				}
-				custom_tooltip = BYZ_COMPLETE_AS_ROME
 			}
-			else_if = {
-				limit = {
-					225 = {
-						OR = {
-							owned_by = ADU
-							owned_by = IBE
-						}
-					}
-				}
+			else = {
 				custom_tooltip = BYZ_COMPLETE_AS_ROME_NO
-			}
-			if = {
-				limit = { 225 = { owned_by = ADU } }
 				tooltip = {
-					add_casus_belli = {
-						target = ADU
-						type = cb_establish_diocese
-						months = 240
-					}
-				}
-			}
-			else_if = {
-				limit = { 225 = { owned_by = IBE } }
-				tooltip = {
-					add_casus_belli = {
-						target = IBE
-						type = cb_establish_diocese
-						months = 240
-					}
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						tag = ROM
-						225 = { owned_by = ADU }
-					}
-					add_casus_belli = {
-						target = ADU
-						type = cb_establish_diocese
-						months = 240
-					}
-				}
-				else_if = {
-					limit = {
-						tag = ROM
-						225 = { owned_by = IBE }
-					}
-					add_casus_belli = {
-						target = IBE
-						type = cb_establish_diocese
-						months = 240
+					225 = {
+						owner = {
+							reverse_add_casus_belli = {
+								target = ROOT
+								type = cb_establish_diocese
+								months = 240
+							}
+						}
 					}
 				}
 			}
@@ -2016,7 +1978,7 @@ latin_first_rome = {
 	has_country_shield = yes
 	
 	lat_reform_imperial_army = {
-		icon = protect_against_austria
+		icon = ven_army_republic
 		position = 9
 		required_missions = { } 
 
@@ -2101,7 +2063,7 @@ latin_first_rome = {
 	}
 
 	lat_grandarmy = {
-		icon = establish_a_standing_army
+		icon = mission_redcoats
 		position = 11
 		required_missions = { lat_finest }
 
@@ -2205,7 +2167,7 @@ latin_first_rome = {
 	}	
 
 	lat_rhine = {
-	    icon = the_crown_of_lothair
+	    icon = mission_rhine
 		required_missions = { lat_alpine }
 		position = 13
 		
@@ -2268,7 +2230,7 @@ latin_first_rome = {
 	}
 
 	lat_belgica = {
-	    icon = mission_spanish_netherlands
+	    icon = ned_dykes
 		required_missions = { lat_rhine }
 		position = 14
 		
@@ -2375,7 +2337,7 @@ latin_second_rome = {
 	has_country_shield = yes
 
 	lat_alpine = {
-	    icon = prosper_in_piedmont
+	    icon = the_alpine_wall
 		required_missions = { }
 		position = 12
 		
@@ -2704,6 +2666,7 @@ latin_third_rome = {
 				}
 				add_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					exists = UKR
@@ -2711,19 +2674,16 @@ latin_third_rome = {
 						religion = catholic
 					}
 				}
-				custom_tooltip = ROM_RUS_IS_CATHOLIC
+				custom_tooltip = ROM_RUS_IS_CATHOLIC_YES
+				add_casus_belli = {
+					target = UKR
+					type = cb_establish_diocese
+					months = 300
+				}
 			}
 			else = {
 				custom_tooltip = ROM_RUS_IS_CATHOLIC_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						exists = UKR
-						UKR = {
-							religion = catholic
-						}
-					}
+				tooltip = {
 					add_casus_belli = {
 						target = UKR
 						type = cb_establish_diocese
@@ -2972,7 +2932,7 @@ latin_third_rome = {
 	}
 
 	lat_dethrone = {
-		icon = carolingian_empire
+		icon = mission_downfall
 		required_missions = { }
 		position = 13
 		
@@ -3016,20 +2976,13 @@ latin_third_rome = {
 					}
 				}
 			}
-			if = {
-				limit = { 236 = { owned_by = ENG } }
-				add_casus_belli = {
-					target = ENG
-					type = cb_establish_diocese
-					months = 240
-				}
-			}
-			else_if = {
-				limit = { 236 = { owned_by = GBR } }
-				add_casus_belli = {
-					target = GBR
-					type = cb_establish_diocese
-					months = 240
+			236 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
 				}
 			}
 		}
@@ -3291,7 +3244,7 @@ latin_fourth_rome = {
 	}
 
 	lat_cities_byzantine = {
-		icon = develop_konigsberg
+		icon = mission_ottoman_law
 		required_missions = { } 
 		position = 15
 
@@ -3411,7 +3364,7 @@ latin_fourth_rome = {
 	}
 
 	lat_cities_latin = {
-		icon = spa_new_capital
+		icon = mission_the_golden_city
 		required_missions = { lat_cities_byzantine } 
 		position = 16
 
@@ -3645,7 +3598,7 @@ latin_fifth_rome = {
 	}
 
 	lat_roads = {
-		icon = mission_pol_develop_countryside
+		icon = mission_royal_roads
 		position = 10
 		required_missions = { lat_money }
 
@@ -3709,7 +3662,7 @@ latin_fifth_rome = {
 	}
 
 	lat_newworld_base = {
-		icon = mission_colonize_the_caribbean
+		icon = mission_caribbean_cn
 		position = 13
 		required_missions = { lat_odyssey }
 		
@@ -3758,7 +3711,7 @@ latin_fifth_rome = {
 	}
 
 	lat_conquer_seas = {
-		icon = mission_sail_to_the_east_indies
+		icon = mission_the_triangle_trade
 		position = 14
 		required_missions = { lat_newworld_base }
 		
@@ -4075,7 +4028,7 @@ latin_fourth_persian_unlocked = {
 	}
 
 	lat_persosphere = {
-		icon = mission_persianate_empire
+		icon = mission_iran
 		required_missions = { } 
 		position = 19
 
@@ -4134,7 +4087,7 @@ latin_fourth_persian_unlocked = {
 	}
 
 	lat_cities_persian = {
-		icon = per_establish_eastern_defenses
+		icon = per_purify_the_holy_sites
 		required_missions = { lat_persosphere } 
 		position = 20
 
@@ -4399,7 +4352,7 @@ latin_fifth_persian_unlocked = {
 	has_country_shield = yes
 
 	lat_persia = {
-		icon = mission_iran
+		icon = per_tab_ziyarids_successor
 		required_missions = { }
 		position = 17
 
@@ -4449,7 +4402,7 @@ latin_fifth_persian_unlocked = {
 	}
 
 	lat_turkmen = {
-		icon = mission_pertribes
+		icon = mission_central_asian_steppes
 		required_missions = { lat_persia } 
 		position = 18
 
@@ -4488,7 +4441,7 @@ latin_fifth_persian_unlocked = {
 	}
 
 	lat_ariana = {
-		icon = mission_afghan_frontier
+		icon = mission_silk_road
 		required_missions = { } 
 		position = 19
 
@@ -4559,7 +4512,7 @@ latin_fifth_persian_unlocked = {
 	}
 
 	lat_invade_india = {
-		icon = mission_subdue_rajputana
+		icon = mission_rb_take_north_india
 		required_missions = { lat_ariana } 
 		position = 20
 
@@ -4625,7 +4578,7 @@ latin_fifth_persian_unlocked = {
 	}
 
 	lat_maharajas = {
-		icon = mission_delhi_resurgent
+		icon = mission_indian_empire
 		required_missions = { lat_invade_india } 
 		position = 21
 
@@ -4830,7 +4783,7 @@ latin_first_chinese_unlocked = {
 	}
 
 	lat_mongolia = {
-		icon = mission_chinese_general_riding
+		icon = mission_unify_mongolia
 		required_missions = { lat_tibet } 
 		position = 19
 
@@ -4905,7 +4858,7 @@ latin_first_chinese_unlocked = {
 	}
 
 	lat_far_east = {
-		icon = mch_proclaim_later_jin
+		icon = jap_financial_cliques
 		required_missions = { lat_mongolia } 
 		position = 21
 
@@ -5004,7 +4957,7 @@ latin_second_chinese_unlocked = {
 	has_country_shield = yes
 
 	lat_invade_china = {
-		icon = qng_north_china
+		icon = mission_jaded
 		required_missions = { lat_tibet lat_burma } 
 		position = 18
 
@@ -5439,7 +5392,7 @@ latin_third_chinese_unlocked = {
 	}
 
 	lat_asia = {
-		icon = mng_heavens_will
+		icon = mission_warring
 		required_missions = { lat_far_east lat_east_indies lat_maharajas } 
 		position = 22
 
