@@ -1,5 +1,5 @@
-ab_epirus_missions_1 = {
-	slot = 1
+ab_epirus_missions_5 = {
+	slot = 5
 	generic = no
 	ai = yes
 	potential = {
@@ -8,29 +8,32 @@ ab_epirus_missions_1 = {
 	has_country_shield = yes
 	
 	epi_army = {
-		icon = mission_pf_soldier
-		position = 1
+		icon = mission_unrivaled
 		required_missions = { }
+		position = 1	
 		
 		trigger = {
 			is_year = 1446
 			is_subject_of = BYZ
-			manpower_percentage = 1
-			army_size_percentage = 1
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			num_of_generals = 1
 		}
 		
 		effect = {
-			add_country_modifier = {
-				name = epi_ready_for_war
-				duration = 3650
-			}
 			define_advisor = {
 				type = army_reformer
 				skill = 1
 				religion = ROOT
 				culture = ROOT
 				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = epi_ready_for_war
+				duration = 3650
 			}
 			thrace_area = {
 				limit = {
@@ -42,123 +45,10 @@ ab_epirus_missions_1 = {
 		}
 	}
 
-	epi_morea_revolt = {
-		icon = dom_ara_remensa_war
-		position = 2
-		required_missions = { }
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 1773
-				province_id = 4701
-				province_id = 145
-			}
-			NOT = { owned_by = ROOT }
-			NOT = { controlled_by = ROOT }
-		}
-		
-		trigger = {
-			is_subject_of = BYZ
-			is_at_war = yes
-			exists = MOE
-			controls = 1773
-			controls = 4701
-			controls = 145
-		}
-		
-		effect = {
-			inherit = MOE
-			add_liberty_desire = 25
-			BYZ = {
-				add_opinion = {
-					who = ROOT
-					modifier = opinion_angry
-				}
-			}
-		}
-	}
-
-	epi_venice_deal = {
-		icon = nuova_promissione_ducale
-		position = 3
-		required_missions = { }
-		
-		provinces_to_highlight = {
-			owned_by = VEN
-		}
-
-		trigger = {
-			is_subject_of = BYZ
-			is_at_war = no
-			exists = VEN
-			VEN = {
-				has_opinion = {
-					who = ROOT
-					value = 200
-				}
-			}
-			146 = {
-				owned_by = BYZ
-			}
-			5152 = {
-				owned_by = BYZ
-			}
-		}
-		
-		effect = {
-			custom_tooltip = EPI_ANGELIDREVOLT_VENICEDEAL
-			set_country_flag = epi_angelidrevolt_venicedeal
-		}
-	}
-
-	epi_smyrna_deal = {
-		icon = mission_nicaea
-		position = 4
-		required_missions = { }
-		
-		provinces_to_highlight = {
-			owned_by = NCI
-		}
-
-		trigger = {
-			is_subject_of = BYZ
-			is_at_war = no
-			exists = NCI
-			NCI = {
-				has_opinion = {
-					who = ROOT
-					value = 100
-				}
-			}
-			318 = {
-				owned_by = BYZ
-			}
-		}
-		
-		effect = {
-			custom_tooltip = EPI_ANGELIDREVOLT_SMYRNADEAL
-			set_country_flag = epi_angelidrevolt_nicaeadeal
-			if = {
-				limit = {
-					4700 = {
-						owned_by = BYZ
-					}
-					2348 = {
-						owned_by = BYZ
-					}
-				}
-				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS
-			}
-			else = {
-				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS_NO
-			}
-		}
-	}
-
 	epi_fall_angelid = {
 		icon = mission_imperial
-		position = 5
-		required_missions = { }
+		required_missions = { epi_army }
+		position = 2
 		
 		provinces_to_highlight = {
 			owned_by = BYZ
@@ -196,7 +86,9 @@ ab_epirus_missions_1 = {
 					join_all_offensive_wars_of = ROOT
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = EPI_ANGELIDREVOLT_UNLOCK_PO
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					NOT = { has_country_flag = epi_angelidrevolt_venicedeal }
@@ -214,6 +106,116 @@ ab_epirus_missions_1 = {
 					duration = 18250
 				}
 				add_ruler_personality = augustus_personality
+			}
+		}
+	}
+
+	epi_morea_revolt = {
+		icon = mission_fekete_sereg
+		required_missions = { }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1773
+				province_id = 4701
+				province_id = 145
+			}
+			NOT = { owned_by = ROOT }
+			NOT = { controlled_by = ROOT }
+		}
+		
+		trigger = {
+			is_subject_of = BYZ
+			war_with = MOE
+			controls = 1773
+			controls = 4701
+			controls = 145
+		}
+		
+		effect = {
+			inherit = MOE
+			add_liberty_desire = 25
+			custom_tooltip = AB_EMPTY
+			BYZ = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_angry
+				}
+			}
+		}
+	}
+
+	epi_venice_deal = {
+		icon = nuova_promissione_ducale
+		required_missions = { }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = VEN
+		}
+
+		trigger = {
+			is_subject_of = BYZ
+			VEN = {
+				has_opinion = {
+					who = ROOT
+					value = 200
+				}
+			}
+			146 = {
+				owned_by = BYZ
+			}
+			5152 = {
+				owned_by = BYZ
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EPI_ANGELIDREVOLT_VENICEDEAL
+			set_country_flag = epi_angelidrevolt_venicedeal
+		}
+	}
+
+	epi_smyrna_deal = {
+		icon = mission_gothic_invasion
+		required_missions = { }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = NCI
+		}
+
+		trigger = {
+			is_subject_of = BYZ
+			NCI = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+			318 = {
+				owned_by = BYZ
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EPI_ANGELIDREVOLT_SMYRNADEAL
+			set_country_flag = epi_angelidrevolt_nicaeadeal
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					4700 = {
+						owned_by = BYZ
+					}
+					2348 = {
+						owned_by = BYZ
+					}
+				}
+				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS_YES
+			}
+			else = {
+				custom_tooltip = EPI_ANGELIDREVOLT_NICAEA_ISLANDS_NO
 			}
 		}
 	}

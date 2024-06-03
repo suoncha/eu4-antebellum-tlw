@@ -1657,6 +1657,13 @@ ab_rum_muslim_fourth = {
 				name = "seljuk_usurper"
 				duration = 9125
 			}
+			dongola_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 			1232 = {
 				if = {
 					limit = {
@@ -4495,327 +4502,71 @@ ab_rum_muslim_fifth_rome = {
 }
 
 # Persian War
-ab_rum_muslim_first_persian = {
-	slot = 1
+ab_rum_muslim_fourth_persian_locked = {
+	slot = 4
 	generic = no
 	ai = yes
 	potential = {
 		tag = ROM
 		was_tag = RUM
 		religion_group = muslim
-		has_country_flag = byz_persian_war_victory
+		NOT = { has_country_flag = byz_persian_war_victory }
 	}
 	has_country_shield = yes
 
-	rum_muslim_persosphere = {
-		icon = mission_persianate_empire
-		required_missions = { rum_muslim_persia } 
+	rum_muslim_georgia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_persia_locked }
 		position = 23
 
-		provinces_to_highlight = {
-			OR = {
-				area = al_jazira_area
-				area = iraq_arabi_area
-				area = basra_area
-				region = persia_region
-				region = khorasan_region
-				AND = {
-					region = caucasia_region
-					NOT = {
-						OR = {
-							area = circassia_area
-							area = dagestan_area
-						}
-					}
-					ROM = { has_country_flag = rom_caucasia_isof_persia }
-				}
-			}
-			province_is_diocese_land_trigger = yes
-			NOT = { culture = perso_roman }
-		}
-
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 12
-				province_is_diocese_land_trigger = yes
-				culture = perso_roman
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
 			}
 		}
 
 		effect = {
-			custom_tooltip = BYZ_PERSIAN_CAPITALS
-			custom_tooltip = PER_ADM_DEV
-			hidden_effect = {
-                for = {
-                    amount = 10
-                    effect = "
-                        random_owned_province = {
-							limit = { region = persia_region }
-							add_base_tax = 1
-                        }
-                    "
-                }
-				set_country_flag = unlocked_faction_romepersian
-				add_faction = faction_byzpersian
-				add_faction_influence = {
-					faction = faction_byzpersian
-					influence = 20
-				}
-			}
-			set_country_flag = byz_faster_romanization_persia
+			custom_tooltip = BYZ_BEATING_PERSIA
 		}
 	}
-}
 
-ab_rum_muslim_second_persian = {
-	slot = 2
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = RUM
-		religion_group = muslim
-		has_country_flag = byz_persian_war_victory
-	}
-	has_country_shield = yes
-
-	rum_muslim_ariana = {
-		icon = mission_afghan_frontier
-		required_missions = { rum_muslim_persia } 
-		position = 23
-
-		provinces_to_highlight = {
-			region = khorasan_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			khorasan_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-
-		effect = {
-			add_yearly_manpower = 2
-			define_advisor = {
-				type = commandant
-				skill = 3
-				religion = ROOT
-				culture = perso_roman
-				cost_multiplier = 0.75
-			}
-			northern_sindh_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			sindh_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			multan_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			lahore_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			sind_sagar_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			kashmir_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-}
-
-ab_rum_muslim_third_persian = {
-	slot = 3
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = RUM
-		religion_group = muslim
-		has_country_flag = byz_persian_war_victory
-	}
-	has_country_shield = yes
-
-	rum_muslim_persia = {
-		icon = mission_iran
+	rum_muslim_persosphere_locked = {
+		icon = mission_unknown_mission
 		required_missions = { }
-		position = 22
-
-		provinces_to_highlight = {
-			region = persia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			persia_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
-			}
-		}
-
-		effect = {
-			persia_region = {
-				add_province_modifier = {
-					name = per_restored_iran
-					duration = 5475
-				}
-			}
-			custom_tooltip = RUM_SUNNI_CENTER_PERSIA
-			hidden_effect = {
-				2218 = {
-					add_reform_center = sunni
-				}
-				2218 = {
-					province_event = {
-						id = ab_jalayirid.2
-						days = 9125
-					}
-				}
-			}
-		}
-	}
-
-	rum_muslim_invade_india = {
-		icon = mission_subdue_rajputana
-		required_missions = { rum_muslim_ariana rum_muslim_georgia } 
 		position = 24
 
-		provinces_to_highlight = {
-			OR = {
-				area = sindh_area
-				area = northern_sindh_area
-				area = multan_area
-				area = kashmir_area
-				area = sind_sagar_area
-				area = lahore_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
 		trigger = {
-			sindh_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			northern_sindh_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			multan_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			kashmir_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			sind_sagar_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			lahore_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
 			}
 		}
 
 		effect = {
-			add_country_modifier = {
-				name = byz_invade_india
-				duration = 7300
-			}
-			west_india_region = {
-				limit = {
-					NOT = { owned_by = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT 
-			} 
-			hindusthan_region = {
-				limit = {
-					NOT = { owned_by = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT 
-			}
+			custom_tooltip = BYZ_BEATING_PERSIA
 		}
 	}
 
-	rum_muslim_maharajas = {
-		icon = mission_delhi_resurgent
-		required_missions = { rum_muslim_invade_india } 
+	rum_muslim_cities_persian_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_persosphere_locked }
 		position = 25
 
-		provinces_to_highlight = {
-			superregion = india_superregion
-			province_is_diocese_land_trigger = no
-		}
-
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 100
-				province_is_diocese_land_trigger = yes
-				superregion = india_superregion
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
 			}
 		}
 
 		effect = {
-			add_country_modifier = {
-				name = yua_horde_claim_india
-				duration = 9125
-			}
-			india_superregion = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			if = {
-				limit = { has_country_modifier = byz_invade_india }
-				custom_tooltip = BYZ_SPEEDRUN_INDIA
-			}
-			else = {
-				custom_tooltip = BYZ_SPEEDRUN_INDIA_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = { has_country_modifier = byz_invade_india }
-					set_country_flag = byz_faster_romanization_india
-				}
-			}
+			custom_tooltip = BYZ_BEATING_PERSIA
 		}
 	}
 }
 
-ab_rum_muslim_fourth_persian = {
+ab_rum_muslim_fourth_persian_unlocked = {
 	slot = 4
 	generic = no
 	ai = yes
@@ -4914,24 +4665,70 @@ ab_rum_muslim_fourth_persian = {
 			}
 		}
 	}
-}
 
-ab_rum_muslim_fifth_persian = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = RUM
-		religion_group = muslim
-		has_country_flag = byz_persian_war_victory
+	rum_muslim_persosphere = {
+		icon = mission_persianate_empire
+		required_missions = { } 
+		position = 24
+
+		provinces_to_highlight = {
+			OR = {
+				area = al_jazira_area
+				area = iraq_arabi_area
+				area = basra_area
+				region = persia_region
+				region = khorasan_region
+				AND = {
+					region = caucasia_region
+					NOT = {
+						OR = {
+							area = circassia_area
+							area = dagestan_area
+						}
+					}
+					ROM = { has_country_flag = rom_caucasia_isof_persia }
+				}
+			}
+			province_is_diocese_land_trigger = yes
+			NOT = { culture = perso_roman }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				culture = perso_roman
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_PERSIAN_CAPITALS
+			custom_tooltip = PER_ADM_DEV
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = { region = persia_region }
+							add_base_tax = 1
+                        }
+                    "
+                }
+				set_country_flag = unlocked_faction_romepersian
+				add_faction = faction_byzpersian
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 20
+				}
+			}
+			set_country_flag = byz_faster_romanization_persia
+		}
 	}
-	has_country_shield = yes
 
 	rum_muslim_cities_persian = {
 		icon = per_establish_eastern_defenses
-		required_missions = { rum_muslim_persia } 
-		position = 23
+		required_missions = { rum_muslim_persosphere } 
+		position = 25
 
 		provinces_to_highlight = {
 		    OR = {
@@ -5085,9 +4882,390 @@ ab_rum_muslim_fifth_persian = {
 	}
 }
 
+ab_rum_muslim_fifth_persian_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_persian_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_persia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 22
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_ariana_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_invade_india_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_ariana_locked }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_maharajas_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_invade_india_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+}
+
+ab_rum_muslim_fifth_persian_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_persia = {
+		icon = mission_iran
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+
+		effect = {
+			persia_region = {
+				add_province_modifier = {
+					name = per_restored_iran
+					duration = 5475
+				}
+			}
+			custom_tooltip = RUM_SUNNI_CENTER_PERSIA
+			hidden_effect = {
+				2218 = {
+					add_reform_center = sunni
+				}
+				2218 = {
+					province_event = {
+						id = ab_jalayirid.2
+						days = 9125
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_ariana = {
+		icon = mission_afghan_frontier
+		required_missions = { } 
+		position = 24
+
+		provinces_to_highlight = {
+			region = khorasan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_yearly_manpower = 2
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = perso_roman
+				cost_multiplier = 0.75
+			}
+			northern_sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_invade_india = {
+		icon = mission_subdue_rajputana
+		required_missions = { rum_muslim_ariana } 
+		position = 25
+
+		provinces_to_highlight = {
+			OR = {
+				area = sindh_area
+				area = northern_sindh_area
+				area = multan_area
+				area = kashmir_area
+				area = sind_sagar_area
+				area = lahore_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = byz_invade_india
+				duration = 7300
+			}
+			west_india_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			} 
+			hindusthan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+		}
+	}
+
+	rum_muslim_maharajas = {
+		icon = mission_delhi_resurgent
+		required_missions = { rum_muslim_invade_india } 
+		position = 26
+
+		provinces_to_highlight = {
+			superregion = india_superregion
+			province_is_diocese_land_trigger = no
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				province_is_diocese_land_trigger = yes
+				superregion = india_superregion
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = yua_horde_claim_india
+				duration = 9125
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = { has_country_modifier = byz_invade_india }
+				custom_tooltip = BYZ_SPEEDRUN_INDIA
+			}
+			else = {
+				custom_tooltip = BYZ_SPEEDRUN_INDIA_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_country_modifier = byz_invade_india }
+					set_country_flag = byz_faster_romanization_india
+				}
+			}
+		}
+	}
+}
+
 # Dragon Emperor
-ab_rum_muslim_second_chinese = {
-	slot = 2
+ab_rum_muslim_first_chinese_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_tibet_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 22
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_mongolia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_tibet_locked }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_far_east_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_mongolia_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_first_chinese_unlocked = {
+	slot = 1
 	generic = no
 	ai = yes
 	potential = {
@@ -5101,7 +5279,7 @@ ab_rum_muslim_second_chinese = {
 	rum_muslim_tibet = {
 		icon = mission_lhasa
 		required_missions = { } 
-		position = 26
+		position = 22
 
 		provinces_to_highlight = {
 			region = tibet_region
@@ -5159,8 +5337,8 @@ ab_rum_muslim_second_chinese = {
 
 	rum_muslim_mongolia = {
 		icon = mission_chinese_general_riding
-		required_missions = { rum_muslim_tibet rum_muslim_china } 
-		position = 29
+		required_missions = { rum_muslim_tibet } 
+		position = 24
 
 		provinces_to_highlight = {
 			region = mongolia_region
@@ -5211,7 +5389,7 @@ ab_rum_muslim_second_chinese = {
 	rum_muslim_far_east = {
 		icon = mch_proclaim_later_jin
 		required_missions = { rum_muslim_mongolia } 
-		position = 30
+		position = 26
 
 		provinces_to_highlight = {
 			superregion = far_east_superregion
@@ -5249,8 +5427,56 @@ ab_rum_muslim_second_chinese = {
 	}
 }
 
-ab_rum_muslim_third_chinese = {
-	slot = 3
+ab_rum_muslim_second_chinese_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_invade_china_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_tibet_locked rum_muslim_burma_locked }
+		position = 23
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_cities_chinese_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_invade_china_locked }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_second_chinese_unlocked = {
+	slot = 2
 	generic = no
 	ai = yes
 	potential = {
@@ -5264,7 +5490,7 @@ ab_rum_muslim_third_chinese = {
 	rum_muslim_invade_china = {
 		icon = qng_north_china
 		required_missions = { rum_muslim_tibet rum_muslim_burma } 
-		position = 27
+		position = 23
 
 		provinces_to_highlight = {
 			superregion = china_superregion
@@ -5283,38 +5509,6 @@ ab_rum_muslim_third_chinese = {
 			enable_estate_effect = {
 				estate = estate_eunuchs
 			}
-			china_superregion = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-
-	rum_muslim_china = {
-		icon = qng_conquer_south_china
-		required_missions = { rum_muslim_invade_china } 
-		position = 28
-
-		provinces_to_highlight = {
-			superregion = china_superregion
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			china_superregion = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
-			}
-			estate_loyalty = {
-				estate = estate_eunuchs
-				loyalty = 60 
-			}
-		}
-
-		effect = {
 			custom_tooltip = BYZ_CHINESE_CAPITALS
 			custom_tooltip = BYZ_CHINA_ADM_DEV
 			hidden_effect = {
@@ -5335,13 +5529,20 @@ ab_rum_muslim_third_chinese = {
 				}
 			}
 			set_country_flag = byz_faster_romanization_china
+			china_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
 	rum_muslim_cities_chinese = {
 		icon = mission_asian_city
-		required_missions = { rum_muslim_china } 
-		position = 29
+		required_missions = { rum_muslim_invade_china } 
+		position = 25
 
 		provinces_to_highlight = {
 		    OR = {
@@ -5502,11 +5703,231 @@ ab_rum_muslim_third_chinese = {
 			}
 		}
 	}
+}
+
+ab_rum_muslim_third_chinese_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_burma_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 22
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_indochina_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_burma_locked }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_east_indies_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_indochina_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_asia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_far_east_locked rum_muslim_east_indies_locked rum_muslim_maharajas }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_third_chinese_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_burma = {
+		icon = mission_conquer_lower_burma_tau
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = {
+			region = burma_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			burma_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+
+		effect = {
+			country_event = { id = flavor_mch.12 }
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			indo_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = { mission_completed = rum_muslim_tibet }
+				}
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST
+			}
+			else = {
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { mission_completed = rum_muslim_tibet }
+					}
+					set_country_flag = byz_conquer_burma_first
+				}
+			}
+		}
+	}
+
+	rum_muslim_indochina = {
+		icon = mission_rule_indochina
+		required_missions = { rum_muslim_burma } 
+		position = 24
+
+		provinces_to_highlight = {
+			region = indo_china_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			indo_china_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+
+		effect = {
+			add_absolutism = 10
+			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
+			east_indies_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			set_country_flag = byz_faster_romanization_indochina
+		}
+	}
+
+	rum_muslim_east_indies = {
+		icon = mission_las_islas_filipinas
+		required_missions = { rum_muslim_indochina } 
+		position = 26
+
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			province_is_diocese_land_trigger = no
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				province_is_diocese_land_trigger = yes
+				superregion = east_indies_superregion
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_SEA_MARITIME_CAPITALS
+			add_country_modifier = {
+				name = gor_spice_trade
+				duration = -1
+			}
+			change_price = {
+                trade_goods = spices
+                key = BYZ_MONOPOLY_SPICES
+                value = 0.15
+                duration = -1
+            }
+			oceanea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			set_country_flag = byz_faster_romanization_eastindies
+		}
+	}
 
 	rum_muslim_asia = {
 		icon = mng_heavens_will
-		required_missions = { rum_muslim_far_east rum_muslim_east_indies } 
-		position = 31
+		required_missions = { rum_muslim_far_east rum_muslim_east_indies rum_muslim_maharajas } 
+		position = 27
 
 		provinces_to_highlight = {
 			OR = {
@@ -5562,144 +5983,6 @@ ab_rum_muslim_third_chinese = {
 				name = yua_china_tiger
 				duration = -1
 			}
-		}
-	}
-}
-
-ab_rum_muslim_fourth_chinese = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = RUM
-		religion_group = muslim
-		has_country_flag = byz_chinese_war_victory
-	}
-	has_country_shield = yes
-
-	rum_muslim_burma = {
-		icon = mission_conquer_lower_burma_tau
-		required_missions = { }
-		position = 26
-
-		provinces_to_highlight = {
-			region = burma_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			burma_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
-			}
-		}
-
-		effect = {
-			country_event = { id = flavor_mch.12 }
-			xinan_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			indo_china_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			if = {
-				limit = {
-					NOT = { mission_completed = rum_muslim_tibet }
-				}
-				custom_tooltip = BYZ_CONQUER_BURMA_FIRST
-			}
-			else = {
-				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { mission_completed = rum_muslim_tibet }
-					}
-					set_country_flag = byz_conquer_burma_first
-				}
-			}
-		}
-	}
-
-	rum_muslim_indochina = {
-		icon = mission_rule_indochina
-		required_missions = { rum_muslim_burma rum_muslim_china } 
-		position = 29
-
-		provinces_to_highlight = {
-			region = indo_china_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			indo_china_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT 
-			}
-		}
-
-		effect = {
-			add_absolutism = 10
-			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
-			east_indies_superregion = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			set_country_flag = byz_faster_romanization_indochina
-		}
-	}
-
-	rum_muslim_east_indies = {
-		icon = mission_las_islas_filipinas
-		required_missions = { rum_muslim_indochina } 
-		position = 30
-
-		provinces_to_highlight = {
-			superregion = east_indies_superregion
-			province_is_diocese_land_trigger = no
-		}
-
-		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 100
-				province_is_diocese_land_trigger = yes
-				superregion = east_indies_superregion
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_SEA_MARITIME_CAPITALS
-			add_country_modifier = {
-				name = gor_spice_trade
-				duration = -1
-			}
-			change_price = {
-                trade_goods = spices
-                key = BYZ_MONOPOLY_SPICES
-                value = 0.15
-                duration = -1
-            }
-			oceanea_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			set_country_flag = byz_faster_romanization_eastindies
 		}
 	}
 }
