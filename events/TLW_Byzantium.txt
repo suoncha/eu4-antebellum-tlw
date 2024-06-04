@@ -38,6 +38,7 @@ country_event = {
 	option = {
 		name = ab_byzantium.48.a
 		add_army_tradition_or_mil_power = { amount = 20 }
+		custom_tooltip = AB_EMPTY
 		add_country_modifier = {
 			name = byz_militarization
 			duration = 3650
@@ -1022,7 +1023,7 @@ province_event = {
 		owner = {
 			OR = {
 				AND = {
-					mission_completed = byzantium_anatolia_dev
+					mission_completed = byzantium_frontier
 					tag = BYZ
 				}
 				AND = {
@@ -1247,12 +1248,10 @@ country_event = {
 				limit = {
 					has_reform = principality
 				}
-				ROOT = {
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						months = 300
-						target = PREV
-					}
+				reverse_add_casus_belli = {
+					target = ROOT
+					type = cb_vassalize_mission
+					months = 300
 				}
 			}
 		}
@@ -1312,6 +1311,7 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.64.a
+		set_country_flag = rome_buffed_augustus
 		change_monarch_points_or_power = {
 			points = 1
 			power = adm
@@ -2989,7 +2989,9 @@ country_event = {
 			limit = {
 				has_custom_ideas = no
 			}
-			country_event = { id = ideagroups.1 } #Swap Ideas
+			country_event = {
+				id = ideagroups.1
+			}
 		}
 		if = {
 			limit = {
@@ -3054,7 +3056,9 @@ country_event = {
 			limit = {
 				has_custom_ideas = no
 			}
-			country_event = { id = ideagroups.1 } #Swap Ideas
+			country_event = {
+				id = ideagroups.1
+			}
 		}
 		if = {
 			limit = {
@@ -3338,24 +3342,7 @@ country_event = {
 					}
 				}
 				set_country_flag = byz_establish_diocese_russia
-				create_subject = {
-					who = UKR
-					subject_type = grand_diocese_vassal
-				}
-				UKR = {
-					override_country_name = DIOCESISRUSSIA
-					add_opinion = {
-						who = ROOT
-						modifier = they_force_unioned_us 
-					}
-					if = {
-						limit = {
-							NOT = { government = monarchy }
-						}
-						change_government = monarchy
-					}
-					add_government_reform = rom_grand_diocese
-				}
+				TLW_establish_diocese_russia_effect = yes
 			}
 		}
 	}
@@ -3472,8 +3459,12 @@ country_event = {
 			}
 		}
 		if = {
-			limit = { has_custom_ideas = no }
-			country_event = { id = ideagroups.1 }
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = {
+				id = ideagroups.1
+			}
 		}
 		country_event = {
 			id = ab_byzantium_disaster.1

@@ -1,0 +1,211 @@
+TLW_establish_diocese_russia_effect = {
+	if = {
+		limit = {
+			NOT = { exists = UKR }
+		}
+		random_subject_country = {
+			limit = {
+				has_reform = principality
+				is_subject_of = ROOT
+				has_opinion = {
+					who = ROOT
+					value = 200
+				}
+				NOT = { liberty_desire = 50 }
+			}
+			change_tag = UKR
+			swap_non_generic_missions = yes
+		}
+		every_subject_country = {
+			limit = { 
+				has_reform = principality
+				is_subject_of = ROOT
+			}
+			UKR = {
+				inherit = PREV
+			}
+		}
+	}
+	create_subject = {
+		subject_type = grand_diocese_vassal
+		who = UKR
+	}
+	UKR = {
+		override_country_name = DIOCESISRUSSIA
+		change_religion = ROOT
+		change_technology_group = western
+		change_unit_type = western
+		if = {
+			limit = {
+				NOT = { government = monarchy }
+			}
+			change_government = monarchy
+		}
+		add_government_reform = rom_grand_diocese
+		swap_free_idea_group = yes
+		set_capital = 280
+		change_country_color = {
+			country = ROOT
+		}
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		complete_mission = ab_russia_consolidate
+		complete_mission = ab_shade_khan
+		complete_mission = ab_tatar_yoke
+		complete_mission = ab_russia_fields
+		complete_mission = ab_russia_crimea
+		complete_mission = ab_russia_game
+		russia_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		crimea_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		ural_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+	}
+}
+
+TLW_establish_diocese_tataria_effect = {
+	every_owned_province = {
+		limit = {
+			OR = {
+				superregion = eastern_europe_superregion
+				region = central_asia_region
+				area = dagestan_area
+				area = circassia_area
+			}
+			NOT = { region = carpathia_region }
+			NOT = { region = balkan_region }
+			NOT = { area = crimea_area }
+		}
+		remove_core = ROOT
+		add_core = GLH
+	}
+	release = GLH
+	create_subject = {
+		subject_type = grand_diocese_vassal
+		who = GLH
+	}
+	GLH = {
+		override_country_name = DIOCESISTATARIA
+		change_religion = ROOT
+		change_technology_group = eastern
+		change_unit_type = eastern
+		if = {
+			limit = {
+				NOT = { government = monarchy }
+			}
+			change_government = monarchy
+		}
+		add_government_reform = rom_grand_diocese
+		set_capital = 466
+		change_country_color = {
+			country = ROOT
+		}
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		set_country_flag = glh_european_tree
+		clr_country_flag = glh_horde_tree
+		clr_country_flag = glh_picked_orthodox
+		clr_country_flag = glh_picked_buddhist
+		clr_country_flag = glh_picked_judaism
+		clr_country_flag = glh_picked_nestorian
+		clr_country_flag = glh_picked_tengri
+		clr_country_flag = glh_can_convert
+		set_country_flag = glh_has_picked_religion
+		if = {
+			limit = {
+				ROM = {
+					religion = sunni
+				}
+			}
+			set_country_flag = glh_picked_sunni
+		}
+		else = {
+			clr_country_flag = glh_picked_sunni
+			set_country_flag = glh_picked_zoroastrian
+		}
+		swap_non_generic_missions = yes
+		swap_free_idea_group = yes
+		complete_mission = glh_embrace_feudalism
+		complete_mission = glh_stabilize
+		complete_mission = glh_crimea
+		complete_mission = glh_reconciliation
+		complete_mission = glh_westernize
+		dagestan_area = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		circassia_area = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		russia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		central_asia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		ural_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		west_siberia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+				is_city = yes
+			}
+			add_permanent_claim = GLH
+		}
+	}
+}

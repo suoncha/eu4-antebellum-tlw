@@ -569,7 +569,7 @@ HLE_missions_1 = {
 		}
 		
 		effect = {
-			add_manpower = 50
+			add_yearly_manpower = 4
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_GAUL
 			add_country_modifier = {
 				name = nci_gaul_invasion
@@ -768,7 +768,7 @@ HLE_missions_2 = {
 			}
 			317 = {
 				if = {
-					limit = {	
+					limit = {
 						NOT = {
 							province_has_center_of_trade_of_level = 3
 						}
@@ -1000,7 +1000,9 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
-			add_mercantilism = 5
+			set_country_flag = trader_give_production_efficiency
+			custom_tooltip = FKN_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = byzantium_mare
 				duration = -1
@@ -1286,7 +1288,7 @@ NCI_missions_3 = {
 			}
 			151 = {
 				if = {
-					limit = {	
+					limit = {
 						NOT = {
 							province_has_center_of_trade_of_level = 2
 						}
@@ -1294,7 +1296,7 @@ NCI_missions_3 = {
 					add_center_of_trade_level = 2
 				}
 				else_if = {
-					limit = {	
+					limit = {
 						NOT = {
 							province_has_center_of_trade_of_level = 3
 						}
@@ -1421,7 +1423,7 @@ HLE_missions_3 = {
 					add_casus_belli = { 
 						target = SER
 						type = cb_vassalize_mission 
-					} 
+					}
 				}
 				else = {
 					serbia_area = {
@@ -1444,7 +1446,7 @@ HLE_missions_3 = {
 					add_casus_belli = { 
 						target = WAL
 						type = cb_vassalize_mission 
-					} 
+					}
 				}
 				else = {
 					wallachia_area = {
@@ -1460,7 +1462,7 @@ HLE_missions_3 = {
 					add_casus_belli = { 
 						target = MOL
 						type = cb_vassalize_mission 
-					} 
+					}
 				}
 				else = {
 					moldavia_area = {
@@ -2167,7 +2169,7 @@ HLE_missions_4_religion_orthodox = {
 				NOT = { culture_group = hellenic_g }
 				has_tax_building_trigger = no
 			}
-		} 
+		}
 
 		trigger = {
 			num_of_owned_provinces_with = {
@@ -2211,7 +2213,7 @@ HLE_missions_4_religion_orthodox = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			NOT = { religion = orthodox }
-		} 
+		}
 
 		trigger = {
 			is_defender_of_faith_of_tier = 4
@@ -2250,7 +2252,7 @@ HLE_missions_4_religion_orthodox = {
 					}
 				}
 			}
-		} 
+		}
 
 		trigger = {
 			151 = { country_or_non_sovereign_subject_holds = ROOT }
@@ -2272,7 +2274,7 @@ HLE_missions_4_religion_orthodox = {
 				every_country = {
 					limit = { 
 						religion = orthodox 
-					} 
+					}
 					add_trust = {
 						who = ROOT
 						value = 10
@@ -2337,7 +2339,7 @@ HLE_missions_4_religion_shiite = {
 				NOT = { culture_group = hellenic_g }
 				has_tax_building_trigger = no
 			}
-		} 
+		}
 
 		trigger = {
 			num_of_owned_provinces_with = {
@@ -2387,7 +2389,7 @@ HLE_missions_4_religion_shiite = {
 					}
 				}
 			}
-		} 
+		}
 
 		trigger = {
 			innovativeness = 25
@@ -2480,7 +2482,7 @@ HLE_missions_4_religion_hellenic = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			NOT = { religion = reformed_hellenic }
-		} 
+		}
 
 		trigger = {
 			NOT = { current_age = age_of_discovery }
@@ -2516,7 +2518,7 @@ HLE_missions_4_religion_hellenic = {
 					}
 				}
 			}
-		} 
+		}
 
 		trigger = {
 			owns = 5152
@@ -2568,9 +2570,9 @@ HLE_missions_4 = {
 		}
 
 		trigger = {
-			egypt_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = egypt_region
 			}
 		}
 
@@ -2792,12 +2794,7 @@ HLE_missions_4 = {
 			custom_tooltip = HLE_EVOLVING_IDEA_1
 			hidden_effect = {
 				set_country_flag = hle_evolved_ideas1
-				if = {
-					limit = { tag = HLE }
-					country_event = {
-						id = ideagroups.1
-					}
-				}
+				swap_free_idea_group = yes
 			}
 			if = {
 				limit = { religion = reformed_hellenic }
@@ -2921,7 +2918,7 @@ HLE_missions_4 = {
 
 	nicene_maharajas = {
 		icon = mission_indian_empire
-		required_missions = { nicene_india } 
+		required_missions = { nicene_india }
 		position = 15
 
 		provinces_to_highlight = {
@@ -2978,7 +2975,11 @@ HLE_missions_4 = {
 		
 		trigger = {
 			if = {
-				limit = { any_country = { is_emperor_of_china = yes } }
+				limit = {
+					any_country = {
+						is_emperor_of_china = yes
+					}
+				}
 				OR = {
 					event_target:EmperorOfChina = {
 						has_opinion = {
@@ -3666,7 +3667,7 @@ HLE_missions_5 = {
 	nicene_bahrain = {
 		icon = mission_conquer_andhra_bah
 		position = 13
-		required_missions = { nicene_nemesis } 
+		required_missions = { nicene_nemesis }
 		
 		provinces_to_highlight = {
 			province_id = 396
@@ -3678,10 +3679,10 @@ HLE_missions_5 = {
 				has_shipyard_building_trigger = no
 				has_dock_building_trigger = no
 			}
-		} 
+		}
 
 		trigger = { 
-			396 = { country_or_non_sovereign_subject_holds = ROOT } 
+			396 = { country_or_non_sovereign_subject_holds = ROOT }
 			396 = { development = 20 }
 			396 = { has_production_building_trigger = yes }
 			396 = { has_trade_building_trigger = yes }
@@ -3712,11 +3713,10 @@ HLE_missions_5 = {
 			define_advisor = {
 				type = trader
 				skill = 3
-				religion = ROOT
 				culture = hellenic_semitic
 				cost_multiplier = 0.5
 			}
-		} 
+		}
 	}
 
 	nicene_scythia = {
@@ -3738,8 +3738,14 @@ HLE_missions_5 = {
 		
 		effect = {
 			if = {
-				limit = { 441 = { country_or_non_sovereign_subject_holds = ROOT } }
-				441 = { change_culture = hellenic_scythian }
+				limit = {
+					441 = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				441 = {
+					change_culture = hellenic_scythian
+				}
 			}
 			add_country_modifier = {
 				name = nci_scythia_tactics
@@ -3757,7 +3763,7 @@ HLE_missions_5 = {
 
 	nicene_east_indies = {
 		icon = mnd_maj_sunda_relations
-		required_missions = { nicene_maharajas } 
+		required_missions = { nicene_maharajas }
 		position = 16
 
 		provinces_to_highlight = {
