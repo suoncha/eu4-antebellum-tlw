@@ -962,7 +962,7 @@ ab_rum_muslim_third = {
 	}
 	
 	rum_muslim_landfall = {
-		icon = king_of_naples
+		icon = mission_invade_apulia
 		required_missions = { rum_muslim_city }
 		position = 7
 		
@@ -1074,7 +1074,7 @@ ab_rum_muslim_third = {
 	}
 	
 	rum_muslim_rome = {
-		icon = mission_pope
+		icon = mission_colosseum
 		required_missions = { rum_muslim_sicily }
 		position = 10
 		
@@ -1228,6 +1228,7 @@ ab_rum_muslim_third = {
 		}
 		
 		effect = {
+			set_country_flag = restored_rome_flag
 			custom_tooltip = SER_JUSTINIAN_PP
 			hidden_effect = {
 				add_power_projection = {
@@ -1235,51 +1236,47 @@ ab_rum_muslim_third = {
 					amount = 25
 				}
 			}
-			custom_tooltip = RUM_NAMECHANGE_ROME_MUSLIM
-			hidden_effect = {
-				change_tag = ROM
-				override_country_name = CALIPHATUMROMANUM
-			}
-			set_government_rank = 3
+			add_ruler_personality = augustus_personality
+			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			custom_tooltip = AB_EMPTY
 			swap_non_generic_missions = yes
-			custom_tooltip = RUM_FASTER_ROMANIZATION_MUSLIM
-			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
+			change_tag = ROM
+			on_change_tag_effect = yes
+			override_country_name = CALIPHATUMROMANUM
+			custom_tooltip = AB_EMPTY
 			change_primary_culture = romano_arabic
+			custom_tooltip = RUM_FASTER_ROMANIZATION_MUSLIM
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
-				151 = { change_culture = romano_arabic }
-				set_heir_culture = romano_arabic
-				set_ruler_culture = romano_arabic
-				every_owned_province = {
+				every_province = {
 					limit = {
-						NOT = { province_id = 151 }
-						OR = {
-							culture = greek
-							culture = pontic_greek
-							culture = goths
+						culture_group = byzantine
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = goths
+							}
 						}
+						change_culture = greco_roman
 					}
-					change_culture = greco_roman
+					else_if = {
+						limit = {
+							culture = turkish_christian
+						}
+						change_culture = romano_scythic
+					}
+					else = {
+						change_culture = illyro_roman
+					}
 				}
-				every_owned_province = {
+				every_subject_country = {
 					limit = {
-						region = balkan_region
-						NOT = { culture = greco_roman }	
-						NOT = { province_id = 151 }
+						is_colonial_nation = yes
 					}
-					change_culture = illyro_roman
-				}
-				every_owned_province = {
-					limit = { culture = turkish_new }
-					change_culture = romano_scythic
-				}
-				every_subject_country = {
-					limit = { culture_group = byzantine }
-					change_primary_culture = greco_roman
-					set_heir_culture = greco_roman
-					set_ruler_culture = greco_roman
-				}
-				every_subject_country = {
-					limit = { is_colonial_nation = yes }
 					change_primary_culture = ROOT
 					set_heir_culture = ROOT
 					set_ruler_culture = ROOT
@@ -1290,10 +1287,11 @@ ab_rum_muslim_third = {
 						random_owned_province = {
 							limit = {
 								OR = {
-									region = italy_region
+									superregion = europe_superregion
 									region = maghreb_region
-									region = iberia_region
+									region = carpathia_region
 								}
+								NOT = { area = carinthia_area }
 								NOT = { culture_group = roman_g }
 							}
 							province_event = {
@@ -1303,12 +1301,17 @@ ab_rum_muslim_third = {
                     "
                 }
 			}
-			add_ruler_personality = augustus_personality
-			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
+				set_heir_culture = ROOT
+				set_ruler_culture = ROOT
+				151 = {
+					change_culture = ROOT
+				}
 				every_owned_province = {
-					limit = { is_part_of_hre = yes }
+					limit = {
+						is_part_of_hre = yes
+					}
 					set_in_empire = no
 				}
 				118 = {
@@ -1317,7 +1320,11 @@ ab_rum_muslim_third = {
 						id = ab_byzantium.71
 					}
 				}
+				country_event = {
+					id = ab_byzantium.67
+				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					has_custom_ideas = no
@@ -1327,12 +1334,8 @@ ab_rum_muslim_third = {
 				}
 			}
 			add_country_modifier = {
-				name = "centralization_modifier"
+				name = centralization_modifier
 				duration = 7300
-			}
-			set_country_flag = restored_rome_flag
-			country_event = {
-				id = ab_byzantium.67
 			}
 		}
 	}
@@ -1636,7 +1639,7 @@ ab_rum_muslim_fourth = {
 	}
 	
 	rum_muslim_egypt = {
-		icon = mission_nizzarid
+		icon = mission_saladins_legacy
 		required_missions = { rum_muslim_palestine }
 		position = 8
 		
@@ -2674,6 +2677,7 @@ ab_rum_muslim_first_rome = {
 		}
 
 		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
 			change_monarch_points_or_power = {
 				points = 1
 				power = adm
@@ -2698,6 +2702,7 @@ ab_rum_muslim_first_rome = {
 				name = byzantium_law
 				duration = -1
 			}
+			custom_tooltip = BYZ_PREVENT
 		}
 	}
 }
@@ -3156,6 +3161,11 @@ ab_rum_muslim_third_rome = {
 				duration = -1
 			}
 			custom_tooltip = RUM_UNION_MISSIONTREE
+			tooltip = {
+				country_event = {
+					id = ab_byzantium.84
+				}
+			}
 			hidden_effect = {
 				TLW_establish_diocese_tataria_effect = yes
 			}
@@ -3163,14 +3173,15 @@ ab_rum_muslim_third_rome = {
 	}
 
 	rum_muslim_restored_rome = {
-		icon = mission_phoenix
+		icon = mission_westrome
 		required_missions = { }
 		position = 16
 				
 		trigger = {
-			tag = ROM
-			prestige = 100
-			legitimacy = 100
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			NOT = { governing_capacity_percentage = 0.8 }
 			religious_unity = 0.85
 		}
@@ -4412,11 +4423,9 @@ ab_rum_muslim_fourth_persian_unlocked = {
 		position = 23
 
 		provinces_to_highlight = {
-			AND = {
-				region = caucasia_region
-				NOT = { area = circassia_area }
-				NOT = { area = dagestan_area }
-			}
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 

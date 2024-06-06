@@ -580,7 +580,7 @@ visigoths_third = {
 	}
 
 	vsg_rome = {
-		icon = sway_the_pope
+		icon = mission_colosseum
 		required_missions = { vsg_dismantle_sultanate vsg_po_valley }
 		position = 5
 		
@@ -1485,7 +1485,7 @@ visigoths_first_rome = {
 				which = discipline
 				value = 0.1
 			}
-			army_tradition = 90
+			army_tradition = 75
 			army_size = 250
 		}
 
@@ -1738,6 +1738,7 @@ visigoths_first_rome = {
 		}
 
 		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
 			change_monarch_points_or_power = {
 				points = 1
 				power = adm
@@ -1762,6 +1763,7 @@ visigoths_first_rome = {
 				name = byzantium_law
 				duration = -1
 			}
+			custom_tooltip = BYZ_PREVENT
 		}
 	}
 }
@@ -1777,14 +1779,15 @@ visigoths_second_rome = {
 	has_country_shield = yes
 
 	vsg_restored_rome = {
-		icon = mission_phoenix
+		icon = mission_westrome
 		required_missions = { }
 		position = 8
 				
 		trigger = {
-			tag = ROM
-			prestige = 100
-			legitimacy = 100
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			NOT = { governing_capacity_percentage = 0.8 }
 			religious_unity = 0.85
 		}
@@ -3230,11 +3233,9 @@ visigoths_fourth_persian_unlocked = {
 		position = 15
 
 		provinces_to_highlight = {
-			AND = {
-				region = caucasia_region
-				NOT = { area = circassia_area }
-				NOT = { area = dagestan_area }
-			}
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 

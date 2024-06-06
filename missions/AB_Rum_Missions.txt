@@ -642,7 +642,7 @@ ab_rum_zoro_second = {
 	}
 		
 	rum_zoroastrian_invictus = {
-		icon = mission_nizzarid
+		icon = mission_saladins_legacy
 		position = 8
 		required_missions = { rum_zoroastrian_syria }
 		
@@ -830,7 +830,7 @@ ab_rum_zoro_second = {
 	}
 
 	rum_zoroastrian_rome = {
-		icon = mission_pope
+		icon = mission_colosseum
 		required_missions = { rum_zoroastrian_sicily }
 		position = 11
 		
@@ -1757,69 +1757,64 @@ ab_rum_zoro_fourth = {
 		}
 		
 		effect = {
+			set_country_flag = restored_rome_flag
 			set_country_flag = had_persian_war
 			set_country_flag = rom_caucasia_isof_anatolia
 			set_country_flag = unlocked_faction_romepersian
+			add_ruler_personality = augustus_personality
+			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = RUM_ZORO_INHERIT_SATRAPY
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
 						is_subject_of_type = satrapy
-						liberty_desire = 50
-					}
-					grant_independence = yes
-				}
-				every_subject_country = {
-					limit = {
-						is_subject_of_type = satrapy
 						NOT = { liberty_desire = 50 }
 					}
-					ROOT = { inherit = PREV }
+					ROOT = {
+						inherit = PREV
+					}
 				}
 			}
-			custom_tooltip = RUM_NAMECHANGE_ROME_ZORO
-			hidden_effect = {
-				change_tag = ROM
-				override_country_name = IMPERIUMPERSIUM
-			}
-			set_government_rank = 3
+			custom_tooltip = AB_EMPTY
 			swap_non_generic_missions = yes
-			custom_tooltip = RUM_FASTER_ROMANIZATION_ZORO
-			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
+			change_tag = ROM
+			on_change_tag_effect = yes
+			override_country_name = IMPERIUMPERSIUM
+			custom_tooltip = AB_EMPTY
 			change_primary_culture = perso_roman
+			custom_tooltip = RUM_FASTER_ROMANIZATION_ZORO
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
 			hidden_effect = {
-				capital_scope = { change_culture = perso_roman }
-				set_heir_culture = perso_roman
-				set_ruler_culture = perso_roman
-				every_owned_province = {
+				every_province = {
 					limit = {
-						OR = {
-							culture = greek
-							culture = pontic_greek
-							culture = goths
+						culture_group = byzantine
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = goths
+							}
 						}
+						change_culture = greco_roman
 					}
-					change_culture = greco_roman
+					else_if = {
+						limit = {
+							culture = turkish_christian
+						}
+						change_culture = romano_scythic
+					}
+					else = {
+						change_culture = illyro_roman
+					}
 				}
-				every_owned_province = {
+				every_subject_country = {
 					limit = {
-						region = balkan_region
-						NOT = { culture = greco_roman }	
+						is_colonial_nation = yes
 					}
-					change_culture = illyro_roman
-				}
-				every_owned_province = {
-					limit = { culture = turkish_iranian }
-					change_culture = romano_scythic
-				}
-				every_subject_country = {
-					limit = { culture_group = byzantine }
-					change_primary_culture = greco_roman
-					set_heir_culture = greco_roman
-					set_ruler_culture = greco_roman
-				}
-				every_subject_country = {
-					limit = { is_colonial_nation = yes }
 					change_primary_culture = ROOT
 					set_heir_culture = ROOT
 					set_ruler_culture = ROOT
@@ -1830,10 +1825,11 @@ ab_rum_zoro_fourth = {
 						random_owned_province = {
 							limit = {
 								OR = {
-									region = italy_region
+									superregion = europe_superregion
 									region = maghreb_region
-									region = iberia_region
+									region = carpathia_region
 								}
+								NOT = { area = carinthia_area }
 								NOT = { culture_group = roman_g }
 							}
 							province_event = {
@@ -1843,12 +1839,17 @@ ab_rum_zoro_fourth = {
                     "
                 }
 			}
-			add_ruler_personality = augustus_personality
-			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = restore_roman_empire_tt
 			hidden_effect = {
+				set_heir_culture = ROOT
+				set_ruler_culture = ROOT
+				capital_scope = {
+					change_culture = ROOT
+				}
 				every_owned_province = {
-					limit = { is_part_of_hre = yes }
+					limit = {
+						is_part_of_hre = yes
+					}
 					set_in_empire = no
 				}
 				118 = {
@@ -1857,7 +1858,11 @@ ab_rum_zoro_fourth = {
 						id = ab_byzantium.71
 					}
 				}
+				country_event = {
+					id = ab_byzantium.67
+				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					has_custom_ideas = no
@@ -1867,12 +1872,8 @@ ab_rum_zoro_fourth = {
 				}
 			}
 			add_country_modifier = {
-				name = "centralization_modifier"
+				name = centralization_modifier
 				duration = 7300
-			}
-			set_country_flag = restored_rome_flag
-			country_event = {
-				id = ab_byzantium.67
 			}
 			carpathia_region = {
 				limit = {
@@ -3354,6 +3355,7 @@ ab_rum_zoro_second_rome = {
 		}
 
 		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
 			change_monarch_points_or_power = {
 				points = 1
 				power = adm
@@ -3378,6 +3380,7 @@ ab_rum_zoro_second_rome = {
 				name = byzantium_law
 				duration = -1
 			}
+			custom_tooltip = BYZ_PREVENT
 		}
 	}
 }
@@ -3500,6 +3503,11 @@ ab_rum_zoro_third_rome = {
 				duration = -1
 			}
 			custom_tooltip = RUM_UNION_MISSIONTREE
+			tooltip = {
+				country_event = {
+					id = ab_byzantium.84
+				}
+			}
 			hidden_effect = {
 				TLW_establish_diocese_tataria_effect = yes
 			}
@@ -3507,16 +3515,17 @@ ab_rum_zoro_third_rome = {
 	}
 
 	rum_zoroastrian_restored_rome = {
-		icon = mission_phoenix
+		icon = mission_westrome
 		required_missions = { }
 		position = 15
 				
 		trigger = {
-			tag = ROM
-			prestige = 100
-			legitimacy = 100
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			NOT = { governing_capacity_percentage = 0.8 }
-			religious_unity = 0.5
+			religious_unity = 0.85
 		}
 		
 		effect = {

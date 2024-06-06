@@ -11,7 +11,7 @@ serbia_first_group = {
 	has_country_shield = yes
 	
 	ser_roman_alliance = {
-		icon = byz_justinians_ambition
+		icon = mission_phoenix
 		required_missions = { }
 		position = 2
 		
@@ -20,64 +20,45 @@ serbia_first_group = {
 		}
 		
 		trigger = {
-			if = {
-				limit = {
-					BYZ = {
-						is_rival = ROOT
-					}
-				}
-				total_development = BYZ
-				num_of_allies = 3
-			}
-			else = {
+			OR = {
 				alliance_with = BYZ
+				is_rival = BYZ
 			}
 		}
 		
 		effect = {
 			if = {
-				limit = { alliance_with = BYZ }
+				limit = {
+					alliance_with = BYZ
+				}
 				custom_tooltip = SER_BYZ_ALLIANCE
-			}
-			else = {
-				custom_tooltip = SER_BYZ_ALLIANCE_NO
-			}
-			tooltip = {
-				add_historical_friend = BYZ
 				add_country_modifier = {
 					name = ser_roman_alliance
 					duration = 5475
 				}
-			}
-			if = {
-				limit = {
-					total_development = BYZ
-					num_of_allies = 3
-				}
-				custom_tooltip = SER_BYZ_ALLIES
+				add_historical_friend = BYZ
 			}
 			else = {
-				custom_tooltip = SER_BYZ_ALLIES_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = { alliance_with = BYZ }
-					add_historical_friend = BYZ
-					BYZ = {
-						add_historical_friend = SER
-					}
+				custom_tooltip = SER_BYZ_ALLIANCE_NO
+				tooltip = {
 					add_country_modifier = {
 						name = ser_roman_alliance
 						duration = 5475
 					}
+					add_historical_friend = BYZ
 				}
-				else_if = {
-					limit = {
-						total_development = BYZ
-						num_of_allies = 3
-					}
+			}
+			if = {
+				limit = {
+					is_rival = BYZ
+				}
+				custom_tooltip = SER_BYZ_ALLIES
+				hidden_effect = {
 					add_prestige = 10
 				}
+			}
+			else = {
+				custom_tooltip = SER_BYZ_ALLIES_NO
 			}
 		}
 	}
@@ -103,13 +84,16 @@ serbia_first_group = {
 			country_event = {
 				id = ab_byzantium.57
 			}
+			custom_tooltip = AB_EMPTY
 			albania_area = {
-				limit = { country_or_non_sovereign_subject_holds = ROOT }
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 				add_base_manpower = 1
 			}
 			add_country_modifier = {
 				name = ser_skanderbergs_company
-				duration = 7300
+				duration = 9125
 			}
 		}
 	}
@@ -125,7 +109,7 @@ serbia_first_group = {
 					which = cavalry_power
 					value = 0.25
 				}
-				num_of_cavalry = 10
+				num_of_cavalry = 15
 			}
 		}
 		
@@ -164,14 +148,13 @@ serbia_first_group = {
 		}
 		
 		effect = {
-			unlock_government_reform = {
-				government_reform = ab_ser_hajduks
-			}
-			custom_tooltip = AB_EMPTY
 			add_army_professionalism = 0.05
 			add_country_modifier = {
 				name = ser_hajduk_companies
 				duration = -1
+			}
+			unlock_government_reform = {
+				government_reform = ab_ser_hajduks
 			}
 		}
 	}
@@ -179,7 +162,7 @@ serbia_first_group = {
 	ser_order_of_the_dragon = {
 		icon = mission_handle_the_streltsy
 		required_missions = { ser_hajduks }
-		position = 8
+		position = 9
 
 		trigger = {
 			army_tradition = 80
@@ -270,8 +253,16 @@ serbia_first_group = {
 			add_stability_or_adm_power = yes
 			custom_tooltip = AB_EMPTY
 			change_monarch_points_or_power = {
-				points = 2
+				points = 1
 				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
 			}
 		}
 	}
@@ -322,13 +313,12 @@ serbia_second_group = {
 	has_country_shield = yes
 	
 	ser_recover_from_the_war = {
-		icon = mission_hundred_years_war
+		icon = mission_fekete_sereg
 		required_missions = { }
 		position = 1
 		
 		trigger = {
 			OR = {
-				stability = 1
 				manpower_percentage = 1
 				army_size_percentage = 1
 			}
@@ -381,23 +371,7 @@ serbia_second_group = {
 					}
 				}
 				custom_tooltip = SER_BUL_RIVALS
-			}
-			else = {
-				custom_tooltip = SER_BUL_RIVALS_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						calc_true_if = {
-							all_ally = {
-								OR = {
-									is_rival = BUL
-									is_enemy = BUL
-								}
-							}
-							amount = 3
-						}
-					}
+				hidden_effect = {
 					every_ally = {
 						limit = {
 							OR = {
@@ -411,6 +385,9 @@ serbia_second_group = {
 						}
 					}
 				}
+			}
+			else = {
+				custom_tooltip = SER_BUL_RIVALS_NO
 			}
 		}
 	}
@@ -436,7 +413,7 @@ serbia_second_group = {
 		}
 		
 		effect = {
-			add_army_tradition = 10
+			add_army_tradition = 15
 			add_country_modifier = {
 				name = "ser_reuniting_serbia"
 				duration = 5475
@@ -531,7 +508,7 @@ serbia_second_group = {
 	}
 
 	ser_secure_greece = {
-		icon = cross_the_pindus
+		icon = mission_strengthen_the_vegvar
 		required_missions = { ser_conquer_macedonia }
 		position = 5
 
@@ -556,10 +533,14 @@ serbia_second_group = {
 		}
 		
 		effect = {
-			add_accepted_culture = greek
+			add_accepted_culture_or_dip_power = {
+				culture = greek
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = ser_greek_union
-				desc = ser_accept_greek
+				desc = "for as long as Rhomaioi is an accepted culture"
 				duration = -1
 			}
 			aegean_archipelago_area = {
@@ -573,7 +554,7 @@ serbia_second_group = {
 	}
 	
 	ser_triumph_levant = {
-		icon = jerusalem
+		icon = arm_proclaim_great_armenia
 		required_missions = { ser_legacy_of_the_sclavinians }
 		position = 8
 
@@ -602,166 +583,86 @@ serbia_second_group = {
 				religion = ROOT
 				cost_multiplier = 0.25
 			}
-			bahrain_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = { 
-					iraq_arabi_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT	
-				   	}
+					owns = 379
 				}
-				custom_tooltip = SER_OWN_BAGDAD_AREA
-				tooltip = {
-					410 = {
-						add_province_modifier = {
-							name = byz_seleucia
-							duration = -1
-						}
-					}
-					iraq_arabi_area = {
-						add_province_modifier = {
-							name = byz_mesopotamia_prosperity 
-							duration = -1 
-						}
-					}
+				custom_tooltip = SER_OWN_JERUSALEM_YES
+				country_event = {
+					id = ab_byzantium.19
 				}
 			}
 			else = {
-				custom_tooltip = SER_OWN_BAGDAD_AREA_NO
+				custom_tooltip = SER_OWN_JERUSALEM_NO
 				tooltip = {
-					410 = {
-						add_province_modifier = {
-							name = byz_seleucia
-							duration = -1
-						}
-					}
-					iraq_arabi_area = {
-						add_province_modifier = {
-							name = byz_mesopotamia_prosperity 
-							duration = -1 
-						}
-					}
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = { 
-						iraq_arabi_area = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT	
-						   }
-					}
-					410 = {
-						add_permanent_province_modifier = {
-							name = byz_seleucia
-							duration = -1
-						}
-					}
-					iraq_arabi_area = {
-						add_province_modifier = {
-							name = byz_mesopotamia_prosperity 
-							duration = -1 
-						}
+					country_event = {
+						id = ab_byzantium.19
 					}
 				}
 			}
 		}
 	}
-	
-	ser_mining_code = {
-		icon = reissue_the_mining_code
-		required_missions = { ser_develop_countryside }
-		position = 11
+
+	ser_jerusalem = {
+		icon = convert_the_holy_lands
+		required_missions = { ser_triumph_levant }
+		position = 10
 
 		provinces_to_highlight = {
-			owned_by = ROOT 
-			has_production_building_trigger = no 
+			province_id = 379
 		}
-		
+	
 		trigger = {
-			num_of_owned_provinces_with = {
-				has_production_building_trigger = yes 
-				value = 10 
+			379 = { country_or_non_sovereign_subject_holds = ROOT }
+			379 = { development = 20 }
+			379 = { religion = orthodox }
+			379 = {
+				has_great_project = {
+					type = holy_city_jerusalem
+					tier = 3
+				}
 			}
 		}
 		
 		effect = {
-			add_country_modifier = {
-				name = ser_novo_brdo_code
-				duration = 9125
-			}
-			if = {
-				limit = {
-					owns = 1766
-					1766 = {
-						base_production = 8
-					}
-				}
-				custom_tooltip = SER_OWN_KOSOVO
-			}
-			else = {
-				custom_tooltip = SER_OWN_KOSOVO_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						owns = 1766
-						1766 = {
-							base_production = 8
-						}
-					}
-					1766 = {
-						add_base_production = 3
-					}
-				}
+			country_event = {
+				id = ab_byzantium.25
 			}
 		}
 	}
-
-	ser_manufactories = {
-		icon = mission_rb_prospect_for_coal
-		required_missions = { ser_mining_code }
-		position = 12
-
+	
+	ser_cities = {
+	    icon = mission_eastern_european_city
+		required_missions = { ser_develop_countryside }
+		position = 14
+		
 		provinces_to_highlight = {
-			has_manufactory_trigger = no
+			NOT = { development = 15 }
 			owned_by = ROOT
 		}
 		
 		trigger = {
 			num_of_owned_provinces_with = {
 				value = 10
-				has_manufactory_trigger = yes
+				development = 15
 			}
 		}
 		
 		effect = {
-			add_years_of_owned_provinces_production_income = {
-				years = 0.5
-				trigger = {
-					has_production_building_trigger = yes
-				}
-				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			define_advisor = {
+				type = architect
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
 			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "ser_industrial_expansion"
-				duration = 9125
+				name = ser_cities
+				duration = 5475
 			}
-			custom_tooltip = MVA_COAL
-			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						trade_goods = coal
-					}
-					add_base_production = 2
-				}
-			}
+			custom_tooltip = BYZ_URBAN_PROD_BOOST		
 		}
 	}
 }
@@ -796,7 +697,7 @@ serbia_third_group = {
 		}
 		
 		effect = {
-			add_yearly_manpower = 1.5
+			add_yearly_manpower = 2
 			add_country_modifier = {
 				name = ser_expand_realm
 				duration = 7300
@@ -861,12 +762,21 @@ serbia_third_group = {
 		
 		effect = {
 			east_adriatic_coast_area = {
+				add_base_tax = 1
 				add_base_production = 1
+				add_base_manpower = 1
 			}
+			custom_tooltip = AB_EMPTY
 			137 = {
 				add_great_project_tier = {
 					type = walls_ston
 					tier = 1
+				}
+				add_unit_construction = {
+					type = galley
+					amount = 10
+					speed = 0.25
+					cost = 0
 				}
 			}
 		}
@@ -920,7 +830,7 @@ serbia_third_group = {
 	}
 	
 	ser_turn_against_the_romans = {
-		icon = end_the_schism
+		icon = mission_the_bospborus
 		required_missions = { ser_dissolve_bulgaria }
 		position = 5
 		
@@ -942,6 +852,20 @@ serbia_third_group = {
 				name = ser_carigrad
 				duration = 9125
 			}
+			custom_tooltip = SER_ORTHODOX_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			hudavendigar_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -953,7 +877,7 @@ serbia_third_group = {
 	}
 	
 	ser_legacy_of_the_sclavinians = {
-		icon = emperor_and_autocrat
+		icon = legacy_of_the_sclavinias
 		required_missions = { ser_turn_against_the_romans ser_secure_greece }
 		position = 7
 		
@@ -963,9 +887,6 @@ serbia_third_group = {
 		}
 
 		trigger = {
-			stability = 3
-			legitimacy = 90
-			prestige = 90
 			development_in_provinces = {
 				value = 250
 				culture = greek
@@ -975,11 +896,14 @@ serbia_third_group = {
 		}
 		
 		effect = {
-			country_event = { id = ab_serbia.1 }
-			custom_tooltip = AB_EMPTY
 			set_country_flag = ab_unlock_byzantine_rome
 			set_country_flag = ser_unlock_sclavinia_rename
+			country_event = {
+				id = ab_serbia.1
+			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = SER_UNLOCK_FORMING_ROME
+			custom_tooltip = AB_EMPTY
 			unlock_government_reform = {
 				government_reform = ab_ser_caesarpapism
 			}
@@ -1010,97 +934,68 @@ serbia_third_group = {
 					NOT = { exists = BYZ }
 				}
 				custom_tooltip = SER_BYZ_YES
+				hidden_effect = {
+					change_country_color = {
+						country = BYZ
+					}
+				}
 			}
 			else = {
 				custom_tooltip = SER_BYZ_NO
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { exists = BYZ }
-					}
-					change_country_color = { 
-						color = { 149 45 102 }
-					}
-				}
-			}
 		}
 	}
-	
-	ser_triumph_egypt = {
-		icon = mission_nizzarid
+
+	ser_triumph_anatolia = {
+		icon = mission_anatolian_conquest
 		required_missions = { ser_legacy_of_the_sclavinians }
 		position = 8
 
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 12
-				region = egypt_region
+				value = 20
+				region = anatolia_region
 			}
 		}
 		
 		provinces_to_highlight = {
-			region = egypt_region
+			region = anatolia_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
-			add_dip_power = 200
+			add_mil_power = 200
 			add_country_modifier = {
-				name = ser_triumph_egypt
+				name = ser_triumph_anatolia
 				duration = -1
 			}
 			define_advisor = {
-				type = natural_scientist
+				type = commandant
 				skill = 3
 				culture = ROOT
 				religion = ROOT
 				cost_multiplier = 0.25
 			}
-			tabuk_area = {
-                limit = {
-                    NOT = { is_permanent_claim = ROOT    }
-                    NOT = { is_core = ROOT    }
-                }
-                add_permanent_claim = ROOT
-            }
-            mecca_area = {
-                limit = {
-                    NOT = { is_permanent_claim = ROOT    }
-                    NOT = { is_core = ROOT    }
-                }
-                add_permanent_claim = ROOT
-            }
-            medina_area = {
-                limit = {
-                    NOT = { is_permanent_claim = ROOT    }
-                    NOT = { is_core = ROOT    }
-                }
-                add_permanent_claim = ROOT
-            }
-			dongola_area = {
+			custom_tooltip = AB_EMPTY
+			if = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
+					exists = GEO
 				}
-				add_permanent_claim = ROOT
-			}
-			1232 = {
-				if = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
-					}
-					add_permanent_claim = ROOT
+				custom_tooltip = BYZ_GEO_EXIST_YES
+				add_casus_belli = {
+					type = cb_restore_personal_union
+					target = GEO
+					months = 240
 				}
 			}
-			2324 = {
-				if = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
+			else = {
+				custom_tooltip = BYZ_GEO_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_restore_personal_union
+						target = GEO
+						months = 240
 					}
-					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -1163,6 +1058,11 @@ serbia_third_group = {
 					amount = 25
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_theme_system
+			}
+			custom_tooltip = AB_EMPTY
 			upper_andalucia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1221,877 +1121,10 @@ serbia_third_group = {
 			}
 		}
 	}
-	
-	ser_develop_countryside = {
-	    icon = mission_develop_the_scandes
-		required_missions = { }
-		position = 10
-		
-		provinces_to_highlight = {
-			owned_by = ROOT
-		}
-
-		trigger = {
-			grown_by_development = 50
-			share_of_starting_income = 2.5
-		}
-		
-		effect = {
-			if = {
-				limit = {
-					serbia_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
-					}
-				}
-				serbia_area = {
-					add_base_tax = 1
-					add_base_production = 1
-					add_base_manpower = 1
-				}
-			}
-			add_country_modifier = {
-				name = "alb_revitalization"
-				duration = 3650
-			}
-		}
-	}
-	
-	ser_cities = {
-	    icon = mission_eastern_european_city
-		required_missions = { ser_develop_countryside }
-		position = 12
-		
-		provinces_to_highlight = {
-			NOT = { development = 15 }
-			owned_by = ROOT
-		}
-		
-		trigger = {
-			num_of_owned_provinces_with = {
-				value = 10
-				development = 15
-			}
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = "ser_cities"
-				duration = 5475
-			}
-			define_advisor = {
-				type = architect
-				skill = 3
-				religion = ROOT
-				culture = ROOT
-				cost_multiplier = 0.5
-			}
-		}
-	}
-}
-
-serbia_fourth_group = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = SER
-			was_tag = SER
-		}
-	}
-	has_country_shield = yes
-	
-	ser_reclaim_belgrade = {
-		icon = fortress_of_belgrade
-		required_missions = { }
-		position = 1
-		
-		trigger = {
-			owns = 4239
-		}
-		
-		provinces_to_highlight = {
-			province_id = 4239
-			NOT = { owned_by = ROOT }
-		}
-		
-		effect = {
-			set_country_flag = moved_capital_to_belgrade
-			custom_tooltip = SER_BELGRADE_DECISION
-			add_country_modifier = {
-				name = ser_reconquest_of_belgrade
-				duration = 7300
-			}
-			bosnia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			slavonia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			alfold_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			southern_transylvania_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			centralhungary_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	ser_the_white_city = {
-		icon = despot_stefans_legacy
-		required_missions = { ser_reclaim_belgrade }
-		position = 2
-		
-		provinces_to_highlight = {
-			province_id = 4239
-			OR = {
-				NOT = { owned_by = ROOT }
-				has_tax_building_trigger = no
-				has_trade_building_trigger = no
-				has_production_building_trigger = no
-			}
-		}
-		
-		trigger = {
-			owns = 4239
-			4239 = { development = 25 }
-			4239 = { has_tax_building_trigger = yes }
-			4239 = { has_trade_building_trigger = yes }
-			4239 = { has_production_building_trigger = yes }
-		}
-		
-		effect = {
-			4239 = {
-				add_base_tax = 1
-				add_base_production = 1
-				add_base_manpower = 1
-				add_province_modifier = {
-					name = ser_white_city
-					duration = -1
-				}
-			}
-			if = {
-				limit = {
-					balkan_region = {
-						type = all
-						OR = {
-							NOT = { higher_development_than = 4239 }
-							province_id = 4239
-						}
-					}
-				}
-				custom_tooltip = SER_BELGRADE_DEV
-			}
-			else = {
-				custom_tooltip = SER_BELGRADE_DEV_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						balkan_region = {
-							type = all
-							OR = {
-								NOT = { higher_development_than = 4239 }
-								province_id = 4239
-							}
-						}
-					}
-					serbia_area = {
-						add_prosperity = 100
-					}
-				}
-			}
-		}
-	}
-	
-	ser_annihilate_croatia = {
-		icon = secure_the_sava
-		required_missions = { ser_secure_bosnia }
-		position = 3
-		
-		trigger = {
-			croatia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			slavonia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				area = croatia_area
-				area = slavonia_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_mil_power = 100
-			add_country_modifier = {
-				name = ser_slavic_empire
-				duration = 3650
-			}
-			carinthia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			transdanubia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			if = {
-				limit = {
-					accepted_culture = croatian
-				}
-				custom_tooltip = SER_ACCEPTED_CROATIAN
-			}
-			else = {
-				custom_tooltip = SER_ACCEPTED_CROATIAN_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						accepted_culture = croatian
-					}
-					every_owned_province = {
-						limit = {
-							culture = croatian
-						}
-						add_nationalism = -20
-					}
-				}
-			}
-		}
-	}
-	
-	ser_south_slavic_union = {
-		icon = mission_balkan_conquest
-		required_missions = { ser_annihilate_croatia }
-		position = 5
-		
-        provinces_to_highlight = {
-            culture_group = south_slavic
-            NOT = { owned_by = ROOT }
-        }
-        
-        trigger = {
-            OR = {
-                tag = ILR
-                owns_all_provinces = {
-                    culture_group = south_slavic
-                }
-            }
-        }
-		
-		effect = {
-			country_event = { id = ab_bulgaria.2 }
-		}
-	}
-	
-	ser_carigradski_drum = {
-		icon = mission_serfdom
-		required_missions = { ser_turn_against_the_romans }
-		position = 6
-
-		provinces_to_highlight = {
-			owned_by = ROOT 
-			has_road_building_trigger = no 
-		}
-		
-		trigger = {
-			num_of_owned_provinces_with = {
-				has_road_building_trigger = yes 
-				value = 10 
-			}
-		}
-		
-		effect = {
-			151 = {
-				add_trade_modifier = {
-					who = ROOT
-					duration = -1
-					power = 25
-					key = SER_DRUM
-				}
-			}
-			custom_tooltip = AB_EMPTY
-			4239 = {
-				add_trade_modifier = {
-					who = ROOT
-					duration = -1
-					power = 25
-					key = SER_DRUM
-				}
-			}
-		}
-	}
-	
-	ser_triumph_anatolia = {
-		icon = mission_ottoman_early_army
-		required_missions = { ser_legacy_of_the_sclavinians }
-		position = 8
-
-		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 20
-				region = anatolia_region
-			}
-		}
-		
-		provinces_to_highlight = {
-			region = anatolia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_mil_power = 200
-			add_country_modifier = {
-				name = ser_triumph_anatolia
-				duration = -1
-			}
-			define_advisor = {
-				type = commandant
-				skill = 3
-				culture = ROOT
-				religion = ROOT
-				cost_multiplier = 0.25
-			}
-			if = {
-				limit = { exists = GEO }
-				add_casus_belli = {
-					type = cb_restore_personal_union
-					target = GEO
-					months = 240
-				}
-			}
-		}
-	}
-	
-	ser_danubian_trade_power = {
-	    icon = danubian_power
-		required_missions = { ser_develop_countryside }
-		position = 11
-		
-		trigger = {
-			137 = { is_strongest_trade_power = ROOT }
-			153 = { is_strongest_trade_power = ROOT }
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 137
-				province_id = 153
-			}
-			NOT = { is_strongest_trade_power = ROOT }
-		}
-		
-		effect = {
-			add_mercantilism = 3
-			add_country_modifier = {
-				name = ser_trade_hegemon
-				duration = -1
-			}
-			custom_tooltip = ALB_UPGRADE_TRADE
-			hidden_effect = {
-				for = {
-					amount = 5
-					effect = "
-						random_owned_province = {
-							limit = {
-								has_trade_building_trigger = yes
-								NOT = { has_province_flag = ab_upgraded_trade }
-							}
-							upgrade_trade_building = yes
-							set_province_flag = ab_upgraded_trade
-						}
-					"
-				}
-				every_owned_province = {
-					limit = {
-						has_province_flag = ab_upgraded_trade
-					}
-					clr_province_flag = ab_upgraded_trade
-				}
-			}
-		}
-	}
-}
-
-serbia_fifth_group = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = SER
-			was_tag = SER
-		}
-	}
-	has_country_shield = yes
-	
-	ser_magyar_menace = {
-		icon = mission_destroy_the_horde
-		required_missions = { ser_reclaim_belgrade }
-		position = 2
-		
-		trigger = {
-			if = {
-				limit = { exists = MGY }
-				total_development = MGY
-			}
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 6
-				region = carpathia_region
-				culture = hungarian
-			}
-		}
-		
-		provinces_to_highlight = {
-			region = carpathia_region
-			culture = hungarian
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_army_professionalism = 0.05
-			add_country_modifier = {
-				name = ser_intervention
-				duration = 5475
-			}
-			custom_tooltip = SER_CONVERT_MAGYAR
-			tooltip = {
-				add_province_modifier = {
-					name = ser_religious_mission
-					duration = 7300
-				}
-			}
-			carpathia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			hidden_effect = {
-				every_owned_province = {
-					limit = { culture = hungarian }
-					add_province_modifier = {
-						name = ser_religious_mission
-						duration = 7300
-					}
-				}
-			}
-		}
-	}
-	
-	ser_carpathian_hegemony = {
-		icon = mission_unite_home_region
-		required_missions = { ser_magyar_menace }
-		position = 4
-		
-		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 15
-				region = carpathia_region
-			}
-		}
-		
-		provinces_to_highlight = {
-			region = carpathia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = ser_purge
-				duration = -1
-			}
-			custom_tooltip = SER_HUNGARY
-		}
-	}
-	
-	ser_zakonopravilo = {
-		icon = reform_the_nomocanon
-		required_missions = { }
-		position = 6
-		
-		trigger = {
-			has_orthodox_religious_icon_trigger = yes
-			patriarch_authority = 0.25
-		}
-		
-		effect = {
-			add_patriarch_authority = 0.1
-			define_advisor = {
-				type = theologian
-				skill = 2
-				religion = ROOT
-				cost_multiplier = 0.5
-			}
-		}
-	}
-	
-	ser_monasteries = {
-		icon = mission_cathedral_cities
-		required_missions = { ser_zakonopravilo }
-		position = 7
-		
-		provinces_to_highlight = {
-			owned_by = ROOT 
-			has_tax_building_trigger = no 
-		}
-		
-		trigger = {
-			num_of_owned_provinces_with = {
-				has_tax_building_trigger = yes 
-				value = 10 
-			}
-		}
-		
-		effect = {
-			add_estate_loyalty = {
-				estate = estate_church
-				loyalty = 20
-			}
-			add_ruler_modifier = {
-				name = "ser_patron_of_church"
-				duration = -1
-			}
-		}
-	}
-	
-	ser_patriarchate = {
-		icon = mission_autocephalous_archbishopric
-		required_missions = { ser_monasteries }
-		position = 8
-		
-		trigger = {
-			patriarch_authority = 0.75
-			reform_level = 5
-			development_in_provinces = {
-				value = 500
-				religion = orthodox
-			}
-			num_of_owned_provinces_with = {
-				value = 50
-				has_state_patriach = yes
-			}
-		}
-		
-		provinces_to_highlight = {
-			owned_by = ROOT
-			OR = {
-				religion = orthodox
-				has_state_patriach = no
-			}
-		}
-		
-		effect = {
-			custom_tooltip = SER_20_PROV
-			add_country_modifier = {
-				name = ser_serbian_patriarchate
-				duration = -1
-			}
-			hidden_effect = {
-                for = {
-                    amount = 20
-                    effect = "
-                        random_owned_province = {
-							limit = {
-								religion = orthodox
-							}
-							add_base_manpower = 1
-                        }
-                    "
-                }
-			}
-			if = {
-				limit = {
-					religion = orthodox
-					NOT = {
-						any_country = {
-							religion = orthodox
-							is_defender_of_faith = yes
-						}
-					}
-				}
-				custom_tooltip = SER_DOTF_YES
-			}
-			else = {
-				custom_tooltip = SER_DOTF_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = orthodox
-						NOT = {
-							any_country = {
-								religion = orthodox
-								is_defender_of_faith = yes
-							}
-						}
-					}
-					set_defender_of_the_faith = { who = ROOT religion = ROOT }
-				}
-			}
-		}
-	}
-	
-	ser_land_in_italy = {
-		icon = king_of_naples
-		required_missions = { }
-		position = 10
-
-		provinces_to_highlight = {
-			region = italy_region
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
-		}
-		
-		trigger = {
-			num_of_owned_provinces_with = {
-				is_core = ROOT
-				region = italy_region
-				value = 5
-			}
-		}
-		
-		effect = {
-			create_scaling_general = yes
-			add_country_modifier = {
-				name = "ser_sicilian_crusade"
-				duration = 7300
-			}
-			apulia_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			calabria_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			naples_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			sicily_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			western_sicily_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			central_italy_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			lazio_area = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	ser_banish = {
-		icon = knights_of_the_new_world
-		required_missions = { ser_land_in_italy }
-		position = 11
-		
-		provinces_to_highlight = {
-			OR = {
-				AND = {
-					region = italy_region
-					owner = {
-						religion_group = muslim
-						army_size = ROOT
-					}
-				}
-				AND = {
-					province_id = 118
-					NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				}
-			}
-		}
-		
-		trigger = {
-			NOT = {
-				italy_region = {
-					type = any
-					owner = {
-						religion_group = muslim
-						army_size = ROOT
-					}
-				}
-			}
-			118 = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			italy_region = {
-				limit = { owned_by = ROOT }
-				add_nationalism = -20
-			}
-			add_ruler_modifier = {
-				name = "ser_liberator_of_italy"
-				duration = -1
-			}
-			tuscany_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			emilia_romagna_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			po_valley_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			lombardy_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}	
-
-	ser_iron = {
-		icon = mission_conquer_north_italy
-		required_missions = { ser_banish }
-		position = 12
-		
-		provinces_to_highlight = {
-			OR = {
-				area = emilia_romagna_area
-				area = tuscany_area
-				area = po_valley_area
-				area = lombardy_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		trigger = {
-			emilia_romagna_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			tuscany_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			po_valley_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			lombardy_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_power_projection = {
-				type = mission_rewards_power_projection
-				amount = 25
-			}
-			add_country_modifier = {
-				name = byzantium_iron_crown
-				duration = 9125
-			}
-			italy_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-}
-
-serbia_third_group2 = {
-	slot = 3
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = SER
-			was_tag = SER
-		}
-	}
-	has_country_shield = yes
 
 	ser_pentarchy = {
-		icon = mission_pope
-		position = 13
+		icon = byz_justinians_ambition
+		position = 10
 		required_missions = { }
 
 		provinces_to_highlight = {
@@ -2114,7 +1147,7 @@ serbia_third_group2 = {
 		}
 
 		effect = {
-			add_patriarch_authority = 0.2
+			add_patriarch_authority = 0.1
 			add_country_modifier = {
 				name = healing_the_schism
 				duration = -1
@@ -2127,24 +1160,17 @@ serbia_third_group2 = {
 	
 	ser_heal_schism = {
 		icon = mission_pf_cross
-		position = 14
-		required_missions = { ser_pentarchy }
+		position = 11
+		required_missions = { ser_jerusalem ser_pentarchy ser_alexandria }
 
 		provinces_to_highlight = {
 			province_id = 118
-			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				NOT = { religion = orthodox }
-			}
 		}
 
 		trigger = {
 			religion = orthodox
 			owns_or_non_sovereign_subject_of = 118
 			118 = { religion = orthodox }
-			mission_completed = ser_triumph_anatolia
-			mission_completed = ser_triumph_egypt
-			mission_completed = ser_triumph_levant
 		}
 
 		effect = {
@@ -2181,7 +1207,7 @@ serbia_third_group2 = {
 
 	ser_rus_union = {
 		icon = mission_rule_ruthenia
-		position = 15
+		position = 12
 		required_missions = { ser_heal_schism }
 
 		provinces_to_highlight = {
@@ -2275,6 +1301,965 @@ serbia_third_group2 = {
 			}
 		}
 	}
+	
+	ser_develop_countryside = {
+	    icon = mission_develop_the_scandes
+		required_missions = { }
+		position = 13
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+		}
+
+		trigger = {
+			grown_by_development = 50
+			share_of_starting_income = 2.5
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = alb_revitalization
+				duration = 3650
+			}
+			serbia_area = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+	}
+
+	ser_mining_code = {
+		icon = reissue_the_mining_code
+		required_missions = { ser_develop_countryside }
+		position = 14
+
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			has_production_building_trigger = no 
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_production_building_trigger = yes 
+				value = 10 
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = ser_novo_brdo_code
+				duration = 9125
+			}
+			if = {
+				limit = {
+					owns = 1766
+					1766 = {
+						base_production = 8
+					}
+				}
+				custom_tooltip = SER_OWN_KOSOVO
+			}
+			else = {
+				custom_tooltip = SER_OWN_KOSOVO_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns = 1766
+						1766 = {
+							base_production = 8
+						}
+					}
+					1766 = {
+						add_base_production = 3
+					}
+				}
+			}
+		}
+	}
+
+	ser_manufactories = {
+		icon = industrialized_rhineland
+		required_missions = { ser_mining_code }
+		position = 15
+
+		provinces_to_highlight = {
+			has_manufactory_trigger = no
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_manufactory_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = ser_industrial_expansion
+				duration = 9125
+			}
+			custom_tooltip = MVA_COAL
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = coal
+					}
+					add_base_production = 2
+				}
+			}
+		}
+	}
+}
+
+serbia_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SER
+			was_tag = SER
+		}
+	}
+	has_country_shield = yes
+	
+	ser_reclaim_belgrade = {
+		icon = fortress_of_belgrade
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			owns = 4239
+		}
+		
+		provinces_to_highlight = {
+			province_id = 4239
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			set_country_flag = moved_capital_to_belgrade
+			add_country_modifier = {
+				name = ser_reconquest_of_belgrade
+				duration = 7300
+			}
+			custom_tooltip = SER_BELGRADE_DECISION
+			custom_tooltip = AB_EMPTY
+			bosnia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			alfold_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southern_transylvania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			centralhungary_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ser_the_white_city = {
+		icon = despot_stefans_legacy
+		required_missions = { ser_reclaim_belgrade }
+		position = 2
+		
+		provinces_to_highlight = {
+			province_id = 4239
+		}
+		
+		trigger = {
+			owns = 4239
+			4239 = { development = 25 }
+			4239 = { has_tax_building_trigger = yes }
+			4239 = { has_trade_building_trigger = yes }
+			4239 = { has_production_building_trigger = yes }
+		}
+		
+		effect = {
+			4239 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+				custom_tooltip = AB_EMPTY
+				add_province_modifier = {
+					name = ser_white_city
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					balkan_region = {
+						type = all
+						OR = {
+							NOT = { higher_development_than = 4239 }
+							province_id = 4239
+						}
+					}
+				}
+				custom_tooltip = SER_BELGRADE_DEV
+				hidden_effect = {
+					serbia_area = {
+						add_prosperity = 100
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_BELGRADE_DEV_NO
+			}
+		}
+	}
+	
+	ser_annihilate_croatia = {
+		icon = secure_the_sava
+		required_missions = { ser_secure_bosnia }
+		position = 3
+		
+		trigger = {
+			croatia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			slavonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = croatia_area
+				area = slavonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = ser_slavic_empire
+				duration = 5475
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			transdanubia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					accepted_culture = croatian
+				}
+				custom_tooltip = SER_ACCEPTED_CROATIAN
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							culture = croatian
+						}
+						add_nationalism = -20
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_ACCEPTED_CROATIAN_NO
+			}
+		}
+	}
+	
+	ser_south_slavic_union = {
+		icon = mission_balkan_conquest
+		required_missions = { ser_annihilate_croatia }
+		position = 5
+		
+        provinces_to_highlight = {
+            culture_group = south_slavic
+            NOT = { owned_by = ROOT }
+        }
+        
+        trigger = {
+            OR = {
+                tag = ILR
+                owns_all_provinces = {
+                    culture_group = south_slavic
+                }
+            }
+        }
+		
+		effect = {
+			country_event = {
+				id = ab_bulgaria.2
+			}
+		}
+	}
+	
+	ser_carigradski_drum = {
+		icon = mission_serfdom
+		required_missions = { ser_turn_against_the_romans }
+		position = 6
+
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			has_road_building_trigger = no 
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_road_building_trigger = yes 
+				value = 10 
+			}
+		}
+		
+		effect = {
+			151 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 25
+					key = SER_DRUM
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			4239 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 25
+					key = SER_DRUM
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_UNLOCK_BOSPHORUS_TOLL
+			set_country_flag = BYZ_unlocked_bosphorus_toll
+		}
+	}
+	
+	ser_triumph_egypt = {
+		icon = mission_saladins_legacy
+		required_missions = { ser_legacy_of_the_sclavinians }
+		position = 8
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				region = egypt_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 200
+			add_country_modifier = {
+				name = ser_triumph_egypt
+				duration = -1
+			}
+			define_advisor = {
+				type = natural_scientist
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			tabuk_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT    }
+                    NOT = { is_core = ROOT    }
+                }
+                add_permanent_claim = ROOT
+            }
+            mecca_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT    }
+                    NOT = { is_core = ROOT    }
+                }
+                add_permanent_claim = ROOT
+            }
+            medina_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT    }
+                    NOT = { is_core = ROOT    }
+                }
+                add_permanent_claim = ROOT
+            }
+			dongola_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1232 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2324 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	ser_alexandria = {
+		icon = mission_conquer_alexandria
+		required_missions = { ser_triumph_egypt }
+		position = 10
+
+		provinces_to_highlight = {
+			province_id = 358
+		}
+	
+		trigger = {
+			358 = { country_or_non_sovereign_subject_holds = ROOT }
+			358 = { development = 30 }
+			358 = { religion = orthodox }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.24
+			}
+		}
+	}
+	
+	ser_danubian_trade_power = {
+	    icon = danubian_power
+		required_missions = { ser_develop_countryside }
+		position = 14
+		
+		trigger = {
+			137 = { is_strongest_trade_power = ROOT }
+			153 = { is_strongest_trade_power = ROOT }
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 137
+				province_id = 153
+			}
+			NOT = { is_strongest_trade_power = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = ser_trade_hegemon
+				duration = -1
+			}
+			custom_tooltip = ALB_UPGRADE_TRADE
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_trade_building_trigger = yes
+								NOT = { has_province_flag = ab_upgraded_trade }
+							}
+							upgrade_trade_building = yes
+							set_province_flag = ab_upgraded_trade
+						}
+					"
+				}
+				every_owned_province = {
+					limit = {
+						has_province_flag = ab_upgraded_trade
+					}
+					clr_province_flag = ab_upgraded_trade
+				}
+			}
+		}
+	}
+}
+
+serbia_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SER
+			was_tag = SER
+		}
+	}
+	has_country_shield = yes
+	
+	ser_magyar_menace = {
+		icon = mission_ulug_ulus
+		required_missions = { ser_reclaim_belgrade }
+		position = 2
+		
+		trigger = {
+			if = {
+				limit = { exists = MGY }
+				total_development = MGY
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				region = carpathia_region
+				culture = hungarian
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = carpathia_region
+			culture = hungarian
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = ser_intervention
+				duration = 5475
+			}
+			custom_tooltip = SER_CONVERT_MAGYAR
+			tooltip = {
+				add_province_modifier = {
+					name = ser_religious_mission
+					duration = 7300
+				}
+			}
+			carpathia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = hungarian
+					}
+					add_province_modifier = {
+						name = ser_religious_mission
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	ser_carpathian_hegemony = {
+		icon = mission_tribe_management
+		required_missions = { ser_magyar_menace }
+		position = 4
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = carpathia_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = carpathia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ser_purge
+				duration = -1
+			}
+			custom_tooltip = SER_HUNGARY
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = MGY }
+				}
+				custom_tooltip = SER_NOT_EXIST_MGY_YES
+				carpathia_region = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_nationalism = -20
+				}
+			}
+			else = {
+				custom_tooltip = SER_NOT_EXIST_MGY_NO
+				tooltip = {
+					carpathia_region = {
+						limit = {
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						add_nationalism = -20
+					}
+				}
+			}
+		}
+	}
+	
+	ser_zakonopravilo = {
+		icon = reform_the_nomocanon
+		required_missions = { }
+		position = 6
+		
+		trigger = {
+			has_orthodox_religious_icon_trigger = yes
+			patriarch_authority = 0.25
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			define_advisor = {
+				type = theologian
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	ser_monasteries = {
+		icon = mission_cathedral_cities
+		required_missions = { ser_zakonopravilo }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			has_tax_building_trigger = no 
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_tax_building_trigger = yes 
+				value = 10 
+			}
+		}
+		
+		effect = {
+			set_country_flag = ser_fund_theological_studies_buff
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 20
+			}
+			add_ruler_modifier = {
+				name = ser_patron_of_church
+				duration = -1
+			}
+			custom_tooltip = SER_FUND_THEOLOGICAL_STUDIES_PRIVILEGE
+		}
+	}
+	
+	ser_patriarchate = {
+		icon = mission_autocephalous_archbishopric
+		required_missions = { ser_monasteries }
+		position = 9
+		
+		trigger = {
+			patriarch_authority = 0.75
+			reform_level = 5
+			development_in_provinces = {
+				value = 500
+				religion = orthodox
+			}
+			num_of_owned_provinces_with = {
+				value = 50
+				has_state_patriach = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				religion = orthodox
+				has_state_patriach = no
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ser_serbian_patriarchate
+				duration = -1
+			}
+			custom_tooltip = SER_20_PROV
+			hidden_effect = {
+                for = {
+                    amount = 20
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								religion = orthodox
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					religion = orthodox
+					NOT = {
+						any_country = {
+							religion = orthodox
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = SER_DOTF_YES
+				hidden_effect = {
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_DOTF_NO
+			}	
+		}
+	}
+	
+	ser_land_in_italy = {
+		icon = mission_invade_apulia
+		required_missions = { }
+		position = 10
+
+		provinces_to_highlight = {
+			region = italy_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = italy_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			create_scaling_general = yes
+			add_country_modifier = {
+				name = ser_sicilian_crusade
+				duration = 7300
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ser_banish = {
+		icon = per_unify_the_shia_realms
+		required_missions = { ser_land_in_italy }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = italy_region
+			owner = {
+				religion_group = muslim
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_province = {
+					region = italy_region
+					owner = {
+						religion_group = muslim
+					}
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.20
+			}
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -20
+			}
+			add_ruler_modifier = {
+				name = ser_liberator_of_italy
+				duration = -1
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}	
+
+	ser_iron = {
+		icon = mission_conquer_north_italy
+		required_missions = { ser_banish }
+		position = 12
+		
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+				area = tuscany_area
+				area = po_valley_area
+				area = lombardy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			tuscany_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			po_valley_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = byzantium_iron_crown
+				duration = 9125
+			}
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
 }
 
 #Rome
@@ -2298,7 +2283,7 @@ serbia_first_group_rome = {
 				which = discipline
 				value = 0.1
 			}
-			army_tradition = 90
+			army_tradition = 75
 			army_size = 250
 		}
 
@@ -2333,7 +2318,7 @@ serbia_first_group_rome = {
 	ser_finest = {
 		icon = mission_romanfinest
 		position = 14
-		required_missions = { ser_reform_imperial_army ser_muskets }
+		required_missions = { ser_reform_imperial_army }
 
 		trigger = {
 			has_global_modifier_value = {
@@ -2367,8 +2352,8 @@ serbia_first_group_rome = {
 
 	ser_grandarmy = {
 		icon = mission_redcoats
-		position = 15
-		required_missions = { ser_finest }
+		position = 16
+		required_missions = { ser_finest ser_muskets }
 
 		trigger = {
 			army_size = 1200
@@ -2631,7 +2616,7 @@ serbia_first_group_rome = {
 	ser_cities_byzantine = {
 		icon = mission_ottoman_law
 		required_missions = { }
-		position = 22
+		position = 21
 
 		provinces_to_highlight = {
 		    OR = {
@@ -2899,7 +2884,7 @@ serbia_second_group_rome = {
 
 	ser_muskets = {
 		icon = ven_navy_mission_2
-		position = 13
+		position = 15
 		required_missions = { }
 
 		provinces_to_highlight = {
@@ -3174,10 +3159,13 @@ serbia_second_group_rome = {
 			has_adm_advisor_3 = yes
 			has_dip_advisor_3 = yes
 			has_mil_advisor_3 = yes
-			OR = {
-				has_idea = ser_seventh
-				has_idea = ilr_seventh
-				has_idea = imperium_sine_fine
+			custom_trigger_tooltip = {
+				tooltip = SER_UNLOCKED_NI
+				OR = {
+					has_idea = ser_seventh
+					has_idea = ilr_seventh
+					has_idea = imperium_sine_fine
+				}
 			}
 		}
 
@@ -3204,6 +3192,7 @@ serbia_second_group_rome = {
 		}
 
 		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
 			change_monarch_points_or_power = {
 				points = 1
 				power = adm
@@ -3228,6 +3217,7 @@ serbia_second_group_rome = {
 				name = byzantium_law
 				duration = -1
 			}
+			custom_tooltip = BYZ_PREVENT
 		}
 	}
 }
@@ -3243,36 +3233,33 @@ serbia_third_group_rome = {
 	has_country_shield = yes
 
 	ser_restored_rome = {
-		icon = mission_phoenix
+		icon = mission_westrome
 		required_missions = { }
 		position = 16
 				
 		trigger = {
-			tag = ROM
-			prestige = 100
-			legitimacy = 100
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			NOT = { governing_capacity_percentage = 0.8 }
 			religious_unity = 0.85
 		}
 		
 		effect = {
+			225 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = byzantium_umayyad
-				duration = 9125
-			}
-			iberia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			maghreb_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
+				name = byzantium_eastern_empire
+				duration = -1
 			}
 			switzerland_area = {
 				limit = {
@@ -3330,14 +3317,19 @@ serbia_third_group_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			225 = {
-				owner = {
-					reverse_add_casus_belli = {
-						target = ROOT
-						type = cb_establish_diocese
-						months = 240
-					}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
+				add_permanent_claim = ROOT
+			}
+			maghreb_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 			custom_tooltip = BYZ_EXPLO
 			tooltip = {
@@ -3729,7 +3721,7 @@ serbia_fourth_group_rome = {
 	ser_money = {
 		icon = dominant_economy
 		required_missions = { }
-		position = 13
+		position = 15
 
 		provinces_to_highlight = {
 			OR = {
@@ -3819,11 +3811,19 @@ serbia_fourth_group_rome = {
 		}
 		
 		effect = {
-			add_mil_power = 150
+			183 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			iberia_region = {
 				add_nationalism = -20
 			}
-			custom_tooltip = AB_EMPTY
 			iberia_region = {
 				limit = {
 					country_or_non_sovereign_subject_holds = ROOT
@@ -3860,15 +3860,6 @@ serbia_fourth_group_rome = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
-			}
-			183 = {
-				owner = {
-					reverse_add_casus_belli = {
-						target = ROOT
-						type = cb_establish_diocese
-						months = 240
-					}
-				}
 			}
 		}
 	}
@@ -4065,7 +4056,7 @@ serbia_fifth_group_rome = {
 	ser_roads = {
 		icon = mission_royal_roads
 		position = 14
-		required_missions = { ser_money ser_industry }
+		required_missions = { ser_industry }
 
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -4091,8 +4082,8 @@ serbia_fifth_group_rome = {
 
 	ser_wonders = {
 		icon = mission_romanwonders
-		position = 15
-		required_missions = { ser_roads }
+		position = 16
+		required_missions = { ser_money ser_roads }
 
 		provinces_to_highlight = {
 			province_is_diocese_land_trigger = yes
@@ -4394,7 +4385,7 @@ serbia_fifth_group_rome = {
 						development = 50
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA1
+				custom_tooltip = BYZ_GREATER_AREA1_YES
 				316 = {
 					change_trade_goods = coal
 				}
@@ -4491,7 +4482,7 @@ serbia_fifth_group_rome = {
 						development = 60
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA2
+				custom_tooltip = BYZ_GREATER_AREA2_YES
 				149 = {
 					change_trade_goods = coal
 				}
@@ -4511,7 +4502,7 @@ serbia_fifth_group_rome = {
 						development = 60
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA3
+				custom_tooltip = BYZ_GREATER_AREA3_YES
 				4779 = {
 					change_trade_goods = coal
 				}
@@ -4609,11 +4600,9 @@ serbia_fourth_group_persian_unlocked = {
 		position = 26
 
 		provinces_to_highlight = {
-			AND = {
-				region = caucasia_region
-				NOT = { area = circassia_area }
-				NOT = { area = dagestan_area }
-			}
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 

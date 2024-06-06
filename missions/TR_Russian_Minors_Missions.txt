@@ -3225,7 +3225,7 @@ ab_russia_first_rome = {
 				which = discipline
 				value = 0.1
 			}
-			army_tradition = 90
+			army_tradition = 75
 			army_size = 250
 		}
 
@@ -3959,7 +3959,7 @@ ab_russia_third_rome_constantinople = {
 						development = 50
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA1
+				custom_tooltip = BYZ_GREATER_AREA1_YES
 				316 = {
 					change_trade_goods = coal
 				}
@@ -4056,7 +4056,7 @@ ab_russia_third_rome_constantinople = {
 						development = 60
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA2
+				custom_tooltip = BYZ_GREATER_AREA2_YES
 				149 = {
 					change_trade_goods = coal
 				}
@@ -4076,7 +4076,7 @@ ab_russia_third_rome_constantinople = {
 						development = 60
 					}
 				}
-				custom_tooltip = BYZ_GREATER_AREA3
+				custom_tooltip = BYZ_GREATER_AREA3_YES
 				4779 = {
 					change_trade_goods = coal
 				}
@@ -4104,36 +4104,33 @@ ab_russia_third_rome = {
 	has_country_shield = yes
 
 	ab_russia_restored_rome = {
-		icon = mission_phoenix
+		icon = mission_westrome
 		required_missions = { }
 		position = 23
 				
 		trigger = {
-			tag = ROM
-			prestige = 100
-			legitimacy = 100
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
 			NOT = { governing_capacity_percentage = 0.8 }
 			religious_unity = 0.85
 		}
 		
 		effect = {
+			225 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = byzantium_umayyad
-				duration = 9125
-			}
-			iberia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			maghreb_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
+				name = byzantium_eastern_empire
+				duration = -1
 			}
 			switzerland_area = {
 				limit = {
@@ -4177,14 +4174,19 @@ ab_russia_third_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			225 = {
-				owner = {
-					reverse_add_casus_belli = {
-						target = ROOT
-						type = cb_establish_diocese
-						months = 240
-					}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
+				add_permanent_claim = ROOT
+			}
+			maghreb_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 			custom_tooltip = BYZ_EXPLO
 			tooltip = {
@@ -4615,11 +4617,19 @@ ab_russia_fourth_rome = {
 		}
 		
 		effect = {
-			add_mil_power = 150
+			183 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			iberia_region = {
 				add_nationalism = -20
 			}
-			custom_tooltip = AB_EMPTY
 			iberia_region = {
 				limit = {
 					country_or_non_sovereign_subject_holds = ROOT
@@ -4656,15 +4666,6 @@ ab_russia_fourth_rome = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
-			}
-			183 = {
-				owner = {
-					reverse_add_casus_belli = {
-						target = ROOT
-						type = cb_establish_diocese
-						months = 240
-					}
-				}
 			}
 		}
 	}
@@ -5285,11 +5286,9 @@ ab_russia_fourth_persian_unlocked = {
 		position = 30
 
 		provinces_to_highlight = {
-			AND = {
-				region = caucasia_region
-				NOT = { area = circassia_area }
-				NOT = { area = dagestan_area }
-			}
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
