@@ -1,6 +1,6 @@
 ab_rum_christian_first = {
-	slot = 1 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 1
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = christian
@@ -16,7 +16,7 @@ ab_rum_christian_first = {
 	has_country_shield = yes
 	
 	rum_christian_balance = {
-		icon = mission_reliable_allies
+		icon = per_protect_the_west_iranian
 		required_missions = { }
 		position = 1
 		
@@ -27,7 +27,7 @@ ab_rum_christian_first = {
 		effect = {
 			custom_tooltip = RUM_TRUST
 			add_country_modifier = {
-				name = "rum_c_achieve"
+				name = rum_c_achieve
 				duration = 5475
 			}
 			hidden_effect = {
@@ -35,7 +35,11 @@ ab_rum_christian_first = {
 					limit = {
 						alliance_with = ROOT
 					}
-					add_trust = { who = ROOT value = 10 mutual = yes }
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
+					}
 				}
 			}
 		}
@@ -63,7 +67,17 @@ ab_rum_christian_first = {
 		}
 		
 		effect = {
-			country_event = { id = ab_zrum.3 }
+			country_event = {
+				id = ab_zrum.3
+			}
+			custom_tooltip = AB_EMPTY
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 			anatolia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -98,7 +112,7 @@ ab_rum_christian_first = {
 		effect = {
 			add_army_professionalism = 0.05
 			add_country_modifier = {
-				name = "rum_c_bulwark"
+				name = rum_c_bulwark
 				duration = 9125
 			}
 			thrace_area = {
@@ -118,50 +132,41 @@ ab_rum_christian_first = {
 		
 		provinces_to_highlight = {
 			OR = {
-				owned_by = BUL
+				area = macedonia_area
 				area = bulgaria_area
 				area = silistria_area
+				area = thrace_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			NOT = { exists = BUL }
-		    bulgaria_area = {
-			    type = all
+			macedonia_area = {
+				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-		    silistria_area = {
-			    type = all
+			bulgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			silistria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			thrace_area = {
+				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 		
 		effect = {
-			add_power_projection = {
-				type = mission_rewards_power_projection
-				amount = 15
+			country_event = {
+				id = ab_byzantium.49
 			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = rum_c_balkan
 				duration = 9125
-			}
-			custom_tooltip = RUM_BALKAN_SER
-			custom_tooltip = RUM_BALKAN_WAL
-			custom_tooltip = RUM_BALKAN_MOL
-			rascia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			serbia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
 			}
 			wallachia_area = {
 				limit = {
@@ -184,26 +189,83 @@ ab_rum_christian_first = {
 				}
 				add_permanent_claim = ROOT
 			}
-			hidden_effect = {
-				if = {
-					limit = { exists = SER }
-					add_casus_belli = { 
+			serbia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rascia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = SER
+				}
+				custom_tooltip = RUM_SER_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = SER
+				}
+			}
+			else = {
+				custom_tooltip = RUM_SER_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = SER
-						type = cb_vassalize_mission 
 					}
 				}
-				if = {
-					limit = { exists = WAL }
-					add_casus_belli = { 
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = WAL
+				}
+				custom_tooltip = BYZ_WAL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = WAL
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_WAL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = WAL
-						type = cb_vassalize_mission 
 					}
 				}
-				if = {
-					limit = { exists = MOL }
-					add_casus_belli = { 
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = MOL
+				}
+				custom_tooltip = BYZ_MOL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = MOL
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_MOL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = MOL
-						type = cb_vassalize_mission 
 					}
 				}
 			}
@@ -250,10 +312,32 @@ ab_rum_christian_first = {
 		}
 		
 		effect = {
-			add_yearly_manpower = 2
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = rum_c_subjugate
 				duration = 5475
+			}
+			transylvania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southern_transylvania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			alfold_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 			balkan_region = {
 				limit = {
@@ -266,7 +350,7 @@ ab_rum_christian_first = {
 			tooltip = {
 				add_country_modifier = {
 					name = rum_c_consolidate
-					duration = 9125
+					duration = 18250
 				}
 			}
 			hidden_effect = {
@@ -276,7 +360,7 @@ ab_rum_christian_first = {
 					}
 					add_country_modifier = {
 						name = rum_c_consolidate
-						duration = 9125
+						duration = 18250
 					}
 				}
 			}
@@ -301,19 +385,15 @@ ab_rum_christian_first = {
 		}
 		
 		effect = {
-			add_army_tradition = 25
+			country_event = {
+				id = ab_byzantium.50
+			}
+			custom_tooltip = AB_EMPTY
 			balkan_region = {
 				add_province_modifier = {
-					name = "rum_develop_balkans"
-					duration = 7300
+					name = rum_develop_balkans
+					duration = 9125
 				}
-			}
-			carpathia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
 			}
 			carinthia_area = {
 				limit = {
@@ -340,7 +420,7 @@ ab_rum_christian_first = {
 	}
 	
 	rum_christian_hre = {
-		icon = humiliate_austria
+		icon = carolingian_empire
 		required_missions = { rum_christian_germans }
 		position = 11
 		
@@ -375,21 +455,17 @@ ab_rum_christian_first = {
 			hidden_effect = {
 				if = {
 					limit = {
-						NOT = { hre_size = 1 }
+						is_emperor = yes
 					}
-					add_mil_power = 250
 					add_country_modifier = {
-						name = rum_c_dismantled
+						name = rum_c_emperor
 						duration = -1
 					}
 				}
-				else_if = {
-					limit = {
-						is_emperor = yes
-					}
-					add_dip_power = 250
+				else = {
+					add_mil_power = 250
 					add_country_modifier = {
-						name = rum_c_emperor
+						name = rum_c_dismantled
 						duration = -1
 					}
 				}
@@ -399,8 +475,8 @@ ab_rum_christian_first = {
 }
 
 ab_rum_christian_second = {
-	slot = 2 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 2
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = christian
@@ -416,7 +492,7 @@ ab_rum_christian_second = {
 	has_country_shield = yes
 	
 	rum_christian_beyliks = {
-		icon = mission_persian_soldiers
+		icon = mam_persia
 		required_missions = { }
 		position = 2
 		
@@ -429,11 +505,13 @@ ab_rum_christian_second = {
 		}
 		
 		effect = {
-			custom_tooltip = RUM_CLAIM
+			add_army_tradition_or_mil_power = { amount = 10 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "rum_c_beyliks"
+				name = rum_c_beyliks
 				duration = 7300
 			}
+			custom_tooltip = RUM_CLAIM
 			hidden_effect = {
 				every_province = {
 					limit = {
@@ -446,11 +524,74 @@ ab_rum_christian_second = {
 			}
 		}
 	}
+
+	rum_christian_unite_the_turks = {
+		icon = per_qizilbash_loyalty
+		required_missions = { rum_christian_beyliks }
+		position = 3
+		
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = turkish
+				NOT = { tag = ROOT }
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+				is_free_or_tributary_trigger = yes
+			}
+		}
+
+		trigger = {
+			any_subject_country = {
+				primary_culture = turkish
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RUM_NO_INDEPENDENT_TURKISH_BEYLIK
+				NOT = {
+					any_country = {
+						primary_culture = turkish
+						NOT = { tag = ROOT }
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+						is_free_or_tributary_trigger = yes
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = commandant
+				skill = 2
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RUM_ANNEX_EVERY_BEYLIKS
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						primary_culture = turkish
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+					}
+					ROOT = {
+						inherit = PREV
+					}
+				}
+			}
+		}
+	}
 	
 	rum_christian_crimea = {
-	    icon = mission_invade_island
-		required_missions = { rum_christian_anatolia }
-		position = 5
+	    icon = mission_feodosia_port
+		required_missions = { rum_christian_legacy }
+		position = 4
 		
 		trigger = {
 		    crimea_area = {
@@ -465,31 +606,68 @@ ab_rum_christian_second = {
 		}
 		
 		effect = {
-			add_mercantilism = 3
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "rum_c_crimea"
+				name = rum_c_crimea
 				duration = 7300
 			}
-			
 			2410 = {
 				add_trade_modifier = {
 					who = ROOT
-					duration = 9125
-					power = 15
+					duration = -1
+					power = 25
 					key = rum_black_sea_trade
 				}
 			}
 		}
 	}
+
+	rum_christian_armenia = {
+	    icon = arm_etchmiadzin_cathedral
+		required_missions = { rum_christian_anatolia }
+		position = 5
+		
+		trigger = {
+		    armenia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = armenia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			armenia_area = {
+				change_culture = ROOT
+				change_religion = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = rum_c_caucasia
+				duration = 9125
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
 	
 	rum_christian_city = {
-	    icon = mission_city_of_the_world's_desire
+	    icon = mission_fall_of_constantinople
 		required_missions = { rum_christian_nicaea }
 		position = 6
 		
 		provinces_to_highlight = {
 			province_id = 151
-			NOT = { owned_by = ROOT }
 		}
 
 		trigger = {
@@ -497,7 +675,24 @@ ab_rum_christian_second = {
 		}
 		
 		effect = {
-			country_event = { id = ab_zrum.5 }
+			country_event = {
+				id = ab_zrum.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SER_ORTHODOX_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			bulgaria_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -512,13 +707,6 @@ ab_rum_christian_second = {
 				}
 				add_permanent_claim = ROOT
 			}
-			albania_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
 			macedonia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -540,21 +728,7 @@ ab_rum_christian_second = {
 				}
 				add_permanent_claim = ROOT
 			}
-			apulia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			calabria_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			naples_area = {
+			ionian_islands_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -565,7 +739,7 @@ ab_rum_christian_second = {
 	}
 	
 	rum_christian_kaiser = {
-	    icon = mission_restore_faith_in_the_throne
+	    icon = mission_the_roman_sultan
 		required_missions = { rum_christian_city }
 		position = 7
 		
@@ -573,9 +747,9 @@ ab_rum_christian_second = {
 			OR = {
 				AND = {
 					OR = {
-						area = morea_area
-						area = macedonia_area
 						area = northern_greece_area
+						area = morea_area
+						area = ionian_islands_area
 					}
 					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
@@ -590,17 +764,19 @@ ab_rum_christian_second = {
 
 		trigger = {
 			tag = RUM
-			151 = { is_capital_of = ROOT }
+			151 = {
+				is_capital_of = ROOT
+			}
 			accepted_culture = greek
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
 			morea_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-			macedonia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			northern_greece_area = {
+			ionian_islands_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
@@ -609,14 +785,13 @@ ab_rum_christian_second = {
 		effect = {
 			set_country_flag = ab_unlock_byzantine_rome
 			custom_tooltip = SER_UNLOCK_FORMING_ROME
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = RUM_CHRISTIAN_CULTURE
 			hidden_effect = {
 				replace_culture_with_effect = {
 					old_culture_1 = turkish
 					new_culture = turkish_christian
 				}
-			}
-			hidden_effect = {
 				323 = {
 					change_original_culture = turkish_christian
 				}
@@ -703,22 +878,22 @@ ab_rum_christian_second = {
 				}
 			}
 			set_government_rank = 3
+			custom_tooltip = AB_EMPTY
 			151 = {
 				add_base_tax = 2
 				add_base_production = 2
 				add_base_manpower = 2
 			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "rum_turkism"
+				name = rum_turkism
 				duration = -1
 			}
 			custom_tooltip = RUM_BANISH
 			tooltip = {
-				add_republican_tradition = 10
-				add_legitimacy = 20
 				add_country_modifier = {
-					name = "rum_latins"
-					duration = 9125
+					name = rum_latins
+					duration = -1
 				}
 			}
 			hidden_effect = {
@@ -729,11 +904,9 @@ ab_rum_christian_second = {
 							country_or_non_sovereign_subject_holds = ROOT
 						}
 					}
-					add_republican_tradition = 10
-					add_legitimacy = 20
 					add_country_modifier = {
-						name = "rum_latins"
-						duration = 9125
+						name = rum_latins
+						duration = -1
 					}
 				}
 			}
@@ -741,7 +914,7 @@ ab_rum_christian_second = {
 	}
 	
 	rum_christian_ottomans = {
-		icon = mission_dominate_trade_in_bengal
+		icon = mission_the_grand_bazaar
 		required_missions = { rum_christian_kaiser }
 		position = 8
 		
@@ -773,7 +946,9 @@ ab_rum_christian_second = {
 				}
 			}
 			if = {
-				limit = { has_estate = estate_burghers }
+				limit = {
+					has_estate = estate_burghers
+				}
 				estate_loyalty = {
 					estate = estate_burghers
 					loyalty = 70
@@ -790,64 +965,671 @@ ab_rum_christian_second = {
 		}
 		
 		effect = {
-			add_years_of_income = 0.5
-			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
+			set_country_flag = trader_give_production_efficiency
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 20
+			}
 			add_country_modifier = {
-				name = "rum_c_ottomans"
+				name = rum_c_ottomans
 				duration = -1
+			}
+			custom_tooltip = FKN_TRADER_SCALING
+		}
+	}
+
+	rum_christian_magyar_menace = {
+		icon = mission_ulug_ulus
+		required_missions = { rum_christian_balkans }
+		position = 10
+		
+		trigger = {
+			transylvania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    southern_transylvania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    alfold_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+				area = alfold_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = ser_intervention
+				duration = 5475
+			}
+			custom_tooltip = SER_CONVERT_MAGYAR
+			tooltip = {
+				add_province_modifier = {
+					name = ser_religious_mission
+					duration = 7300
+				}
+			}
+			carpathia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = hungarian
+					}
+					add_province_modifier = {
+						name = ser_religious_mission
+						duration = 7300
+					}
+				}
 			}
 		}
 	}
-	
-	rum_christian_sophia = {
-		icon = end_the_schism
-		required_missions = { rum_christian_ottomans }
-		position = 9
-		
-		provinces_to_highlight = { 
-			province_id = 151
+
+	rum_christian_roman_ambition = {
+		icon = mission_eyalet_crisis
+		required_missions = { rum_christian_germans rum_christian_iron }
+		position = 11
+
+		trigger = {
+			carinthia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			italy_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
 		}
 		
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				area = carinthia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_ruler_personality = augustus_personality
+			custom_tooltip = SER_JUSTINIAN_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = SER_perma_pp
+					amount = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_theme_system
+			}
+			custom_tooltip = AB_EMPTY
+			upper_andalucia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			baleares_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kabylia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			barbary_coast_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_morocco_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_christian_jerusalem = {
+		icon = convert_the_holy_lands
+		required_missions = { rum_christian_pentarchy }
+		position = 12
+
+		provinces_to_highlight = {
+			province_id = 379
+		}
+	
 		trigger = {
-			151 = {
+			379 = { development = 20 }
+			379 = { religion = orthodox }
+			379 = {
 				has_great_project = {
-					type = hagia_sophia
+					type = holy_city_jerusalem
 					tier = 3
 				}
 			}
 		}
 		
 		effect = {
-			add_estate_loyalty = {
-				estate = estate_church
-				loyalty = 10
+			country_event = {
+				id = ab_byzantium.25
 			}
-			151 = {
+		}
+	}
+}
+
+ab_rum_christian_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = christian
+		OR = {
+			tag = ATG
+			tag = TKK
+			tag = ZNG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_christian_bridging = {
+		icon = mission_conquer_malwa_mer
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_road_building_trigger = yes
+			}
+		}
+	
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = seljuk_bridging
+				duration = 7300
+			}
+		}
+	}
+	
+	rum_christian_capital = {
+	    icon = mission_renovate_kannauj
+		required_missions = { rum_christian_cities }
+		position = 3
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = { development = 30 }
+			capital_scope = { has_tax_building_trigger = yes }
+			capital_scope = { has_production_building_trigger = yes }
+			capital_scope = { has_trade_building_trigger = yes }
+		}
+		
+		effect = {
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
 				add_province_modifier = {
-					name = byzantium_cathedral
+					name = rum_c_seat
 					duration = -1
 				}
+				upgrade_tax_building = yes
 			}
-			custom_tooltip = BYZ_TRUST
-			hidden_effect = {
-				every_country = {
-					limit = { 
-						religion = orthodox 
-					}
-					add_trust = {
-						who = ROOT
-						value = 10
-						mutual = yes
+		}
+	}
+	
+	rum_christian_anatolia = {
+	    icon = mission_anatolian_conquest
+		required_missions = { rum_christian_legacy }
+		position = 4
+		
+		trigger = {
+		    num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = anatolia_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			anatolia_region = {
+				add_nationalism = -20
+			}
+			add_country_modifier = {
+				name = rum_c_anatolia
+				duration = 7300
+			}
+			armenia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			basra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_christian_landfall = {
+		icon = mission_invade_apulia
+		required_missions = { rum_christian_anatolia }
+		position = 6
+		
+		provinces_to_highlight = {
+			region = italy_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = italy_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = rum_c_recover
+				duration = 7300
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_christian_banish = {
+		icon = per_unify_the_shia_realms
+		required_missions = { rum_christian_city rum_christian_landfall }
+		position = 7
+		
+		provinces_to_highlight = {
+			region = italy_region
+			owner = {
+				religion_group = muslim
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_province = {
+					region = italy_region
+					owner = {
+						religion_group = muslim
 					}
 				}
 			}
 		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.20
+			}
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -20
+			}
+			add_ruler_modifier = {
+				name = ser_liberator_of_italy
+				duration = -1
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
 	}
+
+	rum_christian_march_rome = {
+		icon = mission_colosseum
+		position = 9
+		required_missions = { rum_christian_banish }
 			
+		provinces_to_highlight = {
+			province_id = 118
+		}
+
+		trigger = {
+			118 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.21
+			}
+			custom_tooltip = AB_EMPTY
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_christian_iron = {
+		icon = mission_conquer_north_italy
+		required_missions = { rum_christian_march_rome }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+				area = tuscany_area
+				area = po_valley_area
+				area = lombardy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			tuscany_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			po_valley_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = byzantium_iron_crown
+				duration = 9125
+			}
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_christian_pentarchy = {
+		icon = byz_justinians_ambition
+		position = 11
+		required_missions = { }
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 118
+				province_id = 151
+				province_id = 358
+				province_id = 379
+				province_id = 2313
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			owns_or_non_sovereign_subject_of = 118
+			owns_or_non_sovereign_subject_of = 151
+			owns_or_non_sovereign_subject_of = 358 
+			owns_or_non_sovereign_subject_of = 379
+			owns_or_non_sovereign_subject_of = 2313
+		}
+
+		effect = {
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = healing_the_schism
+				duration = -1
+			}
+			country_event = {
+				id = catholic_flavor.3
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_CENTER
+			hidden_effect = {
+				118 = {
+					add_reform_center = orthodox
+				}
+			}
+		}
+	}
+
+	rum_christian_patriarchates = {
+		icon = mission_pf_cross
+		position = 13
+		required_missions = { rum_christian_pentarchy }
+	
+		trigger = {
+			religion = orthodox
+			patriarch_authority = 1
+			379 = {
+				has_tax_building_trigger = yes
+				religion = orthodox
+			}
+			358 = {
+				has_tax_building_trigger = yes
+				religion = orthodox
+			}
+			2313 = {
+				has_tax_building_trigger = yes
+				religion = orthodox
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 379
+				province_id = 358
+				province_id = 2313
+			}
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				has_tax_building_trigger = no
+				NOT = { religion = orthodox }
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.62
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RUM_RANDOM_PROVINCES
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = orthodox
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+			custom_tooltip = RUM_EVOLVING_IDEA_2
+			hidden_effect = {
+				set_country_flag = rum2_evolved_ideas
+				swap_free_idea_group = yes
+			}
+		}
+	}
+
 	rum_christian_rus_union = {
 		icon = mission_rule_ruthenia
-		position = 10
-		required_missions = { rum_christian_pentarchy }
+		position = 14
+		required_missions = { rum_christian_patriarchates }
 
 		provinces_to_highlight = {
 			OR = {
@@ -942,485 +1724,9 @@ ab_rum_christian_second = {
 	}
 }
 
-ab_rum_christian_third = {
-	slot = 3 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
-	ai = yes
-	potential = {
-		religion_group = christian
-		OR = {
-			tag = ATG
-			tag = TKK
-			tag = ZNG
-			tag = RUM
-			was_tag = RUM
-		}
-		NOT = { map_setup = map_setup_random }
-	}
-	has_country_shield = yes
-	
-	rum_christian_bridging = {
-		icon = mission_conquer_malwa_mer
-		required_missions = { }
-		position = 1
-		
-		provinces_to_highlight = {
-			owned_by = ROOT
-			has_road_building_trigger = no
-		}
-		
-		trigger = {
-			num_of_owned_provinces_with = {
-				value = 10
-				has_road_building_trigger = yes
-			}
-		}
-	
-		effect = {
-			add_country_modifier = {
-				name = "seljuk_bridging"
-				duration = 7300
-			}
-		}
-	}
-	
-	rum_christian_capital = {
-	    icon = mission_renovate_kannauj
-		required_missions = { rum_christian_cities }
-		position = 3
-		
-		provinces_to_highlight = {
-			is_capital_of = ROOT
-			OR = {
-				NOT = { development = 30 }
-				has_tax_building_trigger = no
-				has_production_building_trigger = no
-				has_trade_building_trigger = no
-			}
-		}
-		
-		trigger = {
-			capital_scope = { development = 30 }
-			capital_scope = { has_tax_building_trigger = yes }
-			capital_scope = { has_production_building_trigger = yes }
-			capital_scope = { has_trade_building_trigger = yes }
-		}
-		
-		effect = {
-			capital_scope = {
-				add_province_modifier = {
-					name = rum_c_seat
-					duration = -1
-				}
-				if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 1 }
-					}
-					center_of_trade = 1
-				}
-				else_if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 3 }
-					}
-					add_center_of_trade_level = 1
-				}
-			}
-		}
-	}
-	
-	rum_christian_anatolia = {
-	    icon = anatolian_frontier
-		required_missions = { rum_christian_legacy }
-		position = 4
-		
-		trigger = {
-		    anatolia_region = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		provinces_to_highlight = {
-			region = anatolia_region
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			anatolia_region = {
-				add_nationalism = -5
-			}
-			add_country_modifier = {
-				name = rum_c_anatolia
-				duration = 7300
-			}
-			armenia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			crimea_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			al_jazira_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			iraq_arabi_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			basra_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	rum_christian_armenia = {
-	    icon = arm_etchmiadzin_cathedral
-		required_missions = { rum_christian_anatolia }
-		position = 6
-		
-		trigger = {
-		    armenia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		provinces_to_highlight = {
-			area = armenia_area
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_patriarch_authority = 0.05
-			add_country_modifier = {
-				name = rum_c_caucasia
-				duration = 7300
-			}
-			caucasia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	rum_christian_landfall = {
-		icon = mission_invade_apulia
-		required_missions = { rum_christian_city }
-		position = 7
-		
-		provinces_to_highlight = {
-			OR = {
-				area = apulia_area
-				area = calabria_area
-				area = naples_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		trigger = {
-			apulia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			calabria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			naples_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_patriarch_authority = 0.1
-			add_country_modifier = {
-				name = "rum_c_recover"
-				duration = 7300
-			}
-			central_italy_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			lazio_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			sicily_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			western_sicily_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	rum_christian_pentarchy = {
-		icon = byz_justinians_ambition
-		position = 9
-		required_missions = { rum_christian_landfall }
-
-		provinces_to_highlight = {
-			OR = {
-				province_id = 118
-				province_id = 151
-				province_id = 358
-				province_id = 379
-				province_id = 2313
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			owns_or_non_sovereign_subject_of = 118
-			owns_or_non_sovereign_subject_of = 151
-			owns_or_non_sovereign_subject_of = 358 
-			owns_or_non_sovereign_subject_of = 379
-			owns_or_non_sovereign_subject_of = 2313
-		}
-
-		effect = {
-			country_event = {
-				id = ab_byzantium.62
-			}
-			add_country_modifier = {
-				name = healing_the_schism
-				duration = -1
-			}
-			country_event = {
-				id = catholic_flavor.3
-			}
-			custom_tooltip = BYZ_CENTER
-			hidden_effect = {
-				118 = {
-					add_reform_center = orthodox
-				}
-			}
-			tuscany_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			emilia_romagna_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			po_valley_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			lombardy_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-
-	rum_christian_iron = {
-		icon = mission_conquer_north_italy
-		required_missions = { rum_christian_pentarchy }
-		position = 10
-		
-		provinces_to_highlight = {
-			OR = {
-				area = emilia_romagna_area
-				area = tuscany_area
-				area = po_valley_area
-				area = lombardy_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		trigger = {
-			emilia_romagna_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			tuscany_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			po_valley_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			lombardy_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_power_projection = {
-				type = mission_rewards_power_projection
-				amount = 25
-			}
-			add_country_modifier = {
-				name = byzantium_iron_crown
-				duration = 9125
-			}
-			italy_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-
-	rum_christian_roman_ambition = {
-		icon = mission_eyalet_crisis
-		required_missions = { rum_christian_iron rum_christian_patriarchates }
-		position = 11
-
-		trigger = {
-			balkan_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			italy_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			carinthia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				region = balkan_region
-				region = italy_region
-				area = carinthia_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			add_ruler_personality = augustus_personality
-			custom_tooltip = SER_JUSTINIAN_PP
-			hidden_effect = {
-				add_power_projection = {
-					type = SER_perma_pp
-					amount = 25
-				}
-			}
-			custom_tooltip = AB_EMPTY
-			unlock_estate_privilege = {
-				estate_privilege = estate_nobles_theme_system
-			}
-			custom_tooltip = AB_EMPTY
-			upper_andalucia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			baleares_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tripolitania_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			djerba_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tunisia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			kabylia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			barbary_coast_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			northern_morocco_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-}
-
 ab_rum_christian_fourth = {
-	slot = 4 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 4
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = christian
@@ -1455,23 +1761,21 @@ ab_rum_christian_fourth = {
 		}
 		
 		effect = {
+			add_splendor = 200
 			add_country_modifier = {
 				name = rum_c_architecture
 				duration = 9125
 			}
-			
 			define_advisor = {
 				type = planner
 				skill = 2
-				religion = ROOT
-				culture = ROOT
 				cost_multiplier = 0.5
 			}
 		}
 	}
 	
 	rum_christian_greece = {
-	    icon = cross_the_pindus
+	    icon = retake_thessaly
 		required_missions = { rum_christian_cities }
 		position = 4
 		
@@ -1516,24 +1820,28 @@ ab_rum_christian_fourth = {
 		}
 		
 		effect = {
-			custom_tooltip = RUM_C_GREECE
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = rum_c_prosperous
+				duration = -1
+			}
+			custom_tooltip = RUM_EVERY_GREEK_PROVINCE
+			tooltip = {
+				add_base_production = 2
+			}
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
 						culture = greek
 					}
-					add_prosperity = 100
+					add_base_production = 2
 				}
-			}
-			add_country_modifier = {
-				name = rum_c_prosperous
-				duration = -1
 			}
 		}
 	}
 	
 	rum_christian_mesopotamia = {
-		icon = mission_reclaim_lost_territory
+		icon = mission_cradle_of_civilization
 		position = 5
 		required_missions = { rum_christian_anatolia }
 	
@@ -1562,6 +1870,14 @@ ab_rum_christian_fourth = {
 		}
 		
 		effect = {
+			410 = {
+				change_culture = greek
+				change_religion = ROOT
+				add_permanent_province_modifier = {
+					name = byz_seleucia
+					duration = -1
+				}
+			}
 			408 = {
 				if = {
 					limit = {
@@ -1575,8 +1891,6 @@ ab_rum_christian_fourth = {
 					}
 					add_center_of_trade_level = 1
 				}
-			}
-			408 = {
 				add_unit_construction = {
 					type = light_ship
 					amount = 5
@@ -1584,7 +1898,22 @@ ab_rum_christian_fourth = {
 					cost = 0
 				}
 			}
-			mashriq_region = {
+			custom_tooltip = AB_EMPTY
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -1593,26 +1922,63 @@ ab_rum_christian_fourth = {
 			}
 		}
 	}
-	
-	rum_christian_levant = {
-		icon = jerusalem
-		position = 8
+
+	rum_christian_syria = {
+		icon = arm_proclaim_great_armenia
+		position = 6
 		required_missions = { rum_christian_mesopotamia }
 	
 		trigger = {
-			mashriq_region = {
+			syria_area = {
 				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 		
 		provinces_to_highlight = {
-			region = mashriq_region
+			OR = {
+				area = aleppo_area
+				area = syria_area
+			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
-			add_war_exhaustion = -3
+			country_event = {
+				id = ab_byzantium.23
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = levant_greek_flag		
+		    custom_tooltip = BYZ_UNLOCK_SETTLE_LEVANT
+		}
+	}
+	
+	rum_christian_levant = {
+		icon = jerusalem
+		position = 8
+		required_missions = { rum_christian_syria }
+	
+		trigger = {
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.19
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = sel_jerusalem_custodian
 				duration = -1
@@ -1620,9 +1986,30 @@ ab_rum_christian_fourth = {
 			mashriq_region = {
 				add_province_modifier = {
 					name = rum_c_triumph
-					duration = 9125
+					duration = 5475
 				}
 			}
+			tabuk_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT }
+                    NOT = { is_core = ROOT }
+                }
+                add_permanent_claim = ROOT
+            }
+            mecca_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT }
+                    NOT = { is_core = ROOT }
+                }
+                add_permanent_claim = ROOT
+            }
+            medina_area = {
+                limit = {
+                    NOT = { is_permanent_claim = ROOT }
+                    NOT = { is_core = ROOT }
+                }
+                add_permanent_claim = ROOT
+            }
 			egypt_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1635,7 +2022,7 @@ ab_rum_christian_fourth = {
 	
 	rum_christian_egypt = {
 		icon = mission_saladins_legacy
-		position = 9
+		position = 10
 		required_missions = { rum_christian_levant }
 	
 		trigger = {
@@ -1656,49 +2043,21 @@ ab_rum_christian_fourth = {
 				name = rum_c_granary
 				duration = -1
 			}
-			tabuk_area = {
+			tripolitania_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			mecca_area = {
+			djerba_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			medina_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tihama_al_yemen_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			asir_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			yemen_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			upper_yemen_area = {
+			tunisia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -1747,78 +2106,32 @@ ab_rum_christian_fourth = {
 			}
 		}
 	}
-	
-	rum_christian_patriarchates = {
+
+	rum_christian_alexandria = {
 		icon = mission_conquer_alexandria
-		position = 10
-		required_missions = { rum_christian_egypt }
+		required_missions = { rum_christian_pentarchy rum_christian_egypt }
+		position = 12
+
+		provinces_to_highlight = {
+			province_id = 358
+		}
 	
 		trigger = {
-			379 = {
-				country_or_non_sovereign_subject_holds = ROOT
-				has_tax_building_trigger = yes
-				religion = orthodox
-			}
-			358 = {
-				country_or_non_sovereign_subject_holds = ROOT
-				has_tax_building_trigger = yes
-				religion = orthodox
-			}
-			2313 = {
-				country_or_non_sovereign_subject_holds = ROOT
-				has_tax_building_trigger = yes
-				religion = orthodox
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 379
-				province_id = 358
-				province_id = 2313
-			}
-			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				has_tax_building_trigger = no
-				NOT = { religion = orthodox }
-			}
+			358 = { development = 30 }
+			358 = { religion = orthodox }
 		}
 		
 		effect = {
-			add_patriarch_authority = 0.15
-			custom_tooltip = RUM_RANDOM_PROVINCES
-			define_advisor = {
-				type = inquisitor
-				skill = 3
-				religion = ROOT
-				culture = ROOT
-				cost_multiplier = 0.5
-			}
-			hidden_effect = {
-				for = {
-					amount = 10
-					effect = "
-						random_owned_province = {
-							limit = {
-								religion = orthodox
-							}
-							add_base_manpower = 1
-						}
-					"
-				}
-			}
-			custom_tooltip = RUM_EVOLVING_IDEA_2
-			hidden_effect = {
-				set_country_flag = rum2_evolved_ideas
-				swap_free_idea_group = yes
+			country_event = {
+				id = ab_byzantium.24
 			}
 		}
 	}
 }
 
 ab_rum_christian_fifth = {
-	slot = 5 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 5
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = christian
@@ -1834,15 +2147,12 @@ ab_rum_christian_fifth = {
 	has_country_shield = yes
 	
 	rum_christian_convert = {
-		icon = mission_hands_praying
+		icon = mission_autocephalous_archbishopric
 		required_missions = { }
 		position = 1
 		
 		provinces_to_highlight = {
-			OR = {
-				culture = turkish
-				culture = turkish_christian
-			}
+			culture = ROOT
 			OR = {
 				NOT = { owned_by = ROOT }
 				NOT = { religion = ROOT }
@@ -1852,10 +2162,7 @@ ab_rum_christian_fifth = {
 		trigger = {
 			num_of_owned_provinces_with = {
 				value = 15
-				OR = {
-					culture = turkish
-					culture = turkish_christian
-				}
+				culture = ROOT
 				religion = ROOT
 			}
 		}
@@ -1865,8 +2172,6 @@ ab_rum_christian_fifth = {
 			define_advisor = {
 				type = theologian
 				skill = 2
-				religion = ROOT
-				culture = ROOT
 				cost_multiplier = 0.5
 			}
 		}
@@ -1890,12 +2195,15 @@ ab_rum_christian_fifth = {
 		}
 		
 		effect = {
-			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 20
+			}
 			custom_tooltip = RUM_CHRISTIAN_PROVINCE
 			tooltip = {
 				add_province_modifier = {
 					name = rum_c_orthodoxy
-					duration = 7300
+					duration = 9125
 				}
 			}
 			hidden_effect = {
@@ -1903,7 +2211,7 @@ ab_rum_christian_fifth = {
 					limit = { religion = orthodox }
 					add_province_modifier = {
 						name = rum_c_orthodoxy
-						duration = 7300
+						duration = 9125
 					}
 				}
 			}
@@ -1911,13 +2219,15 @@ ab_rum_christian_fifth = {
 	}
 	
 	rum_christian_state = {
-		icon = mission_restore_kiev
+		icon = promote_the_patriarchate
 		required_missions = { rum_christian_churches }
 		position = 4
 		
 		trigger = {
 			if = {
-				limit = { has_estate = estate_church }
+				limit = {
+					has_estate = estate_church
+				}
 				estate_loyalty = {
 					estate = estate_church
 					loyalty = 70
@@ -1934,11 +2244,13 @@ ab_rum_christian_fifth = {
 		}
 		
 		effect = {
-			add_stability = 1
+			set_country_flag = rum_religious_state_buff
+			add_stability_or_adm_power = yes
 			add_country_modifier = {
 				name = rum_c_union
 				duration = -1
 			}
+			custom_tooltip = RUM_RELIGIOUS_STATE_PRIVILEGE
 		}
 	}
 	
@@ -1960,30 +2272,33 @@ ab_rum_christian_fifth = {
         }
 		
 		effect = {
-			custom_tooltip = RUM_GAIN_CHURCH
+			change_government_reform_progress = 100
+			add_country_modifier = {
+				name = rum_c_metropolitans
+				duration = 18250
+			}
+			custom_tooltip = BAV_RANDOM_CHURCH
+			tooltip = {
+				upgrade_tax_building = yes
+			}
 			hidden_effect = {
-                for = {
+				for = {
                     amount = 10
                     effect = "
                         random_owned_province = {
 							limit = {
-								has_building = temple
+								has_tax_building_trigger = yes
 							}
-							remove_building = temple
-							add_building = cathedral
+							upgrade_tax_building = yes
                         }
                     "
                 }
-			}
-			add_country_modifier = {
-				name = rum_c_metropolitans
-				duration = 18250
 			}
 		}
 	}
 	
 	rum_christian_defender = {
-		icon = mission_autocephalous_archbishopric
+		icon = chivalry_is_not_dead
 		required_missions = { rum_christian_metropolitans }
 		position = 7
 		
@@ -2019,8 +2334,8 @@ ab_rum_christian_fifth = {
 
 	rum_christian_mecca = {
 		icon = mission_into_arabia
-		required_missions = { rum_christian_egypt }
-		position = 10
+		required_missions = { rum_christian_levant }
+		position = 9
 		
 		provinces_to_highlight = {
 			OR = {
@@ -2051,7 +2366,7 @@ ab_rum_christian_fifth = {
 	}
 	
 	rum_christian_aden = {
-		icon = mission_arabian_sea_trade
+		icon = mam_highway_empire
 		position = 11
 		required_missions = { rum_christian_mecca }
 	
@@ -2072,25 +2387,10 @@ ab_rum_christian_fifth = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT	
 			}
-			tabuk_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			mecca_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			medina_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
 		}
 		
 		provinces_to_highlight = {
 			OR = {
-				area = tabuk_area
-				area = mecca_area
-				area = medina_area
 				area = yemen_area
 				area = upper_yemen_area
 				area = asir_area
@@ -2117,7 +2417,7 @@ ab_rum_christian_fifth = {
 	}
 }
 
-#Rome
+# Rome
 ab_rum_christian_first_rome = {
 	slot = 1
 	generic = no
@@ -2469,9 +2769,226 @@ ab_rum_christian_first_rome = {
 		}
 	}
 
+	rum_christian_cultural_hegemony = {
+		icon = mission_cultural_hegemony
+		position = 20
+		required_missions = { rum_christian_belgica rum_christian_germany }
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				continent = europe
+				continent = asia
+				continent = africa
+			}
+			NOT = {
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 1000
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				OR = {
+					continent = europe
+					continent = asia
+					continent = africa
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_GOLDEN_AGE 
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_cultural_hegemony
+				duration = -1
+			}
+			custom_tooltip = BYZ_CULTURAL_HEGEMONY_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = byz_cultural_hegemony_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 600
+				}
+				else = {
+					reset_golden_age = yes
+				}
+				every_province = {
+					limit = {
+						culture_group = roman_g
+					}
+					add_province_modifier = {
+						name = byz_cultural_hegemony_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rum_christian_cities_latin = {
+		icon = mission_the_golden_city
+		required_missions = { }
+		position = 21
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 118
+			    province_id = 225
+		      	province_id = 341
+		      	province_id = 183
+				province_id = 236
+				province_id = 1876
+				province_id = 134
+				province_id = 12
+			}
+		}
+
+		trigger = {
+		    118 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			225 = {
+			    province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			341 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			183 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			236 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			1876 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			134 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			12 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_latincities
+			custom_tooltip = BYZ_LATIN_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 118
+							province_id = 225
+							province_id = 341
+							province_id = 183
+							province_id = 236
+							province_id = 1876
+							province_id = 134
+							province_id = 12
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
 	rum_christian_caesaropapism = {
 		icon = emperor_and_autocrat
-		position = 19
+		position = 22
 		required_missions = { }
 
 		trigger = {
@@ -2498,8 +3015,8 @@ ab_rum_christian_first_rome = {
 
 	rum_christian_nomos = {
 		icon = mission_justinian
-		position = 20
-		required_missions = { rum_christian_caesaropapism }
+		position = 23
+		required_missions = { rum_christian_caesaropapism rum_christian_university }
 
 		trigger = {
 			monthly_adm = 10
@@ -2803,7 +3320,10 @@ ab_rum_christian_second_rome = {
 		}
 		
 		effect = {
-			add_power_projection_mission = { amount = 25 }
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
 			add_country_modifier = {
 				name = byz_german_conquest
 				duration = 7300
@@ -2815,6 +3335,40 @@ ab_rum_christian_second_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
+		}
+	}
+
+	rum_christian_university = {
+		icon = mission_rb_trinity_college_dublin
+		position = 22
+		required_missions = { }
+
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+
+		trigger = {
+			OR = {
+				dip = 4
+				monthly_dip = 8
+			}
+			151 = { owned_by = ROOT }
+			151 = { has_building = university }
+		}
+
+		effect = {
+			set_country_flag = koj_scholar_chance
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byzantium_uni
+				duration = -1
+			}
+			custom_tooltip = KOJ_SCHOLAR
+			custom_tooltip = AB_EMPTY
 		}
 	}
 }
@@ -2830,228 +3384,9 @@ ab_rum_christian_third_rome = {
 	}
 	has_country_shield = yes
 
-	rum_christian_megalopolis = {
-		icon = mission_megalopolis
-		required_missions = { }
-		position = 12
-		
-		provinces_to_highlight = {
-			province_id = 151
-		}
-		
-		trigger = {
-			151 = { development = 65 }
-			151 = { num_of_buildings_in_province = 10 }
-		}
-		
-		effect = {
-			151 = {
-				add_province_modifier = {
-					name = BYZ_megalopolis_modifier_1
-					duration = -1
-				}
-				hidden_effect = {
-					add_province_triggered_modifier = BYZ_megalopolis_updater
-				}
-			}
-			custom_tooltip = BYZ_modifier_will_double
-			custom_tooltip = AB_EMPTY
-			add_country_modifier = {
-				name = BYZ_monarch_reigns_in_byzantium
-				duration = -1
-			}
-		}
-	}
-
-	rum_christian_gigalopolis = {
-		icon = take_constantinople
-		required_missions = { rum_christian_megalopolis }
-		position = 13
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 151
-				province_id = 316
-			}
-		}
-		
-		trigger = {
-			151 = {
-				owned_by = ROOT
-				development = 85
-			}
-			316 = {
-				owned_by = ROOT
-				development = 40
-			}
-			architect = 4
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = byz_urbanization
-				duration = -1
-			}
-			151 = {
-				add_province_modifier = {
-					name = byz_gigalopolis
-					duration = -1
-				}
-			}
-			316 = {
-				if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 1 }
-					}
-					center_of_trade = 1
-				}
-				add_province_modifier = {
-					name = byz_greater_constantinople_area
-					duration = -1
-				}
-			}
-			if = {
-				limit = {
-					316 = {
-						development = 50
-					}
-				}
-				custom_tooltip = BYZ_GREATER_AREA1_YES
-				316 = {
-					change_trade_goods = coal
-				}
-			}
-			else = {
-				custom_tooltip = BYZ_GREATER_AREA1_NO
-				tooltip = {
-					316 = {
-						change_trade_goods = coal
-					}
-				}
-			}
-		}
-	}
-
-	rum_christian_ecumenopolis = {
-		icon = mission_constantinople
-		required_missions = { rum_christian_gigalopolis }
-		position = 14
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 151
-				province_id = 316
-				province_id = 149
-				province_id = 4779
-			}
-		}
-		
-		trigger = {
-			151 = {
-				owned_by = ROOT
-				development = 120
-			}
-			316 = {
-				owned_by = ROOT
-				development = 70
-			}
-			149 = {
-				owned_by = ROOT
-				development = 50
-			}
-			4779 = {
-				owned_by = ROOT
-				development = 50
-			}
-			architect = 5
-		}
-		
-		effect = {
-			set_country_flag = byz_unlock_coruscant_rename
-			custom_tooltip = BYZ_URBANIZATION_UPGRADE
-			custom_tooltip = AB_EMPTY
-			hidden_effect = {
-				remove_country_modifier = byz_urbanization
-				add_country_modifier = {
-					name = byz_massive_urbanization
-					duration = -1
-				}
-			}
-			151 = {
-				add_province_modifier = {
-					name = byz_ecumenopolis
-					duration = -1
-				}
-			}
-			149 = {
-				if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 1 }
-					}
-					center_of_trade = 1
-				}
-				add_province_modifier = {
-					name = byz_greater_constantinople_area
-					duration = -1
-				}
-			}
-			4779 = {
-				if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 1 }
-					}
-					center_of_trade = 1
-				}
-				add_province_modifier = {
-					name = byz_greater_constantinople_area
-					duration = -1
-				}
-			}
-			if = {
-				limit = {
-					149 = {
-						development = 60
-					}
-				}
-				custom_tooltip = BYZ_GREATER_AREA2_YES
-				149 = {
-					change_trade_goods = coal
-				}
-			}
-			else = {
-				custom_tooltip = BYZ_GREATER_AREA2_NO
-				tooltip = {
-					149 = {
-						change_trade_goods = coal
-					}
-				}
-			}
-			custom_tooltip = AB_EMPTY
-			if = {
-				limit = {
-					4779 = {
-						development = 60
-					}
-				}
-				custom_tooltip = BYZ_GREATER_AREA3_YES
-				4779 = {
-					change_trade_goods = coal
-				}
-			}
-			else = {
-				custom_tooltip = BYZ_GREATER_AREA3_NO
-				tooltip = {
-					4779 = {
-						change_trade_goods = coal
-					}
-				}
-			}
-		}
-	}
-
 	rum_christian_restored_rome = {
 		icon = mission_westrome
-		required_missions = { }
+		required_missions = { rum_christian_muskets rum_christian_money }
 		position = 15
 				
 		trigger = {
@@ -3430,6 +3765,223 @@ ab_rum_christian_third_rome = {
 			}
 		}
 	}
+
+	rum_christian_megalopolis = {
+		icon = mission_megalopolis
+		required_missions = { }
+		position = 21
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			151 = { owned_by = ROOT }
+			151 = { development = 65 }
+			151 = { num_of_buildings_in_province = 10 }
+		}
+		
+		effect = {
+			151 = {
+				add_province_modifier = {
+					name = BYZ_megalopolis_modifier_1
+					duration = -1
+				}
+				hidden_effect = {
+					add_province_triggered_modifier = BYZ_megalopolis_updater
+				}
+			}
+			custom_tooltip = BYZ_modifier_will_double
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = BYZ_monarch_reigns_in_byzantium
+				duration = -1
+			}
+		}
+	}
+
+	rum_christian_gigalopolis = {
+		icon = take_constantinople
+		required_missions = { rum_christian_megalopolis }
+		position = 22
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 316
+			}
+		}
+		
+		trigger = {
+			151 = {
+				development = 85
+			}
+			316 = {
+				owned_by = ROOT
+				development = 40
+			}
+			architect = 4
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = byz_urbanization
+				duration = -1
+			}
+			151 = {
+				add_province_modifier = {
+					name = byz_gigalopolis
+					duration = -1
+				}
+			}
+			316 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					316 = {
+						development = 50
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA1_YES
+				316 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA1_NO
+				tooltip = {
+					316 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+		}
+	}
+
+	rum_christian_ecumenopolis = {
+		icon = mission_constantinople
+		required_missions = { rum_christian_university rum_christian_gigalopolis rum_christian_sophia }
+		position = 23
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 316
+				province_id = 149
+				province_id = 4779
+			}
+		}
+		
+		trigger = {
+			151 = {
+				development = 120
+			}
+			316 = {
+				development = 70
+			}
+			149 = {
+				owned_by = ROOT
+				development = 50
+			}
+			4779 = {
+				owned_by = ROOT
+				development = 50
+			}
+			architect = 5
+		}
+		
+		effect = {
+			set_country_flag = byz_unlock_coruscant_rename
+			custom_tooltip = BYZ_URBANIZATION_UPGRADE
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				remove_country_modifier = byz_urbanization
+				add_country_modifier = {
+					name = byz_massive_urbanization
+					duration = -1
+				}
+			}
+			151 = {
+				add_province_modifier = {
+					name = byz_ecumenopolis
+					duration = -1
+				}
+			}
+			149 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			4779 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					149 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA2_YES
+				149 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA2_NO
+				tooltip = {
+					149 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					4779 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA3_YES
+				4779 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA3_NO
+				tooltip = {
+					4779 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+		}
+	}
 }
 
 ab_rum_christian_fourth_rome = {
@@ -3652,258 +4204,46 @@ ab_rum_christian_fourth_rome = {
 		}
 	}
 
-	rum_christian_cities_byzantine = {
-		icon = mission_ottoman_law
+	rum_christian_sophia = {
+		icon = mission_hagia_sophia
 		required_missions = { }
-		position = 19
-
-		provinces_to_highlight = {
-		    OR = {
-				province_id = 146
-			    province_id = 148
-		      	province_id = 145
-		      	province_id = 317
-				province_id = 318
-				province_id = 358
-				province_id = 2313
-			}
+		position = 22
+		
+		provinces_to_highlight = { 
+			province_id = 151
 		}
-
+		
 		trigger = {
-		    146 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			148 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			145 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			317 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			318 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			358 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			2313 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
+			151 = { country_or_non_sovereign_subject_holds = ROOT }
+			151 = {
+				has_great_project = {
+					type = hagia_sophia
+					tier = 3
+				}
 			}
 		}
-
+		
 		effect = {
-			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
-			tooltip = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+			151 = {
 				add_province_modifier = {
-                    name = byz_city
-				    duration = -1
+					name = byzantium_cathedral
+					duration = -1
 				}
-				upgrade_trade_building = yes
 			}
+			custom_tooltip = BYZ_TRUST
 			hidden_effect = {
-				every_province = {
-					limit = {
-						OR = {
-							province_id = 146
-							province_id = 148
-							province_id = 145
-							province_id = 317
-							province_id = 318
-							province_id = 358
-							province_id = 2313
-						}
+				every_country = {
+					limit = { 
+						religion = orthodox 
 					}
-					add_permanent_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					upgrade_trade_building = yes
-					if = {
-						limit = {
-							NOT = { province_has_center_of_trade_of_level = 1 }
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-						}
-						province_event = {
-							id = ab_byzantium.71
-						}
-					}
-				}
-			}
-		}
-	}
-
-	rum_christian_cities_latin = {
-		icon = mission_the_golden_city
-		required_missions = { rum_christian_cities_byzantine }
-		position = 20
-
-		provinces_to_highlight = {
-		    OR = {
-				province_id = 118
-			    province_id = 225
-		      	province_id = 341
-		      	province_id = 183
-				province_id = 236
-				province_id = 1876
-				province_id = 134
-				province_id = 12
-			}
-		}
-
-		trigger = {
-		    118 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			225 = {
-			    province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			341 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			183 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			236 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			1876 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			134 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-			12 = {
-				province_is_diocese_land_trigger = yes
-				development = 27
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_building = university
-			}
-		}
-
-		effect = {
-			set_country_flag = byz_faster_romanization_latincities
-			custom_tooltip = BYZ_LATIN_CAPITALS
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
-			tooltip = {
-				add_province_modifier = {
-                    name = byz_city
-				    duration = -1
-				}
-				upgrade_trade_building = yes
-			}
-			hidden_effect = {
-				every_province = {
-					limit = {
-						OR = {
-							province_id = 118
-							province_id = 225
-							province_id = 341
-							province_id = 183
-							province_id = 236
-							province_id = 1876
-							province_id = 134
-							province_id = 12
-						}
-					}
-					add_permanent_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					upgrade_trade_building = yes
-					if = {
-						limit = {
-							NOT = { province_has_center_of_trade_of_level = 1 }
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-						}
-						province_event = {
-							id = ab_byzantium.71
-						}
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
 					}
 				}
 			}
@@ -4124,10 +4464,125 @@ ab_rum_christian_fifth_rome = {
 		}
 	}
 
+	rum_christian_cities_byzantine = {
+		icon = mission_ottoman_law
+		required_missions = { }
+		position = 21
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 146
+			    province_id = 148
+		      	province_id = 145
+		      	province_id = 317
+				province_id = 318
+				province_id = 358
+				province_id = 2313
+			}
+		}
+
+		trigger = {
+		    146 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			148 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			145 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			317 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			318 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			358 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			2313 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 146
+							province_id = 148
+							province_id = 145
+							province_id = 317
+							province_id = 318
+							province_id = 358
+							province_id = 2313
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
 	rum_christian_library = {
 		icon = bibliotheca_corviana
 		required_missions = { }
-		position = 19
+		position = 22
 
 		provinces_to_highlight = { 
 			province_id = 358
@@ -4165,8 +4620,8 @@ ab_rum_christian_fifth_rome = {
 	
 	rum_christian_wall = {
 		icon = byz_reinforce_constantinople
-		required_missions = { rum_christian_library }
-		position = 20
+		required_missions = { rum_christian_sophia rum_christian_library }
+		position = 23
 
 		provinces_to_highlight = { 
 			province_id = 151
@@ -4227,7 +4682,7 @@ ab_rum_christian_fourth_persian_locked = {
 	rum_christian_georgia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_persia_locked }
-		position = 22
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4244,7 +4699,7 @@ ab_rum_christian_fourth_persian_locked = {
 	rum_christian_persosphere_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 23
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4261,7 +4716,7 @@ ab_rum_christian_fourth_persian_locked = {
 	rum_christian_cities_persian_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_persosphere_locked }
-		position = 24
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4291,7 +4746,7 @@ ab_rum_christian_fourth_persian_unlocked = {
 	rum_christian_georgia = {
 		icon = mission_georgia
 		required_missions = { rum_christian_persia }
-		position = 22
+		position = 25
 
 		provinces_to_highlight = {
 			region = caucasia_region
@@ -4372,7 +4827,7 @@ ab_rum_christian_fourth_persian_unlocked = {
 	rum_christian_persosphere = {
 		icon = mission_iran
 		required_missions = { }
-		position = 23
+		position = 26
 
 		provinces_to_highlight = {
 			province_is_diocese_land_trigger = yes
@@ -4417,7 +4872,7 @@ ab_rum_christian_fourth_persian_unlocked = {
 	rum_christian_cities_persian = {
 		icon = per_purify_the_holy_sites
 		required_missions = { rum_christian_persosphere }
-		position = 24
+		position = 27
 
 		provinces_to_highlight = {
 		    OR = {
@@ -4578,7 +5033,7 @@ ab_rum_christian_fifth_persian_locked = {
 	rum_christian_persia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 21
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4595,7 +5050,7 @@ ab_rum_christian_fifth_persian_locked = {
 	rum_christian_turkmen_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_persia_locked }
-		position = 22
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4612,7 +5067,7 @@ ab_rum_christian_fifth_persian_locked = {
 	rum_christian_ariana_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 23
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4629,7 +5084,7 @@ ab_rum_christian_fifth_persian_locked = {
 	rum_christian_invade_india_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_ariana_locked }
-		position = 24
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4646,7 +5101,7 @@ ab_rum_christian_fifth_persian_locked = {
 	rum_christian_maharajas_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_invade_india_locked }
-		position = 25
+		position = 28
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4676,7 +5131,7 @@ ab_rum_christian_fifth_persian_unlocked = {
 	rum_christian_persia = {
 		icon = per_tab_ziyarids_successor
 		required_missions = { }
-		position = 21
+		position = 24
 
 		provinces_to_highlight = {
 			region = persia_region
@@ -4734,7 +5189,7 @@ ab_rum_christian_fifth_persian_unlocked = {
 	rum_christian_turkmen = {
 		icon = mission_central_asian_steppes
 		required_missions = { rum_christian_persia }
-		position = 22
+		position = 25
 
 		provinces_to_highlight = {
 			region = central_asia_region
@@ -4775,7 +5230,7 @@ ab_rum_christian_fifth_persian_unlocked = {
 	rum_christian_ariana = {
 		icon = mission_silk_road
 		required_missions = { }
-		position = 23
+		position = 26
 
 		provinces_to_highlight = {
 			region = khorasan_region
@@ -4848,7 +5303,7 @@ ab_rum_christian_fifth_persian_unlocked = {
 	rum_christian_invade_india = {
 		icon = mission_rb_take_north_india
 		required_missions = { rum_christian_ariana }
-		position = 24
+		position = 27
 
 		provinces_to_highlight = {
 			OR = {
@@ -4915,7 +5370,7 @@ ab_rum_christian_fifth_persian_unlocked = {
 	rum_christian_maharajas = {
 		icon = mission_indian_empire
 		required_missions = { rum_christian_invade_india }
-		position = 25
+		position = 28
 
 		provinces_to_highlight = {
 			superregion = india_superregion
@@ -4983,7 +5438,7 @@ ab_rum_christian_first_chinese_locked = {
 	rum_christian_tibet_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 21
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5000,7 +5455,7 @@ ab_rum_christian_first_chinese_locked = {
 	rum_christian_mongolia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_tibet_locked }
-		position = 23
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5017,7 +5472,7 @@ ab_rum_christian_first_chinese_locked = {
 	rum_christian_far_east_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_mongolia_locked }
-		position = 25
+		position = 28
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5047,7 +5502,7 @@ ab_rum_christian_first_chinese_unlocked = {
 	rum_christian_tibet = {
 		icon = mission_lhasa
 		required_missions = { }
-		position = 21
+		position = 24
 
 		provinces_to_highlight = {
 			region = tibet_region
@@ -5136,7 +5591,7 @@ ab_rum_christian_first_chinese_unlocked = {
 	rum_christian_mongolia = {
 		icon = mission_unify_mongolia
 		required_missions = { rum_christian_tibet }
-		position = 23
+		position = 26
 
 		provinces_to_highlight = {
 			region = mongolia_region
@@ -5225,7 +5680,7 @@ ab_rum_christian_first_chinese_unlocked = {
 	rum_christian_far_east = {
 		icon = jap_financial_cliques
 		required_missions = { rum_christian_mongolia }
-		position = 25
+		position = 28
 
 		provinces_to_highlight = {
 			superregion = far_east_superregion
@@ -5277,7 +5732,7 @@ ab_rum_christian_second_chinese_locked = {
 	rum_christian_invade_china_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_tibet_locked rum_christian_burma_locked }
-		position = 22
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5294,7 +5749,7 @@ ab_rum_christian_second_chinese_locked = {
 	rum_christian_cities_chinese_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_invade_china_locked }
-		position = 24
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5324,7 +5779,7 @@ ab_rum_christian_second_chinese_unlocked = {
 	rum_christian_invade_china = {
 		icon = mission_jaded
 		required_missions = { rum_christian_tibet rum_christian_burma }
-		position = 22
+		position = 25
 
 		provinces_to_highlight = {
 			superregion = china_superregion
@@ -5379,7 +5834,7 @@ ab_rum_christian_second_chinese_unlocked = {
 	rum_christian_cities_chinese = {
 		icon = mission_asian_city
 		required_missions = { rum_christian_invade_china }
-		position = 24
+		position = 27
 
 		provinces_to_highlight = {
 		    OR = {
@@ -5550,7 +6005,7 @@ ab_rum_christian_third_chinese_locked = {
 	rum_christian_burma_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 21
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5567,7 +6022,7 @@ ab_rum_christian_third_chinese_locked = {
 	rum_christian_indochina_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_burma_locked }
-		position = 23
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5584,7 +6039,7 @@ ab_rum_christian_third_chinese_locked = {
 	rum_christian_east_indies_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_indochina_locked }
-		position = 25
+		position = 28
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5601,7 +6056,7 @@ ab_rum_christian_third_chinese_locked = {
 	rum_christian_asia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { rum_christian_far_east_locked rum_christian_east_indies_locked rum_christian_maharajas }
-		position = 26
+		position = 29
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -5631,7 +6086,7 @@ ab_rum_christian_third_chinese_unlocked = {
 	rum_christian_burma = {
 		icon = mission_conquer_lower_burma_tau
 		required_missions = { }
-		position = 21
+		position = 24
 
 		provinces_to_highlight = {
 			region = burma_region
@@ -5680,7 +6135,7 @@ ab_rum_christian_third_chinese_unlocked = {
 	rum_christian_indochina = {
 		icon = mission_rule_indochina
 		required_missions = { rum_christian_burma }
-		position = 23
+		position = 26
 
 		provinces_to_highlight = {
 			region = indo_china_region
@@ -5717,7 +6172,7 @@ ab_rum_christian_third_chinese_unlocked = {
 	rum_christian_east_indies = {
 		icon = mission_las_islas_filipinas
 		required_missions = { rum_christian_indochina }
-		position = 25
+		position = 28
 
 		provinces_to_highlight = {
 			superregion = east_indies_superregion
@@ -5759,7 +6214,7 @@ ab_rum_christian_third_chinese_unlocked = {
 	rum_christian_asia = {
 		icon = mission_warring
 		required_missions = { rum_christian_far_east rum_christian_east_indies rum_christian_maharajas }
-		position = 26
+		position = 29
 
 		provinces_to_highlight = {
 			OR = {

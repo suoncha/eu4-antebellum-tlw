@@ -1,6 +1,6 @@
 ab_rum_muslim_first = {
-	slot = 1 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 1
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = muslim
@@ -27,13 +27,19 @@ ab_rum_muslim_first = {
 		effect = {
 			custom_tooltip = RUM_TRUST
 			add_country_modifier = {
-				name = "rum_c_achieve"
+				name = rum_c_achieve
 				duration = 5475
 			}
 			hidden_effect = {
 				every_country = {
-					limit = { alliance_with = ROOT }
-					add_trust = { who = ROOT value = 10 mutual = yes }
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
+					}
 				}
 			}
 		}
@@ -61,7 +67,17 @@ ab_rum_muslim_first = {
 		}
 		
 		effect = {
-			country_event = { id = ab_zrum.3 }
+			country_event = {
+				id = ab_zrum.3
+			}
+			custom_tooltip = AB_EMPTY
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 			anatolia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -96,7 +112,7 @@ ab_rum_muslim_first = {
 		effect = {
 			add_army_professionalism = 0.05
 			add_country_modifier = {
-				name = "rum_m_bulwark"
+				name = rum_m_bulwark
 				duration = 9125
 			}
 			thrace_area = {
@@ -302,7 +318,7 @@ ab_rum_muslim_first = {
 			add_army_tradition = 25
 			balkan_region = {
 				add_province_modifier = {
-					name = "rum_develop_balkans"
+					name = rum_develop_balkans
 					duration = 7300
 				}
 			}
@@ -358,7 +374,7 @@ ab_rum_muslim_first = {
 		effect = {
 			add_mil_power = 100
 			add_country_modifier = {
-				name = "seljuk_army"
+				name = seljuk_army
 				duration = -1
 			}
 		}
@@ -366,8 +382,8 @@ ab_rum_muslim_first = {
 }
 
 ab_rum_muslim_second = {
-	slot = 2 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 2
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = muslim
@@ -383,7 +399,7 @@ ab_rum_muslim_second = {
 	has_country_shield = yes
 	
 	rum_muslim_beyliks = {
-		icon = mission_persian_soldiers
+		icon = mam_persia
 		required_missions = { }
 		position = 2
 		
@@ -396,11 +412,13 @@ ab_rum_muslim_second = {
 		}
 		
 		effect = {
-			custom_tooltip = RUM_CLAIM
+			add_army_tradition_or_mil_power = { amount = 10 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "rum_c_beyliks"
+				name = rum_c_beyliks
 				duration = 7300
 			}
+			custom_tooltip = RUM_CLAIM
 			hidden_effect = {
 				every_province = {
 					limit = {
@@ -413,11 +431,74 @@ ab_rum_muslim_second = {
 			}
 		}
 	}
+
+	rum_muslim_unite_the_turks = {
+		icon = per_qizilbash_loyalty
+		required_missions = { rum_muslim_beyliks }
+		position = 3
+		
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = turkish
+				NOT = { tag = ROOT }
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+				is_free_or_tributary_trigger = yes
+			}
+		}
+
+		trigger = {
+			any_subject_country = {
+				primary_culture = turkish
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RUM_NO_INDEPENDENT_TURKISH_BEYLIK
+				NOT = {
+					any_country = {
+						primary_culture = turkish
+						NOT = { tag = ROOT }
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+						is_free_or_tributary_trigger = yes
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = commandant
+				skill = 2
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RUM_ANNEX_EVERY_BEYLIKS
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						primary_culture = turkish
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+					}
+					ROOT = {
+						inherit = PREV
+					}
+				}
+			}
+		}
+	}
 	
 	rum_muslim_crimea = {
-	    icon = mission_invade_island
-		required_missions = { rum_muslim_anatolia }
-		position = 5
+	    icon = mission_feodosia_port
+		required_missions = { rum_muslim_legacy }
+		position = 4
 		
 		trigger = {
 		    crimea_area = {
@@ -432,20 +513,21 @@ ab_rum_muslim_second = {
 		}
 		
 		effect = {
-			add_mercantilism = 3
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "rum_c_crimea"
+				name = rum_c_crimea
 				duration = 7300
 			}
-			
 			2410 = {
 				add_trade_modifier = {
 					who = ROOT
-					duration = 9125
-					power = 15
+					duration = -1
+					power = 25
 					key = rum_black_sea_trade
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			crimea_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -457,7 +539,7 @@ ab_rum_muslim_second = {
 	}
 	
 	rum_muslim_city = {
-	    icon = mission_city_of_the_world's_desire
+	    icon = mission_fall_of_constantinople
 		required_missions = { rum_muslim_nicaea }
 		position = 6
 		
@@ -539,7 +621,7 @@ ab_rum_muslim_second = {
 	}
 	
 	rum_muslim_kaiser = {
-	    icon = mission_restore_faith_in_the_throne
+	    icon = mission_the_roman_sultan
 		required_missions = { rum_muslim_city }
 		position = 7
 		
@@ -587,7 +669,7 @@ ab_rum_muslim_second = {
 				add_base_manpower = 2
 			}
 			add_country_modifier = {
-				name = "rum_m_kaiser"
+				name = rum_m_kaiser
 				duration = -1
 			}
 			custom_tooltip = RUM_BANISH
@@ -595,7 +677,7 @@ ab_rum_muslim_second = {
 				add_devotion = 10
 				add_legitimacy = 20
 				add_country_modifier = {
-					name = "rum_latins"
+					name = rum_latins
 					duration = 9125
 				}
 			}
@@ -610,7 +692,7 @@ ab_rum_muslim_second = {
 					add_devotion = 10
 					add_legitimacy = 20
 					add_country_modifier = {
-						name = "rum_latins"
+						name = rum_latins
 						duration = 9125
 					}
 				}
@@ -671,7 +753,7 @@ ab_rum_muslim_second = {
 			add_years_of_income = 0.5
 			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
 			add_country_modifier = {
-				name = "rum_c_ottomans"
+				name = rum_c_ottomans
 				duration = -1
 			}
 		}
@@ -708,7 +790,7 @@ ab_rum_muslim_second = {
 			}
 			151 = {
 				add_province_modifier = {
-					name = "rum_m_ayasofya"
+					name = rum_m_ayasofya
 					duration = -1
 				}
 			}
@@ -727,7 +809,7 @@ ab_rum_muslim_second = {
 		
 		effect = {
 			add_country_modifier = {
-				name = "seljuk_janissaries"
+				name = seljuk_janissaries
 				duration = 7300
 			}
 		}
@@ -753,7 +835,7 @@ ab_rum_muslim_second = {
 		effect = {
 			custom_tooltip = SEL_PASHA
 			add_country_modifier = {
-				name = "sel_pashas"
+				name = sel_pashas
 				duration = -1
 			}
 			custom_tooltip = SEL_PASHA_REFORMED
@@ -775,8 +857,8 @@ ab_rum_muslim_second = {
 }
 
 ab_rum_muslim_third = {
-	slot = 3 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 3
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = muslim
@@ -809,8 +891,9 @@ ab_rum_muslim_third = {
 		}
 	
 		effect = {
+			add_years_of_income = 1
 			add_country_modifier = {
-				name = "seljuk_bridging"
+				name = seljuk_bridging
 				duration = 7300
 			}
 		}
@@ -823,12 +906,6 @@ ab_rum_muslim_third = {
 		
 		provinces_to_highlight = {
 			is_capital_of = ROOT
-			OR = {
-				NOT = { development = 30 }
-				has_tax_building_trigger = no
-				has_production_building_trigger = no
-				has_trade_building_trigger = no
-			}
 		}
 		
 		trigger = {
@@ -840,16 +917,23 @@ ab_rum_muslim_third = {
 		
 		effect = {
 			capital_scope = {
-				add_province_modifier = {
-					name = rum_m_seat
-					duration = -1
-				}
 				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 3 }
 					}
 					add_center_of_trade_level = 1
 				}
+				add_province_modifier = {
+					name = rum_m_seat
+					duration = -1
+				}
+				upgrade_tax_building = yes
 			}
 		}
 	}
@@ -938,7 +1022,7 @@ ab_rum_muslim_third = {
 			custom_tooltip = RUM_M_ARMENIA
 			tooltip = {
 				add_province_modifier = {
-					name = "seluk_displace"
+					name = seluk_displace
 					duration = -1
 				}
 			}
@@ -946,7 +1030,7 @@ ab_rum_muslim_third = {
 				every_owned_province = {
 					limit = { culture = armenian }
 					add_province_modifier = {
-						name = "seluk_displace"
+						name = seluk_displace
 						duration = -1
 					}
 				}
@@ -993,7 +1077,7 @@ ab_rum_muslim_third = {
 		effect = {
 			create_general = { tradition = 75 }
 			add_country_modifier = {
-				name = "rum_m_invasion"
+				name = rum_m_invasion
 				duration = 7300
 			}
 			sicily_area = {
@@ -1040,7 +1124,7 @@ ab_rum_muslim_third = {
 		effect = {
 			custom_tooltip = RUM_CORE_SICILY
 			add_country_modifier = {
-				name = "rum_m_italiyyan"
+				name = rum_m_italiyyan
 				duration = 7300
 			}
 			hidden_effect = {
@@ -1239,7 +1323,6 @@ ab_rum_muslim_third = {
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = AB_EMPTY
-			swap_non_generic_missions = yes
 			change_tag = ROM
 			on_change_tag_effect = yes
 			override_country_name = CALIPHATUMROMANUM
@@ -1337,13 +1420,14 @@ ab_rum_muslim_third = {
 				name = centralization_modifier
 				duration = 7300
 			}
+			swap_non_generic_missions = yes
 		}
 	}
 }
 
 ab_rum_muslim_fourth = {
-	slot = 4 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 4
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = muslim
@@ -1391,7 +1475,7 @@ ab_rum_muslim_fourth = {
 		effect = {
 			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
 			add_country_modifier = {
-				name = "seljuk_caravans"
+				name = seljuk_caravans
 				duration = -1
 			}
 			custom_tooltip = SEL_TRADE_MISSION
@@ -1522,7 +1606,7 @@ ab_rum_muslim_fourth = {
 		effect = {
 			add_yearly_manpower = 3
 			add_country_modifier = {
-				name = "seljuk_levantine"
+				name = seljuk_levantine
 				duration = 9125
 			}
 			palestine_area = {
@@ -1556,7 +1640,7 @@ ab_rum_muslim_fourth = {
 			custom_tooltip = SELJUK_NIZZARID
 			tooltip = {
 				add_ruler_modifier = {
-					name = "seljuk_breaker"
+					name = seljuk_breaker
 					duration = -1
 				}
 			}
@@ -1570,7 +1654,7 @@ ab_rum_muslim_fourth = {
 						}
 					}
 					add_ruler_modifier = {
-						name = "seljuk_breaker"
+						name = seljuk_breaker
 						duration = -1
 					}
 				}
@@ -1658,7 +1742,7 @@ ab_rum_muslim_fourth = {
 		effect = {
 			add_army_tradition = 25
 			add_country_modifier = {
-				name = "seljuk_usurper"
+				name = seljuk_usurper
 				duration = 9125
 			}
 			dongola_area = {
@@ -1751,7 +1835,7 @@ ab_rum_muslim_fourth = {
 				add_nationalism = -5
 			}
 			add_country_modifier = {
-				name = "rum_m_berber"
+				name = rum_m_berber
 				duration = 9125
 			}
 			iberia_region = {
@@ -1803,8 +1887,8 @@ ab_rum_muslim_fourth = {
 }
 
 ab_rum_muslim_fifth = {
-	slot = 5 #upper left column
-	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	slot = 5
+	generic = no
 	ai = yes
 	potential = {
 		religion_group = muslim
@@ -1820,7 +1904,7 @@ ab_rum_muslim_fifth = {
 	has_country_shield = yes
 	
 	rum_muslim_convert = {
-		icon = mission_hands_praying
+		icon = per_unify_the_shia_realms
 		required_missions = { }
 		position = 1
 		
@@ -2081,7 +2165,7 @@ ab_rum_muslim_fifth = {
 		effect = {
 			change_innovativeness = 5
 			add_country_modifier = {
-				name = "sel_house"
+				name = sel_house
 				duration = 9125
 			}
 		}
@@ -2275,7 +2359,7 @@ ab_rum_muslim_fifth = {
 	}
 }
 
-#Rome
+# Rome
 ab_rum_muslim_first_rome = {
 	slot = 1
 	generic = no
@@ -3027,7 +3111,10 @@ ab_rum_muslim_second_rome = {
 		}
 		
 		effect = {
-			add_power_projection_mission = { amount = 25 }
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
 			add_country_modifier = {
 				name = byz_german_conquest
 				duration = 7300
@@ -3073,7 +3160,7 @@ ab_rum_muslim_third_rome = {
 		
 		effect = {
 			add_country_modifier = {
-				name = "trk_mounted_dread"
+				name = trk_mounted_dread
 				duration = 3650
 			}
 			ural_region = {

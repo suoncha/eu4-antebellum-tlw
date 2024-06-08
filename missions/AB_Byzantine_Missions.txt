@@ -733,6 +733,23 @@ byz_slot1_europe_locked = {
 			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
+
+	byzantium_cultural_hegemony_locked = {
+		icon = mission_unknown_mission
+		position = 26
+		required_missions = { byzantium_belgica_locked byzantium_germany_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
 }
 
 byz_slot1_europe_unlocked = {
@@ -897,6 +914,80 @@ byz_slot1_europe_unlocked = {
 				add_great_project_tier = {
 					type = amsterdam_bourse
 					tier = 1
+				}
+			}
+		}
+	}
+
+	byzantium_cultural_hegemony = {
+		icon = mission_cultural_hegemony
+		position = 26
+		required_missions = { byzantium_belgica byzantium_germany }
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				continent = europe
+				continent = asia
+				continent = africa
+			}
+			NOT = {
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 1000
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				OR = {
+					continent = europe
+					continent = asia
+					continent = africa
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_GOLDEN_AGE 
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_cultural_hegemony
+				duration = -1
+			}
+			custom_tooltip = BYZ_CULTURAL_HEGEMONY_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = byz_cultural_hegemony_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 600
+				}
+				else = {
+					reset_golden_age = yes
+				}
+				every_province = {
+					limit = {
+						culture_group = roman_g
+					}
+					add_province_modifier = {
+						name = byz_cultural_hegemony_province
+						duration = -1
+					}
 				}
 			}
 		}
@@ -2148,7 +2239,10 @@ byz_slot2_europe_unlocked = {
 		}
 		
 		effect = {
-			add_power_projection_mission = { amount = 25 }
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
 			add_country_modifier = {
 				name = byz_german_conquest
 				duration = 7300
@@ -2294,7 +2388,7 @@ byz_slot3_balkan = {
 	}
 
 	byzantium_crimea = {
-		icon = mission_control_the_black_sea
+		icon = mission_feodosia_port
 		required_missions = { byzantium_frontier }
 		position = 6
 		
@@ -2811,7 +2905,12 @@ byz_slot3_army = {
 
 		trigger = {
 			religion = orthodox
-			118 = { religion = orthodox }
+			patriarch_authority = 1
+			118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				has_tax_building_trigger = yes
+				religion = orthodox
+			}
 		}
 
 		effect = {
@@ -2819,7 +2918,6 @@ byz_slot3_army = {
 				id = ab_byzantium.62
 			}
 			custom_tooltip = AB_EMPTY
-			add_patriarch_authority = 0.2
 			add_country_modifier = {
 				name = byzantium_conversion_of_rome
 				duration = 7300
@@ -3478,7 +3576,7 @@ byz_slot4_balkan = {
 				id = ab_byzantium.16
 			}
 			custom_tooltip = AB_EMPTY
-			al_jazira_area = {
+			aleppo_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -3499,7 +3597,7 @@ byz_slot4_balkan = {
 				}
 				add_permanent_claim = ROOT
 			}
-			aleppo_area = {
+			al_jazira_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -5754,11 +5852,9 @@ byz_slot3_tall = {
 		
 		trigger = {
 			151 = {
-				owned_by = ROOT
 				development = 120
 			}
 			316 = {
-				owned_by = ROOT
 				development = 70
 			}
 			149 = {
@@ -6002,7 +6098,6 @@ byz_slot4_tall = {
 		
 		trigger = {
 			151 = {
-				owned_by = ROOT
 				development = 85
 			}
 			316 = {
