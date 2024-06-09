@@ -925,12 +925,7 @@ byz_slot1_europe_unlocked = {
 		required_missions = { byzantium_belgica byzantium_germany }
 
 		provinces_to_highlight = {
-			country_or_non_sovereign_subject_holds = ROOT
-			OR = {
-				continent = europe
-				continent = asia
-				continent = africa
-			}
+			province_is_diocese_land_trigger = yes
 			NOT = {
 				culture_group = roman_g
 				has_road_building_trigger = yes
@@ -945,14 +940,10 @@ byz_slot1_europe_unlocked = {
 			}
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 1000
+				province_is_diocese_land_trigger = yes
 				culture_group = roman_g
 				has_road_building_trigger = yes
 				has_courthouse_building_trigger = yes
-				OR = {
-					continent = europe
-					continent = asia
-					continent = africa
-				}
 			}
 		}
 		
@@ -1405,7 +1396,7 @@ byz_slot2_balkan = {
 		}
 
 		effect = {
-            country_event = { 
+            country_event = {
 				id = ab_byzantium.48
 			}
 		}
@@ -1528,7 +1519,7 @@ byz_slot2_balkan = {
 		}
 		
 		effect = {
-			country_event = { 
+			country_event = {
 				id = ab_byzantium.47
 			}
 			custom_tooltip = AB_EMPTY
@@ -1859,7 +1850,7 @@ byz_slot2_europe = {
 		trigger = {
 			379 = { country_or_non_sovereign_subject_holds = ROOT }
 			379 = { development = 20 }
-			379 = { religion = orthodox }
+			379 = { religion = ROOT }
 			379 = {
 				has_great_project = {
 					type = holy_city_jerusalem
@@ -2883,13 +2874,14 @@ byz_slot3_army = {
 		}
 
 		effect = {
+			country_event = {
+				id = catholic_flavor.3
+			}
+			custom_tooltip = AB_EMPTY
 			add_patriarch_authority = 0.1
 			add_country_modifier = {
 				name = healing_the_schism
 				duration = -1
-			}
-			country_event = {
-				id = catholic_flavor.3
 			}
 		}
 	}
@@ -2909,7 +2901,7 @@ byz_slot3_army = {
 			118 = {
 				country_or_non_sovereign_subject_holds = ROOT
 				has_tax_building_trigger = yes
-				religion = orthodox
+				religion = ROOT
 			}
 		}
 
@@ -2926,8 +2918,7 @@ byz_slot3_army = {
 			hidden_effect = {
 				every_country = {
 					limit = { 
-						religion = catholic 
-						knows_country = BYZ
+						religion = catholic
 					}
 					country_event = {
 						id = flavor_byz.2
@@ -3995,7 +3986,7 @@ byz_slot4_alexandria = {
 		trigger = {
 			358 = { country_or_non_sovereign_subject_holds = ROOT }
 			358 = { development = 30 }
-			358 = { religion = orthodox }
+			358 = { religion = ROOT }
 		}
 		
 		effect = {
@@ -5592,7 +5583,9 @@ byz_slot2_tall = {
 		required_missions = { byzantium_patriarchate }
 
 		trigger = {
-			crown_stronger_than_estate = { estate = estate_church }
+			crown_stronger_than_estate = {
+				estate = estate_church
+			}
 			NOT = { 
 				num_of_estate_privileges = { 
 					estate = estate_church
