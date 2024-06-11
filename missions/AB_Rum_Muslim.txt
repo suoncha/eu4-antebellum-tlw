@@ -799,7 +799,9 @@ ab_rum_muslim_second = {
 				}
 			}
 			if = {
-				limit = { has_estate = estate_burghers }
+				limit = {
+					has_estate = estate_burghers
+				}
 				estate_loyalty = {
 					estate = estate_burghers
 					loyalty = 70
@@ -1048,9 +1050,9 @@ ab_rum_muslim_third = {
 		position = 4
 		
 		trigger = {
-		    anatolia_region = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+		    num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = anatolia_region
 			}
 		}
 		
@@ -1061,6 +1063,9 @@ ab_rum_muslim_third = {
 		
 		effect = {
 			anatolia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 				add_nationalism = -20
 			}
 			add_country_modifier = {
@@ -1191,7 +1196,9 @@ ab_rum_muslim_third = {
 			custom_tooltip = RUM_CORE_SICILY
 			hidden_effect = {
 				every_province = {
-					limit = { is_core = SIC }
+					limit = {
+						is_core = SIC
+					}
 					add_territorial_core = ROOT
 				}
 			}
@@ -1556,7 +1563,9 @@ ab_rum_muslim_fourth = {
                     amount = 15
                     effect = "
                         random_owned_province = {
-							limit = { has_manufactory_trigger = yes }
+							limit = {
+								has_manufactory_trigger = yes
+							}
 							add_base_production = 1
                         }
                     "
@@ -1781,11 +1790,11 @@ ab_rum_muslim_fourth = {
 		
 		provinces_to_highlight = {
 			region = maghreb_region
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 23
 				region = maghreb_region
 			}
@@ -1794,6 +1803,9 @@ ab_rum_muslim_fourth = {
 		effect = {
 			add_adm_power = 150
 			maghreb_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 				add_nationalism = -15
 			}
 			add_country_modifier = {
@@ -2161,26 +2173,15 @@ ab_rum_muslim_fifth = {
 		
 		provinces_to_highlight = {
 			OR = {
-				area = tabuk_area
-				area = mecca_area
-				area = medina_area
+				province_id = 384
+				province_id = 385
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			tabuk_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			mecca_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			medina_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
+			384 = { country_or_non_sovereign_subject_holds = ROOT }
+			385 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		effect = {
@@ -4351,7 +4352,9 @@ ab_rum_muslim_fourth_rome = {
 				custom_tooltip = BYZ_PUNICS_GONE_YES
 				hidden_effect = {
 					every_province = {
-						limit = { culture = punic }
+						limit = {
+							culture = punic
+						}
 						add_devastation = 100
 						add_base_tax = -10
 						add_base_production = -10
