@@ -14,8 +14,9 @@ wls_branch_1 = {
 	has_country_shield = yes
 	
 	build_up_the_ring = {
-		icon = mission_conquer_50_development
+		icon = mission_expand_great_wall
 		required_missions = { }
+		position = 1
 
 		provinces_to_highlight = {
 			OR = {
@@ -50,41 +51,49 @@ wls_branch_1 = {
 			}
 		}
 		effect = {
-			add_country_modifier = {
-				name = protect_wls
-				duration = 9125
-			}
+			add_stability_or_adm_power = yes
 			242 = {
 				add_province_modifier = {
 					name = build_wls
-					duration = 9125
+					duration = -1
 				}
+			}
+			add_country_modifier = {
+				name = protect_wls
+				duration = 9125
 			}
 		}
 	}
 
 	expand_gwyn = {
-		icon = mission_early_game_buildings
+		icon = spa_dominate_sevilla
 		required_missions = { build_up_the_ring }
+		position = 2
 
 		provinces_to_highlight = {
 			province_id = 242
-			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				NOT = { development = 10 }
-				has_trade_building_trigger = no
-				has_tax_building_trigger = no
-			}
 		}
 
 		trigger = {
+			242 = { owned_by = ROOT }
 			242 = { development = 10 }
 			242 = { has_trade_building_trigger = yes }
 			242 = { has_tax_building_trigger = yes }
 		}
 
 		effect = {
-			add_prestige = 10
+			242 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = brn_capital_of_the_hills
+					duration = -1
+				}
+			}
 			define_advisor = {
 				type = planner
 				skill = 2
@@ -94,8 +103,9 @@ wls_branch_1 = {
 	}
 
 	production_expansion = {
-		icon = mission_have_manufactories
+		icon = mission_farm
 		required_missions = { expand_gwyn }
+		position = 4
 
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -115,9 +125,31 @@ wls_branch_1 = {
 		}
 
 		effect = {
-			add_years_of_income = 0.5
-			capital_scope = {
-				add_prosperity = 100
+			change_price = {
+                trade_goods = livestock
+                key = "Welsh Beef"
+                value = 0.15
+                duration = -1
+            }
+			custom_tooltip = EVERY_FARM_ESTATE
+			tooltip = {
+				add_province_modifier = {
+					name = brn_welsh_agriculture
+					duration = -1
+				}
+				add_or_upgrade_production_building = yes
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = farm_estate
+					}
+					add_province_modifier = {
+						name = brn_welsh_agriculture
+						duration = -1
+					}
+					add_or_upgrade_production_building = yes
+				}
 			}
 		}
 	}
@@ -144,10 +176,13 @@ wls_branch_1 = {
 		}
 
 		effect = {
+			add_absolutism = 20
 			add_country_modifier = {
 				name = wales_indust
 				duration = -1
 			}
+			set_country_flag = swa_architect_gain_build_time
+			custom_tooltip = SWA_ARCHITECT_SCALING
 		}
 	}
 }
@@ -167,21 +202,12 @@ wls_branch_2 = {
 	has_country_shield = yes
 
 	defenders_cymru = {
-		icon = mission_portuguese_oman
+		icon = per_establish_eastern_defenses
 		position = 2
 		required_missions = { build_up_the_ring }
 
 		provinces_to_highlight = {
 			province_id = 242
-			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				NOT = {
-					has_great_project = {
-						type = iron_ring
-						tier = 3
-					}
-				}
-			}
 		}
 
 		trigger = {
@@ -194,7 +220,6 @@ wls_branch_2 = {
 		}
 
 		effect = {
-			add_prestige = 10
 			242 = {
 				add_base_tax = 2
 				add_base_manpower = 3
@@ -204,6 +229,8 @@ wls_branch_2 = {
 				name = build_wls2
 				duration = -1
 			}
+			set_country_flag = hab_fort_advisor_buff_flag
+			custom_tooltip = HAB_FORT_ADVISOR_NOW_GRANTS_FORT_MAINTENANCE_PER_LEVEL
 		}
 	}
 
@@ -231,9 +258,15 @@ wls_branch_2 = {
 		}
 
 		effect = {
+			add_splendor = 200
 			add_country_modifier = {
 				name = golden_wales
 				duration = -1
+			}
+			wales_area = {
+				add_or_upgrade_tax_building = yes
+				custom_tooltip = AB_EMPTY
+				ab_add_or_upgrade_road_building = yes
 			}
 		}
 	}
@@ -241,11 +274,11 @@ wls_branch_2 = {
 	take_the_marshlands_wls = {
 		icon = mission_rb_into_england
 		required_missions = { take_anglia_wls }
-		position = 4
+		position = 5
 
 		provinces_to_highlight = {
 			OR = {
-				area = scottish_marches_area 
+				area = scottish_marches_area
 				area = yorkshire_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
@@ -265,9 +298,40 @@ wls_branch_2 = {
 		effect = {
 			add_mil_power = 100
 			define_advisor = {
-				type = fortification_expert
+				type = army_organiser
 				skill = 2
 				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BRN_ENGLAND_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = british_isles_region
+						}
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			highlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lowlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
@@ -288,21 +352,25 @@ wls_branch_3 = {
 	has_country_shield = yes
 
 	force_limit_wls = {
-		icon = mission_crusade_for_varna
+		icon = mission_hundred_years_war
 		required_missions = { }
+		position = 1
 
 		trigger = {
-			army_size_percentage = 1
-			num_of_generals = 1
-			manpower_percentage = 0.8
+			OR = {
+				army_size_percentage = 1
+				manpower_percentage = 0.8
+			}
 		}
 
 		effect = {
+			create_general = { tradition = 50 }
 			define_advisor = {
 				type = army_reformer
 				skill = 1
-				cost_multiplier = 0.5
+				cost_multiplier = 0.25
 			}
+			custom_tooltip = AB_EMPTY
 			west_midlands_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -314,8 +382,9 @@ wls_branch_3 = {
 	}
 
 	expand_dike_wls = {
-		icon = mission_unite_home_region
+		icon = mch_bypass_great_wall
 		required_missions = { force_limit_wls }
+		position = 3
 
 		provinces_to_highlight = {
 			area = west_midlands_area
@@ -332,8 +401,10 @@ wls_branch_3 = {
 		effect = {
 			add_country_modifier = {
 				name = wls_saxon_burhs
-				duration = 5475
+				duration = 7300
 			}
+			custom_tooltip = BRN_OCCUPY_ENGLAND_BUFF
+			custom_tooltip = AB_EMPTY
 			east_midlands_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -352,8 +423,9 @@ wls_branch_3 = {
 	}
 
 	take_anglia_wls = {
-		icon = mission_rb_unite_the_clans
+		icon = mission_fyrd
 		required_missions = { expand_dike_wls }
+		position = 4
 
 		provinces_to_highlight = {
 			OR = {
@@ -378,7 +450,7 @@ wls_branch_3 = {
 			add_adm_power = 100
 			add_country_modifier = {
 				name = wls_dragons
-				duration = 7300
+				duration = 9125
 			}
 			scottish_marches_area = {
 				limit = {
@@ -401,40 +473,20 @@ wls_branch_3 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			234 = {
-				if = {
-					limit = {
-						NOT = { is_permanent_claim = ROOT }
-						NOT = { is_core = ROOT }
-					}
-					add_permanent_claim = ROOT
+			wessex_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
-			}
-			4374 = {
-				if = {
-					limit = {
-						NOT = { is_permanent_claim = ROOT }
-						NOT = { is_core = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
-			}
-			4130 = {
-				if = {
-					limit = {
-						NOT = { is_permanent_claim = ROOT }
-						NOT = { is_core = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
 
 	proclaim_pyrdain_wls = {
-		icon = mission_invade_england
-		required_missions = { take_anglia_wls take_londinium_wls take_the_marshlands_wls }
-		position = 5
+		icon = a_roman_empire
+		required_missions = { take_londinium_wls take_the_marshlands_wls }
+		position = 6
 
 		provinces_to_highlight = { 
 			area = wessex_area
@@ -452,7 +504,15 @@ wls_branch_3 = {
 			country_event = {
 				id = wales_flavor.2
 			}
-			british_isles_region = {
+			custom_tooltip = AB_EMPTY
+			cornwall_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			leinster_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -473,14 +533,37 @@ wls_branch_3 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			picardy_area = {
+			jutland_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-		}	
+			denmark_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = wls_saxon_burhs
+				}
+				custom_tooltip = BRN_SPEEDRUN_YES
+				hidden_effect = {
+					extend_country_modifier = {
+						name = wls_saxon_burhs
+						duration = 3650
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRN_SPEEDRUN_NO
+			}
+		}
 	}
 }
 
@@ -499,7 +582,7 @@ wls_branch_4 = {
 	has_country_shield = yes
 
 	house_of_glyndwr = {
-		icon = hungarian_union
+		icon = mission_strengthen_the_vegvar
 		required_missions = { gather_allies_wls }
 		position = 2
 
@@ -523,6 +606,7 @@ wls_branch_4 = {
 		}
 
 		effect = {
+			add_dip_power = 100
 			add_country_modifier = {
 				name = house_glyndwr
 				duration = -1
@@ -531,7 +615,7 @@ wls_branch_4 = {
 	}
 
 	dominate_trade_wls = {
-		icon = mission_establish_high_seas_navy
+		icon = mission_control_the_channel
 		position = 3
 		required_missions = { new_welsh_navy }
 		
@@ -561,7 +645,12 @@ wls_branch_4 = {
 		}
 
 		effect = {
-			add_years_of_income = 1
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			add_years_of_trade_income = {
+				years = 1
+				custom_tooltip = tur_trade_income
+			}
 			add_country_modifier = {
 				name = wls_naval_supremacy
 				duration = 9125
@@ -571,8 +660,8 @@ wls_branch_4 = {
 
 	take_londinium_wls = {
 		icon = mission_rb_scottish_conquer_london
-		position = 4
 		required_missions = { take_anglia_wls }
+		position = 5
 
 		provinces_to_highlight = {
 			area = home_counties_area
@@ -590,111 +679,17 @@ wls_branch_4 = {
 			country_event = {
 				id = wales_flavor.1
 			}
-		}
-	}
-}
-
-wls_branch_4_locked = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = WLS
-			tag = BRN
-		}
-	}
-	has_country_shield = yes
-
-	wls_punics_locked = {
-		icon = mission_unknown_mission
-		position = 5
-		required_missions = { ynys_afallon }
-		
-		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_UNLOCKABLE
-				tag = ROM
-			}
-		}
-		
-		effect = {
-			custom_tooltip = BYZ_UNLOCKABLE
-		}
-	}
-}
-
-wls_branch_4_unlocked = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = BRN
-	}
-	has_country_shield = yes
-
-	wls_punics = {
-		icon = mission_punic
-		position = 5
-		required_missions = { ynys_afallon }
-		
-		provinces_to_highlight = {
-			OR = {
-				region = northeast_america_region
-				region = southeast_america_region
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-			has_discovered = ROOT
-		}
-
-		trigger = {
-			northeast_america_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			southeast_america_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-		}
-		
-		effect = {
-			965 = {
-				change_trade_goods = salt
-			}
-			add_country_modifier = {
-				name = byz_punics_defeated
-				duration = 10950
-			}
-			north_america_superregion = {
+			custom_tooltip = AB_EMPTY
+			british_isles_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
+					country_or_non_sovereign_subject_holds = ROOT
 				}
-				add_permanent_claim = ROOT
+				add_nationalism = -10
 			}
 			custom_tooltip = AB_EMPTY
-			if = {
-				limit = {
-					NOT = { exists = CTG }
-				}
-				custom_tooltip = BYZ_PUNICS_GONE_YES
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture = punic
-						}
-						add_devastation = 100
-						add_base_tax = -10
-						add_base_production = -10
-						add_base_manpower = -10
-						change_culture = owner
-					}
-				}
-			}
-			else = {
-				custom_tooltip = BYZ_PUNICS_GONE_NO
+			add_accepted_culture_or_dip_power = {
+				culture = english
+				dip_reward = yes
 			}
 		}
 	}
@@ -717,43 +712,35 @@ wls_branch_5 = {
 	gather_allies_wls = {
 		icon = mission_alliances
 		required_missions = { }
+		position = 1
 		
 		provinces_to_highlight = {
 			owner = {
 				alliance_with = ROOT
-				NOT = {
-					has_opinion = {
-						who = ROOT
-						value = 100
-					}
-				}
 			}
 		}
 
 		trigger = {
 			num_of_allies = 2
-			calc_true_if = {
-				all_ally = {
-					has_opinion = {
-						who = ROOT
-						value = 100
-					}
-				}
-				amount = 2
-			}
 		}
 		
 		effect = {
-			every_ally = { 
-				add_trust = {
-					who = ROOT
-					value = 15
-					mutual = yes
-				}
-			}
+			custom_tooltip = RUM_TRUST
 			add_country_modifier = {
 				name = cymru_diplomacy
 				duration = 3650
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
+					}
+				}
 			}
 		}
 	}
@@ -761,6 +748,7 @@ wls_branch_5 = {
 	new_welsh_navy = {
 		icon = mission_galleys_in_port
 		required_missions = { gather_allies_wls }
+		position = 2
 		
 		trigger = {
 			navy_size_percentage = 1
@@ -768,23 +756,31 @@ wls_branch_5 = {
 		}
 		
 		effect = {
+			define_explorer = {
+				name = "Lucius Artorius Castus"
+				fire = 3
+				shock = 4
+				manuever = 5
+			}
 			add_country_modifier = {
 				name = wls_saxon_rival
 				duration = 5475
 			}
-			random_owned_province = {
-				limit = {
-					has_port = yes
+			242 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 1
+					cost = 0
 				}
-				heavy_ship = ROOT
-				heavy_ship = ROOT
 			}
 		}
 	}
 	
 	explore_new_world_wls = {
-		icon = mission_invade_island
+		icon = mission_galleass
 		required_missions = { new_welsh_navy }
+		position = 4
 		
 		trigger = {
 			custom_trigger_tooltip = {
@@ -803,6 +799,7 @@ wls_branch_5 = {
 		}
 		
 		effect = {
+			add_navy_tradition = 20
 			add_country_modifier = {
 				name = search_for_avalon
 				duration = 9125
@@ -811,9 +808,9 @@ wls_branch_5 = {
 	}
 
 	ynys_afallon = {
-		icon = mission_look_west
-		position = 4
+		icon = mission_rb_the_thirteen_colonies
 		required_missions = { explore_new_world_wls }
+		position = 5
 
 		provinces_to_highlight = {
 			owner_is_colonial_nation = yes
@@ -825,7 +822,7 @@ wls_branch_5 = {
 			any_subject_country = {
 				is_colonial_nation = yes
 				num_of_cities = 10
-			}	
+			}
 		}
 
 		effect = {
@@ -853,74 +850,8 @@ wls_branch_5 = {
 					}
 				}
 			}
-		}
-	}
-}
-
-wls_branch_5_locked = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = WLS
-			tag = BRN
-		}
-	}
-	has_country_shield = yes
-
-	wls_conquer_seas_locked = {
-		icon = mission_unknown_mission
-		position = 5
-		required_missions = { ynys_afallon }
-		
-		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_UNLOCKABLE
-				tag = ROM
-			}
-		}
-		
-		effect = {
-			custom_tooltip = BYZ_UNLOCKABLE
-		}
-	}
-}
-
-wls_branch_5_unlocked = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = BRN
-	}
-	has_country_shield = yes
-
-	wls_conquer_seas = {
-		icon = mission_the_triangle_trade
-		position = 5
-		required_missions = { ynys_afallon }
-				
-		provinces_to_highlight = {
-			owner_is_colonial_nation = yes
-			country_or_non_sovereign_subject_holds = ROOT
-			has_discovered = ROOT
-		}
-		
-		trigger = {
-			calc_true_if = {
-				all_subject_country = {
-					is_colonial_nation = yes
-				}
-				amount = 12
-			}
-		}
-		
-		effect = {
-			country_event = {
-				id = ab_byzantium.60
-			}
+			set_country_flag = hansa_buff_new_world_charters_flag
+			custom_tooltip = HAS_NEW_WORLD_CHARTERS_PRIVILEGE
 		}
 	}
 }
@@ -938,16 +869,65 @@ BRN_branch_1 = {
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
-	
+
 	invade_ireland_wls = {
-		icon = mission_rb_conquer_leinster
-		position = 6
+		icon = mission_rb_into_ireland
 		required_missions = { proclaim_pyrdain_wls }
+		position = 7
+
+		trigger = {
+			leinster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
 		
+		provinces_to_highlight = {
+			area = leinster_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_country_modifier = {
+				name = eng_laudable
+				duration = 5475
+			}
+			munster_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			connacht_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ulster_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	wls_reclaim_hibernia = {
+	    icon = mission_rb_rule_britannia_irish_version
+		required_missions = { invade_ireland_wls }
+		position = 8
+
 		provinces_to_highlight = {
 			OR = {
 				area = munster_area
-				area = leinster_area
 				area = ulster_area
 				area = connacht_area
 			}
@@ -956,10 +936,6 @@ BRN_branch_1 = {
 		
 		trigger = {
 			munster_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			leinster_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
@@ -977,16 +953,69 @@ BRN_branch_1 = {
 			373 = {
 				add_province_modifier = {
 					name = build_wls
-					duration = 10950
+					duration = -1
+				}
+			}
+			custom_tooltip = ENG_IRELAND_CONQUEST
+			tooltip = {
+				add_province_modifier = {
+					name = eng_consolidate_ireland
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							area = munster_area
+							area = leinster_area
+							area = ulster_area
+							area = connacht_area
+						}
+					}
+					add_province_modifier = {
+						name = eng_consolidate_ireland
+						duration = 5475
+					}
+				}
+			}
+			custom_tooltip = ENG_IRE_VASSAL
+			tooltip = {
+				add_country_modifier = {
+					name = eng_consolidate_ireland2
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_subject_country = {
+								capital_scope = {
+									OR = {
+										area = munster_area
+										area = leinster_area
+										area = ulster_area
+										area = connacht_area
+									}
+								}
+							}
+							amount = 2
+						}
+					}
+					add_country_modifier = {
+						name = eng_consolidate_ireland2
+						duration = 7300
+					}
 				}
 			}
 		}
 	}
 	
 	wls_union_ireland = {
-	    icon = mission_rb_irish_america
+	    icon = mission_abireland
 		required_missions = { invade_ireland_wls }
-		position = 8
+		position = 10
 		
 		trigger = {
 			accepted_culture = irish
@@ -1035,26 +1064,37 @@ BRN_branch_1 = {
 				name = eng_union_ireland
 				duration = -1
 			}
-			custom_tooltip = ENG_COLONIZE_IRELAND5
+			custom_tooltip = ENG_IRELAND_CONQUEST
+			tooltip = {
+				add_base_manpower = 1
+				add_province_modifier = {
+					name = brn_men_of_hibernia
+					duration = -1
+				}
+			}
 			hidden_effect = {
-				for = {
-					amount = 5
-					effect = "
-						random_owned_province = {
-							limit = {
-								culture = irish
-							}
-							add_base_manpower = 1
+				every_province = {
+					limit = {
+						OR = {
+							area = munster_area
+							area = leinster_area
+							area = ulster_area
+							area = connacht_area
 						}
-					"
+					}
+					add_base_manpower = 1
+					add_province_modifier = {
+						name = brn_men_of_hibernia
+						duration = -1
+					}
 				}
 			}
 		}
 	}
 
 	high_king_ire_wls = {
-		icon = mission_rb_control_electors
-		position = 10
+		icon = mission_tara
+		position = 11
 		required_missions = { wls_union_ireland }
 
 		provinces_to_highlight = {
@@ -1080,17 +1120,23 @@ BRN_branch_1 = {
         }
 
 		effect = {
-			add_yearly_manpower = 1.5
+			add_yearly_manpower = 2
 			add_country_modifier = {
 				name = wls_union_ireland
 				duration = -1
+			}
+			373 = {
+				add_great_project_tier = {
+					type = hill_tara
+					tier = 1
+				}
 			}
 		}
 	}
 	
 	wls_ostmark = {
-		icon = revenge_for_nicopolis
-		position = 11
+		icon = connect_further_austria
+		position = 13
 		required_missions = { wls_germany }
 	
 		trigger = {
@@ -1113,14 +1159,14 @@ BRN_branch_1 = {
 		}
 		
 		effect = {
+			add_country_modifier = {
+				name = wls_protector_empire
+				duration = 9125
+			}
 			custom_tooltip = WLS_EVOLVING_IDEA_1
 			hidden_effect = {
 				set_country_flag = wls_evolved_ideas
 				swap_free_idea_group = yes
-			}
-			add_country_modifier = {
-				name = wls_protector_empire
-				duration = 5475
 			}
 		}
 	}
@@ -1141,14 +1187,13 @@ BRN_branch_2 = {
 
 	invade_the_scots_wls = {
 		icon = mission_rb_conquer_scotland 
-		position = 6
+		position = 7
 		required_missions = { proclaim_pyrdain_wls }
 
 		provinces_to_highlight = {
 			OR = {
 				area = highlands_area
 				area = lowlands_area
-				area = kingdom_of_the_isles_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
@@ -1162,18 +1207,15 @@ BRN_branch_2 = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT	
 			}
-			kingdom_of_the_isles_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
 		}
 
 		effect = {
+			change_innovativeness = 5
 			custom_tooltip = WLS_LOWLANDS
 			tooltip = {
 				add_province_modifier = {
 					name = scot_dev_wls
-					duration = 5475
+					duration = 7300
 				}
 			}
 			hidden_effect = {
@@ -1186,8 +1228,33 @@ BRN_branch_2 = {
 					}
 					add_province_modifier = {
 						name = scot_dev_wls
-						duration = 5475
+						duration = 7300
 					}
+				}
+			}
+			kingdom_of_the_isles_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1978 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1979 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -1195,7 +1262,7 @@ BRN_branch_2 = {
 
 	land_of_the_picts = {
 		icon = mission_rb_conquer_the_highlands
-		position = 7
+		position = 8
 		required_missions = { invade_the_scots_wls }
 		
 		provinces_to_highlight = {
@@ -1205,7 +1272,6 @@ BRN_branch_2 = {
 		}
 		
 		trigger = {
-			crown_land_share = 40
 			num_of_owned_provinces_with = {
 				value = 5
 				culture = highland_scottish
@@ -1214,13 +1280,13 @@ BRN_branch_2 = {
 		}
 		
 		effect = {
-			custom_tooltip = WLS_HIGHLANDER_PROVINCE
 			highlands_area = {
 				add_province_modifier = {
 					name = wls_prosperous_region
 					duration = -1
 				}
 			}
+			custom_tooltip = WLS_HIGHLANDER_PROVINCE
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -1229,13 +1295,45 @@ BRN_branch_2 = {
 					add_base_manpower = 1
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					accepted_culture = scottish
+				}
+				custom_tooltip = BRN_ACCEPTED_SCOTTISH_YES
+				lowlands_area = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					change_culture = highland_scottish
+					add_province_modifier = {
+						name = wls_prosperous_region
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRN_ACCEPTED_SCOTTISH_NO
+				tooltip = {
+					lowlands_area = {
+						limit = {
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						change_culture = highland_scottish
+						add_province_modifier = {
+							name = wls_prosperous_region
+							duration = -1
+						}
+					}
+				}
+			}
 		}
 	}
 
 	take_the_low_countries_wls = {
-		icon = bavarian_netherlands
+		icon = ned_dykes
 		required_missions = { land_in_continent_wls }
-		position = 8
+		position = 9
 		
 		provinces_to_highlight = {
 			region = low_countries_region
@@ -1243,26 +1341,21 @@ BRN_branch_2 = {
 		}
 		
 		trigger = {
-			low_countries_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = low_countries_region
 			}
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_byzantium.63
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = wls_dutch_ports
 				duration = 7300
 			}
-			4383 = {
-				add_unit_construction = {
-					type = heavy_ship
-					amount = 5
-					speed = 0.25
-					cost = 0
-				}
-			}
-			custom_tooltip = AB_EMPTY
 			north_rhine_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1308,8 +1401,8 @@ BRN_branch_2 = {
 	}
 	
 	wls_rhineland = {
-		icon = claim_the_borderlands
-		position = 9
+		icon = mission_rhine
+		position = 11
 		required_missions = { take_the_low_countries_wls }
 	
 		trigger = {
@@ -1337,13 +1430,16 @@ BRN_branch_2 = {
 		}
 		
 		effect = {
-			add_army_tradition = 25
 			custom_tooltip = WLS_RHINE
 			tooltip = {
 				add_province_modifier = {
 					name = wls_rhenish_border
 					duration = -1
 				}
+			}
+			add_country_modifier = {
+				name = byzantium_imperial_border
+				duration = -1
 			}
 			south_german_region = {
 				limit = {
@@ -1371,8 +1467,8 @@ BRN_branch_2 = {
 	}
 	
 	wls_germany = {
-		icon = interfere_in_germany
-		position = 10
+		icon = the_imperial_border
+		position = 12
 		required_missions = { wls_rhineland }
 		
 		provinces_to_highlight = {
@@ -1388,10 +1484,11 @@ BRN_branch_2 = {
 		}
 		
 		effect = {
-			add_prestige = 20
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = wls_iron
-				duration = 5475
+				duration = 10950
 			}
 			if = {
 				limit = {
@@ -1410,8 +1507,8 @@ BRN_branch_2 = {
 	}
 	
 	wls_hre = {
-		icon = humiliate_austria
-		position = 11
+		icon = mission_dismantle_hre
+		position = 14
 		required_missions = { wls_germany }
 		
 		provinces_to_highlight = {
@@ -1451,8 +1548,26 @@ BRN_branch_2 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = BYZ_HRE_DISMANTLE
+			tooltip = {
+				add_country_modifier = {
+					name = byzantium_bane
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { hre_size = 1 }
+					}
+					add_country_modifier = {
+						name = byzantium_bane
+						duration = -1
+					}
+				}
+			}
 		}
-	}	
+	}
 }
 
 BRN_branch_3 = {
@@ -1469,31 +1584,25 @@ BRN_branch_3 = {
 	has_country_shield = yes
 
 	land_in_continent_wls = {
-		icon = the_seven_provinces
+		icon = mission_rb_conquer_brittany
 		required_missions = { proclaim_pyrdain_wls }
-		position = 7
+		position = 8
 
 		provinces_to_highlight = {
 			OR = {
-				area = normandy_area 
-				area = picardy_area 
+				area = normandy_area
 				area = brittany_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		trigger = {
-			normandy_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			brittany_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			picardy_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = normandy_area
+					area = brittany_area
+				}
 			}
 		}
 
@@ -1502,6 +1611,20 @@ BRN_branch_3 = {
 				name = wls_continental
 				duration = 9125
 			}
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			france_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1520,8 +1643,8 @@ BRN_branch_3 = {
 	}
 	
 	reclaim_frankia_wls = {
-		icon = carolingian_empire
-		position = 8
+		icon = mission_downfall
+		position = 10
 		required_missions = { land_in_continent_wls }
 		
 		provinces_to_highlight = {
@@ -1537,10 +1660,10 @@ BRN_branch_3 = {
 		}
 		
 		effect = {
-			add_dip_power = 150
+			add_dip_power = 200
 			add_country_modifier = {
 				name = wls_reclaiming
-				duration = 5475
+				duration = 10950
 			}
 			catalonia_area = {
 				limit = {
@@ -1595,17 +1718,17 @@ BRN_branch_3 = {
 	}
 	
 	wls_po_valley = {
-		icon = sweep_the_po
+		icon = mission_conquer_north_italy
 		required_missions = { reclaim_frankia_wls }
-		position = 9
+		position = 12
 		
 		provinces_to_highlight = {
 			OR = {
 				area = lombardy_area
 				area = piedmont_area
 				area = emilia_romagna_area
-				area = liguria_area 
-				area = po_valley_area 
+				area = liguria_area
+				area = po_valley_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
@@ -1617,8 +1740,8 @@ BRN_branch_3 = {
 					area = lombardy_area
 					area = piedmont_area
 					area = emilia_romagna_area
-					area = liguria_area 
-					area = po_valley_area 
+					area = liguria_area
+					area = po_valley_area
 				}
 			}
 		}
@@ -1661,70 +1784,27 @@ BRN_branch_3 = {
 	}
 
 	wls_rome = {
-		icon = sway_the_pope
+		icon = mission_colosseum
 		required_missions = { wls_po_valley }
-		position = 10
+		position = 13
 		
 		trigger = {
-			tuscany_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			central_italy_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			lazio_area = {
-				type = all
+			118 = {
 				country_or_non_sovereign_subject_holds = ROOT	
 			}
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				area = tuscany_area
-				area = central_italy_area
-				area = lazio_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			province_id = 118
 		}
 		
 		effect = {
 			add_legitimacy = 25
-			custom_tooltip = WLS_OCCUPATION
 			add_country_modifier = {
 				name = wls_conquest_rome
 				duration = 7300
 			}
-			naples_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			apulia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			calabria_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			western_sicily_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			sicily_area = {
+			italy_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -1741,18 +1821,20 @@ BRN_branch_3 = {
 					add_territorial_core = ROOT
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = WLS_OCCUPATION
 		}
 	}
 
 	ave_imperator_wls = {
-		icon = a_roman_empire
-		required_missions = { wls_rome wls_hre wls_sitaly }
-		position = 12
+		icon = mission_westrome
+		required_missions = { wls_hre wls_sitaly }
+		position = 15
 		
 		trigger = {
 			tag = ROM
 			stability = 3
-			crown_land_share = 60
+			absolutism = 20
 		}
 		
 		effect = {
@@ -1765,17 +1847,230 @@ BRN_branch_3 = {
 				duration = -1
 			}
 			custom_tooltip = BYZ_LATIN_RENAME
+			set_country_flag = byz_rename_imperium_romanum
+		}
+	}
+
+	wls_schism = {
+		icon = mission_pf_cross
+		required_missions = { ave_imperator_wls wls_reconquest }
+		position = 17
+		
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				region = iberia_region
+				region = balkan_region
+				region = anatolia_region
+				region = egypt_region
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+			NOT = { religion = catholic }
+		}
+		
+		trigger = {
+			is_papal_controller = yes
+			papal_influence = 100
+			italy_region = {
+				type = all
+				religion = catholic
+			}
+			iberia_region = {
+				type = all
+				religion = catholic
+			}
+			balkan_region = {
+				type = all
+				religion = catholic
+			}
+			anatolia_region = {
+				type = all
+				religion = catholic
+			}
+			egypt_region = {
+				type = all
+				religion = catholic
+			}
+			palestine_area = {
+				type = all
+				religion = catholic
+			}
+			syria_area = {
+				type = all
+				religion = catholic
+			}
+			aleppo_area = {
+				type = all
+				religion = catholic
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 50 }
 			custom_tooltip = AB_EMPTY
-			scandinavia_region = {
+			add_country_modifier = {
+				name = pap_schism_mended
+				duration = 18250
+			}
+			custom_tooltip = PAP_SCHISM_TOOLTIP
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					country_event = {
+						id = flavor_pap.11
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			ruthenia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
-				add_permanent_claim = ROOT
+				add_claim = ROOT
 			}
-			set_country_flag = byz_rename_imperium_romanum
+			russia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = LAT_ORTHODOX_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						religion = orthodox
+					}
+					add_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = UKR
+				}
+				custom_tooltip = UKR_EXIST_YES
+				add_casus_belli = {
+					target = UKR
+					type = cb_establish_diocese
+					months = 300
+				}
+			}
+			else = {
+				custom_tooltip = UKR_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						target = UKR
+						type = cb_establish_diocese
+						months = 300
+					}
+				}
+			}
 		}
-	}		
+	}
+
+	wls_rus_union = {
+		icon = mission_rule_ruthenia
+		position = 19
+		required_missions = { wls_schism }
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 280
+				province_id = 295
+				province_id = 310
+				if = {
+					limit = {
+						exists = UKR
+					}
+					owned_by = UKR
+				}
+				else = {
+					owner = {
+						has_reform = principality
+					}
+				}
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			owns_or_non_sovereign_subject_of = 280
+			owns_or_non_sovereign_subject_of = 295
+			owns_or_non_sovereign_subject_of = 310
+			if = {
+				limit = {
+					exists = UKR
+				}
+				UKR = {
+					is_subject_of = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					NOT = { liberty_desire = 50 }
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						has_reform = principality
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+						NOT = { liberty_desire = 50 }
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_RUSSIA_CB
+			add_country_modifier = {
+				name = byz_rus_tsar
+				duration = -1
+			}
+			custom_tooltip = BYZ_UNION_100_YEARS
+			tooltip = {
+				country_event = {
+					id = ab_byzantium.65
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						exists = UKR
+					}
+					calc_true_if = {
+						all_subject_country = {
+							has_reform = principality
+							is_subject_of = ROOT
+						}
+						amount = 3
+					}
+				}
+				custom_tooltip = BYZ_UNION_PRINCES_YES
+			}
+			else = {
+				custom_tooltip = BYZ_UNION_PRINCES_NO
+			}
+			hidden_effect = {
+				TLW_establish_diocese_russia_effect = yes
+				country_event = {
+					id = ab_byzantium.65
+					days = 36500
+				}
+			}
+		}
+	}
 }
 
 BRN_branch_4 = {
@@ -1790,10 +2085,116 @@ BRN_branch_4 = {
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
+
+	wls_danelaw = {
+	    icon = mission_north_sea_empire
+		required_missions = { proclaim_pyrdain_wls }
+		position = 7
+		
+		trigger = {
+			jutland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			denmark_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = jutland_area
+				area = denmark_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 20 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = eng_baltic_merchant
+				duration = -1
+			}
+			12 = {
+				add_great_project_tier = {
+					type = sound_toll
+					tier = 1 
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ENG_PERMA_SCANDI
+			hidden_effect = {
+				scandinavia_region = {
+					limit = {
+						religion = norse_pagan_reformed
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	wls_northern_crusade = {
+	    icon = mission_unite_scandinavia
+		required_missions = { wls_danelaw }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = scandinavia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 35
+				region = scandinavia_region
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = eng_triumph_heathen
+				duration = 7300
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = ENG_DAN_NOR_EXIST
+			tooltip = {
+				add_country_modifier = {
+					name = eng_northern_crusaders
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = DAN
+						}
+						NOT = {
+							exists = NOR
+						}
+					}
+					add_country_modifier = {
+						name = eng_northern_crusaders
+						duration = -1
+					}
+				}
+			}
+		}
+	}
 	
 	land_of_britons = {
-		icon = unite_the_wittelsbachs
-		position = 8
+		icon = mission_invade_england
+		position = 9
 		required_missions = { king_of_britons }
 		
 		provinces_to_highlight = {
@@ -1822,11 +2223,408 @@ BRN_branch_4 = {
 			}
 		}
 	}
-	
-	wls_moors = {
-		icon = knights_of_the_new_world
+
+	wls_pacify = {
+	    icon = centralize_france
 		required_missions = { reclaim_frankia_wls }
-		position = 9
+		position = 11
+		
+		provinces_to_highlight = {
+			region = france_region
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		
+		trigger = {
+			france_region = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 100
+			custom_tooltip = AB_EMPTY
+			france_region = {
+				add_nationalism = -10
+				add_province_modifier = {
+					name = wls_pacified_france
+					duration = -1
+				}
+			}
+			custom_tooltip = frc_every_court_house_tt
+			hidden_effect = {
+				set_country_flag = fra_courthouse_bonus_flag
+				every_owned_province = {
+					limit = {
+						has_courthouse_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = fra_improved_court_houses_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	wls_breton = {
+	    icon = friends_in_high_places
+		required_missions = { wls_pacify }
+		position = 12
+		
+		provinces_to_highlight = {
+			area = brittany_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 15 }
+			}
+		}
+		
+		trigger = {
+			brittany_area = {
+				type = all
+				owned_by = ROOT
+				development = 15
+			}
+		}
+		
+		effect = {
+			brittany_area = {
+				add_prosperity = 100
+			}
+			brittany_area = {
+				add_province_modifier = {
+					name = wls_renaissance
+					duration = -1
+				}
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				cost_multiplier = 0.1
+			}
+		}
+	}
+	
+	wls_sitaly = {
+		icon = per_unify_the_shia_realms
+		required_missions = { wls_rome }
+		position = 14
+		
+		trigger = {
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = naples_area
+				area = apulia_area
+				area = calabria_area
+				area = western_sicily_area
+				area = sicily_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.20
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = WLS_SITALY
+			tooltip = {
+				add_province_modifier = {
+					name = wls_convert_italy
+					duration = 9125
+				}
+			}
+			balkan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = italy_region
+						religion_group = muslim
+					}
+					add_province_modifier = {
+						name = wls_convert_italy
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	wls_second_rome = {
+		icon = mission_phoenix
+		required_missions = { wls_sitaly }
+		position = 15
+		
+		provinces_to_highlight = {
+			area = thrace_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			NOT = { exists = BYZ }
+			NOT = { exists = LAT }
+		}
+		effect = {
+			country_event = {
+				id = ab_jerusalem.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = pap_patriarchates
+				duration = 9125
+			}
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	wls_reconquest = {
+		icon = jerusalem
+		required_missions = { wls_second_rome wls_egypt }
+		position = 16
+		
+		trigger = {
+		    palestine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    trans_jordan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syrian_desert_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    aleppo_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = trans_jordan_area
+				area = syria_area
+				area = syrian_desert_area
+				area = aleppo_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.97
+			}
+			custom_tooltip = AB_EMPTY
+			mashriq_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = rum_c_triumph
+					duration = 5475
+				}
+			}
+			set_country_flag = brn_scaling_inquisitor
+			custom_tooltip = BRN_INQUISITOR_SCALING
+			if = {
+				limit = {
+					is_defender_of_faith = yes
+				}
+				custom_tooltip = LAT_COT
+			}
+			else = {
+				custom_tooltip = LAT_COT_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = catholic
+					}
+					379 = {
+						change_religion = ROOT
+						add_reform_center = catholic
+						province_event = {
+							id = ab_latin.15
+							days = 9125
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+BRN_branch_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRN
+			was_tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	take_cornwall = {
+		icon = mission_thirty_years_war
+		required_missions = { proclaim_pyrdain_wls }
+		position = 7
+
+		provinces_to_highlight = {
+			area = cornwall_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			cornwall_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 10
+			}
+			add_country_modifier = {
+				name = celtic_wls
+				duration = 5475
+			}
+			cornwall_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -20
+				change_culture = cornish
+				add_province_modifier = {
+					name = wls_prosperous_region
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	king_of_britons = {
+		icon = mission_the_renaissance_king
+		position = 8
+		required_missions = { take_cornwall }
+
+		provinces_to_highlight = {
+			OR = {
+				culture = welsh
+				culture = cornish
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			NOT = { current_age = age_of_discovery }
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					culture = welsh
+					culture = cornish
+				}
+			}
+		}
+		effect = {
+			country_event = {
+				id = wales_flavor.3
+			}
+		}
+	}
+	
+	house_pendraigh = {
+		icon = mission_excalibur
+		position = 10
+		required_missions = { king_of_britons }
+		
+		trigger = {
+			crown_land_share = 70
+			stability = 1
+		}
+		
+		effect = {
+			set_dynasty = "Pendraig"
+			add_ruler_personality = augustus_personality
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SER_JUSTINIAN_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = SER_perma_pp
+					amount = 25
+				}
+			}
+			add_country_modifier = {
+				name = wls_absolute 
+				duration = -1
+			}
+		}
+	}
+
+	wls_moors = {
+		icon = mission_reclaim_andalucia
+		required_missions = { reclaim_frankia_wls }
+		position = 11
 		
 		trigger = {
 			basque_country = {
@@ -1884,9 +2682,9 @@ BRN_branch_4 = {
 	}
 	
 	wls_conversion = {
-	    icon = mission_reclaim_andalucia
+	    icon = show_piety
 		required_missions = { wls_moors }
-		position = 10
+		position = 13
 		
 		trigger = {
 			num_of_owned_provinces_with = {
@@ -1903,10 +2701,24 @@ BRN_branch_4 = {
 		}
 		
 		effect = {
-			custom_tooltip = WLS_DEFENDER
 			add_country_modifier = {
 				name = wls_reconquista
 				duration = 9125
+			}
+			iberia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -10
+			}
+			iberia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = byzantium_roman_iberia
+					duration = -1
+				}
 			}
 			maghreb_region = {
 				limit = {
@@ -1915,6 +2727,8 @@ BRN_branch_4 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = WLS_DEFENDER
 			hidden_effect = {
 				if = {
 					limit = {
@@ -1931,357 +2745,10 @@ BRN_branch_4 = {
 			}
 		}
 	}
-	
-	wls_sitaly = {
-		icon = mission_rule_italy
-		required_missions = { wls_rome }
-		position = 11
-		
-		trigger = {
-			naples_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			apulia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			calabria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			western_sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				area = naples_area
-				area = apulia_area
-				area = calabria_area
-				area = western_sicily_area
-				area = sicily_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			custom_tooltip = WLS_SITALY
-			tooltip = {
-				add_province_modifier = {
-					name = wls_convert_italy
-					duration = 9125
-				}
-			}
-			balkan_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						region = italy_region
-						religion_group = muslim
-					}
-					add_province_modifier = {
-						name = wls_convert_italy
-						duration = 9125
-					}
-				}
-			}
-		}
-	}
-
-	wls_second_rome = {
-		icon = the_latin_empire
-		required_missions = { wls_sitaly }
-		position = 12
-		
-		provinces_to_highlight = {
-			area = thrace_area
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		trigger = {
-			thrace_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			NOT = { exists = BYZ }
-		}
-		effect = {
-			add_country_modifier = {
-				name = pap_patriarchates
-				duration = 7300
-			}
-			anatolia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			crimea_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-		}
-	}
-
-	wls_reconquest = {
-		icon = jerusalem
-		required_missions = { wls_second_rome wls_egypt }
-		position = 13
-		
-		trigger = {
-		    palestine_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    trans_jordan_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    syria_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    syrian_desert_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    aleppo_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				area = palestine_area
-				area = trans_jordan_area
-				area = syria_area
-				area = syrian_desert_area
-				area = aleppo_area
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-		
-		effect = {
-			if = {
-				limit = {
-					NOT = {
-						379 = { religion = catholic }
-					}
-				}
-				379 = {
-					change_religion = ROOT
-				}
-				custom_tooltip = AB_EMPTY
-			}
-			country_event = {
-				id = ab_latin.5
-			}
-			if = {
-				limit = {
-					is_defender_of_faith = yes
-				}
-				custom_tooltip = LAT_COT
-			}
-			else = {
-				custom_tooltip = LAT_COT_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = catholic
-					}
-					379 = {
-						add_reform_center = catholic
-					}
-					379 = {
-						province_event = {
-							id = ab_latin.15
-							days = 9125
-						}
-					}
-				}
-			}
-		}
-	}
-}	
-
-BRN_branch_5 = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		OR = {
-			tag = BRN
-			was_tag = BRN
-		}
-		NOT = { map_setup = map_setup_random }
-	}
-	has_country_shield = yes
-	
-	take_cornwall = {
-		icon = mission_assemble_an_army
-		required_missions = { proclaim_pyrdain_wls }
-		position = 6
-
-		provinces_to_highlight = {
-			area = cornwall_area
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			cornwall_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-
-		effect = {
-			add_country_modifier = {
-				name = celtic_wls
-				duration = 5475
-			}
-		}
-	}
-	
-	king_of_britons = {
-		icon = mission_empire
-		position = 7
-		required_missions = { take_cornwall }
-
-		provinces_to_highlight = {
-			OR = {
-				culture = welsh
-				culture = cornish
-			}
-			NOT = { owned_by = ROOT }
-		}
-
-		trigger = {
-			NOT = { current_age = age_of_discovery }
-			NOT = { current_age = age_of_reformation }
-			num_of_owned_provinces_with = {
-				value = 10
-				OR = {
-					culture = welsh
-					culture = cornish
-				}
-			}
-		}
-		effect = {
-			country_event = {
-				id = wales_flavor.3
-			}
-		}
-	}
-	
-	house_pendraigh = {
-		icon = mission_monarch_in_throne_room
-		position = 8
-		required_missions = { king_of_britons }
-		
-		trigger = {
-			crown_land_share = 70
-			stability = 1
-		}
-		
-		effect = {
-			set_dynasty = "Pendraig"
-			add_country_modifier = {
-				name = wls_absolute 
-				duration = -1
-			}
-		}
-	}
-	
-	wls_pacify = {
-	    icon = mission_the_french_menace
-		required_missions = { reclaim_frankia_wls }
-		position = 9
-		
-		provinces_to_highlight = {
-			region = france_region
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-				unrest = 1
-			}
-		}
-		
-		trigger = {
-			france_region = {
-				type = all
-				owned_by = ROOT
-				is_core = ROOT
-				NOT = { unrest = 1 }
-			}
-		}
-		
-		effect = {
-			france_region = {
-				add_nationalism = -5
-				add_province_modifier = {
-					name = wls_pacified_france
-					duration = 5475
-				}
-			}
-		}
-	}
-	
-	wls_breton = {
-	    icon = expand_to_the_south
-		required_missions = { wls_pacify }
-		position = 10
-		
-		provinces_to_highlight = {
-			area = brittany_area
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { development = 15 }
-			}
-		}
-		
-		trigger = {
-			brittany_area = {
-				type = all
-				owned_by = ROOT
-				development = 15
-			}
-		}
-		
-		effect = {
-			brittany_area = {
-				add_prosperity = 100
-			}
-			brittany_area = {
-				add_province_modifier = {
-					name = wls_renaissance
-					duration = -1
-				}
-			}
-		}
-	}
 
 	wls_barbary = {
 		icon = mission_combat_barbary_piracy
-		position = 11
+		position = 14
 		required_missions = { wls_conversion }
 	
 		trigger = {
@@ -2327,8 +2794,11 @@ BRN_branch_5 = {
 			add_navy_tradition = 20
 			add_country_modifier = {
 				name = byzantium_sons
-				duration = 18250
+				duration = 7300
 			}
+			set_country_flag = lat_burgher_force_draft_buff
+			custom_tooltip = LAT_BURGHER_FORCE_DRAFT_PRIVILEGE
+			custom_tooltip = AB_EMPTY
 			egypt_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -2342,7 +2812,7 @@ BRN_branch_5 = {
 	wls_egypt = {
 		icon = mission_saladins_legacy
 		required_missions = { wls_sitaly wls_barbary }
-		position = 12
+		position = 15
 		
 		trigger = {
 			358 = { religion = catholic }
@@ -2363,34 +2833,15 @@ BRN_branch_5 = {
 					NOT = { religion = catholic }
 				}
 			}
+			has_discovered = ROOT
 		}
 		
 		effect = {
 			country_event = {
 				id = ab_latin.3
 			}
+			custom_tooltip = AB_EMPTY
 			mashriq_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tabuk_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			mecca_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			medina_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
@@ -2427,8 +2878,8 @@ BRN_branch_5 = {
 
 	wls_mecca = {
 		icon = mission_into_arabia
-		required_missions = { wls_egypt }
-		position = 13
+		required_missions = { wls_reconquest }
+		position = 17
 		
 		trigger = {
 		    mecca_area = {
@@ -2458,7 +2909,7 @@ BRN_branch_5 = {
 	}
 }
 
-#Rome
+# Rome
 BRN_branch_1_rome = {
 	slot = 1
 	generic = no
@@ -2470,9 +2921,85 @@ BRN_branch_1_rome = {
 	}
 	has_country_shield = yes
 
+	wls_newworld_base = {
+		icon = mission_caribbean_cn
+		position = 15
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				colonial_region = colonial_the_carribean
+				colonial_region = colonial_mexico
+				colonial_region = colonial_colombia
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					colonial_region = colonial_the_carribean
+					colonial_region = colonial_mexico
+					colonial_region = colonial_colombia
+				}
+				value = 40
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			add_country_modifier = {
+				name = byz_america_base
+				duration = 10950
+			}
+			northeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	wls_conquer_seas = {
+		icon = mission_the_triangle_trade
+		position = 17
+		required_missions = { wls_newworld_base }
+				
+		provinces_to_highlight = {
+			owner_is_colonial_nation = yes
+			country_or_non_sovereign_subject_holds = ROOT
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation = yes
+				}
+				amount = 12
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.60
+			}
+		}
+	}
+
 	wls_reform_imperial_army = {
 		icon = ven_army_republic
-		position = 12
+		position = 19
 		required_missions = { }
 
 		trigger = {
@@ -2514,7 +3041,7 @@ BRN_branch_1_rome = {
 
 	wls_finest = {
 		icon = mission_romanfinest
-		position = 13
+		position = 20
 		required_missions = { wls_reform_imperial_army }
 
 		trigger = {
@@ -2549,7 +3076,7 @@ BRN_branch_1_rome = {
 
 	wls_grandarmy = {
 		icon = mission_redcoats
-		position = 14
+		position = 22
 		required_missions = { wls_finest }
 
 		trigger = {
@@ -2651,7 +3178,7 @@ BRN_branch_1_rome = {
 				}
 			}
 		}
-	}	
+	}
 }
 
 BRN_branch_2_rome = {
@@ -2665,152 +3192,75 @@ BRN_branch_2_rome = {
 	}
 	has_country_shield = yes
 
-	wls_money = {
-		icon = dominant_economy
-		required_missions = { }
-		position = 12
-
+	wls_punics = {
+		icon = mission_punic
+		position = 16
+		required_missions = { wls_newworld_base }
+		
 		provinces_to_highlight = {
 			OR = {
-				AND = {
-					province_id = 151
-					NOT = {
-						trade_share = {
-							country = ROOT
-							share = 80
-						}
-					}
-				}
-				AND = {
-					province_id = 358
-					NOT = {
-						trade_share = {
-							country = ROOT
-							share = 60
-						}
-					}
-				}
-				AND = {
-					province_id = 377
-					NOT = {
-						trade_share = {
-							country = ROOT
-							share = 60
-						}
-					}
-				}
+				region = northeast_america_region
+				region = southeast_america_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			northeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			southeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
 			}
 		}
 		
-		trigger = {  
-		    NOT = { num_of_loans = 1 }
-			151 = {
-				trade_share = {
-					country = ROOT
-					share = 80
-				}
-			}
-			358 = {
-				trade_share = {
-					country = ROOT
-					share = 60
-				}
-			}
-			377 = {
-				trade_share = {
-					country = ROOT
-					share = 60
-				}
-			}
-			OR = {
-				monthly_adm = 12
-				full_idea_group = economic_ideas
-			}
-			advisor = treasurer
-		}
-
 		effect = {
-		    set_country_flag = rmg_monetary_policy_no_power_cost_flag
-			add_inflation = -5
+			965 = {
+				change_trade_goods = salt
+			}
 			add_country_modifier = {
-				name = byz_gold_standard
-				duration = -1
+				name = byz_punics_defeated
+				duration = 10950
 			}
-			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
-		}
-	}
-
-	wls_roads = {
-		icon = mission_royal_roads
-		position = 13
-		required_missions = { wls_money }
-
-		provinces_to_highlight = {
-			owned_by = ROOT
-			has_road_building_trigger = no
-		}
-
-		trigger = {
-			num_of_owned_provinces_with = {
-				value = 100
-				has_road_building_trigger = yes
-			}
-		}
-
-		effect = {
-			set_country_flag = byz_building_roads_bonus
-			add_country_modifier = {
-				name = byz_roads
-				duration = -1
-			}
-			custom_tooltip = BYZ_BUILDING_ROADS_BONUS
-		}
-	}
-
-	wls_wonders = {
-		icon = mission_romanwonders
-		position = 14
-		required_missions = { wls_roads }
-
-		provinces_to_highlight = {
-			province_is_diocese_land_trigger = yes
-			has_great_project = {
-				type = any
-				tier = 0
-			}
-			NOT = {
-				has_great_project = {
-					type = any
-					tier = 3
+			north_america_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
-			}
-		}
-
-		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 12
-				province_is_diocese_land_trigger = yes
-				has_great_project = {
-					type = any
-					tier = 3
-				}
-			}
-			reform_level = 6
-		}
-
-		effect = {
-			unlock_government_reform = {
-				government_reform = byzengineering
+				add_permanent_claim = ROOT
 			}
 			custom_tooltip = AB_EMPTY
-			add_government_reform = byzengineering
+			if = {
+				limit = {
+					NOT = { exists = CTG }
+				}
+				custom_tooltip = BYZ_PUNICS_GONE_YES
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture = punic
+						}
+						add_devastation = 100
+						add_base_tax = -10
+						add_base_production = -10
+						add_base_manpower = -10
+						change_culture = owner
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_PUNICS_GONE_NO
+			}
 		}
 	}
 
 	wls_europe = {
 		icon = peace_in_europe
 		required_missions = { wls_schism }
-		position = 15
+		position = 18
 		
 		provinces_to_highlight = {
 			OR = {
@@ -2854,7 +3304,7 @@ BRN_branch_2_rome = {
 				trust = { who = ROOT value = 100 }
 				NOT = { liberty_desire = 1 }
 			}
-		}	
+		}
 		
 		effect = {
 			country_event = {
@@ -2862,415 +3312,11 @@ BRN_branch_2_rome = {
 			}
 		}
 	}
-}
-
-BRN_branch_3_rome = {
-	slot = 3
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = BRN
-		NOT = { map_setup = map_setup_random }
-	}
-	has_country_shield = yes
-
-	wls_schism = {
-		icon = show_piety
-		required_missions = { ave_imperator_wls wls_reconquest }
-		position = 14
-		
-		provinces_to_highlight = {
-			OR = {
-				region = italy_region
-				region = iberia_region
-				region = balkan_region
-				region = anatolia_region
-				region = egypt_region
-				area = palestine_area
-				area = syria_area
-				area = aleppo_area
-			}
-			NOT = { religion = catholic }
-		}
-		
-		trigger = {
-			is_papal_controller = yes
-			papal_influence = 100
-			prestige = 100
-			italy_region = {
-				type = all
-				religion = catholic
-			}
-			iberia_region = {
-				type = all
-				religion = catholic
-			}
-			balkan_region = {
-				type = all
-				religion = catholic
-			}
-			anatolia_region = {
-				type = all
-				religion = catholic
-			}
-			egypt_region = {
-				type = all
-				religion = catholic
-			}
-			palestine_area = {
-				type = all
-				religion = catholic
-			}
-			syria_area = {
-				type = all
-				religion = catholic
-			}
-			aleppo_area = {
-				type = all
-				religion = catholic
-			}
-		}
-		
-		effect = {
-			custom_tooltip = PAP_SCHISM_TOOLTIP
-			hidden_effect = {
-				every_country = {
-					limit = {
-						religion = orthodox
-					}
-					country_event = {
-						id = flavor_pap.11
-					}
-				}
-			}
-			custom_tooltip = ROM_CATHOLIC_ORTHODOX_CLAIMS
-			hidden_effect = {
-				every_province = {
-					limit = {
-						religion = orthodox
-					}
-					add_claim = ROOT
-				}
-			}
-			add_country_modifier = {
-				name = pap_schism_mended
-				duration = 18250
-			}
-			ruthenia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_claim = ROOT
-			}
-			russia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_claim = ROOT
-			}
-			custom_tooltip = AB_EMPTY
-			if = {
-				limit = {
-					exists = UKR
-					UKR = {
-						religion = catholic
-					}
-				}
-				custom_tooltip = ROM_RUS_IS_CATHOLIC_YES
-				add_casus_belli = {
-					target = UKR
-					type = cb_establish_diocese
-					months = 300
-				}
-			}
-			else = {
-				custom_tooltip = ROM_RUS_IS_CATHOLIC_NO
-				tooltip = {
-					add_casus_belli = {
-						target = UKR
-						type = cb_establish_diocese
-						months = 300
-					}
-				}
-			}
-		}
-	}
-}
-
-BRN_branch_4_rome = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = BRN
-		NOT = { map_setup = map_setup_random }
-	}
-	has_country_shield = yes
-
-	wls_rus_union = {
-		icon = mission_rule_ruthenia
-		position = 15
-		required_missions = { wls_schism }
-
-		provinces_to_highlight = {
-			OR = {
-				province_id = 280
-				province_id = 295
-				province_id = 310
-				if = {
-					limit = {
-						exists = UKR
-					}
-					owned_by = UKR
-				}
-				else = {
-					owner = {
-						has_reform = principality
-					}
-				}
-			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-
-		trigger = {
-			owns_or_non_sovereign_subject_of = 280
-			owns_or_non_sovereign_subject_of = 295
-			owns_or_non_sovereign_subject_of = 310
-			if = {
-				limit = {
-					exists = UKR
-				}
-				UKR = {
-					is_subject_of = ROOT
-					has_opinion = {
-						who = ROOT
-						value = 200
-					}
-					NOT = { liberty_desire = 50 }
-				}
-			}
-			else = {
-				calc_true_if = {
-					all_subject_country = {
-						has_reform = principality
-						has_opinion = {
-							who = ROOT
-							value = 200
-						}
-						NOT = { liberty_desire = 50 }
-					}
-					amount = 3
-				}
-			}
-		}
-
-		effect = {
-			add_papal_influence = 100
-			custom_tooltip = BYZ_UNION_100_YEARS
-			tooltip = {
-				country_event = {
-					id = ab_byzantium.65
-				}
-			}
-			hidden_effect = {
-				country_event = {
-					id = ab_byzantium.65
-					days = 36500
-				}
-			}
-			custom_tooltip = AB_EMPTY
-			if = {
-				limit = {
-					exists = UKR
-					UKR = {
-						is_subject_of_type_with_overlord = {
-							who = ROOT
-							type = grand_diocese_vassal
-						}
-					}
-				}
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_YES
-				add_country_modifier = {
-					name = byz_rus_tsar
-					duration = -1
-				}
-			}
-			else = {
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_NO
-				tooltip = {
-					add_country_modifier = {
-						name = byz_rus_tsar
-						duration = -1
-					}
-				}
-			}
-			if = {
-				limit = {
-					NOT = { exists = UKR }
-					calc_true_if = {
-						all_subject_country = {
-							has_reform = principality
-							is_subject_of = ROOT
-						}
-						amount = 3
-					}
-				}
-				custom_tooltip = BYZ_UNION_PRINCES_YES
-				hidden_effect = {
-					TLW_establish_diocese_russia_effect = yes
-				}
-			}
-			else = {
-				custom_tooltip = BYZ_UNION_PRINCES_NO
-			}
-			custom_tooltip = AB_DIOCESE_RUSSIA_CB
-		}
-	}
-}
-
-BRN_branch_5_rome = {
-	slot = 5
-	generic = no
-	ai = yes
-	potential = {
-		tag = ROM
-		was_tag = BRN
-		NOT = { map_setup = map_setup_random }
-	}
-	has_country_shield = yes
-
-	wls_cities_byzantine = {
-		icon = mission_ottoman_law
-		required_missions = { }
-		position = 14
-
-		provinces_to_highlight = {
-			OR = {
-				province_id = 151
-				province_id = 146
-			    province_id = 148
-		      	province_id = 145
-		      	province_id = 317
-				province_id = 318
-				province_id = 358
-				province_id = 2313
-			}
-		}
-
-		trigger = {
-			151 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-		    146 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			148 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			145 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			317 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			318 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			358 = {
-				province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-			2313 = {
-			    province_is_diocese_land_trigger = yes
-				development = 22
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
-			tooltip = {
-				add_province_modifier = {
-                    name = byz_city
-				    duration = -1
-				}
-				upgrade_trade_building = yes
-			}
-			hidden_effect = {
-				every_province = {
-					limit = {
-						OR = {
-							province_id = 151
-							province_id = 146
-							province_id = 148
-							province_id = 145
-							province_id = 317
-							province_id = 318
-							province_id = 358
-							province_id = 2313
-						}
-					}
-					add_permanent_province_modifier = {
-						name = byz_city
-						duration = -1
-					}
-					upgrade_trade_building = yes
-					if = {
-						limit = {
-							NOT = { province_has_center_of_trade_of_level = 1 }
-						}
-						center_of_trade = 1
-					}
-					if = {
-						limit = {
-							NOT = { culture_group = roman_g }
-						}
-						province_event = {
-							id = ab_byzantium.71
-						}
-					}
-				}
-			}
-		}
-	}
 
 	wls_cities_latin = {
 		icon = mission_the_golden_city
-		required_missions = { wls_cities_byzantine }
-		position = 15
+		required_missions = { }
+		position = 19
 
 		provinces_to_highlight = {
 		    OR = {
@@ -3409,6 +3455,559 @@ BRN_branch_5_rome = {
 			}
 		}
 	}
+
+	wls_library = {
+		icon = bibliotheca_corviana
+		required_missions = { }
+		position = 21
+
+		provinces_to_highlight = { 
+			province_id = 358
+		}
+
+		trigger = {
+			treasury = 2500
+			adm_power = 200
+			advisor = scholar
+			358 = { country_or_non_sovereign_subject_holds = ROOT }
+			358 = { has_any_ongoing_construction = no }
+		}
+
+		effect = {
+			add_treasury = -2500
+			add_adm_power = -200
+		    custom_tooltip = BYZ_CREATE_LIBRARY
+			set_country_flag = byzantine_library_build
+			hidden_effect = {
+				358 = {
+					add_great_project = {
+						type = library_alexandria
+						instant = yes
+					}
+				}
+				358 = {
+					add_great_project_tier = {
+						type = library_alexandria
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+}
+
+BRN_branch_3_rome = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	wls_ministries = {
+		icon = empower_the_junkers
+		required_missions = { }
+		position = 20
+
+		trigger = {
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			custom_trigger_tooltip = {
+				tooltip = BRN_UNLOCKED_NI
+				OR = {
+					has_idea = BRN_seventh
+					has_idea = imperium_sine_fine
+				}
+			}
+		}
+
+		effect = {
+			add_stability_or_adm_power = yes
+			add_splendor = 400
+			add_country_modifier = {
+				name = byzantium_ministries
+				duration = 9125
+			}
+		}
+	}
+
+	wls_roman_law = {
+		icon = mission_themis
+		position = 21
+		required_missions = { wls_ministries }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_courthouse_building_trigger = no
+		}
+
+		trigger = {
+			OR = {
+				adm = 5
+				monthly_adm = 9
+			}
+			adm_power = 150
+			num_of_owned_provinces_with = {
+				value = 40
+				has_courthouse_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_adm_power = -150
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = byzantium_roman_law
+				duration = -1
+			}
+		}
+	}
+
+	wls_nomos = {
+		icon = mission_justinian
+		position = 22
+		required_missions = { wls_library wls_roman_law wls_wall }
+
+		trigger = {
+			monthly_adm = 10
+			monthly_dip = 10
+			monthly_mil = 10
+			absolutism = 75
+		}
+
+		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = byzantium_law
+				duration = -1
+			}
+			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+BRN_branch_4_rome = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	wls_cultural_hegemony = {
+		icon = mission_cultural_hegemony
+		position = 18
+		required_missions = { wls_schism }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			NOT = {
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 1000
+				province_is_diocese_land_trigger = yes
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_GOLDEN_AGE 
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_cultural_hegemony
+				duration = -1
+			}
+			custom_tooltip = BYZ_CULTURAL_HEGEMONY_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = byz_cultural_hegemony_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 600
+				}
+				else = {
+					reset_golden_age = yes
+				}
+				every_province = {
+					limit = {
+						culture_group = roman_g
+					}
+					add_province_modifier = {
+						name = byz_cultural_hegemony_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	wls_cities_byzantine = {
+		icon = mission_ottoman_law
+		required_missions = { }
+		position = 19
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 146
+			    province_id = 148
+		      	province_id = 145
+		      	province_id = 317
+				province_id = 318
+				province_id = 358
+				province_id = 2313
+			}
+		}
+
+		trigger = {
+			151 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		    146 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			148 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			145 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			317 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			318 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			358 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			2313 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 151
+							province_id = 146
+							province_id = 148
+							province_id = 145
+							province_id = 317
+							province_id = 318
+							province_id = 358
+							province_id = 2313
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
+	wls_wall = {
+		icon = byz_reinforce_constantinople
+		required_missions = { }
+		position = 21
+
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+
+		trigger = {
+			mil_power = 200
+			manpower = 25
+			treasury = 2500
+			advisor = fortification_expert
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			151 = {
+				has_any_ongoing_construction = no
+			}
+		}
+
+		effect = {
+			add_mil_power = -200
+			add_manpower = -25
+			add_treasury = -2500
+			custom_tooltip = BYZ_CREATE_MONUMENT
+			set_country_flag = byzantine_monument_flag
+			hidden_effect = {
+				151 = {
+					add_great_project = {
+						type = theodosian
+						instant = yes
+					}
+				}
+				151 = {
+					add_great_project_tier = {
+						type = theodosian
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+}
+
+BRN_branch_5_rome = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	wls_money = {
+		icon = dominant_economy
+		required_missions = { }
+		position = 19
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 151
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				}
+				AND = {
+					province_id = 358
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+				AND = {
+					province_id = 377
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {  
+		    NOT = { num_of_loans = 1 }
+			151 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			358 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			377 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			OR = {
+				monthly_adm = 12
+				full_idea_group = economic_ideas
+			}
+			advisor = treasurer
+		}
+
+		effect = {
+		    set_country_flag = rmg_monetary_policy_no_power_cost_flag
+			add_inflation = -5
+			add_country_modifier = {
+				name = byz_gold_standard
+				duration = -1
+			}
+			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
+		}
+	}
+
+	wls_roads = {
+		icon = mission_royal_roads
+		position = 20
+		required_missions = { wls_money }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 100
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_building_roads_bonus
+			add_country_modifier = {
+				name = byz_roads
+				duration = -1
+			}
+			custom_tooltip = BYZ_BUILDING_ROADS_BONUS
+		}
+	}
+
+	wls_wonders = {
+		icon = mission_romanwonders
+		position = 22
+		required_missions = { wls_roads }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			has_great_project = {
+				type = any
+				tier = 0
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+			reform_level = 6
+		}
+
+		effect = {
+			unlock_government_reform = {
+				government_reform = byzengineering
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzengineering
+		}
+	}
 }
 
 # Persian War
@@ -3426,7 +4025,7 @@ BRN_branch_4_persian_locked = {
 	wls_georgia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_persia_locked }
-		position = 17
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3443,7 +4042,7 @@ BRN_branch_4_persian_locked = {
 	wls_persosphere_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 18
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3460,7 +4059,7 @@ BRN_branch_4_persian_locked = {
 	wls_cities_persian_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_persosphere_locked }
-		position = 19
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3489,13 +4088,14 @@ BRN_branch_4_persian_unlocked = {
 	wls_georgia = {
 		icon = mission_georgia
 		required_missions = { wls_persia }
-		position = 17
+		position = 24
 
 		provinces_to_highlight = {
 			region = caucasia_region
 			NOT = { area = circassia_area }
 			NOT = { area = dagestan_area }
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 
 		trigger = {
@@ -3570,7 +4170,7 @@ BRN_branch_4_persian_unlocked = {
 	wls_persosphere = {
 		icon = mission_iran
 		required_missions = { }
-		position = 18
+		position = 25
 
 		provinces_to_highlight = {
 			province_is_diocese_land_trigger = yes
@@ -3615,7 +4215,7 @@ BRN_branch_4_persian_unlocked = {
 	wls_cities_persian = {
 		icon = per_purify_the_holy_sites
 		required_missions = { wls_persosphere }
-		position = 19
+		position = 26
 
 		provinces_to_highlight = {
 		    OR = {
@@ -3776,7 +4376,7 @@ BRN_branch_5_persian_locked = {
 	wls_persia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 16
+		position = 23
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3793,7 +4393,7 @@ BRN_branch_5_persian_locked = {
 	wls_turkmen_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_persia_locked }
-		position = 17
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3810,7 +4410,7 @@ BRN_branch_5_persian_locked = {
 	wls_ariana_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 18
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3827,7 +4427,7 @@ BRN_branch_5_persian_locked = {
 	wls_invade_india_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_ariana_locked }
-		position = 19
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3844,7 +4444,7 @@ BRN_branch_5_persian_locked = {
 	wls_maharajas_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_invade_india_locked }
-		position = 20
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -3873,7 +4473,7 @@ BRN_branch_5_persian_unlocked = {
 	wls_persia = {
 		icon = per_tab_ziyarids_successor
 		required_missions = { }
-		position = 16
+		position = 23
 
 		provinces_to_highlight = {
 			region = persia_region
@@ -3905,7 +4505,7 @@ BRN_branch_5_persian_unlocked = {
 						}
 					}
 				}
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_YES
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
 				central_asia_region = {
 					limit = {
 						NOT = { is_core = UKR }
@@ -3915,7 +4515,7 @@ BRN_branch_5_persian_unlocked = {
 				}
 			}
 			else = {
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_NO
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
 				tooltip = {
 					central_asia_region = {
 						limit = {
@@ -3932,7 +4532,7 @@ BRN_branch_5_persian_unlocked = {
 	wls_turkmen = {
 		icon = mission_central_asian_steppes
 		required_missions = { wls_persia }
-		position = 17
+		position = 24
 
 		provinces_to_highlight = {
 			region = central_asia_region
@@ -3973,7 +4573,7 @@ BRN_branch_5_persian_unlocked = {
 	wls_ariana = {
 		icon = mission_silk_road
 		required_missions = { }
-		position = 18
+		position = 25
 
 		provinces_to_highlight = {
 			region = khorasan_region
@@ -4047,7 +4647,7 @@ BRN_branch_5_persian_unlocked = {
 	wls_invade_india = {
 		icon = mission_rb_take_north_india
 		required_missions = { wls_ariana }
-		position = 19
+		position = 26
 
 		provinces_to_highlight = {
 			OR = {
@@ -4115,7 +4715,7 @@ BRN_branch_5_persian_unlocked = {
 	wls_maharajas = {
 		icon = mission_indian_empire
 		required_missions = { wls_invade_india }
-		position = 20
+		position = 27
 
 		provinces_to_highlight = {
 			superregion = india_superregion
@@ -4182,7 +4782,7 @@ BRN_branch_1_chinese_locked = {
 	wls_tibet_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 16
+		position = 23
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4199,7 +4799,7 @@ BRN_branch_1_chinese_locked = {
 	wls_mongolia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_tibet_locked }
-		position = 18
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4216,7 +4816,7 @@ BRN_branch_1_chinese_locked = {
 	wls_far_east_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_mongolia_locked }
-		position = 20
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4245,7 +4845,7 @@ BRN_branch_1_chinese_unlocked = {
 	wls_tibet = {
 		icon = mission_lhasa
 		required_missions = { }
-		position = 16
+		position = 23
 
 		provinces_to_highlight = {
 			region = tibet_region
@@ -4296,7 +4896,7 @@ BRN_branch_1_chinese_unlocked = {
 						}
 					}
 				}
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_YES
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
 				mongolia_region = {
 					limit = {
 						NOT = { is_core = UKR }
@@ -4306,7 +4906,7 @@ BRN_branch_1_chinese_unlocked = {
 				}
 			}
 			else = {
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_NO
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
 				tooltip = {
 					mongolia_region = {
 						limit = {
@@ -4334,7 +4934,7 @@ BRN_branch_1_chinese_unlocked = {
 	wls_mongolia = {
 		icon = mission_unify_mongolia
 		required_missions = { wls_tibet }
-		position = 18
+		position = 25
 
 		provinces_to_highlight = {
 			region = mongolia_region
@@ -4394,7 +4994,7 @@ BRN_branch_1_chinese_unlocked = {
 						}
 					}
 				}
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_YES
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
 				manchuria_region = {
 					limit = {
 						NOT = { is_core = UKR }
@@ -4405,7 +5005,7 @@ BRN_branch_1_chinese_unlocked = {
 				}
 			}
 			else = {
-				custom_tooltip = ROM_UKR_IS_OUR_DIOCESE_NO
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
 				tooltip = {
 					manchuria_region = {
 						limit = {
@@ -4423,7 +5023,7 @@ BRN_branch_1_chinese_unlocked = {
 	wls_far_east = {
 		icon = jap_financial_cliques
 		required_missions = { wls_mongolia }
-		position = 20
+		position = 27
 
 		provinces_to_highlight = {
 			superregion = far_east_superregion
@@ -4474,7 +5074,7 @@ BRN_branch_2_chinese_locked = {
 	wls_invade_china_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_tibet_locked wls_burma_locked }
-		position = 17
+		position = 24
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4491,7 +5091,7 @@ BRN_branch_2_chinese_locked = {
 	wls_cities_chinese_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_invade_china_locked }
-		position = 19
+		position = 26
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4520,7 +5120,7 @@ BRN_branch_2_chinese_unlocked = {
 	wls_invade_china = {
 		icon = mission_jaded
 		required_missions = { wls_tibet wls_burma }
-		position = 17
+		position = 24
 
 		provinces_to_highlight = {
 			superregion = china_superregion
@@ -4575,7 +5175,7 @@ BRN_branch_2_chinese_unlocked = {
 	wls_cities_chinese = {
 		icon = mission_asian_city
 		required_missions = { wls_invade_china }
-		position = 19
+		position = 26
 
 		provinces_to_highlight = {
 		    OR = {
@@ -4745,7 +5345,7 @@ BRN_branch_3_chinese_locked = {
 	wls_burma_locked = {
 		icon = mission_unknown_mission
 		required_missions = { }
-		position = 16
+		position = 23
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4762,7 +5362,7 @@ BRN_branch_3_chinese_locked = {
 	wls_indochina_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_burma_locked }
-		position = 18
+		position = 25
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4779,7 +5379,7 @@ BRN_branch_3_chinese_locked = {
 	wls_east_indies_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_indochina_locked }
-		position = 20
+		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4796,7 +5396,7 @@ BRN_branch_3_chinese_locked = {
 	wls_asia_locked = {
 		icon = mission_unknown_mission
 		required_missions = { wls_far_east_locked wls_east_indies_locked wls_maharajas }
-		position = 21
+		position = 28
 
 		trigger = {
 			custom_trigger_tooltip = {
@@ -4825,7 +5425,7 @@ BRN_branch_3_chinese_unlocked = {
 	wls_burma = {
 		icon = mission_conquer_lower_burma_tau
 		required_missions = { }
-		position = 16
+		position = 23
 
 		provinces_to_highlight = {
 			region = burma_region
@@ -4876,7 +5476,7 @@ BRN_branch_3_chinese_unlocked = {
 	wls_indochina = {
 		icon = mission_rule_indochina
 		required_missions = { wls_burma }
-		position = 18
+		position = 25
 
 		provinces_to_highlight = {
 			region = indo_china_region
@@ -4913,7 +5513,7 @@ BRN_branch_3_chinese_unlocked = {
 	wls_east_indies = {
 		icon = mission_las_islas_filipinas
 		required_missions = { wls_indochina }
-		position = 20
+		position = 27
 
 		provinces_to_highlight = {
 			superregion = east_indies_superregion
@@ -4955,7 +5555,7 @@ BRN_branch_3_chinese_unlocked = {
 	wls_asia = {
 		icon = mission_warring
 		required_missions = { wls_far_east wls_east_indies wls_maharajas }
-		position = 21
+		position = 28
 
 		provinces_to_highlight = {
 			OR = {
