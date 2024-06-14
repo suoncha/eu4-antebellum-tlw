@@ -3354,6 +3354,7 @@ ab_russia_fifth_formable = {
 			owner = {
 				is_emperor_of_china = yes
 			}
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -3399,12 +3400,7 @@ ab_russia_fifth_formable = {
 							who = event_target:EmperorOfChina
 						}
 					}
-					custom_tooltip = RUS_DEFEAT_CHINA
-				}
-				else = {
-					custom_tooltip = RUS_DEFEAT_CHINA_NO
-				}
-				tooltip = {
+					custom_tooltip = PER_DEFEAT_CHINA_TT
 					add_power_projection = {
 						type = mission_rewards_power_projection
 						amount = 25
@@ -3421,48 +3417,9 @@ ab_russia_fifth_formable = {
 						add_permanent_claim = ROOT
 					}
 				}
-				if = {
-					limit = {
-						alliance_with = event_target:EmperorOfChina
-					}
-					custom_tooltip = RUS_BEFRIEND_CHINA
-				}
 				else = {
-					custom_tooltip = RUS_BEFRIEND_CHINA_NO
-				}
-				tooltip = {
-					add_legitimacy = 25
-					add_country_modifier = {
-						name = rus_jade_dragon_friend
-						duration = -1
-					}
-				}
-			}
-			else = {
-				mongolia_region = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						any_country = {
-							is_emperor_of_china = yes
-						}
-					}
-					if = {
-						limit = {
-							any_country = {
-								is_emperor_of_china = yes
-								ROOT = {
-									has_won_war_against = { who = PREV }
-								}
-							}
-						}
+					custom_tooltip = PER_DEFEAT_CHINA_TT_NO
+					tooltip = {
 						add_power_projection = {
 							type = mission_rewards_power_projection
 							amount = 25
@@ -3479,12 +3436,21 @@ ab_russia_fifth_formable = {
 							add_permanent_claim = ROOT
 						}
 					}
-					else_if = {
-						limit = {
-							event_target:EmperorOfChina = {
-								alliance_with = ROOT
-							}
-						}
+				}
+				if = {
+					limit = {
+						alliance_with = event_target:EmperorOfChina
+					}
+					custom_tooltip = PER_BEFRIEND_CHINA
+					add_legitimacy = 25
+					add_country_modifier = {
+						name = rus_jade_dragon_friend
+						duration = -1
+					}
+				}
+				else = {
+					custom_tooltip = PER_BEFRIEND_CHINA_NO
+					tooltip = {
 						add_legitimacy = 25
 						add_country_modifier = {
 							name = rus_jade_dragon_friend
@@ -3492,14 +3458,14 @@ ab_russia_fifth_formable = {
 						}
 					}
 				}
-				else = {
-					mongolia_region = {
-						limit = {
-							NOT = { is_core = ROOT }
-							NOT = { is_permanent_claim = ROOT }
-						}
-						add_permanent_claim = ROOT
+			}
+			else = {
+				mongolia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
 					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}

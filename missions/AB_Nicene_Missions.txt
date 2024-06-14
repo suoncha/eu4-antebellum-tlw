@@ -119,7 +119,6 @@ NCI_missions_1_stratocracy_unlocked = {
 		position = 1
 	
 		trigger = {
-			has_reform = nicene_stratocracy
 			estate_influence = { estate = estate_nobles influence = 80 }
 			num_of_estate_privileges = {
 				estate = estate_nobles
@@ -128,11 +127,12 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 		
 		effect = {
-			custom_tooltip = NICENE_ADVISOR
+			add_army_professionalism = 0.05
 			add_country_modifier = {
-				name = "nicaea_nobles"
+				name = nicaea_nobles
 				duration = -1
 			}
+			custom_tooltip = NICENE_ADVISOR
 		}
 	}
 	
@@ -150,7 +150,6 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 		
 		trigger = {
-			has_reform = nicene_stratocracy
 			num_of_owned_provinces_with = {
 				value = 10
 				has_manpower_building_trigger = yes
@@ -160,10 +159,13 @@ NCI_missions_1_stratocracy_unlocked = {
 		
 		effect = {
 			custom_tooltip = NCI_BONUS_DEV
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "nicaea_infrastructure"
+				name = nicaea_infrastructure
 				duration = -1
 			}
+			set_country_flag = vsg_barrack_buff
+			custom_tooltip = VSG_BUILDING_BARRACK
 		}
 	}
 	
@@ -191,7 +193,6 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 		
 		trigger = {
-			has_reform = nicene_stratocracy
 			university = 10
 			317 = {
 				has_great_project = {
@@ -202,6 +203,9 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 		
 		effect = {
+			set_country_flag = nci_ruler_winning_battle
+			custom_tooltip = NCI_RULER_WINNING_BATTLE
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = NICENE_EDUCATION
 		}
 	}
@@ -212,19 +216,19 @@ NCI_missions_1_stratocracy_unlocked = {
 		position = 4
 		
 		trigger = {
-			has_reform = nicene_stratocracy
 			mil = 6
 			absolutism = 80
 			army_tradition = 100
 		}
 		
 		effect = {
-			add_army_professionalism = 0.05
 			add_mil_tech = 1
 			add_country_modifier = {
-				name = "nicaea_megas"
+				name = nicaea_megas
 				duration = -1
 			}
+			set_country_flag = sax_primacy_privilege_buff
+			custom_tooltip = SAX_PRIMACY_PRIVILEGE
 		}
 	}
 	
@@ -241,7 +245,6 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 
 		trigger = {
-			has_reform = nicene_stratocracy
 			custom_trigger_tooltip = {
 				tooltip = NICENE_ARMY
 				NOT = {
@@ -254,11 +257,15 @@ NCI_missions_1_stratocracy_unlocked = {
 		}
 		
 		effect = {
-			add_army_tradition = 20
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "nicaea_supremacy"
-				duration = 9125
+				name = nicaea_supremacy
+				duration = 36500
 			}
+			set_country_flag = sty_winning_battle_grant_morale
+			custom_tooltip = STY_GER_EASTERN_SPEAR_BATTLE
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = NCI_THREAT
 			hidden_effect = {
 				if = {
@@ -342,6 +349,11 @@ HLE_missions_1 = {
 			country_event = {
 				id = ab_nicaea.12
 			}
+			custom_tooltip = AB_EMPTY
+			add_ruler_modifier = {
+				name = ser_liberator_of_italy
+				duration = -1
+			}
 			corsica_sardinia_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -362,20 +374,21 @@ HLE_missions_1 = {
 		}
 		
 		trigger = {
-			owns_or_non_sovereign_subject_of = 126
+			mission_completed = nicene_asia_minor
+			126 = { country_or_non_sovereign_subject_holds = ROOT }
 			126 = { base_manpower = 6 }
 			126 = { province_has_current_tech_fort_trigger = yes }
 		}
 		
 		effect = {
-			custom_tooltip = NICENE_MALTA
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_ITALY
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "nicaea_western"
+				name = nicaea_western
 				duration = 9125
 			}
-			hidden_effect = {
-			  	126 = { upgrade_fort_building = yes }
+			126 = {
+				upgrade_fort_building = yes
 			}
 		}
 	}
@@ -406,7 +419,10 @@ HLE_missions_1 = {
 					speed = 0.5
 					cost = 0
 				}
+				custom_tooltip = AB_EMPTY
+				add_or_upgrade_shipyard_building = yes
 			}
+			custom_tooltip = AB_EMPTY
 			baleares_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -441,6 +457,7 @@ HLE_missions_1 = {
 					add_permanent_claim = ROOT
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -509,6 +526,7 @@ HLE_missions_1 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -558,9 +576,10 @@ HLE_missions_1 = {
 		effect = {
 			add_yearly_manpower = 4
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_GAUL
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = nci_gaul_invasion
-				duration = 3650
+				duration = 7300
 			}
 		}
 	}
@@ -589,19 +608,24 @@ NCI_missions_2 = {
 		}
 		
 		effect = {
+			add_government_power = { 
+				mechanic_type = nicene_militarization_mechanic
+				power_type = nicene_militarized_society
+				value = 10
+			}
 			add_country_modifier = {
-				name = "nicaea_battle"
+				name = nicaea_battle
 				duration = 5475
 			}
 			custom_tooltip = NICAEA_RIVAL_ROME
 			tooltip = {
 				add_country_modifier = {
-					name = "nicaea_rival_rome"
+					name = nicaea_rival_rome
 					duration = 9125
 				}
 			}
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						NOT = {
 							BYZ = {
@@ -610,7 +634,7 @@ NCI_missions_2 = {
 						}
 					}
 					add_country_modifier = {
-						name = "nicaea_rival_rome"
+						name = nicaea_rival_rome
 						duration = 9125
 					}
 				}
@@ -639,8 +663,8 @@ NCI_missions_2 = {
 		effect = {
 			create_admiral = { tradition = 50 }
 			add_country_modifier = {
-				name = "nicaea_ambition"
-				duration = 5475
+				name = nicaea_ambition
+				duration = 7300
 			}
 			aegean_archipelago_area = {
 				limit = {
@@ -670,15 +694,21 @@ NCI_missions_2 = {
 		}
 		
 		effect = {
-			add_navy_tradition = 20
 			151 = {
 				add_trade_modifier = {
 					who = root
-					duration = 7300
+					duration = -1
 					power = 20
 					key = aegean_dominance
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = naval_reformer
+				skill = 2
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
 			western_sicily_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -743,6 +773,9 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
+			custom_tooltip = BYZ_UNLOCK_BOSPHORUS_TOLL
+			set_country_flag = BYZ_unlocked_bosphorus_toll
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = nicene_hellespont
 				duration = -1
@@ -785,10 +818,29 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
-			add_adm_power = 75
 			add_country_modifier = {
 				name = nicene_countryside
 				duration = 9125
+			}
+			custom_tooltip = BYZ_BALKAN_DEV
+			tooltip = {
+				add_province_modifier = {
+					name = byzantium_urbanization
+					duration = 9125
+				}
+			}
+			custom_tooltip = BYZ_URBAN_PROD_BOOST
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = balkan_region
+						development = 15
+					}
+					add_province_modifier = {
+						name = byzantium_urbanization
+						duration = 9125
+					}
+				}
 			}
 		}
 	}
@@ -799,7 +851,6 @@ HLE_missions_2 = {
 		position = 8
 		
 		trigger = {
-			has_institution = nacionalizmus
 			development_in_provinces = {
 				value = 500
 				culture = hellenic_greek
@@ -812,6 +863,11 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = nicene_nationalism
+				duration = -1
+			}
 			custom_tooltip = NICENE_NATION
 			hidden_effect = {
 				every_owned_province = {
@@ -820,10 +876,6 @@ HLE_missions_2 = {
 					}
 					add_base_manpower = 1
 				}
-			}
-			add_country_modifier = {
-				name = nicene_nationalism
-				duration = -1
 			}
 		}
 	}
@@ -834,7 +886,7 @@ HLE_missions_2 = {
 		position = 9
 		
 		trigger = {
-			owns_or_non_sovereign_subject_of = 112
+			112 = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		provinces_to_highlight = {
@@ -908,7 +960,6 @@ HLE_missions_2 = {
 					duration = -1
 				}
 			}
-			custom_tooltip = AB_EMPTY
 			1751 = {
 				if = {
 					limit = {
@@ -945,6 +996,7 @@ HLE_missions_2 = {
 					add_permanent_claim = ROOT
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -967,7 +1019,7 @@ HLE_missions_2 = {
 		position = 13
 		required_missions = { nicene_massillia nicene_valencia nicene_hercules }
 	
-		trigger = { 
+		trigger = {
 			101 = { is_strongest_trade_power = ROOT }
 			341 = { is_strongest_trade_power = ROOT }
 			220 = { is_strongest_trade_power = ROOT }
@@ -1080,9 +1132,12 @@ HLE_missions_2 = {
 		}
 		
 		effect = {
+			965 = {
+				change_trade_goods = salt
+			}
 			add_country_modifier = {
 				name = byz_punics_defeated
-				duration = 7300
+				duration = 10950
 			}
 			north_america_superregion = {
 				limit = {
@@ -1096,16 +1151,8 @@ HLE_missions_2 = {
 				limit = {
 					NOT = { exists = CTG }
 				}
-				custom_tooltip = BYZ_PUNICS_GONE
-			}
-			else = {
-				custom_tooltip = BYZ_PUNICS_GONE_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { exists = CTG }
-					}
+				custom_tooltip = BYZ_PUNICS_GONE_YES
+				hidden_effect = {
 					every_province = {
 						limit = {
 							culture = punic
@@ -1117,6 +1164,9 @@ HLE_missions_2 = {
 						change_culture = owner
 					}
 				}
+			}
+			else = {
+				custom_tooltip = BYZ_PUNICS_GONE_NO
 			}
 		}
 	}
@@ -1145,21 +1195,27 @@ NCI_missions_3 = {
 		}
 		
 		trigger = {
-		    has_spy_network_in = { who = BYZ value = 50 }
+		    has_spy_network_in = {
+				who = BYZ
+				value = 50
+			}
 		}
 		
 		effect = {
-			add_spy_network_in = { who = BYZ value = -50 }
+			add_spy_network_in = {
+				who = BYZ
+				value = -50
+			}
 			custom_tooltip = NICAEA_GREEK_FIRE
 			tooltip = {
 				add_country_modifier = {
-					name = "nicaea_greek_fire"
+					name = nicaea_greek_fire
 					duration = -1
 				}
 			}
 			hidden_effect = {
 				add_country_modifier = {
-					name = "nicaea_greek_fire"
+					name = nicaea_greek_fire
 					duration = -1
 				}
 			}
@@ -1182,7 +1238,7 @@ NCI_missions_3 = {
 		effect = {
 			add_mil_power = 50
 			add_country_modifier = {
-				name = "nicaea_reconquest"
+				name = nicaea_reconquest
 				duration = 7300
 			}
 			thrace_area = {
@@ -1239,6 +1295,20 @@ NCI_missions_3 = {
 			country_event = {
 				id = ab_nicaea.1
 			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SER_ORTHODOX_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
 		}
 	}
 	
@@ -1261,15 +1331,17 @@ NCI_missions_3 = {
 				change_province_name = "Byzantion"
 				rename_capital = "Byzantion"
 			}
-			if = {
-				limit = {
-					has_dlc = "Mandate of Heaven"
-				}
-				151 = {
-					add_prosperity = 100 
-				}
-			}
+			custom_tooltip = AB_EMPTY
 			151 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+				custom_tooltip = AB_EMPTY
+				add_prosperity = 100
+				add_province_modifier = {
+					name = byzantium_queen
+					duration = -1
+				}
 				if = {
 					limit = {
 						NOT = {
@@ -1285,6 +1357,25 @@ NCI_missions_3 = {
 						}
 					}
 					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_TOP_DEV
+			tooltip = { 
+				add_splendor = 100
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						151 = { 
+							NOT = { 
+								any_province = { 
+									higher_development_than = PREV 
+								}
+							}
+						}
+					}
+					add_splendor = 100
 				}
 			}
 		}
@@ -1330,6 +1421,7 @@ NCI_missions_3 = {
 			country_event = {
 				id = ab_nicaea.2
 			}
+			custom_tooltip = AB_EMPTY
 			bulgaria_area = {
 			    limit = {
 					NOT = { is_core = ROOT}
@@ -1367,7 +1459,6 @@ HLE_missions_3 = {
 		
 		provinces_to_highlight = {
 			OR = {
-				owned_by = BUL
 				area = bulgaria_area
 				area = silistria_area
 			}
@@ -1375,7 +1466,6 @@ HLE_missions_3 = {
 		}
 		
 		trigger = {
-			NOT = { exists = BUL }
 		    bulgaria_area = {
 			    type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1395,71 +1485,104 @@ HLE_missions_3 = {
 				name = nicene_balkan
 				duration = 9125
 			}
-			custom_tooltip = NICENE_SERBIA
+			wallachia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			serbia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rascia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = NICENE_WALLACHIA
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = NICENE_MOLDAVIA
-			hidden_effect = {
-				if = {
-					limit = {
-						exists = SER
-					}
-					add_casus_belli = { 
+			if = {
+				limit = {
+					exists = SER
+				}
+				custom_tooltip = SER_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = SER
+				}
+			}
+			else = {
+				custom_tooltip = SER_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = SER
-						type = cb_vassalize_mission 
 					}
 				}
-				else = {
-					serbia_area = {
-						limit = {
-							NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-						add_permanent_claim = ROOT
-					}
-					rascia_area = {
-						limit = {
-							NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-						add_permanent_claim = ROOT
-					}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = WAL
 				}
-				if = {
-					limit = {
-						exists = WAL
-					}
-					add_casus_belli = { 
+				custom_tooltip = WAL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = WAL
+				}
+			}
+			else = {
+				custom_tooltip = WAL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = WAL
-						type = cb_vassalize_mission 
 					}
 				}
-				else = {
-					wallachia_area = {
-						limit = {
-							NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-						add_permanent_claim = ROOT
-					}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = MOL
 				}
-				if = {
-					limit = {
-						exists = MOL
-					}
-					add_casus_belli = { 
+				custom_tooltip = MOL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = MOL
+				}
+			}
+			else = {
+				custom_tooltip = MOL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
 						target = MOL
-						type = cb_vassalize_mission 
-					}
-				}
-				else = {
-					moldavia_area = {
-						limit = {
-							NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-						add_permanent_claim = ROOT
 					}
 				}
 			}
@@ -1491,7 +1614,11 @@ HLE_missions_3 = {
 		}
 		
 		effect = {
-			add_years_of_income = 1
+			add_dip_power = 100
+			add_country_modifier = {
+				name = rum_c_subjugate
+				duration = 5475
+			}
 			balkan_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1499,6 +1626,7 @@ HLE_missions_3 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = orthodox
@@ -1515,6 +1643,7 @@ HLE_missions_3 = {
 			else = {
 				custom_tooltip = NCI_SERBIA_REWARD_ORTHODOX_NO
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -1529,6 +1658,7 @@ HLE_missions_3 = {
 			else = {
 				custom_tooltip = NCI_SERBIA_REWARD_HELLENIC_NO
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = shiite
@@ -1588,8 +1718,16 @@ HLE_missions_3 = {
 			131 = { change_culture = hellenic_illyrian }
 			137 = { change_culture = hellenic_illyrian }
 			4239 = { change_culture = hellenic_illyrian }
+			custom_tooltip = AB_EMPTY
+			balkan_region = {
+				add_nationalism = -20
+				add_province_modifier = {
+					name = rum_develop_balkans
+					duration = 9125
+				}
+			}
 			add_country_modifier = {
-				name = "lat_integrate_balkan"
+				name = lat_integrate_balkan
 				duration = -1
 			}
 			carinthia_area = {
@@ -1634,7 +1772,6 @@ HLE_missions_3 = {
 		}
 		
 		effect = {
-			add_navy_tradition = 10
 			285 = {
 				change_culture = hellenic_scythian
 				if = {
@@ -1650,6 +1787,11 @@ HLE_missions_3 = {
 					add_center_of_trade_level = 1
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_c_crimea
+				duration = 7300
+			}
 			crimea_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1657,6 +1799,7 @@ HLE_missions_3 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -1693,7 +1836,8 @@ HLE_missions_3 = {
 		}
 		
 		effect = {
-			add_years_of_income = 1
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = nicene_centers
 				duration = 9125
@@ -1729,7 +1873,9 @@ HLE_missions_3 = {
 			1749 = { change_culture = hellenic_iberian }
 			334 = { change_culture = hellenic_african }
 			1751 = { change_culture = hellenic_african }
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_IBERIA
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = byzantium_unknown
 				duration = 18250
@@ -1810,15 +1956,6 @@ NCI_missions_4 = {
 				name = nicene_legion
 				duration = 9125
 			}
-			318 = {
-				if = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
-			}
 			aydin_area = {
 				limit = {
 					NOT = { is_core = ROOT }
@@ -1872,14 +2009,16 @@ NCI_missions_4 = {
 		}
 		
 		effect = {
-			capital_scope = {
-				add_prosperity = 100
-			}
+			add_stability_or_adm_power = yes
 			add_country_modifier = {
 				name = nicene_refuge
 				duration = 9125
 			}
 			custom_tooltip = NICENE_DEV_BONUS
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_or_upgrade_tax_building = yes
+			}
 		}
 	}
 	
@@ -1894,13 +2033,11 @@ NCI_missions_4 = {
 		
 		trigger = {
 			319 = { owned_by = ROOT }
-			OR = {
-				319 = { development = 20 }
-				319 = {
-					has_great_project = {
-						type = mausoleum_at_halicarnassus
-						tier = 1
-					}
+			319 = { development = 20 }
+			319 = {
+				has_great_project = {
+					type = mausoleum_at_halicarnassus
+					tier = 1
 				}
 			}
 		}
@@ -1913,10 +2050,11 @@ NCI_missions_4 = {
 			define_advisor = {
 				type = architect
 				skill = 3
-				religion = ROOT
-				culture = ROOT
 				cost_multiplier = 0.5
 			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = nci_scaling_architect
+			custom_tooltip = NCI_ARCHITECT_SCALING
 		}
 	}
 	
@@ -1948,9 +2086,10 @@ NCI_missions_4 = {
 		
 		effect = {
 			custom_tooltip = NICENE_CAPITAL
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = nicene_unite_greece
-				duration = 5475
+				duration = 10950
 			}
 			northern_greece_area = {
 				limit = {
@@ -2011,6 +2150,14 @@ NCI_missions_4 = {
 		}
 		
 		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_country_modifier = {
+				name = nci_fortify_coastline
+				duration = -1
+			}
 			custom_tooltip = FRC_COASTLINE
 			hidden_effect = {
 				every_owned_province = {
@@ -2131,11 +2278,15 @@ HLE_missions_4_religion_orthodox = {
 		
 		effect = {
 			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = rus_land_churches
+				duration = 5475
+			}
 			custom_tooltip = NCI_ANATOLIA_DEV
 			tooltip = {
 				add_province_modifier = {
 					name = nci_hellenic_orthodoxy
-					duration = 7300
+					duration = 10950
 				}
 			}
 			hidden_effect = {
@@ -2195,7 +2346,6 @@ HLE_missions_4_religion_orthodox = {
 		}
 
 		trigger = {
-			151 = { country_or_non_sovereign_subject_holds = ROOT }
 			151 = {
 				has_great_project = {
 					type = hagia_sophia
@@ -2228,6 +2378,9 @@ HLE_missions_4_religion_orthodox = {
 					}
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rum_religious_state_buff
+			custom_tooltip = RUM_RELIGIOUS_STATE_PRIVILEGE
 		}
 	}
 }
@@ -2260,9 +2413,10 @@ HLE_missions_4_religion_shiite = {
 		
 		effect = {
 			change_government_reform_progress = 30
+			add_splendor = 200
 			add_country_modifier = {
 				name = jlr_court
-				duration = 5475
+				duration = 7300
 			}
 		}
 	}
@@ -2292,11 +2446,10 @@ HLE_missions_4_religion_shiite = {
 		
 		effect = {
 			custom_tooltip = NCI_SHIA_CENTER
+			custom_tooltip = AB_EMPTY
 			define_advisor = {
 				type = islamic_advisor
 				skill = 3
-				religion = ROOT
-				culture = ROOT
 				cost_multiplier = 0.25
 			}
 			hidden_effect = {
@@ -2310,6 +2463,9 @@ HLE_missions_4_religion_shiite = {
 					}
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = vsg_religious_culture_buff
+			custom_tooltip = VSG_RELIGIOUS_CULTURE_PRIVILEGE
 		}
 	}
 
@@ -2339,6 +2495,9 @@ HLE_missions_4_religion_shiite = {
 			country_event = {
 				id = ab_jalayirid.5
 			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = scholar_gain_tech_cost
+			custom_tooltip = FKN_SCHOLAR_SCALING
 		}
 	}
 }
@@ -2404,6 +2563,20 @@ HLE_missions_4_religion_hellenic = {
 				name = nicene_ideas
 				duration = 9125
 			}
+			custom_tooltip = FIVE_RANDOM_PROVINCES
+			tooltip = {
+				add_or_upgrade_courthouse_building = yes
+			}
+			hidden_effect = {
+				for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							add_or_upgrade_courthouse_building = yes
+                        }
+                    "
+                }
+			}
 		}
 	}
 
@@ -2432,6 +2605,8 @@ HLE_missions_4_religion_hellenic = {
 				name = nci_hellenic_reformation
 				duration = -1
 			}
+			set_country_flag = nci_scaling_natural_scientist
+			custom_tooltip = NCI_NATURAL_SCIENTIST_SCALING
 		}
 	}
 
@@ -2459,14 +2634,15 @@ HLE_missions_4_religion_hellenic = {
 				type = natural_scientist
 				female = yes
 				skill = 3
-				culture = ROOT
-				religion = ROOT
 				cost_multiplier = 0.5
 			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = nci_hellenic_women
 				duration = -1
 			}
+			set_country_flag = byz_religious_diplomats_buff
+			custom_tooltip = BYZ_RELIGIOUS_DIPLOMATS_PRIVILEGE
 		}
 	}
 }
@@ -2504,6 +2680,11 @@ HLE_missions_4 = {
 			country_event = {
 				id = ab_nicaea.5
 			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_c_granary
+				duration = -1
+			}
 			maghreb_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -2511,6 +2692,7 @@ HLE_missions_4 = {
 				}
 				add_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -2538,6 +2720,7 @@ HLE_missions_4 = {
 		provinces_to_highlight = {
 			region = maghreb_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		effect = {
@@ -2547,10 +2730,11 @@ HLE_missions_4 = {
 				}
 				341 = { change_culture = hellenic_african }
 			}
-			create_admiral = { tradition = 60 }
+			custom_tooltip = AB_EMPTY
+			add_navy_tradition = 25
 			add_country_modifier = {
 				name = byzantium_secured
-				duration = 9125
+				duration = -1
 			}
 			if = {
 				limit = {
@@ -2566,6 +2750,15 @@ HLE_missions_4 = {
 			}
 			else = {
 				custom_tooltip = NCI_MAGHREB_REWARD_NO
+			}
+			tooltip = {
+				maghreb_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = AEG
+				}
 			}
 			hidden_effect = {
 				if = {
@@ -2598,6 +2791,7 @@ HLE_missions_4 = {
 		provinces_to_highlight = {
 			region = persia_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -2608,12 +2802,15 @@ HLE_missions_4 = {
 		}
 		
 		effect = {
-			2218 = { change_culture = hellenic_persian }
 			country_event = {
 				id = ab_nicaea.13
 			}
+			custom_tooltip = AB_EMPTY
+			2218 = {
+				change_culture = hellenic_persian
+			}
 			add_country_modifier = {
-				name = "nicene_shahanshah"
+				name = nicene_shahanshah
 				duration = -1
 			}
 			caucasia_region = {
@@ -2661,6 +2858,7 @@ HLE_missions_4 = {
 		provinces_to_highlight = {
 			region = khorasan_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -2671,10 +2869,17 @@ HLE_missions_4 = {
 		}
 		
 		effect = {
-			445 = { change_culture = hellenic_bactrian }
+			custom_tooltip = HLE_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = hle_evolved_ideas1
+				swap_free_idea_group = yes
+			}
 			custom_tooltip = AB_EMPTY
+			445 = {
+				change_culture = hellenic_bactrian
+			}
 			add_country_modifier = {
-				name = "nicene_hellenic_world"
+				name = nicene_hellenic_world
 				duration = 18250
 			}
 			northern_sindh_area = {
@@ -2719,11 +2924,7 @@ HLE_missions_4 = {
 				}
 				add_claim = ROOT
 			}
-			custom_tooltip = HLE_EVOLVING_IDEA_1
-			hidden_effect = {
-				set_country_flag = hle_evolved_ideas1
-				swap_free_idea_group = yes
-			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = reformed_hellenic
@@ -2755,6 +2956,7 @@ HLE_missions_4 = {
 				area = northern_sindh_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 
 		trigger = {
@@ -2781,7 +2983,9 @@ HLE_missions_4 = {
 		}
 		
 		effect = {
-			507 = { change_culture = hellenic_indian }
+			507 = {
+				change_culture = hellenic_indian
+			}
 			add_country_modifier = {
 				name = ilk_invade_india
 				duration = 9125
@@ -2861,7 +3065,18 @@ HLE_missions_4 = {
 		}
 
 		effect = {
+			add_army_professionalism = 0.05
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_INDIA
+			custom_tooltip = AB_EMPTY
+			india_superregion = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = byz_integrate_indian
+					duration = 7300
+				}
+			}
 			malaya_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -2869,6 +3084,7 @@ HLE_missions_4 = {
 				}
 				add_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					has_country_modifier = sel_hydaspes
@@ -2897,6 +3113,7 @@ HLE_missions_4 = {
 			owner = {
 				is_emperor_of_china = yes
 			}
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -2936,28 +3153,37 @@ HLE_missions_4 = {
 		effect = {
 			if = {
 				limit = {
-					any_country = { is_emperor_of_china = yes }
+					any_country = {
+						is_emperor_of_china = yes
+					}
 				}
 				if = {
 					limit = {
-						any_country = {
-							is_emperor_of_china = yes
-							ROOT = {
-								has_won_war_against = { who = PREV }
-							}
+						has_won_war_against = {
+							who = event_target:EmperorOfChina
 						}
 					}
 					custom_tooltip = PER_DEFEAT_CHINA_TT
-					tooltip = {
-						add_power_projection = {
-							type = mission_rewards_power_projection
-							amount = 25
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+					add_country_modifier = {
+						name = per_jade_dragon
+						duration = 7300
+					}
+					custom_tooltip = PER_CHINA_COT_CLAIM
+					hidden_effect = {
+						every_province = {
+							limit = {
+								owner = {
+									is_emperor_of_china = yes
+								}
+								has_port = yes
+								province_has_center_of_trade_of_level = 1
+							}
+							add_permanent_claim = ROOT
 						}
-						add_country_modifier = {
-							name = "per_jade_dragon"
-							duration = 7300
-						}
-						custom_tooltip = PER_CHINA_COT_CLAIM
 					}
 				}
 				else = {
@@ -2968,7 +3194,7 @@ HLE_missions_4 = {
 							amount = 25
 						}
 						add_country_modifier = {
-							name = "per_jade_dragon"
+							name = per_jade_dragon
 							duration = 7300
 						}
 						custom_tooltip = PER_CHINA_COT_CLAIM
@@ -2985,79 +3211,12 @@ HLE_missions_4 = {
 						}
 					}
 					custom_tooltip = PER_BEFRIEND_CHINA
-					tooltip = {
-						custom_tooltip = PER_CHINA_PERMA_TP
-						add_country_modifier = {
-							name = "per_jade_dragon_friend"
-							duration = 7300
-						}
+					add_country_modifier = {
+						name = per_jade_dragon_friend
+						duration = 7300
 					}
-				}
-				else = {
-					custom_tooltip = PER_BEFRIEND_CHINA_NO
-					tooltip = {
-						custom_tooltip = PER_CHINA_PERMA_TP
-						add_country_modifier = {
-							name = "per_jade_dragon_friend"
-							duration = 7300
-						}
-					}
-				}
-			}
-			else = {
-				add_country_modifier = {
-					name = "per_enter_china"
-					duration = 5475
-				}
-				custom_tooltip = PER_CHINA_COT_CLAIM2
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						any_country = { is_emperor_of_china = yes }
-					}
-					if = {
-						limit = {
-							any_country = {
-								is_emperor_of_china = yes
-								ROOT = {
-									has_won_war_against = { who = PREV }
-								}
-							}
-						}
-						add_power_projection = {
-							type = mission_rewards_power_projection
-							amount = 25
-						}
-						add_country_modifier = {
-							name = "per_jade_dragon"
-							duration = 7300
-						}
-						every_province = {
-							limit = {
-								owner = {
-									is_emperor_of_china = yes
-								}
-								has_port = yes
-								province_has_center_of_trade_of_level = 1
-							}
-							add_permanent_claim = ROOT
-						}
-					}
-					else_if = {
-						limit = {
-							event_target:EmperorOfChina = {
-								has_opinion = {
-									who = ROOT
-									value = 150
-								}
-								alliance_with = ROOT
-							}
-						}
-						add_country_modifier = {
-							name = "per_jade_dragon_friend"
-							duration = 7300
-						}
+					custom_tooltip = PER_CHINA_PERMA_TP
+					hidden_effect = {
 						667 = {
 							add_trade_modifier = {
 								who = root
@@ -3085,13 +3244,25 @@ HLE_missions_4 = {
 					}
 				}
 				else = {
-					add_country_modifier = {
-						name = "per_enter_china"
-						duration = 5475
+					custom_tooltip = PER_BEFRIEND_CHINA_NO
+					tooltip = {
+						add_country_modifier = {
+							name = per_jade_dragon_friend
+							duration = 7300
+						}
+						custom_tooltip = PER_CHINA_PERMA_TP
 					}
-					every_province = {
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = per_enter_china
+					duration = 5475
+				}
+				custom_tooltip = PER_CHINA_COT_CLAIM2
+				hidden_effect = {
+					china_superregion = {
 						limit = {
-							superregion = china_superregion
 							has_port = yes
 							province_has_center_of_trade_of_level = 1
 						}
@@ -3120,27 +3291,23 @@ NCI_missions_5 = {
 	    icon = mam_persia
 		required_missions = { nicene_legions }
 		position = 2
+
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				is_core = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				region = anatolia_region
 				value = 15
 			}
 		}
 		
-		provinces_to_highlight = {
-			region = anatolia_region
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
-		}
-		
 		effect = {
-			create_general = { tradition = 60 }
+			create_general = { tradition = 75 }
 			add_country_modifier = {
-				name = "nicene_anatolia"
+				name = nicene_anatolia
 				duration = 5475
 			}
 			karaman_area = {
@@ -3233,19 +3400,15 @@ HLE_missions_5 = {
 		icon = mission_pontic_reconquest
 		required_missions = { nicene_hellenic nicene_manzikert }
 		position = 6
-		
+
 		provinces_to_highlight = {
 			region = anatolia_region
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
+
 		trigger = {
 			culture_group = hellenic_g
-			num_of_owned_provinces_with = {
-				is_core = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				region = anatolia_region
 				value = 35
 			}
@@ -3253,10 +3416,14 @@ HLE_missions_5 = {
 		
 		effect = {
 			add_adm_power = 150
-			329 = { change_culture = hellenic_greek }
+			329 = {
+				change_culture = hellenic_greek
+			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "nicene_minor"
+				name = nicene_minor
 				duration = 9125
 			}
 			mashriq_region = {
@@ -3268,7 +3435,7 @@ HLE_missions_5 = {
 			}
 			custom_tooltip = NICENE_RUM
 			tooltip = {
-				add_army_tradition = 25
+				add_army_tradition_or_mil_power = { amount = 25 }
 			}
 			hidden_effect = {
 				if = {
@@ -3280,7 +3447,7 @@ HLE_missions_5 = {
 							}
 						}
 					}
-					add_army_tradition = 25
+					add_army_tradition_or_mil_power = { amount = 25 }
 				}
 			}
 		}
@@ -3300,6 +3467,7 @@ HLE_missions_5 = {
 				area = syrian_desert_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 
 		trigger = {
@@ -3326,15 +3494,17 @@ HLE_missions_5 = {
 		}
 		
 		effect = {
-			add_prestige = 25
+			add_prestige_or_monarch_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
 			5132 = { change_culture = hellenic_egyptian }
 			2313 = { change_culture = hellenic_egyptian }
 			378 = { change_culture = hellenic_egyptian }
 			1855 = { change_culture = hellenic_egyptian }
 			1854 = { change_culture = hellenic_egyptian }
 			364 = { change_culture = hellenic_egyptian }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = "nicene_levantine_invasion"
+				name = nicene_levantine_invasion
 				duration = 9125
 			}
 			egypt_region = {
@@ -3359,6 +3529,7 @@ HLE_missions_5 = {
 				area = al_jazira_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -3383,7 +3554,7 @@ HLE_missions_5 = {
 			custom_tooltip = NAZ_RESTORE_MESOPOTAMIA
 			tooltip = {
 				add_province_modifier = {
-					name = "nizzarid_restore_mesopotamia"
+					name = nizzarid_restore_mesopotamia
 					duration = 7300
 				}
 			}
@@ -3401,7 +3572,7 @@ HLE_missions_5 = {
 						}
 					}
 					add_province_modifier = {
-						name = "nizzarid_restore_mesopotamia"
+						name = nizzarid_restore_mesopotamia
 						duration = 7300
 					}
 				}
@@ -3456,6 +3627,7 @@ HLE_missions_5 = {
 				area = farsistan_area
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -3478,9 +3650,10 @@ HLE_missions_5 = {
 				points = 1
 				power = mil
 			}
+			custom_tooltip = AB_EMPTY
 			add_mil_power = 150
 			add_country_modifier = {
-				name = "nicene_alexander"
+				name = nicene_alexander
 				duration = 9125
 			}
 			persia_region = {
@@ -3508,6 +3681,7 @@ HLE_missions_5 = {
 		provinces_to_highlight = {
 			region = arabia_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -3518,7 +3692,14 @@ HLE_missions_5 = {
 		}
 		
 		effect = {
-			add_legitimacy = 25
+			custom_tooltip = SER_JUSTINIAN_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = SER_perma_pp
+					amount = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = orthodox
@@ -3592,10 +3773,10 @@ HLE_missions_5 = {
 		
 		provinces_to_highlight = {
 			province_id = 396
+			has_discovered = ROOT
 		}
 
-		trigger = { 
-			396 = { country_or_non_sovereign_subject_holds = ROOT }
+		trigger = {
 			396 = { development = 20 }
 			396 = { has_production_building_trigger = yes }
 			396 = { has_trade_building_trigger = yes }
@@ -3606,6 +3787,8 @@ HLE_missions_5 = {
 		effect = {
 			396 = {
 				change_culture = hellenic_semitic
+				change_religion = ROOT
+				custom_tooltip = AB_EMPTY
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 1 }
@@ -3647,6 +3830,7 @@ HLE_missions_5 = {
 		provinces_to_highlight = {
 			region = central_asia_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		
 		effect = {
@@ -3662,8 +3846,11 @@ HLE_missions_5 = {
 			}
 			add_country_modifier = {
 				name = nci_scythia_tactics
-				duration = 18250
+				duration = 36500
 			}
+			set_country_flag = ab_free_mercs
+			custom_tooltip = PER_FREE_MERCS
+			custom_tooltip = AB_EMPTY
 			central_asia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -3682,6 +3869,7 @@ HLE_missions_5 = {
 		provinces_to_highlight = {
 			region = malaya_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 
 		trigger = {
@@ -3692,13 +3880,14 @@ HLE_missions_5 = {
 		}
 
 		effect = {
+			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_MALAYA
+			custom_tooltip = AB_EMPTY
 			random_owned_province = {
 				limit = {
 					region = malaya_region
 				}
 				change_culture = hellenic_malay
 			}
-			custom_tooltip = NICENE_UNLOCK_HELLENIC_CB_MALAYA
 			add_country_modifier = {
 				name = gor_spice_trade
 				duration = -1
@@ -3707,7 +3896,7 @@ HLE_missions_5 = {
                 trade_goods = spices
                 key = "Monopolization of Spices"
                 value = 0.25
-                duration = 7300
+                duration = -1
             }
 		}
 	}
