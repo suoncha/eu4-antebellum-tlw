@@ -13,4 +13,4 @@ dependencies={
 	"Ante Bellum"
 }
 picture="thumbnail.png"
-supported_version="v1.37.1.0"
+supported_version="v1.37.2.0"

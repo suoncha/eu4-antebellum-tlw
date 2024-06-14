@@ -2644,7 +2644,7 @@ country_event = {
 	}
 }
 
-#Spreads of Iberian cultures in Aquitania
+#Spreads of Visigothic Culture
 province_event = {
 	id = ab_byzantium.85
 	title = ab_byzantium.85.t
@@ -2655,23 +2655,35 @@ province_event = {
 		
 	trigger = {
 		owner = {
-			mission_completed = vsg_visigothic_aquitania
-			culture_group = iberian
+			primary_culture = Visigothic
 		}
 		OR = {
-			area = pyrenees_area
-			area = guyenne_area
-			area = languedoc_area
-			area = savoy_dauphine_area
-			area = massif_central_area
-			area = poitou_area
-			area = provence_area
+			AND = {
+				OR = {
+					area = pyrenees_area
+					area = guyenne_area
+					area = languedoc_area
+					area = savoy_dauphine_area
+					area = massif_central_area
+					area = poitou_area
+					area = provence_area
+				}
+				owner = {
+					mission_completed = vsg_visigothic_aquitania
+				}
+			}
+			AND = {
+				region = iberia_region
+				owner = {
+					mission_completed = vsg_finish_reconquista
+				}
+			}
 		}
 		any_neighbor_province = {
 			owned_by = ROOT
-			culture_group = iberian
+			culture = Visigothic
 		}
-		NOT = { culture_group = iberian }
+		NOT = { culture = Visigothic }
 	}
 
 	mean_time_to_happen = {
@@ -2684,17 +2696,8 @@ province_event = {
 	
 	option = {
 		name = ab_byzantium.85.a
-		if = {
-			limit = {
-				culture = occitain
-			}
-			change_culture = catalan
-			change_original_culture = catalan
-		}
-		else = {
-			change_culture = basque
-			change_original_culture = basque
-		}
+		change_culture = Visigothic
+		change_original_culture = Visigothic
 	}
 }
 
@@ -2977,6 +2980,7 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.89.a
+		ai_chance = { factor = 0 }
 		change_tag = IBE
 		swap_non_generic_missions = yes
 		remove_non_electors_emperors_from_empire_effect = yes
@@ -2995,6 +2999,7 @@ country_event = {
 				id = ideagroups.1
 			}
 		}
+		custom_tooltip = AB_EMPTY
 		if = {
 			limit = {
 				government = monarchy
@@ -3043,6 +3048,7 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.89.b
+		ai_chance = { factor = 100 }
 		highlight = yes
 		change_tag = VSG
 		swap_non_generic_missions = yes
@@ -3054,6 +3060,11 @@ country_event = {
 			set_government_rank = 2
 		}
 		custom_tooltip = AB_EMPTY
+		change_primary_culture = Visigothic
+		capital_scope = {
+			change_culture = Visigothic
+		}
+		custom_tooltip = AB_EMPTY
 		if = {
 			limit = {
 				has_custom_ideas = no
@@ -3062,6 +3073,7 @@ country_event = {
 				id = ideagroups.1
 			}
 		}
+		custom_tooltip = AB_EMPTY
 		if = {
 			limit = {
 				government = monarchy
@@ -3545,6 +3557,55 @@ country_event = {
 				NOT = { is_core = ROOT	}
 			}
 			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#The Fate of Cordoba
+country_event = {
+	id = ab_byzantium.98
+	title = ab_byzantium.98.t
+	desc = ab_byzantium.98.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = ab_byzantium.98.a
+		add_prestige = 25
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+		add_treasury = 1000
+		225 = {
+			add_devastation = 75
+			add_base_tax = -3
+			add_base_production = -3
+			add_base_manpower = -3
+			remove_province_modifier = nm_cordoba
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.98.b
+		add_prestige = 15
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+		225 = {
+			add_devastation = 35
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			change_religion = ROOT
+		}
+		225 = {
+			move_capital_effect = yes
+			change_culture = ROOT
 		}
 	}
 }
