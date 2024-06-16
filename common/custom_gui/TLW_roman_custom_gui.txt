@@ -56,16 +56,20 @@ custom_button = {
     }
     trigger = {
         owns_core_province = 151
-        capital_scope = {
-            NOT = { region = balkan_region }
-            NOT = { region = anatolia_region }
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_caucasia_isof_anatolia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            capital_scope = {
+                NOT = { region = balkan_region }
+                NOT = { region = anatolia_region }
                 NOT = { region = caucasia_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = balkan_region }
+                NOT = { region = anatolia_region }
             }
         }
 		is_at_war = no
@@ -75,28 +79,41 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = anatolia_region
-                        area = macedonia_area
-                        area = northern_greece_area
-                        area = morea_area
-                        area = thrace_area
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_caucasia_isof_anatolia
-                                }
-                            }
+                    has_country_flag = rom_caucasia_isof_anatolia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
                             region = caucasia_region
                         }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
                     }
-                    NOT = { area = circassia_area }
-                    NOT = { area = dagestan_area }
+                    add_core = RDC
+                    remove_core = ROOT
                 }
-                add_core = RDC
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                        }
+                    }
+                    add_core = RDC
+                    remove_core = ROOT
+                }
             }
             release = RDC
             create_subject = {
@@ -128,13 +145,11 @@ custom_button = {
         overlord_of = RDC
     }
     trigger = {
-        any_owned_province = {
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_caucasia_isof_anatolia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            any_owned_province = {
                 OR = {
                     region = anatolia_region
                     region = caucasia_region
@@ -146,7 +161,9 @@ custom_button = {
                 NOT = { area = circassia_area }
                 NOT = { area = dagestan_area }
             }
-            else = {
+        }
+        else = {
+            any_owned_province = {
                 OR = {
                     region = anatolia_region
                     area = macedonia_area
@@ -163,29 +180,43 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = anatolia_region
-                        area = macedonia_area
-                        area = northern_greece_area
-                        area = morea_area
-                        area = thrace_area
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_caucasia_isof_anatolia
-                                }
-                            }
+                    has_country_flag = rom_caucasia_isof_anatolia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
                             region = caucasia_region
                         }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
                     }
-                    NOT = { area = circassia_area }
-                    NOT = { area = dagestan_area }
+                    add_core = RDC
+                    cede_province = RDC
+                    remove_core = ROOT
                 }
-                add_core = RDC
-                cede_province = RDC
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                        }
+                    }
+                    add_core = RDC
+                    cede_province = RDC
+                    remove_core = ROOT
+                }
             }
         }
         if = {
@@ -576,15 +607,18 @@ custom_button = {
     }
     trigger = {
         owns_core_province = 183
-        capital_scope = {
-            NOT = { region = france_region }
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_belgica_isof_gallia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            capital_scope = {
+                NOT = { region = france_region }
                 NOT = { region = low_countries_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = france_region }
             }
         }
 		is_at_war = no
@@ -594,22 +628,29 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = france_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_belgica_isof_gallia
-                                }
-                            }
+                    has_country_flag = rom_belgica_isof_gallia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = france_region
                             region = low_countries_region
                         }
                     }
+                    add_core = RD4
+                    remove_core = ROOT
                 }
-                add_core = RD4
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = france_region
+                    }
+                    add_core = RD4
+                    remove_core = ROOT
+                }
             }
             release = RD4
             create_subject = {
@@ -646,19 +687,19 @@ custom_button = {
         overlord_of = RD4
     }
     trigger = {
-        any_owned_province = {
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_belgica_isof_gallia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            any_owned_province = {
                 OR = {
                     region = france_region
                     region = low_countries_region
                 }
             }
-            else = {
+        }
+        else = {
+            any_owned_province = {
                 region = france_region
             }
         }
@@ -669,23 +710,31 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = france_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_belgica_isof_gallia
-                                }
-                            }
+                    has_country_flag = rom_belgica_isof_gallia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = france_region
                             region = low_countries_region
                         }
                     }
+                    add_core = RD4
+                    cede_province = RD4
+                    remove_core = ROOT
                 }
-                add_core = RD4
-                cede_province = RD4
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = france_region
+                    }
+                    add_core = RD4
+                    cede_province = RD4
+                    remove_core = ROOT
+                }
             }
         }
         if = {
@@ -855,15 +904,18 @@ custom_button = {
     }
     trigger = {
         owns_core_province = 1876
-        capital_scope = {
-            NOT = { region = north_german_region }
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_belgica_isof_germania
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            capital_scope = {
+                NOT = { region = north_german_region }
                 NOT = { region = low_countries_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = north_german_region }
             }
         }
 		is_at_war = no
@@ -873,22 +925,29 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = north_german_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_belgica_isof_germania
-                                }
-                            }
+                    has_country_flag = rom_belgica_isof_germania
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = north_german_region
                             region = low_countries_region
                         }
                     }
+                    add_core = RD6
+                    remove_core = ROOT
                 }
-                add_core = RD6
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = north_german_region
+                    }
+                    add_core = RD6
+                    remove_core = ROOT
+                }
             }
             release = RD6
             create_subject = {
@@ -925,19 +984,19 @@ custom_button = {
         overlord_of = RD6
     }
     trigger = {
-        any_owned_province = {
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_belgica_isof_germania
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            any_owned_province = {
                 OR = {
                     region = north_german_region
                     region = low_countries_region
                 }
             }
-            else = {
+        }
+        else = {
+            any_owned_province = {
                 region = north_german_region
             }
         }
@@ -948,24 +1007,32 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = north_german_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_belgica_isof_germania
-                                }
-                            }
+                    has_country_flag = rom_belgica_isof_germania
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = north_german_region
                             region = low_countries_region
                         }
                     }
+                    add_core = RD6
+                    cede_province = RD6
+                    remove_core = ROOT
                 }
-                add_core = RD6
-                cede_province = RD6
-                remove_core = ROOT
             }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = north_german_region
+                    }
+                    add_core = RD6
+                    cede_province = RD6
+                    remove_core = ROOT
+                }
+            }     
         }
         if = {
             limit = {
@@ -1783,15 +1850,18 @@ custom_button = {
     }
     trigger = {
         owns_core_province = 2218
-        capital_scope = {
-            NOT = { region = persia_region }
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_caucasia_isof_persia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            capital_scope = {
+                NOT = { region = persia_region }
                 NOT = { region = caucasia_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = persia_region }
             }
         }
         NOT = { religion = zoroastrian }
@@ -1802,24 +1872,31 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = persia_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_caucasia_isof_persia
-                                }
-                            }
+                    has_country_flag = rom_caucasia_isof_persia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = persia_region
                             region = caucasia_region
                         }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
                     }
-                    NOT = { area = circassia_area }
-                    NOT = { area = dagestan_area }
+                    add_core = RDZ
+                    remove_core = ROOT
                 }
-                add_core = RDZ
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = persia_region
+                    }
+                    add_core = RDZ
+                    remove_core = ROOT
+                }
             }
             release = RDZ
             create_subject = {
@@ -1856,13 +1933,11 @@ custom_button = {
         overlord_of = RDZ
     }
     trigger = {
-        any_owned_province = {
-            if = {
-                limit = {
-                    ROOT = {
-                        has_country_flag = rom_caucasia_isof_persia
-                    }
-                }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            any_owned_province = {
                 OR = {
                     region = persia_region
                     region = caucasia_region
@@ -1870,7 +1945,9 @@ custom_button = {
                 NOT = { area = circassia_area }
                 NOT = { area = dagestan_area }
             }
-            else = {
+        }
+        else = {
+            any_owned_province = {
                 region = persia_region
             }
         }
@@ -1881,25 +1958,33 @@ custom_button = {
     }
     effect = {
         hidden_effect = {
-            every_owned_province = {
+            if = {
                 limit = {
-                    OR = {
-                        region = persia_region
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    has_country_flag = rom_caucasia_isof_persia
-                                }
-                            }
+                    has_country_flag = rom_caucasia_isof_persia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = persia_region
                             region = caucasia_region
                         }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
                     }
-                    NOT = { area = circassia_area }
-                    NOT = { area = dagestan_area }
+                    add_core = RDZ
+                    cede_province = RDZ
+                    remove_core = ROOT
                 }
-                add_core = RDZ
-                cede_province = RDZ
-                remove_core = ROOT
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = persia_region
+                    }
+                    add_core = RDZ
+                    cede_province = RDZ
+                    remove_core = ROOT
+                }
             }
         }
         if = {
