@@ -849,10 +849,6 @@ ab_russia_second_formable = {
 		
 		provinces_to_highlight = {
 			province_id = 151
-			OR = {
-				NOT = { owned_by = ROOT	}
-				has_any_ongoing_construction = yes
-			}
 		}
 		
 		trigger = {
@@ -3215,6 +3211,7 @@ ab_russia_fifth_formable = {
 		}
 		
 		effect = {
+			set_country_flag = ab_allow_released_hungary
 			add_country_modifier = {
 				name = ser_purge
 				duration = -1
@@ -4851,8 +4848,18 @@ ab_russia_third_rome = {
 		}
 		
 		effect = {
-			country_event = {
-				id = MEE_Byzantine_Events.9
+			if = {
+				limit = {
+					religion = orthodox
+				}
+				country_event = {
+					id = MEE_Byzantine_Events.9
+				}
+			}
+			else = {
+				country_event = {
+					id = ab_latin.9
+				}
 			}
 			custom_tooltip = AB_EMPTY
 			arabia_region = {
