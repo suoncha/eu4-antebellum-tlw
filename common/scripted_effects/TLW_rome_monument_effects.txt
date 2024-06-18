@@ -2039,7 +2039,6 @@ TLW_rome_monument_upgrade_effect = {
 				type = library_alexandria
 				tier = 3
 			}
-			culture_group = roman_g
 		}
 		ROM = {
 			remove_country_modifier = diocese_project_libalexandria1
@@ -2057,7 +2056,6 @@ TLW_rome_monument_upgrade_effect = {
 				type = library_alexandria
 				tier = 2
 			}
-			culture_group = roman_g
 		}
 		ROM = {
 			remove_country_modifier = diocese_project_libalexandria1
@@ -2074,11 +2072,59 @@ TLW_rome_monument_upgrade_effect = {
 				type = library_alexandria
 				tier = 1
 			}
-			culture_group = roman_g
 		}
 		ROM = {
 			add_country_modifier = {
 				name = diocese_project_libalexandria1
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+	#Theodosian
+	if = {
+		limit = {
+			has_great_project = {
+				type = theodosian
+				tier = 3
+			}
+		}
+		ROM = {
+			remove_country_modifier = diocese_project_theodosian1
+			remove_country_modifier = diocese_project_theodosian2
+			add_country_modifier = {
+				name = diocese_project_theodosian3
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_great_project = {
+				type = theodosian
+				tier = 2
+			}
+		}
+		ROM = {
+			remove_country_modifier = diocese_project_theodosian1
+			add_country_modifier = {
+				name = diocese_project_theodosian2
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_great_project = {
+				type = theodosian
+				tier = 1
+			}
+		}
+		ROM = {
+			add_country_modifier = {
+				name = diocese_project_theodosian1
 				duration = -1
 				hidden = yes
 			}
@@ -6783,13 +6829,39 @@ TLW_rome_monument_downgrade_effect = {
 				}
 				province_is_diocese_land_trigger = yes
 				NOT = { owned_by = ROM }
-				culture_group = roman_g
 			}
 		}
 		ROM = {
 			remove_country_modifier = diocese_project_libalexandria1
 			remove_country_modifier = diocese_project_libalexandria2
 			remove_country_modifier = diocese_project_libalexandria3
+		}
+	}
+	#Theodosian
+	if = {
+		limit = {
+			has_great_project = {
+				type = theodosian
+			}
+			ROM = {
+				OR = {
+					has_country_modifier = diocese_project_theodosian1
+					has_country_modifier = diocese_project_theodosian2
+					has_country_modifier = diocese_project_theodosian3
+				}
+			}
+			NOT = {
+				ROM = {
+					has_reform = byzengineering
+				}
+				province_is_diocese_land_trigger = yes
+				NOT = { owned_by = ROM }
+			}
+		}
+		ROM = {
+			remove_country_modifier = diocese_project_theodosian1
+			remove_country_modifier = diocese_project_theodosian2
+			remove_country_modifier = diocese_project_theodosian3
 		}
 	}
 	#Pyramid
