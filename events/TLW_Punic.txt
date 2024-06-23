@@ -1,7 +1,7 @@
 namespace = ab_punic
 normal_or_historical_nations = yes
 
-#Colony culture spread
+#Trade company & colony culture spread
 province_event = {
 	id = ab_punic.0
 	title = ab_punic.0.t
@@ -11,13 +11,24 @@ province_event = {
 	hidden = yes
 		
 	trigger = {
-		owner = {
-			is_colonial_nation = yes
-		}
 		NOT = { culture = owner }
 		OR = {
-			NOT = { nationalism = 1 } 
-			culture_group = owner
+			AND = {
+				owner = {
+					is_colonial_nation = yes
+				}
+				OR = {
+					NOT = { nationalism = 1 } 
+					culture_group = owner
+				}
+			}
+			AND = {
+				is_owned_by_trade_company = yes
+				num_investments_in_trade_company_region = {
+					investment = trade_company_cultural_center
+					value = 1
+				}
+			}
 		}
 	}
 
