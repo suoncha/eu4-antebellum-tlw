@@ -1,0 +1,1886 @@
+estate_nobles_french_strong_duchies = {
+	icon = privilege_french_strong_duchies
+	max_absolutism = -10
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	loyalty = 0.1
+	influence = 0.1
+	is_valid = {
+		# AB {{{
+		NOT = { tag = FRC }
+		# }}}
+		OR = {
+			has_estate_privilege = estate_nobles_french_strong_duchies
+			AND = {
+				tag = FRA
+				NOT = { has_estate_privilege = estate_nobles_strong_duchies }
+			}
+		}
+		any_subject_country = {
+			OR = {
+				is_subject_of_type = appanage
+				is_subject_of_type = vassal
+				is_subject_of_type = march
+				is_subject_of_type = client_march
+				is_subject_of_type = client_vassal
+				is_subject_of_type = personal_union
+			}
+			# AB [[[
+			#capital_scope = { region = france_region }
+			#culture_group = french
+			# ]]]
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = estate_nobles_strong_duchies_trigger_tooltip
+			calc_true_if = {
+				amount = 2
+				all_subject_country = {
+					OR = {
+						is_subject_of_type = appanage
+						is_subject_of_type = vassal
+						is_subject_of_type = march
+						is_subject_of_type = client_march
+						is_subject_of_type = client_vassal
+						is_subject_of_type = personal_union
+					}
+				}
+			}
+		}
+		NOT = { has_estate_privilege = estate_eunuchs_delegate_subject_diplomacy_privilege }
+		# AB {{{
+		if = {
+			limit = {
+				OR = {
+					tag = FRC
+					tag = FRK
+				}
+			}
+			has_reform = frcfeudalism
+		}
+		# }}}
+	}
+	penalties = {
+	}
+	benefits = {
+		diplomatic_upkeep = 3
+		reduced_liberty_desire_on_same_continent = 10
+	}
+	ai_will_do = {
+		# AB {{{
+		factor = 1
+		modifier = { #will lose it via invalid sooner or later
+			factor = 10
+			has_estate_privilege = estate_nobles_french_strong_duchies
+		}
+		# }}}
+	}
+}
+
+estate_nobles_strong_duchies = {
+	icon = privilege_royal_authority
+	max_absolutism = -10
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	influence = 0.1
+	loyalty = 0.05
+	is_valid = {
+		any_subject_country = {
+			OR = {
+				is_subject_of_type = appanage
+				is_subject_of_type = vassal
+				is_subject_of_type = client_vassal
+				is_subject_of_type = march
+				is_subject_of_type = client_march
+				is_subject_of_type = personal_union
+			}
+		}
+		NOT = { has_estate_privilege = estate_nobles_french_strong_duchies }
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = estate_nobles_strong_duchies_trigger_tooltip
+			calc_true_if = {
+				amount = 2
+				all_subject_country = {
+					OR = {
+						is_subject_of_type = appanage
+						is_subject_of_type = vassal
+						is_subject_of_type = client_vassal
+						is_subject_of_type = march
+						is_subject_of_type = client_march
+						is_subject_of_type = personal_union
+					}
+				}
+			}
+		}
+		# AB {{{
+		if = {
+			limit = {
+				OR = {
+					tag = FRC
+					tag = FRK
+				}
+			}
+			has_government_attribute = unlocks_strong_duchies_privilege
+		}
+		else = {
+			hidden_trigger = { always = yes }
+		}
+		# }}}
+	}
+	penalties = {
+	}
+	benefits = {
+		diplomatic_upkeep = 2
+		reduced_liberty_desire = 10
+	}
+	ai_will_do = {
+		# AB {{{
+		factor = 1
+		modifier = { #will lose it via invalid sooner or later
+			factor = 10
+			has_estate_privilege = estate_nobles_strong_duchies
+		}
+		modifier = { #will lose it via invalid sooner or later
+			factor = 10
+			tag = LIT
+		}
+		# }}}
+	}
+}
+
+estate_church_clerical_ministers = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	influence = 0.10
+	on_granted = {
+		if = {
+			limit = { has_estate_privilege = estate_church_freedom_of_interpretation }
+			remove_estate_privilege = estate_church_freedom_of_interpretation
+		}
+		else = {
+			custom_tooltip = has_no_effects_on_granted
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Common Sense"
+				}
+				NOT = { religion = protestant }
+				NOT = { religion = buddhism }
+				NOT = { religion = vajrayana }
+				NOT = { religion = mahayana }
+			}
+			if = {
+				limit = {
+					has_dlc = "Emperor"
+				}
+				NOT = { religion = hussite }
+			}
+			if = {
+				limit = {
+					has_dlc = "Wealth of Nations"
+				}
+				NOT = { religion = reformed }
+			}
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				NOT = { religion_group = muslim }
+			}
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				NOT = { religion = confucianism }
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+				}
+				NOT = { religion = orthodox }
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+				}
+				NOT = { religion = nestorian }
+			}
+			if = {
+				limit = {
+					has_dlc = "Origins"
+				}
+				NOT = { religion = jewish }
+			}
+			NOT = { religion = anglican }
+			# AB {{{
+			NOT = { religion = gaelic_ab }
+			NOT = { religion = reformed_slavic }
+			NOT = { religion = manichaean }
+			NOT = { religion = reformed_baltic }
+			NOT = { religion = reformed_hellenic }
+			NOT = { religion = reformed_norse }
+			NOT = { religion = reformed_suomi }
+			NOT = { religion = zunist }
+			# }}}
+		}
+		modifier = {
+			missionary_maintenance_cost = -0.2
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Common Sense"
+			OR = {
+				religion = buddhism
+				religion = vajrayana
+				religion = mahayana
+			}
+		}
+		modifier = {
+			yearly_karma_decay = 0.05
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Common Sense"
+			religion = protestant
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Emperor"
+			religion = hussite
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Origins"
+			religion = jewish
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Wealth of Nations"
+			religion = reformed
+		}
+		modifier = {
+			monthly_fervor_increase = 0.5
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Cradle of Civilization"
+			religion_group = muslim
+		}
+		modifier = {
+			monthly_piety = 0.001
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Mandate of Heaven"
+			religion = confucianism
+		}
+		modifier = {
+			yearly_harmony = 0.25
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Third Rome"
+			religion = orthodox
+		}
+		modifier = {
+			yearly_patriarch_authority = 0.005
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Third Rome"
+			religion = nestorian
+		}
+		modifier = {
+			yearly_patriarch_authority = 0.005
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = anglican
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	# AB {{{
+	conditional_modifier = {
+		trigger = {
+			religion = gaelic_ab
+		}
+		modifier = { 
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			religion = reformed_slavic
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = manichaean
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = reformed_baltic
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = reformed_hellenic
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = reformed_norse
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = reformed_suomi
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			religion = zunist
+		}
+		modifier = {
+			church_power_modifier = 0.1
+		}
+	}
+	# }}}
+	conditional_modifier = {
+		trigger = {
+			has_government_attribute = clerical_ministers_tech_buff
+		}
+		modifier = {
+			technology_cost = -0.05
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	conditional_modifier = {
+		trigger = { has_government_mechanic = russian_modernization_mechanic }
+		modifier = { monthly_russian_modernization = -0.03 }
+	}
+	#conditional_modifier = {
+	#	trigger = { has_government_mechanic = ottoman_decadence_mechanic }
+	#	modifier = { monthly_ottoman_decadence = 0.02 }
+	#}
+	ai_will_do = {
+		factor = 10
+		modifier = {
+			factor = 0.5
+			is_absolutism_active = yes
+		}
+		modifier = {
+			factor = 0.5
+			# AB {{{
+			OR = {
+				religion = protestant
+				religion = anglican
+				AND = {
+					has_dlc = "Emperor"
+					religion = hussite
+				}
+				# These are AB-specific religions
+				religion = gaelic_ab
+				religion = reformed_slavic
+				religion = manichaean
+			}
+			# }}}
+			num_of_aspects = 3
+		}
+		modifier = {
+			factor = 10
+			religion = orthodox
+			has_dlc = "Third Rome"
+		}
+		# AB {{{
+		modifier = {
+			factor = 10
+			religion = nestorian
+			has_dlc = "Third Rome"
+		}
+		# }}}
+	}
+}
+
+estate_burghers_indebted_to_burghers = {
+	icon = privilege_give_money
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	# AB {{{
+	is_valid = {
+		NOT = {
+			any_owned_province = {
+				has_great_project = {
+					type = ottoman_market
+					tier = 1
+				}
+			}
+		}
+	}
+	# }}}
+	on_granted = {
+		custom_tooltip = estate_burghers_indebted_to_burghers_effect_tooltip
+		if = {
+			limit = { NOT = { has_government_attribute = no_mercantilism_loss_from_privilege } }
+			add_mercantilism = -1
+		}
+		tooltip = {
+			add_inflation = 0.5
+		}
+		hidden_effect = {
+			add_loan = {
+				fixed_interest = 1
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 1
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 1
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 1
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 1
+				duration = 60
+				estate_loan = yes
+			}
+		}
+	}
+	penalties = {
+		trade_efficiency = -0.05
+	}
+	benefits = {
+	}
+	can_select = {
+		if = {
+			limit = {
+				has_estate_privilege = estate_burghers_indebted_to_burghers
+			}
+			has_estate_loan = yes
+		}
+	}
+	can_revoke = {
+		has_estate_loan = no
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+# AB {{{
+estate_burghers_ottoman_loans = {
+	icon = privilege_ottoman
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.1
+	is_valid = {
+		any_owned_province = {
+			has_great_project = {
+				type = ottoman_market
+				tier = 1
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_indebted_to_ottomans
+		if = {
+			limit = {
+				NOT = { has_country_flag = no_mercantilism_loss_estate_privilege_flag }
+				NOT = { has_government_attribute = no_mercantilism_loss_from_privilege }
+			}
+			add_mercantilism = -1
+		}
+		tooltip = {
+			add_inflation = 3
+		}
+		hidden_effect = {
+			add_inflation = 2.5
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			if = {
+				limit = {
+					has_country_flag = BYZ_buff_burgher_loans_flag
+				}
+				add_loan = {
+					fixed_interest = 0
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0
+					duration = 60
+					estate_loan = yes
+				}
+			}
+		}
+	}
+	penalties = {
+		trade_efficiency = -0.05
+	}
+	benefits = {
+	}
+	can_select = {
+		if = {
+			limit = {
+				has_estate_privilege = estate_burghers_ottoman_loans
+			}
+			has_estate_loan = yes
+		}
+	}
+	can_revoke = {
+		has_estate_loan = no
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+# }}}
+
+estate_nobles_better_integration = {
+	icon = privilege_better_integration
+	max_absolutism = -10
+	influence = 0.15
+	loyalty = 0.05
+	is_valid = {
+		any_subject_country = {
+			OR = {
+				is_subject_of_type = vassal
+				is_subject_of_type = client_vassal
+				is_subject_of_type = daimyo_vassal
+				is_subject_of_type = personal_union
+			}
+		}
+	}
+	can_select = {
+	}
+	on_granted = {
+		disable_annexation_penalty = yes
+	}
+	on_revoked = {
+		enable_annexation_penalty = yes
+	}
+	on_invalid = {
+		enable_annexation_penalty = yes
+	}
+	penalties = {
+		reduced_liberty_desire = -15
+	}
+	benefits = {
+		diplomatic_annexation_cost = -0.05
+	}
+	cooldown_years = 10
+	ai_will_do = {
+		factor = 10
+		# AB {{{
+		modifier = {
+			factor = 1000
+			tag = FRC
+			is_emperor = yes
+			num_of_subjects = 1
+		}
+		# }}}
+	}
+}
+
+# AB {{{
+estate_burghers_highland_rights = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.15
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = income_SCO
+			has_unlocked_estate_privilege = { estate_privilege = estate_burghers_highland_rights }
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = unlocked_privilege_estate_burghers_highland_rights
+			has_unlocked_estate_privilege = { estate_privilege = estate_burghers_highland_rights }
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = hills
+				has_terrain = highlands
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_highland_rights_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = hills
+			}
+			add_province_modifier = {
+				name = estate_burghers_highland_rights_hills
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = highlands
+			}
+			add_province_modifier = {
+				name = estate_burghers_highland_rights_highlands
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_highland_rights_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_highland_rights_hills
+					has_province_modifier = estate_burghers_highland_rights_highlands
+				}
+			}
+			remove_province_modifier = estate_burghers_highland_rights_hills
+			remove_province_modifier = estate_burghers_highland_rights_highlands
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_highland_rights_hills
+					has_province_modifier = estate_burghers_highland_rights_highlands
+				}
+			}
+			remove_province_modifier = estate_burghers_highland_rights_hills
+			remove_province_modifier = estate_burghers_highland_rights_highlands
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = highlands
+					has_terrain = hills
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_ire_deforestation = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = cot_deforestation
+			has_mission = ire_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ire_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_ire_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ire_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_ire_deforestation_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				OR = {
+					area = ulster_area
+					area = leinster_area
+					area = connacht_area
+					area = munster_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_ire_deforestation_dev
+				duration = -1
+			}
+			}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_ire_deforestation_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_ire_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_ire_deforestation_dev
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_ire_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_ire_deforestation_dev
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_lit_deforestation = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = lit_forest
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_lit_deforestation
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_lit_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_lit_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_lit_deforestation_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_lit_deforestation_dev
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_lit_deforestation_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_lit_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_lit_deforestation_dev
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_lit_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_lit_deforestation_dev
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_church_pagan_reconciliation = {
+	icon = privilege_religious_diplomats
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		OR = {
+			religion_group = pagan
+			religion_group = reformed_pagan
+			NOT = { religion = ROOT }
+		}
+		OR = {
+			has_mission = lit_reconciliation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_church_pagan_reconciliation
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_church_pagan_reconciliation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_church_pagan_reconciliation
+			}
+		}
+		any_owned_province = {
+			NOT = { province_religion = ROOT }
+			OR = {
+				religion_group = pagan
+				religion_group = reformed_pagan
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = lit_pagan_reconciliation
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					religion = ROOT
+				}
+				OR = {
+					religion_group = reformed_pagan
+					religion_group = pagan
+				}
+			}
+			add_province_modifier = {
+				name = lit_reconciliat
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = lit_reconciliat
+			}
+			remove_province_modifier = lit_reconciliat
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_church_pagan_reconciliation_revoked
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = lit_reconciliat
+			}
+			remove_province_modifier = lit_reconciliat
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = lit_reconciliat
+			}
+			remove_province_modifier = lit_reconciliat
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					NOT = { religion_group = ROOT }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+	}
+}
+
+
+estate_nobles_balkan_client = {
+	icon = privilege_royal_authority
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.1
+	is_valid = {
+		OR = {
+			has_mission = ab_russia_bulgaria
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_balkan_client
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_completed_ab_russia_bulgaria
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_balkan_client
+			}
+		}
+		calc_true_if = {
+			amount = 3
+			all_subject_country = {
+				capital_scope = {
+					region = balkan_region
+				}
+				OR = {
+					is_march = yes
+					is_vassal = yes
+				}
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		diplomatic_upkeep = 3
+	}
+	ai_will_do = {
+		factor = 1
+	}
+}
+
+estate_burghers_panslavism = {
+	icon = privilege_royal_authority
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = ab_russia_panslavism
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_panslavism
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_completed_russian_panslavism
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_panslavism
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				culture_group = west_slavic
+				culture_group = east_slavic
+				culture_group = south_slavic
+			}
+			NOT = {
+				has_owner_accepted_culture = yes
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = rus_panslavism_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					has_owner_accepted_culture = yes
+				}
+				OR = {
+					culture_group = west_slavic
+					culture_group = east_slavic
+					culture_group = south_slavic
+				}
+			}
+			add_province_modifier = {
+				name = rus_panslavism
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	on_revoked = {
+		custom_tooltip = rus_panslavism_remove_tt
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	on_invalid = {
+		custom_tooltip = rus_panslavism_remove_tt
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_nobles_tataria_slavicization = {
+	icon = privilege_grant_autonomy
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = glh_reconciliation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_tataria_slavicization
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_nobles_tataria_slavicization
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_tataria_slavicization
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = estate_nobles_tataria_slavicization_has_eligible_province_tt
+			any_owned_province = {
+				has_owner_accepted_culture = no
+				culture_group = east_slavic
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = tataria_slavicization_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					has_owner_accepted_culture = yes
+				}
+				culture_group = east_slavic
+			}
+			add_province_modifier = {
+				name = glh_slavicization
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = glh_slavicization
+			}
+			remove_province_modifier = glh_slavicization
+		}
+	}
+	on_revoked = {
+		custom_tooltip = tataria_slavicization_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = glh_slavicization
+			}
+			remove_province_modifier = glh_slavicization
+		}
+	}
+	on_invalid = {
+		custom_tooltip = tataria_slavicization_rk
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = glh_slavicization
+			}
+			remove_province_modifier = glh_slavicization
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_burghers_orthodox_tolerance = {
+	icon = privilege_tolerance_heretics
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		religion_group = christian
+		NOT = { religion = orthodox }
+		NOT = { religion = coptic }
+		# AB [[[
+		any_owned_province = {
+			OR = {
+				religion = orthodox
+				religion = coptic
+			}
+		}
+		# ]]]
+		#has_unlocked_estate_privilege = { estate_privilege = estate_burghers_orthodox_tolerance }
+		# TLW [[[
+		NOT = { is_subject_of = ROM }
+		# ]]]
+	}
+	can_select = {
+		religion_group = christian
+		NOT = { religion = orthodox }
+		NOT = { religion = coptic }
+		any_owned_province = {
+			OR = {
+				religion = orthodox
+				religion = coptic
+			}
+		}
+	}
+	on_granted = {
+		if = {
+			limit = { has_estate_privilege = estate_church_anti_heresy_act }
+			remove_estate_privilege = estate_church_anti_heresy_act
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = -20
+			}
+		}
+		custom_tooltip = estate_burghers_orthodox_tolerance_effect_tooltip
+		hidden_effect = {
+			set_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					religion = orthodox
+					religion = coptic
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_guaranteed_autonomy_mod
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_orthodox_tolerance_revoke_effect_tooltip
+		hidden_effect = {
+			clr_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	on_invalid = {
+		custom_tooltip = estate_burghers_orthodox_tolerance_revoke_effect_tooltip
+		hidden_effect = {
+			clr_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	penalties = {
+		church_loyalty_modifier = -0.1
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					OR = {
+						religion = orthodox
+						religion = coptic
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			government = theocracy
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+		# AB [[[
+		modifier = {
+			factor = 0
+			OR = {
+				tag = VOL
+				was_tag = VOL
+			}
+		}
+		# ]]]
+	}
+}
+
+estate_burghers_per_mountain_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = per_mountain_expansion
+			has_mission = perc_mountain_expansion
+			has_mission = perm_mountain_expansion
+			has_mission = mper_mountain_expansion
+			has_mission = grg_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_per_mountain_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_per_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_per_mountain_expansion
+			}
+		}
+		any_owned_province = {
+			region = persia_region
+			OR = {
+				has_terrain = highlands
+				has_terrain = mountain
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_per_mountain_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+				region = persia_region
+			}
+			add_province_modifier = {
+				name = estate_burghers_per_mountain_expansion
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = highlands
+				region = persia_region		
+			}
+			add_province_modifier = {
+				name = estate_burghers_per_highlands_expansion
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_per_mountain_tt_remove
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_per_highlands_expansion
+					has_province_modifier = estate_burghers_per_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_per_mountain_expansion
+			remove_province_modifier = estate_burghers_per_highlands_expansion
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_per_highlands_expansion
+					has_province_modifier = estate_burghers_per_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_per_mountain_expansion
+			remove_province_modifier = estate_burghers_per_highlands_expansion
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = highlands
+				}
+				region = persia_region
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_nobles_hindu_integration = {
+	icon = privilege_grant_autonomy
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = zun_integrate
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_hindu_integration
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_nobles_hindu_integration
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_hindu_integration
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = estate_nobles_hindu_integration_has_eligible_province_tt
+			any_owned_province = {
+				has_owner_accepted_culture = no
+				OR = {
+					culture_group = eastern_aryan
+					culture_group = hindusthani
+					culture_group = western_aryan
+					culture_group = dravidian
+					culture_group = central_indic
+				}
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = zun_hindu_integration_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					has_owner_accepted_culture = yes
+				}
+				OR = {
+					culture_group = eastern_aryan
+					culture_group = hindusthani
+					culture_group = western_aryan
+					culture_group = dravidian
+					culture_group = central_indic
+				}
+			}
+			add_province_modifier = {
+				name = zun_hindu_integrate
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	on_revoked = {
+		custom_tooltip = zun_hindu_integration_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	on_invalid = {
+		custom_tooltip = zun_hindu_integration_rk
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_nobles_ghurid_hindu_integration = {
+	icon = privilege_grant_autonomy
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = ghu_integrate
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_ghurid_hindu_integration
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = unlocked_estate_nobles_ghurid_hindu_integration
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nobles_ghurid_hindu_integration
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = estate_nobles_ghurid_hindu_integration_has_eligible_province_tt
+			any_owned_province = {
+				has_owner_accepted_culture = no
+				OR = {
+					culture_group = eastern_aryan
+					culture_group = hindusthani
+					culture_group = western_aryan
+					culture_group = dravidian
+					culture_group = central_indic
+				}
+				religion = mahayana
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = ghu_hindu_integration_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					has_owner_accepted_culture = yes
+				}
+				OR = {
+					culture_group = eastern_aryan
+					culture_group = hindusthani
+					culture_group = western_aryan
+					culture_group = dravidian
+					culture_group = central_indic
+				}
+				religion = mahayana
+			}
+			add_province_modifier = {
+				name = zun_hindu_integrate
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	on_revoked = {
+		custom_tooltip = zun_hindu_integration_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	on_invalid = {
+		custom_tooltip = zun_hindu_integration_rk
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = zun_hindu_integrate
+			}
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_nomadic_tribes_blood_before_faith = {
+	icon = privilege_religious_diplomats
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		religion = tengri_pagan_reformed
+		OR = {
+			has_mission = trk_khiva
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nomadic_tribes_blood_before_faith
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_nomadic_tribes_blood_before_faith
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nomadic_tribes_blood_before_faith
+			}
+		}
+		any_owned_province = {
+			NOT = { province_religion = ROOT }
+			culture_group = altaic
+		}
+	}
+	on_granted = {
+		custom_tooltip = blood_before_faith_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				culture_group = altaic
+				NOT = {
+					religion = ROOT
+				}
+			}
+			add_province_modifier = {
+				name = blood_before_faith_mod
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	on_revoked = {
+		custom_tooltip = blood_before_faith_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					NOT = { religion_group = ROOT }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+	}
+}
+
+estate_nomadic_tribes_nomadic_warriors = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	loyalty = 0.1
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_country_flag = ab_mnk_steppe_warriors
+			has_mission = mnk_warriors
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = completed_mnk_warriors
+			has_country_flag = ab_mnk_steppe_warriors
+		}
+		custom_trigger_tooltip = {
+			tooltip = not_granted_nomadic_warriors_to_nobles
+			NOT = { has_estate_privilege = estate_nobles_nomadic_warriors }
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		cavalry_cost = -0.15
+	}
+	modifier_by_land_ownership = {
+		cavalry_power = 0.35
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = { crown_land_share = 30 }
+		}
+	}
+}
+
+estate_nobles_nomadic_warriors = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	loyalty = 0.1
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_country_flag = ab_mnk_steppe_warriors
+			has_mission = mnk_warriors
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = completed_mnk_warriors
+			has_country_flag = ab_mnk_steppe_warriors
+		}
+		custom_trigger_tooltip = {
+			tooltip = not_granted_nomadic_warriors_to_nomadic_tribes
+			NOT = { has_estate_privilege = estate_nomadic_tribes_nomadic_warriors }
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		cavalry_cost = -0.15
+	}
+	modifier_by_land_ownership = {
+		cavalry_power = 0.35
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = { crown_land_share = 30 }
+		}
+	}
+}
+# }}}
