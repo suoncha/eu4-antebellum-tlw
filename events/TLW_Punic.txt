@@ -51,7 +51,7 @@ province_event = {
 	}
 }
 
-#First event
+#Punic Peace
 country_event = {
 	id = ab_punic.1
 	title = ab_punic.1.t
@@ -62,14 +62,13 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
+			add_adm_tech = 2
+			add_dip_tech = 2
+			add_mil_tech = 2
 			add_country_modifier = {
 				name = punic_peace
 				duration = -1
 			}
-			add_stability = 1
-			add_adm_tech = 2
-			add_dip_tech = 2
-			add_mil_tech = 2
 		}
 	}
 	
@@ -77,6 +76,10 @@ country_event = {
 		name = ab_punic.1.a
 		custom_tooltip = PUNIC_EARLY_EVENT_CHAIN
 		tooltip = {
+			add_adm_tech = 2
+			add_dip_tech = 2
+			add_mil_tech = 2
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = punic_peace
 				duration = -1
@@ -108,9 +111,17 @@ country_event = {
 				limit = {
 					primitives = no
 				}
-				add_country_modifier = {
-					name = punic_primitive
-					duration = -1
+				if = {
+					limit = {
+						has_reform = steppe_horde
+					}
+					set_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
+				}
+				else = {
+					set_estate_privilege = estate_church_punic_primitive_administration
+					set_estate_privilege = estate_nobles_punic_pacifist_civilization
+					set_estate_privilege = estate_burghers_punic_isolationism
+					set_estate_privilege = estate_church_punic_religious_tolerance
 				}
 			}
 			# Punic League
@@ -123,5 +134,539 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+
+#Discovery of the New World
+country_event = {
+	id = ab_punic.3
+	title = ab_punic.3.t
+	desc = ab_punic.3.d
+	picture = USA_EXPLORERS_eventPicture
+
+	major = yes
+
+	fire_only_once = yes
+	
+	trigger = {
+		any_province = {
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			NOT = { province_id = 1804 }
+			NOT = { area = greenland_area }
+			is_wasteland = no
+			has_discovered = ROOT
+		}
+		capital_scope = {
+			OR = {
+				continent = europe
+				region = maghreb_region
+				region = egypt_region
+			}
+		}
+		NOT = { has_global_flag = new_world_discovered }
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_global_flag = new_world_discovered
+		}
+	}
+
+	option = {
+		name = ab_punic.3.a
+		add_navy_tradition = 25
+		add_country_modifier_for_age = {
+			name = punic_discovery_of_north_america
+			age = age_of_discovery
+		}
+	}
+}
+
+#A Strange Yet Familiar World
+country_event = {
+	id = ab_punic.4
+	title = ab_punic.4.t
+	desc = {
+		trigger = {
+			any_country = {
+				culture_group = eastern_algonquian
+				capital_scope = {
+					has_discovered = ROOT
+				}
+			}
+			NOT = {
+				any_country = {
+					culture_group = punic_g
+					capital_scope = {
+						has_discovered = ROOT
+					}
+				}
+			}
+		}
+		desc = ab_punic.4.d1
+	}
+	desc = {
+		trigger = {
+			any_country = {
+				culture_group = punic_g
+				capital_scope = {
+					has_discovered = ROOT
+				}
+			}
+		}
+		desc = ab_punic.4.d2
+	}
+	picture = DHOW_AT_SEA_eventPicture
+
+	fire_only_once = yes
+	
+	trigger = {
+		any_country = {
+			OR = {
+				culture_group = eastern_algonquian
+				culture_group = punic_g
+			}
+			capital_scope = {
+				has_discovered = ROOT
+			}
+		}
+		capital_scope = {
+			OR = {
+				continent = europe
+				region = maghreb_region
+				region = egypt_region
+			}
+		}
+		NOT = { has_global_flag = europe_discovered_punics }
+		has_global_flag = new_world_discovered
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					OR = {
+						culture_group = eastern_algonquian
+						culture_group = punic_g
+					}
+					capital_scope = {
+						has_discovered = ROOT
+					}
+				}
+				set_country_flag = europe_discovered_punics_native_tag
+				save_event_target_as = discoveredCountry
+			}
+			set_country_flag = europe_discovered_punics_europe_tag
+			set_global_flag = europe_discovered_punics
+		}
+	}
+
+	option = {
+		name = ab_punic.4.a
+		ai_chance = { factor = 100 }
+		add_treasury = -200
+		event_target:discoveredCountry = {
+			set_country_flag = pun_receive_colonizer_gift
+			country_event = {
+				id = ab_punic.5
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.4.b
+		ai_chance = { factor = 0 }
+		event_target:discoveredCountry = {
+			country_event = {
+				id = ab_punic.5
+			}
+		}
+	}
+}
+
+#Visitors Beyond the Sea
+country_event = {
+	id = ab_punic.5
+	title = ab_punic.5.t
+	desc = {
+		trigger = {
+			has_country_flag = pun_receive_colonizer_gift
+		}
+		desc = ab_punic.5.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = pun_receive_colonizer_gift }
+		}
+		desc = ab_punic.5.d2
+	}
+	picture = 15_Trade_Company_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			FROM = {
+				capital_scope = {
+					ROOT = {
+						discover_province = PREV
+					}
+					save_event_target_as = capitalProv
+				}
+			}
+		}
+	}
+
+	goto = capitalProv
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = pun_receive_colonizer_gift
+			every_country = {
+				limit = {
+					technology_group = north_american
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_punic.8
+					days = 30
+					random = 60
+				}
+			}
+			every_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							continent = europe
+							region = maghreb_region
+							region = egypt_region
+						}
+					}
+					NOT = { tag = BYZ }
+					NOT = { tag = FROM }
+				}
+				country_event = {
+					id = ab_punic.9
+					days = 60
+					random = 60
+				}
+			}
+			if = {
+				limit = {
+					exists = BYZ
+				}
+				BYZ = {
+					country_event = {
+						id = ab_byzantium.61
+						days = 60
+						random = 60
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.5.a
+		trigger = {
+			has_country_flag = pun_receive_colonizer_gift
+		}
+		ai_chance = { factor = 100 }
+		add_treasury = 200
+		add_opinion = {
+			who = FROM
+			modifier = opinion_received_gift
+		}
+		tooltip = {
+			discover_province = event_target:capitalProv
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PUN_SHARING_MAP_BEYOND_THE_SEA_FROM
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture_group = ROOT
+					is_city = yes
+				}
+				FROM = {
+					discover_province = PREV
+				}
+			}
+			FROM = {
+				country_event = {
+					id = ab_punic.6
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.5.b
+		trigger = {
+			has_country_flag = pun_receive_colonizer_gift
+		}
+		ai_chance = { factor = 0 }
+		tooltip = {
+			discover_province = event_target:capitalProv
+		}
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = ab_punic.7
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.5.c
+		trigger = {
+			NOT = { has_country_flag = pun_receive_colonizer_gift }
+		}
+	}
+}
+
+#Locals Accept Our Gift
+country_event = {
+	id = ab_punic.6
+	title = ab_punic.6.t
+	desc = ab_punic.6.d
+	picture = muslimgfx_MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.6.a
+		tooltip = {
+			FROM = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_received_gift
+				}
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PUN_SHARING_MAP_BEYOND_THE_SEA_ROOT
+	}
+}
+
+#Locals Refuse Our Gift
+country_event = {
+	id = ab_punic.7
+	title = ab_punic.7.t
+	desc = ab_punic.7.d
+	picture = muslimgfx_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.7.a
+		add_treasury = 200
+	}
+}
+
+#A Strange Yet Familiar World - North America Nof
+country_event = {
+	id = ab_punic.8
+	title = ab_punic.8.t
+	desc = ab_punic.8.d
+	picture = northamericagfx_CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					has_country_flag = europe_discovered_punics_europe_tag
+				}
+				capital_scope = {
+					ROOT = {
+						discover_province = PREV
+					}
+					save_event_target_as = capitalProv
+				}
+				save_event_target_as = europeTag
+			}
+			random_country = {
+				limit = {
+					has_country_flag = europe_discovered_punics_native_tag
+				}
+				save_event_target_as = nativeTag
+			}
+		}
+	}
+
+	goto = capitalProv
+	
+	option = {
+		name = ab_punic.8.a
+		tooltip = {
+			discover_province = event_target:capitalProv
+		}
+	}
+}
+
+#A Strange Yet Familiar World - Europe Nof
+country_event = {
+	id = ab_punic.9
+	title = ab_punic.9.t
+	desc = ab_punic.9.d
+	picture = MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					has_country_flag = europe_discovered_punics_europe_tag
+				}
+				save_event_target_as = europeTag
+			}
+			random_country = {
+				limit = {
+					has_country_flag = europe_discovered_punics_native_tag
+				}
+				capital_scope = {
+					ROOT = {
+						discover_province = PREV
+					}
+					save_event_target_as = capitalProv
+				}
+				save_event_target_as = nativeTag
+			}
+		}
+	}
+
+	goto = capitalProv
+	
+	option = {
+		name = ab_punic.9.a
+		tooltip = {
+			discover_province = event_target:capitalProv
+		}
+	}
+}
+
+#Gold Found in the New World
+country_event = {
+	id = ab_punic.10
+	title = ab_punic.10.t
+	desc = ab_punic.10.d
+	picture = GOLDEN_CITY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		any_province = {
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			is_city = yes
+			trade_goods = gold
+			has_discovered = ROOT
+		}
+		capital_scope = {
+			OR = {
+				continent = europe
+				region = maghreb_region
+				region = egypt_region
+			}
+		}
+		has_global_flag = new_world_discovered
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_province = {
+				limit = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					is_city = yes
+					trade_goods = gold
+					has_discovered = ROOT
+				}
+				save_event_target_as = goldProv
+			}
+		}
+	}
+
+	goto = goldProv
+
+	after = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							continent = europe
+							region = maghreb_region
+							region = egypt_region
+						}	
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_punic.11
+					days = 60
+					random = 60
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.10.a
+		create_conquistador = { tradition = 100 }
+		add_country_modifier = {
+			name = punic_gold_in_new_world
+			duration = 10950
+		}
+	}
+}
+
+#Gold Found in the New World - Europe Nof
+country_event = {
+	id = ab_punic.11
+	title = ab_punic.11.t
+	desc = ab_punic.11.d
+	picture = GOLDEN_CITY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		trigger = {
+			OR = {
+				num_of_colonists = 1
+				has_idea_group = exploration_ideas
+				has_idea_group = expansion_ideas
+			}
+		}
+		name = ab_punic.11.a
+		add_country_modifier = {
+			name = punic_race_for_gold
+			duration = 10950
+		}
+	}
+
+	option = {
+		trigger = {
+			NOT = {
+				OR = {
+					num_of_colonists = 1
+					has_idea_group = exploration_ideas
+					has_idea_group = expansion_ideas
+				}
+			}
+		}
+		name = ab_punic.11.b
+		create_explorer = { tradition = 50 }
 	}
 }
