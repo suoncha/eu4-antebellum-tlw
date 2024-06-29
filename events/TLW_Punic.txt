@@ -146,6 +146,16 @@ country_event = {
 
 	major = yes
 
+	major_trigger = {
+		capital_scope = {
+			OR = {
+				continent = europe
+				region = maghreb_region
+				region = egypt_region
+			}
+		}
+	}
+
 	fire_only_once = yes
 	
 	trigger = {
@@ -266,6 +276,16 @@ country_event = {
 
 	option = {
 		name = ab_punic.4.a
+		trigger = {
+			NOT = {
+				AND = {
+					tag = BYZ
+					event_target:discoveredCountry = {
+						culture_group = punic_g
+					}
+				}
+			}
+		}
 		ai_chance = { factor = 100 }
 		add_treasury = -200
 		event_target:discoveredCountry = {
@@ -355,6 +375,19 @@ country_event = {
 				}
 			}
 			if = {
+				limit = {
+					FROM = {
+						tag = BYZ
+					}
+				}
+				BYZ = {
+					country_event = {
+						id = ab_byzantium.61
+						days = 1
+					}
+				}
+			}
+			else_if = {
 				limit = {
 					exists = BYZ
 				}
@@ -668,5 +701,145 @@ country_event = {
 		}
 		name = ab_punic.11.b
 		create_explorer = { tradition = 50 }
+	}
+}
+
+#European Colony Establish in North America - Hidden
+country_event = {
+	id = ab_punic.12
+	title = ab_punic.12.t
+	desc = ab_punic.12.d
+	picture = COLONIZATION_eventPicture
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	hidden = yes
+	
+	option = {
+		name = ab_punic.12.a
+		every_country = {
+			limit = {
+				technology_group = north_american
+			}
+			country_event = {
+				id = ab_punic.13
+			}
+		}
+	}
+}
+
+#European Colony Establish in North America
+country_event = {
+	id = ab_punic.13
+	title = ab_punic.13.t
+	desc = ab_punic.13.d
+	picture = COLONIZATION_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_province = {
+				limit = {
+					continent = north_america
+					is_city = yes
+					owner = {
+						capital_scope = {
+							OR = {
+								continent = europe
+								region = maghreb_region
+								region = egypt_region
+							}
+						}
+					}
+				}
+				save_event_target_as = colonyProv
+			}
+		}
+	}
+
+	goto = colonyProv
+	
+	option = {
+		name = ab_punic.13.a
+		add_country_modifier = {
+			name = punic_trading_with_europeans
+			duration = -1
+		}
+	}
+}
+
+#The European Threat - Hidden
+country_event = {
+	id = ab_punic.14
+	title = ab_punic.14.t
+	desc = ab_punic.14.d
+	picture = northamericagfx_REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+
+	hidden = yes
+
+	trigger = {
+		calc_true_if = {
+			amount = 10
+			all_province = {
+				continent = north_america
+				is_city = yes
+				owner = {
+					OR = {
+						is_colonial_nation = yes
+						capital_scope = {
+							OR = {
+								continent = europe
+								region = maghreb_region
+								region = egypt_region
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.14.a
+		every_country = {
+			limit = {
+				technology_group = north_american
+			}
+			country_event = {
+				id = ab_punic.15
+			}
+		}
+	}
+}
+
+#The European Threat
+country_event = {
+	id = ab_punic.15
+	title = ab_punic.15.t
+	desc = ab_punic.15.d
+	picture = northamericagfx_REVOLUTION_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = pun_unlock_revoking_privilege
+			add_stability = -1
+		}
+	}
+	
+	option = {
+		name = ab_punic.15.a
+		tooltip = {
+			add_stability = -1
+		}
+		remove_country_modifier = punic_trading_with_europeans
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PUN_UNLOCK_REVOKING_PRIVILEGE
 	}
 }
