@@ -9,12 +9,29 @@ country_decisions = {
 		}
 
 		provinces_to_highlight = {
-			has_province_modifier = punic_pale_death_prov
+			if = {
+				limit = {
+					ROOT = {
+						capital_scope = {
+							OR = {
+								continent = north_america
+								continent = south_america
+							}
+						}
+					}
+				}
+				has_province_modifier = punic_pale_death_prov
+			}
+			else = {
+				has_province_modifier = punic_gray_fever_prov
+			}
 			NOT = { owned_by = ROOT }
 		}
 
 		allow = {
-			always = yes
+			hidden_trigger = {
+				always = yes
+			}
 		}
 
 		effect = {
@@ -38,6 +55,12 @@ country_decisions = {
 			factor = 1
 			modifier = {
 				factor = 0
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				NOT = {
 					any_neighbor_province = {
 						has_province_modifier = punic_pale_death_prov
@@ -46,6 +69,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.25
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				NOT = {
 					had_global_flag = {
 						flag = plague_pale_death
@@ -55,6 +84,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.5
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				had_global_flag = {
 					flag = plague_pale_death
 					days = 730
@@ -68,6 +103,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.75
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				had_global_flag = {
 					flag = plague_pale_death
 					days = 1825
@@ -80,7 +121,82 @@ country_decisions = {
 				}
 			}
 			modifier = {
+				factor = 0
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				NOT = {
+					any_neighbor_province = {
+						has_province_modifier = punic_gray_fever_prov
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 730
+					}
+				}
+			}
+			modifier = {
 				factor = 0.5
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				had_global_flag = {
+					flag = plague_gray_fever
+					days = 730
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 1825
+					}
+				}
+			}
+			modifier = {
+				factor = 0.75
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				had_global_flag = {
+					flag = plague_gray_fever
+					days = 1825
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 3650
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
 				NOT = { innovativeness = 10 }
 			}
 			modifier = {
@@ -98,23 +214,57 @@ country_decisions = {
 		}
 
 		provinces_to_highlight = {
-			has_province_modifier = punic_pale_death_prov
+			if = {
+				limit = {
+					ROOT = {
+						capital_scope = {
+							OR = {
+								continent = north_america
+								continent = south_america
+							}
+						}
+					}
+				}
+				has_province_modifier = punic_pale_death_prov
+			}
+			else = {
+				has_province_modifier = punic_gray_fever_prov
+			}
 			NOT = { owned_by = ROOT }
 		}
 
 		allow = {
 			if = {
 				limit = {
-					has_global_flag = plague_pale_death
+					OR = {
+						AND = {
+							has_global_flag = plague_pale_death
+							capital_scope = {
+								OR = {
+									continent = north_america
+									continent = south_america
+								}
+							}
+						}
+						AND = {
+							has_global_flag = plague_gray_fever
+							NOT = {
+								capital_scope = {
+									OR = {
+										continent = north_america
+										continent = south_america
+									}
+								}
+							}
+						}
+					}
 				}
 				custom_trigger_tooltip = {
 					tooltip = PLAGUE_BORDER_CLOSED_5YEARS
 					NOT = { has_country_modifier = punic_plague_close_border_timer }
 				}
 			}
-			else = {
-				always = yes
-			}
+			NOT = { has_country_modifier = punic_plague_enforced_quarantine }
 		}
 
 		effect = {
@@ -126,8 +276,28 @@ country_decisions = {
 			factor = 1
 			modifier = {
 				factor = 0
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				any_neighbor_province = {
 					has_province_modifier = punic_pale_death_prov
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				any_neighbor_province = {
+					has_province_modifier = punic_gray_fever_prov
 				}
 			}
 		}
@@ -142,7 +312,22 @@ country_decisions = {
 		}
 
 		provinces_to_highlight = {
-			has_province_modifier = punic_pale_death_prov
+			if = {
+				limit = {
+					ROOT = {
+						capital_scope = {
+							OR = {
+								continent = north_america
+								continent = south_america
+							}
+						}
+					}
+				}
+				has_province_modifier = punic_pale_death_prov
+			}
+			else = {
+				has_province_modifier = punic_gray_fever_prov
+			}
 			owned_by = ROOT
 		}
 
@@ -150,6 +335,7 @@ country_decisions = {
 			any_owned_province = {
 				has_province_modifier = punic_pale_death_prov
 			}
+			has_country_modifier = punic_plague_closed_border
 		}
 
 		effect = {
@@ -173,6 +359,12 @@ country_decisions = {
 			factor = 1
 			modifier = {
 				factor = 0
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				NOT = {
 					any_owned_province = {
 						same_continent = capital
@@ -182,6 +374,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.25
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				NOT = {
 					had_global_flag = {
 						flag = plague_pale_death
@@ -191,6 +389,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.5
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				had_global_flag = {
 					flag = plague_pale_death
 					days = 730
@@ -204,6 +408,12 @@ country_decisions = {
 			}
 			modifier = {
 				factor = 0.75
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				had_global_flag = {
 					flag = plague_pale_death
 					days = 1825
@@ -216,7 +426,83 @@ country_decisions = {
 				}
 			}
 			modifier = {
+				factor = 0
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				NOT = {
+					any_owned_province = {
+						same_continent = capital
+						has_province_modifier = punic_gray_fever_prov
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 730
+					}
+				}
+			}
+			modifier = {
 				factor = 0.5
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				had_global_flag = {
+					flag = plague_gray_fever
+					days = 730
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 1825
+					}
+				}
+			}
+			modifier = {
+				factor = 0.75
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				had_global_flag = {
+					flag = plague_gray_fever
+					days = 1825
+				}
+				NOT = {
+					had_global_flag = {
+						flag = plague_gray_fever
+						days = 3650
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
 				NOT = { innovativeness = 10 }
 			}
 			modifier = {
@@ -234,14 +520,60 @@ country_decisions = {
 		}
 
 		provinces_to_highlight = {
-			has_province_modifier = punic_pale_death_prov
+			if = {
+				limit = {
+					ROOT = {
+						capital_scope = {
+							OR = {
+								continent = north_america
+								continent = south_america
+							}
+						}
+					}
+				}
+				has_province_modifier = punic_pale_death_prov
+			}
+			else = {
+				has_province_modifier = punic_gray_fever_prov
+			}
 			owned_by = ROOT
 		}
 
 		allow = {
-			custom_trigger_tooltip = {
-				tooltip = PLAGUE_QUARANTINE_ENFORCED_5YEARS
-				NOT = { has_country_modifier = punic_plague_enforced_quarantine_timer }
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							has_global_flag = plague_pale_death
+							capital_scope = {
+								OR = {
+									continent = north_america
+									continent = south_america
+								}
+							}
+						}
+						AND = {
+							has_global_flag = plague_gray_fever
+							NOT = {
+								capital_scope = {
+									OR = {
+										continent = north_america
+										continent = south_america
+									}
+								}
+							}
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = PLAGUE_QUARANTINE_ENFORCED_5YEARS
+					NOT = { has_country_modifier = punic_plague_enforced_quarantine_timer }
+				}
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
 			}
 		}
 
@@ -254,8 +586,28 @@ country_decisions = {
 			factor = 1
 			modifier = {
 				factor = 0
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
 				any_owned_province = {
 					has_province_modifier = punic_pale_death_prov
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				any_owned_province = {
+					has_province_modifier = punic_gray_fever_prov
 				}
 			}
 		}
