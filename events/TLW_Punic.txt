@@ -1,6 +1,7 @@
 namespace = ab_punic
 normal_or_historical_nations = yes
 
+## NORMAL EVENTS
 #Trade company & colony culture spread
 province_event = {
 	id = ab_punic.0
@@ -790,14 +791,9 @@ country_event = {
 				is_city = yes
 				owner = {
 					OR = {
-						is_colonial_nation = yes
-						capital_scope = {
-							OR = {
-								continent = europe
-								region = maghreb_region
-								region = egypt_region
-							}
-						}
+						technology_group = western
+						technology_group = eastern
+						technology_group = muslim
 					}
 				}
 			}
@@ -841,5 +837,461 @@ country_event = {
 		remove_country_modifier = punic_trading_with_europeans
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = PUN_UNLOCK_REVOKING_PRIVILEGE
+	}
+}
+
+#Conquest of Paradise - Hidden
+country_event = {
+	id = ab_punic.16
+	title = ab_punic.16.t
+	desc = ab_punic.16.d
+	picture = POPE_PREACHING_eventPicture
+	
+	fire_only_once = yes
+
+	hidden = yes
+
+	trigger = {
+		ADU = {
+			OR = {
+				num_of_colonists = 1
+				has_idea_group = exploration_ideas
+				has_idea_group = expansion_ideas
+			}
+		}
+		had_global_flag = {
+			flag = new_world_discovered
+			days = 1825
+		}
+	}
+	
+	option = {
+		name = ab_punic.16.a
+		every_country = {
+			limit = {
+				capital_scope = {
+					continent = europe
+				}
+				religion = catholic
+			}
+			country_event = {
+				id = ab_punic.17
+			}
+		}
+	}
+}
+
+#Conquest of Paradise
+country_event = {
+	id = ab_punic.17
+	title = ab_punic.17.t
+	desc = ab_punic.17.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.17.a
+		custom_tooltip = CATHOLIC_FINISH_COLONY
+	}
+}
+
+## PLAGUE EVENTS
+#The Pale Death Appear In America - Hidden
+province_event = {
+	id = ab_punic.1000
+	title = ab_punic.1000.t
+	desc = ab_punic.1000.d
+	picture = PLAGUE_eventPicture
+	
+	fire_only_once = yes
+
+	hidden = yes
+
+	trigger = {
+		continent = north_america
+		NOT = { region = carribeans_region }
+		NOT = { area = greenland_area }
+		owner = {
+			OR = {
+				technology_group = western
+				technology_group = eastern
+				technology_group = muslim
+			}
+		}
+		had_global_flag = {
+			flag = europe_discovered_punics
+			days = 3650
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.5
+			any_neighbor_province = {
+				owner = {
+					OR = {
+						technology_group = western
+						technology_group = eastern
+						technology_group = muslim
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			any_neighbor_province = {
+				owner = {
+					technology_group = north_american
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.1000.a
+		set_global_flag = plague_pale_death
+		add_permanent_province_modifier = {
+			name = punic_pale_death_prov
+			duration = 1825
+		}
+		owner = {
+			set_country_flag = plague_pale_death_ground_zero
+			country_event = {
+				id = ab_punic.1002
+				days = 60
+			}
+			if = {
+				limit = {
+					is_colonial_nation = yes
+				}
+				overlord = {
+					set_country_flag = plague_pale_death_ground_zero
+					country_event = {
+						id = ab_punic.1002
+						days = 60
+					}
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
+				NOT = { has_country_flag = plague_pale_death_ground_zero }
+			}
+			country_event = {
+				id = ab_punic.1002
+				days = 365
+			}
+		}
+	}
+}
+
+#The Pale Death Spread - Hidden
+province_event = {
+	id = ab_punic.1001
+	title = ab_punic.1001.t
+	desc = ab_punic.1001.d
+	picture = PLAGUE_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		NOT = { has_province_modifier = punic_pale_death_prov }
+		OR = {
+			any_neighbor_province = {
+				has_province_modifier = punic_pale_death_prov
+			}
+			any_friendly_coast_border_province = {
+				has_province_modifier = punic_pale_death_prov
+			}
+			any_empty_neighbor_province = {
+				any_neighbor_province = {
+					has_province_modifier = punic_pale_death_prov
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 1
+		modifier = {
+			factor = 6
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 30
+			}
+		}
+		modifier = {
+			factor = 2
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 365
+			}
+		}
+		modifier = {
+			factor = 2
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 1825
+			}
+		}
+		modifier = {
+			factor = 2
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 3650
+			}
+		}
+		modifier = {
+			factor = 2
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 5475
+			}
+		}
+		modifier = {
+			factor = 3
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 7300
+			}
+		}
+		modifier = {
+			factor = 3
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 10950
+			}
+		}
+		modifier = {
+			factor = 4
+			owner = {
+				has_country_modifier = punic_plague_enforced_quarantine
+			}
+		}
+		modifier = {
+			factor = 4
+			owner = {
+				has_country_modifier = punic_plague_closed_border
+			}
+			all_neighbor_province = {
+				OR = {
+					AND = {
+						owned_by = ROOT
+						NOT = { has_province_modifier = punic_pale_death_prov }
+					}
+					NOT = { owned_by = ROOT }
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.1001.a
+		add_permanent_province_modifier = {
+			name = punic_pale_death_prov
+			duration = 1825
+		}
+	}
+}
+
+#The Pale Death - Official Nof
+country_event = {
+	id = ab_punic.1002
+	title = ab_punic.1002.t
+	desc = {
+		trigger = {
+			has_country_flag = plague_pale_death_ground_zero
+		}
+		desc = ab_punic.1002.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = plague_pale_death_ground_zero }
+		}
+		desc = ab_punic.1002.d2
+	}
+	picture = northamericagfx_PLAGUE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.1002.a
+		custom_tooltip = PLAGUE_PALE_DEATH_TT
+		if = {
+			limit = {
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = plague_unlock_decisions
+			custom_tooltip = PLAGUE_UNLOCK_DECISIONS
+		}
+	}
+}
+
+#The Pale Death - Native First Nof
+country_event = {
+	id = ab_punic.1003
+	title = ab_punic.1003.t
+	desc = ab_punic.1003.d
+	picture = northamericagfx_FAMINE_eventPicture
+	
+	trigger = {
+		NOT = { has_country_flag = plague_pale_death_contacted }
+		capital_scope = {
+			continent = north_america
+		}
+		any_owned_province = {
+			has_province_modifier = punic_pale_death_prov
+		}
+		NOT = {
+			had_global_flag = {
+				flag = plague_pale_death
+				days = 365
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = plague_pale_death_contacted
+			random_owned_province = {
+				limit = {
+					has_province_modifier = punic_pale_death_prov
+				}
+				save_event_target_as = diseaseProv
+			}
+		}
+	}
+
+	goto = diseaseProv
+	
+	option = {
+		name = ab_punic.1003.a
+		event_target:diseaseProv = {
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			add_devastation = 25
+		}
+	}
+}
+
+#The Pale Death Died Out - Hidden
+country_event = {
+	id = ab_punic.1004
+	title = ab_punic.1004.t
+	desc = ab_punic.1004.d
+	picture = northamericagfx_PLAGUE_eventPicture
+
+	fire_only_once = yes
+
+	hidden = yes
+	
+	trigger = {
+		has_global_flag = plague_pale_death
+		NOT = {
+			any_province = {
+				has_province_modifier = punic_pale_death_prov
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.1004.a
+		clr_global_flag = plague_pale_death
+		every_country = {
+			limit = {
+				capital_scope = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
+			}
+			country_event = {
+				id = ab_punic.1005
+			}
+		}
+	}
+}
+
+#The Pale Death Died Out - Official Nof
+country_event = {
+	id = ab_punic.1005
+	title = ab_punic.1005.t
+	desc = ab_punic.1005.d
+	picture = northamericagfx_FEAST_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = plague_unlock_decisions
+			clr_country_flag = plague_pale_death_contacted
+		}
+	}
+	
+	option = {
+		name = ab_punic.1005.a
+		add_stability_or_adm_power = yes
+	}
+}
+
+#The Pale Death Infected Our Country
+country_event = {
+	id = ab_punic.1006
+	title = ab_punic.1006.t
+	desc = ab_punic.1006.d
+	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
+	
+	trigger = {
+		NOT = { has_country_flag = plague_pale_death_contacted }
+		capital_scope = {
+			continent = north_america
+		}
+		any_owned_province = {
+			has_province_modifier = punic_pale_death_prov
+		}
+		had_global_flag = {
+			flag = plague_pale_death
+			days = 365
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = plague_pale_death_contacted
+			random_owned_province = {
+				limit = {
+					has_province_modifier = punic_pale_death_prov
+				}
+				save_event_target_as = diseaseProv
+			}
+		}
+	}
+
+	goto = diseaseProv
+	
+	option = {
+		name = ab_punic.1006.a
+		event_target:diseaseProv = {
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			add_devastation = 25
+		}
 	}
 }
