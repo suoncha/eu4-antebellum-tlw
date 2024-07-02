@@ -744,7 +744,7 @@ country_event = {
 		hidden_effect = {
 			random_province = {
 				limit = {
-					continent = north_america
+					superregion = north_america_superregion
 					is_city = yes
 					owner = {
 						capital_scope = {
@@ -802,6 +802,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.14.a
+		set_global_flag = plague_gray_fever_enabled
 		every_country = {
 			limit = {
 				technology_group = north_american
@@ -896,6 +897,60 @@ country_event = {
 	}
 }
 
+#Disable AI Earlier Colonization
+country_event = {
+	id = ab_punic.18
+	title = ab_punic.18.t
+	desc = ab_punic.18.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+	
+	option = {
+		name = ab_punic.18.a
+		clr_global_flag = AB_FASTER_EARLY_COLONIZATION
+		clr_global_flag = AB_EARLY_COLONIZATION_PUNIC
+		clr_global_flag = AB_EARLY_COLONIZATION_MAYA
+		clr_global_flag = AB_EARLY_COLONIZATION_INCA
+	}
+}
+
+#AI Earlier Colonization Buff
+country_event = {
+	id = ab_punic.19
+	title = ab_punic.19.t
+	desc = ab_punic.19.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+	
+	option = {
+		name = ab_punic.19.a
+		create_explorer = { tradition = 100 }
+		add_country_modifier = {
+			name = punic_earlier_ai_colonization
+			duration = 12775
+		}
+		every_province = {
+			limit = {
+				OR = {
+					region = carribeans_region
+					area = macaronesia_area
+					area = greenland_area
+					area = newfoundland_area
+				}
+			}
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+	}
+}
+
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden
 province_event = {
@@ -909,6 +964,7 @@ province_event = {
 	hidden = yes
 
 	trigger = {
+		NOT = { has_global_flag = AB_DISABLED_PLAGUES }
 		has_port = yes
 		continent = north_america
 		NOT = { region = carribeans_region }
@@ -1332,25 +1388,98 @@ province_event = {
 	hidden = yes
 
 	trigger = {
+		NOT = { has_global_flag = AB_DISABLED_PLAGUES }
 		has_port = yes
 		continent = europe
 		NOT = { area = subarctic_islands_area }
-		owner = {
-			OR = {
-				num_of_colonists = 1
-				has_idea_group = exploration_ideas
-				has_idea_group = expansion_ideas
-			}
-		}
-		had_global_flag = {
-			flag = new_world_discovered
-			days = 10950
-		}
+		has_global_flag = plague_gray_fever_enabled
 		NOT = { has_global_flag = plague_gray_fever }
 	}
 
 	mean_time_to_happen = {
-		months = 24
+		months = 360
+		modifier = {
+			factor = 0.75
+			calc_true_if = {
+				all_province = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					owner = {
+						OR = {
+							technology_group = western
+							technology_group = eastern
+							technology_group = muslim
+						}
+					}
+				}
+				amount = 20
+			}
+		}
+		modifier = {
+			factor = 0.75
+			calc_true_if = {
+				all_province = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					owner = {
+						OR = {
+							technology_group = western
+							technology_group = eastern
+							technology_group = muslim
+						}
+					}
+				}
+				amount = 40
+			}
+		}
+		modifier = {
+			factor = 0.5
+			calc_true_if = {
+				all_province = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					owner = {
+						OR = {
+							technology_group = western
+							technology_group = eastern
+							technology_group = muslim
+						}
+					}
+				}
+				amount = 60
+			}
+		}
+		modifier = {
+			factor = 0.5
+			calc_true_if = {
+				all_province = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					owner = {
+						OR = {
+							technology_group = western
+							technology_group = eastern
+							technology_group = muslim
+						}
+					}
+				}
+				amount = 80
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = plague_gray_fever_enabled
+		}
 	}
 	
 	option = {
@@ -3284,7 +3413,9 @@ province_event = {
 	
 	option = {
 		name = ab_punic.1031.a
-		add_prestige = -5
+		owner = {
+			add_prestige = -5
+		}
 	}
 }
 
