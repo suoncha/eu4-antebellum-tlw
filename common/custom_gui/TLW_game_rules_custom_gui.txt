@@ -137,7 +137,51 @@ custom_button = {
 			limit = {
 				has_country_flag = ab_game_rules_early_colonization_enabled
 			}
-			set_global_flag = NO_CNS
+			if = {
+				limit = {
+					technology_group = north_american
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_PUNIC
+			}
+			else_if = {
+				limit = {
+					OR = {
+						capital_scope = {
+							region = caribbean_sea_region
+						}
+						technology_group = mesoamerican
+					}
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_MAYA
+			}
+			else_if = {
+				limit = {
+					OR = {
+						technology_group = andean
+						technology_group = south_american
+					}
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_INCA
+			}
+			every_country = {
+				limit = {
+					OR = {
+						tag = NOR
+						tag = ENG
+						tag = HOL
+						tag = FRC
+						tag = ADU
+					}
+					ai = yes
+				}
+				country_event = {
+					id = ab_punic.19
+				}
+			}
+			country_event = {
+				id = ab_punic.18
+				days = 12775
+			}
 		}
 		# Emperor of the East
 		if = {

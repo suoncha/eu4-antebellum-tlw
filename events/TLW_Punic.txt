@@ -78,3 +78,56 @@ country_event = {
 		custom_tooltip = PUNIC_EARLY_EVENT_CHAIN
 	}
 }
+
+#Disable AI Earlier Colonization
+country_event = {
+    id = ab_punic.18
+    title = ab_punic.18.t
+    desc = ab_punic.18.d
+    picture = POPE_PREACHING_eventPicture
+    
+    is_triggered_only = yes
+
+    hidden = yes
+    
+    option = {
+        name = ab_punic.18.a
+        clr_global_flag = AB_EARLY_COLONIZATION_PUNIC
+        clr_global_flag = AB_EARLY_COLONIZATION_MAYA
+        clr_global_flag = AB_EARLY_COLONIZATION_INCA
+    }
+}
+
+#AI Earlier Colonization Buff
+country_event = {
+    id = ab_punic.19
+    title = ab_punic.19.t
+    desc = ab_punic.19.d
+    picture = POPE_PREACHING_eventPicture
+    
+    is_triggered_only = yes
+
+    hidden = yes
+    
+    option = {
+        name = ab_punic.19.a
+        create_explorer = { tradition = 100 }
+        add_country_modifier = {
+            name = punic_earlier_ai_colonization
+            duration = 12775
+        }
+        every_province = {
+            limit = {
+                OR = {
+                    region = carribeans_region
+                    area = macaronesia_area
+                    area = greenland_area
+                    area = newfoundland_area
+                }
+            }
+            ROOT = {
+                discover_province = PREV
+            }
+        }
+    }
+}
