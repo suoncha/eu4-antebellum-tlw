@@ -1,0 +1,649 @@
+# Popup
+custom_window = {
+	name = ab_game_rules_popup_window
+	potential = {
+		ai = no
+		NOT = { is_year = 1445 }
+		NOT = { has_country_flag = ab_game_rules_menu_opened }
+		NOT = { has_global_flag = AB_GAME_RULES_SET }
+	}
+}
+
+custom_button = {
+    name = ab_game_rules_popup_open_button
+    potential = {
+    }
+    trigger = {
+    }
+    effect = {
+        set_country_flag = ab_game_rules_menu_page1
+        set_country_flag = ab_game_rules_menu_opened
+		# Default Options
+		set_country_flag = ab_game_rules_preset_cn_default
+		set_country_flag = ab_game_rules_early_colonization_default
+		set_country_flag = ab_game_rules_emperor_east_default
+		set_country_flag = ab_game_rules_visigoths_default
+		set_country_flag = ab_game_rules_pendragon_default
+    }
+    tooltip = AB_OPEN_GAME_RULES_MENU
+}
+
+custom_button = {
+    name = ab_game_rules_popup_close_button
+    potential = {
+    }
+    trigger = {
+    }
+    effect = {
+        set_global_flag = AB_GAME_RULES_SET
+    }
+    tooltip = AB_CLOSE_GAME_RULES_MENU
+}
+
+# Menu
+custom_window = {
+	name = ab_game_rules_window
+	potential = {
+		has_country_flag = ab_game_rules_menu_opened
+		NOT = { is_year = 1445 }
+	}
+}
+
+custom_button = {
+    name = ab_game_rules_close_button
+    potential = {
+    }
+    trigger = {
+    }
+    effect = {
+        clr_country_flag = ab_game_rules_menu_opened
+		set_global_flag = AB_GAME_RULES_SET
+    }
+    tooltip = AB_CLOSE_GAME_RULES_MENU
+}
+
+custom_button = {
+    name = ab_game_rules_confirm_button
+    potential = {
+    }
+    trigger = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_byzantium
+			}
+			NOT = { tag = BYZ }
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_latin
+			}
+			NOT = {
+				OR = {
+					tag = BUL
+					tag = KNI
+					tag = CYP
+					tag = ATI
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_muslim
+			}
+			NOT = {
+				OR = {
+					tag = AKG
+					tag = AKR
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_zoro
+			}
+			NOT = { tag = SRK }
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_visigoths_enabled
+			}
+			NOT = {
+				OR = {
+					tag = ASU
+					tag = GAL
+					tag = NAV
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_pendragon_enabled
+			}
+			NOT = { tag = WLS }
+		}
+    }
+    effect = {
+        clr_country_flag = ab_game_rules_menu_opened
+		set_global_flag = AB_GAME_RULES_SET
+		# Preset CN
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_preset_cn_disabled
+			}
+			set_global_flag = NO_CNS
+		}
+		# Early AI Colonization
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_early_colonization_enabled
+			}
+			if = {
+				limit = {
+					technology_group = north_american
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_PUNIC
+			}
+			else_if = {
+				limit = {
+					OR = {
+						capital_scope = {
+							region = caribbean_sea_region
+						}
+						technology_group = mesoamerican
+					}
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_MAYA
+			}
+			else_if = {
+				limit = {
+					OR = {
+						technology_group = andean
+						technology_group = south_american
+					}
+				}
+				set_global_flag = AB_EARLY_COLONIZATION_INCA
+			}
+			every_country = {
+				limit = {
+					OR = {
+						tag = NOR
+						tag = ENG
+						tag = HOL
+						tag = FRC
+						tag = ADU
+					}
+					ai = yes
+				}
+				country_event = {
+					id = ab_punic.19
+				}
+			}
+			country_event = {
+				id = ab_punic.18
+				days = 12775
+			}
+		}
+		# Emperor of the East
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_byzantium
+			}
+			set_global_flag = NO_CNS
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_latin
+			}
+			set_global_flag = NO_CNS
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_muslim
+			}
+			set_global_flag = NO_CNS
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_zoro
+			}
+			set_global_flag = NO_CNS
+		}
+		# Rise of the Visigoths
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_visigoths_enabled
+			}
+			set_global_flag = NO_CNS
+		}
+		# Pendragon
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_pendragon_enabled
+			}
+			set_global_flag = NO_CNS
+		}
+    }
+    tooltip = AB_CONFIRM_GAME_RULES_MENU
+}
+
+# Page 1
+custom_window = {
+	name = ab_game_rules_page1_window
+	potential = {
+		has_country_flag = ab_game_rules_menu_page1
+	}
+}
+
+# Preset CN
+custom_window = {
+	name = ab_game_rules_preset_cn_default_window
+	potential = {
+		has_country_flag = ab_game_rules_preset_cn_default
+	}
+}
+
+custom_window = {
+	name = ab_game_rules_preset_cn_disabled_window
+	potential = {
+		has_country_flag = ab_game_rules_preset_cn_disabled
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_preset_cn_disabled_image
+    potential = {
+    }
+    tooltip = GAMERULE_DISABLE_PRESET_CN
+}
+
+custom_button = {
+    name = ab_game_rules_preset_cn_back_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_preset_cn_default
+			}
+			clr_country_flag = ab_game_rules_preset_cn_default
+			set_country_flag = ab_game_rules_preset_cn_disabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_preset_cn_disabled
+			set_country_flag = ab_game_rules_preset_cn_default
+		}
+	}
+    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
+}
+
+custom_button = {
+    name = ab_game_rules_preset_cn_next_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_preset_cn_default
+			}
+			clr_country_flag = ab_game_rules_preset_cn_default
+			set_country_flag = ab_game_rules_preset_cn_disabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_preset_cn_disabled
+			set_country_flag = ab_game_rules_preset_cn_default
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
+
+# Early AI Colonization
+custom_window = {
+	name = ab_game_rules_early_colonization_default_window
+	potential = {
+		has_country_flag = ab_game_rules_early_colonization_default
+	}
+}
+
+custom_window = {
+	name = ab_game_rules_early_colonization_enabled_window
+	potential = {
+		has_country_flag = ab_game_rules_early_colonization_enabled
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_early_colonization_disabled_image
+    potential = {
+    }
+    tooltip = GAMERULE_ENABLE_EARLY_COLONIZATION
+}
+
+custom_button = {
+    name = ab_game_rules_early_colonization_back_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_early_colonization_default
+			}
+			clr_country_flag = ab_game_rules_early_colonization_default
+			set_country_flag = ab_game_rules_early_colonization_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_early_colonization_enabled
+			set_country_flag = ab_game_rules_early_colonization_default
+		}
+	}
+    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
+}
+
+custom_button = {
+    name = ab_game_rules_early_colonization_next_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_early_colonization_default
+			}
+			clr_country_flag = ab_game_rules_early_colonization_default
+			set_country_flag = ab_game_rules_early_colonization_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_early_colonization_enabled
+			set_country_flag = ab_game_rules_early_colonization_default
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
+
+# Emperor of the East
+custom_window = {
+	name = ab_game_rules_emperor_east_default_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_default
+	}
+}
+
+custom_window = {
+	name = ab_game_rules_emperor_east_byzantium_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_byzantium
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_emperor_east_byzantium_image
+    potential = {
+    }
+    tooltip = GAMERULE_EMPEROR_EAST_BYZANTIUM
+}
+
+custom_window = {
+	name = ab_game_rules_emperor_east_latin_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_latin
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_emperor_east_latin_image
+    potential = {
+    }
+    tooltip = GAMERULE_EMPEROR_EAST_LATIN
+}
+
+custom_window = {
+	name = ab_game_rules_emperor_east_muslim_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_muslim
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_emperor_east_muslim_image
+    potential = {
+    }
+    tooltip = GAMERULE_EMPEROR_EAST_MUSLIM
+}
+
+custom_window = {
+	name = ab_game_rules_emperor_east_zoro_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_zoro
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_emperor_east_zoro_image
+    potential = {
+    }
+    tooltip = GAMERULE_EMPEROR_EAST_ZORO
+}
+
+custom_button = {
+    name = ab_game_rules_emperor_east_back_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_default
+			}
+			clr_country_flag = ab_game_rules_emperor_east_default
+			set_country_flag = ab_game_rules_emperor_east_zoro
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_byzantium
+			}
+			clr_country_flag = ab_game_rules_emperor_east_byzantium
+			set_country_flag = ab_game_rules_emperor_east_default
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_latin
+			}
+			clr_country_flag = ab_game_rules_emperor_east_latin
+			set_country_flag = ab_game_rules_emperor_east_byzantium
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_muslim
+			}
+			clr_country_flag = ab_game_rules_emperor_east_muslim
+			set_country_flag = ab_game_rules_emperor_east_latin
+		}
+		else = {
+			clr_country_flag = ab_game_rules_emperor_east_zoro
+			set_country_flag = ab_game_rules_emperor_east_muslim
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
+}
+
+custom_button = {
+    name = ab_game_rules_emperor_east_next_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_default
+			}
+			clr_country_flag = ab_game_rules_emperor_east_default
+			set_country_flag = ab_game_rules_emperor_east_byzantium
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_byzantium
+			}
+			clr_country_flag = ab_game_rules_emperor_east_byzantium
+			set_country_flag = ab_game_rules_emperor_east_latin
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_latin
+			}
+			clr_country_flag = ab_game_rules_emperor_east_latin
+			set_country_flag = ab_game_rules_emperor_east_muslim
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_muslim
+			}
+			clr_country_flag = ab_game_rules_emperor_east_muslim
+			set_country_flag = ab_game_rules_emperor_east_zoro
+		}
+		else = {
+			clr_country_flag = ab_game_rules_emperor_east_zoro
+			set_country_flag = ab_game_rules_emperor_east_default
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
+
+# Rise of the Visigoths
+custom_window = {
+	name = ab_game_rules_visigoths_default_window
+	potential = {
+		has_country_flag = ab_game_rules_visigoths_default
+	}
+}
+
+custom_window = {
+	name = ab_game_rules_visigoths_enabled_window
+	potential = {
+		has_country_flag = ab_game_rules_visigoths_enabled
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_visigoths_enabled_image
+    potential = {
+    }
+    tooltip = GAMERULE_ENABLE_VISIGOTHS
+}
+
+custom_button = {
+    name = ab_game_rules_visigoths_back_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_visigoths_default
+			}
+			clr_country_flag = ab_game_rules_visigoths_default
+			set_country_flag = ab_game_rules_visigoths_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_visigoths_enabled
+			set_country_flag = ab_game_rules_visigoths_default
+		}
+	}
+    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
+}
+
+custom_button = {
+    name = ab_game_rules_visigoths_next_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_visigoths_default
+			}
+			clr_country_flag = ab_game_rules_visigoths_default
+			set_country_flag = ab_game_rules_visigoths_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_visigoths_enabled
+			set_country_flag = ab_game_rules_visigoths_default
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
+
+# Pendragon
+custom_window = {
+	name = ab_game_rules_pendragon_default_window
+	potential = {
+		has_country_flag = ab_game_rules_pendragon_default
+	}
+}
+
+custom_window = {
+	name = ab_game_rules_pendragon_enabled_window
+	potential = {
+		has_country_flag = ab_game_rules_pendragon_enabled
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_pendragon_enabled_image
+    potential = {
+    }
+    tooltip = GAMERULE_ENABLE_PENDRAGON
+}
+
+custom_button = {
+    name = ab_game_rules_pendragon_back_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_pendragon_default
+			}
+			clr_country_flag = ab_game_rules_pendragon_default
+			set_country_flag = ab_game_rules_pendragon_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_pendragon_enabled
+			set_country_flag = ab_game_rules_pendragon_default
+		}
+	}
+    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
+}
+
+custom_button = {
+    name = ab_game_rules_pendragon_next_button
+    potential = {
+    }
+    trigger = {
+	}
+    effect = {
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_pendragon_default
+			}
+			clr_country_flag = ab_game_rules_pendragon_default
+			set_country_flag = ab_game_rules_pendragon_enabled
+		}
+		else = {
+			clr_country_flag = ab_game_rules_pendragon_enabled
+			set_country_flag = ab_game_rules_pendragon_default
+		}
+    }
+    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
