@@ -1330,14 +1330,32 @@ country_event = {
 		}
 		custom_tooltip = BYZ_RUSSIAN_PRINCES
 		hidden_effect = {
-			every_country = {
+			if = {
 				limit = {
-					has_reform = principality
+					government = monarchy
+					NOT = { has_country_flag = byz_restore_republic }
 				}
-				reverse_add_casus_belli = {
-					target = ROOT
-					type = cb_vassalize_mission
-					months = 300
+				every_country = {
+					limit = {
+						has_reform = principality
+					}
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_restore_personal_union
+						months = 300
+					}
+				}
+			}
+			else = {
+				every_country = {
+					limit = {
+						has_reform = principality
+					}
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_vassalize_mission
+						months = 300
+					}
 				}
 			}
 		}
@@ -1348,10 +1366,23 @@ country_event = {
 		trigger = {
 			exists = UKR
 		}
-		add_casus_belli = {
-			type = cb_vassalize_mission
-			months = 300
-			target = UKR
+		if = {
+			limit = {
+				government = monarchy
+				NOT = { has_country_flag = byz_restore_republic }
+			}
+			add_casus_belli = {
+				type = cb_restore_personal_union
+				months = 300
+				target = UKR
+			}
+		}
+		else = {
+			add_casus_belli = {
+				type = cb_vassalize_mission
+				months = 300
+				target = UKR
+			}
 		}
 	}
 }
@@ -1490,7 +1521,12 @@ country_event = {
 	# Flag clearing to optimize performance
 	after = {
 		hidden_effect = {
-			clr_country_flag = had_16th_crisis
+			if = {
+				limit = {
+					mission_completed = byzantium_iron
+				}
+				clr_country_flag = had_16th_crisis
+			}
 			clr_country_flag = byz_court_latin
 			clr_country_flag = byz_court_mixed
 			clr_country_flag = byz_court_greek

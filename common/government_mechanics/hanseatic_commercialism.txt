@@ -1,0 +1,221 @@
+hanseatic_commercialism_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Domination"
+		tag = HAS
+	}
+
+	powers = {
+		commercial_power = {
+            gui = hanseatic_commercialism_gov_mech
+            show_before_interactions = yes
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					trade_company_investment_cost = -0.1
+					global_trade_power = 0.2
+					trade_steering = 0.3
+				}
+			}
+			scaled_modifier = {
+				trigger = {
+					has_country_flag = hansa_govmechanic_buff_3
+				}
+				modifier = {
+					global_trade_goods_size_modifier = 0.15
+				}
+			}
+		}
+	}
+	
+	interactions = {
+		expand_merchant_fleet = {
+			gui = hanseatic_commercialism_gov_interaction_1
+			cost_type = commercial_power
+			trigger = {
+				has_government_power = {
+					mechanic_type = hanseatic_commercialism_mechanic
+					power_type = commercial_power
+					value = 25
+				}
+			}
+			effect = { 
+				add_government_power = {
+					mechanic_type = hanseatic_commercialism_mechanic
+					power_type = commercial_power
+					value = -25
+				}
+				create_admiral = { tradition = 50 }
+				custom_tooltip = AB_EMPTY
+				if = {
+					limit = {
+						has_country_modifier = hansa_fleet_modifier
+					}
+					extend_country_modifier = {
+						name = hansa_fleet_modifier
+						duration = 3650
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = hansa_fleet_modifier
+						duration = 3650
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = hansa_govmechanic_buff_1
+					}
+					custom_tooltip = HAS_FLEET_BONUS_YES
+				}
+				else = {
+					custom_tooltip = HAS_FLEET_BONUS_NO
+				}
+				tooltip = {
+					add_navy_tradition = 15
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							has_country_flag = hansa_govmechanic_buff_1
+						}
+						add_navy_tradition = 15
+					}
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+		}
+		
+		boost_commercial_power = {
+			gui = hanseatic_commercialism_gov_interaction_2
+			cost_type = commercial_power
+			trigger = {
+				if = {
+					limit = {
+						has_country_flag = hansa_govmechanic_buff_2
+					}
+					years_of_income = 0.25
+				}
+				else = {
+					years_of_income = 0.5
+				}
+				NOT = {
+					has_government_power = {
+						mechanic_type = hanseatic_commercialism_mechanic
+						power_type = commercial_power
+						value = 100
+					}
+				}
+			}
+			effect = {
+				if = {
+					limit = {
+						has_country_flag = hansa_govmechanic_buff_2
+					}
+					add_years_of_income = -0.125
+				}
+				else = {
+					add_years_of_income = -0.25
+				}
+				add_government_power = {
+					mechanic_type = hanseatic_commercialism_mechanic
+					power_type = commercial_power
+					value = 10
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+		}
+		
+		consolidate = {
+			gui = hanseatic_commercialism_gov_interaction_3
+			trigger = {
+				has_government_power = {
+					mechanic_type = hanseatic_commercialism_mechanic
+					power_type = commercial_power
+					value = 25
+				}
+			}
+			effect = { 
+				add_government_power = {
+					mechanic_type = hanseatic_commercialism_mechanic
+					power_type = commercial_power
+					value = -25
+				}
+				add_mercantilism = 3
+				custom_tooltip = AB_EMPTY
+				if = {
+					limit = {
+						has_country_flag = hansa_govmechanic_buff_4
+					}
+					custom_tooltip = HAS_CONSOLIDATE_LAW_BONUS_YES
+				}
+				else = {
+					custom_tooltip = HAS_CONSOLIDATE_LAW_BONUS_NO
+				}
+				tooltip = {
+					if = {
+						limit = {
+							has_country_modifier = hansa_consolidate_merchant_law_modifier
+						}
+						extend_country_modifier = {
+							name = hansa_consolidate_merchant_law_modifier
+							duration = 3650
+						}
+					}
+					else = {
+						add_country_modifier = {
+							name = hansa_consolidate_merchant_law_modifier
+							duration = 3650
+						}
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							has_country_flag = hansa_govmechanic_buff_4
+						}
+						if = {
+							limit = {
+								has_country_modifier = hansa_consolidate_merchant_law_modifier
+							}
+							extend_country_modifier = {
+								name = hansa_consolidate_merchant_law_modifier
+								duration = 3650
+							}
+						}
+						else = {
+							add_country_modifier = {
+								name = hansa_consolidate_merchant_law_modifier
+								duration = 3650
+							}
+						}
+					}
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					years_of_income = 3
+				}
+			}
+		}
+	}
+}
