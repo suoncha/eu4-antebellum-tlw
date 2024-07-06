@@ -4703,55 +4703,81 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			clr_global_flag = AB_TRIUMVERATE_SET
-			event_target:romanTriumvir1 = {
+			random_country = {
+				limit = {
+					has_country_flag = byz_triumvir_flag
+				}
+				save_event_target_as = triumvir1
+				random_country = {
+					limit = {
+						has_country_flag = byz_triumvir_flag
+						NOT = { tag = event_target:triumvir1 }
+					}
+					save_event_target_as = triumvir2
+					if = {
+						limit = {
+							has_saved_global_event_target = romanTriumvir3
+						}
+						random_country = {
+							limit = {
+								has_country_flag = byz_triumvir_flag
+								NOT = { tag = event_target:triumvir1 }
+								NOT = { tag = event_target:triumvir2 }
+							}
+							save_event_target_as = triumvir3
+						}
+					}
+				}
+			}
+			event_target:triumvir1 = {
 				clr_country_flag = byz_triumvir_flag
 				set_country_flag = byz_old_triumvir_flag
-				break_alliance = event_target:romanTriumvir2
-				break_alliance = event_target:romanTriumvir3
-				remove_historical_friend = event_target:romanTriumvir2
-				remove_historical_friend = event_target:romanTriumvir3
-				add_historical_rival = event_target:romanTriumvir2
-				add_historical_rival = event_target:romanTriumvir3
+				break_alliance = event_target:triumvir2
+				break_alliance = event_target:triumvir3
+				remove_historical_friend = event_target:triumvir2
+				remove_historical_friend = event_target:triumvir3
+				add_historical_rival = event_target:triumvir2
+				add_historical_rival = event_target:triumvir3
 				remove_opinion = {
-					who = event_target:romanTriumvir2
+					who = event_target:triumvir2
 					modifier = opinion_triumvir
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir3
+					who = event_target:triumvir3
 					modifier = opinion_triumvir
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir2
+					who = event_target:triumvir2
 					modifier = opinion_strategic_partners
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir3
+					who = event_target:triumvir3
 					modifier = opinion_strategic_partners
 				}
 			}
-			event_target:romanTriumvir2 = {
+			event_target:triumvir2 = {
 				clr_country_flag = byz_triumvir_flag
 				set_country_flag = byz_old_triumvir_flag
-				break_alliance = event_target:romanTriumvir1
-				break_alliance = event_target:romanTriumvir3
-				remove_historical_friend = event_target:romanTriumvir1
-				remove_historical_friend = event_target:romanTriumvir3
-				add_historical_rival = event_target:romanTriumvir1
-				add_historical_rival = event_target:romanTriumvir3
+				break_alliance = event_target:triumvir1
+				break_alliance = event_target:triumvir3
+				remove_historical_friend = event_target:triumvir1
+				remove_historical_friend = event_target:triumvir3
+				add_historical_rival = event_target:triumvir1
+				add_historical_rival = event_target:triumvir3
 				remove_opinion = {
-					who = event_target:romanTriumvir1
+					who = event_target:triumvir1
 					modifier = opinion_triumvir
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir3
+					who = event_target:triumvir3
 					modifier = opinion_triumvir
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir1
+					who = event_target:triumvir1
 					modifier = opinion_strategic_partners
 				}
 				remove_opinion = {
-					who = event_target:romanTriumvir3
+					who = event_target:triumvir3
 					modifier = opinion_strategic_partners
 				}
 			}
@@ -4759,29 +4785,29 @@ country_event = {
 				limit = {
 					has_saved_global_event_target = romanTriumvir3
 				}
-				event_target:romanTriumvir3 = {
+				event_target:triumvir3 = {
 					clr_country_flag = byz_triumvir_flag
 					set_country_flag = byz_old_triumvir_flag
-					break_alliance = event_target:romanTriumvir2
-					break_alliance = event_target:romanTriumvir1
-					remove_historical_friend = event_target:romanTriumvir2
-					remove_historical_friend = event_target:romanTriumvir1
-					add_historical_rival = event_target:romanTriumvir2
-					add_historical_rival = event_target:romanTriumvir1
+					break_alliance = event_target:triumvir1
+					break_alliance = event_target:triumvir2
+					remove_historical_friend = event_target:triumvir1
+					remove_historical_friend = event_target:triumvir2
+					add_historical_rival = event_target:triumvir1
+					add_historical_rival = event_target:triumvir2
 					remove_opinion = {
-						who = event_target:romanTriumvir2
+						who = event_target:triumvir1
 						modifier = opinion_triumvir
 					}
 					remove_opinion = {
-						who = event_target:romanTriumvir1
+						who = event_target:triumvir2
 						modifier = opinion_triumvir
 					}
 					remove_opinion = {
-						who = event_target:romanTriumvir2
+						who = event_target:triumvir1
 						modifier = opinion_strategic_partners
 					}
 					remove_opinion = {
-						who = event_target:romanTriumvir1
+						who = event_target:triumvir2
 						modifier = opinion_strategic_partners
 					}
 				}
@@ -4803,44 +4829,44 @@ country_event = {
 			limit = {
 				has_saved_global_event_target = romanTriumvir3
 			}
-			event_target:romanTriumvir3 = {
+			event_target:triumvir3 = {
 				declare_war_with_cb = {
 					casus_belli = cb_triumverate_unification
-					who = event_target:romanTriumvir1
+					who = event_target:triumvir1
 				}
 			}
-			event_target:romanTriumvir1 = {
+			event_target:triumvir1 = {
 				declare_war_with_cb = {
 					casus_belli = cb_triumverate_unification
-					who = event_target:romanTriumvir2
+					who = event_target:triumvir2
 				}
 			}
-			event_target:romanTriumvir2 = {
+			event_target:triumvir2 = {
 				declare_war_with_cb = {
 					casus_belli = cb_triumverate_unification
-					who = event_target:romanTriumvir3
+					who = event_target:triumvir3
 				}
 			}
 		}
 		else = {
 			if = {
 				limit = {
-					event_target:romanTriumvir2 = {
+					event_target:triumvir2 = {
 						ai = no
 					}
 				}
-				event_target:romanTriumvir2 = {
+				event_target:triumvir2 = {
 					declare_war_with_cb = {
 						casus_belli = cb_triumverate_unification
-						who = event_target:romanTriumvir1
+						who = event_target:triumvir1
 					}
 				}
 			}
 			else = {
-				event_target:romanTriumvir1 = {
+				event_target:triumvir1 = {
 					declare_war_with_cb = {
 						casus_belli = cb_triumverate_unification
-						who = event_target:romanTriumvir2
+						who = event_target:triumvir2
 					}
 				}
 			}
@@ -4848,9 +4874,9 @@ country_event = {
 		every_country = {
 			limit = {
 				OR = {
-					tag = event_target:romanTriumvir1
-					tag = event_target:romanTriumvir2
-					tag = event_target:romanTriumvir3
+					tag = event_target:triumvir1
+					tag = event_target:triumvir2
+					tag = event_target:triumvir3
 				}
 				ai = no
 			}
@@ -4873,7 +4899,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
-		name = ab_byzantium.110.b
+		name = ab_byzantium.110.a
 		custom_tooltip = ROM_TRIUMVERATE_CB_TT
 	}
 }

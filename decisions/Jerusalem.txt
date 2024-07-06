@@ -12,8 +12,10 @@ country_decisions = {
 			}
 			religion = catholic
 			NOT = { tag = OTR }
+			# TLW [[[
 			NOT = { tag = ROM }
 			NOT = { tag = WRE }
+			# ]]]
 			NOT = { culture = swabian } #Barbarossa
 			OR = {
 				owns = 379
@@ -59,6 +61,10 @@ country_decisions = {
 				}
 				change_tag = KOJ
 				swap_non_generic_missions = yes
+				if = {
+                    limit = { has_custom_ideas = no }
+                    country_event = { id = ideagroups.1 } #Swap Ideas
+                }
 				set_country_flag = knights_formed_jerusalem
 			}
 			else = {
@@ -84,14 +90,184 @@ country_decisions = {
 						set_government_rank = 2
 					}
 					set_country_flag = formed_jerusalem
-					country_event = {
-						id = ideagroups.1
-					}
+					swap_free_idea_group = yes
 				}
 			}
 		}
 		ai_will_do = {
 			factor = 0
+		}
+	}
+
+	otr_settlement = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = otr_settlement_flag }
+			religion = catholic
+			OR = {
+				culture_group = french
+				culture_group = latin
+				culture_group = germanic
+				culture_group = iberian
+				culture_group = united_germanic
+			}
+			tag = OTR
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 364
+				province_id = 1854
+				province_id = 1855
+			}
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			dip_power = 150
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			owns = 364
+			owns = 1854
+			owns = 1855
+			any_country = {
+				culture_group = ROOT
+				capital_scope = {
+					superregion = europe_superregion
+				}
+				has_opinion = {
+					who = ROOT
+					value = 125
+				}
+			}
+		}
+		effect = {
+			add_dip_power = -150
+			every_owned_province = {
+				limit = {
+					OR = {
+						province_id = 364
+						province_id = 1854
+						province_id = 1855
+					}
+				}
+				if = {
+					limit = {
+						ROOT = { culture_group = french }
+					}
+					change_culture = Outremer
+				}
+				else_if = {
+					limit = {
+						ROOT = { culture_group = latin }
+					}
+					change_culture = Outremer_latin
+				}
+				else_if = {
+					limit = {
+						ROOT = { culture_group = germanic }
+					}
+					change_culture = Outremer_germanic
+				}
+				else_if = {
+					limit = {
+						ROOT = { culture_group = iberian }
+					}
+					change_culture = Outremer_iberian
+				}
+				else_if = {
+					limit = {
+						ROOT = { culture_group = united_germanic }
+					}
+					change_culture = Outremer_united_germanic
+				}
+				change_religion = ROOT
+			}
+			add_country_modifier = {
+				name = otr_culture_conversion
+				duration = -1
+			}
+			set_country_flag = otr_settlement_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	otr_request_manpower = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_modifier = otr_requested_christian_reinforcements }
+			religion = catholic
+			OR = {
+				tag = OTR
+				tag = KOJ
+			}
+		}
+		allow = {
+			papal_influence = 75
+			PAP = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+		effect = {
+			add_papal_influence = -75
+			add_country_modifier = {
+				name = otr_requested_manpower
+				duration = 1825
+			}
+			hidden_effect = {
+				add_country_modifier = {
+					name = otr_requested_christian_reinforcements
+					duration = 9125
+					hidden = yes
+				}
+			}
+			custom_tooltip = OTR_INFLUENCE_EXCHANGE
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	otr_request_money = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_modifier = otr_requested_money }
+			religion = catholic
+			OR = {
+				tag = OTR
+				tag = KOJ
+			}
+		}
+		allow = {
+			papal_influence = 75
+			PAP = {
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+			}
+		}
+		effect = {
+			add_papal_influence = -75
+			add_years_of_income = 3
+			hidden_effect = {
+				add_country_modifier = {
+					name = otr_requested_money
+					duration = 9125
+					hidden = yes
+				}
+			}
+			custom_tooltip = OTR_INFLUENCE_EXCHANGE
+		}
+		ai_will_do = {
+			factor = 1
 		}
 	}
 

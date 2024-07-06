@@ -24,6 +24,30 @@ estate_burghers_land_rights = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = {
+			OR = {
+				has_country_modifier = rmg_powerful_estate
+				AND = {
+					has_country_flag = rhl_unifier_of_germany
+					has_country_modifier = sax_unifier_of_germany
+				}
+			}
+		}
+		modifier = {
+			country_diplomatic_power = 1
+			max_absolutism = 5
+		}
+	}
+	conditional_modifier = {
+		trigger = { has_country_flag = bav_burgher_land_right_buff }
+		modifier = {
+			global_trade_power = 0.2
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	ai_will_do = {
 		factor = 5
 		modifier = {
@@ -272,6 +296,15 @@ estate_burghers_land_of_commerce = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = bav_land_of_commerce_buff }
+		modifier = {
+			mercantilism_cost = -0.33
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	# TLW [[[
 	conditional_modifier = {
 		trigger = {
@@ -406,6 +439,15 @@ estate_burghers_new_world_charter = {
 		global_colonial_growth = 10
 		colonist_placement_chance = 0.05
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = hansa_buff_new_world_charters_flag }
+		modifier = {
+			native_uprising_chance = -0.5
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	on_granted = {
 		if = {
 			limit = { has_dlc = "Domination" }
@@ -447,6 +489,15 @@ estate_burghers_new_world_charter = {
 			}
 		}
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = ab_upgrade_colonial_charters }
+		modifier = {
+			max_absolutism = 5
+			liberty_desire_from_subject_development = -0.2
+		}
+	}
+	# ]]]
 	conditional_modifier = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
@@ -459,22 +510,6 @@ estate_burghers_new_world_charter = {
 			naval_forcelimit_modifier = 0.05
 		}
 	}
-	# TODO: REMOVE AFTER B&I [[[
-	conditional_modifier = {
-		trigger = { has_country_flag = hansa_buff_new_world_charters_flag }
-		modifier = {
-			native_uprising_chance = -0.5
-			max_absolutism = 5
-		}
-	}
-	conditional_modifier = {
-		trigger = { has_country_flag = ab_upgrade_colonial_charters }
-		modifier = {
-			max_absolutism = 5
-			liberty_desire_from_subject_development = -0.2
-		}
-	}
-	# ]]]
 	ai_will_do = {
 		factor = 1
 		modifier = {
@@ -502,12 +537,30 @@ estate_burghers_indebted_to_burghers = {
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
 	influence = 0.05
+	# AB {{{
+	is_valid = {
+		NOT = {
+			any_owned_province = {
+				has_great_project = {
+					type = ottoman_market
+					tier = 1
+				}
+			}
+		}
+	}
+	# }}}
 	on_granted = {
 		if = {
 			limit = {
 				has_country_flag = BYZ_buff_burgher_loans_flag
 			}
 			custom_tooltip = BYZ_estate_burghers_indebted_to_burghers_effect_tooltip
+		}
+		else_if = {
+			limit = {
+				has_country_flag = tus_buff_burgher_loans_flag
+			}
+			custom_tooltip = TUS_estate_burghers_indebted_to_burghers_effect_tooltip
 		}
 		else = {
 			custom_tooltip = estate_burghers_indebted_to_burghers_effect_tooltip
@@ -524,34 +577,51 @@ estate_burghers_indebted_to_burghers = {
 			add_inflation = 0.5
 		}
 		hidden_effect = {
-			add_loan = {
-				fixed_interest = 1
-				duration = 60
-				estate_loan = yes
-			}
-			add_loan = {
-				fixed_interest = 1
-				duration = 60
-				estate_loan = yes
-			}
-			add_loan = {
-				fixed_interest = 1
-				duration = 60
-				estate_loan = yes
-			}
-			add_loan = {
-				fixed_interest = 1
-				duration = 60
-				estate_loan = yes
-			}
-			add_loan = {
-				fixed_interest = 1
-				duration = 60
-				estate_loan = yes
-			}
 			if = {
 				limit = {
-					has_country_flag = BYZ_buff_burgher_loans_flag
+					has_country_flag = tus_buff_burgher_loans_flag
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0.5
+					duration = 60
+					estate_loan = yes
+				}
+			}
+			else = {
+				add_loan = {
+					fixed_interest = 1
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 1
+					duration = 60
+					estate_loan = yes
 				}
 				add_loan = {
 					fixed_interest = 1
@@ -562,6 +632,26 @@ estate_burghers_indebted_to_burghers = {
 					fixed_interest = 1
 					duration = 60
 					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 1
+					duration = 60
+					estate_loan = yes
+				}
+				if = {
+					limit = {
+						has_country_flag = BYZ_buff_burgher_loans_flag
+					}
+					add_loan = {
+						fixed_interest = 1
+						duration = 60
+						estate_loan = yes
+					}
+					add_loan = {
+						fixed_interest = 1
+						duration = 60
+						estate_loan = yes
+					}
 				}
 			}
 		}
@@ -638,23 +728,45 @@ estate_burghers_free_enterprise = {
 
 estate_burghers_patronage_of_the_arts = {
 	icon = privilege_build_jain_temple
-	max_absolutism = -5
+	# AB [[[
+	conditional_modifier = {
+		trigger = { NOT = { has_country_flag = ab_fkn_improved_patronage } }
+		modifier = { max_absolutism = -5 }
+	}
+	# ]]]
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
 	influence = 0.05
 	conditional_modifier = {
-		trigger = { NOT = { has_country_flag = ned_patronage_buff_flag } }
+		# AB [[[
+		trigger = {
+			NOT = { has_country_flag = ned_patronage_buff_flag }
+			NOT = { has_country_flag = AB_SHH_improved_patronage_privilege }
+		}
+		# ]]]
 		modifier = { global_tax_modifier = -0.05 }
 	}
 	benefits = {
 		
 	}
 	conditional_modifier = {
-		trigger = { NOT = { has_country_flag = ned_patronage_buff_flag } }
+		# AB [[[
+		trigger = {
+			NOT = { has_country_flag = ned_patronage_buff_flag }
+			NOT = { has_country_flag = AB_SHH_improved_patronage_privilege }
+		}
+		# ]]]
 		modifier = { prestige = 0.5 }
 	}
 	conditional_modifier = {
-		trigger = { has_country_flag = ned_patronage_buff_flag }
+		# AB [[[
+		trigger = {
+			OR = {
+				has_country_flag = ned_patronage_buff_flag
+				has_country_flag = AB_SHH_improved_patronage_privilege
+			}
+		}
+		# ]]]
 		modifier = { prestige = 1 }
 	}
 	conditional_modifier = {
@@ -671,6 +783,12 @@ estate_burghers_patronage_of_the_arts = {
 		}
 		modifier = { stability_cost_modifier = -0.15 }
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = ab_fkn_improved_patronage }
+		modifier = { advisor_cost = -0.15 }
+	}
+	# ]]]
 	cooldown_years = 10
 	on_granted = {
 		if = {
@@ -1418,7 +1536,7 @@ estate_burghers_control_over_monetary_policy = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
-	# TODO: REMOVE AFTER B&I [[[
+	# AB [[[
 	conditional_modifier = {
 		trigger = {
 			has_country_flag = rmg_monetary_policy_no_power_cost_flag
@@ -1463,6 +1581,33 @@ estate_burghers_private_trade_fleets = {
 	}
 	benefits = {
 		light_ship_cost = -0.2
+		global_ship_trade_power = 0.1
+	}
+	conditional_modifier = {
+		trigger = { mission_completed = cro_merchant_fleet }
+		modifier = { global_ship_trade_power = 0.1 light_ship_cost = -0.1 }
+	}
+	conditional_modifier = {
+		trigger = { mission_completed = slv_merchant_fleet }
+		modifier = { global_ship_trade_power = 0.1 light_ship_cost = -0.1 }
+	}
+	conditional_modifier = {
+		trigger = {
+			mission_completed = trc_control_valencia
+		}
+		modifier = {
+			global_ship_trade_power = 0.1
+			max_absolutism = 5
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			mission_completed = gen_merchant_fleet
+		}
+		modifier = {
+			light_ship_cost = -0.1
+			max_absolutism = 5
+		}
 	}
 	conditional_modifier = {
 		trigger = {
