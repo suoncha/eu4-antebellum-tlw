@@ -325,6 +325,10 @@ HLE_missions_1 = {
 		icon = king_of_naples
 		required_missions = { nicene_hellenic }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -337,23 +341,32 @@ HLE_missions_1 = {
 		}
 
 		trigger = {
-			culture_group = hellenic_g
-			western_sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				owns = 125
 			}
-			sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			calabria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			apulia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
+			else = {
+				culture_group = hellenic_g
+				western_sicily_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				sicily_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				calabria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				apulia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}	
 		}
 		
 		effect = {
@@ -372,6 +385,19 @@ HLE_missions_1 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 	
@@ -386,9 +412,18 @@ HLE_missions_1 = {
 		
 		trigger = {
 			mission_completed = nicene_asia_minor
-			126 = { country_or_non_sovereign_subject_holds = ROOT }
-			126 = { base_manpower = 6 }
-			126 = { province_has_current_tech_fort_trigger = yes }
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				126 = { country_or_non_sovereign_subject_holds = ROOT }
+				126 = { base_manpower = 6 }
+				126 = { province_has_current_tech_fort_trigger = yes }
+			}
 		}
 		
 		effect = {
@@ -415,9 +450,20 @@ HLE_missions_1 = {
 		}
 
 		trigger = {
-			corsica_sardinia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				corsica_sardinia_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+			else = {
+				corsica_sardinia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
 		}
 		
@@ -497,9 +543,18 @@ HLE_missions_1 = {
 
 		trigger = {
 			201 = { country_or_non_sovereign_subject_holds = ROOT }
-			201 = { development = 20 }
-			201 = { has_shipyard_building_trigger = yes }
-			201 = { has_dock_building_trigger = yes }
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				201 = { development = 20 }
+				201 = { has_shipyard_building_trigger = yes }
+				201 = { has_dock_building_trigger = yes }
+			}
 		}
 		
 		effect = {
@@ -615,7 +670,16 @@ NCI_missions_2 = {
 		position = 1
 		
 		trigger = {
-		    navy_size_percentage = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				navy_size_percentage = 0.5
+			}
+			else = {
+				navy_size_percentage = 1
+			}
 		}
 		
 		effect = {
@@ -684,6 +748,13 @@ NCI_missions_2 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				inherit = KNI
+			}
 		}
 	}
 	
@@ -691,6 +762,10 @@ NCI_missions_2 = {
 		icon = nuova_promissione_ducale
 		required_missions = { nicene_aegean }
 		position = 4
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			area = aegean_archipelago_area
@@ -698,9 +773,21 @@ NCI_missions_2 = {
 		}
 		
 		trigger = {
-		    aegean_archipelago_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 3
+					area = aegean_archipelago_area
+				}
+			}
+			else = {
+				aegean_archipelago_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -774,11 +861,20 @@ HLE_missions_2 = {
 		}
 
 		trigger = {
-			mercantilism = 10
-			151 = {
-				trade_share = {
-					country = ROOT
-					share = 51
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				mercantilism = 10
+				151 = {
+					trade_share = {
+						country = ROOT
+						share = 51
+					}
 				}
 			}
 		}
@@ -801,6 +897,17 @@ HLE_missions_2 = {
 					add_center_of_trade_level = 1
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				every_owned_province = {
+					province_event = {
+						id = ab_nicaea.10
+					}
+				}
+			}
 		}
 	}
 
@@ -819,12 +926,21 @@ HLE_missions_2 = {
 		}
 		
 		trigger = {
-			culture_group = hellenic_g
-			num_of_owned_provinces_with = {
-				value = 10
-				culture = hellenic_greek
-				development = 15
-				region = balkan_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				culture_group = hellenic_g
+				num_of_owned_provinces_with = {
+					value = 10
+					culture = hellenic_greek
+					development = 15
+					region = balkan_region
+				}
 			}
 		}
 		
@@ -862,9 +978,18 @@ HLE_missions_2 = {
 		position = 8
 		
 		trigger = {
-			development_in_provinces = {
-				value = 500
-				culture = hellenic_greek
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				development_in_provinces = {
+					value = 500
+					culture = hellenic_greek
+				}
 			}
 		}
 		
@@ -930,17 +1055,31 @@ HLE_missions_2 = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-			213 = {
-				country_or_non_sovereign_subject_holds = ROOT
-				development = 20
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				213 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				220 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			220 = {
-				country_or_non_sovereign_subject_holds = ROOT
-				development = 20
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
+			else = {
+				213 = {
+					country_or_non_sovereign_subject_holds = ROOT
+					development = 20
+					has_shipyard_building_trigger = yes
+					has_dock_building_trigger = yes
+				}
+				220 = {
+					country_or_non_sovereign_subject_holds = ROOT
+					development = 20
+					has_shipyard_building_trigger = yes
+					has_dock_building_trigger = yes
+				}
 			}
 		}
 		
@@ -1206,9 +1345,18 @@ NCI_missions_3 = {
 		}
 		
 		trigger = {
-		    has_spy_network_in = {
-				who = BYZ
-				value = 50
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				has_spy_network_in = {
+					who = BYZ
+					value = 50
+				}
 			}
 		}
 		
@@ -1243,7 +1391,7 @@ NCI_missions_3 = {
 		}
 		
 		trigger = {
-		    318 = { country_or_non_sovereign_subject_holds = ROOT }
+		    318 = { owned_by = ROOT }
 		}
 		
 		effect = {
@@ -1299,7 +1447,7 @@ NCI_missions_3 = {
 		}
 		
 		trigger = {
-		    151 = { country_or_non_sovereign_subject_holds = ROOT }
+		    151 = { owned_by = ROOT }
 		}
 		
 		effect = {
@@ -1320,6 +1468,21 @@ NCI_missions_3 = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				add_core = 4702
+				add_core = 4961
+				add_core = 148
+				add_core = 1853
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = BUL
+					war_goal_province = 148
+				}
+			}
 		}
 	}
 	
@@ -1334,7 +1497,16 @@ NCI_missions_3 = {
 		
 		trigger = {
 			owns_core_province = 151
-			151 = { development = 40 }
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				151 = { development = 25 }
+			}
+			else = {
+				151 = { development = 40 }
+			}
 		}
 		
 		effect = {
@@ -1396,6 +1568,10 @@ NCI_missions_3 = {
 		icon = a_real_roman_empire
 		required_missions = { nicene_latins nicene_secure }
 		position = 5
+
+		ai_weight = {
+			factor = 5000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1409,22 +1585,31 @@ NCI_missions_3 = {
 		
 		trigger = {
 			NOT = { exists = BYZ }
-			has_government_power = { 
-				mechanic_type = nicene_militarization_mechanic
-				power_type = nicene_militarized_society
-				value = 100
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
 			}
-		    northern_greece_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    morea_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    ionian_islands_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				has_government_power = { 
+					mechanic_type = nicene_militarization_mechanic
+					power_type = nicene_militarized_society
+					value = 100
+				}
+				northern_greece_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				morea_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				ionian_islands_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1446,6 +1631,36 @@ NCI_missions_3 = {
 					NOT = {owned_by = ROOT}
 				}
 				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = ab_stronger_ai_nci
+						ai = yes
+					}
+					inherit = EPI
+					country_event = {
+						id = ab_nicaea.8
+					}
+					set_country_flag = nci_religion_shiite
+					override_country_name = HELLENICCALIPHATE
+					change_religion = shiite
+					add_country_modifier = {
+						name = "gh_conversion"
+						duration = 3650
+					}
+					swap_non_generic_missions = yes
+				}
+				else = {
+					country_event = {
+						id = ab_nicaea.8
+						days = 365
+					}
+					country_event = {
+						id = ab_nicaea.7
+						days = 366
+					}
+				}
 			}
 		}
 	}
@@ -1712,6 +1927,10 @@ HLE_missions_3 = {
 		icon = mission_balkan_conquest
 		required_missions = { nicene_serbia }
 		position = 8
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 		    balkan_region = {
@@ -1951,9 +2170,18 @@ NCI_missions_4 = {
 		position = 1
 		
 		trigger = {
-			OR = {
-				army_size_percentage = 1
-				army_tradition = 40
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				OR = {
+					army_size_percentage = 1
+					army_tradition = 40
+				}
 			}
 		}
 		
@@ -1995,6 +2223,56 @@ NCI_missions_4 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				add_ruler_personality = legendary_conqueror_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				BYZ = {
+					every_owned_province = {
+						add_core = ROOT
+					}
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = BYZ
+					war_goal_province = 151
+				}
+				BYZ = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_manpower = -20
+						every_owned_province = {
+							limit = {
+								is_neighbor_of = ROOT
+							}
+							change_controller = ROOT
+						}
+					}
+				}
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				anatolia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -2009,13 +2287,22 @@ NCI_missions_4 = {
 		}
 
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = NICENE_REFUGEE
-				has_country_flag = accepted_byzantine_refugees
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				is_year = 1445
 			}
-			development_in_provinces = {
-				value = 100
-				culture = greek
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = NICENE_REFUGEE
+					has_country_flag = accepted_byzantine_refugees
+				}
+				development_in_provinces = {
+					value = 100
+					culture = greek
+				}
 			}
 		}
 		
@@ -2073,6 +2360,10 @@ NCI_missions_4 = {
 		icon = retake_thessaly
 		required_missions = { nicene_byzantium }
 		position = 4
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -2136,6 +2427,19 @@ NCI_missions_4 = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				balkan_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -2675,15 +2979,32 @@ HLE_missions_4 = {
 		required_missions = { nicene_levantine }
 		position = 9
 
+		ai_weight = {
+			factor = 2000
+		}
+
 		provinces_to_highlight = {
 			region = egypt_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			owns = 358
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 
@@ -2798,6 +3119,10 @@ HLE_missions_4 = {
 		icon = mission_iran
 		required_missions = { nicene_persepolis }
 		position = 12
+
+		ai_weight = {
+			factor = 5000
+		}
 		
 		provinces_to_highlight = {
 			region = persia_region
@@ -2806,9 +3131,23 @@ HLE_missions_4 = {
 		}
 		
 		trigger = {
-		    persia_region = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				owns = 410
+				owns = 2218
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 30
+					region = persia_region
+				}
+			}
+			else = {
+				persia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -2865,6 +3204,10 @@ HLE_missions_4 = {
 		icon = mission_silk_road
 		required_missions = { nicene_shah }
 		position = 13
+
+		ai_weight = {
+			factor = 5000
+		}
 		
 		provinces_to_highlight = {
 			region = khorasan_region
@@ -2873,9 +3216,22 @@ HLE_missions_4 = {
 		}
 		
 		trigger = {
-		    khorasan_region = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				owns = 445
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 20
+					region = khorasan_region
+				}
+			}
+			else = {
+				khorasan_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -2964,6 +3320,10 @@ HLE_missions_4 = {
 		icon = mission_rb_take_north_india
 		required_missions = { nicene_bactria }
 		position = 14
+
+		ai_weight = {
+			factor = 5000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -3350,6 +3710,10 @@ NCI_missions_5 = {
 		required_missions = { nicene_menace }
 		position = 4
 
+		ai_weight = {
+			factor = 1000
+		}
+
 		provinces_to_highlight = {
 			OR = {
 				area = karaman_area
@@ -3359,13 +3723,27 @@ NCI_missions_5 = {
 		}
 
 		trigger = {
-			karaman_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				karaman_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				rum_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			rum_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				karaman_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				rum_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -3398,6 +3776,19 @@ NCI_missions_5 = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				mashriq_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 }
@@ -3418,6 +3809,10 @@ HLE_missions_5 = {
 		icon = mission_pontic_reconquest
 		required_missions = { nicene_hellenic nicene_manzikert }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 
 		provinces_to_highlight = {
 			region = anatolia_region
@@ -3489,25 +3884,39 @@ HLE_missions_5 = {
 		}
 
 		trigger = {
-			aleppo_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				owns = 5132
+				owns = 2313
+				owns = 378
+				owns = 1855
+				owns = 1854
+				owns = 364
 			}
-			palestine_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			syria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			trans_jordan_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			syrian_desert_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				trans_jordan_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				syrian_desert_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -3539,6 +3948,10 @@ HLE_missions_5 = {
 		icon = mission_cradle_of_civilization
 		required_missions = { nicene_levantine }
 		position = 10
+
+		ai_weight = {
+			factor = 2000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -3551,17 +3964,34 @@ HLE_missions_5 = {
 		}
 		
 		trigger = {
-		    al_jazira_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				al_jazira_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				iraq_arabi_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				basra_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-		    iraq_arabi_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    basra_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				al_jazira_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				iraq_arabi_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				basra_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -3630,6 +4060,19 @@ HLE_missions_5 = {
 			else = {
 				custom_tooltip = NCI_SPAWN_CENTER_HELLENIC_NO
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				persia_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 	
@@ -3649,17 +4092,34 @@ HLE_missions_5 = {
 		}
 		
 		trigger = {
-		    farsistan_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_nci
+					ai = yes
+				}
+				farsistan_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				persian_gulf_coast = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				khuzestan_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-		    persian_gulf_coast = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    khuzestan_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				farsistan_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				persian_gulf_coast = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				khuzestan_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		

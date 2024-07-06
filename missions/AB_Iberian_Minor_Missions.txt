@@ -24,8 +24,17 @@ ibemin_first = {
 		position = 2
 		
 		trigger = {
-			army_size_percentage = 0.8
-			num_of_generals = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				army_size_percentage = 0.8
+				num_of_generals = 1
+			}
 		}
 		
 		effect = {
@@ -42,8 +51,17 @@ ibemin_first = {
 		position = 4
 		
 		trigger = {
-			army_size_percentage = 1
-			army_tradition = 45
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				army_size_percentage = 1
+				army_tradition = 45
+			}
 		}
 		
 		effect = {
@@ -59,28 +77,44 @@ ibemin_first = {
 	    icon = mission_iberia
 		required_missions = { ibe_reconquistador }
 		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
-			owns_core_province = 213	# Barcelona
-			owns_core_province = 214	# Aragón
-			owns_core_province = 215	# Castilla La Vieja
-			owns_core_province = 216	# Salamanca
-			owns_core_province = 219	# Toledo
-			owns_core_province = 220	# Valencia
-			owns_core_province = 231
-			owns_core_province = 227
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 25
+					region = iberia_region
+				}
+			}
+			else = {
+				is_free_or_tributary_trigger = yes
+				is_at_war = no
+				owns_core_province = 213
+				owns_core_province = 214
+				owns_core_province = 215
+				owns_core_province = 216
+				owns_core_province = 219
+				owns_core_province = 220
+				owns_core_province = 231
+				owns_core_province = 227
+			}
 		}
 		
 		provinces_to_highlight = {
 			OR = {
-				province_id = 213	# Barcelona
-				province_id = 214	# Aragón
-				province_id = 215	# Castilla La Vieja
-				province_id = 216	# Salamanca
-				province_id = 219	# Toledo
-				province_id = 220	# Valencia
+				province_id = 213
+				province_id = 214
+				province_id = 215
+				province_id = 216
+				province_id = 219
+				province_id = 220
 				province_id = 231
 				province_id = 227
 			}
@@ -135,19 +169,28 @@ ibemin_second = {
 		}
 		
 		trigger = {
-			208 = { owned_by = ROOT }
-			4553 = { owned_by = ROOT }
-		    asturias_area = {
-			    type = all
-				owned_by = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				is_year = 1445
 			}
-		    basque_country = {
-			    type = all
-				owned_by = ROOT
-			}
-		    galicia_area = {
-			    type = all
-				owned_by = ROOT
+			else = {
+				208 = { owned_by = ROOT }
+				4553 = { owned_by = ROOT }
+				asturias_area = {
+					type = all
+					owned_by = ROOT
+				}
+				basque_country = {
+					type = all
+					owned_by = ROOT
+				}
+				galicia_area = {
+					type = all
+					owned_by = ROOT
+				}
 			}
 		}
 		
@@ -197,12 +240,50 @@ ibemin_second = {
 				if = {
 					limit = {
 						NOT = { is_year = 1450 }
+						NOT = { has_country_flag = ab_stronger_ai_vsg }
 					}
 					add_casus_belli = {
 						type = cb_grand_crusade_reconquista
 						months = 120
 						target = ADU
 					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				add_casus_belli = {
+					type = cb_grand_crusade_reconquista
+					months = 300
+					target = ADU
+				}
+				every_province = {
+					limit = {
+						OR = {
+							owned_by = GAL
+							owned_by = NAV
+						}
+					}
+					add_territorial_core = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = NAV
+					war_goal_province = 210
 				}
 			}
 		}
