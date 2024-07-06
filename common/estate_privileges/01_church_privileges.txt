@@ -27,6 +27,30 @@ estate_church_land_rights = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = {
+			OR = {
+				has_country_modifier = rmg_powerful_estate
+				AND = {
+					has_country_flag = rhl_unifier_of_germany
+					has_country_modifier = sax_unifier_of_germany
+				}
+			}
+		}
+		modifier = {
+			country_admin_power = 1
+			max_absolutism = 5
+		}
+	}
+	conditional_modifier = {
+		trigger = { has_country_flag = bav_clergy_land_right_buff }
+		modifier = {
+			governing_capacity = 150
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	ai_will_do = {
 		factor = 5
 		modifier = {
@@ -461,6 +485,9 @@ estate_church_clerical_ministers = {
 				NOT = { religion = buddhism }
 				NOT = { religion = vajrayana }
 				NOT = { religion = mahayana }
+				# AB [[[
+				NOT = { religion = maitreya }
+				# ]]]
 			}
 			if = {
 				limit = {
@@ -511,6 +538,9 @@ estate_church_clerical_ministers = {
 				religion = buddhism
 				religion = vajrayana
 				religion = mahayana
+				# AB [[[
+				religion = maitreya
+				# ]]]
 			}
 		}
 		modifier = {
@@ -1489,10 +1519,18 @@ estate_church_for_the_faith = {
 	}
 	conditional_modifier = {
 		trigger = {
-			has_government_attribute = free_expansionist_zealotry
+			OR = {
+				has_government_attribute = free_expansionist_zealotry
+				# AB [[[
+				has_country_flag = bra_expansionist_zealotry_buff
+				# ]]]
+			}
 		}
 		modifier = {
 			max_absolutism = 5
+			# AB [[[
+			warscore_cost_vs_other_religion = -0.1
+			# ]]]
 		}
 	}
 	penalties = {
@@ -1630,6 +1668,9 @@ estate_church_karma_temples = {
 			religion = buddhism
 			religion = mahayana
 			religion = vajrayana
+			# AB [[[
+			religion = maitreya
+			# ]]]
 		}
 	}
 	can_select = {
@@ -1910,6 +1951,12 @@ estate_church_religious_diplomats = {
 				NOT = { has_global_flag = free_religious_diplomats_for_all_zoro_countries }
 			}
 		}
+		# AB [[[
+		modifier = {
+			factor = 100
+			tag = SAX
+		}
+		# ]]]
 	}
 }
 
@@ -1920,6 +1967,15 @@ estate_church_one_faith_one_culture = {
 	influence = 0.1
 	loyalty = 0.05
 	land_share = 5
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = rmg_religious_culture_flag }
+		modifier = {
+			global_missionary_strength = 0.03
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	is_valid = {
 	}
 	can_select = {
@@ -2077,6 +2133,18 @@ estate_church_one_faith_one_culture = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	
+	# AB [[[
+	loyalty_scaled_conditional_modifier = {
+		trigger = {
+			has_country_flag = sty_buffed_religious_culture_flag
+		}
+		modifier = {
+			manpower_in_own_culture_provinces = 0.2
+		}
+	}
+	# ]]]
+
 	# TLW [[[
 	conditional_modifier = {
 		trigger = {
@@ -2088,6 +2156,7 @@ estate_church_one_faith_one_culture = {
 		}
 	}
 	# ]]]
+
 	cooldown_years = 15
 	ai_will_do = {
 		factor = 10
@@ -2119,7 +2188,6 @@ estate_church_one_faith_one_culture = {
 		}
 	}
 }
-
 
 ###FETISHIST PRIVILEGES###
 #Privilege to enable cults for heirs
@@ -2442,10 +2510,10 @@ estate_church_lands_of_riga = {
 	can_revoke = {
 		owns_core_province = 37
 		owns_core_province = 4241
-		if = {
-			limit = { has_mission = liv_handle_riga }
-			mission_completed = liv_handle_riga
-		}
+		# if = {
+		# 	limit = { has_mission = liv_handle_riga }
+		# 	mission_completed = liv_handle_riga
+		# }
 		NOT = { has_estate_privilege = estate_church_bishopric_of_dorpat }
 		NOT = { has_estate_privilege = estate_church_bishopric_of_osel_wiek }
 		NOT = { has_estate_privilege = estate_church_bishopric_of_courland }

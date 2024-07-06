@@ -6,15 +6,19 @@ country_decisions = {
 		potential = {
 			normal_or_historical_nations = yes
 			NOT = { has_country_flag = formed_westrome_flag }
+			NOT = { exists = WRE }
 			OR = {
 				ai = no
 				tag = VSG
 				tag = BRN
-				tag = GUY
+				tag = AQT
 				tag = CAP
+				was_tag = CAP
 				tag = SWA
+				was_tag = SWA
+				tag = RVN
+				was_tag = RVN
 			}
-			NOT = { exists = WRE }
 			NOT = { tag = PAP }
 			NOT = { tag = HLR }
 			NOT = { tag = LAT }
@@ -23,6 +27,7 @@ country_decisions = {
 				culture_group = iberian
 				culture_group = latin
 				culture_group = germanic
+				culture_group = united_germanic
 				culture_group = scandinavian
 				primary_culture = welsh
 				primary_culture = briton
@@ -37,86 +42,114 @@ country_decisions = {
 
 		provinces_to_highlight = {
 			if = {
-				limit = {
-					ROOT = {
-						OR = {
-							culture_group = gaelic
-							culture_group = scandinavian
+                limit = {
+                    ROOT = {
+                        mission_completed = rmg_legacy_of_west_rome
+                    }
+                }
+                OR = {
+                    region = italy_region
+                    province_id = 151
+                }
+            }
+			else = {
+				if = {
+					limit = {
+						ROOT = {
+							OR = {
+								culture_group = gaelic
+								culture_group = scandinavian
+							}
 						}
 					}
-				}
-				OR = {
-					region = british_isles_region
-					region = france_region
-					region = italy_region
-				}
-			}
-			else_if = {
-				limit = {
-					ROOT = {
-						culture_group = germanic
+					OR = {
+						region = british_isles_region
+						region = france_region
+						region = italy_region
 					}
 				}
-				OR = {
-					region = south_german_region
-					region = france_region
-					region = italy_region
+				else_if = {
+					limit = {
+						ROOT = {
+							culture_group = germanic
+						}
+					}
+					OR = {
+						region = south_german_region
+						region = france_region
+						region = italy_region
+					}
 				}
-			}
-			else = {
-				OR = {
-					region = iberia_region
-					region = france_region
-					region = italy_region
+				else = {
+					OR = {
+						region = iberia_region
+						region = france_region
+						region = italy_region
+					}
 				}
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
-			religion = catholic
 			if = {
-				limit = {
-					culture_group = iberian
+                limit = {
+                    mission_completed = rmg_legacy_of_west_rome
+                }
+                ab_is_italy_tag_trigger = yes
+                italy_region = {
+                    type = all
+                    owned_by = ROOT
+                }
+                151 = {
+                    country_or_non_sovereign_subject_holds = ROOT
+                }
+            }
+			else = {
+				is_free_or_tributary_trigger = yes
+				is_at_war = no
+				religion = catholic
+				if = {
+					limit = {
+						culture_group = iberian
+					}
+					tag = VSG
 				}
-				tag = VSG
-			}
-			if = {
-				limit = {
-					OR = {
-						culture_group = gaelic
-						culture_group = scandinavian
+				if = {
+					limit = {
+						OR = {
+							culture_group = gaelic
+							culture_group = scandinavian
+						}
+					}
+					british_isles_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
-				british_isles_region = {
+				else_if = {
+					limit = {
+						culture_group = germanic
+					}
+					south_german_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				else = {
+					iberia_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				france_region = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
-			}
-			else_if = {
-				limit = {
-					culture_group = germanic
-				}
-				south_german_region = {
+				italy_region = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
-			}
-			else = {
-				iberia_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-			}
-			france_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			italy_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 

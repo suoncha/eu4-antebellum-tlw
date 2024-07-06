@@ -306,7 +306,17 @@ stonehenge = {
 				else = {
 					OR = {
 						culture = english
+						if = {
+							limit = {
+								owner = { culture_group = united_germanic }
+							}
+							culture = english_new
+						}
+						else = { culture = english }
+						# AB [[[
+						# culture = anglois
 						culture = Anglois
+						# ]]]
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -349,7 +359,17 @@ stonehenge = {
 				else = {
 					OR = {
 						culture = english
+						if = {
+							limit = {
+								owner = { culture_group = united_germanic }
+							}
+							culture = english_new
+						}
+						else = { culture = english }
+						# AB [[[
+						# culture = anglois
 						culture = Anglois
+						# ]]]
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -382,7 +402,17 @@ stonehenge = {
 				else = {
 					OR = {
 						culture = english
+						if = {
+							limit = {
+								owner = { culture_group = united_germanic }
+							}
+							culture = english_new
+						}
+						else = { culture = english }
+						# AB [[[
+						# culture = anglois
 						culture = Anglois
+						# ]]]
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -1990,6 +2020,22 @@ cologne_cathedral = {
 			}
 			AB_monument_upgrade_effect = yes
 		}
+
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = RHL_KOL_CATHEDRAL_CONDITION
+					has_country_flag = kol_unlock_cathedral_flag
+				}
+			}
+
+			modifier = {
+				years_of_nationalism = -5
+				global_unrest = -2
+			}
+		}
+		# ]]]
 	}
 
 	tier_3 = {
@@ -2029,6 +2075,22 @@ cologne_cathedral = {
 			}
 			AB_monument_upgrade_effect = yes
 		}
+
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = RHL_KOL_CATHEDRAL_CONDITION
+					has_country_flag = kol_unlock_cathedral_flag
+				}
+			}
+
+			modifier = {
+				years_of_nationalism = -5
+				global_unrest = -2
+			}
+		}
+		# ]]]
 	}
 }
 
@@ -12422,11 +12484,11 @@ chan_chan_citadel = {
 		area_modifier = {
 			local_defensiveness = 0.25
 			local_development_cost = -0.1
-			monthly_divine_authority = 0.15
 		}
 		country_modifiers = {
 			diplomatic_upkeep = 2
 			yearly_authority = 0.3
+			monthly_divine_authority = 0.15
 		}
 		on_upgraded = {
 		}
@@ -12694,10 +12756,22 @@ dutch_polders = {
 		}
 		# ]]]
 		else = {
-			OR = {
-				culture = dutch
-				culture = flemish
-				culture = frisian
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				OR = {
+					culture = dutch_new
+					culture = flemish_new
+					culture = frisian_new
+				}
+			}
+			else = {
+				OR = {
+					culture = dutch
+					culture = flemish
+					culture = frisian
+				}
 			}
 		}
 		province_is_or_accepts_culture = yes
@@ -12722,10 +12796,22 @@ dutch_polders = {
 		}
 		# ]]]
 		else = {
-			OR = {
-				culture = dutch
-				culture = flemish
-				culture = frisian
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				OR = {
+					culture = dutch_new
+					culture = flemish_new
+					culture = frisian_new
+				}
+			}
+			else = {
+				OR = {
+					culture = dutch
+					culture = flemish
+					culture = frisian
+				}
 			}
 		}
 		province_is_or_accepts_culture = yes
@@ -12744,10 +12830,22 @@ dutch_polders = {
 		}
 		# ]]]
 		else = {
-			OR = {
-				culture = dutch
-				culture = flemish
-				culture = frisian
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				OR = {
+					culture = dutch_new
+					culture = flemish_new
+					culture = frisian_new
+				}
+			}
+			else = {
+				OR = {
+					culture = dutch
+					culture = flemish
+					culture = frisian
+				}
 			}
 		}
 		province_is_or_accepts_culture = yes
@@ -16407,6 +16505,21 @@ santa_maria_del_fiore = {
 		on_upgraded = {
 			AB_monument_upgrade_effect = yes
 		}
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = TUS_IMPROVE_SANTA_MARIA
+					has_country_flag = ab_completed_tus_great_project
+				}
+			}
+
+			modifier = {
+				republican_tradition = 0.1
+				legitimacy = 1
+			}
+		}
+		# ]]]
 	}
 
 	tier_3 = {
@@ -16428,7 +16541,23 @@ santa_maria_del_fiore = {
 		on_upgraded = {
 			AB_monument_upgrade_effect = yes
 		}
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = TUS_IMPROVE_SANTA_MARIA
+					has_country_flag = ab_completed_tus_great_project
+				}
+			}
+
+			modifier = {
+				republican_tradition = 0.1
+				legitimacy = 1
+			}
+		}
+		# ]]]
 	}
+
 }
 
 spiral_minaret_samarra = {
@@ -17522,7 +17651,10 @@ ulm_minster_great_project = {
 		}
 		# ]]]
 		else = {
-			culture_group = germanic
+			OR = {
+				culture_group = germanic
+				culture_group = united_germanic
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -17546,7 +17678,10 @@ ulm_minster_great_project = {
 		}
 		# ]]]
 		else = {
-			culture_group = germanic
+			OR = {
+				culture_group = germanic
+				culture_group = united_germanic
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -17564,7 +17699,10 @@ ulm_minster_great_project = {
 		}
 		# ]]]
 		else = {
-			culture_group = germanic
+			OR = {
+				culture_group = germanic
+				culture_group = united_germanic
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -19144,6 +19282,7 @@ edinburgh_castle = {
 						culture = goidelic
 						culture = Anglois
 						culture_group = west_germanic
+						culture_group = united_germanic
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -19181,6 +19320,7 @@ edinburgh_castle = {
 						culture = goidelic
 						culture = Anglois
 						culture_group = west_germanic
+						culture_group = united_germanic
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -19212,6 +19352,7 @@ edinburgh_castle = {
 						culture = goidelic
 						culture = Anglois
 						culture_group = west_germanic
+						culture_group = united_germanic
 					}
 				}
 				province_is_or_accepts_culture = yes
@@ -20972,7 +21113,15 @@ amsterdam_bourse = {
 		}
 		# ]]]
 		else = {
-			culture = dutch
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				culture = dutch_new
+			}
+			else = {
+				culture = dutch
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -20990,7 +21139,15 @@ amsterdam_bourse = {
 		}
 		# ]]]
 		else = {
-			culture = dutch
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				culture = dutch_new
+			}
+			else = {
+				culture = dutch
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -21008,7 +21165,15 @@ amsterdam_bourse = {
 		}
 		# ]]]
 		else = {
-			culture = dutch
+			if = {
+				limit = {
+					owner = { culture_group = united_germanic }
+				}
+				culture = dutch_new
+			}
+			else = {
+				culture = dutch
+			}
 		}
 		province_is_or_accepts_culture = yes
 	}
@@ -21296,6 +21461,21 @@ schonbrunn_palace = {
 		on_upgraded = {
 			AB_monument_upgrade_effect = yes
 		}
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = TIR_SCHONBRUNN_CONDITION
+					has_country_flag = tir_unlock_schonbrunn_flag
+				}
+			}
+
+			modifier = {
+				diplomatic_annexation_cost = -0.2
+				liberty_desire_from_subject_development = -0.15
+			}
+		}
+		# ]]]
 	}
 	tier_3 = {
 		upgrade_time = { months = 480 }
@@ -21311,6 +21491,21 @@ schonbrunn_palace = {
 		on_upgraded = {
 			AB_monument_upgrade_effect = yes
 		}
+		# AB [[[
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = TIR_SCHONBRUNN_CONDITION
+					has_country_flag = tir_unlock_schonbrunn_flag
+				}
+			}
+
+			modifier = {
+				diplomatic_annexation_cost = -0.2
+				liberty_desire_from_subject_development = -0.15
+			}
+		}
+		# ]]]
 	}
 }
 tzintzuntzan = {
