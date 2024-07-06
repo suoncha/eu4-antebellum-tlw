@@ -20,12 +20,103 @@ visigoths_first = {
 		}
 
 		trigger = {
-			owns_core_province = 225
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				is_year = 1450
+			}
+			else = {
+				owns_core_province = 225
+			}
 		}
 		
 		effect = {
-			country_event = {
-				id = ab_byzantium.98
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				iberia_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_territorial_core = ROOT
+				}
+				ADU = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								area = extremadura_area
+								area = alentejo_area
+								area = lower_andalucia_area
+							}
+							NOT = { province_id = 225 }
+							NOT = { province_id = 1748 }
+						}
+						add_core = BTW
+					}
+					release = BTW
+					BTW = {
+						change_government = monarchy
+						add_government_reform = iqta
+						capital_scope = {
+							build_to_forcelimit = {
+								infantry = 0.6
+								cavalry = 0.3
+							}
+						}
+						random_owned_province = {
+							limit = {
+								has_port = yes
+							}
+							build_to_forcelimit = {
+								galley = 0.3
+								light_ship = 0.3
+								transport = 0.2
+							}
+						}
+					}
+					every_owned_province = {
+						limit = {
+							OR = {
+								area = valencia_area
+								area = baleares_area
+								area = toledo_area
+								province_id = 1748
+							}
+						}
+						add_core = BLS
+					}
+					release = BLS
+					BLS = {
+						change_government = monarchy
+						add_government_reform = iqta
+						capital_scope = {
+							build_to_forcelimit = {
+								infantry = 0.6
+								cavalry = 0.3
+							}
+						}
+						random_owned_province = {
+							limit = {
+								has_port = yes
+							}
+							build_to_forcelimit = {
+								galley = 0.3
+								light_ship = 0.3
+								transport = 0.2
+							}
+						}
+					}
+				}
+			}
+			else = {
+				country_event = {
+					id = ab_byzantium.98
+				}
 			}
 		}
 	}
@@ -34,15 +125,33 @@ visigoths_first = {
 	    icon = mission_reclaim_andalucia
 		required_missions = { vsg_cordoba_control }
 		position = 3
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
-		    upper_andalucia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				upper_andalucia_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				lower_andalucia_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-		    lower_andalucia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				upper_andalucia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				lower_andalucia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -76,6 +185,19 @@ visigoths_first = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				maghreb_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -497,6 +619,10 @@ visigoths_second = {
 	    icon = mission_retake_ceuta
 		required_missions = { }
 		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 		    northern_morocco_area = {
@@ -557,6 +683,19 @@ visigoths_second = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				maghreb_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -661,11 +800,27 @@ visigoths_second = {
 		required_missions = { vsg_vandals }
 		position = 8
 		
+		ai_weight = {
+			factor = 1000
+		}
+		
 		trigger = {
-			358 = { religion = catholic }
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				358 = { religion = catholic }
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 		
@@ -763,9 +918,18 @@ visigoths_third = {
 		position = 1
 		
 		trigger = {
-		    baleares_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				is_year = 1450
+			}
+			else = {
+				baleares_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -802,9 +966,20 @@ visigoths_third = {
 		position = 2
 		
 		trigger = {
-		    corsica_sardinia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				corsica_sardinia_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				corsica_sardinia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -861,6 +1036,19 @@ visigoths_third = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -934,6 +1122,10 @@ visigoths_third = {
 		icon = mission_colosseum
 		required_missions = { vsg_dismantle_sultanate vsg_po_valley }
 		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			province_id = 118
@@ -1066,6 +1258,10 @@ visigoths_third = {
 		icon = jerusalem
 		required_missions = { vsg_italy }
 		position = 7
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 		    palestine_area = {
@@ -1771,6 +1967,10 @@ visigoths_fifth = {
 	    icon = alpine_defenses
 		required_missions = { }
 		position = 1
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1785,17 +1985,34 @@ visigoths_fifth = {
 		}
 		
 		trigger = {
-			basque_country = {
-				province_has_current_tech_fort_trigger = yes
-				base_manpower = 4
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				basque_country = {
+					owned_by = ROOT
+				}
+				aragon_area = {
+					owned_by = ROOT
+				}
+				catalonia_area = {
+					owned_by = ROOT
+				}
 			}
-			aragon_area = {
-				province_has_current_tech_fort_trigger = yes
-				base_manpower = 4
-			}
-			catalonia_area = {
-				province_has_current_tech_fort_trigger = yes
-				base_manpower = 4
+			else = {
+				basque_country = {
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 4
+				}
+				aragon_area = {
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 4
+				}
+				catalonia_area = {
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 4
+				}
 			}
 		}
 		
@@ -1848,17 +2065,34 @@ visigoths_fifth = {
 		position = 2
 		
 		trigger = {
-		    guyenne_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				guyenne_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				pyrenees_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				languedoc_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-		    pyrenees_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    languedoc_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				guyenne_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				pyrenees_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				languedoc_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1905,6 +2139,19 @@ visigoths_fifth = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				france_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -1912,6 +2159,10 @@ visigoths_fifth = {
 	    icon = develop_provence
 		required_missions = { vsg_invade_francia }
 		position = 3
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 		    provence_area = {
@@ -2085,6 +2336,10 @@ visigoths_fifth = {
 		required_missions = { vsg_soissons }
 		position = 6
 
+		ai_weight = {
+			factor = 1000
+		}
+
 		trigger = {
 			overlord_of = VSS
 		    brittany_area = {
@@ -2185,6 +2440,19 @@ visigoths_fifth = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_vsg
+					ai = yes
+				}
+				british_isles_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -2273,6 +2541,10 @@ visigoths_fifth = {
 		icon = mission_frankishengland
 		required_missions = { vsg_invade_britain }
 		position = 9
+
+		ai_weight = {
+			factor = 1000
+		}
 
 		provinces_to_highlight = {
 			OR = {

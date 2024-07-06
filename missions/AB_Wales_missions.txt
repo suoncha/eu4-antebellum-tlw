@@ -76,9 +76,18 @@ wls_branch_1 = {
 
 		trigger = {
 			242 = { owned_by = ROOT }
-			242 = { development = 10 }
-			242 = { has_trade_building_trigger = yes }
-			242 = { has_tax_building_trigger = yes }
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				242 = { development = 5 }
+			}
+			else = {
+				242 = { development = 10 }
+				242 = { has_trade_building_trigger = yes }
+				242 = { has_tax_building_trigger = yes }
+			}
 		}
 
 		effect = {
@@ -98,6 +107,19 @@ wls_branch_1 = {
 				type = planner
 				skill = 2
 				cost_multiplier = 0.5
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				242 = {
+					add_base_tax = 2
+					add_base_production = 2
+					add_base_manpower = 2
+					add_or_upgrade_tax_building = yes
+					add_or_upgrade_trade_building = yes
+				}
 			}
 		}
 	}
@@ -211,10 +233,21 @@ wls_branch_2 = {
 		}
 
 		trigger = {
-			242 = {
-				has_great_project = {
-					type = iron_ring
-					tier = 3
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				242 = {
+					base_manpower = 5
+				}
+			}
+			else = {
+				242 = {
+					has_great_project = {
+						type = iron_ring
+						tier = 3
+					}
 				}
 			}
 		}
@@ -231,6 +264,18 @@ wls_branch_2 = {
 			}
 			set_country_flag = hab_fort_advisor_buff_flag
 			custom_tooltip = HAB_FORT_ADVISOR_NOW_GRANTS_FORT_MAINTENANCE_PER_LEVEL
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				242 = {
+					add_great_project_tier = {
+						type = iron_ring
+						tier = 3
+					}
+				}
+			}
 		}
 	}
 
@@ -285,13 +330,27 @@ wls_branch_2 = {
 		}
 
 		trigger = {
-			scottish_marches_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				scottish_marches_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				yorkshire_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			yorkshire_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				scottish_marches_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				yorkshire_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 
@@ -357,9 +416,18 @@ wls_branch_3 = {
 		position = 1
 
 		trigger = {
-			OR = {
-				army_size_percentage = 1
-				manpower_percentage = 0.8
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				OR = {
+					army_size_percentage = 1
+					manpower_percentage = 0.8
+				}
 			}
 		}
 
@@ -377,6 +445,52 @@ wls_branch_3 = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				remove_ruler_personality = intricate_web_weaver_personality
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				add_stability = 2
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				ENG = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_treasury = -200
+						add_manpower = -20
+						every_owned_province = {
+							add_territorial_core = ROOT
+						}
+						ROOT = {
+							declare_war_with_cb = {
+								casus_belli = cb_core
+								who = ENG
+								war_goal_province = 240
+							}
+						}
+						every_owned_province = {
+							limit = {
+								is_neighbor_of = ROOT
+							}
+							change_controller = ROOT
+						}
+					}
+				}
 			}
 		}
 	}
@@ -436,13 +550,27 @@ wls_branch_3 = {
 		}
 
 		trigger = {
-			east_anglia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				east_anglia_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				east_midlands_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			east_midlands_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				east_anglia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				east_midlands_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 
@@ -488,15 +616,30 @@ wls_branch_3 = {
 		required_missions = { take_londinium_wls take_the_marshlands_wls }
 		position = 6
 
-		provinces_to_highlight = { 
+		ai_weight = {
+			factor = 1000
+		}
+
+		provinces_to_highlight = {
 			area = wessex_area
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		trigger = {
-			wessex_area = { 
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				wessex_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				wessex_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 
@@ -596,12 +739,26 @@ wls_branch_4 = {
 		}
 
 		trigger = {
-			calc_true_if = {
-				all_known_country = {
-					dynasty = ROOT
-					marriage_with = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
 				}
-				amount = 3
+				calc_true_if = {
+					all_known_country = {
+						marriage_with = ROOT
+					}
+					amount = 2
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_known_country = {
+						dynasty = ROOT
+						marriage_with = ROOT
+					}
+					amount = 3
+				}
 			}
 		}
 
@@ -669,9 +826,18 @@ wls_branch_4 = {
 		}
 
 		trigger = {
-			home_counties_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				owns = 236
+			}
+			else = {
+				home_counties_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 
@@ -1106,10 +1272,21 @@ BRN_branch_1 = {
 		}
 
 		trigger = {
-			373 = {
-				has_great_project = {
-					type = hill_tara
-					tier = 2
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				373 = {
+					development = 10
+				}
+			}
+			else = {
+				373 = {
+					has_great_project = {
+						type = hill_tara
+						tier = 2
+					}
 				}
 			}
         }
@@ -1124,6 +1301,18 @@ BRN_branch_1 = {
 				add_great_project_tier = {
 					type = hill_tara
 					tier = 1
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				373 = {
+					add_great_project_tier = {
+						type = hill_tara
+						tier = 2
+					}
 				}
 			}
 		}
@@ -1670,10 +1859,14 @@ BRN_branch_3 = {
 		icon = mission_downfall
 		position = 10
 		required_missions = { land_in_continent_wls }
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			region = france_region
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -1737,6 +1930,33 @@ BRN_branch_3 = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				france_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_territorial_core = ROOT
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				iberia_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -2347,6 +2567,10 @@ BRN_branch_4 = {
 		icon = per_unify_the_shia_realms
 		required_missions = { wls_rome }
 		position = 14
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 			naples_area = {
@@ -2413,6 +2637,19 @@ BRN_branch_4 = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				egypt_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -2457,6 +2694,19 @@ BRN_branch_4 = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				egypt_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -2464,6 +2714,10 @@ BRN_branch_4 = {
 		icon = jerusalem
 		required_missions = { wls_second_rome wls_egypt }
 		position = 16
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 		    palestine_area = {
@@ -2623,6 +2877,18 @@ BRN_branch_5 = {
 			country_event = {
 				id = wales_flavor.3
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				every_owned_province = {
+					limit = {
+						region = british_isles_region
+					}
+					change_culture = briton
+				}
+			}
 		}
 	}
 	
@@ -2632,7 +2898,16 @@ BRN_branch_5 = {
 		required_missions = { king_of_britons }
 		
 		trigger = {
-			crown_land_share = 70
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				crown_land_share = 40
+			}
+			else = {
+				crown_land_share = 70
+			}
 			stability = 1
 		}
 		
@@ -2660,13 +2935,27 @@ BRN_branch_5 = {
 		position = 11
 		
 		trigger = {
-			basque_country = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				basque_country = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				catalonia_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
-			catalonia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			else = {
+				basque_country = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				catalonia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
 		}
 		
@@ -2720,10 +3009,23 @@ BRN_branch_5 = {
 		position = 13
 		
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				religion = ROOT
-				region = iberia_region
-				value = 30
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					religion = ROOT
+					region = iberia_region
+					value = 15
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					religion = ROOT
+					region = iberia_region
+					value = 30
+				}
 			}
 		}
 		
@@ -2774,6 +3076,19 @@ BRN_branch_5 = {
 						}
 					}
 					set_defender_of_the_faith = { who = ROOT religion = ROOT }
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				egypt_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -2846,12 +3161,28 @@ BRN_branch_5 = {
 		icon = mission_saladins_legacy
 		required_missions = { wls_sitaly wls_barbary }
 		position = 15
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
-			358 = { religion = catholic }
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_brn
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				358 = { religion = catholic }
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 		
@@ -3493,7 +3824,7 @@ BRN_branch_2_rome = {
 		required_missions = { }
 		position = 21
 
-		provinces_to_highlight = { 
+		provinces_to_highlight = {
 			province_id = 358
 		}
 
@@ -3849,7 +4180,7 @@ BRN_branch_4_rome = {
 		required_missions = { }
 		position = 21
 
-		provinces_to_highlight = { 
+		provinces_to_highlight = {
 			province_id = 151
 		}
 

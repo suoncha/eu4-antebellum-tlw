@@ -352,6 +352,13 @@ EMP_crusader_3 = {
 			is_subject = no
 			if = {
 				limit = {
+					has_country_flag = ab_stronger_ai_lat
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
 					exists = PAP
 					religion = catholic
 				}
@@ -402,6 +409,55 @@ EMP_crusader_3 = {
 					NOT = { owned_by = PAP }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_lat
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				BYZ = {
+					every_owned_province = {
+						add_core = ROOT
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_core
+							who = BYZ
+							war_goal_province = 151
+						}
+					}
+					4779 = {
+						change_controller = ROOT
+						for = {
+							amount = 15
+							effect = "
+								infantry = ROOT
+								galley = ROOT
+							"
+						}
+					}
+					if = {
+						limit = {
+							ai = yes
+						}
+						151 = {
+							change_controller = ROOT
+						}
+						4701 = {
+							change_controller = ROOT
+							for = {
+								amount = 5
+								effect = "
+									infantry = ROOT
+								"
+							}
+						}
+					}
+				}
 			}
 		}
 	}

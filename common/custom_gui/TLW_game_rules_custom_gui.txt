@@ -70,16 +70,21 @@ custom_button = {
 		if = {
 			limit = {
 				has_country_flag = ab_game_rules_emperor_east_byzantium
+				tag = BYZ
 			}
 			NOT = { tag = BYZ }
 		}
 		else_if = {
 			limit = {
 				has_country_flag = ab_game_rules_emperor_east_latin
+				OR = {
+					tag = KNI
+					tag = CYP
+					tag = ATI
+				}
 			}
 			NOT = {
 				OR = {
-					tag = BUL
 					tag = KNI
 					tag = CYP
 					tag = ATI
@@ -89,23 +94,32 @@ custom_button = {
 		else_if = {
 			limit = {
 				has_country_flag = ab_game_rules_emperor_east_muslim
+				tag = AKG
 			}
-			NOT = {
-				OR = {
-					tag = AKG
-					tag = AKR
-				}
-			}
+			NOT = { tag = AKG }
 		}
 		else_if = {
 			limit = {
 				has_country_flag = ab_game_rules_emperor_east_zoro
+				tag = SRK
 			}
 			NOT = { tag = SRK }
+		}
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_nicaea
+				tag = NCI
+			}
+			NOT = { tag = NCI }
 		}
 		if = {
 			limit = {
 				has_country_flag = ab_game_rules_visigoths_enabled
+				OR = {
+					tag = ASU
+					tag = GAL
+					tag = NAV
+				}
 			}
 			NOT = {
 				OR = {
@@ -118,60 +132,103 @@ custom_button = {
 		if = {
 			limit = {
 				has_country_flag = ab_game_rules_pendragon_enabled
+				tag = WLS
 			}
 			NOT = { tag = WLS }
 		}
     }
     effect = {
-        clr_country_flag = ab_game_rules_menu_opened
-		set_global_flag = AB_GAME_RULES_SET
-		# Preset CN
-		if = {
-			limit = {
-				has_country_flag = ab_game_rules_preset_cn_disabled
-			}
-			set_global_flag = NO_CNS
-		}
-		# Early AI Colonization
-		if = {
-			limit = {
-				has_country_flag = ab_game_rules_early_colonization_enabled
-			}
+		hidden_effect = {
+			clr_country_flag = ab_game_rules_menu_opened
+			set_global_flag = AB_GAME_RULES_SET
+			# Preset CN
 			if = {
 				limit = {
-					technology_group = north_american
+					has_country_flag = ab_game_rules_preset_cn_disabled
 				}
-				set_global_flag = AB_EARLY_COLONIZATION_PUNIC
+				set_global_flag = NO_CNS
 			}
-			else_if = {
+			# Early AI Colonization
+			if = {
 				limit = {
-					OR = {
-						capital_scope = {
-							region = caribbean_sea_region
+					has_country_flag = ab_game_rules_early_colonization_enabled
+				}
+				if = {
+					limit = {
+						technology_group = north_american
+					}
+					set_global_flag = AB_EARLY_COLONIZATION_PUNIC
+				}
+				else_if = {
+					limit = {
+						OR = {
+							capital_scope = {
+								region = caribbean_sea_region
+							}
+							technology_group = mesoamerican
 						}
-						technology_group = mesoamerican
+					}
+					set_global_flag = AB_EARLY_COLONIZATION_MAYA
+				}
+				else_if = {
+					limit = {
+						OR = {
+							technology_group = andean
+							technology_group = south_american
+						}
+					}
+					set_global_flag = AB_EARLY_COLONIZATION_INCA
+				}
+				if = {
+					limit = {
+						has_country_flag = ab_game_rules_visigoths_enabled
+					}
+					ASU = {
+						country_event = {
+							id = ab_punic.19
+						}
 					}
 				}
-				set_global_flag = AB_EARLY_COLONIZATION_MAYA
-			}
-			else_if = {
-				limit = {
-					OR = {
-						technology_group = andean
-						technology_group = south_american
+				else_if = {
+					limit = {
+						ADU = {
+							ai = yes
+						}
+					}
+					ADU = {
+						country_event = {
+							id = ab_punic.19
+						}
 					}
 				}
-				set_global_flag = AB_EARLY_COLONIZATION_INCA
-			}
-			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = ab_game_rules_pendragon_enabled
+					}
+					WLS = {
+						country_event = {
+							id = ab_punic.19
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ENG = {
+							ai = yes
+						}
+					}
+					ENG = {
+						country_event = {
+							id = ab_punic.19
+						}
+					}
+				}
 				every_country = {
 					limit = {
 						OR = {
 							tag = NOR
-							tag = ENG
 							tag = HOL
 							tag = FRC
-							tag = ADU
 						}
 						ai = yes
 					}
@@ -184,56 +241,93 @@ custom_button = {
 					days = 12775
 				}
 			}
-		}
-		# Emperor of the East
-		if = {
-			limit = {
-				has_country_flag = ab_game_rules_emperor_east_byzantium
+			# Emperor of the East
+			if = {
+				limit = {
+					has_country_flag = ab_game_rules_emperor_east_byzantium
+				}
+				BYZ = {
+					set_country_flag = ab_stronger_ai_byz
+					set_country_flag = had_16th_crisis
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-			BYZ = {
-				set_country_flag = ab_stronger_ai_byz
+			else_if = {
+				limit = {
+					has_country_flag = ab_game_rules_emperor_east_latin
+				}
+				KNI = {
+					set_country_flag = ab_stronger_ai_lat
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-		}
-		else_if = {
-			limit = {
-				has_country_flag = ab_game_rules_emperor_east_latin
+			else_if = {
+				limit = {
+					has_country_flag = ab_game_rules_emperor_east_muslim
+				}
+				AKG = {
+					set_country_flag = ab_stronger_ai_akg
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-			KNI = {
-				set_country_flag = ab_stronger_ai_lat
+			else_if = {
+				limit = {
+					has_country_flag = ab_game_rules_emperor_east_zoro
+				}
+				SRK = {
+					set_country_flag = ab_stronger_ai_srk
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-		}
-		else_if = {
-			limit = {
-				has_country_flag = ab_game_rules_emperor_east_muslim
+			else_if = {
+				limit = {
+					has_country_flag = ab_game_rules_emperor_east_nicaea
+				}
+				NCI = {
+					set_country_flag = ab_stronger_ai_nci
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-			AKG = {
-				set_country_flag = ab_stronger_ai_akg
+			# Rise of the Visigoths
+			if = {
+				limit = {
+					has_country_flag = ab_game_rules_visigoths_enabled
+				}
+				ASU = {
+					set_country_flag = ab_stronger_ai_vsg
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
-		}
-		else_if = {
-			limit = {
-				has_country_flag = ab_game_rules_emperor_east_zoro
-			}
-			SRK = {
-				set_country_flag = ab_stronger_ai_srk
-			}
-		}
-		# Rise of the Visigoths
-		if = {
-			limit = {
-				has_country_flag = ab_game_rules_visigoths_enabled
-			}
-			ASU = {
-				set_country_flag = ab_stronger_ai_vsg
-			}
-		}
-		# Pendragon
-		if = {
-			limit = {
-				has_country_flag = ab_game_rules_pendragon_enabled
-			}
-			WLS = {
-				set_country_flag = ab_stronger_ai_brn
+			# Pendragon
+			if = {
+				limit = {
+					has_country_flag = ab_game_rules_pendragon_enabled
+				}
+				WLS = {
+					set_country_flag = ab_stronger_ai_brn
+					add_country_modifier = {
+						name = pol_stronger_ai_mod
+						duration = 20075
+					}
+				}
 			}
 		}
     }
@@ -483,6 +577,20 @@ custom_icon = {
     tooltip = GAMERULE_EMPEROR_EAST_ZORO
 }
 
+custom_window = {
+	name = ab_game_rules_emperor_east_nicaea_window
+	potential = {
+		has_country_flag = ab_game_rules_emperor_east_nicaea
+	}
+}
+
+custom_icon = {
+    name = ab_game_rules_emperor_east_nicaea_image
+    potential = {
+    }
+    tooltip = GAMERULE_EMPEROR_EAST_NICAEA
+}
+
 custom_button = {
     name = ab_game_rules_emperor_east_back_button
     potential = {
@@ -495,7 +603,7 @@ custom_button = {
 				has_country_flag = ab_game_rules_emperor_east_default
 			}
 			clr_country_flag = ab_game_rules_emperor_east_default
-			set_country_flag = ab_game_rules_emperor_east_zoro
+			set_country_flag = ab_game_rules_emperor_east_nicaea
 		}
 		else_if = {
 			limit = {
@@ -518,9 +626,16 @@ custom_button = {
 			clr_country_flag = ab_game_rules_emperor_east_muslim
 			set_country_flag = ab_game_rules_emperor_east_latin
 		}
-		else = {
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_zoro
+			}
 			clr_country_flag = ab_game_rules_emperor_east_zoro
 			set_country_flag = ab_game_rules_emperor_east_muslim
+		}
+		else = {
+			clr_country_flag = ab_game_rules_emperor_east_nicaea
+			set_country_flag = ab_game_rules_emperor_east_zoro
 		}
     }
     tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
@@ -561,8 +676,15 @@ custom_button = {
 			clr_country_flag = ab_game_rules_emperor_east_muslim
 			set_country_flag = ab_game_rules_emperor_east_zoro
 		}
-		else = {
+		else_if = {
+			limit = {
+				has_country_flag = ab_game_rules_emperor_east_zoro
+			}
 			clr_country_flag = ab_game_rules_emperor_east_zoro
+			set_country_flag = ab_game_rules_emperor_east_nicaea
+		}
+		else = {
+			clr_country_flag = ab_game_rules_emperor_east_nicaea
 			set_country_flag = ab_game_rules_emperor_east_default
 		}
     }

@@ -116,7 +116,14 @@ country_event = {
 		tag = BYZ
 		NCI = {
 			ai = yes
-			offensive_war_with = ROOT
+			OR = {
+				offensive_war_with = ROOT
+				BYZ = {
+					ai = yes
+					has_country_flag = ab_stronger_ai_byz
+					war_with = NCI
+				}
+			}
 		}
 	}
 
@@ -248,17 +255,32 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		has_country_modifier = byz_nci_war_timer
-		NCI = {
-			ai = yes
-			offensive_war_with = ROOT
-			capital_scope = {
-				controlled_by = ROOT
+		OR = {
+			AND = {
+				has_country_modifier = byz_nci_war_timer
+				NCI = {
+					ai = yes
+					offensive_war_with = ROOT
+					capital_scope = {
+						controlled_by = ROOT
+					}
+					NOT = {
+						war_score_against = {
+							who = ROOT
+							value = -60
+						}
+					}
+				}
 			}
-			NOT = {
-				war_score_against = {
-					who = ROOT
-					value = -60
+			AND = {
+				has_country_flag = ab_stronger_ai_byz
+				ai = yes
+				NCI = {
+					ai = yes
+					war_with = BYZ
+					capital_scope = {
+						controlled_by = ROOT
+					}
 				}
 			}
 		}
@@ -1563,6 +1585,7 @@ country_event = {
 		else_if = {
 			limit = {
 				government = theocracy
+				NOT = { religion_group = muslim }
 			}
 			add_government_reform = byzromantheocracy
 		}
@@ -2922,135 +2945,41 @@ country_event = {
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = ROM_CATHOLIC_FORMATION_CLAIM
 		hidden_effect = {
-			italy_region = {
+			every_province = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			iberia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			france_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			egypt_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			balkan_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			anatolia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			syria_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			aleppo_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			palestine_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			carinthia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tripolitania_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			djerba_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			tunisia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			kabylia_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			barbary_coast_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			northern_morocco_area = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT }
-					NOT = { is_core = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			1232 = {
-				if = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
+					OR = {
+						region = anatolia_region
+						region = egypt_region
+						region = italy_region
+						region = france_region
+						region = iberia_region
+						region = balkan_region
+						area = east_midlands_area
+						area = west_midlands_area
+						area = yorkshire_area
+						area = wessex_area
+						area = home_counties_area
+						area = east_anglia_area
+						area = wales_area
+						area = scottish_marches_area
+						area = cornwall_area
+						area = tripolitania_area
+						area = djerba_area
+						area = tunisia_area
+						area = kabylia_area
+						area = barbary_coast_area
+						area = northern_morocco_area
+						area = syria_area
+						area = aleppo_area
+						area = palestine_area
+						area = carinthia_area
+						province_id = 1232
+						province_id = 2324
 					}
-					add_permanent_claim = ROOT
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
-			}
-			2324 = {
-				if = {
-					limit = {
-						NOT = { is_core = ROOT }
-						NOT = { is_permanent_claim = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
@@ -3144,7 +3073,13 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.89.a
-		ai_chance = { factor = 0 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				has_country_flag = ab_stronger_ai_vsg
+			}
+		}
 		change_tag = IBE
 		swap_non_generic_missions = yes
 		remove_non_electors_emperors_from_empire_effect = yes
@@ -3212,7 +3147,7 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.89.b
-		ai_chance = { factor = 100 }
+		ai_chance = { factor = 50 }
 		highlight = yes
 		change_tag = VSG
 		swap_non_generic_missions = yes
@@ -3909,10 +3844,1127 @@ country_event = {
 		clr_country_flag = ab_game_rules_emperor_east_latin
 		clr_country_flag = ab_game_rules_emperor_east_muslim
 		clr_country_flag = ab_game_rules_emperor_east_zoro
+		clr_country_flag = ab_game_rules_emperor_east_nicaea
 		clr_country_flag = ab_game_rules_visigoths_default
 		clr_country_flag = ab_game_rules_visigoths_enabled
 		clr_country_flag = ab_game_rules_pendragon_default
 		clr_country_flag = ab_game_rules_pendragon_enabled
+	}
+}
+
+# NO CHEATING
+country_event = {
+	id = ab_byzantium.102
+	title = ab_byzantium.102.t
+	desc = ab_byzantium.102.d
+	picture = CIVIL_WAR_eventPicture
+
+	trigger = {
+		ai = no
+		has_country_modifier = pol_stronger_ai_mod
+	}
+
+	option = {
+		name = ab_byzantium.102.a
+		remove_country_modifier = pol_stronger_ai_mod
+	}
+}
+
+# AI Helper - Asturias vs Andalusia
+country_event = {
+	id = ab_byzantium.103
+	title = ab_byzantium.103.t
+	desc = ab_byzantium.103.d
+	picture = CIVIL_WAR_eventPicture
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		ai = yes
+		has_country_flag = ab_stronger_ai_vsg
+		OR = {
+			NOT = { exists = GAL }
+			overlord_of = GAL
+		}
+		OR = {
+			NOT = { exists = NAV }
+			overlord_of = NAV
+		}
+		army_size_percentage = 0.5
+		NOT = { truce_with = ADU }
+		is_at_war = no
+		FRC = {
+			NOT = { truce_with = ADU }
+			is_at_war = no
+		}
+	}
+
+	option = {
+		name = ab_byzantium.103.a
+		inherit = GAL
+		inherit = NAV
+		declare_war_with_cb = {
+			casus_belli = cb_grand_crusade_reconquista
+			who = ADU
+		}
+		add_treasury = 200
+		capital_scope = {
+			for = {
+				amount = 20
+				effect = "
+					infantry = ROOT
+				"
+			}
+		}
+		ADU = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_stability = -3
+				add_treasury = -500
+				add_manpower = -20
+				every_owned_province = {
+					limit = {
+						is_neighbor_of = ROOT
+					}
+					change_controller = ROOT
+				}
+			}
+		}
+	}
+}
+
+# Triumverate - First check
+country_event = {
+	id = ab_byzantium.104
+	title = ab_byzantium.104.t
+	desc = ab_byzantium.104.d
+	picture = CIVIL_WAR_eventPicture
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		any_country = {
+			is_rome_heir = yes
+			is_at_war = no
+			total_development = 750
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 75
+				OR = {
+					superregion = europe_superregion
+					superregion = near_east_superregion
+					region = balkan_region
+					region = maghreb_region
+				}
+			}
+			any_country = {
+				NOT = { tag = PREV }
+				is_rome_heir = yes
+				is_at_war = no
+				total_development = 750
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 75
+					OR = {
+						superregion = europe_superregion
+						superregion = near_east_superregion
+						region = balkan_region
+						region = maghreb_region
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					is_rome_heir = yes
+					total_development = 750
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 75
+						OR = {
+							superregion = europe_superregion
+							superregion = near_east_superregion
+							region = balkan_region
+							region = maghreb_region
+						}
+					}
+				}
+				save_global_event_target_as = romanTriumvir1
+			}
+			random_country = {
+				limit = {
+					NOT = { tag = event_target:romanTriumvir1 }
+					is_rome_heir = yes
+					total_development = 750
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 75
+						OR = {
+							superregion = europe_superregion
+							superregion = near_east_superregion
+							region = balkan_region
+							region = maghreb_region
+						}
+					}
+				}
+				save_global_event_target_as = romanTriumvir2
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.104.a
+		if = {
+			limit = {
+				event_target:romanTriumvir2 = {
+					ai = no
+				}
+			}
+			event_target:romanTriumvir2 = {
+				country_event = {
+					id = ab_byzantium.105
+				}
+			}
+		}
+		else = {
+			event_target:romanTriumvir1 = {
+				country_event = {
+					id = ab_byzantium.105
+				}
+			}
+		}
+	}
+}
+
+# Triumverate - Player Choice
+country_event = {
+	id = ab_byzantium.105
+	title = ab_byzantium.105.t
+	desc = ab_byzantium.105.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					event_target:romanTriumvir2 = {
+						ai = no
+					}
+				}
+				event_target:romanTriumvir1 = {
+					save_event_target_as = targetTriumvir
+				}
+			}
+			else = {
+				event_target:romanTriumvir2 = {
+					save_event_target_as = targetTriumvir
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.105.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+			set_global_flag = AB_TRIUMVERATE_SET
+			set_country_flag = byz_triumvir_flag
+			remove_historical_rival = event_target:targetTriumvir
+			add_historical_friend = event_target:targetTriumvir
+			remove_rival = event_target:targetTriumvir
+			add_opinion = {
+				who = event_target:targetTriumvir
+				modifier = opinion_triumvir
+			}
+			add_opinion = {
+				who = event_target:targetTriumvir
+				modifier = opinion_strategic_partners
+			}
+			every_country = {
+				limit = {
+					NOT = { tag = event_target:targetTriumvir }
+					OR = {
+						guaranteed_by = ROOT
+						alliance_with = ROOT
+					}
+				}
+				ROOT = {
+					remove_guarantee = PREV
+					break_alliance = PREV
+				}
+			}
+		}
+		hidden_effect = {
+			event_target:targetTriumvir = {
+				set_country_flag = byz_triumvir_flag
+				remove_historical_rival = ROOT
+				add_historical_friend = ROOT
+				remove_rival = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_triumvir
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_strategic_partners
+				}
+				every_country = {
+					limit = {
+						NOT = { tag = ROOT }
+						OR = {
+							guaranteed_by = PREV
+							alliance_with = PREV
+						}
+					}
+					PREV = {
+						remove_guarantee = PREV
+						break_alliance = PREV
+					}
+				}
+			}
+		}
+		create_alliance = event_target:targetTriumvir
+		add_trust = {
+			who = event_target:targetTriumvir
+			value = 100
+			mutual = yes
+		}
+		tooltip = {
+			add_opinion = {
+				who = event_target:targetTriumvir
+				modifier = opinion_triumvir_for_tooltips
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_TRIUMVERATE_ROOT
+		custom_tooltip = ROM_TRIUMVERATE_FROM
+		custom_tooltip = ROM_TRIUMVERATE_MECHANIC
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_CATHOLIC_FORMATION_CLAIM
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						region = anatolia_region
+						region = egypt_region
+						region = italy_region
+						region = france_region
+						region = iberia_region
+						region = balkan_region
+						area = east_midlands_area
+						area = west_midlands_area
+						area = yorkshire_area
+						area = wessex_area
+						area = home_counties_area
+						area = east_anglia_area
+						area = wales_area
+						area = scottish_marches_area
+						area = cornwall_area
+						area = tripolitania_area
+						area = djerba_area
+						area = tunisia_area
+						area = kabylia_area
+						area = barbary_coast_area
+						area = northern_morocco_area
+						area = syria_area
+						area = aleppo_area
+						area = palestine_area
+						area = carinthia_area
+						province_id = 1232
+						province_id = 2324
+					}
+				}
+				add_permanent_claim = ROOT
+				add_permanent_claim = event_target:targetTriumvir
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_TRIUMVERATE_WILL_BREAK
+	}
+
+	option = {
+		name = ab_byzantium.105.b
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			clear_global_event_target = romanTriumvir1
+			clear_global_event_target = romanTriumvir2
+		}
+	}
+}
+
+# Triumverate - Tetrarchy check
+country_event = {
+	id = ab_byzantium.106
+	title = ab_byzantium.106.t
+	desc = ab_byzantium.106.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		has_global_flag = AB_TRIUMVERATE_SET
+		any_country = {
+			NOT = { tag = event_target:romanTriumvir1 }
+			NOT = { tag = event_target:romanTriumvir2 }
+			is_rome_heir = yes
+			is_at_war = no
+			total_development = 750
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 75
+				OR = {
+					superregion = europe_superregion
+					superregion = near_east_superregion
+					region = balkan_region
+					region = maghreb_region
+				}
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					NOT = { tag = event_target:romanTriumvir1 }
+					NOT = { tag = event_target:romanTriumvir2 }
+					is_rome_heir = yes
+					total_development = 750
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 75
+						OR = {
+							superregion = europe_superregion
+							superregion = near_east_superregion
+							region = balkan_region
+							region = maghreb_region
+						}
+					}
+				}
+				save_global_event_target_as = romanTriumvir3
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.106.a
+		if = {
+			limit = {
+				event_target:romanTriumvir2 = {
+					ai = no
+				}
+			}
+			event_target:romanTriumvir2 = {
+				country_event = {
+					id = ab_byzantium.107
+				}
+			}
+		}
+		else = {
+			event_target:romanTriumvir1 = {
+				country_event = {
+					id = ab_byzantium.107
+				}
+			}
+		}
+	}
+}
+
+# Triumverate - Tetrarchy Choice
+country_event = {
+	id = ab_byzantium.107
+	title = ab_byzantium.107.t
+	desc = ab_byzantium.107.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			event_target:romanTriumvir3 = {
+				save_event_target_as = targetTriumvir
+			}
+			if = {
+				limit = {
+					tag = event_target:romanTriumvir1
+				}
+				event_target:romanTriumvir2 = {
+					save_event_target_as = otherTriumvir
+				}
+			}
+			else = {
+				event_target:romanTriumvir1 = {
+					save_event_target_as = otherTriumvir
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.107.a
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				event_target:targetTriumvir = {
+					ai = no
+				}
+			}
+			event_target:targetTriumvir = {
+				country_event = {
+					id = ab_byzantium.108
+				}
+			}
+		}
+		else = {
+			hidden_effect = {
+				remove_historical_rival = event_target:targetTriumvir
+				add_historical_friend = event_target:targetTriumvir
+				remove_rival = event_target:targetTriumvir
+				add_opinion = {
+					who = event_target:targetTriumvir
+					modifier = opinion_triumvir
+				}
+				add_opinion = {
+					who = event_target:targetTriumvir
+					modifier = opinion_strategic_partners
+				}
+			}
+			hidden_effect = {
+				event_target:otherTriumvir = {
+					remove_historical_rival = event_target:targetTriumvir
+					add_historical_friend = event_target:targetTriumvir
+					remove_rival = event_target:targetTriumvir
+					add_opinion = {
+						who = event_target:targetTriumvir
+						modifier = opinion_triumvir
+					}
+					add_opinion = {
+						who = event_target:targetTriumvir
+						modifier = opinion_strategic_partners
+					}
+					create_alliance = event_target:targetTriumvir
+					add_trust = {
+						who = event_target:targetTriumvir
+						value = 100
+						mutual = yes
+					}
+				}
+			}
+			hidden_effect = {
+				event_target:targetTriumvir = {
+					set_country_flag = byz_triumvir_flag
+					remove_historical_rival = ROOT
+					add_historical_friend = ROOT
+					remove_rival = ROOT
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_triumvir
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_strategic_partners
+					}
+					remove_historical_rival = event_target:otherTriumvir
+					add_historical_friend = event_target:otherTriumvir
+					remove_rival = event_target:otherTriumvir
+					add_opinion = {
+						who = event_target:otherTriumvir
+						modifier = opinion_triumvir
+					}
+					add_opinion = {
+						who = event_target:otherTriumvir
+						modifier = opinion_strategic_partners
+					}
+					every_country = {
+						limit = {
+							NOT = { tag = ROOT }
+							NOT = { tag = event_target:otherTriumvir }
+							OR = {
+								guaranteed_by = PREV
+								alliance_with = PREV
+							}
+						}
+						PREV = {
+							remove_guarantee = PREV
+							break_alliance = PREV
+						}
+					}
+				}
+			}
+			create_alliance = event_target:targetTriumvir
+			add_trust = {
+				who = event_target:targetTriumvir
+				value = 100
+				mutual = yes
+			}
+			tooltip = {
+				add_opinion = {
+					who = event_target:targetTriumvir
+					modifier = opinion_triumvir_for_tooltips
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ROM_TRIUMVERATE_FROM
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							region = anatolia_region
+							region = egypt_region
+							region = italy_region
+							region = france_region
+							region = iberia_region
+							region = balkan_region
+							area = east_midlands_area
+							area = west_midlands_area
+							area = yorkshire_area
+							area = wessex_area
+							area = home_counties_area
+							area = east_anglia_area
+							area = wales_area
+							area = scottish_marches_area
+							area = cornwall_area
+							area = tripolitania_area
+							area = djerba_area
+							area = tunisia_area
+							area = kabylia_area
+							area = barbary_coast_area
+							area = northern_morocco_area
+							area = syria_area
+							area = aleppo_area
+							area = palestine_area
+							area = carinthia_area
+							province_id = 1232
+							province_id = 2324
+						}
+					}
+					add_permanent_claim = event_target:targetTriumvir
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.107.b
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			clear_global_event_target = romanTriumvir3
+		}
+	}
+}
+
+# Triumverate - Tetrarchy Reply Choice
+country_event = {
+	id = ab_byzantium.108
+	title = ab_byzantium.108.t
+	desc = ab_byzantium.108.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					FROM = {
+						tag = event_target:romanTriumvir1
+					}
+				}
+				event_target:romanTriumvir2 = {
+					save_event_target_as = otherTriumvir
+				}
+			}
+			else = {
+				event_target:romanTriumvir1 = {
+					save_event_target_as = otherTriumvir
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.108.a
+		hidden_effect = {
+			set_country_flag = byz_triumvir_flag
+			remove_historical_rival = FROM
+			add_historical_friend = FROM
+			remove_rival = FROM
+			add_opinion = {
+				who = FROM
+				modifier = opinion_triumvir
+			}
+			add_opinion = {
+				who = FROM
+				modifier = opinion_strategic_partners
+			}
+			remove_historical_rival = event_target:otherTriumvir
+			add_historical_friend = event_target:otherTriumvir
+			remove_rival = event_target:otherTriumvir
+			add_opinion = {
+				who = event_target:otherTriumvir
+				modifier = opinion_triumvir
+			}
+			add_opinion = {
+				who = event_target:otherTriumvir
+				modifier = opinion_strategic_partners
+			}
+			every_country = {
+				limit = {
+					NOT = { tag = FROM }
+					NOT = { tag = event_target:otherTriumvir }
+					OR = {
+						guaranteed_by = ROOT
+						alliance_with = ROOT
+					}
+				}
+				ROOT = {
+					remove_guarantee = PREV
+					break_alliance = PREV
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				remove_historical_rival = ROOT
+				add_historical_friend = ROOT
+				remove_rival = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_triumvir
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_strategic_partners
+				}
+			}
+		}
+		hidden_effect = {
+			event_target:otherTriumvir = {
+				remove_historical_rival = ROOT
+				add_historical_friend = ROOT
+				remove_rival = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_triumvir
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_strategic_partners
+				}
+			}
+		}
+		create_alliance = FROM
+		add_trust = {
+			who = FROM
+			value = 100
+			mutual = yes
+		}
+		tooltip = {
+			add_opinion = {
+				who = FROM
+				modifier = opinion_triumvir_for_tooltips
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		create_alliance = event_target:otherTriumvir
+		add_trust = {
+			who = event_target:otherTriumvir
+			value = 100
+			mutual = yes
+		}
+		tooltip = {
+			add_opinion = {
+				who = event_target:otherTriumvir
+				modifier = opinion_triumvir_for_tooltips
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_TRIUMVERATE_ROOT
+		custom_tooltip = ROM_TRIUMVERATE_MECHANIC
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_CATHOLIC_FORMATION_CLAIM
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						region = anatolia_region
+						region = egypt_region
+						region = italy_region
+						region = france_region
+						region = iberia_region
+						region = balkan_region
+						area = east_midlands_area
+						area = west_midlands_area
+						area = yorkshire_area
+						area = wessex_area
+						area = home_counties_area
+						area = east_anglia_area
+						area = wales_area
+						area = scottish_marches_area
+						area = cornwall_area
+						area = tripolitania_area
+						area = djerba_area
+						area = tunisia_area
+						area = kabylia_area
+						area = barbary_coast_area
+						area = northern_morocco_area
+						area = syria_area
+						area = aleppo_area
+						area = palestine_area
+						area = carinthia_area
+						province_id = 1232
+						province_id = 2324
+					}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ROM_TRIUMVERATE_WILL_BREAK
+	}
+
+	option = {
+		name = ab_byzantium.108.b
+		hidden_effect = {
+			clear_global_event_target = romanTriumvir3
+		}
+	}
+}
+
+# Triumverate - Break Check
+country_event = {
+	id = ab_byzantium.109
+	title = ab_byzantium.109.t
+	desc = ab_byzantium.109.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	hidden = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		has_global_flag = AB_TRIUMVERATE_SET
+		OR = {
+			exists = ROM
+			exists = WRE
+			calc_true_if = {
+				amount = 400
+				all_province = {
+					OR = {
+						region = anatolia_region
+						region = egypt_region
+						region = italy_region
+						region = france_region
+						region = iberia_region
+						region = balkan_region
+						area = east_midlands_area
+						area = west_midlands_area
+						area = yorkshire_area
+						area = wessex_area
+						area = home_counties_area
+						area = east_anglia_area
+						area = wales_area
+						area = scottish_marches_area
+						area = cornwall_area
+						area = tripolitania_area
+						area = djerba_area
+						area = tunisia_area
+						area = kabylia_area
+						area = barbary_coast_area
+						area = northern_morocco_area
+						area = syria_area
+						area = aleppo_area
+						area = palestine_area
+						area = carinthia_area
+						province_id = 1232
+						province_id = 2324
+					}
+					OR = {
+						country_or_non_sovereign_subject_holds = event_target:romanTriumvir1
+						country_or_non_sovereign_subject_holds = event_target:romanTriumvir2
+						country_or_non_sovereign_subject_holds = event_target:romanTriumvir3
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = AB_TRIUMVERATE_SET
+			event_target:romanTriumvir1 = {
+				clr_country_flag = byz_triumvir_flag
+				set_country_flag = byz_old_triumvir_flag
+				break_alliance = event_target:romanTriumvir2
+				break_alliance = event_target:romanTriumvir3
+				remove_historical_friend = event_target:romanTriumvir2
+				remove_historical_friend = event_target:romanTriumvir3
+				add_historical_rival = event_target:romanTriumvir2
+				add_historical_rival = event_target:romanTriumvir3
+				remove_opinion = {
+					who = event_target:romanTriumvir2
+					modifier = opinion_triumvir
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir3
+					modifier = opinion_triumvir
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir2
+					modifier = opinion_strategic_partners
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir3
+					modifier = opinion_strategic_partners
+				}
+			}
+			event_target:romanTriumvir2 = {
+				clr_country_flag = byz_triumvir_flag
+				set_country_flag = byz_old_triumvir_flag
+				break_alliance = event_target:romanTriumvir1
+				break_alliance = event_target:romanTriumvir3
+				remove_historical_friend = event_target:romanTriumvir1
+				remove_historical_friend = event_target:romanTriumvir3
+				add_historical_rival = event_target:romanTriumvir1
+				add_historical_rival = event_target:romanTriumvir3
+				remove_opinion = {
+					who = event_target:romanTriumvir1
+					modifier = opinion_triumvir
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir3
+					modifier = opinion_triumvir
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir1
+					modifier = opinion_strategic_partners
+				}
+				remove_opinion = {
+					who = event_target:romanTriumvir3
+					modifier = opinion_strategic_partners
+				}
+			}
+			if = {
+				limit = {
+					has_saved_global_event_target = romanTriumvir3
+				}
+				event_target:romanTriumvir3 = {
+					clr_country_flag = byz_triumvir_flag
+					set_country_flag = byz_old_triumvir_flag
+					break_alliance = event_target:romanTriumvir2
+					break_alliance = event_target:romanTriumvir1
+					remove_historical_friend = event_target:romanTriumvir2
+					remove_historical_friend = event_target:romanTriumvir1
+					add_historical_rival = event_target:romanTriumvir2
+					add_historical_rival = event_target:romanTriumvir1
+					remove_opinion = {
+						who = event_target:romanTriumvir2
+						modifier = opinion_triumvir
+					}
+					remove_opinion = {
+						who = event_target:romanTriumvir1
+						modifier = opinion_triumvir
+					}
+					remove_opinion = {
+						who = event_target:romanTriumvir2
+						modifier = opinion_strategic_partners
+					}
+					remove_opinion = {
+						who = event_target:romanTriumvir1
+						modifier = opinion_strategic_partners
+					}
+				}
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clear_global_event_target = romanTriumvir1
+			clear_global_event_target = romanTriumvir2
+			clear_global_event_target = romanTriumvir3
+		}
+	}
+
+	option = {
+		name = ab_byzantium.109.a
+		if = {
+			limit = {
+				has_saved_global_event_target = romanTriumvir3
+			}
+			event_target:romanTriumvir3 = {
+				declare_war_with_cb = {
+					casus_belli = cb_triumverate_unification
+					who = event_target:romanTriumvir1
+				}
+			}
+			event_target:romanTriumvir1 = {
+				declare_war_with_cb = {
+					casus_belli = cb_triumverate_unification
+					who = event_target:romanTriumvir2
+				}
+			}
+			event_target:romanTriumvir2 = {
+				declare_war_with_cb = {
+					casus_belli = cb_triumverate_unification
+					who = event_target:romanTriumvir3
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					event_target:romanTriumvir2 = {
+						ai = no
+					}
+				}
+				event_target:romanTriumvir2 = {
+					declare_war_with_cb = {
+						casus_belli = cb_triumverate_unification
+						who = event_target:romanTriumvir1
+					}
+				}
+			}
+			else = {
+				event_target:romanTriumvir1 = {
+					declare_war_with_cb = {
+						casus_belli = cb_triumverate_unification
+						who = event_target:romanTriumvir2
+					}
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = event_target:romanTriumvir1
+					tag = event_target:romanTriumvir2
+					tag = event_target:romanTriumvir3
+				}
+				ai = no
+			}
+			country_event = {
+				id = ab_byzantium.110
+			}
+		}
+	}
+}
+
+# Triumverate - Break War
+country_event = {
+	id = ab_byzantium.110
+	title = ab_byzantium.110.t
+	desc = ab_byzantium.110.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.110.b
+		custom_tooltip = ROM_TRIUMVERATE_CB_TT
+	}
+}
+
+# Triumverate - War End
+country_event = {
+	id = ab_byzantium.111
+	title = ab_byzantium.111.t
+	desc = ab_byzantium.111.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		is_in_war = {
+			attacker_leader = ROOT
+			casus_belli = cb_triumverate_unification
+			duration = 1825
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = THIS
+						casus_belli = cb_triumverate_unification
+					}
+				}
+				save_event_target_as = targetTriumvir
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.111.a
+		every_province = {
+			limit = {
+				OR = {
+					region = anatolia_region
+					region = egypt_region
+					region = italy_region
+					region = france_region
+					region = iberia_region
+					region = balkan_region
+					area = east_midlands_area
+					area = west_midlands_area
+					area = yorkshire_area
+					area = wessex_area
+					area = home_counties_area
+					area = east_anglia_area
+					area = wales_area
+					area = scottish_marches_area
+					area = cornwall_area
+					area = tripolitania_area
+					area = djerba_area
+					area = tunisia_area
+					area = kabylia_area
+					area = barbary_coast_area
+					area = northern_morocco_area
+					area = syria_area
+					area = aleppo_area
+					area = palestine_area
+					area = carinthia_area
+					province_id = 1232
+					province_id = 2324
+				}
+			}
+			if = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+					controlled_by = event_target:targetTriumvir
+				}
+				add_core = event_target:targetTriumvir
+				cede_province = event_target:targetTriumvir
+			}
+			else_if = {
+				limit = {
+					country_or_non_sovereign_subject_holds = event_target:targetTriumvir
+					controlled_by = ROOT
+				}
+				add_core = ROOT
+				cede_province = ROOT
+			}
+		}
+		white_peace = event_target:targetTriumvir
 	}
 }
 

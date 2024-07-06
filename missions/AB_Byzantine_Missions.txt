@@ -19,9 +19,16 @@ byz_slot1_balkan = {
 		trigger = {
 			if = {
 				limit = {
+					has_country_flag = ab_stronger_ai_byz
 					ai = yes
-					is_year = 1450
 				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					ai = yes
+				}
+				is_year = 1450
 			}
 			else = {
 				army_size_percentage = 1
@@ -47,6 +54,48 @@ byz_slot1_balkan = {
 					value = -25
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_core = 317
+				capital_scope = {
+					for = {
+						amount = 10
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				NCI = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_treasury = -200
+						add_manpower = -10
+						every_owned_province = {
+							add_core = BYZ
+						}
+					}
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = NCI
+					war_goal_province = 317
+				}
+				every_neighbor_province = {
+					limit = {
+						owned_by = NCI
+					}
+					change_controller = ROOT
+				}
+			}
 		}
 	}
 
@@ -56,10 +105,23 @@ byz_slot1_balkan = {
 		position = 4
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 12
-				region = balkan_region
-				development = 15
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 10
+					region = balkan_region
+					development = 8
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 12
+					region = balkan_region
+					development = 15
+				}
 			}
 		}
 		
@@ -80,14 +142,35 @@ byz_slot1_balkan = {
 			}
 			custom_tooltip = BYZ_URBAN_PROD_BOOST
 			hidden_effect = {
-				every_owned_province = {
+				if = {
 					limit = {
-						region = balkan_region
-						development = 15
+						has_country_flag = ab_stronger_ai_byz
+						ai = yes
 					}
-					add_province_modifier = {
-						name = byzantium_urbanization
-						duration = 9125
+					every_owned_province = {
+						limit = {
+							region = balkan_region
+							development = 8
+						}
+						add_base_tax = 2
+						add_base_production = 2
+						add_base_manpower = 2
+						add_province_modifier = {
+							name = byzantium_urbanization
+							duration = -1
+						}
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = balkan_region
+							development = 15
+						}
+						add_province_modifier = {
+							name = byzantium_urbanization
+							duration = 9125
+						}
 					}
 				}
 			}
@@ -98,6 +181,10 @@ byz_slot1_balkan = {
 		icon = push_on_to_bulgaria
 		required_missions = { byzantium_macedonia }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -110,21 +197,38 @@ byz_slot1_balkan = {
 		}
 		
 		trigger = {
-			macedonia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 10
+					OR = {
+						area = macedonia_area
+						area = bulgaria_area
+						area = silistria_area
+						area = thrace_area
+					}
+				}
 			}
-			bulgaria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			silistria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			thrace_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				macedonia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				bulgaria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				silistria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				thrace_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -212,6 +316,26 @@ byz_slot1_balkan = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				balkan_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				carinthia_area = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 	
@@ -280,6 +404,10 @@ byz_slot1_balkan = {
 		icon = secure_the_sava
 		required_missions = { byzantium_serbia }
 		position = 8
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1007,9 +1135,16 @@ byz_slot2_balkan = {
 		trigger = {
 			if = {
 				limit = {
+					has_country_flag = ab_stronger_ai_byz
 					ai = yes
-					is_year = 1450
 				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					ai = yes
+				}
+				is_year = 1450
 			}
 			else = {
 				NOT = { corruption = 1 }
@@ -1022,13 +1157,6 @@ byz_slot2_balkan = {
 		}
 		
 		effect = {
-			if = {
-				limit = {
-					ai = yes
-					is_year = 1450
-				}
-				add_corruption = -5
-			}
 			custom_tooltip = BYZ_25_DECADENCE
 			add_country_modifier = {
 				name = byzantium_court_stab
@@ -1039,6 +1167,18 @@ byz_slot2_balkan = {
 					mechanic_type = byzantine_decadence_mechanic
 					power_type = byzantine_decadence
 					value = -25
+				}
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_corruption = -5
+				if = {
+					limit = {
+						has_country_flag = ab_stronger_ai_byz
+					}
+					add_treasury = 500
 				}
 			}
 		}
@@ -1052,9 +1192,16 @@ byz_slot2_balkan = {
 		trigger = {
 			if = {
 				limit = {
+					has_country_flag = ab_stronger_ai_byz
 					ai = yes
-					is_year = 1450
 				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					ai = yes
+				}
+				is_year = 1450
 			}
 			else = {
 				NOT = { num_of_loans = 1 }
@@ -1075,15 +1222,6 @@ byz_slot2_balkan = {
 		}
 		
 		effect = {
-			if = {
-				limit = {
-					ai = yes
-					is_year = 1450
-				}
-				every_owned_province = {
-					add_devastation = -35
-				}
-			}
 			custom_tooltip = BYZ_25_DECADENCE
 			add_country_modifier = {
 				name = byz_revitalized_economy
@@ -1099,6 +1237,25 @@ byz_slot2_balkan = {
 					value = -25
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				every_owned_province = {
+					add_base_tax = 1
+					add_base_manpower = 1
+					add_devastation = -45
+				}
+			}
+			else_if = {
+				limit = {
+					ai = yes
+				}
+				every_owned_province = {
+					add_devastation = -35
+				}
+			}
 		}
 	}
 	
@@ -1108,12 +1265,21 @@ byz_slot2_balkan = {
 		position = 3
 		
 		trigger = {
-			stability = 1
-			NOT = {
-				has_government_power = {
-					mechanic_type = byzantine_decadence_mechanic
-					power_type = byzantine_decadence
-					value = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				stability = 1
+				NOT = {
+					has_government_power = {
+						mechanic_type = byzantine_decadence_mechanic
+						power_type = byzantine_decadence
+						value = 1
+					}
 				}
 			}
 			has_any_disaster = no
@@ -1130,6 +1296,21 @@ byz_slot2_balkan = {
 				duration = 9125
 			}
 			add_government_reform = imperial_autocracy
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				inherit = EPI
+				add_power_projection = {
+					type = BYZ_perma_pp
+					amount = 15
+				}
+				add_country_modifier = {
+					name = byz_restorer_angelid
+					duration = 18250
+				}
+			}
 		}
 	}
 
@@ -1211,6 +1392,10 @@ byz_slot2_balkan = {
 		icon = pacify_the_albanian_lands
 		required_missions = { byzantium_macedonia }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			area = albania_area
@@ -1218,9 +1403,21 @@ byz_slot2_balkan = {
 		}
 
 		trigger = {
-			albania_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 3
+					area = albania_area
+				}
+			}
+			else = {
+				albania_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1235,6 +1432,31 @@ byz_slot2_balkan = {
 					duration = 10950
 				}
 				add_prosperity = 50
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				SIC = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						every_owned_province = {
+							add_territorial_core = ROOT
+						}
+						if = {
+							limit = {
+								NOT = { truce_with = SIC }
+							}
+							declare_war_with_cb = {
+								casus_belli = cb_core
+								who = SIC
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1642,6 +1864,10 @@ byz_slot2_balkan = {
 		icon = mission_invade_apulia
 		required_missions = { }
 		position = 16
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1704,6 +1930,19 @@ byz_slot2_balkan = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -1871,6 +2110,10 @@ byz_slot2_europe = {
 		icon = mission_rule_italy
 		required_missions = { byzantium_iron }
 		position = 20
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			region = italy_region
@@ -1947,6 +2190,19 @@ byz_slot2_europe = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				france_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -2271,8 +2527,9 @@ byz_slot3_balkan = {
 			if = {
 				limit = {
 					ai = yes
-					is_year = 1450
+					NOT = { has_country_flag = ab_stronger_ai_byz }
 				}
+				is_year = 1450
 			}
 			else = {
 				NOT = { exists = NCI }
@@ -2295,7 +2552,6 @@ byz_slot3_balkan = {
 			if = {
 				limit = {
 					ai = yes
-					is_year = 1450
 				}
 				hudavendigar_area = {
 					limit = {
@@ -2332,6 +2588,29 @@ byz_slot3_balkan = {
 					value = -25
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				every_province = {
+					limit = {
+						OR = {
+							owned_by = BUL
+							area = aegean_archipelago_area
+							area = albania_area
+						}
+					}
+					add_core = ROOT
+				}
+				anatolia_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -2341,10 +2620,23 @@ byz_slot3_balkan = {
 		position = 4
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 12
-				region = anatolia_region
-				development = 15
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 10
+					region = anatolia_region
+					development = 8
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 12
+					region = anatolia_region
+					development = 15
+				}
 			}
 		}
 		
@@ -2365,14 +2657,35 @@ byz_slot3_balkan = {
 			}
 			custom_tooltip = BYZ_URBAN_PROD_BOOST
 			hidden_effect = {
-				anatolia_region = {
+				if = {
 					limit = {
-						development = 15
-						owned_by = ROOT
+						has_country_flag = ab_stronger_ai_byz
+						ai = yes
 					}
-					add_province_modifier = {
-						name = byzantium_urbanization
-						duration = 9125
+					anatolia_region = {
+						limit = {
+							development = 8
+							owned_by = ROOT
+						}
+						add_base_tax = 2
+						add_base_production = 2
+						add_base_manpower = 2
+						add_province_modifier = {
+							name = byzantium_urbanization
+							duration = -1
+						}
+					}
+				}
+				else = {
+					anatolia_region = {
+						limit = {
+							development = 15
+							owned_by = ROOT
+						}
+						add_province_modifier = {
+							name = byzantium_urbanization
+							duration = 9125
+						}
 					}
 				}
 			}
@@ -3236,6 +3549,10 @@ byz_slot3_europe_unlocked = {
 		icon = mission_frankishengland
 		required_missions = { byzantium_dethrone }
 		position = 24
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -3404,7 +3721,16 @@ byz_slot4_balkan = {
 		position = 1
 		
 		trigger = {
-			navy_size_percentage = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				navy_size_percentage = 0.5
+			}
+			else = {
+				navy_size_percentage = 1
+			}
 		}
 		
 		effect = {
@@ -3422,8 +3748,17 @@ byz_slot4_balkan = {
 		position = 2
 		
 		trigger = {
-			navy_tradition = 50
-		    advisor = naval_reformer
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				navy_tradition = 50
+		    	advisor = naval_reformer
+			}
 		}
 		
 		effect = {
@@ -3440,9 +3775,21 @@ byz_slot4_balkan = {
 		required_missions = { byzantium_traitors byzantium_reinforce }
 	
 		trigger = {
-			aydin_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					region = anatolia_region
+					value = 5
+				}
+			}
+			else = {
+				aydin_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -3485,6 +3832,10 @@ byz_slot4_balkan = {
 	    icon = anatolian_frontier
 		required_missions = { byzantium_coastline }
 		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -3541,6 +3892,19 @@ byz_slot4_balkan = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				mashriq_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 	
@@ -3548,15 +3912,33 @@ byz_slot4_balkan = {
 		icon = byz_avenge_1071
 		position = 7
 		required_missions = { byzantium_frontier }
+
+		ai_weight = {
+			factor = 1000
+		}
 	
 		trigger = {
-			rum_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				rum_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				erzurum_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			erzurum_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				rum_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				erzurum_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -3629,6 +4011,36 @@ byz_slot4_balkan = {
 			}
 			else = {
 				custom_tooltip = BYZ_EARLY_NIZZARIDS_BUFF_NO
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				egypt_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				if = {
+					limit = {
+						NAZ = {
+							ai = yes
+							NOT = { truce_with = ROOT }
+						}
+					}
+					NAZ = {
+						add_stability = -3
+						add_manpower = -50
+						add_treasury = -2000
+					}
+					declare_war_with_cb = {
+						casus_belli = cb_conquest
+						who = NAZ
+					}
+				}
 			}
 		}
 	}
@@ -3842,6 +4254,10 @@ byz_slot4_africa = {
 		icon = africa_proconsulare
 		position = 16
 		required_missions = { byzantium_tripolitania }
+
+		ai_weight = {
+			factor = 1000
+		}
 	
 		trigger = {
 			tunisia_area = {
@@ -3877,6 +4293,19 @@ byz_slot4_africa = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				iberia_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -4593,11 +5022,27 @@ byz_slot5_balkan = {
 		icon = mission_saladins_legacy
 		position = 11
 		required_missions = { byzantium_palestine }
+
+		ai_weight = {
+			factor = 1000
+		}
 	
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 		
@@ -4654,6 +5099,19 @@ byz_slot5_balkan = {
 						NOT = { exists = NAZ }
 					}
 					add_army_tradition = 25
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_byz
+					ai = yes
+				}
+				maghreb_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -4903,6 +5361,10 @@ byz_slot5_balkan = {
 		icon = mission_reclaim_andalucia
 		position = 19
 		required_missions = { byzantium_barbary }
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			area = upper_andalucia_area

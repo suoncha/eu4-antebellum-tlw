@@ -21,7 +21,16 @@ ab_rum_muslim_first = {
 		position = 1
 		
 		trigger = {
-			num_of_allies = 2
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				num_of_allies = 2
+			}
 		}
 		
 		effect = {
@@ -42,6 +51,53 @@ ab_rum_muslim_first = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				every_province = {
+					limit = {
+						culture = turkish
+					}
+					add_core = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = SEL
+					war_goal_province = 329
+				}
+				SEL = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_manpower = -20
+						every_owned_province = {
+							limit = {
+								OR = {
+									is_neighbor_of = ROOT
+									province_id = 329
+								}
+							}
+							change_controller = ROOT
+						}
+					}
+				}
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+			}
 		}
 	}
 	
@@ -59,10 +115,21 @@ ab_rum_muslim_first = {
 		}
 		
 		trigger = {
-			rum_area = {
-				type = all
-				is_core = ROOT
-				owned_by = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				rum_area = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				rum_area = {
+					type = all
+					is_core = ROOT
+					owned_by = ROOT
+				}
 			}
 		}
 		
@@ -273,6 +340,10 @@ ab_rum_muslim_first = {
 		icon = mission_balkan_conquest
 		required_missions = { rum_muslim_bulgaria }
 		position = 9
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -621,6 +692,10 @@ ab_rum_muslim_second = {
 	    icon = mission_fall_of_constantinople
 		required_missions = { rum_muslim_nicaea }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -677,6 +752,19 @@ ab_rum_muslim_second = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				balkan_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -1114,6 +1202,19 @@ ab_rum_muslim_third = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				mashriq_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 	
@@ -1121,6 +1222,10 @@ ab_rum_muslim_third = {
 		icon = mission_invade_apulia
 		required_missions = { rum_muslim_anatolia }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			region = italy_region
@@ -1128,9 +1233,20 @@ ab_rum_muslim_third = {
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				region = italy_region
-				value = 5
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				italy_region = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					region = italy_region
+					value = 5
+				}
 			}
 		}
 		
@@ -1160,6 +1276,19 @@ ab_rum_muslim_third = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -1352,11 +1481,33 @@ ab_rum_muslim_third = {
 		required_missions = { rum_muslim_pashas rum_muslim_iron rum_muslim_andalusia }
 		position = 12
 
+		ai_weight = {
+			factor = 5000
+		}
+
 		trigger = {
+			if = {
+				limit = {
+					has_global_flag = AB_TRIUMVERATE_SET
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_BROKEN_TRIUMVERATE
+					NOT = { has_global_flag = AB_TRIUMVERATE_SET }
+				}
+			}
 			primary_culture = turkish_new
-			iberia_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				is_year = 1500
+			}
+			else = {
+				iberia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
 			italy_region = {
 				type = all
@@ -1596,17 +1747,34 @@ ab_rum_muslim_fourth = {
 		}
 		
 		trigger = {
-			aleppo_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				aleppo_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syria_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syrian_desert_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
-			syria_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
-			}
-			syrian_desert_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			else = {
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syrian_desert_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
 		}
 		
@@ -1673,6 +1841,10 @@ ab_rum_muslim_fourth = {
 		icon = jerusalem
 		position = 7
 		required_missions = { rum_muslim_syria }
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			area = palestine_area
@@ -1680,9 +1852,20 @@ ab_rum_muslim_fourth = {
 		}
 		
 		trigger = {
-			palestine_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT	
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				palestine_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+			else = {
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
 			}
 		}
 		
@@ -1728,6 +1911,15 @@ ab_rum_muslim_fourth = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				country_event = {
+					id = ab_seljuk.15
+				}
+			}
 		}
 	}
 	
@@ -1742,9 +1934,21 @@ ab_rum_muslim_fourth = {
 		}
 		
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 		
@@ -1801,9 +2005,21 @@ ab_rum_muslim_fourth = {
 		}
 		
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 23
-				region = maghreb_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 13
+					region = maghreb_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 23
+					region = maghreb_region
+				}
 			}
 		}
 		
@@ -1840,9 +2056,21 @@ ab_rum_muslim_fourth = {
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 25
-				region = iberia_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = iberia_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = iberia_region
+				}
 			}
 		}
 		

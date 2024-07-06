@@ -32,9 +32,18 @@ ab_rum_zoro_first = {
 					base_manpower = 5
 				}
 			}
-			OR = {
-				manpower_percentage = 1
-				army_size_percentage = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				OR = {
+					manpower_percentage = 1
+					army_size_percentage = 1
+				}
 			}
 		}
 		
@@ -55,6 +64,53 @@ ab_rum_zoro_first = {
 					add_permanent_claim = ROOT
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				every_province = {
+					limit = {
+						culture = turkish
+					}
+					add_core = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = SEL
+					war_goal_province = 329
+				}
+				SEL = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_manpower = -20
+						every_owned_province = {
+							limit = {
+								OR = {
+									is_neighbor_of = ROOT
+									province_id = 329
+								}
+							}
+							change_controller = ROOT
+						}
+					}
+				}
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+			}
 		}
 	}
 
@@ -72,10 +128,21 @@ ab_rum_zoro_first = {
 		}
 		
 		trigger = {
-			rum_area = {
-				type = all
-				is_core = ROOT
-				owned_by = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				rum_area = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				rum_area = {
+					type = all
+					is_core = ROOT
+					owned_by = ROOT
+				}
 			}
 		}
 		
@@ -142,6 +209,10 @@ ab_rum_zoro_first = {
 	    icon = mission_based
 		required_missions = { rum_zoroastrian_nicaea }
 		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -204,6 +275,10 @@ ab_rum_zoro_first = {
 		icon = per_unify_the_shia_realms
 		required_missions = { rum_zoroastrian_city }
 		position = 8
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -214,13 +289,24 @@ ab_rum_zoro_first = {
 		}
 		
 		trigger = {
-			sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				italy_region = {
+					owned_by = ROOT
+				}
 			}
-			western_sicily_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				sicily_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				western_sicily_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -274,6 +360,19 @@ ab_rum_zoro_first = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -326,7 +425,20 @@ ab_rum_zoro_first = {
 		required_missions = { rum_zoroastrian_rome }
 		position = 11
 
+		ai_weight = {
+			factor = 5000
+		}
+
 		trigger = {
+			if = {
+				limit = {
+					has_global_flag = AB_TRIUMVERATE_SET
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_BROKEN_TRIUMVERATE
+					NOT = { has_global_flag = AB_TRIUMVERATE_SET }
+				}
+			}
 			primary_culture = turkish_iranian
 			italy_region = {
 				type = all
@@ -951,6 +1063,10 @@ ab_rum_zoro_second = {
 		icon = mission_saladins_legacy
 		position = 8
 		required_missions = { rum_zoroastrian_syria }
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			region = egypt_region
@@ -958,9 +1074,21 @@ ab_rum_zoro_second = {
 		}
 		
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 25
-				region = egypt_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
 			}
 		}
 		
@@ -1025,9 +1153,21 @@ ab_rum_zoro_second = {
 		}
 		
 		trigger = {
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 23
-				region = maghreb_region
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 13
+					region = maghreb_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 23
+					region = maghreb_region
+				}
 			}
 		}
 		
@@ -1202,17 +1342,26 @@ ab_rum_zoro_third = {
 		}
 		
 		trigger = {
-			samtskhe_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				is_year = 1445
 			}
-			imereti_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			kartli_kakheti_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				samtskhe_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				imereti_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				kartli_kakheti_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1264,6 +1413,23 @@ ab_rum_zoro_third = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				caucasia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = {  is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_vassalize_mission
+					who = ILK
+				}
+			}
 		}
 	}
 	
@@ -1271,6 +1437,10 @@ ab_rum_zoro_third = {
 		icon = mission_ilkhanate
 		required_missions = { rum_zoroastrian_georgia }
 		position = 2
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1282,17 +1452,34 @@ ab_rum_zoro_third = {
 		}
 		
 		trigger = {
-			armenia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				armenia_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				shirvan_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tabriz_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			shirvan_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			tabriz_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				armenia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				shirvan_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tabriz_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1335,6 +1522,20 @@ ab_rum_zoro_third = {
 					set_country_flag = rum_can_annex_ilk
 				}
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				inherit = ILK
+				persia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = {  is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -1349,8 +1550,20 @@ ab_rum_zoro_third = {
 		}
 		
 		trigger = {
-			owns_all_provinces = {
-				culture = turkish
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 20
+					region = anatolia_region
+				}
+			}
+			else = {
+				owns_all_provinces = {
+					culture = turkish
+				}
 			}
 		}
 		
@@ -1379,6 +1592,19 @@ ab_rum_zoro_third = {
 						name = rum_unite_beyliks
 						duration = 7300
 					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				mashriq_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -1682,6 +1908,10 @@ ab_rum_zoro_fourth = {
 		icon = per_tab_ziyarids_successor
 		required_missions = { rum_zoroastrian_ilkhanate rum_zoroastrian_mesopotamia }
 		position = 3
+
+		ai_weight = {
+			factor = 5000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -1697,15 +1927,8 @@ ab_rum_zoro_fourth = {
 		
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 16
-				OR = {
-					area = azerbaijan_area
-					area = tabarestan_area
-					area = iraq_e_ajam_area
-					area = luristan_area
-					area = shahrizor_area
-					area = khuzestan_area
-				}
+				value = 20
+				region = persia_region
 			}
 		}
 		
@@ -1725,6 +1948,19 @@ ab_rum_zoro_fourth = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				persia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = {  is_permanent_claim = ROOT }
+					}
+					add_core = ROOT
+				}
+			}
 		}
 	}
 	
@@ -1739,9 +1975,21 @@ ab_rum_zoro_fourth = {
 		}
 		
 		trigger = {
-			persia_region = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 40
+					region = persia_region
+				}
+			}
+			else = {
+				persia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -1772,6 +2020,30 @@ ab_rum_zoro_fourth = {
 					NOT = {  is_permanent_claim = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				override_country_name = RUMANSHAHR
+				move_turkish_into_iranian_group = yes
+				add_country_modifier = {
+					name = rum_ruman
+					duration = -1
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							tag = RUM
+						}
+						set_country_flag = rum3_evolved_ideas
+						country_event = {
+							id = ideagroups.1
+						}
+					}
+				}
+				add_government_reform = turcopersianrum
 			}
 		}
 	}
@@ -2119,9 +2391,18 @@ ab_rum_zoro_fifth = {
 		}
 		
 		trigger = {
-			north_kurdistan_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				north_kurdistan_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -2159,6 +2440,13 @@ ab_rum_zoro_fifth = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				inherit = HSN
+			}
 		}
 	}
 	
@@ -2166,6 +2454,10 @@ ab_rum_zoro_fifth = {
 		icon = mission_cradle_of_civilization
 		required_missions = { rum_zoroastrian_kurdistan }
 		position = 2
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -2177,17 +2469,34 @@ ab_rum_zoro_fifth = {
 		}
 		
 		trigger = {
-			al_jazira_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_srk
+					ai = yes
+				}
+				al_jazira_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				iraq_arabi_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				basra_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
-			iraq_arabi_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			basra_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				al_jazira_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				iraq_arabi_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				basra_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
