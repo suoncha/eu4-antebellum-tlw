@@ -195,6 +195,8 @@ country_decisions = {
 						overlord_of = VSO
 						overlord_of = VSS
 						overlord_of = LAT
+						overlord_of = KOJ
+						overlord_of = OTR
 					}
 				}
 				if = {
@@ -220,6 +222,18 @@ country_decisions = {
 						overlord_of = LAT
 					}
 					inherit = LAT
+				}
+				if = {
+					limit = {
+						overlord_of = KOJ
+					}
+					inherit = KOJ
+				}
+				if = {
+					limit = {
+						overlord_of = OTR
+					}
+					inherit = OTR
 				}
 				custom_tooltip = AB_EMPTY
 			}
@@ -374,16 +388,23 @@ country_decisions = {
 			}
 			custom_tooltip = AB_EMPTY
 			# The rest
-			custom_tooltip = restore_roman_empire_tt
+			if = {
+				limit = {
+					is_emperor = no
+				}
+				custom_tooltip = restore_roman_empire_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_part_of_hre = yes
+						}
+						set_in_empire = no
+					}
+				}
+			}
 			hidden_effect = {
 				set_heir_culture = ROOT
 				set_ruler_culture = ROOT
-				every_owned_province = {
-					limit = {
-						is_part_of_hre = yes
-					}
-					set_in_empire = no
-				}
 				118 = {
 					add_core = ROOT
 					province_event = {

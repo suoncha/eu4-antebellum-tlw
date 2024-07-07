@@ -128,7 +128,10 @@ country_decisions = {
 				}
 				else_if = {
 					limit = {
-						culture_group = germanic
+						OR = {
+							culture_group = germanic
+							culture_group = united_germanic
+						}
 					}
 					south_german_region = {
 						type = all
@@ -154,8 +157,49 @@ country_decisions = {
 
 		effect = {
 			set_country_flag = formed_westrome_flag
+			if = {
+				limit = {
+					tag = SWA
+				}
+				set_country_flag = formed_germany_flag
+			}
 			change_tag = WRE
 			on_change_tag_effect = yes
+			if = {
+				limit = {
+					culture_group = iberian
+				}
+				if = {
+					limit = {
+						overlord_of = VSV
+					}
+					VSV = {
+						change_country_color = {
+							country = WRE
+						}
+					}
+				}
+				if = {
+					limit = {
+						overlord_of = VSO
+					}
+					VSO = {
+						change_country_color = {
+							country = WRE
+						}
+					}
+				}
+				if = {
+					limit = {
+						overlord_of = VSS
+					}
+					VSS = {
+						change_country_color = {
+							country = WRE
+						}
+					}
+				}
+			}
 			add_prestige = 25
 			if = {
 				limit = {
@@ -163,48 +207,18 @@ country_decisions = {
 				}
 				set_government_rank = 3
 			}
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = restore_roman_empire_tt
-			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						is_part_of_hre = yes
-					}
-					set_in_empire = no
+			if = {
+				limit = {
+					is_emperor = no
 				}
-				if = {
-					limit = {
-						culture_group = iberian
-					}
-					if = {
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = restore_roman_empire_tt
+				hidden_effect = {
+					every_owned_province = {
 						limit = {
-							overlord_of = VSV
+							is_part_of_hre = yes
 						}
-						VSV = {
-							change_country_color = {
-								country = WRE
-							}
-						}
-					}
-					if = {
-						limit = {
-							overlord_of = VSO
-						}
-						VSO = {
-							change_country_color = {
-								country = WRE
-							}
-						}
-					}
-					if = {
-						limit = {
-							overlord_of = VSS
-						}
-						VSS = {
-							change_country_color = {
-								country = WRE
-							}
-						}
+						set_in_empire = no
 					}
 				}
 			}
