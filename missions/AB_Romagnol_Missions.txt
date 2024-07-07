@@ -1,0 +1,4166 @@
+romagnol_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = PAR
+					was_tag = RVN
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_conquer_florence = {
+		icon = conquer_tuscany
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 116
+				province_id = 2978
+				owned_by = LAN
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			116 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2978 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			NOT = { exists = LAN }
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = "lom_home_renaissance"
+				duration = 5475
+			}
+			liguria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					artist = 1
+				}
+				custom_tooltip = RMG_ARTIST_YES
+			}
+			else = {
+				custom_tooltip = RMG_ARTIST_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rmg_works_florence
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						artist = 1
+					}
+					add_country_modifier = {
+						name = rmg_works_florence
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	rmg_florence_monument = {
+		icon = public_works
+		required_missions = { rmg_conquer_florence }
+		position = 3
+
+		provinces_to_highlight = {
+			province_id = 116
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = {
+					has_great_project = {
+						type = santa_maria_del_fiore
+						tier = 2
+					}
+				}
+			}
+		}
+
+		trigger = {
+			116 = {
+				owned_by = ROOT
+			}
+			116 = {
+				has_great_project = {
+					type = santa_maria_del_fiore
+					tier = 2
+				}
+			}
+			treasury = 2500
+		}
+
+		effect = {
+			add_treasury = -2500
+			add_splendor = 400
+			add_country_modifier = {
+				name = ivr_innovative_engineering
+				duration = 9125
+			}
+			if = {
+				limit = {
+					116 = {
+						NOT = {
+							has_great_project = {
+								type = santa_maria_del_fiore
+								tier = 3
+							}
+						}
+					}
+				}
+				custom_tooltip = RMG_FIORE_LEVEL_2_YES
+			}
+			else = {
+				custom_tooltip = RMG_FIORE_LEVEL_2_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					116 = {
+						has_great_project = {
+							type = santa_maria_del_fiore
+							tier = 3
+						}
+					}
+				}
+				custom_tooltip = RMG_FIORE_LEVEL_3_YES
+			}
+			else = {
+				custom_tooltip = RMG_FIORE_LEVEL_3_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						116 = {
+							has_great_project = {
+								type = santa_maria_del_fiore
+								tier = 3
+							}
+						}
+					}
+					set_country_flag = rmg_fiore_level_3_bonus_flag
+				}
+				else = {
+					116 = {
+						add_great_project_tier = {
+							type = santa_maria_del_fiore
+							tier = 1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rmg_build_shipyards = {
+		icon = secure_the_republic
+		required_missions = { rmg_invade_genoa }
+		position = 4
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_port = yes
+			has_shipyard_building_trigger = no
+		}
+		
+		trigger = {
+			navy_size_percentage = 1
+			num_of_galley = 20
+			num_of_owned_provinces_with = {
+				value = 10
+				has_shipyard_building_trigger = yes
+			}
+		}
+
+		effect = {
+			create_admiral = { tradition = 50 }
+			define_advisor = {
+				type = naval_reformer
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = lom_regia
+				duration = 10950
+			}
+			corsica_sardinia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+romagnol_first_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_retake_isles_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_build_shipyards rmg_unite_italy }
+		position = 6
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_no_muslim_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_retake_isles_locked rmg_liberate_naples_locked }
+		position = 8
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+romagnol_first_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = RMG
+			was_tag = PAR
+			was_tag = RVN
+			was_tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_retake_isles = {
+		icon = mission_seize_the_isles
+		required_missions = { rmg_build_shipyards rmg_unite_italy }
+		position = 6
+
+		provinces_to_highlight = {
+			area = corsica_sardinia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			corsica_sardinia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+
+		effect = {
+			corsica_sardinia_area = {
+				add_province_modifier = {
+					name = rmg_sea_fortress
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = "lom_new_hegemon"
+				duration = 7300
+			}
+			baleares_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rmg_no_muslim = {
+		icon = arb_sicily
+		required_missions = { rmg_retake_isles rmg_liberate_naples }
+		position = 8
+
+		provinces_to_highlight = {
+			region = italy_region
+			owner = {
+				religion_group = muslim
+			}
+		}
+		
+		trigger = {
+			italy_region = {
+				type = all
+				owner = {
+					NOT = { religion_group = muslim }
+				}
+			}
+		}
+
+		effect = {
+			country_event = { id = ab_lombardy.4 }
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_convert_grant_mana
+			custom_tooltip = RMG_CONVERT_BONUS
+		}
+	}
+}
+
+romagnol_first_tall = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = PAR
+					was_tag = RVN
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_romagnol_renaissance = {
+		icon = mission_english_renaissance
+		required_missions = { }
+		position = 9
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			prestige = 40
+			capital_scope = {
+				renaissance = 75
+			}
+			OR = {
+				has_adm_advisor_2 = yes
+				has_dip_advisor_2 = yes
+				has_mil_advisor_2 = yes
+			}
+		}
+
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 25
+				}
+			}
+			define_advisor = {
+				type = architect
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_owned_province = {
+						is_institution_origin = renaissance
+					}
+				}
+				custom_tooltip = RMG_RENAI_OWN_YES
+			}
+			else = {
+				custom_tooltip = RMG_RENAI_OWN_NO
+			}
+			tooltip = {
+				change_government_reform_progress = 50
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = {
+							is_institution_origin = renaissance
+						}
+					}
+					change_government_reform_progress = 50
+				}
+			}
+		}
+	}
+
+	rmg_architecture_revolution = {
+		icon = promote_urbanization
+		required_missions = { rmg_romagnol_renaissance }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_tax_building_trigger = no
+				NOT = { has_building = university }
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				has_building = university
+			}
+		}
+
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = lom_urbanization
+				duration = 3650
+			}
+			set_country_flag = rmg_uni_grant_dip
+			custom_tooltip = RMG_BUILD_UNI
+		}
+	}
+
+	rmg_wonders_of_italy = {
+		icon = new_st_peters_basilica
+		required_missions = { rmg_architecture_revolution }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_great_project = {
+				type = any
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rmg_great_project_builder
+				duration = -1
+			}
+			custom_tooltip = RMG_EVERY_GREAT_PROJECT_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rmg_wonders_of_italy_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = italy_region
+						has_great_project = {
+							type = any
+						}
+					}
+					add_province_modifier = {
+						name = rmg_wonders_of_italy_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+romagnol_second_romagna = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RMG
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_develop_ferrara = {
+		icon = develop_provence
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			province_id = 113
+		}
+		
+		trigger = {
+			113 = {
+				owned_by = ROOT
+			}
+			113 = {
+				development = 30
+			}
+			113 = {
+				has_trade_building_trigger = yes
+			}
+			113 = {
+				has_production_building_trigger = yes
+			}
+			113 = {
+				has_building = wharf
+			}
+		}
+		
+
+		effect = {
+			add_years_of_trade_income = {
+				years = 2
+				custom_tooltip = ars_trade_income
+			}
+			113 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			113 = {
+				add_base_production = 2
+				upgrade_production_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					113 = {
+						owned_by = ROOT
+						development = 25
+					}
+				}
+				custom_tooltip = RMG_RAVENNA_SALT_YES
+			}
+			else = {
+				custom_tooltip = RMG_RAVENNA_SALT_NO
+			}
+			tooltip = {
+				change_price = {
+					trade_goods = salt
+					key = rmg_salt_mines
+					value = 0.25
+					duration = 36500
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						113 = {
+							owned_by = ROOT
+							development = 25
+						}
+					}
+					change_price = {
+						trade_goods = salt
+						key = rmg_salt_mines
+						value = 0.25
+						duration = 36500
+					}
+				}
+			}
+		}
+	}
+}
+
+romagnol_second_ravenna = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_capital_of_west_rome = {
+		icon = a_real_roman_empire
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			province_id = 114
+		}
+		
+		trigger = {
+			114 = {
+				owned_by = ROOT
+			}
+			114 = {
+				development = 30
+			}
+			114 = {
+				has_tax_building_trigger = yes
+			}
+			114 = {
+				province_has_current_tech_fort_trigger = yes
+			}
+			114 = {
+				has_building = ramparts
+			}
+		}
+		
+
+		effect = {
+			114 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			114 = {
+				add_base_manpower = 2
+				upgrade_fort_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			114 = {
+				add_province_modifier = {
+					name = rmg_capital_of_west_rome_province
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					118 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = the_colloseum
+							tier = 2
+						}
+					}
+				}
+				custom_tooltip = RMG_BUILD_COLOSSEUM_YES
+			}
+			else = {
+				custom_tooltip = RMG_BUILD_COLOSSEUM_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rmg_heritage_west_rome
+					duration = 18250
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						118 = {
+							owned_by = ROOT
+							has_great_project = {
+								type = the_colloseum
+								tier = 2
+							}
+						}
+					}
+					add_country_modifier = {
+						name = rmg_heritage_west_rome
+						duration = 18250
+					}
+				}
+			}
+		}
+	}
+}
+
+romagnol_second_parma = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_gem_of_italy = {
+		icon = pontifical_universities
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			province_id = 105
+		}
+		
+		trigger = {
+			105 = {
+				owned_by = ROOT
+			}
+			105 = {
+				development = 30
+			}
+			105 = {
+				has_trade_building_trigger = yes
+			}
+			105 = {
+				has_courthouse_building_trigger = yes
+			}
+			105 = {
+				has_building = university
+			}
+		}
+		
+
+		effect = {
+			105 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			105 = {
+				add_base_tax = 1
+				add_base_production = 1
+				upgrade_trade_building = yes
+				change_trade_goods = gems
+			}
+			custom_tooltip = AB_EMPTY
+			105 = {
+				add_province_modifier = {
+					name = rmg_university_parma
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					innovativeness = 25
+				}
+				custom_tooltip = RMG_HIGH_INNOVATIVENESS_YES
+			}
+			else = {
+				custom_tooltip = RMG_HIGH_INNOVATIVENESS_NO
+			}
+			tooltip = {
+				change_government_reform_progress = 150
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						innovativeness = 25
+					}
+					change_government_reform_progress = 150
+				}
+			}
+		}
+	}
+}
+
+romagnol_second_verona = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = VRN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_romeo_juliet = {
+		icon = mission_romeo
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			province_id = 108
+		}
+		
+		trigger = {
+			108 = {
+				owned_by = ROOT
+			}
+			108 = {
+				development = 30
+			}
+			108 = {
+				has_tax_building_trigger = yes
+			}
+			108 = {
+				has_courthouse_building_trigger = yes
+			}
+			108 = {
+				has_building = university
+			}
+		}
+		
+
+		effect = {
+			108 = {
+				add_base_tax = 3
+				add_province_modifier = {
+					name = rmg_romeo_juliet_verona
+					duration = -1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					116 = {
+						owned_by = ROOT
+						development = 35
+					}
+				}
+				custom_tooltip = RMG_FIRENZE_ROMEO_YES
+			}
+			else = {
+				custom_tooltip = RMG_FIRENZE_ROMEO_NO
+			}
+			tooltip = {
+				add_adm_tech = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						116 = {
+							owned_by = ROOT
+							development = 35
+						}
+					}
+					add_adm_tech = 1
+				}
+			}
+		}
+	}
+}
+
+romagnol_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = PAR
+					was_tag = RVN
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_invade_genoa = {
+		icon = end_genoese_competition
+		required_missions = { rmg_conquer_florence }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = { 
+				province_id = 2992
+				province_id = 101
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			2992 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			101 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+
+		effect = {
+			101 = {
+				add_or_upgrade_trade_building = yes
+			}
+			add_country_modifier = {
+				name = ivr_takeover_genoese_trade
+				duration = 7300
+			}
+			101 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 10
+					speed = 0.5
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					101 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+				custom_tooltip = IVR_TRADE_BONUS
+			}
+			else = {
+				custom_tooltip = IVR_TRADE_BONUS_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						101 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_mercantilism = 10
+				}
+			}
+		}
+	}
+
+	rmg_unite_italy = {
+		icon = mission_rule_italy
+		required_missions = { rmg_invade_genoa }
+		position = 5
+		
+		trigger = {
+			ab_is_italy_tag_trigger = yes
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 10
+			}
+			country_event = { id = ab_lombardy.3 }
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					exists = PAP
+				}
+				custom_tooltip = AB_EMPTY
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = PAP
+				}
+			}
+		}
+	}
+}
+
+romagnol_second_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_question_of_roma_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_unite_italy }
+		position = 6
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_liberate_naples_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_question_of_roma_locked }
+		position = 7
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_develop_naples_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_liberate_naples_locked }
+		position = 9
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_urbanize_italy_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_romagnol_renaissance }
+		position = 10
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_industrial_powerhouse_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_urbanize_italy_locked }
+		position = 11
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+romagnol_second_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = RMG
+			was_tag = PAR
+			was_tag = RVN
+			was_tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_question_of_roma = {
+		icon = mission_pope
+		required_missions = { rmg_unite_italy }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = lazio_area
+				owned_by = PAP
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			OR = {
+				overlord_of = PAP
+				NOT = { exists = PAP }
+			}
+			lazio_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					owns = 118
+				}
+				custom_tooltip = AB_ROME_CAPITAL
+			}
+			else = {
+				custom_tooltip = AB_ROME_CAPITAL_NO
+			}
+			if = {
+				limit = {
+					118 = {
+						owned_by = PAP
+					}
+					PAP = {
+						is_subject_of = ROOT
+					}
+				}
+				custom_tooltip = AB_ROME_POPE
+				tooltip = {
+					add_country_modifier = {
+						name = "lom_holy_see_protector"
+						duration = -1
+					}
+					custom_tooltip = AB_PAP_INTEGRATE
+				}
+			}
+			else = {
+				custom_tooltip = AB_ROME_POPE_NO
+				tooltip = {
+					add_country_modifier = {
+						name = "lom_holy_see_protector"
+						duration = -1
+					}
+					custom_tooltip = AB_PAP_INTEGRATE
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns = 118
+					}
+					118 = {
+						move_capital_effect = yes
+					}
+				}
+				else_if = {
+					limit = {
+						118 = {
+							owned_by = PAP
+						}
+						PAP = {
+							is_subject_of = ROOT
+						}
+					}
+					add_country_modifier = {
+						name = "lom_holy_see_protector"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rmg_liberate_naples = {
+		icon = king_of_naples
+		required_missions = { rmg_question_of_roma }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = naples_area
+				area = apulia_area
+				area = calabria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_army_professionalism = 0.1
+			add_country_modifier = {
+				name = trc_crusade_sicily
+				duration = 7300
+			}
+			custom_tooltip = RMG_CRUSADE_SICILY
+		}
+	}
+
+	rmg_develop_naples = {
+		icon = develop_naples
+		required_missions = { rmg_liberate_naples }
+		position = 9
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				culture = neapolitan
+				culture = sicilian
+			}
+			NOT = { development = 15 }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				development = 15
+				OR = {
+					culture = neapolitan
+					culture = sicilian
+				}
+			}
+		}
+
+		effect = {
+			add_years_of_income = 3
+			add_country_modifier = {
+				name = rmg_developing_south
+				duration = 7300
+			}
+			if = {
+				limit = {
+					121 = {
+						is_prosperous = yes
+					}
+				}
+				custom_tooltip = RMG_NAPOLI_PROSPERITY_YES
+			}
+			else = {
+				custom_tooltip = RMG_NAPOLI_PROSPERITY_NO
+			}
+			tooltip = {
+				121 = {
+					add_or_upgrade_production_building = yes
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						121 = {
+							is_prosperous = yes
+						}
+					}
+					121 = {
+						add_or_upgrade_production_building = yes
+						add_base_tax = 1
+						add_base_production = 1
+						add_base_manpower = 1
+					}
+				}
+			}
+		}
+	}
+
+	rmg_urbanize_italy = {
+		icon = found_batavia
+		required_missions = { rmg_romagnol_renaissance }
+		position = 10
+
+		provinces_to_highlight = {
+			NOT = {
+				development = 25
+			}
+			region = italy_region
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				region = italy_region
+				development = 25
+			}
+		}
+		
+		effect = {
+			italy_region = {
+				limit = { owned_by = ROOT }
+				add_province_modifier = {
+					name = lom_industrial_economy
+					duration = -1
+				}
+			}
+		}
+	}
+
+	rmg_industrial_powerhouse = {
+		icon = industrialized_rhineland
+		required_missions = { rmg_urbanize_italy }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_MANUFACTORIES
+			add_country_modifier = {
+				name = lom_industrial_powerhouse
+				duration = 7300
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									has_building = mills
+									has_building = farm_estate
+									has_building = tradecompany
+									has_building = plantations
+									has_building = textile
+									has_building = weapons
+									has_building = wharf
+									has_building = furnace
+								}
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+}
+
+romagnol_third_starting = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = PAR
+					was_tag = RVN
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_war_emilia_romagna = {
+		icon = mission_italian_condottiere
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
+			num_of_generals = 1
+		}
+
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = rmg_war_for_emilia_modifier
+				duration = 3650
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = PAR
+						was_tag = PAR
+					}
+				}
+				if = {
+					limit = {
+						RVN = {
+							has_opinion = {
+								who = ROOT
+								value = 100
+							}
+						}
+						NOT = { has_country_flag = had_romagna_coalition }
+					}
+					custom_tooltip = RMG_GOOD_RELATION_WITH_RAVENNA_YES
+				}
+				else = {
+					custom_tooltip = RMG_GOOD_RELATION_WITH_RAVENNA_NO
+				}
+				tooltip = {
+					country_event = {
+						id = ab_romagna.0
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							RVN = {
+								has_opinion = {
+									who = ROOT
+									value = 100
+								}
+							}
+							NOT = { has_country_flag = had_romagna_coalition }
+						}
+						country_event = {
+							id = ab_romagna.0
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						tag = RVN
+						was_tag = RVN
+					}
+				}
+				if = {
+					limit = {
+						PAR = {
+							has_opinion = {
+								who = ROOT
+								value = 100
+							}
+						}
+						NOT = { has_country_flag = had_romagna_coalition }
+					}
+					custom_tooltip = RMG_GOOD_RELATION_WITH_PARMA_YES
+				}
+				else = {
+					custom_tooltip = RMG_GOOD_RELATION_WITH_PARMA_NO
+				}
+				tooltip = {
+					country_event = {
+						id = ab_romagna.0
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							PAR = {
+								has_opinion = {
+									who = ROOT
+									value = 100
+								}
+							}
+							NOT = { has_country_flag = had_romagna_coalition }
+						}
+						country_event = {
+							id = ab_romagna.0
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+romagnol_third_romagna = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RMG
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_romagnan_victory = {
+		icon = expand_to_the_south
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			area = emilia_romagna_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = statesman
+				skill = 2
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = rmg_unite_the_romagnol
+				duration = 5475
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			108 = {
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rmg_cuisine = {
+		icon = mission_pasta
+		required_missions = { rmg_develop_ferrara rmg_curtail_nobles }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				trade_goods = cocoa
+				trade_goods = spices
+				trade_goods = coffee
+				trade_goods = tea
+				trade_goods = sugar
+			}
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { has_production_building_trigger = yes }
+				NOT = { has_manufactory_trigger = yes }
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					trade_goods = cocoa
+					trade_goods = spices
+					trade_goods = coffee
+					trade_goods = tea
+					trade_goods = sugar
+				}
+				has_production_building_trigger = yes
+				has_manufactory_trigger = yes
+				value = 30
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = gen_italian_cuisine
+				duration = -1
+			}
+			4730 = {
+				add_base_production = 5
+				change_trade_goods = cocoa
+				upgrade_production_building = yes
+				add_province_modifier = {
+					name = rmg_bologna_pasta
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+romagnol_third_ravenna = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_ravennan_victory = {
+		icon = control_the_church
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+				owned_by = RMG
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				area = emilia_romagna_area
+			}
+			NOT = { exists = RMG }
+		}
+
+		effect = {
+			define_advisor = {
+				type = theologian
+				skill = 2
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = rmg_ravennan_romagna
+				duration = 5475
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			108 = {
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					PAR = {
+						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+						NOT = { total_development = ROOT }
+					}
+				}
+				custom_tooltip = RMG_VASSALIZE_PARMA_YES
+			}
+			else = {
+				custom_tooltip = RMG_VASSALIZE_PARMA_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						PAR = {
+							alliance_with = ROOT
+							has_opinion = {
+								who = ROOT
+								value = 200
+							}
+							NOT = { total_development = ROOT }
+						}
+					}
+					vassalize = PAR
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						is_year = 1450
+					}
+				}
+				custom_tooltip = RVN_TIMED_UNLOCK_YES
+			}
+			else = {
+				custom_tooltip = RVN_TIMED_UNLOCK_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							is_year = 1450
+						}
+					}
+					country_event = { id = ab_romagna.6 }
+				}
+			}
+		}
+	}
+}
+
+romagnol_ravenna_timed_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		NOT = { has_country_flag = rvn_mission_unlocked }
+		NOT = { has_country_flag = rvn_mission_failed }
+	}
+	has_country_shield = yes
+	
+	rmg_ravenna_timed_locked = {
+	    icon = mission_timed
+		required_missions = { rmg_ravennan_victory }
+		position = 3
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = RMG_RAVENNA_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RMG_RAVENNA_UNLOCKABLE
+		}
+	}
+}
+
+romagnol_ravenna_timed_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		has_country_flag = rvn_mission_unlocked
+		NOT = { has_country_flag = rvn_mission_failed }
+	}
+	has_country_shield = yes
+	
+	rmg_legacy_of_west_rome = {
+	    icon = a_roman_empire
+		required_missions = { rmg_ravennan_victory }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = BYZ
+				is_core = BYZ
+				culture = greek
+				province_id = 151
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			NOT = { is_year = 1500 }
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			owns_all_provinces = {
+				custom_trigger_tooltip = {
+					tooltip = RMG_IS_BYZ_CORE
+					is_core = BYZ
+				}
+			}
+			owns_all_provinces = {
+				culture = greek
+			}
+			NOT = { exists = BYZ }
+		}
+		
+		effect = {
+			custom_tooltip = RMG_UNLOCK_EARLY_WESTROME
+			custom_tooltip = AB_EMPTY
+			france_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iberia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			cornwall_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wessex_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wales_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_midlands_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_midlands_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_anglia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+romagnol_ravenna_timed_failed = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		has_country_flag = rvn_mission_failed
+	}
+	has_country_shield = yes
+}
+
+romagnol_third_parma = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_parman_victory = {
+		icon = dreams_of_grandeur
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+				owned_by = RMG
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				area = emilia_romagna_area
+			}
+			NOT = { exists = RMG }
+		}
+
+		effect = {
+			define_advisor = {
+				type = in_advisor
+				skill = 2
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = rmg_parman_romagna
+				duration = 5475
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			108 = {
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					RVN = {
+						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+						NOT = { total_development = ROOT }
+					}
+				}
+				custom_tooltip = RMG_VASSALIZE_RAVENNA_YES
+			}
+			else = {
+				custom_tooltip = RMG_VASSALIZE_RAVENNA_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						RVN = {
+							alliance_with = ROOT
+							has_opinion = {
+								who = ROOT
+								value = 200
+							}
+							NOT = { total_development = ROOT }
+						}
+					}
+					vassalize = RVN
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						is_year = 1450
+					}
+				}
+				custom_tooltip = PAR_TIMED_UNLOCK_YES
+			}
+			else = {
+				custom_tooltip = PAR_TIMED_UNLOCK_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							is_year = 1450
+						}
+					}
+					country_event = { id = ab_romagna.4 }
+				}
+			}
+		}
+	}
+}
+
+romagnol_parma_timed_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		NOT = { has_country_flag = par_mission_unlocked }
+		NOT = { has_country_flag = par_mission_failed }
+	}
+	has_country_shield = yes
+	
+	rmg_parma_timed_locked = {
+	    icon = mission_timed
+		required_missions = { rmg_parman_victory }
+		position = 3
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = RMG_PARMA_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RMG_PARMA_UNLOCKABLE
+		}
+	}
+}
+
+romagnol_parma_timed_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		has_country_flag = par_mission_unlocked
+		NOT = { has_country_flag = par_mission_failed }
+	}
+	has_country_shield = yes
+	
+	rmg_lion_of_parma = {
+	    icon = mission_lion
+		required_missions = { rmg_parman_victory }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = italy_region
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			ab_is_italy_tag_trigger = yes
+			NOT = { is_year = 1500 }
+			italy_region = {
+				type = all
+				owned_by = ROOT
+			}
+			is_great_power = yes
+			in_golden_age = yes
+		}
+		
+		effect = {
+			custom_tooltip = BOH_GOLDEN_AGE
+			hidden_effect = {
+				extend_golden_age = 600
+			}
+			add_country_modifier = {
+				name = rmg_parmalion
+				duration = 36500
+			}
+		}
+	}
+}
+
+romagnol_parma_timed_failed = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		has_country_flag = par_mission_failed
+	}
+	has_country_shield = yes
+}
+
+romagnol_third_verona = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = VRN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_veronese_victory = {
+		icon = develop_the_po_valley
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			area = emilia_romagna_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = romagnan
+			}
+			custom_tooltip = RMG_VERONA_INTEGRATE_ROMAGNOL
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = romagnan
+					}
+					add_nationalism = -20
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rmg_unexpected_verona
+				duration = 5475
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rmg_police_state = {
+		icon = mission_italian_condottiere
+		required_missions = { rmg_romeo_juliet rmg_burghers_rule }
+		position = 3
+		
+		trigger = {
+			absolutism = 50
+			NOT = { average_autonomy = 10 }
+			NOT = {
+				any_owned_province = {
+					unrest = 1
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rmg_police_state_modifier
+				duration = -1
+			}
+			custom_tooltip = TRC_NAT_DEV
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								culture_group = latin
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+}
+
+romagnol_third_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_slovenia_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_end_venice }
+		position = 4
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_croatia_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_slovenia_locked }
+		position = 5
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_unite_latin_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_unite_italy rmg_dalmatia }
+		position = 6
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_mare_nostrum_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_unite_latin_locked }
+		position = 8
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+romagnol_third_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = RMG
+			was_tag = PAR
+			was_tag = RVN
+			was_tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_slovenia = {
+		icon = capture_adriatic_ports
+		required_missions = { rmg_end_venice }
+		position = 4
+
+		provinces_to_highlight = {
+			area = carinthia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			carinthia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			create_general = { tradition = 80 }
+			add_yearly_manpower = 2.5
+			add_country_modifier = {
+				name = rmg_balkan_campaign
+				duration = 5475
+			}
+			if = {
+				limit = {
+					exists = CRO
+				}
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = CRO
+				}
+			}
+			else = {
+				croatia_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				slavonia_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				bosnia_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					4738 = {
+						development = 20
+						has_trade_building_trigger = yes
+					}
+				}
+				custom_tooltip = RMG_TRIESTE_HIGH_DEV_YES
+			}
+			else = {
+				custom_tooltip = RMG_TRIESTE_HIGH_DEV_NO
+			}
+			tooltip = {
+				4738 = {
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					else_if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 3 }
+						}
+						add_center_of_trade_level = 1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						4738 = {
+							development = 20
+							has_trade_building_trigger = yes
+						}
+					}
+					4738 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rmg_croatia = {
+		icon = secure_the_sava
+		required_missions = { rmg_slovenia }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = CRO
+				area = croatia_area
+				area = slavonia_area
+				area = bosnia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				overlord_of = CRO
+				AND = {
+					croatia_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					slavonia_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					bosnia_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_mil_power = 100
+			add_stability_or_adm_power = yes
+			if = {
+				limit = {
+					accepted_culture = croatian
+				}
+				custom_tooltip = SER_ACCEPTED_CROATIAN
+			}
+			else = {
+				custom_tooltip = SER_ACCEPTED_CROATIAN_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						accepted_culture = croatian
+					}
+					every_owned_province = {
+						limit = {
+							culture = croatian
+						}
+						add_nationalism = -20
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					overlord_of = CRO
+				}
+				custom_tooltip = RMG_OVERLORD_CRO_YES
+			}
+			else = {
+				custom_tooltip = RMG_OVERLORD_CRO_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rmg_integrate_pandurs
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						overlord_of = CRO
+					}
+					add_country_modifier = {
+						name = rmg_integrate_pandurs
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+
+	rmg_unite_latin = {
+		icon = complete_the_risorgimento
+		required_missions = { rmg_unite_italy rmg_dalmatia }
+		position = 6
+
+		trigger = {
+			owns_all_provinces = {
+				culture_group = latin
+			}
+		}
+		
+		provinces_to_highlight = {
+			culture_group = latin
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = TRC_NAT_DEV
+			add_country_modifier = {
+				name = "trc_risorgimento"
+				duration = 9125
+			}
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								culture_group = latin
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+	rmg_mare_nostrum = {
+		icon = mission_rb_mediterranean_authority
+		required_missions = { rmg_unite_latin }
+		position = 8
+
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				any_owned_province = {
+					has_port = yes
+					sea_zone = {
+						OR = {
+							area = western_mediterrenean_area
+							area = eastern_mediterrenean_area
+						}
+					}
+				}
+				navy_size = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AB_MARE_NOSTRUM
+				NOT = {
+					any_known_country = {
+						any_owned_province = {
+							has_port = yes
+							sea_zone = {
+								OR = {
+									area = western_mediterrenean_area
+									area = eastern_mediterrenean_area
+								}
+							}
+						}
+						navy_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_ADMIRAL
+			set_country_flag = ab_admiral_gives_naval_tradition
+			add_country_modifier = {
+				name = "lom_marenostrum"
+				duration = -1
+			}
+			define_advisor = {
+				type = naval_reformer
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+}
+
+romagnol_third_army = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = PAR
+					was_tag = RVN
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_scout_army = {
+		icon = the_hundred_years_war
+		required_missions = { }
+		position = 10
+
+		trigger = {
+			has_global_modifier_value = { 
+				which = cavalry_power
+				value = 0.1
+			}
+			num_of_cavalry = 15
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rmg_ricognizio
+				duration = 7300
+			}
+			custom_tooltip = RMG_WINNING_BATTLE
+		}
+	}
+}
+
+romagnol_fourth_romagna = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RMG
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_curtail_nobles = {
+		icon = rein_in_the_nobles
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+		
+		trigger = {
+			crown_stronger_than_estate = { estate = estate_church }
+			crown_stronger_than_estate = { estate = estate_nobles }
+			crown_stronger_than_estate = { estate = estate_burghers }
+			absolutism = 20
+		}
+
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = rmg_undisputed_authority
+				duration = 36500
+			}
+		}
+	}
+}
+
+romagnol_fourth_ravenna = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RVN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = RVN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_clergy_rule = {
+		icon = support_the_orders
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+		
+		trigger = {
+			num_of_estate_privileges = {
+				estate = estate_church
+				value = 4
+			}
+			crown_stronger_than_estate = { estate = estate_nobles }
+			crown_stronger_than_estate = { estate = estate_burghers }
+		}
+
+		effect = {
+			change_estate_land_share = {
+				estate = estate_church
+				share = 10
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RMG_SCALING_THEOLOGIAN
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_religious_culture_flag
+			custom_tooltip = RMG_RELIGIOUS_CULTURE_BUFF
+		}
+	}
+}
+
+romagnol_fourth_parma = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PAR
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = PAR
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_share_power = {
+		icon = balance_the_estates
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+		
+		trigger = {
+			num_of_estate_privileges = {
+				estate = estate_church
+				value = 2
+			}
+			num_of_estate_privileges = {
+				estate = estate_nobles
+				value = 2
+			}
+			num_of_estate_privileges = {
+				estate = estate_burghers
+				value = 2
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rmg_powerful_estate
+				duration = 36500
+			}
+			custom_tooltip = RMG_POWERFUL_ESTATE
+		}
+	}
+}
+
+romagnol_fourth_verona = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = VRN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_burghers_rule = {
+		icon = mission_lit_reform_magdeburg_laws
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+		
+		trigger = {
+			num_of_estate_privileges = {
+				estate = estate_burghers
+				value = 4
+			}
+			crown_stronger_than_estate = { estate = estate_church }
+			crown_stronger_than_estate = { estate = estate_nobles }
+		}
+
+		effect = {
+			change_estate_land_share = {
+				estate = estate_burghers
+				share = 10
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RMG_SCALING_TRADER
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_monetary_policy_no_power_cost_flag
+			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
+		}
+	}
+}
+
+romagnol_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = RVN
+					was_tag = PAR
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_end_venice = {
+		icon = mission_control_venice
+		required_missions = { rmg_into_po_valley }
+		position = 3
+
+		provinces_to_highlight = {
+			area = venetia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				venetia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				navy_size = VEN
+			}
+		}
+
+		effect = {
+			add_navy_tradition = 25
+			112 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 25
+					key = lom_venice_control
+				}
+			}
+			add_country_modifier = {
+				name = gen_dismantled
+				duration = 7300
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_adriatic_coast_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rmg_dalmatia = {
+		icon = dalmatian_conquest
+		required_missions = { rmg_end_venice }
+		position = 5
+
+		provinces_to_highlight = {
+			area = east_adriatic_coast_area
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { base_production = 6 }
+			}
+		}
+		
+		trigger = {
+			east_adriatic_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+				base_production = 6
+			}
+		}
+		
+		effect = {
+			east_adriatic_coast_area = {
+				add_base_tax = 1
+			}
+			137 = {
+				add_great_project_tier = {
+					type = walls_ston
+					tier = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			serbia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rascia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RUM_BALKAN_SER
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = SER
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = SER
+					}
+				}	
+			}
+		}
+	}
+}
+
+romagnol_fourth_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_serbia_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_dalmatia }
+		position = 7
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_bulgaria_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_serbia_locked rmg_latin_empire_locked }
+		position = 8
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+romagnol_fourth_unlocked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = RMG
+			was_tag = RVN
+			was_tag = PAR
+			was_tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_serbia = {
+		icon = defeat_the_serbs
+		required_missions = { rmg_dalmatia }
+		position = 7
+
+		provinces_to_highlight = {
+			culture = serbian
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				owns_all_provinces = {
+					culture = serbian
+				}
+				overlord_of = SER
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rmg_integrate_hajduks
+				duration = 7300
+			}
+			custom_tooltip = CRO_SERBIA
+			tooltip = {
+				add_province_modifier = {
+					name = cro_catholicise_serbs
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = serbian
+					}
+					add_province_modifier = {
+						name = cro_catholicise_serbs
+						duration = 7300
+					}
+					add_local_autonomy = -50
+				}
+			}
+			balkan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = rmg_integrate_pandurs
+				}
+				custom_tooltip = RMG_HAVE_2_SLAVIC_BUFF_YES
+			}
+			else = {
+				custom_tooltip = RMG_HAVE_2_SLAVIC_BUFF_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = rmg_integrate_pandurs
+					}
+					remove_country_modifier = rmg_integrate_hajduks
+					remove_country_modifier = rmg_integrate_pandurs
+					add_country_modifier = {
+						name = rmg_integrate_pandurs
+						duration = -1
+					}
+					add_country_modifier = {
+						name = rmg_integrate_hajduks
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rmg_bulgaria = {
+		icon = mission_balkan_conquest
+		required_missions = { rmg_serbia rmg_latin_empire }
+		position = 8
+
+		provinces_to_highlight = {
+			region = balkan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			balkan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			custom_tooltip = LOM_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = RMG_perma_pp
+					amount = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_italo_balkan_unity
+			}
+		}
+	}
+}
+
+romagnol_fourth_tall = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = RVN
+					was_tag = PAR
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_northern_prosperity = {
+		icon = reclaim_the_ducal_lands
+		required_missions = { }
+		position = 9
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = { development = 15 }
+				has_production_building_trigger = no
+				has_trade_building_trigger = no
+			}
+			OR = {
+				culture = romagnan
+				culture = lombard
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				development = 15
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				OR = {
+					culture = romagnan
+					culture = lombard
+				}
+			}
+		}
+
+		effect = {
+			add_adm_power = 100
+			add_years_of_income = 2
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RMG_EVERY_15_NORTHERN_PROVINCE
+			tooltip = {
+				add_base_production = 2
+				add_province_modifier = {
+					name = rmg_northern_prosperity_province
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						development = 15
+						OR = {
+							culture = romagnan
+							culture = lombard
+						}
+					}
+					add_base_production = 2
+					add_province_modifier = {
+						name = rmg_northern_prosperity_province
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	rmg_cannons_of_mantova = {
+		icon = mission_guns_of_urban
+		required_missions = { rmg_northern_prosperity }
+		position = 10
+
+		provinces_to_highlight = {
+			province_id = 109
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 22 }
+				has_manpower_building_trigger = no
+				has_forcelimit_building_trigger = no
+			}
+		}
+
+		trigger = {
+			109 = {
+				owned_by = ROOT
+			}
+			109 = {
+				development = 22
+			}
+			109 = {
+				has_manpower_building_trigger = yes
+			}
+			109 = {
+				has_forcelimit_building_trigger = yes
+			}
+			has_global_modifier_value = { 
+				which = artillery_power
+				value = 0.1
+			}
+			num_of_artillery = 20
+		}
+
+		effect = {
+			add_mil_tech = 1
+			add_country_modifier = {
+				name = rmg_superior_firepower
+				duration = 7300
+			}
+			109 = {
+				add_base_manpower = 3
+				upgrade_manpower_building = yes
+				upgrade_forcelimit_building = yes
+				change_trade_goods = iron
+			}
+		}
+	}
+
+	rmg_italian_warfare = {
+		icon = mission_thirty_years_war
+		required_missions = { rmg_scout_army rmg_cannons_of_mantova }
+		position = 11
+
+		trigger = {
+			army_size = 200
+			army_professionalism = 1
+			army_tradition = 100
+			has_global_modifier_value = { 
+				which = discipline
+				value = 0.15
+			}
+		}
+
+		effect = {
+			create_general = { tradition = 100 }
+			create_general = { tradition = 80 }
+			add_country_modifier = {
+				name = rmg_army_academy
+				duration = -1
+			}
+			custom_tooltip = RMG_WINNING_WAR_REDUCE_AE
+		}
+	}
+}
+
+romagnol_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = RMG
+					was_tag = RVN
+					was_tag = PAR
+					was_tag = VRN
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_into_po_valley = {
+		icon = sweep_the_po
+		required_missions = { rmg_war_emilia_romagna }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = po_valley_area
+				province_id = 108
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				OR = {
+					area = po_valley_area
+					province_id = 108
+				}
+				if = {
+					limit = {
+						ROOT = {
+							OR = {
+								tag = VRN
+								was_tag = VRN
+							}
+						}
+					}
+					base_manpower = 5
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						tag = VRN
+						was_tag = VRN
+					}
+				}
+				define_advisor = {
+					type = commandant
+					culture = ROOT
+					skill = 1
+					discount = yes
+				}
+				custom_tooltip = AB_EMPTY
+			}
+			else = {
+				custom_tooltip = LOM_REINTEGRATION
+				tooltip = {
+					add_province_modifier = {
+						name = "lom_reintegration_po"
+						duration = 3650
+					}
+				}
+				hidden_effect = {
+					po_valley_area = {
+						limit = {
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						add_province_modifier = {
+							name = "lom_reintegration_po"
+							duration = 3650
+						}
+					}
+					108 = {
+						if = {
+							limit = {
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+						}
+						add_province_modifier = {
+							name = "lom_reintegration_po"
+							duration = 3650
+						}
+					}
+				}
+			}
+			custom_tooltip = BRA_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -10
+						apply_calc = no
+					}
+				}
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			110 = {
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						is_rival = LOM
+						is_enemy = LOM
+					}
+				}
+				custom_tooltip = IVR_RIVAL_LOMBARDY_YES
+			}
+			else = {
+				custom_tooltip = IVR_RIVAL_LOMBARDY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							is_rival = LOM
+							is_enemy = LOM
+						}
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = LOM
+					}
+				}
+			}
+		}
+	}
+
+	rmg_unite_north = {
+		icon = mission_italian_conquest
+		required_missions = { rmg_into_po_valley }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				area = lombardy_area
+				area = piedmont_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			piedmont_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = { 
+				name = trc_consolidate_italy
+				duration = 5475
+			}
+			if = {
+				limit = {
+					LOM = {
+						is_subject_of = ROOT
+						is_elector = yes
+					}
+				}
+				custom_tooltip = IVR_OVERLORD_LOMBARDY_YES
+			}
+			else = {
+				custom_tooltip = IVR_OVERLORD_LOMBARDY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						LOM = {
+							is_subject_of = ROOT
+							is_elector = yes
+						}
+					}
+					LOM = {
+						elector = no
+					}
+					elector = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								region = italy_region
+							}
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = TRC_MOST_DEV_YES
+				add_prestige_or_monarch_power = { amount = 25 } 
+			}
+			else = {
+				custom_tooltip = TRC_MOST_DEV_NO
+				tooltip = {
+					add_prestige_or_monarch_power = { amount = 25 } 
+				}
+			}
+		}
+	}
+
+	rmg_fortify_alps = {
+		icon = fortress_switzerland
+		required_missions = { rmg_unite_north }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 102
+				province_id = 103
+				province_id = 4740
+				province_id = 110
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				province_has_current_tech_fort_trigger = no
+			}
+		}
+		
+		trigger = {
+			102 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+			}
+			103 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+			}
+			4740 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+			}
+			110 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = RMG_ALL_NORTHERN_FORT_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rmg_fortress_italy
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				102 = {
+					add_province_modifier = {
+						name = rmg_fortress_italy
+						duration = -1
+					}
+				}
+				103 = {
+					add_province_modifier = {
+						name = rmg_fortress_italy
+						duration = -1
+					}
+				}
+				4740 = {
+					add_province_modifier = {
+						name = rmg_fortress_italy
+						duration = -1
+					}
+				}
+				110 = {
+					add_province_modifier = {
+						name = rmg_fortress_italy
+						duration = -1
+					}
+				}
+			}
+			define_advisor = {
+				type = fortification_expert
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+}
+
+romagnol_fifth_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = RMG
+			tag = RVN
+			tag = PAR
+			tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_greece_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_dalmatia }
+		position = 6
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_latin_empire_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_greece_locked }
+		position = 7
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_jerusalem_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_latin_empire_locked }
+		position = 9
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	rmg_balkan_metropolises_locked = {
+		icon = mission_locked_mission
+		required_missions = { rmg_northern_prosperity }
+		position = 10
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+romagnol_fifth_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = RMG
+			was_tag = RVN
+			was_tag = PAR
+			was_tag = VRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rmg_greece = {
+		icon = cross_the_pindus
+		required_missions = { rmg_dalmatia }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = northern_greece_area
+				area = morea_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			morea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			change_price = {
+				trade_goods = silk
+				key = steal_greek_silk
+				value = 0.15
+				duration = -1
+			}
+			random_owned_province = {
+				limit = {
+					region = italy_region
+					trade_goods = livestock
+				}
+				add_base_production = 3
+				change_trade_goods = silk
+				add_province_modifier = {
+					name = rmg_greek_silk
+					duration = -1
+				}
+			}
+			151 = {
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rmg_latin_empire = {
+		icon = take_constantinople
+		required_missions = { rmg_greece }
+		position = 7
+
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			151 = {
+				owned_by = ROOT
+			}
+		}
+
+		effect = {
+			country_event = { id = ab_jerusalem.5 }
+			add_country_modifier = {
+				name = alb_aegean_domination
+				duration = 9125
+			}
+			palestine_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = RVN
+						was_tag = RVN
+					}
+				}
+				custom_tooltip = RMG_START_AS_RAVENNA_YES
+			}
+			else = {
+				custom_tooltip = RMG_START_AS_RAVENNA_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = rmg_successor_of_romans
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							tag = RVN
+							was_tag = RVN
+						}
+					}
+					add_country_modifier = {
+						name = rmg_successor_of_romans
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rmg_jerusalem = {
+		icon = jerusalem
+		required_missions = { rmg_latin_empire }
+		position = 9
+
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    palestine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			379 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+				add_province_modifier = {
+					name = koj_jewel_of_orient
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = "lat_jerusalem"
+				duration = 9125
+			}
+			if = {
+				limit = {
+					KOJ = {
+						is_subject_of = ROOT
+						owns = 379
+					}
+				}
+				custom_tooltip = RMG_KOJ_OWN_PALESTINE_YES
+			}
+			else = {
+				custom_tooltip = RMG_KOJ_OWN_PALESTINE_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = "ibe_jerusalem_alliance"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						KOJ = {
+							is_subject_of = ROOT
+							owns = 379
+						}
+					}
+					add_country_modifier = {
+						name = "ibe_jerusalem_alliance"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rmg_balkan_metropolises = {
+		icon = despot_stefans_legacy
+		required_missions = { rmg_northern_prosperity }
+		position = 10
+
+		provinces_to_highlight = {
+			NOT = { development = 25 }
+			region = balkan_region
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				region = balkan_region
+				development = 25
+			}
+		}
+
+		effect = {
+			add_absolutism = 10
+			add_legitimacy = 25
+			add_devotion = 25
+			add_republican_tradition = 25
+			add_country_modifier = {
+				name = rmg_co_prosperity_sphere
+				duration = 18250
+			}
+			custom_tooltip = RMG_NEW_BALKAN_UNITY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_province_modifier = rmg_balkan_unity
+					}
+					remove_province_modifier = rmg_balkan_unity
+					add_province_modifier = {
+						name = rmg_balkan_unity_buffed
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
