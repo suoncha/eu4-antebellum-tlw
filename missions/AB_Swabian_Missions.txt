@@ -15,7 +15,6 @@ ab_swabia_first = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -529,7 +528,6 @@ ab_swabia_second = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -960,7 +958,6 @@ ab_swabia_third = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -1529,7 +1526,6 @@ ab_swabia_fourth = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -1583,13 +1579,6 @@ ab_swabia_fourth = {
 				}
 				else = {
 					custom_tooltip = BOH_LOTCB_NO
-					tooltip = {
-						add_casus_belli = {
-							type = cb_restore_personal_union
-							months = 300
-							target = LOT
-						}
-					}
 				}
 			}
 			else = {
@@ -1608,13 +1597,6 @@ ab_swabia_fourth = {
 				}
 				else = {
 					custom_tooltip = SWA_LOTCB_NOT_MONARCHY_NO
-					tooltip = {
-						add_casus_belli = {
-							type = cb_vassalize_mission
-							months = 300
-							target = LOT
-						}
-					}
 				}
 			}
 		}
@@ -1712,13 +1694,8 @@ ab_swabia_fourth = {
 		}
 
 		effect = {
-			97 = {
-				add_trade_modifier = {
-					who = ROOT
-					duration = -1
-					power = 50
-					key = "The Low Countries Secured"
-				}
+			country_event = {
+				id = ab_byzantium.63
 			}
 			custom_tooltip = AB_EMPTY
 			low_countries_region = {
@@ -1923,7 +1900,6 @@ ab_swabia_fifth = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -2084,11 +2060,9 @@ ab_swabia_fifth = {
 					dynasty = "Hohenstaufen"
 				}
 				custom_tooltip = BOH_HOHENSTAUFEN
-				tooltip = {
-					add_country_modifier = {
-						name = boh_hohenstaufen_glory
-						duration = -1
-					}
+				add_country_modifier = {
+					name = boh_hohenstaufen_glory
+					duration = -1
 				}
 			}
 			else = {
@@ -2102,15 +2076,6 @@ ab_swabia_fifth = {
 			}
 			hidden_effect = {
 				extend_golden_age = 600
-				if = {
-					limit = {
-						dynasty = "Hohenstaufen"
-					}
-					add_country_modifier = {
-						name = boh_hohenstaufen_glory
-						duration = -1
-					}
-				}
 			}
 		}
 	}
@@ -2343,7 +2308,6 @@ ab_swabia_first_eastern = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -2397,7 +2361,6 @@ ab_swabia_second_eastern = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -2405,10 +2368,6 @@ ab_swabia_second_eastern = {
 		icon = mission_combat_barbary_piracy
 		position = 13
 		required_missions = { swa_kingdom_of_jerusalem }
-
-		ai_weight = {
-			factor = 1000
-		}
 	
 		trigger = {
 			tunisia_area = {
@@ -2580,7 +2539,6 @@ ab_swabia_third_eastern = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -2589,27 +2547,11 @@ ab_swabia_third_eastern = {
 		required_missions = { swa_kingdom_of_jerusalem }
 		position = 13
 		
-		ai_weight = {
-			factor = 1000
-		}
-		
 		trigger = {
-			if = {
-				limit = {
-					has_country_flag = ab_stronger_ai_swa
-					ai = yes
-				}
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 15
-					region = egypt_region
-				}
-			}
-			else = {
-				358 = { religion = catholic }
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 25
-					region = egypt_region
-				}
+			358 = { religion = catholic }
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = egypt_region
 			}
 		}
 		
@@ -2900,7 +2842,6 @@ ab_swabia_fourth_eastern = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -3016,7 +2957,6 @@ ab_swabia_fifth_eastern = {
 			tag = DWT
 			tag = AUG
 		}
-		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 
@@ -3237,6 +3177,57 @@ ab_swabia_fifth_eastern = {
 }
 
 # Rome
+ab_swabia_first_rome_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SWA
+			tag = BAD
+			tag = KNZ
+			tag = ULM
+			tag = DWT
+			tag = AUG
+		}
+	}
+	has_country_shield = yes
+
+	swa_newworld_base_locked = {
+		icon = mission_unknown_mission
+		position = 14
+		required_missions = { }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	swa_conquer_seas_locked = {
+		icon = mission_unknown_mission
+		position = 16
+		required_missions = { swa_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+}
+
 ab_swabia_first_rome = {
 	slot = 1
 	generic = no
@@ -3502,6 +3493,57 @@ ab_swabia_first_rome = {
 					government_reform = rom_legio
 				}
 			}
+		}
+	}
+}
+
+ab_swabia_second_rome_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SWA
+			tag = BAD
+			tag = KNZ
+			tag = ULM
+			tag = DWT
+			tag = AUG
+		}
+	}
+	has_country_shield = yes
+
+	swa_punics_locked = {
+		icon = mission_unknown_mission
+		position = 15
+		required_missions = { swa_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	swa_europe_locked = {
+		icon = mission_unknown_mission
+		required_missions = { swa_schism }
+		position = 16
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
 }
@@ -3933,6 +3975,40 @@ ab_swabia_third_rome = {
 				duration = -1
 			}
 			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+ab_swabia_fourth_rome_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SWA
+			tag = BAD
+			tag = KNZ
+			tag = ULM
+			tag = DWT
+			tag = AUG
+		}
+	}
+	has_country_shield = yes
+
+	swa_cultural_hegemony_locked = {
+		icon = mission_unknown_mission
+		position = 16
+		required_missions = { swa_schism }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
 }
@@ -5112,7 +5188,6 @@ ab_swabia_first_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = SWA
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -5404,7 +5479,6 @@ ab_swabia_second_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = SWA
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -5676,7 +5750,6 @@ ab_swabia_third_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = SWA
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -5719,23 +5792,6 @@ ab_swabia_third_chinese_locked = {
 		icon = mission_unknown_mission
 		required_missions = { swa_indochina_locked }
 		position = 26
-
-		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_BEATING_CHINA
-				always = no
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_BEATING_CHINA
-		}
-	}
-
-	swa_asia_locked = {
-		icon = mission_unknown_mission
-		required_missions = { swa_far_east_locked swa_east_indies_locked swa_maharajas }
-		position = 27
 
 		trigger = {
 			custom_trigger_tooltip = {

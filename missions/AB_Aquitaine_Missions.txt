@@ -202,23 +202,14 @@ aqt_second = {
 						}
 					}
 					custom_tooltip = LOT_FRC_DISASTER
-				}
-				else = {
-					custom_tooltip = LOT_FRC_DISASTER_NO
-				}
-				tooltip = {
 					add_country_modifier = {
 						name = lot_exploit
 						duration = 3650
 					}
 				}
-				hidden_effect = {
-					if = {
-						limit = {
-							FRC = {
-								has_disaster = frankish_succession_crisis
-							}
-						}
+				else = {
+					custom_tooltip = LOT_FRC_DISASTER_NO
+					tooltip = {
 						add_country_modifier = {
 							name = lot_exploit
 							duration = 3650
@@ -448,18 +439,7 @@ aqt_third = {
 						}
 					}
 					custom_tooltip = AQT_LOT_GAIN_CORE
-				}
-				else = {
-					custom_tooltip = AQT_LOT_GAIN_CORE_NO
-				}
-				hidden_effect = {
-					if = {
-						limit = {
-							LOT = {
-								is_rival = FRC
-								is_supporting_independence_of = ROOT
-							}
-						}
+					hidden_effect = {
 						LOT = {
 							every_neighbor_province = {
 								limit = {
@@ -470,6 +450,9 @@ aqt_third = {
 							}
 						}
 					}
+				}
+				else = {
+					custom_tooltip = AQT_LOT_GAIN_CORE_NO
 				}
 			}
 			else = {
@@ -648,18 +631,7 @@ aqt_fourth = {
 					}
 				}
 				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS
-			}
-			else = {
-				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						basque_country = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT
-						}
-					}
+				hidden_effect = {
 					basque_country = {
 						add_province_modifier = {
 							name = geo_passes
@@ -667,6 +639,9 @@ aqt_fourth = {
 						}
 					}
 				}
+			}
+			else = {
+				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS_NO
 			}
 		}
 	}
@@ -1536,18 +1511,18 @@ aqt_second_aquitaine_unlocked = {
 					1269 = { highest_value_trade_node = yes }
 				}
 				custom_tooltip = FRC_NODE_YES
+				hidden_effect = { 
+					every_owned_province = {
+						limit = { 
+							same_trade_node_as = 1269
+							province_has_center_of_trade_of_level = 1 
+						}
+						owner = { add_mercantilism = 1 }
+					}
+				}
 			}
 			else = {
 				custom_tooltip = FRC_NODE_NO
-			}
-			hidden_effect = { 
-				every_owned_province = {
-					limit = { 
-						same_trade_node_as = 1269
-						province_has_center_of_trade_of_level = 1 
-					}
-					owner = { add_mercantilism = 1 }
-				}
 			}
 		}
 	}
@@ -1890,18 +1865,20 @@ aqt_third_aquitaine_unlocked = {
 					}
 				}
 				custom_tooltip = YES_AQT_NORTHERN_SUPREMACY
-				every_owned_province = {
-					limit = {
-						OR = {
-							culture = cosmopolitan_french
-							culture = burgundian
-							culture = normand
-							culture = wallonian
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								culture = cosmopolitan_french
+								culture = burgundian
+								culture = normand
+								culture = wallonian
+							}
 						}
-					}
-					add_province_modifier = {
-						name = aqt_northern_supremacy
-						duration = 9125
+						add_province_modifier = {
+							name = aqt_northern_supremacy
+							duration = 9125
+						}
 					}
 				}
 			}
@@ -2055,22 +2032,15 @@ aqt_fourth_aquitaine_unlocked = {
 					accepted_culture = occitain
 				}
 				custom_tooltip = AQT_OCCITAN_BONUS
-			}
-			else = {
-				custom_tooltip = AQT_OCCITAN_BONUS_NO
-			}
-			tooltip = {
 				201 = {
 					add_base_tax = 2
 					add_base_production = 2
 					add_base_manpower = 2
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						accepted_culture = occitain
-					}
+			else = {
+				custom_tooltip = AQT_OCCITAN_BONUS_NO
+				tooltip = {
 					201 = {
 						add_base_tax = 2
 						add_base_production = 2
@@ -2401,23 +2371,12 @@ aqt_fifth_aquitaine_unlocked = {
 					}
 				}
 				custom_tooltip = AQT_UNITE_IBERIANS_NAVARRA_BONUS
+				hidden_effect = {
+					inherit = NAV
+				}
 			}
 			else = {
 				custom_tooltip = AQT_UNITE_IBERIANS_NAVARRA_BONUS_NO
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NAV = {
-							is_subject_of_type_with_overlord = {
-								who = ROOT
-								type = march
-							}
-							NOT = { liberty_desire = 1 }
-						}
-					}
-					inherit = NAV
-				}
 			}
 		}
 	}
@@ -2485,21 +2444,14 @@ aqt_fifth_aquitaine_unlocked = {
 					has_country_modifier = frc_turning_the_tide
 				}
 				custom_tooltip = AQT_VALENCIA_SPEEDRUN_BONUS
-			}
-			else = {
-				custom_tooltip = AQT_VALENCIA_SPEEDRUN_BONUS_NO
-			}
-			tooltip = {
 				add_country_modifier = {
 					name = lot_iberian_crusade
 					duration = 18250
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_country_modifier = frc_turning_the_tide
-					}
+			else = {
+				custom_tooltip = AQT_VALENCIA_SPEEDRUN_BONUS_NO
+				tooltip = {
 					add_country_modifier = {
 						name = lot_iberian_crusade
 						duration = 18250
@@ -2828,12 +2780,6 @@ aqt_second_second = {
 					}
 				}
 				custom_tooltip = FRC_EAST_20_YES
-
-			}
-			else = {
-				custom_tooltip = FRC_EAST_20_NO
-			}
-			tooltip = {
 				southeast_america_region = {
 					limit = {
 						NOT = { is_core = ROOT }
@@ -2849,15 +2795,9 @@ aqt_second_second = {
 					add_permanent_claim = ROOT
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-							value = 20
-							colonial_region = colonial_eastern_america
-							is_city = yes
-						}
-					}
+			else = {
+				custom_tooltip = FRC_EAST_20_NO
+				tooltip = {
 					southeast_america_region = {
 						limit = {
 							NOT = { is_core = ROOT }
@@ -3965,6 +3905,50 @@ aqt_fifth_eastern = {
 }
 
 # Rome
+aqt_first_rome_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_newworld_base_locked = {
+		icon = mission_unknown_mission
+		position = 16
+		required_missions = { }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_conquer_seas_locked = {
+		icon = mission_unknown_mission
+		position = 18
+		required_missions = { aqt_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+}
+
 aqt_first_rome = {
 	slot = 1
 	generic = no
@@ -4230,6 +4214,67 @@ aqt_first_rome = {
 					government_reform = rom_legio
 				}
 			}
+		}
+	}
+}
+
+aqt_second_rome_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_colonial_empire_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_louisiana aqt_imperial_restoration }
+		position = 16
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_punics_locked = {
+		icon = mission_unknown_mission
+		position = 17
+		required_missions = { aqt_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_europe_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_schism }
+		position = 19
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
 }
@@ -4714,6 +4759,33 @@ aqt_third_rome = {
 				duration = -1
 			}
 			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+aqt_fourth_rome_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_cultural_hegemony_locked = {
+		icon = mission_unknown_mission
+		position = 19
+		required_missions = { aqt_schism }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
 		}
 	}
 }
@@ -5893,7 +5965,6 @@ aqt_first_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = AQT
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -6185,7 +6256,6 @@ aqt_second_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = AQT
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -6457,7 +6527,6 @@ aqt_third_chinese_locked = {
 	potential = {
 		tag = ROM
 		was_tag = AQT
-		has_country_flag = byz_persian_war_victory
 		NOT = { has_country_flag = byz_chinese_war_victory }
 	}
 	has_country_shield = yes
@@ -6500,23 +6569,6 @@ aqt_third_chinese_locked = {
 		icon = mission_unknown_mission
 		required_missions = { aqt_indochina_locked }
 		position = 28
-
-		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = BYZ_BEATING_CHINA
-				always = no
-			}
-		}
-
-		effect = {
-			custom_tooltip = BYZ_BEATING_CHINA
-		}
-	}
-
-	aqt_asia_locked = {
-		icon = mission_unknown_mission
-		required_missions = { aqt_far_east_locked aqt_east_indies_locked aqt_maharajas }
-		position = 29
 
 		trigger = {
 			custom_trigger_tooltip = {
