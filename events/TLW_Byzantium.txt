@@ -679,6 +679,13 @@ province_event = {
 			}
 		}
 		modifier = {
+			factor = 0.25
+			region = italy_region
+			ROM = {
+				has_country_flag = cap_embraced_sol_invictus
+			}
+		}
+		modifier = {
 			factor = 0.8
 			OR = {
 				culture_group = french
@@ -5028,6 +5035,422 @@ country_event = {
 			}
 		}
 		white_peace = event_target:targetTriumvir
+	}
+}
+
+# Capua - Visitors from the East
+country_event = {
+	id = ab_byzantium.112
+	title = ab_byzantium.112.t
+	desc = ab_byzantium.112.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		is_year = 1445
+		tag = CAP
+	}
+
+	option = {
+		name = ab_byzantium.112.a
+		ai_chance = { factor = 99 }
+		add_prestige = 10
+	}
+
+	option = {
+		name = ab_byzantium.112.b
+		ai_chance = { factor = 1 }
+		highlight = yes
+		set_country_flag = cap_chose_sol_invictus_flag
+		set_ruler_religion = sol_invictus
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_UNLOCK_SOL_EVENTS
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.113
+				days = 30
+			}
+		}
+	}
+}
+
+# Capua - Reform Our Court
+country_event = {
+	id = ab_byzantium.113
+	title = ab_byzantium.113.t
+	desc = ab_byzantium.113.d
+	picture = COURT_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.113.a
+		define_advisor = {
+			type = inquisitor
+			skill = 3
+			religion = sol_invictus
+			cost_multiplier = 0.1
+		}
+		custom_tooltip = AB_EMPTY
+		define_advisor = {
+			type = ae_advisor
+			skill = 3
+			religion = sol_invictus
+			cost_multiplier = 0.1
+		}
+		custom_tooltip = AB_EMPTY
+		define_advisor = {
+			type = siegeengineer
+			skill = 3
+			religion = sol_invictus
+			cost_multiplier = 0.1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.114
+				days = 30
+			}
+		}
+	}
+}
+
+# Capua - Restore the Roman Bureaucracy
+country_event = {
+	id = ab_byzantium.114
+	title = ab_byzantium.114.t
+	desc = ab_byzantium.114.d
+	picture = CITY_VIEW_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.114.a
+		custom_tooltip = CAP_WILL_FIGHT_POPE
+		custom_tooltip = AB_EMPTY
+		unlock_government_reform = {
+			government_reform = capua_roman_bureaucracy
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = capua_roman_bureaucracy
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.115
+				days = 30
+			}
+		}
+	}
+}
+
+# Capua - A Sol Invictus Kingdom
+country_event = {
+	id = ab_byzantium.115
+	title = ab_byzantium.115.t
+	desc = ab_byzantium.115.d
+	picture = BYZ_BATTLE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_heir_religion = sol_invictus
+			set_consort_religion = sol_invictus
+			add_treasury = 500
+			capital_scope = {
+				for = {
+					amount = 20
+					effect = "
+						infantry = ROOT
+					"
+				}
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_core = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_core = ROOT
+			}
+			declare_war_with_cb = {
+				casus_belli = cb_core
+				who = PAP
+				war_goal_province = 118
+			}
+			set_government_rank = 2
+		}
+	}
+
+	option = {
+		name = ab_byzantium.115.a
+		enable_religion = sol_invictus
+		change_religion = sol_invictus
+		tooltip = {
+			set_government_rank = 2
+			add_treasury = 500
+			custom_tooltip = AB_EMPTY
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_core = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_core = ROOT
+			}
+		}
+	}
+}
+
+# Capua - Dream of Rome
+country_event = {
+	id = ab_byzantium.116
+	title = ab_byzantium.116.t
+	desc = ab_byzantium.116.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = cap_chose_sol_invictus_flag
+			set_country_flag = cap_embraced_sol_invictus
+			swap_non_generic_missions = yes
+		}
+	}
+
+	option = {
+		name = ab_byzantium.116.a
+		118 = {
+			move_capital_effect = yes
+			custom_tooltip = AB_EMPTY
+			change_religion = sol_invictus
+		}
+		custom_tooltip = CAP_SPAWN_CENTER_ROME
+		hidden_effect = {
+			118 = {
+				add_reform_center = sol_invictus
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_UNLOCK_ITALY_CB
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_UNLOCK_FORMING_WRE
+	}
+}
+
+# Capua - The Mad Emperor
+country_event = {
+	id = ab_byzantium.117
+	title = ab_byzantium.117.t
+	desc = ab_byzantium.117.d
+	picture = BYZ_BYZANTINE_EMPEROR_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = formed_westrome_flag
+		}
+	}
+
+	option = {
+		name = ab_byzantium.117.a
+		set_country_flag = restored_rome_flag
+		add_ruler_personality = augustus_personality
+		custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+		custom_tooltip = AB_EMPTY
+		change_tag = ROM
+		on_change_tag_effect = yes
+		custom_tooltip = AB_EMPTY
+		change_primary_culture = roman_new
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_ROMANIZATION_ON_EVENT
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = restore_roman_empire_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					is_part_of_hre = yes
+				}
+				set_in_empire = no
+			}
+		}
+		hidden_effect = {
+			set_heir_culture = ROOT
+			set_ruler_culture = ROOT
+			118 = {
+				add_core = ROOT
+				province_event = {
+					id = ab_byzantium.71
+				}
+			}
+			country_event = {
+				id = ab_byzantium.67
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = {
+				id = ideagroups.1
+			}
+		}
+		add_country_modifier = {
+			name = centralization_modifier
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+}
+
+# Capua - Death of the Emperor
+country_event = {
+	id = ab_byzantium.118
+	title = ab_byzantium.118.t
+	desc = ab_byzantium.118.d
+	picture = DEATH_OF_HEIR_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = cap_robert_is_dead
+			for = {
+				amount = 5
+				effect = "
+					random_owned_province = {
+						spawn_rebels = {
+							type = nationalist_rebels
+							size = 3
+						}
+					}
+				"
+			}
+			if = {
+				limit = {
+					NOT = { exists = IVR }
+				}
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = piedmont_area
+							area = liguria_area
+						}
+					}
+					add_core = IVR
+				}
+				release = IVR
+				IVR = {
+					change_religion = catholic
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_capua_roman_reconquest
+					who = IVR
+				}
+			}
+			if = {
+				limit = {
+					NOT = { exists = LOM }
+				}
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = lombardy_area
+							area = po_valley_area
+						}
+					}
+					add_core = LOM
+				}
+				release = LOM
+				LOM = {
+					change_religion = catholic
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_capua_roman_reconquest
+					who = LOM
+				}
+			}
+			if = {
+				limit = {
+					NOT = { exists = RMG }
+				}
+				every_owned_province = {
+					limit = {
+						area = emilia_romagna_area
+					}
+					add_core = RMG
+				}
+				release = RMG
+				RMG = {
+					change_religion = catholic
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_capua_roman_reconquest
+					who = RMG
+				}
+			}
+			if = {
+				limit = {
+					NOT = { exists = LAN }
+				}
+				every_owned_province = {
+					limit = {
+						area = tuscany_area
+					}
+					add_core = LAN
+				}
+				release = LAN
+				LAN = {
+					change_religion = catholic
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_capua_roman_reconquest
+					who = LAN
+				}
+			}
+			if = {
+				limit = {
+					NOT = { exists = VRN }
+				}
+				every_owned_province = {
+					limit = {
+						area = venetia_area
+					}
+					add_core = VRN
+				}
+				release = VRN
+				VRN = {
+					change_religion = catholic
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_capua_roman_reconquest
+					who = VRN
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.118.a
+		custom_tooltip = CAP_UNLOCK_ROBERT_ICON
 	}
 }
 
