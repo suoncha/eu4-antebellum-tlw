@@ -19,6 +19,13 @@ aqt_first = {
 		trigger = {
 			if = {
 				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
 					is_subject_of = FRC
 				}
 				num_of_allies = 1
@@ -136,11 +143,20 @@ aqt_second = {
 		position = 1
 		
 		trigger = {
-			OR = {
-				manpower_percentage = 1
-				army_size_percentage = 1
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
 			}
-			num_of_generals = 1
+			else = {
+				OR = {
+					manpower_percentage = 1
+					army_size_percentage = 1
+				}
+				num_of_generals = 1
+			}
 		}
 		
 		effect = {
@@ -157,6 +173,52 @@ aqt_second = {
 				type = commandant
 				skill = 1
 				discount = yes
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				remove_ruler_personality = intricate_web_weaver_personality
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				add_stability = 2
+				capital_scope = {
+					for = {
+						amount = 40
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				FRC = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_treasury = -200
+						add_manpower = -20
+						every_owned_province = {
+							add_territorial_core = ROOT
+						}
+						ROOT = {
+							declare_war_with_cb = {
+								casus_belli = cb_core
+								who = FRC
+								war_goal_province = 4112
+							}
+						}
+						every_owned_province = {
+							limit = {
+								is_neighbor_of = ROOT
+							}
+							change_controller = ROOT
+						}
+					}
+				}
 			}
 		}
 	}
@@ -283,6 +345,19 @@ aqt_second = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				france_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -321,6 +396,10 @@ aqt_second = {
 		icon = mission_aquitaine
 		required_missions = { aqt_bourbonnais aqt_poitou aqt_toulouse }
 		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 			legitimacy = 100
@@ -395,6 +474,13 @@ aqt_third = {
 		
 		trigger = {
 			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
 				limit = {
 					is_subject_of = FRC
 				}
@@ -581,15 +667,29 @@ aqt_fourth = {
 		}
 		
 		trigger = {
-			pyrenees_area = {
-				owned_by = ROOT
-				province_has_current_tech_fort_trigger = yes
-				base_manpower = 5
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				pyrenees_area = {
+					owned_by = ROOT
+				}
+				languedoc_area = {
+					owned_by = ROOT
+				}
 			}
-			languedoc_area = {
-				owned_by = ROOT
-				province_has_current_tech_fort_trigger = yes
-				base_manpower = 5
+			else = {
+				pyrenees_area = {
+					owned_by = ROOT
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 5
+				}
+				languedoc_area = {
+					owned_by = ROOT
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 5
+				}
 			}
 		}
 		
@@ -642,6 +742,19 @@ aqt_fourth = {
 			}
 			else = {
 				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS_NO
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				iberia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -1431,20 +1544,31 @@ aqt_second_aquitaine_unlocked = {
 		}
 		
 		trigger = {
-			brittany_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			brittany_area = {
-				type = all
-				NOT = {
-					local_autonomy = 10
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				brittany_area = {
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			brittany_area = {
-				type = all
-				NOT = {
-					nationalism = 10
+			else = {
+				brittany_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				brittany_area = {
+					type = all
+					NOT = {
+						local_autonomy = 10
+					}
+				}
+				brittany_area = {
+					type = all
+					NOT = {
+						nationalism = 10
+					}
 				}
 			}
 		}
@@ -1799,6 +1923,10 @@ aqt_third_aquitaine_unlocked = {
 		icon = centralize_france
 		required_missions = { aqt_britanny aqt_destroy_francia aqt_lower_burgundy }
 		position = 8
+
+		ai_weight = {
+			factor = 2000
+		}
 	
 		provinces_to_highlight = {
 			region = france_region
@@ -1898,6 +2026,19 @@ aqt_third_aquitaine_unlocked = {
 				}
 				add_permanent_claim = ROOT
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				british_isles_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		}
 	}
 
@@ -1964,6 +2105,10 @@ aqt_fourth_aquitaine_unlocked = {
 		icon = negotiate_for_avignon
 		required_missions = { aqt_fortify_pyrenees }
 		position = 7
+
+		ai_weight = {
+			factor = 1000
+		}
 	
 		provinces_to_highlight = {
 			OR = {
@@ -1974,13 +2119,27 @@ aqt_fourth_aquitaine_unlocked = {
 		}
 		
 		trigger = {
-		    savoy_dauphine_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				savoy_dauphine_area = {
+					type = all
+				}
+				provence_area = {
+					type = all
+				}
 			}
-		    provence_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				savoy_dauphine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				provence_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		
@@ -2046,6 +2205,19 @@ aqt_fourth_aquitaine_unlocked = {
 						add_base_production = 2
 						add_base_manpower = 2
 					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -2203,6 +2375,10 @@ aqt_fourth_aquitaine_unlocked = {
 		icon = arb_sicily
 		required_missions = { aqt_rome }
 		position = 10
+
+		ai_weight = {
+			factor = 1000
+		}
 	
 		provinces_to_highlight = {
 			OR = {
