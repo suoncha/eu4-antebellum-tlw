@@ -16,6 +16,10 @@ trc_first = {
 		icon = mission_colosseum
 		required_missions = { trc_defy_rome }
 		position = 2
+
+		ai_weight = {
+			factor = 2000
+		}
 		
 		trigger = {
 			owns = 118
@@ -83,6 +87,19 @@ trc_first = {
 					country_event = {
 						id = ab_byzantium.116
 					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_cap
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
 				}
 			}
 		}
@@ -196,6 +213,10 @@ trc_first = {
 		icon = kingdom_of_lombardy
 		required_missions = { trc_new_italian_power }
 		position = 4
+
+		ai_weight = {
+			factor = 2000
+		}
 		
 		provinces_to_highlight = {
 			OR = {
@@ -679,6 +700,17 @@ trc_second = {
 			else = {
 				custom_tooltip = TRC_UNLOCK_TIMED_NO
 			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_cap
+					ai = yes
+				}
+				SIC = {
+					every_owned_province = {
+						add_territorial_core = ROOT
+					}
+				}
+			}
 		}
 	}	
 }	
@@ -833,6 +865,10 @@ trc_second_sol_unlocked = {
 		required_missions = { trc_dismantle_pope }
 		position = 3
 
+		ai_weight = {
+			factor = 5000
+		}
+
 		provinces_to_highlight = {
 			region = italy_region
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
@@ -841,6 +877,7 @@ trc_second_sol_unlocked = {
 		trigger = {
 			religion = sol_invictus
 			has_ruler = "Robert XI"
+			mission_completed = trc_trinacrian_restoration
 			italy_region = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -942,10 +979,12 @@ trc_second_second = {
 		position = 5
 		
 		trigger = {
-			ab_is_italy_tag_trigger = yes
+			OR = {
+				ab_is_italy_tag_trigger = yes
+				mission_completed = trc_roman_ambition
+			}
 		}
-		
-		
+
 		effect = {
 			country_event = {
 				id = ab_lombardy.3
@@ -1262,6 +1301,10 @@ trc_third = {
 		icon = arb_sicily
 		required_missions = { trc_crush_the_saracens }
 		position = 4
+
+		ai_weight = {
+			factor = 1000
+		}
 		
 		trigger = {
 			tag = TRC

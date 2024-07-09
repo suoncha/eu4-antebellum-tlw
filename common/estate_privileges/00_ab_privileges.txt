@@ -121,7 +121,10 @@ estate_nobles_strong_duchies = {
 					tag = FRK
 				}
 			}
-			has_government_attribute = unlocks_strong_duchies_privilege
+            # We would ideally ask for
+            # has_government_attribute = unlocks_strong_duchies_privilege
+            # but the tooltip does not work simply 
+            has_reform = frcfeudalism
 		}
 		else = {
 			hidden_trigger = { always = yes }
@@ -214,6 +217,14 @@ estate_church_clerical_ministers = {
 				}
 				NOT = { religion = nestorian }
 			}
+			# TLW [[[
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+				}
+				NOT = { religion = sol_invictus }
+			}
+			# ]]]
 			if = {
 				limit = {
 					has_dlc = "Origins"
@@ -321,6 +332,17 @@ estate_church_clerical_ministers = {
 			yearly_patriarch_authority = 0.005
 		}
 	}
+	# TLW [[[
+	conditional_modifier = {
+		trigger = {
+			has_dlc = "Third Rome"
+			religion = sol_invictus
+		}
+		modifier = {
+			yearly_patriarch_authority = 0.005
+		}
+	}
+	# ]]]
 	conditional_modifier = {
 		trigger = {
 			religion = anglican
@@ -451,6 +473,13 @@ estate_church_clerical_ministers = {
 			has_dlc = "Third Rome"
 		}
 		# }}}
+		# TLW [[[
+		modifier = {
+			factor = 10
+			religion = sol_invictus
+			has_dlc = "Third Rome"
+		}
+		# ]]]
 	}
 }
 
@@ -545,52 +574,6 @@ estate_burghers_ottoman_loans = {
 	}
 }
 # }}}
-
-estate_nobles_better_integration = {
-	icon = privilege_better_integration
-	max_absolutism = -10
-	influence = 0.15
-	loyalty = 0.05
-	is_valid = {
-		any_subject_country = {
-			OR = {
-				is_subject_of_type = vassal
-				is_subject_of_type = client_vassal
-				is_subject_of_type = daimyo_vassal
-				is_subject_of_type = personal_union
-			}
-		}
-	}
-	can_select = {
-	}
-	on_granted = {
-		disable_annexation_penalty = yes
-	}
-	on_revoked = {
-		enable_annexation_penalty = yes
-	}
-	on_invalid = {
-		enable_annexation_penalty = yes
-	}
-	penalties = {
-		reduced_liberty_desire = -15
-	}
-	benefits = {
-		diplomatic_annexation_cost = -0.05
-	}
-	cooldown_years = 10
-	ai_will_do = {
-		factor = 10
-		# AB {{{
-		modifier = {
-			factor = 1000
-			tag = FRC
-			is_emperor = yes
-			num_of_subjects = 1
-		}
-		# }}}
-	}
-}
 
 # AB {{{
 estate_burghers_highland_rights = {

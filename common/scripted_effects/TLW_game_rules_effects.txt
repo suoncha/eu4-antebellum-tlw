@@ -106,14 +106,29 @@ TLW_game_rules_effect = {
 					}
 				}
 			}
-			every_country = {
+			if = {
 				limit = {
-					OR = {
-						tag = NOR
-						tag = HOL
-					}
-					ai = yes
+					has_country_flag = ab_game_rules_mademperor_enabled
 				}
+				CAP = {
+					country_event = {
+						id = ab_punic.19
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					HOL = {
+						ai = yes
+					}
+				}
+				HOL = {
+					country_event = {
+						id = ab_punic.19
+					}
+				}
+			}
+			NOR = {
 				country_event = {
 					id = ab_punic.19
 				}
@@ -219,6 +234,23 @@ TLW_game_rules_effect = {
 				set_country_flag = ab_stronger_ai_brn
 				add_country_modifier = {
 					name = pol_stronger_ai_mod
+					duration = 20075
+				}
+			}
+		}
+		# The Mad Emperor
+		if = {
+			limit = {
+				has_country_flag = ab_game_rules_mademperor_enabled
+			}
+			CAP = {
+				set_country_flag = ab_stronger_ai_cap
+				add_country_modifier = {
+					name = pol_stronger_ai_mod
+					duration = 20075
+				}
+				add_country_modifier = {
+					name = cap_strong_ai_buff
 					duration = 20075
 				}
 			}

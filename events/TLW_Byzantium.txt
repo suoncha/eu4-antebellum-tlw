@@ -3888,6 +3888,8 @@ country_event = {
 		clr_country_flag = ab_game_rules_visigoths_aquitaine
 		clr_country_flag = ab_game_rules_pendragon_default
 		clr_country_flag = ab_game_rules_pendragon_enabled
+		clr_country_flag = ab_game_rules_mademperor_default
+		clr_country_flag = ab_game_rules_mademperor_enabled
 		clr_country_flag = ab_game_rules_plagues_default
 		clr_country_flag = ab_game_rules_plagues_disabled
 	}
@@ -3908,6 +3910,7 @@ country_event = {
 	option = {
 		name = ab_byzantium.102.a
 		remove_country_modifier = pol_stronger_ai_mod
+		remove_country_modifier = cap_strong_ai_buff
 	}
 }
 
@@ -5054,13 +5057,19 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.112.a
-		ai_chance = { factor = 99 }
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0
+				has_country_flag = ab_stronger_ai_cap
+			}
+		}
 		add_prestige = 10
 	}
 
 	option = {
 		name = ab_byzantium.112.b
-		ai_chance = { factor = 1 }
+		ai_chance = { factor = 25 }
 		highlight = yes
 		set_country_flag = cap_chose_sol_invictus_flag
 		set_ruler_religion = sol_invictus
@@ -5186,6 +5195,41 @@ country_event = {
 				war_goal_province = 118
 			}
 			set_government_rank = 2
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_cap
+					ai = yes
+				}	
+				add_treasury = 500
+				add_manpower = 100
+				create_general = { tradition = 100 }
+				add_ruler_personality = augustus_personality
+				add_stability = 2
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				PAP = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_treasury = -200
+						add_manpower = -20
+					}
+				}
+				4732 = {
+					change_controller = ROOT
+				}
+				118 = {
+					change_controller = ROOT
+				}
+			}
 		}
 	}
 
@@ -5451,6 +5495,168 @@ country_event = {
 	option = {
 		name = ab_byzantium.118.a
 		custom_tooltip = CAP_UNLOCK_ROBERT_ICON
+	}
+}
+
+# Capua - The Key to Immortality
+country_event = {
+	id = ab_byzantium.119
+	title = ab_byzantium.119.t
+	desc = ab_byzantium.119.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		mission_completed = trc_the_mad_dukes_gambit
+		religion = sol_invictus
+	}
+
+	mean_time_to_happen = {
+		days = 1825
+	}
+
+	option = {
+		name = ab_byzantium.119.a
+		add_ruler_modifier = {
+			name = cap_prolong_life
+			duration = -1
+		}
+	}
+}
+
+# Capua - To Pay the Price 1
+country_event = {
+	id = ab_byzantium.120
+	title = ab_byzantium.120.t
+	desc = ab_byzantium.120.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		has_ruler_modifier = cap_prolong_life
+		is_year = 1500
+	}
+
+	option = {
+		name = ab_byzantium.120.a
+		ai_chance = { factor = 0 }
+		add_adm_power = -50
+		add_dip_power = -50
+		add_mil_power = -50
+		add_treasury = -200
+		add_legitimacy = -10
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_EXTEND_ROBERT_LIFESPAN
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.121
+				days = 1825
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.120.b
+		ai_chance = { factor = 100 }
+		kill_ruler = yes
+	}
+}
+
+# Capua - To Pay the Price 2
+country_event = {
+	id = ab_byzantium.121
+	title = ab_byzantium.121.t
+	desc = ab_byzantium.121.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.121.a
+		add_adm_power = -100
+		add_dip_power = -100
+		add_mil_power = -100
+		add_treasury = -400
+		add_legitimacy = -20
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_EXTEND_ROBERT_LIFESPAN
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.122
+				days = 1825
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.121.b
+		kill_ruler = yes
+	}
+}
+
+# Capua - To Pay the Price 3
+country_event = {
+	id = ab_byzantium.122
+	title = ab_byzantium.122.t
+	desc = ab_byzantium.122.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.122.a
+		add_adm_power = -200
+		add_dip_power = -200
+		add_mil_power = -200
+		add_treasury = -800
+		add_legitimacy = -40
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_EXTEND_ROBERT_LIFESPAN
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.123
+				days = 1825
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.122.b
+		kill_ruler = yes
+	}
+}
+
+# Capua - To Pay the Price 4
+country_event = {
+	id = ab_byzantium.123
+	title = ab_byzantium.123.t
+	desc = ab_byzantium.123.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.123.a
+		add_adm_power = -400
+		add_dip_power = -400
+		add_mil_power = -400
+		add_treasury = -1600
+		add_legitimacy = -80
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CAP_EXTEND_ROBERT_LIFESPAN
+		hidden_effect = {
+			country_event = {
+				id = ab_byzantium.123
+				days = 1825
+			}
+		}
+	}
+
+	option = {
+		name = ab_byzantium.123.b
+		kill_ruler = yes
 	}
 }
 
