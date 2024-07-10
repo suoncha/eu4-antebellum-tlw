@@ -4709,7 +4709,12 @@ country_event = {
 	trigger = {
 		has_global_flag = AB_TRIUMVIRATE_SET
 		OR = {
-			exists = ROM
+			AND = {
+				exists = ROM
+				ROM = {
+					NOT = { mission_completed = trc_roman_ambition }
+				}
+			}
 			exists = WRE
 			calc_true_if = {
 				amount = 400
@@ -5661,6 +5666,34 @@ country_event = {
 	option = {
 		name = ab_byzantium.123.b
 		kill_ruler = yes
+	}
+}
+
+# Custom GUI Setup
+country_event = {
+	id = ab_byzantium.124
+	title = ab_byzantium.124.t
+	desc = ab_byzantium.124.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_byzantium.124.a
+		set_variable = {
+			which = tlw_achievement_page_var
+			value = 1
+		}
+		set_variable = {
+			which = tlw_romanization_page_var
+			value = 1
+		}
+		set_variable = {
+			which = tlw_diocese_page_var
+			value = 1
+		}
 	}
 }
 
