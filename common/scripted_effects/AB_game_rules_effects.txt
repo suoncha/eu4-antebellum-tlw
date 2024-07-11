@@ -1,0 +1,108 @@
+ab_game_rules_setup_effect = {
+	set_country_flag = ab_game_rules_menu_opened
+	set_variable = {
+		which = ab_game_rules_page_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_preset_cn_var
+		value = 1
+	}
+}
+
+ab_game_rules_back_page_effect = {
+    # First Page
+    if = {
+        limit = {
+            ab_game_rules_page = { page = 1 }
+        }
+        set_variable = {
+            which = ab_game_rules_page_var
+            value = 2
+        }
+    }
+    else = {
+        subtract_variable = {            
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+}
+
+ab_game_rules_next_page_effect = {
+    # Last Page
+    if = {
+        limit = {
+            ab_game_rules_page = { page = 2 }
+        }
+        set_variable = {
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+    else = {
+        change_variable = {            
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+}
+
+ab_game_rules_back_option_effect = {
+	# First Option
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = $var$
+				value = 1
+			}
+		}
+		set_variable = {
+			which = $var$
+			value = $num$
+		}
+	}
+	else = {
+		subtract_variable = {            
+			which = $var$
+			value = 1
+		}
+	}
+}
+
+ab_game_rules_next_option_effect = {
+	# Last Option
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = $var$
+				value = $num$
+			}
+		}
+		set_variable = {
+			which = $var$
+			value = 1
+		}
+	}
+	else = {
+		change_variable = {            
+			which = $var$
+			value = 1
+		}
+	}
+}
+
+ab_game_rules_confirm_effect = {
+	clr_country_flag = ab_game_rules_menu_opened
+	clr_global_flag = AB_GAME_RULES_NOT_SET
+	# Preset CN
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_preset_cn_var
+				value = 2
+			}
+		}
+		set_global_flag = NO_CNS
+	}
+}
