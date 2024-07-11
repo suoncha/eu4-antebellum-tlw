@@ -1,19 +1,22 @@
-#Romanization
+# Open Menu Button
 custom_button = {
     name = ab_romanization_open_button
     potential = {
         culture_group = roman_g
     }
     trigger = {
+        hidden_trigger = {
+			NOT = { has_country_flag = byz_romanization_menu_opened }
+		}
     }
     effect = {
-        clr_country_flag = byz_romanization_menu_page2
-        set_country_flag = byz_romanization_menu_page1
         set_country_flag = byz_romanization_menu_opened
     }
     tooltip = AB_ROMANIZATION_INFO
 }
 
+# ========== Etc
+# Menu
 custom_window = {
 	name = ab_romanization_menu_window
 	potential = {
@@ -21,6 +24,15 @@ custom_window = {
 	}
 }
 
+# Background
+custom_icon = {
+	name = ab_romanization_menu
+	potential = {
+	}
+	frame_variable = "tlw_romanization_page_var"
+}
+
+# Close Menu Button
 custom_button = {
     name = ab_romanization_close_button
     potential = {
@@ -33,38 +45,50 @@ custom_button = {
     tooltip = AB_CLOSE_ROMANIZATION_MENU
 }
 
-# Page 1
-custom_window = {
-	name = ab_romanization_page1_window
-	potential = {
-		has_country_flag = byz_romanization_menu_page1
-	}
-}
-
+# Back to Previous Page Button
 custom_button = {
-    name = ab_romanization_page1_back_button
+    name = ab_romanization_page_back_button
     potential = {
     }
     trigger = {
 	}
     effect = {
-		clr_country_flag = byz_romanization_menu_page1
-		set_country_flag = byz_romanization_menu_page2
+		hidden_effect = {
+			ab_romanization_back_page_effect = yes
+		}
 	}
     tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
 }
 
+# Go to Next Page Button
 custom_button = {
-    name = ab_romanization_page1_next_button
+    name = ab_romanization_page_next_button
     potential = {
     }
     trigger = {
 	}
     effect = {
-		clr_country_flag = byz_romanization_menu_page1
-        set_country_flag = byz_romanization_menu_page2
+		hidden_effect = {
+			ab_romanization_next_page_effect = yes
+		}
     }
     tooltip = AB_ACHIEVEMENT_NEXT_PAGE
+}
+
+# Page Number
+custom_text_box = {
+    name = ab_romanization_page_number
+    potential = {
+	}
+}
+# ========== Etc
+
+# Page 1
+custom_window = {
+	name = ab_romanization_page1_window
+	potential = {
+		tlw_romanization_page = { page = 1 }
+	}
 }
 
 custom_button = {
@@ -695,34 +719,8 @@ custom_button = {
 custom_window = {
 	name = ab_romanization_page2_window
 	potential = {
-		has_country_flag = byz_romanization_menu_page2
+		tlw_romanization_page = { page = 2 }
 	}
-}
-
-custom_button = {
-    name = ab_romanization_page2_back_button
-    potential = {
-    }
-    trigger = {
-	}
-    effect = {
-		clr_country_flag = byz_romanization_menu_page2
-		set_country_flag = byz_romanization_menu_page1
-	}
-    tooltip = AB_ACHIEVEMENT_PREVIOUS_PAGE
-}
-
-custom_button = {
-    name = ab_romanization_page2_next_button
-    potential = {
-    }
-    trigger = {
-	}
-    effect = {
-		clr_country_flag = byz_romanization_menu_page2
-        set_country_flag = byz_romanization_menu_page1
-    }
-    tooltip = AB_ACHIEVEMENT_NEXT_PAGE
 }
 
 custom_button = {
