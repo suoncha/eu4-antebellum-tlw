@@ -44,15 +44,6 @@ country_decisions = {
 		}
 
 		allow = {
-			if = {
-				limit = {
-					has_global_flag = AB_TRIUMVIRATE_SET
-				}
-				custom_trigger_tooltip = {
-					tooltip = BYZ_BROKEN_TRIUMVIRATE
-					NOT = { has_global_flag = AB_TRIUMVIRATE_SET }
-				}
-			}
 			custom_trigger_tooltip = {
 				tooltip = BYZ_RESTORED_JUSTINIAN
 				italy_region = {
@@ -410,6 +401,24 @@ country_decisions = {
 				duration = 7300
 			}
 			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = rome }
+					}
+				}
+			}
 		}
 
 		ai_will_do = {
