@@ -2,9 +2,9 @@ country_decisions = {
 
 	reform_hellenic_religion = {
 		major = yes
-
-		potential = { religion = hellenic }
-
+		potential = {
+			religion = hellenic
+		}
 		provinces_to_highlight = {
 			OR = {
 				province_id = 146
@@ -19,7 +19,6 @@ country_decisions = {
 			}
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-
 		allow = {
 			full_idea_group = religious_ideas
 			5152 = {
@@ -43,7 +42,7 @@ country_decisions = {
 			add_stability = -2
 			change_religion = reformed_hellenic
 			add_country_modifier = {
-				name = "wee_conversion_zeal"
+				name = wee_conversion_zeal
 				duration = 3650
 			}
 			custom_tooltip = reform_hellenic_subjects_switch_too
@@ -64,6 +63,8 @@ country_decisions = {
 					change_religion = reformed_hellenic
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			ab_mpf_consolidate_rites_effect = yes
 		}
 		
 		ai_will_do = {
@@ -172,6 +173,43 @@ country_decisions = {
 
 		ai_will_do = {
 			factor = 0
+		}
+	}
+
+	dedicate_jerusalem_to_zeus = {
+		major = yes
+		potential = {
+			OR = {
+				religion = hellenic
+				religion = reformed_hellenic
+			}
+			379 = {
+				NOT = { has_province_flag = ab_mpf_zeus_jerusalem }
+			}
+		}
+		provinces_to_highlight = {
+			province_id = 379
+		}
+		allow = {
+			owns_core_province = 379
+			religion = reformed_hellenic
+			379 = {
+				religion = reformed_hellenic
+			}
+			church_power = 150
+		}
+		effect = {
+			country_event = {
+				id = ab_mpf_hellenic.8
+			}
+			custom_tooltip = AB_EMPTY
+			add_church_power = -150
+			custom_tooltip = ab_mpf_temple_of_zeus_tt
+			hidden_effect = {
+				379 = {
+					set_province_flag = ab_mpf_zeus_jerusalem
+				}
+			}
 		}
 	}
 }

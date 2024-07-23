@@ -1,0 +1,74 @@
+##New Slavic events by Chronometry
+
+namespace = ab_mpf_slavic
+
+#Jarilo Festival
+country_event = {
+	id = ab_mpf_slavic.1
+	title = ab_mpf_slavic.1.t
+	desc = ab_mpf_slavic.1.d
+	picture = FEAST_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = slavic_pagan
+			religion = reformed_slavic
+		}
+		NOT = { has_country_modifier = ab_mpf_jarilo_festival }
+		is_month = 1
+		NOT = { is_month = 5 } #February to May, because spring festival
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { #Where Jarilo walks, there your field gives birth
+		name = ab_mpf_slavic.1.a
+		add_country_modifier = {
+			name = ab_mpf_jarilo_festival
+			duration = 1825
+		}
+	}
+}
+
+#Perun's Wrath
+country_event = {
+	id = ab_mpf_slavic.2
+	title = ab_mpf_slavic.2.t
+	desc = ab_mpf_slavic.2.d
+	picture = BATTLE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = slavic_pagan
+			religion = reformed_slavic
+		}
+		NOT = { has_country_modifier = ab_mpf_peruns_lightning }
+		is_at_war = yes
+		any_war_enemy_country = {
+			NOT = {
+				OR = {
+					religion = slavic_pagan
+					religion = reformed_slavic
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { #Perun has shown us his favour!
+		name = ab_mpf_slavic.2.a
+		add_country_modifier = {
+			name = ab_mpf_peruns_lightning
+			duration = 1825
+		}
+	}
+}
