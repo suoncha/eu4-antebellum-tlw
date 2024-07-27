@@ -975,43 +975,48 @@ country_event = {
 	desc = ab_byzantium.61.d
 	picture = DHOW_AT_SEA_eventPicture
 
-	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = BYZ
+			tag = ROM
+		}
+		any_country = {
+			primary_culture = punic
+			capital_scope = {
+				OR = {
+					has_discovered = BYZ
+					has_discovered = ROM
+				}
+			}
+		}
+	}
 
 	immediate = {
 		hidden_effect = {
-			discover_province = 965
 			every_country = {
 				limit = {
 					primary_culture = punic
 				}
 				add_historical_rival = ROOT
+				ROOT = {
+					add_historical_rival = PREV
+				}
 			}
 		}
 	}
 
-	goto = capitalProv
-
 	option = {
 		name = ab_byzantium.61.a
-		every_country = {
-			limit = {
-				primary_culture = punic
-			}
-			ROOT = {
-				add_historical_rival = PREV
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					965 = {
-						has_discovered = ROOT
-					}
+		tooltip = {
+			every_country = {
+				limit = {
+					primary_culture = punic
 				}
-			}
-			custom_tooltip = AB_EMPTY
-			tooltip = {
-				discover_province = 965
+				ROOT = {
+					add_historical_rival = PREV
+				}
 			}
 		}
 	}
