@@ -5,23 +5,31 @@ country_decisions = {
 
 		potential = {
 			religion = canaanite
-			tag = CTG
 		}
 
 		provinces_to_highlight = {
 			OR = {
-				province_id = 226
-				province_id = 341
-				province_id = 1751
+				province_id = 965
+				province_id = 967
+				province_id = 938
+				province_id = 2011
+				province_id = 2544
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					is_core = ROOT
+				}
+			}
 		}
 
 		allow = {
-			full_idea_group = religious_ideas
-			owns_or_non_sovereign_subject_of = 226
-			owns_or_non_sovereign_subject_of = 341
-			owns_or_non_sovereign_subject_of = 1751
+			tag = CTG
+			owns_core_province = 965
+			owns_core_province = 967
+			owns_core_province = 938
+			owns_core_province = 2011
+			owns_core_province = 2544
 		}
 
 		effect = {
@@ -51,6 +59,68 @@ country_decisions = {
 			}
 			custom_tooltip = AB_EMPTY
 			ab_mpf_consolidate_rites_effect = yes
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	punic_oracle_decision = {
+		major = yes
+
+		potential = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			NOT = { has_country_modifier = punic_religion_oracle_timer }
+		}
+
+		allow = {
+			adm_power = 100
+		}
+
+		effect = {
+			add_adm_power = -100
+			country_event = {
+				id = ab_punic.2002
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	punic_pilgrimate_decision = {
+		major = yes
+
+		potential = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			NOT = {
+				OR = {
+					has_ruler_modifier = punic_religion_made_a_pilgrimate
+					has_ruler_flag = punic_religion_is_going_on_pilgrimate
+				}
+			}
+		}
+
+		allow = {
+			years_of_income = 0.5
+			dip_power = 100
+		}
+
+		effect = {
+			set_ruler_flag = punic_religion_is_going_on_pilgrimate
+			add_years_of_income = -0.5
+			add_dip_power = -100
+			country_event = {
+				id = ab_punic.2008
+			}
 		}
 
 		ai_will_do = {

@@ -63,9 +63,9 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
-			add_adm_tech = 2
-			add_dip_tech = 2
-			add_mil_tech = 2
+			# add_adm_tech = 2
+			# add_dip_tech = 2
+			# add_mil_tech = 2
 			add_country_modifier = {
 				name = punic_peace
 				duration = -1
@@ -77,9 +77,9 @@ country_event = {
 		name = ab_punic.1.a
 		custom_tooltip = PUNIC_EARLY_EVENT_CHAIN
 		tooltip = {
-			add_adm_tech = 2
-			add_dip_tech = 2
-			add_mil_tech = 2
+			# add_adm_tech = 2
+			# add_dip_tech = 2
+			# add_mil_tech = 2
 			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = punic_peace
@@ -3624,6 +3624,1459 @@ province_event = {
 			name = punic_plague_recently_infected
 			duration = 730
 			hidden = yes
+		}
+	}
+}
+
+## FLAVOR EVENTS
+#Festival of Baal Hammon
+country_event = {
+	id = ab_punic.2000
+	title = ab_punic.2000.t
+	desc = ab_punic.2000.d
+	picture = muslimgfx_FEAST_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = {
+			OR = {
+				has_country_modifier = punic_religion_festival_baal_hammon_large
+				has_country_modifier = punic_religion_festival_baal_hammon_small
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_punic.2000.a
+		add_years_of_income = -0.5
+		add_country_modifier = {
+			name = punic_religion_festival_baal_hammon_large
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2000.b
+		add_years_of_income = -0.25
+		add_country_modifier = {
+			name = punic_religion_festival_baal_hammon_small
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2000.c
+		add_prestige = -10
+	}
+}
+
+#Rites of Tanit
+country_event = {
+	id = ab_punic.2001
+	title = ab_punic.2001.t
+	desc = ab_punic.2001.d
+	picture = muslimgfx_REFORM_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_rites_tanit }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_punic.2001.a
+		add_dip_power = -50
+		add_country_modifier = {
+			name = punic_religion_rites_tanit
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2001.b
+		add_dip_power = 25
+	}
+}
+
+#Oracle of Melqart
+country_event = {
+	id = ab_punic.2002
+	title = ab_punic.2002.t
+	desc = ab_punic.2002.d
+	picture = muslimgfx_DEBATE_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2002.a
+		random_list = {
+			70 = {
+				country_event = {
+					id = ab_punic.2003
+				}
+			}
+			30 = {
+				country_event = {
+					id = ab_punic.2004
+				}
+			}
+		}
+	}
+}
+
+#Oracle of Melqart - Good Results
+country_event = {
+	id = ab_punic.2003
+	title = ab_punic.2003.t
+	desc = ab_punic.2003.d
+	picture = muslimgfx_DEBATE_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2003.a
+		random_list = { 
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_adm
+					duration = 3650
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_dip
+					duration = 3650
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_mil
+					duration = 3650
+				}
+			}
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_religion_oracle_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+}
+
+#Oracle of Melqart - Bad Results
+country_event = {
+	id = ab_punic.2004
+	title = ab_punic.2004.t
+	desc = ab_punic.2004.d
+	picture = muslimgfx_DEBATE_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2004.a
+		random_list = { 
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_weak_economy
+					duration = 3650
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_weak_diplomacy
+					duration = 3650
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_oracle_weak_military
+					duration = 3650
+				}
+			}
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_religion_oracle_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+}
+
+#The Veiled Priestess
+country_event = {
+	id = ab_punic.2005
+	title = ab_punic.2005.t
+	desc = ab_punic.2005.d
+	picture = muslimgfx_STREET_SPEECH_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_veiled_priestess_timer }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					religion = ROOT
+				}
+				save_event_target_as = targetProv
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_religion_veiled_priestess_timer
+				duration = 1825
+				hidden = yes
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2005.a
+		random_list = {
+			50 = {
+				country_event = {
+					id = ab_punic.2006
+				}
+			}
+			50 = {
+				country_event = {
+					id = ab_punic.2007
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2005.b
+		add_prestige = 10
+		event_target:targetProv = {
+			add_province_modifier = {
+				name = puinc_religion_kick_priestess
+				duration = 1825
+			}
+		}
+	}
+}
+
+#The Veiled Priestess - Good Results
+country_event = {
+	id = ab_punic.2006
+	title = ab_punic.2006.t
+	desc = ab_punic.2006.d
+	picture = muslimgfx_STREET_SPEECH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2006.a
+		random_list = { 
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_adm
+					duration = 1825
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_dip
+					duration = 1825
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_mil
+					duration = 1825
+				}
+			}
+		}
+	}
+}
+
+#The Veiled Priestess - Bad Results
+country_event = {
+	id = ab_punic.2007
+	title = ab_punic.2007.t
+	desc = ab_punic.2007.d
+	picture = muslimgfx_STREET_SPEECH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2007.a
+		random_list = { 
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_hidden_threat
+					duration = 1825
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_overextension
+					duration = 1825
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = punic_religion_veiled_priestess_corrupted_politicians
+					duration = 1825
+				}
+			}
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove
+country_event = {
+	id = ab_punic.2008
+	title = ab_punic.2008.t
+	desc = ab_punic.2008.d
+	picture = muslimgfx_COMET_SIGHTED_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.2008.a
+		add_yearly_manpower = -0.25
+		country_event = {
+			id = ab_punic.2016
+			days = 90
+		}
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = {
+						id = ab_punic.2009
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2010
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2011
+						days = 30
+						random = 30
+					}
+				}
+				10 = {
+					country_event = {
+						id = ab_punic.2012
+						days = 30
+						random = 30
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2008.b
+		trigger = {
+			any_owned_province = {
+				has_port = yes
+			}
+		}
+		add_treasury = -50
+		add_yearly_sailors = -0.25
+		country_event = {
+			id = ab_punic.2016
+			days = 45
+		}
+		hidden_effect = {
+			random_list = {
+				33 = {
+					country_event = {
+						id = ab_punic.2013
+						days = 15
+						random = 15
+					}
+				}
+				33 = {
+					country_event = {
+						id = ab_punic.2014
+						days = 15
+						random = 15
+					}
+				}
+				33 = {
+					country_event = {
+						id = ab_punic.2015
+						days = 15
+						random = 15
+					}
+				}
+			}
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove - Trouble on the Road
+country_event = {
+	id = ab_punic.2009
+	title = ab_punic.2009.t
+	desc = ab_punic.2009.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = {
+						id = ab_punic.2010
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2011
+						days = 30
+						random = 30
+					}
+				}
+				10 = {
+					country_event = {
+						id = ab_punic.2012
+						days = 30
+						random = 30
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2009.a
+		add_years_of_income = -0.5
+	}
+
+	option = {
+		name = ab_punic.2009.b
+		random_list = {
+			60 = {
+				add_prestige_or_monarch_power = { amount = 10 }
+			}
+			25 = {
+				add_ruler_modifier = {
+					name = punic_ruler_wounded
+					duration = 180
+				}
+			}
+			10 = {
+				add_ruler_modifier = {
+					name = punic_ruler_maimed
+					duration = -1
+				}
+			}
+			5 = {
+				kill_ruler = yes
+			}
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove - Lost in the Woods
+country_event = {
+	id = ab_punic.2010
+	title = ab_punic.2010.t
+	desc = ab_punic.2010.d
+	picture = muslimgfx_EXPLORERS_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = {
+						id = ab_punic.2009
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2011
+						days = 30
+						random = 30
+					}
+				}
+				10 = {
+					country_event = {
+						id = ab_punic.2012
+						days = 30
+						random = 30
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2010.a
+		add_mil_power = -50
+		random_list = {
+			80 = { }
+			15 = {
+				add_ruler_modifier = {
+					name = punic_ruler_wounded
+					duration = 180
+				}
+			}
+			4 = {
+				add_ruler_modifier = {
+					name = punic_ruler_maimed
+					duration = -1
+				}
+			}
+			1 = {
+				kill_ruler = yes
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2010.b
+		hidden_effect = {
+			remove_country_modifier = punic_lost_in_the_woods
+		}
+		add_country_modifier = {
+			name = punic_lost_in_the_woods
+			duration = 365
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove - A Poor Village
+country_event = {
+	id = ab_punic.2011
+	title = ab_punic.2011.t
+	desc = ab_punic.2011.d
+	picture = muslimgfx_FAMINE_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = {
+						id = ab_punic.2009
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2010
+						days = 30
+						random = 30
+					}
+				}
+				10 = {
+					country_event = {
+						id = ab_punic.2012
+						days = 30
+						random = 30
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2011.a
+		add_years_of_income = -0.5
+		if = {
+			limit = {
+				NOT = { has_ruler_modifier = punic_helped_the_poor }
+			}
+			add_ruler_modifier = {
+				name = punic_helped_the_poor
+				duration = -1
+			}
+		}
+		else = {
+			add_dip_power = 50
+		}
+	}
+
+	option = {
+		name = ab_punic.2011.b
+	}
+}
+
+#Pilgrimage to the Sacred Grove - The Mysterious Caravan
+country_event = {
+	id = ab_punic.2012
+	title = ab_punic.2012.t
+	desc = ab_punic.2012.d
+	picture = CARAVAN_EVENT_Picture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				30 = {
+					country_event = {
+						id = ab_punic.2009
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2010
+						days = 30
+						random = 30
+					}
+				}
+				30 = {
+					country_event = {
+						id = ab_punic.2011
+						days = 30
+						random = 30
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2012.a
+		add_years_of_income = -0.5
+		random_list = {
+			15 = {
+				hidden_effect = {
+					remove_country_modifier = punic_cursed_sword
+				}
+				add_country_modifier = {
+					name = punic_cursed_sword
+					duration = 18250
+				}
+			}
+			15 = {
+				hidden_effect = {
+					remove_country_modifier = punic_cursed_armor
+				}
+				add_country_modifier = {
+					name = punic_cursed_armor
+					duration = 18250
+				}
+			}
+			15 = {
+				hidden_effect = {
+					remove_country_modifier = punic_cursed_crown
+				}
+				add_country_modifier = {
+					name = punic_cursed_crown
+					duration = 18250
+				}
+			}
+			15 = {
+				hidden_effect = {
+					remove_country_modifier = punic_cursed_amulet
+				}
+				add_country_modifier = {
+					name = punic_cursed_amulet
+					duration = 18250
+				}
+			}
+			40 = { }
+		}
+	}
+
+	option = {
+		name = ab_punic.2012.b
+	}
+}
+
+#Pilgrimage to the Sacred Grove - Encountering Pirates
+country_event = {
+	id = ab_punic.2013
+	title = ab_punic.2013.t
+	desc = ab_punic.2013.d
+	picture = BARBARY_PIRATES_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				33 = {
+					country_event = {
+						id = ab_punic.2014
+						days = 15
+						random = 15
+					}
+				}
+				33 = {
+					country_event = {
+						id = ab_punic.2015
+						days = 15
+						random = 15
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2013.a
+		add_years_of_income = -0.5
+	}
+
+	option = {
+		name = ab_punic.2013.b
+		random_list = {
+			60 = {
+				add_prestige_or_monarch_power = { amount = 10 }
+			}
+			25 = {
+				add_ruler_modifier = {
+					name = punic_ruler_wounded
+					duration = 180
+				}
+			}
+			10 = {
+				add_ruler_modifier = {
+					name = punic_ruler_maimed
+					duration = -1
+				}
+			}
+			5 = {
+				kill_ruler = yes
+			}
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove - Sea Storm
+country_event = {
+	id = ab_punic.2014
+	title = ab_punic.2014.t
+	desc = ab_punic.2014.d
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				33 = {
+					country_event = {
+						id = ab_punic.2013
+						days = 15
+						random = 15
+					}
+				}
+				33 = {
+					country_event = {
+						id = ab_punic.2015
+						days = 15
+						random = 15
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2014.a
+		add_mil_power = -50
+		random_list = {
+			80 = { }
+			15 = {
+				add_ruler_modifier = {
+					name = punic_ruler_wounded
+					duration = 180
+				}
+			}
+			4 = {
+				add_ruler_modifier = {
+					name = punic_ruler_maimed
+					duration = -1
+				}
+			}
+			1 = {
+				kill_ruler = yes
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2014.b
+		hidden_effect = {
+			remove_country_modifier = punic_lost_in_the_woods
+		}
+		add_country_modifier = {
+			name = punic_lost_in_the_woods
+			duration = 365
+		}
+	}
+}
+
+#Pilgrimage to the Sacred Grove - Shipwrecked
+country_event = {
+	id = ab_punic.2015
+	title = ab_punic.2015.t
+	desc = ab_punic.2015.d
+	picture = muslimgfx_WOUNDED_SOLDIERS_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_ruler_flag = punic_religion_is_going_on_pilgrimate
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				33 = {
+					country_event = {
+						id = ab_punic.2013
+						days = 15
+						random = 15
+					}
+				}
+				33 = {
+					country_event = {
+						id = ab_punic.2014
+						days = 15
+						random = 15
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2015.a
+		add_years_of_income = -0.5
+		if = {
+			limit = {
+				NOT = { has_ruler_modifier = punic_helped_the_poor }
+			}
+			add_ruler_modifier = {
+				name = punic_helped_the_poor
+				duration = -1
+			}
+		}
+		else = {
+			add_dip_power = 50
+		}
+	}
+
+	option = {
+		name = ab_punic.2015.b
+	}
+}
+
+#Pilgrimage to the Sacred Grove - We Have Arrived!
+country_event = {
+	id = ab_punic.2016
+	title = ab_punic.2016.t
+	desc = ab_punic.2016.d
+	picture = RUNESTONE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_ruler_flag = punic_religion_is_going_on_pilgrimate
+			add_ruler_modifier = {
+				name = punic_religion_made_a_pilgrimate
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.2016.a
+		add_adm_power = -100
+		add_dip_power = -100
+		add_mil_power = -100
+		add_ruler_modifier = {
+			name = punic_religion_pilgrimate_super_strong
+			duration = 3650
+		}
+		tooltip = {
+			add_ruler_modifier = {
+				name = punic_religion_made_a_pilgrimate
+				duration = -1
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2016.b
+		add_adm_power = -50
+		add_dip_power = -50
+		add_mil_power = -50
+		add_ruler_modifier = {
+			name = punic_religion_pilgrimate_strong
+			duration = 3650
+		}
+		tooltip = {
+			add_ruler_modifier = {
+				name = punic_religion_made_a_pilgrimate
+				duration = -1
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.2016.c
+		add_ruler_modifier = {
+			name = punic_religion_pilgrimate_weak
+			duration = 3650
+		}
+		tooltip = {
+			add_ruler_modifier = {
+				name = punic_religion_made_a_pilgrimate
+				duration = -1
+			}
+		}
+	}
+}
+
+#Guidance from the Necropolis
+country_event = {
+	id = ab_punic.2017
+	title = ab_punic.2017.t
+	desc = ab_punic.2017.d
+	picture = BYZ_ATHENS_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = {
+			OR = {
+				has_country_modifier = punic_religion_necropolis_super_strong
+				has_country_modifier = punic_religion_necropolis_strong
+				has_country_modifier = punic_religion_necropolis_weak
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_punic.2017.a
+		add_splendor = -50
+		change_government_reform_progress = -25
+		add_country_modifier = {
+			name = punic_religion_necropolis_super_strong
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2017.b
+		add_splendor = -50
+		add_country_modifier = {
+			name = punic_religion_necropolis_strong
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2017.c
+		add_country_modifier = {
+			name = punic_religion_necropolis_weak
+			duration = 1825
+		}
+	}
+}
+
+#The Fire Festival
+country_event = {
+	id = ab_punic.2018
+	title = ab_punic.2018.t
+	desc = ab_punic.2018.d
+	picture = southamericagfx_NEW_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = {
+			OR = {
+				has_country_modifier = punic_religion_fire_festival_super_strong
+				has_country_modifier = punic_religion_fire_festival_strong
+				has_country_modifier = punic_religion_fire_festival_weak
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_punic.2018.a
+		trigger = {
+			ai = no
+		}
+		add_stability = -2
+		add_country_modifier = {
+			name = punic_religion_fire_festival_super_strong
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2018.b
+		trigger = {
+			ai = no
+		}
+		add_stability = -1
+		add_country_modifier = {
+			name = punic_religion_fire_festival_strong
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2018.c
+		add_country_modifier = {
+			name = punic_religion_fire_festival_weak
+			duration = 1825
+		}
+	}
+}
+
+#Haruspicy Rituals
+country_event = {
+	id = ab_punic.2019
+	title = ab_punic.2019.t
+	desc = ab_punic.2019.d
+	picture = muslimgfx_FEAST_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = {
+			OR = {
+				has_country_modifier = punic_religion_haruspicy_strong
+				has_country_modifier = punic_religion_haruspicy_weak
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = ab_punic.2019.a
+		trigger = {
+			innovativeness = 5
+		}
+		change_innovativeness = -2
+		add_country_modifier = {
+			name = punic_religion_haruspicy_strong
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.2019.b
+		add_country_modifier = {
+			name = punic_religion_haruspicy_weak
+			duration = 1825
+		}
+	}
+}
+
+#Dagon Peace
+country_event = {
+	id = ab_punic.2020
+	title = ab_punic.2020.t 
+	desc = ab_punic.2020.d
+	picture = muslimgfx_DIPLOMACY_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_dagon }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2020.a
+		if = {
+			limit = {
+				OR = {
+					has_personal_deity = dagon_diety
+					has_church_aspect = blessing_dagon
+				}
+			}
+			add_adm_power = 50
+			add_splendor = 50
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_dagon
+			duration = 1825
+		}
+		define_advisor = {
+			type = planner
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Baal Prosperity
+country_event = {
+	id = ab_punic.2021
+	title = ab_punic.2021.t 
+	desc = ab_punic.2021.d
+	picture = muslimgfx_GOOD_WITH_MONARCH_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_baal }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2021.a
+		if = {
+			limit = {
+				OR = {
+					has_personal_deity = baal_deity
+					has_church_aspect = blessing_baal
+				}
+			}
+			add_dip_power = 50
+			add_years_of_income = 0.5
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_baal
+			duration = 1825
+		}
+		define_advisor = {
+			type = trader
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Yam Blesses the Navy
+country_event = {
+	id = ab_punic.2022
+	title = ab_punic.2022.t 
+	desc = ab_punic.2022.d
+	picture = muslimgfx_NAVAL_MILITARY_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_yam }
+		num_of_ports = 1
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2022.a
+		if = {
+			limit = {
+				OR = {
+					has_personal_deity = yam_deity
+					has_church_aspect = blessing_yam
+				}
+			}
+			add_dip_power = 50
+			add_navy_tradition = 10
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_yam
+			duration = 1825
+		}
+		define_advisor = {
+			type = naval_reformer
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Anat Blesses the Army
+country_event = {
+	id = ab_punic.2023
+	title = ab_punic.2023.t 
+	desc = ab_punic.2023.d
+	picture = muslimgfx_MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_anat }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2023.a
+		if = {
+			limit = {
+				OR = {
+					has_personal_deity = anat_deity
+					has_church_aspect = blessing_anat
+				}
+			}
+			add_mil_power = 50
+			add_army_professionalism = 0.05
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_anat
+			duration = 1825
+		}
+		define_advisor = {
+			type = commandant
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Melqart Protection
+country_event = {
+	id = ab_punic.2024
+	title = ab_punic.2024.t 
+	desc = ab_punic.2024.d
+	picture = muslimgfx_FORT_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_melqart }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2024.a
+		if = {
+			limit = {
+				OR = {
+					has_personal_deity = melqart_deity
+					has_church_aspect = blessing_melqart
+				}
+			}
+			add_mil_power = 50
+			add_yearly_manpower = 0.5
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_melqart
+			duration = 1825
+		}
+		define_advisor = {
+			type = fortification_expert
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Fire of Sydyk
+country_event = {
+	id = ab_punic.2025
+	title = ab_punic.2025.t 
+	desc = ab_punic.2025.d
+	picture = muslimgfx_CONQUEST_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_sydyk }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2025.a
+		if = {
+			limit = {
+				has_church_aspect = blessing_sydyk
+			}
+			change_innovativeness = 2
+			add_yearly_manpower = 0.5
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_sydyk
+			duration = 1825
+		}
+		define_advisor = {
+			type = siegeengineer
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Astarte Harmony
+country_event = {
+	id = ab_punic.2026
+	title = ab_punic.2026.t 
+	desc = ab_punic.2026.d
+	picture = muslimgfx_COURT_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = canaanite
+			religion = reformed_canaanite
+		}
+		NOT = { has_country_modifier = punic_religion_blessing_astarte }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = ab_punic.2026.a
+		if = {
+			limit = {
+				has_church_aspect = blessing_astarte
+			}
+			change_innovativeness = 2
+			change_government_reform_progress = 25
+		}
+		add_country_modifier = {
+			name = punic_religion_blessing_astarte
+			duration = 1825
+		}
+		define_advisor = {
+			type = architect
+			skill = 2
+			cost_multiplier = 0.5
 		}
 	}
 }
