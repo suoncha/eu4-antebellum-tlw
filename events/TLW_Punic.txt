@@ -63,29 +63,37 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
-			# add_adm_tech = 2
-			# add_dip_tech = 2
-			# add_mil_tech = 2
-			add_country_modifier = {
-				name = punic_peace
-				duration = -1
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_country_modifier = {
+					name = punic_peace_ai
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = punic_peace
+					duration = -1
+				}
 			}
 		}
 	}
 	
 	option = {
 		name = ab_punic.1.a
-		custom_tooltip = PUNIC_EARLY_EVENT_CHAIN
 		tooltip = {
-			# add_adm_tech = 2
-			# add_dip_tech = 2
-			# add_mil_tech = 2
+			add_adm_tech = 2
+			add_dip_tech = 2
+			add_mil_tech = 2
 			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = punic_peace
 				duration = -1
 			}
 		}
+		custom_tooltip = PUNIC_EARLY_EVENT_CHAIN
 	}
 }
 
@@ -772,7 +780,7 @@ country_event = {
 	}
 }
 
-#The European Threat - Hidden
+#The Palemen Threat - Hidden
 country_event = {
 	id = ab_punic.14
 	title = ab_punic.14.t
@@ -803,6 +811,7 @@ country_event = {
 	option = {
 		name = ab_punic.14.a
 		set_global_flag = plague_gray_fever_enabled
+		set_global_flag = north_america_european_threat
 		every_country = {
 			limit = {
 				technology_group = north_american
@@ -814,7 +823,7 @@ country_event = {
 	}
 }
 
-#The European Threat
+#The Palemen Threat
 country_event = {
 	id = ab_punic.15
 	title = ab_punic.15.t
@@ -825,7 +834,6 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			set_country_flag = pun_unlock_revoking_privilege
 			add_stability = -1
 		}
 	}
@@ -838,6 +846,13 @@ country_event = {
 		remove_country_modifier = punic_trading_with_europeans
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = PUN_UNLOCK_REVOKING_PRIVILEGE
+		if = {
+			limit = {
+				NOT = { has_global_flag = ab_disabled_punic_league }
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = PUN_FASTER_LEAGUE_AUTHORITY
+		}
 	}
 }
 
@@ -947,6 +962,908 @@ country_event = {
 				discover_province = PREV
 			}
 		}
+	}
+}
+
+#Assassination Attempt
+country_event = {
+	id = ab_punic.20
+	title = ab_punic.20.t
+	desc = ab_punic.20.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clear_global_event_target = assassinationTarget
+		}
+	}
+	
+	option = {
+		name = ab_punic.20.a
+		if = {
+			limit = {
+				full_idea_group = spy_ideas
+			}
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = event_target:assassinationTarget
+						value = 65
+					}
+				}
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -65
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						30 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						40 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						30 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_spy_network_in = {
+						who = event_target:assassinationTarget
+						value = 50
+					}
+				}
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -50
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						20 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						30 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						50 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+			else = {
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -40
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						10 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						20 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						70 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = event_target:assassinationTarget
+						value = 80
+					}
+				}
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -80
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						30 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						40 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						30 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_spy_network_in = {
+						who = event_target:assassinationTarget
+						value = 65
+					}
+				}
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -65
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						20 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						30 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						50 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+			else = {
+				add_spy_network_in = {
+					who = event_target:assassinationTarget
+					value = -50
+				}
+				event_target:assassinationTarget = {
+					random_list = {
+						10 = {
+							country_event = {
+								id = ab_punic.21
+							}
+						}
+						20 = {
+							country_event = {
+								id = ab_punic.24
+							}
+						}
+						70 = {
+							country_event = {
+								id = ab_punic.27
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.20.b
+		trigger = {
+			ai = no
+		}
+	}
+}
+
+#Assassination Attempt - Success
+country_event = {
+	id = ab_punic.21
+	title = ab_punic.21.t
+	desc = ab_punic.21.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+			subtract_variable = {
+				which = election_point
+				value = 200
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = election_point
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = election_point
+					value = 0
+				}
+			}
+			add_country_modifier = {
+				name = punic_league_was_assassinated_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.21.a
+		tooltip = {
+			subtract_variable = {
+				which = election_point
+				value = 200
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					tlw_is_punic_city_state_trigger = yes
+					NOT = { tag = ROOT }
+				}
+				if = {
+					limit = {
+						tag = FROM
+					}
+					country_event = {
+						id = ab_punic.22
+					}
+				}
+				else = {
+					country_event = {
+						id = ab_punic.23
+					}
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Success Nof
+country_event = {
+	id = ab_punic.22
+	title = ab_punic.22.t
+	desc = ab_punic.22.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.22.a
+		tooltip = {
+			FROM = {
+				subtract_variable = {
+					which = election_point
+					value = 200
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Success Nof All
+country_event = {
+	id = ab_punic.23
+	title = ab_punic.23.t
+	desc = ab_punic.23.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.23.a
+		tooltip = {
+			FROM = {
+				subtract_variable = {
+					which = election_point
+					value = 200
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Caught
+country_event = {
+	id = ab_punic.24
+	title = ab_punic.24.t
+	desc = ab_punic.24.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+			subtract_variable = {
+				which = election_point
+				value = 200
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = election_point
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = election_point
+					value = 0
+				}
+			}
+			add_country_modifier = {
+				name = punic_league_was_assassinated_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.24.a
+		tooltip = {
+			subtract_variable = {
+				which = election_point
+				value = 200
+			}
+		}
+		add_opinion = {
+			who = FROM
+			modifier = opinion_assassinated_our_ruler
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					tlw_is_punic_city_state_trigger = yes
+					NOT = { tag = ROOT }
+				}
+				if = {
+					limit = {
+						tag = FROM
+					}
+					country_event = {
+						id = ab_punic.25
+					}
+				}
+				else = {
+					country_event = {
+						id = ab_punic.26
+					}
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Caught Nof
+country_event = {
+	id = ab_punic.25
+	title = ab_punic.25.t
+	desc = ab_punic.25.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_league_discovered_assassinated_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.25.a
+		tooltip = {
+			FROM = {
+				subtract_variable = {
+					which = election_point
+					value = 200
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_assassinated_our_ruler
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Caught Nof All
+country_event = {
+	id = ab_punic.26
+	title = ab_punic.26.t
+	desc = ab_punic.26.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.26.a
+		tooltip = {
+			FROM = {
+				subtract_variable = {
+					which = election_point
+					value = 200
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Failed
+country_event = {
+	id = ab_punic.27
+	title = ab_punic.27.t
+	desc = ab_punic.27.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.27.a
+		add_opinion = {
+			who = FROM
+			modifier = opinion_assassinated_our_ruler
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					tlw_is_punic_city_state_trigger = yes
+					NOT = { tag = ROOT }
+				}
+				if = {
+					limit = {
+						tag = FROM
+					}
+					country_event = {
+						id = ab_punic.28
+					}
+				}
+				else = {
+					country_event = {
+						id = ab_punic.29
+					}
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Failed Nof
+country_event = {
+	id = ab_punic.28
+	title = ab_punic.28.t
+	desc = ab_punic.28.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_league_discovered_assassinated_timer
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.28.a
+		tooltip = {
+			FROM = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_assassinated_our_ruler
+				}
+			}
+		}
+	}
+}
+
+#Assassination Attempt - Failed Nof All
+country_event = {
+	id = ab_punic.29
+	title = ab_punic.29.t
+	desc = ab_punic.29.d
+	picture = muslimgfx_ASSASSINATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.29.a
+	}
+}
+
+#Easima Election
+country_event = {
+	id = ab_punic.30
+	title = ab_punic.30.t
+	desc = ab_punic.30.d
+	picture = muslimgfx_ELECTION_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = {
+				which = election_point
+				value = 0
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = punic_league_tag_switch
+		}
+	}
+	
+	option = {
+		name = ab_punic.30.a
+		if = {
+			limit = {
+				has_country_flag = punic_league_tag_switch
+			}
+			custom_tooltip = PUN_TRANSFER
+		}
+		else = {
+			tooltip = {
+				change_variable = {
+					which = punic_league_value
+					value = 10
+				}
+			}
+		}
+		tooltip = {
+			set_variable = {
+				which = election_point
+				value = 0
+			}
+		}
+	}
+}
+
+#Fall of the Punic League
+country_event = {
+	id = ab_punic.31
+	title = ab_punic.31.t
+	desc = ab_punic.31.d
+	picture = muslimgfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			ab_punic_league_cleanup_effect = yes
+		}
+	}
+	
+	option = {
+		name = ab_punic.31.a
+		add_dip_power = 50
+		add_mil_power = 50
+		add_adm_power = 50
+		add_country_modifier = {
+			name = punic_league_dismantler
+			duration = 36500
+		}
+		custom_tooltip = PUN_DISABLE_PUNIC_LEAGUE
+	}
+}
+
+#Revive the Legacy of Hannibal
+country_event = {
+	id = ab_punic.32
+	title = ab_punic.32.t
+	desc = ab_punic.32.d
+	picture = AB_CARTHAGE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			ab_punic_league_cleanup_effect = yes
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_city_vassal
+				}
+				ROOT = {
+					inherit = PREV
+				}
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_tribe_vassal
+				}
+				ROOT = {
+					create_march = PREV
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.32.a
+		custom_tooltip = PUN_DISABLE_PUNIC_LEAGUE
+		custom_tooltip = AB_EMPTY
+		change_tag = CTG
+		remove_country_modifier = punic_peace
+		remove_country_modifier = punic_peace_ai
+		set_government_rank = 3
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PUN_ANNEX_EVERY_CITY_STATE
+		custom_tooltip = PUN_TURN_MARCH_EVERY_ALDIRAQ
+		custom_tooltip = AB_EMPTY
+		country_event = {
+			id = ideagroups.1
+		}
+		add_country_modifier = {
+			name = centralization_modifier
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+}
+
+#Enact Punic League Reform - AI Helper
+country_event = {
+	id = ab_punic.33
+	title = ab_punic.33.t
+	desc = ab_punic.33.d
+	picture = muslimgfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_punic.33.a
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_1 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_1_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.b
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_2 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_2_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.c
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_3 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_3_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.e
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_4 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_4_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.f
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_5 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_5_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.g
+		trigger = {
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_6 }
+			}
+		}
+		ai_chance = { factor = 10 }
+		ab_punic_league_reform_6_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.h
+		trigger = {
+			has_global_flag = north_america_european_threat
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_7 }
+			}
+		}
+		ai_chance = { factor = 25 }
+		ab_punic_league_reform_7_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.i
+		trigger = {
+			has_global_flag = north_america_european_threat
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_8 }
+			}
+		}
+		ai_chance = { factor = 25 }
+		ab_punic_league_reform_8_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.j
+		trigger = {
+			has_global_flag = north_america_european_threat
+			REB = {
+				NOT = { has_country_flag = punic_league_reform_passed_9 }
+			}
+		}
+		ai_chance = { factor = 25 }
+		ab_punic_league_reform_9_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.k
+		trigger = {
+			has_global_flag = north_america_european_threat
+			REB = {
+                has_country_flag = punic_league_reform_passed_1
+                has_country_flag = punic_league_reform_passed_2
+                has_country_flag = punic_league_reform_passed_3
+                has_country_flag = punic_league_reform_passed_4
+                has_country_flag = punic_league_reform_passed_5
+                has_country_flag = punic_league_reform_passed_6
+                has_country_flag = punic_league_reform_passed_7
+                has_country_flag = punic_league_reform_passed_8
+                has_country_flag = punic_league_reform_passed_9
+            }
+		}
+		ai_chance = { factor = 100 }
+		ab_punic_league_reform_10_effect = yes
+	}
+}
+
+#Granted Aldiraq Expansion
+country_event = {
+	id = ab_punic.34
+	title = ab_punic.34.t
+	desc = {
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		desc = ab_punic.34.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		desc = ab_punic.34.d2
+	}
+	picture = northamericagfx_CITY_DEVELOPMENT_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					tag = event_target:easimaTarget
+				}
+				add_country_modifier = {
+					name = punic_league_aldiraq_expansion_mod_easima
+					duration = -1
+					desc = "until revoked by the Easima"
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = punic_league_aldiraq_expansion_ai_timer
+					duration = 365
+					hidden = yes
+				}
+				add_country_modifier = {
+					name = punic_league_aldiraq_expansion_mod_rayi
+					duration = -1
+					desc = "until revoked by the Easima"
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.34.a
+		tooltip = {
+			if = {
+				limit = {
+					tag = event_target:easimaTarget
+				}
+				add_country_modifier = {
+					name = punic_league_aldiraq_expansion_mod_easima
+					duration = -1
+					desc = "until revoked by the Easima"
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = punic_league_aldiraq_expansion_mod_rayi
+					duration = -1
+					desc = "until revoked by the Easima"
+				}
+			}
+		}
+	}
+}
+
+#Revoked Aldiraq Expansion
+country_event = {
+	id = ab_punic.35
+	title = ab_punic.35.t
+	desc = {
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		desc = ab_punic.35.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		desc = ab_punic.35.d2
+	}
+	picture = northamericagfx_CITY_DEVELOPMENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.35.a
+		remove_country_modifier = punic_league_aldiraq_expansion_mod_easima
+		remove_country_modifier = punic_league_aldiraq_expansion_mod_rayi
 	}
 }
 
@@ -2325,7 +3242,7 @@ country_event = {
 		ai_chance = { factor = 40 }
 		add_years_of_income = -0.25
 		add_yearly_manpower = -1
-		random_list = { 
+		random_list = {
 			10 = {
 				country_event = {
 					id = ab_punic.1016
@@ -2578,7 +3495,7 @@ country_event = {
 							}
 						}
 					}
-					random_list = { 
+					random_list = {
 						40 = {
 							province_event = {
 								id = ab_punic.1019
@@ -2843,7 +3760,7 @@ country_event = {
 		name = ab_punic.1022.a
 		ai_chance = { factor = 75 }
 		add_years_of_income = -0.5
-		random_list = { 
+		random_list = {
 			25 = {
 				country_event = {
 					id = ab_punic.1023
@@ -2856,7 +3773,7 @@ country_event = {
 	option = {
 		name = ab_punic.1022.b
 		ai_chance = { factor = 25 }
-		random_list = { 
+		random_list = {
 			50 = {
 				country_event = {
 					id = ab_punic.1023
@@ -2956,7 +3873,7 @@ country_event = {
 				}
 			}
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					40 = {
 						province_event = {
 							id = ab_punic.1019
@@ -2968,7 +3885,7 @@ country_event = {
 		}
 		else = {
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					75 = {
 						province_event = {
 							id = ab_punic.1019
@@ -2991,7 +3908,7 @@ country_event = {
 				}
 			}
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					1 = {
 						province_event = {
 							id = ab_punic.1019
@@ -3003,7 +3920,7 @@ country_event = {
 		}
 		else = {
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					50 = {
 						province_event = {
 							id = ab_punic.1019
@@ -3184,7 +4101,7 @@ country_event = {
 				}
 			}
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					40 = {
 						province_event = {
 							id = ab_punic.1019
@@ -3196,7 +4113,7 @@ country_event = {
 		}
 		else = {
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					75 = {
 						province_event = {
 							id = ab_punic.1019
@@ -3427,7 +4344,7 @@ country_event = {
 				}
 			}
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					5 = {
 						province_event = {
 							id = ab_punic.1031
@@ -3448,7 +4365,7 @@ country_event = {
 		}
 		else = {
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					25 = {
 						province_event = {
 							id = ab_punic.1031
@@ -3480,7 +4397,7 @@ country_event = {
 				}
 			}
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					25 = {
 						province_event = {
 							id = ab_punic.1031
@@ -3501,7 +4418,7 @@ country_event = {
 		}
 		else = {
 			event_target:diseaseProv = {
-				random_list = { 
+				random_list = {
 					60 = {
 						province_event = {
 							id = ab_punic.1031
@@ -3752,7 +4669,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2003.a
-		random_list = { 
+		random_list = {
 			33 = {
 				add_country_modifier = {
 					name = punic_religion_oracle_adm
@@ -3794,7 +4711,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2004.a
-		random_list = { 
+		random_list = {
 			33 = {
 				add_country_modifier = {
 					name = punic_religion_oracle_weak_economy
@@ -3906,7 +4823,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2006.a
-		random_list = { 
+		random_list = {
 			33 = {
 				add_country_modifier = {
 					name = punic_religion_veiled_priestess_adm
@@ -3940,7 +4857,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2007.a
-		random_list = { 
+		random_list = {
 			33 = {
 				add_country_modifier = {
 					name = punic_religion_veiled_priestess_hidden_threat
@@ -4739,6 +5656,29 @@ country_event = {
 			name = punic_religion_fire_festival_super_strong
 			duration = 1825
 		}
+		if = {
+			limit = {
+				has_global_flag = europe_discovered_punics
+			}
+			custom_tooltip = OLD_WORLD_HATE_EATING_CHILDREN_MORE
+			hidden_effect = {
+				every_known_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								continent = europe
+								continent = asia
+								continent = africa
+							}
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_barbaric_super
+					}
+				}
+			}
+		}
 	}
 
 	option = {
@@ -4750,6 +5690,29 @@ country_event = {
 		add_country_modifier = {
 			name = punic_religion_fire_festival_strong
 			duration = 1825
+		}
+		if = {
+			limit = {
+				has_global_flag = europe_discovered_punics
+			}
+			custom_tooltip = OLD_WORLD_HATE_EATING_CHILDREN
+			hidden_effect = {
+				every_known_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								continent = europe
+								continent = asia
+								continent = africa
+							}
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_barbaric
+					}
+				}
+			}
 		}
 	}
 

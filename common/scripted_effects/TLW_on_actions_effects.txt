@@ -66,6 +66,27 @@ TLW_on_new_monarch_effect = {
 			add_ruler_personality = augustus_buffed_personality
 		}
 	}
+	else_if = {
+		limit = {
+			tag = HLS
+			NOT = { dynasty = "Seleukos" }
+		}
+		set_dynasty = "Seleukos"
+	}
+	else_if = {
+		limit = {
+			tag = HLM
+			NOT = { dynasty = "Antigonos" }
+		}
+		set_dynasty = "Antigonos"
+	}
+	else_if = {
+		limit = {
+			tag = AEG
+			NOT = { dynasty = "Ptolemaios" }
+		}
+		set_dynasty = "Ptolemaios"
+	}
 }
 
 TLW_on_adm_development_effect = {
@@ -412,27 +433,6 @@ TLW_on_new_term_election_effect = {
 		country_event = {
 			id = ab_byzantium.68
 		}
-	}
-	else_if = {
-		limit = {
-			tag = HLS
-			NOT = { dynasty = "Seleukos" }
-		}
-		set_dynasty = "Seleukos"
-	}
-	else_if = {
-		limit = {
-			tag = HLM
-			NOT = { dynasty = "Antigonos" }
-		}
-		set_dynasty = "Antigonos"
-	}
-	else_if = {
-		limit = {
-			tag = AEG
-			NOT = { dynasty = "Ptolemaios" }
-		}
-		set_dynasty = "Ptolemaios"
 	}
 }
 
@@ -993,6 +993,50 @@ TLW_on_war_lost_effect = {
 			remove_country_modifier = byz_reconquest_of_the_levant_nizzarids
 		}
 	}
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			tag = event_target:easimaTarget
+		}
+		subtract_variable = {
+			which = election_point
+			value = 100
+		}
+		if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						which = election_point
+						value = 0.001
+					}
+				}
+			}
+			set_variable = {
+				which = election_point
+				value = 0
+			}
+		}
+		REB = {
+			subtract_variable = {
+				which = punic_league_value
+				value = 5
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = punic_league_value
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = punic_league_value
+					value = 0
+				}
+			}
+		}
+	}
 }
 
 TLW_on_general_recruited = {
@@ -1407,6 +1451,31 @@ TLW_on_dependency_lost_effect = {
 	}
 }
 
+TLW_on_annexed_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			FROM = {
+				tag = event_target:easimaTarget
+			}
+		}
+		FROM = {
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				grant_independence = yes
+			}
+		}
+		country_event = {
+			id = ab_punic.31
+		}
+	}
+}
+
 TLW_on_colonial_nation_established = {
 	if = {
 		limit = {
@@ -1427,6 +1496,7 @@ TLW_on_colonial_nation_established = {
 }
 
 TLW_on_colony_finished_effect = {
+	# Colonization
 	if = {
 		limit = {
 			continent = north_america
@@ -1459,6 +1529,47 @@ TLW_on_colony_finished_effect = {
 		}
 		owner = {
 			add_papal_influence = 5
+		}
+	}
+	# Punic
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			owner = {
+				OR = {
+					tag = event_target:easimaTarget
+					is_subject_of_type = punic_tribe_vassal
+				}
+			}
+		}
+		owner = {
+			if = {
+				limit = {
+					tag = event_target:easimaTarget
+				}
+				change_variable = {
+					which = election_point
+					value = 50
+				}
+			}
+		}
+		REB = {
+			change_variable = {
+				which = punic_league_value
+				value = 5
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = punic_league_value
+						value = 100
+					}
+				}
+				set_variable = {
+					which = punic_league_value
+					value = 100
+				}
+			}
 		}
 	}
 }

@@ -204,6 +204,24 @@ declarewar = {
 			}
 		}
 	}
+	condition = {
+		tooltip = CANNOT_DECLARE_INTERNAL_LEAGUE_WARS_OTHER_THAN_INDEPENDENCE_WARS
+		potential = {
+			is_subject_of = event_target:easimaTarget
+			FROM = {
+				is_subject_of = event_target:easimaTarget
+			}
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			REB = {
+				has_country_flag = punic_league_reform_passed_9
+			}
+		}
+		allow = {
+			FROM = {
+				NOT = { is_subject_of = event_target:easimaTarget }
+			}
+		}
+	}
 	# ]]]
 	effect = {
 		on_war_declaration_effect = yes
@@ -627,6 +645,19 @@ guaranteeaction = {
 		}
 		allow = {
 			has_country_flag = byz_triumvir_flag
+		}
+	}
+}
+
+fabricate_claim = {
+	condition = {
+		tooltip = ROOT_IS_CTG_TT
+		potential = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			tlw_is_punic_city_state_trigger = yes
+		}
+		allow = {
+			tag = CTG
 		}
 	}
 }

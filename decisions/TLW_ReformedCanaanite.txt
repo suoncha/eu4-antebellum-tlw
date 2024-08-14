@@ -133,4 +133,109 @@ country_decisions = {
 			factor = 1
 		}
 	}
+
+	ai_easima_decision = {
+		potential = {
+			ai = yes
+			tag = event_target:easimaTarget
+			NOT = { has_global_flag = ab_disabled_punic_league }
+		}
+
+		allow = {
+			is_at_war = no
+			REB = {
+                check_variable = {
+                    which = punic_league_value
+                    value = 50
+                }
+				if = {
+					limit = {
+						has_global_flag = north_america_european_threat
+					}
+					NOT = {
+						AND = {
+							has_country_flag = punic_league_reform_passed_1
+							has_country_flag = punic_league_reform_passed_2
+							has_country_flag = punic_league_reform_passed_3
+							has_country_flag = punic_league_reform_passed_4
+							has_country_flag = punic_league_reform_passed_5
+							has_country_flag = punic_league_reform_passed_6
+							has_country_flag = punic_league_reform_passed_7
+							has_country_flag = punic_league_reform_passed_8
+							has_country_flag = punic_league_reform_passed_9
+							has_country_flag = punic_league_reform_passed_10
+						}
+					}
+				}
+				else = {
+					NOT = {
+						AND = {
+							has_country_flag = punic_league_reform_passed_1
+							has_country_flag = punic_league_reform_passed_2
+							has_country_flag = punic_league_reform_passed_3
+							has_country_flag = punic_league_reform_passed_4
+							has_country_flag = punic_league_reform_passed_5
+							has_country_flag = punic_league_reform_passed_6
+						}
+					}
+				}
+            }
+		}
+
+		effect = {
+			REB = {
+                subtract_variable = {
+                    which = punic_league_value
+                    value = 50
+                } 
+            }
+			country_event = {
+				id = ab_punic.33
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	ai_carthage_decision = {
+		potential = {
+			ai = yes
+			tag = event_target:easimaTarget
+			REB = {
+                has_country_flag = punic_league_reform_passed_1
+                has_country_flag = punic_league_reform_passed_2
+                has_country_flag = punic_league_reform_passed_3
+                has_country_flag = punic_league_reform_passed_4
+                has_country_flag = punic_league_reform_passed_5
+                has_country_flag = punic_league_reform_passed_6
+                has_country_flag = punic_league_reform_passed_7
+                has_country_flag = punic_league_reform_passed_8
+                has_country_flag = punic_league_reform_passed_9
+                has_country_flag = punic_league_reform_passed_10
+            }
+			NOT = { has_global_flag = ab_disabled_punic_league }
+		}
+
+		allow = {
+			is_at_war = no
+			REB = {
+                check_variable = {
+                    which = punic_league_value
+                    value = 50
+                }
+            }
+		}
+
+		effect = {
+			country_event = {
+				id = ab_punic.32
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
 }
