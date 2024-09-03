@@ -1,0 +1,474 @@
+aa_is_alert_disabled = {
+	OR = {
+		AND = {
+			NOT = { has_global_flag = aa_settings_local }
+			has_global_flag = aa_alert_disabled_$alert$
+		}
+		AND = {
+			has_global_flag = aa_settings_local
+			has_country_flag = aa_alert_disabled_$alert$
+		}
+	}
+}
+aa_is_alert_in_slot = {
+	[[alert2slot1]
+		NOT = { aa_alert_emperor_losing_election_trigger = yes }
+		aa_alert_elector_not_voting_for_self_trigger = yes
+	]
+	[[alert2slot2]
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+	]
+	[[alert3slot1]
+		NOT = { aa_alert_emperor_losing_election_trigger = yes }
+		NOT = { aa_alert_elector_not_voting_for_self_trigger = yes }
+		aa_alert_war_taxes_paying_trigger = yes
+	]
+	[[alert3slot2]
+		OR = {
+			AND = {
+				NOT = { aa_alert_emperor_losing_election_trigger = yes }
+				aa_alert_elector_not_voting_for_self_trigger = yes
+			}
+			AND = {
+				aa_alert_emperor_losing_election_trigger = yes
+				NOT = { aa_alert_elector_not_voting_for_self_trigger = yes }
+			}
+		}
+		aa_alert_war_taxes_paying_trigger = yes
+	]
+	[[alert3slot3]
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+		aa_alert_war_taxes_paying_trigger = yes
+	]
+	[[alert4slot1]
+		NOT = { aa_alert_emperor_losing_election_trigger = yes }
+		NOT = { aa_alert_elector_not_voting_for_self_trigger = yes }
+		NOT = { aa_alert_war_taxes_paying_trigger = yes }
+		aa_alert_governing_capacity_over_trigger = yes
+	]
+	[[alert4slot2]
+		OR = {
+			aa_alert_emperor_losing_election_trigger = yes
+			aa_alert_elector_not_voting_for_self_trigger = yes
+			aa_alert_war_taxes_paying_trigger = yes
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				amount = 2
+			}
+		}
+		aa_alert_governing_capacity_over_trigger = yes
+	]
+	[[alert4slot3]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			amount = 2
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				amount = 3
+			}
+		}
+		aa_alert_governing_capacity_over_trigger = yes
+	]
+	[[alert4slot3]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			amount = 2
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				amount = 3
+			}
+		}
+		aa_alert_governing_capacity_over_trigger = yes
+	]
+	[[alert4slot4]
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+		aa_alert_war_taxes_paying_trigger = yes
+		aa_alert_governing_capacity_over_trigger = yes
+	]
+	[[alert5slot1]
+		NOT = { aa_alert_emperor_losing_election_trigger = yes }
+		NOT = { aa_alert_elector_not_voting_for_self_trigger = yes }
+		NOT = { aa_alert_war_taxes_paying_trigger = yes }
+		NOT = { aa_alert_governing_capacity_over_trigger = yes }
+		aa_alert_war_taxes_free_trigger = yes
+	]
+	[[alert5slot2]
+		OR = {
+			aa_alert_emperor_losing_election_trigger = yes
+			aa_alert_elector_not_voting_for_self_trigger = yes
+			aa_alert_war_taxes_paying_trigger = yes
+			aa_alert_governing_capacity_over_trigger = yes
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				amount = 2
+			}
+		}
+		aa_alert_war_taxes_free_trigger = yes
+	]
+	[[alert5slot3]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+			amount = 2
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				amount = 3
+			}
+		}
+		aa_alert_war_taxes_free_trigger = yes
+	]
+	[[alert5slot4]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+			amount = 3
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				amount = 4
+			}
+		}
+		aa_alert_war_taxes_free_trigger = yes
+	]
+	[[alert5slot5]
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+		aa_alert_war_taxes_paying_trigger = yes
+		aa_alert_governing_capacity_over_trigger = yes
+		aa_alert_war_taxes_free_trigger = yes
+	]
+	[[alert6slot1]
+		NOT = { aa_alert_emperor_losing_election_trigger = yes }
+		NOT = { aa_alert_elector_not_voting_for_self_trigger = yes }
+		NOT = { aa_alert_war_taxes_paying_trigger = yes }
+		NOT = { aa_alert_governing_capacity_over_trigger = yes }
+		NOT = { aa_alert_war_taxes_free_trigger = yes }
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+	[[alert6slot2]
+		OR = {
+			aa_alert_emperor_losing_election_trigger = yes
+			aa_alert_elector_not_voting_for_self_trigger = yes
+			aa_alert_war_taxes_paying_trigger = yes
+			aa_alert_governing_capacity_over_trigger = yes
+			aa_alert_war_taxes_free_trigger = yes
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+				amount = 2
+			}
+		}
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+	[[alert6slot3]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+			amount = 2
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+				amount = 3
+			}
+		}
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+	[[alert6slot4]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+			amount = 3
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+				amount = 4
+			}
+		}
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+	[[alert6slot5]
+		calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+			AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+			AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+			AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+			AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+			amount = 4
+		}
+		NOT = {
+			calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+				AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+				AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+				AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+				AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+				amount = 5
+			}
+		}
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+	[[alert6slot6]
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+		aa_alert_war_taxes_paying_trigger = yes
+		aa_alert_governing_capacity_over_trigger = yes
+		aa_alert_war_taxes_free_trigger = yes
+		aa_alert_governing_capacity_near_trigger = yes
+	]
+}
+aa_is_slot_active_1 = {
+	OR = {
+		OR = {
+			AND = {
+				has_global_flag = aa_settings_local
+				NOT = { has_country_flag = aa_hide_settings_button }
+			}
+			AND = {
+				NOT = { has_global_flag = aa_settings_local }
+				NOT = { has_global_flag = aa_hide_settings_button }
+			}
+		}
+		NOT = { has_global_flag = aa_hide_settings_button }
+		aa_alert_emperor_losing_election_trigger = yes
+		aa_alert_elector_not_voting_for_self_trigger = yes
+		aa_alert_war_taxes_paying_trigger = yes
+		aa_alert_governing_capacity_over_trigger = yes
+		aa_alert_war_taxes_free_trigger = yes
+		aa_alert_governing_capacity_near_trigger = yes
+	}
+}
+aa_is_slot_active_2 = {
+	calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+		AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+		AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_near_trigger = yes } }
+		amount = 2
+	}
+}
+aa_is_slot_active_3 = {
+	calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+		AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+		AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_near_trigger = yes } }
+		amount = 3
+	}
+}
+aa_is_slot_active_4 = {
+	calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+		AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+		AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_near_trigger = yes } }
+		amount = 4
+	}
+}
+aa_is_slot_active_5 = {
+	calc_true_if = { #The ORs are needed so calc_true_if considers each scripted trigger as one trigger
+		AND = { OR = { aa_alert_emperor_losing_election_trigger = yes } }
+		AND = { OR = { aa_alert_elector_not_voting_for_self_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_paying_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_over_trigger = yes } }
+		AND = { OR = { aa_alert_war_taxes_free_trigger = yes } }
+		AND = { OR = { aa_alert_governing_capacity_near_trigger = yes } }
+		amount = 5
+	}
+}
+aa_is_slot_active_6 = {
+	aa_alert_emperor_losing_election_trigger = yes
+	aa_alert_elector_not_voting_for_self_trigger = yes
+	aa_alert_war_taxes_paying_trigger = yes
+	aa_alert_governing_capacity_over_trigger = yes
+	aa_alert_war_taxes_free_trigger = yes
+	aa_alert_governing_capacity_near_trigger = yes
+}
+aa_alert_emperor_losing_election_trigger = { #High priority
+	NOT = { aa_is_alert_disabled = { alert = 1 } }
+	is_emperor = yes
+	OR = {
+		aa_alert_emperor_losing_election_trigger_votes = yes
+		has_heir = no
+		AND = {
+			has_female_heir = yes
+			allows_female_emperor = no
+		}
+	}
+}
+aa_alert_emperor_losing_election_trigger_votes = { #Checks if another country has more votes then the emperor, for previous trigger
+	OR = {
+		any_country = {
+			NOT = { tag = ROOT }
+			calc_true_if = {
+				all_elector = {
+					preferred_emperor = PREV
+				}
+				amount = 4
+			}
+		}
+		AND = {
+			any_country = {
+				NOT = { tag = ROOT }
+				calc_true_if = {
+					all_elector = {
+						preferred_emperor = PREV
+					}
+					amount = 3
+				}
+			}
+			NOT = {
+				calc_true_if = {
+					all_elector = {
+						preferred_emperor = ROOT
+					}
+					amount = 3
+				}
+			}
+		}
+		AND = {
+			any_country = {
+				NOT = { tag = ROOT }
+				calc_true_if = {
+					all_elector = {
+						preferred_emperor = PREV
+					}
+					amount = 2
+				}
+			}
+			NOT = {
+				calc_true_if = {
+					all_elector = {
+						preferred_emperor = ROOT
+					}
+					amount = 2
+				}
+			}
+		}
+		AND = {
+			any_country = {
+				NOT = { tag = ROOT }
+				any_elector = {
+					preferred_emperor = PREV
+				}
+			}
+			NOT = {
+				any_elector = {
+					preferred_emperor = ROOT
+				}
+			}
+		}
+	}
+}
+aa_alert_elector_not_voting_for_self_trigger = { #Medium priority
+	NOT = { aa_is_alert_disabled = { alert = 2 } }
+	is_elector = yes
+	is_subject = no
+	NOT = { preferred_emperor = ROOT }
+    has_government_attribute = is_eligible_for_hre_emperor
+    OR = {
+        is_female = no
+        allows_female_emperor = yes
+    }
+    if = {
+        limit = {
+            has_dlc = "Art of War"
+            hre_religion_treaty = no
+        }
+        religion = emperor
+    }
+    else = {
+        religion_group = christian
+    }
+}
+
+aa_alert_war_taxes_paying_trigger = { #Medium priority
+	NOT = { aa_is_alert_disabled = { alert = 3 } }
+	has_wartaxes = yes
+	has_global_modifier_value = {
+		which = war_taxes_cost_modifier
+		value = -0.51
+	}
+}
+aa_alert_governing_capacity_over_trigger = { #Medium priority
+	NOT = { aa_is_alert_disabled = { alert = 4 } }
+	governing_capacity_percentage = 1.001
+}
+aa_alert_war_taxes_free_trigger = { #Low priority
+	NOT = { aa_is_alert_disabled = { alert = 5 } }
+	has_wartaxes = no
+	NOT = {
+		has_global_modifier_value = {
+			which = war_taxes_cost_modifier
+			value = -0.51
+		}
+	}
+}
+aa_alert_governing_capacity_near_trigger = { #Low priority
+	NOT = { aa_is_alert_disabled = { alert = 6 } }
+	NOT = { governing_capacity_percentage = 1.001 }
+	governing_capacity_percentage = 0.85
+}
