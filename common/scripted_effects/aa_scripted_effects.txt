@@ -1,0 +1,76 @@
+aa_toggle_all_alerts = { #Remember to make it work for non-global setting
+	if = {
+		limit = { NOT = { has_global_flag = aa_settings_local } }
+		if = {
+			limit = {
+				OR = {
+					has_global_flag = aa_alert_disabled_1
+					has_global_flag = aa_alert_disabled_2
+					has_global_flag = aa_alert_disabled_3
+					has_global_flag = aa_alert_disabled_4
+					has_global_flag = aa_alert_disabled_5
+					has_global_flag = aa_alert_disabled_6
+				}
+			}
+			clr_global_flag = aa_alert_disabled_1
+			clr_global_flag = aa_alert_disabled_2
+			clr_global_flag = aa_alert_disabled_3
+			clr_global_flag = aa_alert_disabled_4
+			clr_global_flag = aa_alert_disabled_5
+			clr_global_flag = aa_alert_disabled_6
+		}
+		else = {
+			set_global_flag = aa_alert_disabled_1
+			set_global_flag = aa_alert_disabled_2
+			set_global_flag = aa_alert_disabled_3
+			set_global_flag = aa_alert_disabled_4
+			set_global_flag = aa_alert_disabled_5
+			set_global_flag = aa_alert_disabled_6
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				OR = {
+					has_country_flag = aa_alert_disabled_1
+					has_country_flag = aa_alert_disabled_2
+					has_country_flag = aa_alert_disabled_3
+					has_country_flag = aa_alert_disabled_4
+					has_country_flag = aa_alert_disabled_5
+					has_country_flag = aa_alert_disabled_6
+				}
+			}
+			clr_country_flag = aa_alert_disabled_1
+			clr_country_flag = aa_alert_disabled_2
+			clr_country_flag = aa_alert_disabled_3
+			clr_country_flag = aa_alert_disabled_4
+			clr_country_flag = aa_alert_disabled_5
+			clr_country_flag = aa_alert_disabled_6
+		}
+		else = {
+			set_country_flag = aa_alert_disabled_1
+			set_country_flag = aa_alert_disabled_2
+			set_country_flag = aa_alert_disabled_3
+			set_country_flag = aa_alert_disabled_4
+			set_country_flag = aa_alert_disabled_5
+			set_country_flag = aa_alert_disabled_6
+		}
+	}
+}
+aa_toggle_alert = { #Remember to make it work for non-global setting
+	if = {
+		limit = { NOT = { has_global_flag = aa_settings_local } }
+		if = {
+			limit = { has_global_flag = aa_alert_disabled_$alert$ }
+			clr_global_flag = aa_alert_disabled_$alert$
+		}
+		else = { set_global_flag = aa_alert_disabled_$alert$ }
+	}
+	else = {
+		if = {
+			limit = { has_country_flag = aa_alert_disabled_$alert$ }
+			clr_country_flag = aa_alert_disabled_$alert$
+		}
+		else = { set_country_flag = aa_alert_disabled_$alert$ }
+	}
+}
