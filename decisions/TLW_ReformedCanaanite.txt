@@ -59,6 +59,18 @@ country_decisions = {
 			}
 			custom_tooltip = AB_EMPTY
 			ab_mpf_consolidate_rites_effect = yes
+			# Defender of Faith
+			hidden_effect = {
+				if = {
+					limit = {
+						mission_completed = ctg_champion_of_the_league
+					}
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -83,12 +95,28 @@ country_decisions = {
 		}
 
 		allow = {
-			adm_power = 100
+			if = {
+				limit = {
+					mission_completed = ctg_champion_of_the_league
+				}
+				adm_power = 50
+			}
+			else = {
+				adm_power = 100
+			}
 		}
 
 		effect = {
 			set_country_flag = punic_religion_is_waiting_oracle
-			add_adm_power = -100
+			if = {
+				limit = {
+					mission_completed = ctg_champion_of_the_league
+				}
+				add_adm_power = -50
+			}
+			else = {
+				add_adm_power = -100
+			}
 			country_event = {
 				id = ab_punic.2002
 			}

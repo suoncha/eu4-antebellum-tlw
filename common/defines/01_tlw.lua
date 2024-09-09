@@ -13,3 +13,8 @@ NDefines.NCountry.COHESION_NEIGHBOURING_COLONIZER = 0.25
 NDefines.NCountry.COHESION_FEDERATION_ADVANCEMENT = -0.05
 -- Nerfing faction switch --
 NDefines.NCountry.PS_FACTION_BOOST = 400
+-- Map painting
+NDefines.NNationDesigner.POINTS_AVAILABLE = 5000
+NDefines.NNationDesigner.MAX_DISTANCE_TO_OWNER_AREA = 8000
+NDefines.NNationDesigner.MAX_DISCOVERED_PROVINCE_DISTANCE = 9000
+NDefines.NGame.MAX_CUSTOM_COUNTRIES = 100

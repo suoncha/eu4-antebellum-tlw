@@ -1264,6 +1264,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.22.a
+		set_country_flag = punic_league_assassinated_rival
 		tooltip = {
 			FROM = {
 				subtract_variable = {
@@ -1392,6 +1393,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.25.a
+		set_country_flag = punic_league_assassinated_rival
 		tooltip = {
 			FROM = {
 				subtract_variable = {
@@ -1525,9 +1527,20 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			set_variable = {
-				which = election_point
-				value = 0
+			if = {
+				limit = {
+					mission_completed = ctg_line_of_leadership
+				}
+				set_variable = {
+					which = election_point
+					value = 20
+				}
+			}
+			else = {
+				set_variable = {
+					which = election_point
+					value = 0
+				}
 			}
 		}
 	}
@@ -1554,10 +1567,23 @@ country_event = {
 				}
 			}
 		}
-		tooltip = {
-			set_variable = {
-				which = election_point
-				value = 0
+		if = {
+			limit = {
+				mission_completed = ctg_line_of_leadership
+			}
+			tooltip = {
+				set_variable = {
+					which = election_point
+					value = 20
+				}
+			}
+		}
+		else = {
+			tooltip = {
+				set_variable = {
+					which = election_point
+					value = 0
+				}
 			}
 		}
 	}
