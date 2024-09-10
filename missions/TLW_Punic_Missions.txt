@@ -176,14 +176,30 @@ tlw_punic_city_first = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			province_id = 938
 		}
 		
 		trigger = {
-			#
+			938 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			938 = {
+				has_great_project = {
+					type = melqart_shrine
+					tier = 3
+				}
+			}
 		}
 		
 		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = {
+				name = punic_melqart_fury
+				duration = 7300
+			}
+			set_country_flag = ctg_winning_war_melqart
+			custom_tooltip = CTG_WINNING_WAR_MELQART
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					OR = {
@@ -192,9 +208,17 @@ tlw_punic_city_first = {
 					}
 				}
 				custom_tooltip = START_AS_PU7_YES
+				unlock_government_reform = {
+					government_reform = ctg_order_of_melqart_reform
+				}
 			}
 			else = {
 				custom_tooltip = START_AS_PU7_NO
+				tooltip = {
+					unlock_government_reform = {
+						government_reform = ctg_order_of_melqart_reform
+					}
+				}
 			}
 		}
 	}
@@ -256,6 +280,18 @@ tlw_punic_city_first = {
 				custom_tooltip = AB_EMPTY
 			}
 			custom_tooltip = CTG_BUILDING_DOCK
+			hidden_effect = {
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						has_dock_building_trigger = yes
+					}
+					add_permanent_province_modifier = {
+						name = punic_thapsus_mod
+						duration = -1
+					}
+				}
+			}
 			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
@@ -495,14 +531,30 @@ tlw_punic_city_second = {
 		position = 13
 
 		provinces_to_highlight = {
-			#
+			province_id = 965
 		}
 		
 		trigger = {
-			#
+			965 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			965 = {
+				has_great_project = {
+					type = temple_of_baal_hammon
+					tier = 2
+				}
+			}
 		}
 		
 		effect = {
+			965 = {
+				add_or_upgrade_tax_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = punic_monument_renovator
+				duration = 10950
+			}
 			if = {
 				limit = {
 					OR = {
@@ -511,10 +563,12 @@ tlw_punic_city_second = {
 					}
 				}
 				custom_tooltip = START_AS_PU1_YES
+				set_country_flag = ctg_unlock_grand_temple
 			}
 			else = {
 				custom_tooltip = START_AS_PU1_NO
 			}
+			custom_tooltip = CTG_BAAL_HAMMON_UPGRADE
 		}
 	}
 
@@ -575,6 +629,18 @@ tlw_punic_city_second = {
 				custom_tooltip = AB_EMPTY
 			}
 			custom_tooltip = CTG_BUILDING_BARRACK
+			hidden_effect = {
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						has_manpower_building_trigger = yes
+					}
+					add_permanent_province_modifier = {
+						name = punic_iscine_mod
+						duration = -1
+					}
+				}
+			}
 			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
@@ -793,14 +859,29 @@ tlw_punic_city_third = {
 		position = 12
 
 		provinces_to_highlight = {
-			#
+			province_id = 967
 		}
 		
 		trigger = {
-			#
+			967 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			967 = {
+				has_great_project = {
+					type = sacred_grove_of_eshmun
+					tier = 2
+				}
+			}
 		}
 		
 		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CTG_PILGRIMATE_BUFF
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					OR = {
@@ -809,9 +890,31 @@ tlw_punic_city_third = {
 					}
 				}
 				custom_tooltip = START_AS_PU2_YES
+				967 = {
+					add_great_project_tier = {
+						type = sacred_grove_of_eshmun
+						tier = 1
+					}
+				}
+				add_country_modifier = {
+					name = punic_protector_of_holy_land
+					duration = -1
+				}
 			}
 			else = {
 				custom_tooltip = START_AS_PU2_NO
+				tooltip = {
+					967 = {
+						add_great_project_tier = {
+							type = sacred_grove_of_eshmun
+							tier = 1
+						}
+					}
+					add_country_modifier = {
+						name = punic_protector_of_holy_land
+						duration = -1
+					}
+				}
 			}
 		}
 	}
@@ -822,11 +925,19 @@ tlw_punic_city_third = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			province_id = 2544
 		}
 		
 		trigger = {
-			#
+			2544 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2544 = {
+				has_great_project = {
+					type = sanctuary_of_tanit
+					tier = 3
+				}
+			}
 		}
 		
 		effect = {
@@ -1223,16 +1334,35 @@ tlw_punic_city_fourth = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = { has_building = university }
 		}
 		
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				has_building = university
+			}
 		}
 		
 		effect = {
 			unlock_government_reform = {
 				government_reform = ctg_universal_education_reform
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = ctg_uni_buff
+			custom_tooltip = CTG_BUILDING_UNI
+			hidden_effect = {
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						has_building = university
+					}
+					add_permanent_province_modifier = {
+						name = punic_universal_education_mod
+						duration = -1
+					}
+				}
 			}
 		}
 	}
@@ -1523,14 +1653,29 @@ tlw_punic_city_fifth = {
 		position = 13
 
 		provinces_to_highlight = {
-			#
+			province_id = 2639
 		}
 		
 		trigger = {
-			#
+			2639 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2639 = {
+				has_tax_building_trigger = yes
+			}
+			2639 = {
+				has_courthouse_building_trigger = yes
+			}
+			2639 = {
+				base_tax = 10
+			}
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_punic.38
+			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					OR = {
@@ -1539,9 +1684,17 @@ tlw_punic_city_fifth = {
 					}
 				}
 				custom_tooltip = START_AS_PU3_YES
+				unlock_government_reform = {
+					government_reform = ctg_college_of_thoughts_reform
+				}
 			}
 			else = {
 				custom_tooltip = START_AS_PU3_NO
+				tooltip = {
+					unlock_government_reform = {
+						government_reform = ctg_college_of_thoughts_reform
+					}
+				}
 			}
 		}
 	}
@@ -1552,15 +1705,29 @@ tlw_punic_city_fifth = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			province_id = 2011
 		}
 		
 		trigger = {
-			#
+			2011 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2011 = {
+				has_great_project = {
+					type = necropolis_of_moloch
+					tier = 3
+				}
+			}
 		}
 		
 		effect = {
-			#
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = punic_the_elden_ring
+				duration = 1825
+			}
+			set_country_flag = ctg_elden_ring
+			custom_tooltip = CTG_TAKING_TECH
 		}
 	}
 
