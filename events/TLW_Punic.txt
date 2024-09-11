@@ -2153,6 +2153,223 @@ country_event = {
 	}
 }
 
+#Smuggling Goods
+country_event = {
+	id = ab_punic.41
+	title = ab_punic.41.t
+	desc = ab_punic.41.d
+	picture = SMUGGLERS_eventPicture
+
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = punic_is_waiting_smuggle
+			add_country_modifier = {
+				name = punic_smuggle_timer
+				duration = 1825
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.41.a
+		change_price = {
+			trade_goods = coffee
+			key = "Smuggled Goods"
+			value = 0.025
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = punic_smuggle_coffee
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.41.b
+		change_price = {
+			trade_goods = incense
+			key = "Smuggled Goods"
+			value = 0.025
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = punic_smuggle_incense
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.41.c
+		change_price = {
+			trade_goods = sugar
+			key = "Smuggled Goods"
+			value = 0.025
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = punic_smuggle_sugar
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.41.e
+		change_price = {
+			trade_goods = spices
+			key = "Smuggled Goods"
+			value = 0.025
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = punic_smuggle_spices
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ab_punic.41.f
+		change_price = {
+			trade_goods = cocoa
+			key = "Smuggled Goods"
+			value = 0.025
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = punic_smuggle_cocoa
+			duration = 1825
+		}
+	}
+}
+
+#The Fourth Aldiraq
+country_event = {
+	id = ab_punic.42
+	title = ab_punic.42.t
+	desc = ab_punic.42.d
+	picture = northamericagfx_LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.42.a
+		tooltip = {
+			change_primary_culture = barbiri
+			capital_scope = {
+				change_culture = barbiri
+			}
+			add_country_modifier = {
+				name = punic_iroquoian_punicization
+				duration = 3650
+			}
+			custom_tooltip = PUN_BARBIRI_SPREAD
+		}
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.43
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.42.b
+		trigger = {
+			ai = no
+		}
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.44
+			}
+		}
+	}
+}
+
+#The Fourth Aldiraq - Accept Nof
+country_event = {
+	id = ab_punic.43
+	title = ab_punic.43.t
+	desc = ab_punic.43.d
+	picture = northamericagfx_LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.43.a
+		create_subject = {
+			subject_type = punic_tribe_vassal
+			who = FROM
+		}
+		custom_tooltip = AB_EMPTY
+		FROM = {
+			change_primary_culture = barbiri
+			capital_scope = {
+				change_culture = barbiri
+			}
+			hidden_effect = {
+				set_ruler_culture = barbiri
+				set_heir_culture = barbiri
+			}
+			add_country_modifier = {
+				name = punic_iroquoian_punicization
+				duration = 3650
+			}
+			set_country_flag = ctg_barbiri_spread
+			custom_tooltip = PUN_BARBIRI_SPREAD
+		}
+	}
+}
+
+#The Fourth Aldiraq - Deny Nof
+country_event = {
+	id = ab_punic.44
+	title = ab_punic.44.t
+	desc = ab_punic.44.d
+	picture = northamericagfx_LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.44.a
+		add_prestige = -10
+	}
+}
+
+#Spread of Barbiri - Hidden
+province_event = {
+	id = ab_punic.45
+	title = ab_punic.45.t
+	desc = ab_punic.45.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+		
+	trigger = {
+		owner = {
+			culture_group = punic_g
+			has_country_flag = ctg_barbiri_spread
+		}
+		any_friendly_coast_border_province = {
+			culture_group = punic_g
+		}
+		NOT = { culture_group = punic_g }
+	}
+
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.75
+			religion = owner
+		}
+	}
+	
+	option = {
+		name = ab_punic.45.a
+		change_culture = barbiri
+		change_original_culture = barbiri
+	}
+}
+
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden
 province_event = {

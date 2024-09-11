@@ -180,6 +180,46 @@ country_decisions = {
 		}
 	}
 
+	punic_smuggle_decision = {
+		major = yes
+
+		potential = {
+			has_country_flag = ctg_unlock_smuggle_goods
+			exists = JOA
+			NOT = {
+				OR = {
+					has_country_modifier = punic_smuggle_timer
+					has_country_flag = punic_is_waiting_smuggle
+				}
+			}
+		}
+
+		allow = {
+			exists = JOA
+			NOT = { corruption = 5 }
+		}
+
+		effect = {
+			set_country_flag = punic_is_waiting_smuggle
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_corruption = 0.5
+			}
+			else = {
+				add_corruption = 1
+			}
+			country_event = {
+				id = ab_punic.41
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
 	ai_easima_decision = {
 		potential = {
 			ai = yes
