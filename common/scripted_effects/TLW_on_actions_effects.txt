@@ -1314,6 +1314,22 @@ TLW_on_province_owner_change_effect = {
 			duration = -1
 		}
 	}
+	else_if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_abrahamic_tolerance
+			}
+			OR = {
+				religion_group = christian
+				religion_group = muslim
+				religion_group = christian
+			}
+		}
+		add_province_modifier = {
+			name = punic_abrahamic_mod
+			duration = -1
+		}
+	}
 	if = {
 		limit = {
 			OR = {
@@ -1445,20 +1461,32 @@ TLW_on_province_religion_changed = {
 				duration = -1
 			}
 		}
-		else_if = {
-			limit = {
-				NOT = {
-					OR = {
-						religion = canaanite
-						religion = zoroastrian
-						religion = jewish
-						religion = hellenic
-						religion = totemism
-					}
-				}
-				has_province_modifier = punic_pact_of_shalim_mod
-			}
+		else = {
 			remove_province_modifier = punic_pact_of_shalim_mod
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_abrahamic_tolerance
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					religion_group = christian
+					religion_group = muslim
+					religion_group = christian
+				}
+				NOT = { has_province_modifier = punic_abrahamic_mod }
+			}
+			add_province_modifier = {
+				name = punic_abrahamic_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = punic_abrahamic_mod
 		}
 	}
 }

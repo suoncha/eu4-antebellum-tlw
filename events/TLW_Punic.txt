@@ -1666,6 +1666,7 @@ country_event = {
 				id = ideagroups.1
 			}
 		}
+		custom_tooltip = AB_EMPTY
 		add_country_modifier = {
 			name = centralization_modifier
 			duration = 7300
@@ -2006,6 +2007,148 @@ country_event = {
 		add_country_modifier = {
 			name = punic_school_of_mil
 			duration = 18250
+		}
+	}
+}
+
+#Discovery of the Old World
+country_event = {
+	id = ab_punic.39
+	title = ab_punic.39.t
+	desc = ab_punic.39.d
+	picture = muslimgfx_SHIP_SAILING_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.39.a
+		add_dip_power = 100
+		add_country_modifier = {
+			name = punic_friendly_approach
+			duration = 9125
+		}
+		custom_tooltip = PUN_FRIENDLY_OLD_WORLD
+		hidden_effect = {
+			every_known_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							continent = europe
+							continent = asia
+							continent = africa
+						}
+					}
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_friendly_approach
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.39.b
+		add_mil_power = 100
+		add_country_modifier = {
+			name = punic_aggressive_approach
+			duration = 9125
+		}
+		custom_tooltip = OLD_WORLD_HATE_EATING_CHILDREN
+		hidden_effect = {
+			every_known_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							continent = europe
+							continent = asia
+							continent = africa
+						}
+					}
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_aggressive_approach
+				}
+			}
+		}
+	}
+}
+
+#New Gods
+country_event = {
+	id = ab_punic.40
+	title = ab_punic.40.t
+	desc = ab_punic.40.d
+	picture = muslimgfx_REFORM_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.40.a
+		add_prestige_or_monarch_power = { amount = 25 }
+		custom_tooltip = AB_EMPTY
+		set_country_flag = vsg_religious_culture_buff
+		custom_tooltip = VSG_RELIGIOUS_CULTURE_PRIVILEGE
+	}
+
+	option = {
+		name = ab_punic.40.b
+		change_government_reform_progress = 50
+		unlock_estate_privilege = {
+			estate_privilege = estate_church_punic_abrahamic_tolerance
+		}
+	}
+
+	option = {
+		name = ab_punic.40.c
+		change_innovativeness = 5
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 5475
+		}
+		if = {
+			limit = {
+				any_ally = {
+					religion = sunni
+				}
+			}
+			custom_tooltip = PUN_HAS_MUSLIM_ALLY_YES
+			change_religion = sunni
+			capital_scope = {
+				change_religion = sunni
+			}
+			hidden_effect = {
+				set_ruler_religion = sunni
+				set_heir_religion = sunni
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ELSE_NO
+			tooltip = {
+				change_religion = catholic
+				capital_scope = {
+					change_religion = catholic
+				}
+			}
+		}
+		else = {
+			custom_tooltip = PUN_HAS_MUSLIM_ALLY_NO
+			tooltip = {
+				change_religion = sunni
+				capital_scope = {
+					change_religion = sunni
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ELSE_YES
+			change_religion = catholic
+			capital_scope = {
+				change_religion = catholic
+			}
+			hidden_effect = {
+				set_ruler_religion = catholic
+				set_heir_religion = catholic
+			}
 		}
 	}
 }
