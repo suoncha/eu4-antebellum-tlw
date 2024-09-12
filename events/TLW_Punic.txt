@@ -2347,12 +2347,49 @@ province_event = {
 	trigger = {
 		owner = {
 			culture_group = punic_g
-			has_country_flag = ctg_barbiri_spread
 		}
 		any_friendly_coast_border_province = {
 			culture_group = punic_g
 		}
 		NOT = { culture_group = punic_g }
+		OR = {
+			AND = {
+				owner = {
+					has_country_flag = ctg_barbiri_spread
+				}
+				OR = {
+					continent = north_america
+					continent = south_america
+				}
+			}
+			AND = {
+				owner = {
+					mission_completed = ctg_restoration_of_iberia
+				}
+				OR = {
+					region = iberia_region
+					region = france_region
+				}
+			}
+			AND = {
+				owner = {
+					mission_completed = ctg_the_lost_world
+				}
+				region = maghreb_region
+			}
+			AND = {
+				owner = {
+					mission_completed = ctg_return_to_phoenicia
+				}
+				superregion = near_east_superregion
+			}
+			AND = {
+				owner = {
+					mission_completed = ctg_punic_italy
+				}
+				continent = europe
+			}
+		}
 	}
 
 	mean_time_to_happen = {
@@ -2365,8 +2402,140 @@ province_event = {
 	
 	option = {
 		name = ab_punic.45.a
-		change_culture = barbiri
-		change_original_culture = barbiri
+		if = {
+			limit = {
+				OR = {
+					continent = north_america
+					continent = south_america
+				}
+			}
+			change_culture = barbiri
+			change_original_culture = barbiri
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = iberia_region
+					region = france_region
+				}	
+			}
+			change_culture = ibero_phoenician
+			change_original_culture = ibero_phoenician
+		}
+		else_if = {
+			limit = {
+				region = maghreb_region
+			}
+			change_culture = punic
+			change_original_culture = punic
+		}
+		else_if = {
+			limit = {
+				superregion = near_east_superregion
+			}
+			change_culture = phoenician_new
+			change_original_culture = phoenician_new
+		}
+		else = {
+			change_culture = romaqa
+			change_original_culture = romaqa
+		}
+	}
+}
+
+#Return to Aphriqa
+country_event = {
+	id = ab_punic.46
+	title = ab_punic.46.t
+	desc = ab_punic.46.d
+	picture = muslimgfx_CITY_DEVELOPMENT_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.46.a
+		341 = {
+			move_capital_effect = yes
+			add_base_tax = 3
+			add_base_production = 4
+			add_base_manpower = 3
+			add_province_modifier = {
+				name = punic_rebuilt_qart_hadast
+				duration = -1
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.46.b
+		capital_scope = {
+			add_base_tax = 2
+			add_base_production = 3
+			add_base_manpower = 2
+		}
+		custom_tooltip = AB_EMPTY
+		341 = {
+			add_base_tax = 1
+			add_base_production = 2
+			add_base_manpower = 1
+			add_province_modifier = {
+				name = punic_rebuilt_qart_hadast
+				duration = -1
+			}
+		}
+	}
+}
+
+#Sack of Rome
+country_event = {
+	id = ab_punic.47
+	title = ab_punic.47.t
+	desc = ab_punic.47.d
+	picture = muslimgfx_COUNTRY_COLLAPSE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.47.a
+		118 = {
+			add_devastation = 100
+			add_base_tax = -20
+			add_base_production = -20
+			add_base_manpower = -20
+			change_trade_goods = salt
+		}
+		custom_tooltip = AB_EMPTY
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 100
+		}
+		add_prestige = 100
+	}
+
+	option = {
+		name = ab_punic.47.b
+		118 = {
+			add_or_upgrade_trade_building = yes
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = GER_EUROPE_AE
+		hidden_effect = {
+			every_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							superregion = europe_superregion
+							superregion = eastern_europe_superregion
+						}
+					}
+				}
+				add_aggressive_expansion = {
+					who = ROOT
+					value = -20
+					apply_calc = no
+				}
+			}
+		}
 	}
 }
 
