@@ -1,0 +1,65 @@
+po_political_war = {
+	category = 6
+	power_projection = humiliated_rival
+	power_cost_base = 1.0
+	prestige_base = 1.0
+	ae_base = 0
+	warscore_cost = {
+		all_provinces = 0
+		no_provinces = 50.0 
+		owner_keeps = 0.0 
+		conquered = 0.0 
+		returned_core = 0.0 
+		released_nation = 0.0 
+		cancelled_subject = 0.0 
+		concede_colonial_region = 0.0 
+	}
+	warscore_cap = 50
+	requires_is_allowed = yes
+
+	is_visible = {
+		always = yes
+	}
+	is_allowed = {
+		always = yes
+	}
+
+	effect = {
+		if = {
+			limit = {
+				ai = yes
+			}
+			set_country_flag = punic_league_assassinated_rival
+		}
+		change_variable = {
+			which = election_point
+			value = 100
+		}
+		FROM = {
+			subtract_variable = {
+				which = election_point
+				value = 100
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = election_point
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = election_point
+					value = 0
+				}
+			}
+		}
+	}
+	ai_weight = { 
+		export_to_variable = {
+			variable_name = ai_value 
+			value = 100
+		}
+	}
+}
