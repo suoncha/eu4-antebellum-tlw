@@ -522,27 +522,15 @@ province_event = {
 		
 	trigger = {
 		province_is_diocese_land_trigger = yes
-		if = {
-			limit = {
-				owner = {
-					is_subject_of_type_with_overlord = {
-						who = ROM
-						type = grand_diocese_vassal
-					}
-				}
-			}
-			owner = {
-				culture_group = roman_g
-			}
+		owner = {
+			culture_group = roman_g
 		}
 		NOT = { culture_group = roman_g }
 		any_friendly_coast_border_province = {
 			culture_group = roman_g
 		}
-		if = {
-			limit = {
-				region = low_countries_region
-			}
+		OR = {
+			NOT = { region = low_countries_region }
 			ROM = {
 				OR = {
 					has_country_flag = rom_belgica_isof_gallia
@@ -550,16 +538,8 @@ province_event = {
 				}
 			}
 		}
-		else_if = {
-			limit = {
-				OR = {
-					area = shirvan_area
-					area = armenia_area
-					area = imereti_area
-					area = samtskhe_area
-					area = kartli_kakheti_area
-				}
-			}
+		OR = {
+			NOT = { region = caucasia_region }
 			ROM = {
 				OR = {
 					has_country_flag = rom_caucasia_isof_anatolia
@@ -5046,17 +5026,6 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = cap_robert_is_dead
-			for = {
-				amount = 5
-				effect = "
-					random_owned_province = {
-						spawn_rebels = {
-							type = nationalist_rebels
-							size = 1
-						}
-					}
-				"
-			}
 			if = {
 				limit = {
 					NOT = { exists = IVR }
@@ -5075,7 +5044,7 @@ country_event = {
 					change_religion = catholic
 				}
 				declare_war_with_cb = {
-					casus_belli = cb_capua_roman_reconquest
+					casus_belli = cb_core
 					who = IVR
 				}
 			}
@@ -5097,7 +5066,7 @@ country_event = {
 					change_religion = catholic
 				}
 				declare_war_with_cb = {
-					casus_belli = cb_capua_roman_reconquest
+					casus_belli = cb_core
 					who = LOM
 				}
 			}
@@ -5116,7 +5085,7 @@ country_event = {
 					change_religion = catholic
 				}
 				declare_war_with_cb = {
-					casus_belli = cb_capua_roman_reconquest
+					casus_belli = cb_core
 					who = RMG
 				}
 			}
@@ -5135,7 +5104,7 @@ country_event = {
 					change_religion = catholic
 				}
 				declare_war_with_cb = {
-					casus_belli = cb_capua_roman_reconquest
+					casus_belli = cb_core
 					who = LAN
 				}
 			}
@@ -5154,7 +5123,7 @@ country_event = {
 					change_religion = catholic
 				}
 				declare_war_with_cb = {
-					casus_belli = cb_capua_roman_reconquest
+					casus_belli = cb_core
 					who = VRN
 				}
 			}
