@@ -1,0 +1,69 @@
+country_decisions = {
+	
+	form_baltic = {
+		major = yes
+		potential = {
+			OR = {
+				culture_group = baltic
+				culture = estonian
+			}
+			OR = {
+				religion_group = pagan
+				religion_group = reformed_pagan
+			}
+			is_colonial_nation = no
+			NOT = { exists = BLT }
+			NOT = { was_tag = BLT }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 43
+				province_id = 41
+				province_id = 272
+				province_id = 38
+				province_id = 37
+				province_id = 36
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			adm_tech = 10
+			owns_core_province = 43
+			owns_core_province = 41
+			owns_core_province = 272
+			owns_core_province = 38
+			owns_core_province = 37
+			owns_core_province = 36
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = BLT
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

@@ -1,0 +1,84 @@
+country_decisions = {
+
+	form_east_francia = {
+		major = yes
+		potential = {
+			tag = GER
+			NOT = { exists = EFC }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 57
+				province_id = 65
+				province_id = 67
+				province_id = 85
+				province_id = 63
+				province_id = 1876
+				province_id = 70
+				province_id = 1874
+				province_id = 134
+				province_id = 1863
+				province_id = 129
+				province_id = 73
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			OR = {
+				dynasty = "Carolingian"
+				is_emperor = yes
+			}
+			owns_core_province = 57
+			owns_core_province = 65	
+			owns_core_province = 67
+			owns_core_province = 85
+			owns_core_province = 63
+			owns_core_province = 1876
+			owns_core_province = 70
+			owns_core_province = 1874
+			owns_core_province = 134
+			owns_core_province = 1863
+			owns_core_province = 129
+			owns_core_province = 73
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = EFC
+			add_prestige = 25
+			set_country_flag = formed_east_francia_flag
+			custom_tooltip = cosmetic_tag_info
+			if = {
+				limit = {
+					exists = FRC
+				}
+				FRC = {
+					override_country_name = RENAME_WFRANCIA
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -1,0 +1,144 @@
+country_decisions = {
+
+	frankish_empire = {
+		major = yes
+		potential = {
+			OR = {
+				tag = FRC
+				tag = MFC
+				tag = EFC
+				has_country_flag = unlocked_frankish_empire_decision
+			}
+			NOT = { exists = FRK }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 183
+				province_id = 168
+				province_id = 175
+				province_id = 200
+				province_id = 205
+				province_id = 101
+				province_id = 104
+				province_id = 118
+				province_id = 134
+				province_id = 67
+				province_id = 1876
+				province_id = 1878
+				province_id = 1874
+				province_id = 97
+				
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		allow = {
+			adm_tech = 10
+		    183 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    168 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    175 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    200 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    205 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    101 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    104 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    134 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    67 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1876 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1878 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1874 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    97 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige_or_monarch_power = { amount = 25 } 
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = FRK
+			if = {
+				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					NOT = { tag = FRC }
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					if = {
+						limit = {
+							NOT = { was_tag = FRC }
+						}
+					}
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = francia }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

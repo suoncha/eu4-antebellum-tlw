@@ -1,0 +1,90 @@
+country_decisions = {
+
+	turkish_nation_form = {
+		major = yes
+		potential = {
+			primary_culture = turkish
+			is_colonial_nation = no
+			NOT = { tag = SEL }
+			NOT = { tag = TRN }
+			NOT = { tag = TCL }
+			NOT = { tag = TUR }
+			NOT = { exists = RUM }
+			NOT = { was_tag = RUM }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 328
+				province_id = 319
+				province_id = 323		# Konya
+				province_id = 326		# Ankara
+				province_id = 329		# Sivas
+				province_id = 2300
+				province_id = 2301		# Kayseri
+				province_id = 4312		# Eskeshehir
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			owns_core_province = 328
+			owns_core_province = 319
+			owns_core_province = 323		# Konya
+			owns_core_province = 326		# Ankara
+			owns_core_province = 329		# Sivas
+			owns_core_province = 2300
+			owns_core_province = 2301		# Kayseri
+			owns_core_province = 4312		# Eskeshehir
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			change_tag = RUM
+			RUM = {
+				if = {
+					limit = {
+						NOT = { government = monarchy }
+						
+					}
+					change_government = monarchy
+				}
+				if = {
+					limit = { religion_group = muslim }
+					add_government_reform = ottoman_government
+				}
+				if = {
+					limit = { religion = zoroastrian }
+					add_government_reform = zoroastrian_rum
+				}
+				if = {
+					limit = { religion_group = christian }
+					add_government_reform = christian_rum
+				}
+			}
+			remove_non_electors_emperors_from_empire_effect = yes
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+}

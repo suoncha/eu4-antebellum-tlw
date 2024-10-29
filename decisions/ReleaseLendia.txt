@@ -1,0 +1,122 @@
+country_decisions = {
+	
+	release_lendia = {
+		major = yes
+		potential = {
+			ai = no
+			mission_completed = lit_baptize_poland
+			NOT = { has_country_flag = lit_released_poland }
+			NOT = { exists = POL }
+		}
+		allow = {
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			custom_tooltip = LTV_RELEASE_LENDIA
+			tooltip = {
+				add_country_modifier = {
+					name = lit_crown
+					duration = -1
+					desc = lit_crown_poland
+				}
+			}
+			if = {
+				limit = {
+					mission_completed = lit_baptize_poland
+				}
+				hidden_effect = {
+					add_country_modifier = {
+						name = lit_crown
+						duration = -1
+						desc = lit_crown_poland
+					}
+					poland_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = POL
+						remove_core = ROOT
+					}
+					release = POL
+					create_union = POL
+					POL = {
+						override_country_name = LITLENDIA
+						add_manpower = 10
+						add_treasury = 100
+						add_liberty_desire = -50
+						change_religion = orthodox
+						change_primary_culture = polish
+						swap_non_generic_missions = yes
+						swap_free_idea_group = yes
+						set_government_rank = 2
+						add_government_reform = crownpoland
+					}
+					unify_polish_cultures_effect = yes
+				}
+			}
+			set_country_flag = lit_released_poland
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+	release_poland = {
+		major = yes
+		potential = {
+			ai = no
+			has_country_flag = can_release_polish_union
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			NOT = {
+				exists = POL
+			}
+		}
+		effect = {
+			clr_country_flag = can_release_polish_union
+			custom_tooltip = LTV_RELEASE_POLAND
+			tooltip = {
+				add_country_modifier = {
+					name = litc_crown
+					duration = -1
+					desc = litc_crown_poland
+				}
+			}
+			hidden_effect = {
+				add_country_modifier = {
+					name = lit_crown
+					duration = -1
+					desc = lit_crown_poland
+				}
+				poland_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = POL
+					remove_core = ROOT
+				}
+				release = POL
+				create_union = POL
+				POL = {
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = catholic
+					change_primary_culture = polish
+					swap_non_generic_missions = yes
+					swap_free_idea_group = yes
+					set_government_rank = 2
+					add_government_reform = crownpoland
+				}
+				unify_polish_cultures_effect = yes
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+}

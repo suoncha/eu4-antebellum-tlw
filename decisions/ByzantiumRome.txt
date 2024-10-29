@@ -4,16 +4,9 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_flag = restored_rome_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
 			NOT = { exists = ROM }
 			OR = {
 				tag = BYZ
-				tag = LAT
 				has_country_flag = ab_unlock_byzantine_rome
 			}
 		}
@@ -175,35 +168,26 @@ country_decisions = {
 				religion = orthodox
 			}
 			is_at_war = no
-			is_free_or_tributary_trigger = yes
+			is_subject = no
 		}
 
 		effect = {
-			set_country_flag = restored_rome_flag
+			clr_country_flag = ab_unlock_byzantine_rome
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = AB_EMPTY
 			# Inherit
 			if = {
 				limit = {
-					OR = {
-						overlord_of = BYZ
-						overlord_of = LAT
-					}
+					overlord_of = BYZ
 				}
-				if = {
-					limit = {
-						overlord_of = BYZ
-					}
-					inherit = BYZ
+				inherit = BYZ
+			}
+			if = {
+				limit = {
+					overlord_of = LAT
 				}
-				else_if = {
-					limit = {
-						overlord_of = LAT
-					}
-					inherit = LAT
-				}
-				custom_tooltip = AB_EMPTY
+				inherit = LAT
 			}
 			# Triumvirate [[[
 			TLW_switch_flag_triumvirate_effect = yes
@@ -432,22 +416,13 @@ country_decisions = {
 
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 100
-				OR = {
-					has_country_flag = ab_stronger_ai_byz
-					has_country_flag = ab_stronger_ai_lat
-				}
-				ai = yes
-			}
 		}
+		ai_importance = 400
 	}
 
 	italy_greek = {
 		potential = {
-			normal_or_historical_nations = yes
 			has_country_flag = italy_greek_flag
-			culture = greek
 		}
 		
 		provinces_to_highlight = {
@@ -459,22 +434,23 @@ country_decisions = {
 				area = sicily_area
 				area = western_sicily_area
 			}
+			NOT = { owned_by = ROOT }
 		}
 
 		allow = {
 			dip_power = 250
-			owns_all_provinces = {
-				OR = {
-					area = sicily_area
-					area = western_sicily_area
-					province_id = 122
-					province_id = 1934
-					province_id = 2984
-					province_id = 123
-				}
+			owns = 122
+			owns = 123
+			owns = 1934
+			owns = 2984
+			sicily_area = {
+				type = all
+				owned_by = ROOT
 			}
-			is_at_war = no
-			is_free_or_tributary_trigger = yes
+			western_sicily_area = {
+				type = all
+				owned_by = ROOT
+			}
 		}
 
 		effect = {
@@ -518,9 +494,7 @@ country_decisions = {
 
 	levant_greek = {
 		potential = {
-			normal_or_historical_nations = yes
 			has_country_flag = levant_greek_flag
-			culture = greek
 		}
 		
 		provinces_to_highlight = {
@@ -529,19 +503,23 @@ country_decisions = {
 				area = syria_area
 				area = aleppo_area
 			}
+			NOT = { owned_by = ROOT }
 		}
 
 		allow = {
 			dip_power = 300
-			owns_all_provinces = {
-				OR = {
-					area = palestine_area
-					area = syria_area
-					area = aleppo_area
-				}
+			palestine_area = {
+				type = all
+				owned_by = ROOT
 			}
-			is_at_war = no
-			is_free_or_tributary_trigger = yes
+			syria_area = {
+				type = all
+				owned_by = ROOT
+			}
+			aleppo_area = {
+				type = all
+				owned_by = ROOT
+			}
 		}
 		
 		effect = {
@@ -582,7 +560,6 @@ country_decisions = {
 	
 	unite_romanian_vassals = {
 		potential = {
-			normal_or_historical_nations = yes
 			overlord_of = WAL
 		    overlord_of = MOL
 		}
@@ -596,14 +573,6 @@ country_decisions = {
 
 		allow = {
 			dip_power = 50
-			WAL = {
-				NOT = { liberty_desire = 50 }
-			}
-			MOL = {
-				NOT = { liberty_desire = 50 }
-			}
-			is_at_war = no
-			is_free_or_tributary_trigger = yes
 		}
 		
 		effect = {
@@ -623,19 +592,18 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			normal_or_historical_nations = yes
 			NOT = { has_country_flag = rule_rus_byz_flag }
-			UKR = {
-				NOT = { is_subject_of_type = grand_diocese_vassal }
-			}
 			OR = {
 				overlord_of = UKR
 				any_subject_country = {
 					has_reform = principality
 				}
 			}
-			NOT = { culture_group = east_slavic }
 			religion_group = christian
+			NOT = { culture_group = east_slavic }
+			UKR = {
+				NOT = { is_subject_of_type = grand_diocese_vassal }
+			}
 		}
 
 		allow = {
@@ -743,14 +711,7 @@ country_decisions = {
 
 		potential = {
 			has_country_flag = unlock_decision_strategos_specialty
-			NOT = {
-				OR = {
-					has_country_modifier = byz_fire_focused
-					has_country_modifier = byz_shock_focused
-					has_country_modifier = byz_manuever_focused
-					has_country_modifier = byz_siege_focused
-				}
-			}
+			NOT = { has_country_modifier = byz_strategos_timer }
 		}
 
 		allow = {
@@ -772,27 +733,18 @@ country_decisions = {
 
 	show_favored_diocese = {
 		potential = {
-			has_government_attribute = ab_has_dioceses
-			any_subject_country = {
-				has_country_modifier = byz_friend_diocese
-			}
+			tag = ROM
 		}
 		
 		provinces_to_highlight = {
 			owner = {
-				is_subject_of_type_with_overlord = {
-					who = ROOT
-					type = diocese_vassal
-				}
+				is_subject_of_type = diocese_vassal
 				has_country_modifier = byz_friend_diocese
 			}
 		}
 
 		allow = {
-			custom_trigger_tooltip = {
-				tooltip = SHOW_FAVORED_DIOCESE_TT
-				always = no
-			}
+			always = no
 		}
 		
 		effect = {
@@ -806,8 +758,8 @@ country_decisions = {
 
 	byzantium_spawn_samurai = {
 		potential = {
-			overlord_of = RDG
 			has_country_flag = byz_center_of_far_east_japan
+			overlord_of = RDG
 			NOT = { has_country_modifier = byz_samurai_timer }
 		}
 

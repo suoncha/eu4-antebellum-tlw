@@ -1,0 +1,1514 @@
+# country
+on_war_won = {
+	# AB-BAI {{{
+	if = {
+		limit = {
+			# Check if we are inside the war
+			has_global_flag = fate_of_francia_in_war
+			# And that the war was not decisive
+			NOT = { has_global_flag = fate_of_francia_decisive_war }
+			# And that the war isn't still ongoing
+			NOT = {
+				is_in_war = {
+					casus_belli = cb_fate_of_francia
+				}
+			}
+			# And that the emperor and the FRC are the leaders
+			OR = {
+				AND = {
+					tag = emperor
+					FROM = {
+						tag = FRC
+					}
+				}
+				AND = {
+					tag = FRC
+					FROM = {
+						tag = emperor
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_reform = free_city
+				}
+			}
+			random_country = {
+				limit = {
+					has_reform = free_city
+				}
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_elector = {
+					exists = yes
+				}
+			}
+			random_elector = {
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		else = {
+			emperor = {
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				is_emperor = no
+				OR = {
+					tag = FRC
+					is_part_of_hre = yes
+				}
+			}
+			country_event = {
+				id = fate_of_francia.8
+			}
+		}
+		emperor = {
+			country_event = {
+				id = fate_of_francia.9
+			}
+		} 
+	}
+	if = {
+		limit = {
+			has_country_modifier = rmg_army_academy
+		}
+		every_neighbor_country = {
+			add_aggressive_expansion = {
+				who = ROOT
+				value = -10
+				apply_calc = no
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = swa_german_hegemony
+		}
+		add_stability_or_adm_power = yes
+	}
+	# }}}
+}
+
+# country
+on_religion_change = {
+	# AB-BAI {{{
+	if = {
+		limit = {
+			religion = protestant
+		}
+		country_event = { id = ab_christianschools.1 }
+	}
+	if = {
+		limit = {
+			religion = reformed
+		}
+		country_event = { id = ab_christianschools.2 }
+	}
+	# }}}
+
+	# This huge and yucky block of code makes so we reset the religious school to nothing
+	if = {
+		limit = {
+			religion_group = christian
+			NOT = { religion = protestant }
+			NOT = { religion = reformed }
+			NOT = { has_country_flag = switching_religion_to_clear_school }
+		}
+		if = {
+			limit = {
+				religion = catholic
+			}
+			set_country_flag = switching_religion_to_clear_school
+			add_prestige = 100
+			change_religion = noreligion
+			add_prestige = 100
+			change_religion = catholic
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = orthodox
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = orthodox
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = coptic
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = coptic
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = hussite
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = hussite
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = gaelic_ab
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = gaelic_ab
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = anglican
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = anglican
+			clr_country_flag = switching_religion_to_clear_school
+		}
+		if = {
+			limit = {
+				religion = nestorian
+			}
+			set_country_flag = switching_religion_to_clear_school
+			change_religion = noreligion
+			change_religion = nestorian
+			clr_country_flag = switching_religion_to_clear_school
+		}
+	}
+}
+
+on_adm_development = {
+	# AB-BAI (put in the above scripted effect when we merge)
+	if = { 
+		limit = {
+			AND = {
+				OR = {
+					province_id = 125
+					province_id = 121
+				}
+				owner = { mission_completed = trc_two_capitals } 
+			}
+			AND = {
+				province_id = 101
+				owner = { has_country_flag = gen_developing_genoa }
+			}
+		}
+		random_list = { 
+			10 = { add_base_tax = 1 } 
+			90 = { } 
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_reform = aquitain_kingdom_reform }
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = gascon
+					culture = occitain
+					culture = aquitaine
+				}
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				culture_group = french
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = -1
+				}
+			}
+		}
+	}
+	if = { 
+		limit = { 
+			culture = neapolitan
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			40 = { add_base_tax = 1 } 
+			60 = { } 
+		}
+	}
+	else_if = { 
+		limit = { 
+			culture = sicilian
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			20 = { change_culture = neapolitan } 
+			80 = { } 
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = tus_tuscan_golden_age
+			owner = {
+				mission_completed = tus_tuscan_cities
+				NOT = { mission_completed = tus_industrialization_of_tuscany }
+			}
+		}
+		extend_province_modifier = { 
+			name = tus_tuscan_golden_age
+			duration = 1825
+		}
+	}
+}
+
+on_dip_development = {
+	# AB-BAI (put in the above scripted effect when we merge)
+	if = { 
+		limit = { 
+			owner = { has_country_modifier = lot_expand_industry } 
+		}
+		random_list = { 
+			20 = { add_base_production = 1 } 
+			80 = { } 
+		}
+	}
+	if = { 
+		limit = {
+			AND = {
+				OR = {
+					province_id = 125
+					province_id = 121
+				}
+				owner = { mission_completed = trc_two_capitals } 
+			}
+			AND = {
+				province_id = 101
+				owner = { has_country_flag = gen_developing_genoa }
+			}
+		}
+		random_list = { 
+			10 = { add_base_production = 1 } 
+			90 = { } 
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_reform = aquitain_kingdom_reform }
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = gascon
+					culture = occitain
+					culture = aquitaine
+				}
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				culture_group = french
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = -1
+				}
+			}
+		}
+	}
+	if = { 
+		limit = { 
+			culture = neapolitan
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			40 = { add_base_production = 1 } 
+			60 = { } 
+		}
+	}
+	else_if = { 
+		limit = { 
+			culture = sicilian
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			20 = { change_culture = neapolitan } 
+			80 = { } 
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = hsa_walrus
+			}
+			OR = {
+				province_id = 1104
+				province_id = 1105
+			}
+		}
+		random_list = { 
+			50 = { add_base_production = 1 } 
+			50 = { } 
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = tus_tuscan_golden_age
+			owner = {
+				mission_completed = tus_tuscan_cities
+				NOT = { mission_completed = tus_industrialization_of_tuscany }
+			}
+		}
+		extend_province_modifier = { 
+			name = tus_tuscan_golden_age
+			duration = 1825
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = rhl_claimed_the_saxon_mines
+			}
+			trade_goods = iron
+		}
+		random_list = { 
+			25 = { add_base_production = 1 } 
+			75 = { } 
+		}
+	}
+}
+
+on_mil_development = {
+	# AB-BAI (put in the above scripted effect when we merge)
+	if = { 
+		limit = {
+			AND = {
+				OR = {
+					province_id = 125
+					province_id = 121
+				}
+				owner = { mission_completed = trc_two_capitals } 
+			}
+			AND = {
+				province_id = 101
+				owner = { has_country_flag = gen_developing_genoa }
+			}
+		}
+		random_list = { 
+			10 = { add_base_manpower = 1 } 
+			90 = { } 
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_reform = aquitain_kingdom_reform }
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = gascon
+					culture = occitain
+					culture = aquitaine
+				}
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				culture_group = french
+			}
+			owner = {
+				add_government_power = {
+					mechanic_type = southern_vs_northern_french_mechanic
+					power_type = southernfrenchness
+					value = -1
+				}
+			}
+		}
+	}
+	if = { 
+		limit = { 
+			culture = neapolitan
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			40 = { add_base_manpower = 1 } 
+			60 = { } 
+		}
+	}
+	else_if = { 
+		limit = { 
+			culture = sicilian
+			owner = {
+				mission_completed = rmg_liberate_naples
+				has_country_modifier = trc_crusade_sicily
+			}
+		}
+		random_list = { 
+			20 = { change_culture = neapolitan } 
+			80 = { } 
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = tus_tuscan_golden_age
+			owner = {
+				mission_completed = tus_tuscan_cities
+				NOT = { mission_completed = tus_industrialization_of_tuscany }
+			}
+		}
+		extend_province_modifier = { 
+			name = tus_tuscan_golden_age
+			duration = 1825
+		}
+	}
+}
+
+on_center_of_trade_upgrade = {
+	if = { 
+		limit = { 
+			owner = { has_country_flag = aqt_bordeaux_bonus }
+		}
+		random_list = {
+			33 = { add_base_production = 1 }
+			66 = { }
+		}
+	}
+}
+
+on_successive_emperor = {
+	if = {
+		limit = {
+			emperor = {
+				has_country_flag = frc_prestige_legitimacy_hre
+			}
+		}
+		add_prestige = 20
+		add_legitimacy = 20
+	}
+}
+
+on_province_culture_converted = {
+	# AB-BAI (put in above effect when we merge)
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = slv_converting_germanic_provinces_dev_bonus
+			}
+			culture_group = germanic
+			NOT = {
+				has_province_flag = slv_converted_bonus
+			}
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+		set_province_flag = slv_converted_bonus
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ger_convert_wendia
+			}
+			culture_group = ROOT
+			region = wendia_region
+			NOT = {
+				has_province_flag = ger_converted_bonus
+			}
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+		set_province_flag = ger_converted_bonus
+	}
+	# Grant 0.05 of Southern or Northern Frenchness per development of the converted province
+	if = {
+		limit = {
+			owner = {
+				has_government_mechanic = southern_vs_northern_french_mechanic
+			}
+		}
+		# Get the development of the province
+		export_to_variable = {
+			which = provinceDevelopment
+			value = development
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = gascon
+					culture = occitain
+					culture = aquitaine
+				}
+			}
+			for_variable_amount = {
+				variable = provinceDevelopment
+				effect = "	
+					owner = {
+						add_government_power = {
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = 0.05
+						}
+					} 
+				"
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = cosmopolitan_french
+					culture = burgundian
+					culture = normand
+					culture = wallonian
+				}
+			}
+			for_variable_amount = {
+				variable = provinceDevelopment
+				effect = "	
+					owner = {
+						add_government_power = {
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = -0.05
+						}
+					} 
+				"
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = bav_assimilate_culture
+		}
+		add_base_tax = 2
+		remove_province_modifier = bav_assimilate_culture
+	}
+}
+
+on_province_culture_changed = {
+	# AB-BAI (add it to ab_on_province_culture_changed_effect when we merge the build)
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = slv_converting_germanic_provinces_dev_bonus
+			}
+			culture_group = germanic
+			NOT = {
+				has_province_flag = slv_converted_bonus
+			}
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+		set_province_flag = slv_converted_bonus
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_frankish_unity }
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = french
+				culture_group = latin
+				culture_group = germanic
+			}
+		}
+		if = {
+			limit = {
+				owner = { has_country_flag = fkn_buff_frankish_unity }
+			}
+			add_province_modifier = {
+				name = lot_frankish_unity_buffed
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = lot_frankish_unity
+				duration = -1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_province_modifier = lot_frankish_unity
+				has_province_modifier = lot_frankish_unity_buffed
+			}
+		}
+		remove_province_modifier = lot_frankish_unity
+		remove_province_modifier = lot_frankish_unity_buffed
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_burghers_italo_balkan_unity }
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = south_slavic
+				culture_group = byzantine
+			}
+		}
+		if = {
+			limit = {
+				owner = { mission_completed = rmg_balkan_metropolises }
+			}
+			add_province_modifier = {
+				name = rmg_balkan_unity_buffed
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = rmg_balkan_unity
+				duration = -1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_province_modifier = rmg_balkan_unity
+				has_province_modifier = rmg_balkan_unity_buffed
+			}
+		}
+		remove_province_modifier = rmg_balkan_unity
+		remove_province_modifier = rmg_balkan_unity_buffed
+	}
+	# Bonus you get as Aquitaine for completely converting Switzerland to Aquitanian culture
+	# the triggers are on the event and it is fire_only_once
+	owner = { country_event = { id = ab_aquitaine.5 } }
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_germano_italic_unity }
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = latin
+				culture_group = germanic
+			}
+		}
+		add_province_modifier = {
+			name = swa_germano_italic_unity
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			has_province_modifier = swa_germano_italic_unity
+		}
+		remove_province_modifier = swa_germano_italic_unity
+	}
+}
+
+#ROOT = province that was centralized in
+on_centralized_state = {
+	if = {
+		limit = {
+			owner = { has_country_flag = ger_centralize_flag }
+		}
+		owner = {
+			add_adm_power = 25
+			change_government_reform_progress = 25
+		}
+	}
+	if = {
+		limit = {
+			owner = { 
+				has_country_modifier = trc_strengthen_the_government
+			}
+		}
+		area = {
+			limit = {
+				owned_by = ROOT
+			}
+			random_list = {
+				1 = { add_base_tax = 1 }
+				1 = { add_base_production = 1 }
+				1 = { add_base_manpower = 1 }
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_government_attribute = centralize_state_development
+					has_country_modifier = ger_imperial_institutions
+				}
+			}
+		}
+		area = {
+			limit = {
+				owned_by = ROOT
+			}
+			random_list = {
+				1 = { add_base_tax = 1 }
+				1 = { add_base_production = 1 }
+				1 = { add_base_manpower = 1 }
+			}
+		}
+	}
+}
+
+# this = Released country, FROM = Releasing country
+# AB [[[
+# This only applies to countries released via the Peace Option
+# not via releasing as vassal
+# ]]]
+on_country_released = {
+	# AB-BAI [[[
+	# Run Christian religious school events when a country is created
+	# Unlike Muslim School events that run whenever there is a new
+	# monarch, it is not contextually possible Christian schools
+	if = {
+		limit = {
+			religion = protestant
+		}
+		country_event = { id = ab_christianschools.1 }
+	}
+	if = {
+		limit = {
+			religion = reformed
+		}
+		country_event = { id = ab_christianschools.2 }
+	}
+	# ]]]
+}
+
+# ROOT = New vassal, FROM = Overlord
+on_create_vassal = {
+	# AB-BaI [[[
+	# Run Christian religious school events when a country is created
+	# Unlike Muslim School events that run whenever there is a new
+	# monarch, it is not contextually possible Christian schools
+	if = {
+		limit = {
+			religion = protestant
+		}
+		country_event = { id = ab_christianschools.1 }
+	}
+	if = {
+		limit = {
+			religion = reformed
+		}
+		country_event = { id = ab_christianschools.2 }
+	}
+	# ]]]
+}
+
+on_battle_won_country = {
+	# AB-BAI (put on above effect when we merge)
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					has_country_modifier = trc_crusade_sicily
+					FROM = {
+						tag = SIC
+					}
+				}
+				AND = {
+					has_country_modifier = swa_conquest_of_italy
+					FROM = {
+						culture_group = latin
+					}
+				}
+			}
+		}
+		add_army_tradition = 0.25
+	}
+	if = {
+		limit = {
+			has_country_modifier = ger_reich_army
+		}
+		add_mil_power = 5
+		add_government_power = {
+			mechanic_type = prussian_militarization_mechanic_3
+			power_type = prussian_militarized_society_3
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = hlv_children_of_alps
+				has_country_modifier = bav_professional_army
+				has_country_modifier = fkn_franconia_ascendant
+				has_country_modifier = sax_shock_and_awe_mod
+				has_country_modifier = sax_shock_and_awe_ger
+			}
+		}
+		remove_country_modifier = hlv_children_of_alps_victory
+		add_country_modifier = {
+			name = hlv_children_of_alps_victory
+			duration = 365
+		}
+	}
+	if = {
+		limit = {
+			mission_completed = rmg_scout_army
+		}
+		remove_country_modifier = rmg_winning_battle
+		add_country_modifier = {
+			name = rmg_winning_battle
+			duration = 30
+		}
+	}
+	#[Florence]
+	if = {
+		limit = {
+			has_country_flag = tus_win_battles_grant_republican_tradition
+		}
+		add_republican_tradition = 0.25
+	}
+	if = {
+		limit = {
+			has_country_modifier = fkn_cavalry_corps
+		}
+		remove_country_modifier = fkn_cavalry_corps_battle
+		add_country_modifier = {
+			name = fkn_cavalry_corps_battle
+			duration = 30
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = rhl_remilitarization_of_the_rhineland_modifier
+		}
+		remove_country_modifier = rhl_yearly_militarization_buff
+		add_country_modifier = {
+			name = rhl_yearly_militarization_buff
+			duration = 365
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = sty_winning_battle_grant_morale
+		}
+		remove_country_modifier = sty_winning_battle_morale
+		add_country_modifier = {
+			name = sty_winning_battle_morale
+			duration = 60
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = sax_royal_army_mod
+		}
+		remove_country_modifier = sax_royal_army_winning_battle
+		add_country_modifier = {
+			name = sax_royal_army_winning_battle
+			duration = 180
+		}
+	}
+}
+
+on_raid_coast = {
+	if = {
+		limit = {
+			has_country_modifier = trc_raiders
+		}
+		add_treasury = 10
+		add_sailors = 100
+	}
+	change_variable = {
+		which = num_of_raided_coasts
+		value = 1
+	}
+}
+
+on_colonial_nation_established = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = NO_CNS }
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = GER
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = germany delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = BRI
+						AND = {
+							tag = GLL
+							was_tag = BRI
+						}
+					}
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = brittany delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					ab_is_italy_tag_trigger = yes
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = italy delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					tag = BYZ
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = byzantium delay = yes }
+		}
+	}
+}
+
+on_tech_taken = { #ROOT - Country, executed after on_tech_taken!
+	if = {
+		limit = {
+			has_country_flag = ab_tus_taking_tech_bonus_improved
+		}
+		remove_country_modifier = tus_tech_taken
+		remove_country_modifier = tus_tech_taken_buffed
+		add_country_modifier = {
+			name = tus_tech_taken_buffed
+			duration = 1825
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_flag = ab_tus_taking_tech_bonus
+		}
+		remove_country_modifier = tus_tech_taken
+		add_country_modifier = {
+			name = tus_tech_taken
+			duration = 1825
+		}
+	}
+}
+
+
+on_annexed = {
+	if = {
+		limit = {
+			FROM = {
+				tag = PAP
+			}
+		}
+		if = {
+			limit = {
+				religion = protestant
+				is_defender_of_faith = yes
+			}
+			set_country_flag = ab_demon_of_babylon_flag
+		}
+		if = {
+			limit = {
+				has_country_modifier = lom_holy_see_protector
+			}
+			remove_country_modifier = lom_holy_see_protector
+		}
+		if = {
+			limit = {
+				has_country_modifier = bav_crown_of_arles
+				NOT = { overlord_of = LWB }
+				NOT = { overlord_of = UPB }
+				NOT = { overlord_of = ARS }
+			}
+			remove_country_modifier = bav_crown_of_arles
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					tag = KOJ
+					tag = OTR
+					tag = BRA
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = swa_crusader_lord
+			}
+			remove_country_modifier = swa_crusader_lord
+		}
+	}
+}
+
+on_raze = {
+	if = {
+		limit = {
+			province_id = 105
+		}
+		set_country_flag = ab_achiev_razed_parma
+	}
+}
+
+on_capital_moved = {
+	# Give Southern or Northern Frenchness if we move our capital into the
+	# Langue d'oc sphere or Langue d'oil sphere
+	if = {
+		limit = {
+			owner = { has_government_mechanic = southern_vs_northern_french_mechanic }
+		}
+		# Get the development of the province
+		export_to_variable = {
+			which = provinceDevelopment
+			value = development
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = gascon
+					culture = occitain
+					culture = aquitaine
+				}
+				# Prevent giving it over and over again by moving the capital inside
+				# the same Langue sphere
+				FROM = {
+					NOT = { culture = gascon }
+					NOT = { culture = occitain }
+					NOT = { culture = aquitaine }
+				}
+			}
+			for_variable_amount = {
+				variable = provinceDevelopment
+				effect = "	
+					owner = {
+						add_government_power = {
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = 0.1
+						}
+					} 
+				"
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture = cosmopolitan_french
+					culture = burgundian
+					culture = normand
+					culture = wallonian
+				}
+				FROM = {
+					NOT = { culture = cosmopolitan_french }
+					NOT = { culture = burgundian }
+					NOT = { culture = normand }
+					NOT = { culture = wallonian }
+				}
+			}
+			for_variable_amount = {
+				variable = provinceDevelopment
+				effect = "	
+					owner = {
+						add_government_power = {
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = -0.1
+						}
+					} 
+				"
+			}
+		}
+	}
+}
+
+on_minority_expelled = {
+	# Add or Decrease d'oc and d'oil based on who we expelled
+	if = {
+		limit = {
+			owner = { has_government_mechanic = southern_vs_northern_french_mechanic }
+		}
+		FROM = {
+			# Get the development of the province
+			export_to_variable = {
+				which = provinceDevelopment
+				value = development
+			}
+			if = {
+				limit = {
+					OR = {
+						culture = gascon
+						culture = occitain
+						culture = aquitaine
+					}
+				}
+				for_variable_amount = {
+					variable = provinceDevelopment
+					effect = "
+						owner = {
+							add_government_power = {
+								mechanic_type = southern_vs_northern_french_mechanic
+								power_type = southernfrenchness
+								value = -0.05
+							}
+						} 
+					"
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture = cosmopolitan_french
+						culture = burgundian
+						culture = normand
+						culture = wallonian
+					}
+				}
+				for_variable_amount = {
+					variable = provinceDevelopment
+					effect = "
+						owner = {
+							add_government_power = {
+								mechanic_type = southern_vs_northern_french_mechanic
+								power_type = southernfrenchness
+								value = 0.05
+							}
+						} 
+					"
+				}
+			}
+		}
+	}
+}
+
+on_mercenary_recruited = {
+	if = {
+		limit = {
+			FROM = { has_government_mechanic = helvetic_militarization_mechanic }
+		}
+		FROM = {
+			add_government_power = {
+				mechanic_type = helvetic_militarization_mechanic
+				power_type = helvetic_militarization
+				value = 1
+			}
+		}
+	}
+}
+
+on_battle_won_unit = {
+	if = {
+		limit = {
+			unit_owner = {
+				has_government_mechanic = helvetic_militarization_mechanic
+				num_of_mercenaries = 1
+			}
+			location = {
+				NOT = { has_province_modifier = hlv_merc_battle_province }
+			}
+		}
+		location = {
+			add_province_modifier = {
+				name = hlv_merc_battle_province
+				duration = 1
+				hidden = yes
+			}
+		}
+		if = {
+			limit = {
+				unit_owner = {
+					any_hired_mercenary_company = {
+						location = {
+							has_province_modifier = hlv_merc_battle_province
+						}
+					}
+				}
+			}
+			unit_owner = {
+				add_government_power = {
+					mechanic_type = helvetic_militarization_mechanic
+					power_type = helvetic_militarization
+					value = 0.5
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			unit_owner = {
+				has_mission = tus_the_italian_wars
+			}
+			NOT = {
+				mercenary_company = ab_black_band
+			}
+			location = {
+				region = italy_region
+			}
+		}
+		unit_owner = {
+			change_variable = {
+				which = tus_num_of_merc_battles_won_var
+				value = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			unit_owner = {
+				has_mission = tus_the_italian_wars
+			}
+			mercenary_company = ab_black_band
+			location = {
+				region = italy_region
+			}
+		}
+		unit_owner = {
+			change_variable = {
+				which = tus_num_of_merc_battles_won_var
+				value = 2
+			}
+		}
+	}
+}
+
+on_general_recruited = {
+	if = {
+		limit = {
+			has_country_modifier = ivr_italian_supremacy
+		}
+		add_army_tradition = 1
+	}
+	if = {
+		limit = {
+			has_country_flag = kle_unlock_general_bonus
+		}
+		remove_country_modifier = rhl_kle_rally_the_militia
+		add_country_modifier = {
+			name = rhl_kle_rally_the_militia
+			duration = 365
+		}
+	}
+}
+
+on_expanded_infrastructure = {
+	if = {
+		limit = {
+			owner = {
+				has_government_attribute = expand_infrastructure_a_mechanic
+			}
+		}
+		add_province_modifier = {
+			name = tus_florentine_buff_a
+			duration = 1825
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_government_attribute = expand_infrastructure_b_mechanic
+			}
+		}
+		add_province_modifier = {
+			name = tus_florentine_buff_b
+			duration = 1825
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_government_attribute = expand_infrastructure_c_mechanic
+			}
+		}
+		add_province_modifier = {
+			name = tus_florentine_buff_c
+			duration = 1825
+		}
+	}
+}
+
+on_province_religion_converted = {
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = rmg_convert_grant_mana
+			}
+		}
+		owner = {
+			random_list = {
+				33 = {
+					add_adm_power = 5
+				}
+				33 = {
+					add_dip_power = 5
+				}
+				33 = {
+					add_mil_power = 5
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				OR = {
+					has_country_modifier = lom_liberator
+					has_country_modifier = sax_wendish_crusade
+				}
+			}
+		}
+		add_base_manpower = 2
+	}
+}
+
+on_colony_finished = {
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = new_lubeck_modifier
+			}
+		}
+		add_base_production = 2
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = fra_french_canadian_settlers_modifier
+			}
+		}
+		add_base_tax = 1
+		add_base_production = 1
+		add_base_manpower = 1
+	}
+}
+
+on_culture_demoted = {
+	#ab_on_culture_demoted_effect_remove_all_free_slots = yes
+}
+
+on_siege_won_province = {
+	if = {
+		limit = {
+			controller = {
+				has_country_modifier = fkn_conquest_of_italy
+			}
+			region = italy_region
+			is_claim = controller
+		}
+		add_permanent_claim = controller
+	}
+}
+
+on_siege_won_country = {
+	events = {
+		ab_tuscany.3
+	}
+}
+
+on_naval_barrage = {
+	if = {
+		limit = {
+			has_country_modifier = rhl_north_sea_power
+		}
+		random_list = { 
+			25 = { 
+				FROM = {
+					change_controller = ROOT
+				}
+			} 
+			75 = { } 
+		}
+	}
+}
+
+on_province_owner_change = {
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = hab_buffed_forts_modifier
+			}
+			has_fort_building_trigger = yes
+		}
+		add_province_modifier = {
+			name = hab_buffed_forts_modifier
+			duration = -1
+			hidden = yes
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_burghers_saxon_woods_expansion
+			}
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			has_terrain = woods
+		}
+		add_province_modifier = {
+			name = estate_burghers_saxon_woods_expansion_mod
+			duration = -1
+		}
+	}
+}
+
+on_heir_disinherited = {
+	if = {
+		limit = {
+			tag = FRC
+			ai = no
+			ironman = yes
+			has_ruler = "Lothair III"
+		}
+		change_variable = {
+			which = frc_lothair_heirs_disinherited
+			value = 1
+		}
+	}
+}
