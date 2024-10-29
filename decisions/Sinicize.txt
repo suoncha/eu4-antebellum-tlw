@@ -1,0 +1,122 @@
+country_decisions = {
+	sinicize_culture = {
+		potential = {
+			ai = no
+			OR = {
+				culture_group = tibetan_group
+				primary_culture = korean
+				primary_culture = vietnamese
+			}
+		}
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					ROOT = {
+						culture_group = tibetan_group
+					}
+				}
+				region = tibet_region
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						primary_culture = korean
+					}
+				}
+				region = korea_region
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						primary_culture = vietnamese
+					}
+				}
+				OR = {
+					area = red_river_delta_area
+					area = vietnam_area
+				}
+			}
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			OR = {
+				is_emperor_of_china = yes
+				num_of_owned_provinces_with = {
+					value = 10
+					culture_group = east_asian
+				}
+			}
+			if = {
+				limit = {
+					culture_group = tibetan_group
+				}
+				tibet_region = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = korean
+				}
+				korea_region = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = vietnamese
+				}
+				red_river_delta_area = {
+					type = all
+					owned_by = ROOT
+				}
+				vietnam_area = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+		}
+		effect = {
+			if = { #Sinicize Vietnamese
+				limit = {
+					primary_culture = vietnamese
+				}
+				replace_culture_with_effect = {
+					new_culture = vietnamese_new
+					old_culture_1 = vietnamese
+				}
+			}
+			else_if = { #Sinicize Korean
+				limit = {
+					primary_culture = korean
+				}
+				replace_culture_with_effect = {
+					new_culture = korean_new
+					old_culture_1 = korean
+				}
+			}
+			else_if = { #Sinicize Tibetan
+				limit = {
+					culture_group = tibetan_group
+				}
+				replace_culture_with_effect = {
+					new_culture = tibetan_new
+					old_culture_1 = tibetan
+				}
+				replace_culture_with_effect = {
+					new_culture = tibetan_new
+					old_culture_1 = Tangut
+					old_culture_2 = yi
+					old_culture_3 = bai
+					old_culture_4 = miao
+				}
+			}
+			custom_tooltip = sinicize_culture_ct
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

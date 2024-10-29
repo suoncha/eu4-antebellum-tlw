@@ -1,0 +1,79 @@
+country_decisions = {
+
+	maratha_nation = {
+		major = yes
+		potential = {
+			primary_culture = marathi
+			is_colonial_nation = no
+			NOT = { exists = MAR }
+			NOT = { was_tag = MAR }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 516 #Broach
+				province_id = 546 #Nagpur
+				province_id = 1946 #Satara
+				province_id = 2033 #Savanur
+				province_id = 2034 #Pune
+				province_id = 4429 #Rajapur
+				province_id = 2026 #Tanjore
+				province_id = 4431 #Kolhapur
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			adm_tech = 18
+			owns_core_province = 546 #Nagpur
+			owns_core_province = 1946 #Satar
+			owns_core_province = 2033 #Savanur
+			owns_core_province = 2034 #Pune
+			owns_core_province = 4429 #Rajapur
+			owns_core_province = 4431 #Kolhapur
+			OR = {
+				owns_core_province = 2026 #Tanjore
+				owns_core_province = 516 #Broach
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			change_tag = MAR
+			on_change_tag_effect = yes
+			deccan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = MAR
+			}
+			west_india_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = MAR
+			}
+			add_prestige = 25
+			if = {
+				limit = {
+					NOT = { technology_group = indian }
+				}
+				change_technology_group = indian
+				change_unit_type = indian
+			}
+			if = {
+				limit = { 
+					has_custom_ideas = no
+					NOT = { has_idea_group = MAR_ideas }
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+
+}

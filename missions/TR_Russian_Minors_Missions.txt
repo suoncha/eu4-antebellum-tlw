@@ -1258,6 +1258,10 @@ ab_russia_second_formable = {
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_rus.9
+			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = RUS_DUAL
 			tooltip = {
 				add_province_modifier = {
@@ -1266,8 +1270,6 @@ ab_russia_second_formable = {
 				}
 				upgrade_trade_building = yes
 			}
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = RUS_UNLOCK_CAPITAL
 			hidden_effect = {
 				310 = {
 					add_province_modifier = {
@@ -3361,22 +3363,18 @@ ab_russia_fifth_formable = {
 		trigger = {
 			if = {
 				limit = {
-					any_country = {
-						is_emperor_of_china = yes
-					}
+					NOT = { has_global_flag = empire_of_china_dismantled }
 				}
 				OR = {
-					event_target:EmperorOfChina = {
-						alliance_with = ROOT
+					has_won_war_against = {
+						who = event_target:EmperorOfChina
 					}
-					custom_trigger_tooltip = {
-						tooltip = RUS_WIN_WAR_AGAINST_CHINA
-						any_country = {
-							is_emperor_of_china = yes
-							ROOT = {
-								has_won_war_against = { who = PREV }
-							}
+					event_target:EmperorOfChina = {
+						has_opinion = {
+							who = ROOT
+							value = 150
 						}
+						alliance_with = ROOT
 					}
 				}
 			}
@@ -3391,9 +3389,7 @@ ab_russia_fifth_formable = {
 		effect = {
 			if = {
 				limit = {
-					any_country = {
-						is_emperor_of_china = yes
-					}
+					NOT = { has_global_flag = empire_of_china_dismantled }
 				}
 				if = {
 					limit = {

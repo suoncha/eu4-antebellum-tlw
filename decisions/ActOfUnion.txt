@@ -1,0 +1,55 @@
+country_decisions = {
+	
+	gbr_act = {
+		major = yes
+		potential = {
+			OR = {
+				mission_completed = nrm_acts_union
+				mission_completed = ab_eng_acts
+				mission_completed = sco_acts
+			}
+			NOT = { has_country_flag = proclaimed_uk }
+		}
+		allow = {
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			set_country_flag = proclaimed_uk
+			if = {
+				limit = {
+					tag = ABO
+				}
+				override_country_name = PROCLAIM_UK_ABO
+			}
+			else_if = {
+				limit = {
+					tag = GDL
+				}
+				override_country_name = PROCLAIM_UK_GDL
+			}
+			else_if = {
+				limit = {
+					tag = DLM
+				}
+				override_country_name = PROCLAIM_UK_DLM
+			}
+			else_if = {
+				limit = {
+					OR = {
+						tag = ANG # Norman England
+						tag = GBR
+					}
+				}
+				override_country_name = PROCLAIM_UK
+			}
+			else = {
+				# fallback in case there is a tag we didn't catch
+				override_country_name = PROCLAIM_UK
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

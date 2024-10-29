@@ -310,6 +310,46 @@ declarewar = {
 				id = ab_byzantium.79
 			}
 		}
+		else_if = {
+			limit = {
+				is_emperor_of_china = yes
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = FROM
+					casus_belli = cb_chinese_unification
+				}
+				NOT = { has_country_modifier = waging_war_for_china }
+			}
+			country_event = {
+				id = ab_performance.16
+			}
+		}
+		else_if = {
+			limit = {
+				hre_reform_passed = emperor_reichskrieg
+				OR = {
+					is_emperor = yes
+					is_elector = yes
+				}
+				FROM = {
+					is_part_of_hre = no
+				}
+				NOT = { has_country_modifier = defense_of_the_empire_modifier }
+			}
+			country_event = {
+				id = ab_performance.25
+			}
+		}
+		else_if = {
+			limit = {
+				religion = jewish
+				has_church_aspect = judaism_yom_kippur_aspect
+				NOT = { has_country_modifier = judaism_yom_kippur_aspect_war_modifier }
+			}
+			country_event = {
+				id = ab_performance.26
+			}
+		}
 		# ]]]
 	}
 }
@@ -520,10 +560,7 @@ annexationaction = {
 					tag = HLS
 					tag = HLM
 				}
-				is_subject_of_type_with_overlord = {
-					who = ROOT
-					type = diadochi_vassal
-				}
+				is_subject_of_type = diadochi_vassal
 			}
 		}
 		allow = {
@@ -627,6 +664,16 @@ guaranteeaction = {
 		}
 		allow = {
 			has_country_flag = byz_triumvir_flag
+		}
+	}
+}
+
+excommunicate_action = {
+	effect = {
+		FROM = {
+			country_event = {
+				id = ab_performance.12
+			}
 		}
 	}
 }

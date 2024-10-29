@@ -1,0 +1,57 @@
+country_decisions = {
+	mossi_nation = {
+		major = yes
+		potential = {
+			primary_culture = mossi
+			is_colonial_nation = no
+			NOT = { exists = MSI }
+			NOT = { was_tag = MSI }
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = upper_volta_area
+				province_id = 2267
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			owns_core_province = 2267	# Tenkodogo
+			upper_volta_area = {
+				owned_by = ROOT
+				is_core = ROOT
+				type = all
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			change_tag = MSI
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = { NOT = { government_rank = 2 } }
+				set_government_rank = 2
+			}
+			add_prestige = 25
+			if = {
+				limit = {
+					has_custom_ideas = no
+					NOT = { has_idea_group = mossi_ideas }
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = { has_dlc = "Origins" }
+				swap_non_generic_missions = yes
+			}
+			on_change_tag_effect = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400 #
+	}
+	
+}

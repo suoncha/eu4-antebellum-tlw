@@ -1,0 +1,126 @@
+country_decisions = {
+	
+	sultan_of_delhi = {
+		major = yes
+		potential = {
+			religion_group = muslim
+			OR = {
+				culture_group = hindusthani
+				culture_group = western_aryan
+				culture_group = eastern_aryan
+			}
+			is_colonial_nation = no
+			NOT = { exists = DLH }
+			NOT = { was_tag = DLH }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 522 #Delhi
+				province_id = 510
+				province_id = 524
+				province_id = 507
+				province_id = 555
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			government = monarchy
+			owns_core_province = 522 	#Delhi
+			OR = {
+				owns_core_province = 510 #Sirhind
+				owns_core_province = 524 #Agra
+			}
+			OR = {
+				owns_core_province = 507 #Lahore
+				owns_core_province = 555 #Jaunpur
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			522 = {
+				move_capital_effect = yes
+			}
+			change_tag = DLH
+			swap_non_generic_missions = yes
+			on_change_tag_effect = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 3650
+			}
+			if = {
+				limit = {
+					NOT = { primary_culture = kanauji }
+				}
+				change_primary_culture = kanauji
+			}
+			upper_doab_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			lower_doab_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			oudh_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			katehar_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			sirhind_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			lahore_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { owned_by = DLH }
+					NOT = { is_core = DLH }
+				}
+				add_permanent_claim = DLH
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 200
+	}
+}
