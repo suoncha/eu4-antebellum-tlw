@@ -181,16 +181,40 @@ TLW_performance_on_province_owner_change_effect = {
 			}
 		}
 	}
-	else_if = {
+	if = {
 		limit = {
-			owner = {
-				tag = NED
-				overlord_of = VOC
-			}
 			superregion = india_superregion
+			owner = {
+				capital_scope = {
+					NOT = { continent = asia }
+					NOT = { continent = oceania }
+				}
+			}
 		}
-		cede_province = VOC
-		add_core = VOC
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_country_flag = trade_company }
+					NOT = { tag = NED }
+				}
+			}
+			owner = {
+				set_country_flag = trade_company
+				country_event = {
+					id = ab_performance.34
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					tag = NED
+					overlord_of = VOC
+				}
+			}
+			cede_province = VOC
+			add_core = VOC
+		}
 	}
 }
 
@@ -267,6 +291,26 @@ TLW_performance_on_lock_hre_religion = {
 		}
 		country_event = {
 			id = ab_performance.17
+		}
+	}
+}
+
+TLW_performance_on_institution_embracement = {
+	if = {
+		limit = {
+			is_colonial_nation = yes
+			is_year = 1600
+			NOT = { has_country_modifier = colonial_assembly }
+		}
+		add_liberty_desire = 10
+		add_country_modifier = {
+			name = colonial_assembly
+			duration = -1
+		}
+		hidden_effect = {
+			colonial_parent = {
+				country_event = { id = elections.711 days = 3 }
+			}
 		}
 	}
 }

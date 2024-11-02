@@ -156,17 +156,6 @@ declarewar = {
 			}
 		}
 	}
-	condition = {
-		tooltip = CANNOT_DECLARE_WARS_TEUTONS_HRE
-		potential = {
-			ai = yes 
-			has_country_flag = teu_joined_the_hre
-			FROM = { is_part_of_hre = yes }
-		}
-		allow = { 
-			FROM = { is_part_of_hre = no }
-		}
-	}
 	# AB [[[
 	condition = {
 		tooltip = GRAND_CRUSADE_NO_OTHER_WAR
@@ -178,6 +167,17 @@ declarewar = {
 					casus_belli = cb_grand_crusade
 				}
 			}
+		}
+	}
+	condition = {
+		tooltip = CANNOT_DECLARE_WARS_TEUTONS_HRE
+		potential = {
+			ai = yes 
+			has_country_flag = ab_teu_joined_the_hre
+			FROM = { is_part_of_hre = yes }
+		}
+		allow = { 
+			FROM = { is_part_of_hre = no }
 		}
 	}
 	# ]]]
@@ -235,34 +235,8 @@ declarewar = {
 				duration = -1
 			}
 		}
-		# if = {
-		# 	limit = {
-		# 		has_country_flag = teu_joined_the_hre
-		# 		tag = TEU
-		# 		is_part_of_hre = yes
-		# 		FROM = { is_part_of_hre = yes }
-		# 	}
-		# 	clr_country_flag = teu_joined_the_hre
-		# 	country_event = {
-		# 		id = flavor_teu.33
-		# 		days = 10
-		# 	}
-		# }
-		# AB {{{
+		# AB [[[
 		# Thanks Inferno
-		if = {
-			limit = {
-				has_global_flag = grand_crusades_enabled
-				has_country_flag = grand_crusader_war_monger_flag
-				is_in_war = {
-					attacker_leader = ROOT
-					casus_belli = cb_grand_crusade
-				}
-			}
-			FROM = {
-				save_global_event_target_as = grand_crusade_target
-			}
-		}
 		if = {
 			limit = {
 				NOT = { has_country_flag = frc_had_morale_modifier }
@@ -298,6 +272,38 @@ declarewar = {
 			FROM = {
 				save_global_event_target_as = grand_crusade_target
 			}
+			# TLW [[[
+			every_country = {
+				limit = {
+					religion = catholic
+					is_at_war = no
+					is_subject = no
+					knows_country = ROOT
+					NOT = { truce_with = FROM }
+					NOT = { alliance_with = FROM }
+				}
+				country_event = {
+					id = ab_performance.35
+					days = 10
+					random = 20
+				}
+			}
+			every_country = {
+				limit = {
+					religion = FROM
+					is_at_war = no
+					is_subject = no
+					knows_country = FROM
+					NOT = { truce_with = ROOT }
+					NOT = { alliance_with = ROOT }
+				}
+				country_event = {
+					id = ab_performance.36
+					days = 10
+					random = 20
+				}
+			}
+			# ]]]
 		}
 		if = {
 			limit = {
@@ -308,7 +314,7 @@ declarewar = {
 				duration = -1
 			}
 		}
-		# }}}
+		# ]]]
 		# TLW [[[
 		if = {
 			limit = {

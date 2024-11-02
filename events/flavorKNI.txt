@@ -1,0 +1,96 @@
+########################################
+# Flavor Events for Knights of St:John
+#
+# Scripted by Sara Wendel-Örtqvist
+########################################
+
+namespace = flavor_kni
+normal_or_historical_nations = yes
+
+# The Knights of St. John of Jerusalem
+country_event = {
+	id = flavor_kni.100
+	title = "flavor_spa.EVTNAME3156"
+	desc = "flavor_spa.EVTDESC3156"
+	picture = RELIGION_eventPicture
+
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_global_flag = knights_malta_event_flag
+			set_country_flag = KNIGHT_WANTS_MALTA
+			if = {
+				limit = {
+					has_country_flag = kni_malta_mision_flag
+				}
+				set_country_flag = KNIGHT_WANTS_MALTA_MISSION
+			}
+		}
+	}
+
+	option = {		# Give Malta to the Knights of St. John
+		name = "flavor_spa.EVTOPTA3156"
+		ai_chance = { factor = 50 }
+		add_stability_or_adm_power = yes
+		if = {
+			limit = {
+				NOT = { has_country_flag = KNIGHT_WANTS_MALTA_MISSION }
+			}
+			126 = {
+				remove_core = ROOT
+				cede_province = KNI
+				add_core = KNI
+			}
+			KNI = {
+				add_opinion = {
+					who = ROOT
+					modifier = spa_ceded_malta
+				}
+				adopt_reform_progress = ROOT
+				hidden_effect = {
+					change_religion = catholic
+				}
+			}
+			
+		}
+		else = {
+			126 = {
+				remove_core = ROOT
+				cede_province = FROM
+				add_core = FROM
+			}
+			FROM = {
+				add_opinion = {
+					who = ROOT
+					modifier = spa_ceded_malta
+				}
+			}
+		}
+		PAP = {
+			add_opinion = {
+				who = ROOT
+				modifier = spa_ceded_malta_pap
+			}
+		}
+		if = { 
+			limit = {
+				religion_group = christian 
+				has_dlc = "Golden Century"
+			}
+			custom_tooltip = spa_enable_san_juan_holy_order_tt
+			set_country_flag = spa_enable_san_juan_holy_order_flag
+		}
+	}
+
+	option = {		# Don't give them anything
+		name = "flavor_spa.EVTOPTC3156"
+		ai_chance = { factor = 0 }
+		PAP = {
+			add_opinion = {
+				who = ROOT
+				modifier = spa_refused_ceding_malta
+			}
+		}
+	}
+}

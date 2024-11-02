@@ -1,0 +1,61 @@
+########################################
+# Flavor Events for Manchu
+#
+# Scripted by Sara Wendel-Örtqvist
+########################################
+
+namespace = flavor_mch
+normal_or_historical_nations = yes
+
+##########################################
+#1.35 Events for Qing / Jianzhou / Manchu#
+	# by Big Boss #
+##########################################
+country_event = { #Entering the City of [586.GetName]
+	id = flavor_mch.12
+	title = flavor_mch.12.t 
+	desc = flavor_mch.12.d 
+	picture = BATTLE_eventPicture
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavor_mch.12.a
+		
+		add_country_modifier = {
+			name = qng_subjugation_of_burma_modifier
+			duration = -1 
+		}
+		
+		if = { 
+			limit = { has_dlc = "Leviathan" }
+			if = {
+				limit = { 
+					586 = {
+						NOT = { 
+							has_great_project = {
+								type = kanbawzathadi_palace
+								tier = 3 
+							}
+						}
+					}
+				}
+				586 = { 
+					add_great_project_tier = {
+						type = kanbawzathadi_palace
+						tier = 1 
+					}
+					add_base_tax = 3 
+					add_base_production = 3 
+					add_base_manpower = 2 
+				}
+			}
+		}
+		else = {
+			586 = { 
+				add_base_tax = 3 
+				add_base_production = 3 
+				add_base_manpower = 2 
+			}
+		}
+	}
+}
