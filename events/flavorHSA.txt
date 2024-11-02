@@ -1,0 +1,267 @@
+########################################
+# Flavor Events for Hansa
+#
+# written by Sara Wendel-�rtqvist
+########################################
+
+namespace = flavor_hsa
+normal_or_historical_nations = yes
+
+country_event = { #Novgorod Kontor Event
+	id = flavor_hsa.5
+	title = flavor_hsa.5.t 
+	desc = flavor_hsa.5.d 
+	picture = DEBATE_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.5.a 
+		
+		310 = {
+			add_trade_modifier = {
+				who = ROOT
+				duration = 9125
+				power = 50
+				key = hsa_peterhof_depot_modifier
+			}
+		}
+		if = {
+			limit = {
+				310 = { 
+					owner = { alliance_with = ROOT }
+				}
+			}
+			310 = {
+				owner = {
+					add_opinion = {
+						who = ROOT  
+						modifier = hsa_permitted_kontor_modifier 
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Herring Currents of the Lubeckbothe
+	id = flavor_hsa.6
+	title = flavor_hsa.6.t 
+	desc = flavor_hsa.6.d 
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.6.a 
+		
+		45 = {
+			change_trade_goods = fish 
+			add_province_modifier = {
+				name = hsa_lubeck_herring_market_modifier 
+				duration = -1 
+			}
+		}
+		ai_chance = { factor = 5 }
+	}
+	option = {
+		name = flavor_hsa.6.b 
+		
+		if = {
+			limit = {
+				45 = {
+					has_manufactory_trigger = no 
+				}
+			}
+			45 = { add_building = wharf } 
+		}
+		else = { add_adm_power = 50 }
+		ai_chance = { factor = 5 }
+	}
+	
+	option = {
+		name = flavor_hsa.6.c 
+		
+		trigger = {
+			any_owned_province = {
+				trade_goods = salt 
+				base_production = 6 
+			}
+		}
+		highlight = yes 
+		45 = {
+			change_trade_goods = fish 
+			add_province_modifier = {
+				name = hsa_lubeck_herring_market_modifier2 
+				duration = 9125 
+			}
+		}
+		ai_chance = { factor = 90 }
+	}
+}
+
+country_event = { #Docks & Wharfs of Bryggen
+	id = flavor_hsa.7
+	title = flavor_hsa.7.t 
+	desc = flavor_hsa.7.d 
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.7.a 
+		
+		1975 = { #North Sea
+			add_trade_modifier = {
+				who = ROOT
+				duration = -1
+				power = 30
+				key = hsa_bryggen_kontor_modifier
+			}
+		}
+		custom_tooltip = hsa_every_league_member_gains_mercantilism_and_dev_tt
+		hidden_effect = {
+			every_country = {
+				limit = { is_in_trade_league_with = ROOT }
+				add_mercantilism = 1 
+				capital_scope = {
+					random_list = {
+						50 = {
+							add_base_tax = 1 
+						}
+						25 = {
+							add_base_production = 1 
+						}
+						25 = {
+							add_base_manpower = 1 
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Hanseatic Town of Visby
+	id = flavor_hsa.8
+	title = flavor_hsa.8.t 
+	desc = flavor_hsa.8.d 
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.8.a 
+		
+		25 = {
+			add_province_modifier = {
+				name = hsa_visby_warehouse_modifier 
+				duration = -1 
+			}
+		}
+		custom_tooltip = hsa_league_wealth_tt
+		hidden_effect = {
+			every_country = {
+				limit = { is_in_trade_league_with = ROOT }
+				add_treasury = 100
+			}
+			add_treasury = 100 
+		}
+	}
+}
+
+country_event = { #Town Hall of Lubeck 
+    id = flavor_hsa.10
+    title = flavor_hsa.10.t 
+    desc = flavor_hsa.10.d 
+    picture = GREAT_BUILDING_eventPicture
+
+    is_triggered_only = yes 
+
+    option = {
+        name = flavor_hsa.10.a 
+
+        add_country_modifier = {
+            name = hsa_republican_modus_operandi_modifier
+            duration = 9125
+        }
+        change_innovativeness = 3 
+    }
+}
+
+country_event = { #The City Gates of Lubeck 
+	id = flavor_hsa.11
+	title = flavor_hsa.11.t 
+	desc = flavor_hsa.11.d 
+	picture = SIEGE_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.11.a 
+		
+		45 = {
+			add_province_modifier = {
+				name = hsa_holstentor_burgtor_modifier 
+				duration = -1 
+			}
+		}
+	}
+}
+
+country_event = { #Theory of Mercantilism
+	id = flavor_hsa.12
+	title = flavor_hsa.12.t 
+	desc = flavor_hsa.12.d 
+	picture = TRADEGOODS_eventPicture 
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.12.a 
+		
+		add_country_modifier = {
+			name = hsa_theory_of_mercantilism_modifier
+			duration = -1 
+		}
+	}
+}
+
+country_event = { #The Hanseatic Cog
+	id = flavor_hsa.13
+	title = flavor_hsa.13.t 
+	desc = flavor_hsa.13.d 
+	picture = HARBOUR_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.13.a 
+		
+		add_country_modifier = {
+			name = hsa_hanseatic_merchant_cogs_modifier 
+			duration = 10950
+		}
+		add_sailors = 2000
+	}
+}
+
+country_event = { #Adler von Lubeck 
+	id = flavor_hsa.14
+	title = flavor_hsa.14.t 
+	desc = flavor_hsa.14.d 
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = flavor_hsa.14.a 
+		
+		add_country_modifier = {
+			name = hsa_pride_eagle_of_the_fleet_modifier
+			duration = -1 
+			desc = hsa_till_it_gets_sunk_desc 
+		}
+		add_navy_tradition = 25 
+	}
+}

@@ -1,0 +1,61 @@
+country_decisions = {
+	
+	form_tocharia = {
+		major = yes
+		potential = {
+			primary_culture = Tocharian
+			is_colonial_nation = no
+			NOT = { exists = TCR }
+			NOT = { was_tag = TCR }
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = shanshan_area
+				area = tarim_basin_area
+				area = kashgaria_area
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			primary_culture = Tocharian
+		    shanshan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tarim_basin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kashgaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = TCR
+			override_country_name = TCR
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			set_country_flag = formed_tocharia_flag
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}
