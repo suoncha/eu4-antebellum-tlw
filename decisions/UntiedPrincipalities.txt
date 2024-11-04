@@ -1,0 +1,54 @@
+country_decisions = {
+
+	unp_nation = {
+		major = yes
+		potential = {
+			culture_group = romanian_culture_group
+			is_colonial_nation = no
+			NOT = { exists = UNP }
+			NOT = { was_tag = UNP }
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 160
+				province_id = 161
+				province_id = 4706
+				province_id = 4530
+				province_id = 268
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			culture_group = romanian_culture_group
+			owns_core_province = 160
+			owns_core_province = 161
+			owns_core_province = 4706
+			owns_core_province = 4530
+			owns_core_province = 268
+			is_at_war = no
+			is_subject = no
+			mission_completed = rmn_principalities
+		}
+		effect = {
+			change_tag = UNP
+			remove_non_electors_emperors_from_empire_effect = yes
+			swap_non_generic_missions = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			add_prestige = 25
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

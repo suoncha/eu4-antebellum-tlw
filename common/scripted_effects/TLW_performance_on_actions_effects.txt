@@ -1,0 +1,316 @@
+TLW_performance_on_startup = {
+	if = {
+		limit = {
+			ai = no
+		}
+		country_event = {
+			id = ab_performance.33
+		}
+	}
+}
+
+TLW_performance_on_war_won_effect = {
+	if = {
+		limit = {
+			has_country_modifier = reaction
+			FROM = {
+				is_revolution_target = yes
+			}
+		}
+		remove_country_modifier = reaction
+	}
+	if = {
+		limit = {
+			has_country_modifier = crusader
+			FROM = {
+				is_crusade_target = yes
+			}
+		}
+		remove_country_modifier = crusader
+	}
+}
+
+TLW_performance_on_war_lost_effect = {
+	if = {
+		limit = {
+			has_country_modifier = reaction
+			FROM = {
+				is_revolution_target = yes
+			}
+		}
+		remove_country_modifier = reaction
+	}
+	if = {
+		limit = {
+			has_country_modifier = crusader
+			FROM = {
+				is_crusade_target = yes
+			}
+		}
+		remove_country_modifier = crusader
+	}
+}
+
+TLW_performance_on_explore_coast_effect = {
+	if = {
+		limit = {
+			OR = {
+				province_id = 1361 # Straits of Johor
+				province_id = 1343 # Ganges Delta
+				province_id = 504 # Sind
+				province_id = 1340 # Comorin Cape
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+				has_discovered = 1460 # Cape of Good Hope
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_performance.3
+			}
+		}
+	}
+}
+
+TLW_performance_on_religion_change = {
+	if = {
+		limit = {
+			religion_group = muslim
+			owns = 384
+			owns = 385
+		}
+		country_event = {
+			id = ab_performance.4
+		}
+	}
+	else_if = {
+		limit = {
+			religion = emperor
+			hre_religion_locked = yes
+			hre_religion = emperor
+			capital_scope = {
+				continent = europe
+			}
+		}
+		country_event = {
+			id = ab_performance.17
+		}
+	}
+}
+
+TLW_performance_on_province_owner_change_effect = {
+	if = {
+		limit = {
+			OR = {
+				province_id = 384 # Medina
+				province_id = 385 # Mecca
+			}
+			owner = {
+				religion_group = muslim
+				owns = 384
+				owns = 385
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_performance.4
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			province_id = 1816 # Beijing
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_beijing
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_beijing
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			province_id = 1821 # Nanjing
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_nanjing
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_nanjing
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			province_id = 667 # Canton
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_canton
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_canton
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			superregion = india_superregion
+			owner = {
+				capital_scope = {
+					NOT = { continent = asia }
+					NOT = { continent = oceania }
+				}
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_country_flag = trade_company }
+					NOT = { tag = NED }
+				}
+			}
+			owner = {
+				set_country_flag = trade_company
+				country_event = {
+					id = ab_performance.34
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					tag = NED
+					overlord_of = VOC
+				}
+			}
+			cede_province = VOC
+			add_core = VOC
+		}
+	}
+}
+
+TLW_performance_on_dependency_gained_effect = {
+	if = {
+		limit = {
+			religion = catholic
+			ab_is_italy_tag_trigger = no
+			NOT = { tag = HLR }
+			FROM = {
+				tag = PAP
+				OR = {
+					is_part_of_hre = no
+					NOT = { hre_reform_passed = emperor_privilegia_de_non_appelando }
+				}
+			}
+		}
+		country_event = {
+			id = ab_performance.6
+		}
+	}
+}
+
+TLW_performance_on_mandate_of_heaven_gained = {
+	if = {
+		limit = {
+			NOT = { owns = 1816 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_beijing
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { owns = 1821 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_nanjing
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { owns = 667 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_canton
+			duration = -1
+		}
+	}
+}
+
+TLW_performance_on_mandate_of_heaven_lost = {
+	remove_country_modifier = lost_control_of_beijing
+	remove_country_modifier = lost_control_of_nanjing
+	remove_country_modifier = lost_control_of_canton
+}
+
+TLW_performance_on_lock_hre_religion = {
+	every_country = {
+		limit = {
+			OR = {
+				religion = catholic
+				religion = protestant
+				religion = reformed
+				religion = anglican
+				religion = hussite
+				religion = gaelic_ab
+			}
+			capital_scope = {
+				continent = europe
+			}
+		}
+		country_event = {
+			id = ab_performance.17
+		}
+	}
+}
+
+TLW_performance_on_institution_embracement = {
+	if = {
+		limit = {
+			is_colonial_nation = yes
+			is_year = 1600
+			NOT = { has_country_modifier = colonial_assembly }
+		}
+		add_liberty_desire = 10
+		add_country_modifier = {
+			name = colonial_assembly
+			duration = -1
+		}
+		hidden_effect = {
+			colonial_parent = {
+				country_event = { id = elections.711 days = 3 }
+			}
+		}
+	}
+}

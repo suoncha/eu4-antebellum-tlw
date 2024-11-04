@@ -1,0 +1,153 @@
+country_decisions = {
+
+	# Brandenburg
+	form_kingdom_of_prussia = {
+		major = yes
+		potential = {
+			tag = BRA
+			NOT = { exists = PRU }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 41	# Königsberg
+				AND = {
+					province_id = 43	# Danzig
+					ROOT = { NOT = { owns_core_province = 2995 } }
+				}
+				AND = {
+					province_id = 2995
+					ROOT = { NOT = { owns_core_province = 2995 } }
+				}
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = BRA
+			owns_core_province = 41			# Königsberg
+			OR = {
+				owns_core_province = 43		# Danzig
+				owns_core_province = 2995	# Stolp
+			}
+			is_at_war = no
+		}
+		effect = {
+			change_tag = PRU
+			on_change_tag_effect = yes
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_dlc = "Emperor" }
+						NOT = { hre_size = 1 }
+					}
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = {
+					has_custom_ideas = no
+					NOT = { has_idea_group = PRU_ideas }
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			random_owned_province = {
+				limit = {
+					OR = {
+						culture = saxon
+						culture = prussian
+						# AB [[[
+						culture = baltic_german
+						culture = markish_culture
+						# ]]]
+					}
+				}
+				add_base_tax = 1
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 3650
+			}
+			if =  {
+				limit = {
+					is_revolutionary = no
+					NOT = { government = republic }
+					NOT = { government = theocracy }
+					has_dlc = "Domination"
+				}
+				change_government = monarchy
+				add_government_reform = prussian_monarchy
+			}
+			else_if =  {
+				limit = {
+					is_revolutionary = no
+					NOT = { government = republic }
+					NOT = { government = theocracy }
+					NOT = { has_dlc = "Domination" }
+				}
+				change_government = monarchy
+				add_government_reform = prussian_monarchy_base
+			}
+			else_if = {
+				limit = {
+					government = republic
+					is_revolutionary = no
+				}
+				add_government_reform = prussian_republic_reform
+			}
+			else_if = {
+				limit = {
+					government = theocracy
+					is_revolutionary = no
+				}
+				add_government_reform = prussian_theocratic_reform
+			}
+			if = {
+				limit = {
+					has_reform = states_general_reform
+				}
+				remove_government_reform = states_general_reform
+			}
+			add_prestige = 5
+			change_primary_culture = prussian
+			PRU = {
+				random_owned_province = {
+					limit = { 
+						is_capital = no 
+						OR = {
+							culture = saxon
+							# AB [[[
+							culture = baltic_german
+							culture = markish_culture
+							# ]]]
+						}
+					} 
+					change_culture = prussian
+				}
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = PRU
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = PRU
+			}
+			capital_scope = {
+				change_culture = prussian
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 1000
+	}
+}

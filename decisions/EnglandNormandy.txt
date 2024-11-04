@@ -1,0 +1,73 @@
+country_decisions = {
+
+	form_england = {
+		major = yes
+		potential = {
+			tag = NRM
+			NOT = { exists = ANG }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 236		# London
+				province_id = 237		# Oxfordshire
+				province_id = 234		# Wessex
+				province_id = 245
+				province_id = 239
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = NRM
+			mission_completed = nrm_duke_king
+			owns_core_province = 236		# London
+			owns_core_province = 237		# Oxfordshire
+			owns_core_province = 234		# Wessex
+			owns_core_province = 245
+			owns_core_province = 239
+			NOT = { exists = ENG }
+			NOT = { exists = GBR }
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = ANG
+			236 = {
+				move_capital_effect = yes
+			}
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			add_government_reform = english_feudal
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = ENG
+					}
+					remove_core = ENG
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+}

@@ -1,0 +1,63 @@
+country_decisions = {
+
+	form_trinacria = {
+		major = yes
+		potential = {
+			primary_culture = neapolitan
+			is_colonial_nation = no
+			religion_group = christian
+			NOT = { exists = TRC }
+			NOT = { has_country_flag = formed_trinacria_flag }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 125
+				province_id = 2982
+				province_id = 2984
+				province_id = 2985
+				province_id = 120
+				province_id = 121
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			primary_culture = neapolitan
+			owns_core_province = 125
+			owns_core_province = 2982
+			owns_core_province = 2984
+			owns_core_province = 2985
+			owns_core_province = 120
+			owns_core_province = 121
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = TRC
+			change_primary_culture = trinacrian
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_trinacria_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+
+}

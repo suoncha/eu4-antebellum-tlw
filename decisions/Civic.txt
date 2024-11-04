@@ -1,0 +1,122 @@
+country_decisions = {
+	statue_in_restraint_of_appeals = {
+		potential = {
+			religion = catholic
+			NOT = { tag = PAP }
+			NOT = { has_country_modifier = the_statue_in_restraint_of_appeals }
+			exists = PAP
+		}
+		allow = {
+			religion = catholic
+			ADM = 2
+			MIL = 2
+			PAP = {
+				NOT = {
+					has_opinion = {
+						who = ROOT
+						value = -50
+					}
+				}
+			}
+		}
+		effect = {
+			add_prestige = 10
+			add_reform_desire  = 0.01
+			every_neighbor_country = {
+				limit = { 
+					religion = catholic 
+					NOT = {
+						tag = PAP
+					}
+				}
+				add_opinion = { who = ROOT modifier = opinion_demote_pope }
+			}
+			PAP = { add_opinion = { who = ROOT modifier = opinion_pope_realise_demotion } }
+			add_country_modifier = {
+				name = "the_statue_in_restraint_of_appeals"
+				duration = -1
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_emperor = yes
+				hre_religion_treaty = no
+			}
+		}
+	}
+	
+	abolish_slavery_act = {
+		potential = {
+			ai = no
+			adm_tech = 15
+			slaves = 1
+			NOT = { has_country_modifier = the_abolish_slavery_act }
+			OR = {
+				current_age = age_of_revolutions
+				has_country_flag = ned_abolish_slavery_flag
+			}
+		}
+		allow = {
+		}
+		effect = {
+			add_prestige = 5
+			add_country_modifier = {
+				name = innovative_modifier
+				duration = 3650
+			}
+			add_country_modifier = {
+				name = "the_abolish_slavery_act"
+				duration = -1
+			}
+			custom_tooltip = abolished_slavery_act_tooltip
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = slaves
+					}
+					change_trade_goods = unknown
+					remove_building = tradecompany
+					if = {
+						limit = { has_province_modifier = slave_entrepot }
+						remove_province_modifier = slave_entrepot
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	revoke_restraint_of_appeals = {
+		potential = {
+			ai = no
+			has_country_modifier = the_statue_in_restraint_of_appeals
+			exists = PAP
+		}
+		allow = {
+		}
+		effect = {
+			remove_country_modifier = the_statue_in_restraint_of_appeals
+			reverse_add_opinion = {
+				who = PAP
+				modifier = opinion_revoked_demotion
+			}
+			add_country_modifier = {
+				name = "revocation_of_restraint_of_appeals"
+				duration = -1
+			}
+			if = {
+				limit = { has_estate = estate_church }
+				custom_tooltip = will_decrease_clergy_loyalty_by_5
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+}

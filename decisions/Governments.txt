@@ -1,0 +1,90 @@
+country_decisions = {	
+	formalize_separation_of_powers = {
+		potential = {
+			has_parliament = yes
+			NOT = { has_country_modifier = separation_of_powers }
+		}
+		allow = {
+			has_parliament = yes
+			stability = 2
+			advisor = statesman
+			is_at_war = no
+		}
+		effect = {
+			add_country_modifier = {
+				name = separation_of_powers
+				duration = -1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	elevate_bishopric = {
+		major = yes
+		potential = {
+			government = theocracy
+			is_elector = yes
+			NOT = { government_rank = 2 }
+			NOT = { has_reform = monastic_order_reform }
+		}
+		allow = {
+			is_elector = yes
+			is_subject = no
+			OR = {
+				NOT = { religion = catholic }
+				papal_influence = 25
+			}
+		}
+		effect = {
+			set_government_rank = 2
+			add_papal_influence = -25
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	force_reelection = {
+		major = yes
+		potential = {
+			has_government_attribute = can_force_election
+		}
+		allow = {
+			ai = no
+			republican_tradition = 55
+			custom_trigger_tooltip = {
+				tooltip = force_reelection_tt
+				OR = {
+					NOT = { has_country_flag = forced_reelection_flag }
+					had_country_flag = {
+						flag = forced_reelection_flag
+						days = 5475
+					}
+				}
+			}
+		}
+		effect = {
+			add_republican_tradition = -5
+			clr_country_flag = forced_reelection_flag
+			set_country_flag = forced_reelection_flag
+			set_country_flag = increased_election_cost
+			if = {
+				limit = { NOT = { has_government_attribute = is_pirate_republic_reform } } 
+				country_event = {
+					id = 700
+				}
+			}
+			else = {
+				country_event = {
+					id = pirates.1
+				}
+			}
+			custom_tooltip = force_reelection_ct
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

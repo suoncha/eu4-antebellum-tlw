@@ -1,0 +1,173 @@
+country_decisions = {
+	
+	persia_rum = {
+		major = yes
+		
+		potential = {
+			ai = no
+			OR = {
+				mission_completed = per_persianize
+				mission_completed = perc_persianize
+				mission_completed = perm_persianize
+				mission_completed = mper_persianize
+			}
+			NOT = { exists = RUM }
+			NOT = { has_country_flag = per_released_rum }
+		}
+		allow = {
+			ai = no
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			custom_tooltip = PERSIA_RUM
+			add_country_modifier = {
+				name = per_client
+				duration = -1
+			}
+			if = {
+				limit = {
+					mission_completed = per_persianize
+				}
+				hidden_effect = {
+					anatolia_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RUM
+						remove_core = ROOT
+					}
+					release = RUM
+					create_march = RUM
+					RUM = {
+						add_manpower = 10
+						add_treasury = 100
+						add_liberty_desire = -50
+						change_religion = ROOT
+						set_dynasty = "Sarukhanid"
+						change_primary_culture = turkish_iranian
+						swap_non_generic_missions = yes
+						swap_free_idea_group = yes
+						add_government_reform = zoroastrian_rum
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					mission_completed = perc_persianize
+				}
+				hidden_effect = {
+					anatolia_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RUM
+						remove_core = ROOT
+					}
+					release = RUM
+					create_march = RUM
+					RUM = {
+						add_manpower = 10
+						add_treasury = 100
+						add_liberty_desire = -50
+						change_religion = ROOT
+						change_primary_culture = turkish_iranian
+						swap_non_generic_missions = yes
+						swap_free_idea_group = yes
+						add_government_reform = christian_rum
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					mission_completed = perm_persianize
+				}
+				hidden_effect = {
+					anatolia_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RUM
+						remove_core = ROOT
+					}
+					release = RUM
+					create_march = RUM
+					RUM = {
+						add_manpower = 10
+						add_treasury = 100
+						add_liberty_desire = -50
+						change_religion = ROOT
+						change_primary_culture = turkish_iranian
+						swap_non_generic_missions = yes
+						swap_free_idea_group = yes
+						add_government_reform = ottoman_government
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					mission_completed = mper_persianize
+				}
+				hidden_effect = {
+					anatolia_region = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_core = RUM
+						remove_core = ROOT
+					}
+					release = RUM
+					create_march = RUM
+					RUM = {
+						add_manpower = 10
+						add_treasury = 100
+						add_liberty_desire = -50
+						change_religion = ROOT
+						change_primary_culture = turkish_iranian
+						swap_non_generic_missions = yes
+						swap_free_idea_group = yes
+						if = {
+							limit = {
+								OR = {
+									secondary_religion = ibadi
+									secondary_religion = shiite
+									secondary_religion = sunni
+								}
+							}
+							add_government_reform = ottoman_government
+						}
+						else_if = {
+							limit = { 
+								secondary_religion = zoroastrian
+							}
+							add_government_reform = zoroastrian_rum
+						}
+						else_if = {
+							limit = {
+								secondary_religion = nestorian
+								secondary_religion = gaelic_ab
+								secondary_religion = catholic
+								secondary_religion = orthodox
+								secondary_religion = protestant
+								secondary_religion = reformed
+								secondary_religion = anglican
+								secondary_religion = hussite
+								secondary_religion = coptic
+							}
+							add_government_reform = christian_rum
+						}
+						else = {
+							# Default government if no secondary religion found
+							add_government_reform = ottoman_government
+						}
+					}
+				}
+			}
+			set_country_flag = per_released_rum
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+}

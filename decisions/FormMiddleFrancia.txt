@@ -1,0 +1,92 @@
+country_decisions = {
+
+	form_middle_francia = {
+		major = yes
+		potential = {
+			OR = {
+				tag = LOT
+				tag = ARS
+			}
+			NOT = { exists = MFC }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 100
+				province_id = 4383
+				province_id = 1878
+				province_id = 92
+				province_id = 188
+				province_id = 192
+				province_id = 203
+				province_id = 201
+				province_id = 103
+				province_id = 104
+				province_id = 108
+				province_id = 2980
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			OR = {
+				tag = LOT
+				tag = ARS
+			}
+			OR = {
+				dynasty = "Carolingian"
+				is_emperor = yes
+			}
+			owns_core_province = 100
+			owns_core_province = 4383
+			owns_core_province = 1878
+			owns_core_province = 92
+			owns_core_province = 188
+			owns_core_province = 192
+			owns_core_province = 203
+			owns_core_province = 201
+			owns_core_province = 103
+			owns_core_province = 104
+			owns_core_province = 108
+			owns_core_province = 2980
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = MFC
+			add_prestige = 25
+			custom_tooltip = cosmetic_tag_info
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = FRC
+				}
+				FRC = {
+					override_country_name = RENAME_WFRANCIA
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

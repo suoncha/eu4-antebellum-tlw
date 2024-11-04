@@ -91,7 +91,10 @@ country_event = {
 
 	option = {
 		name = ab_nicaea.2.a
-		add_prestige = 25
+		country_event = {
+			id = ab_nicaea.6
+		}
+		custom_tooltip = AB_EMPTY
 		change_tag = HLE
 		set_government_rank = 3
 		custom_tooltip = NICENE_IDEAS
@@ -113,20 +116,20 @@ country_event = {
 			}
 			every_owned_province = {
 				random_list = {
-					33 = { 
-						add_province_modifier = {
+					33 = {
+						add_permanent_province_modifier = {
 							name = nci_antigonos_province
 							duration = -1
 						}
 					}
-					33 = { 
-						add_province_modifier = {
+					33 = {
+						add_permanent_province_modifier = {
 							name = nci_seleukos_province
 							duration = -1
 						}
 					}
-					33 = { 
-						add_province_modifier = {
+					33 = {
+						add_permanent_province_modifier = {
 							name = nci_ptolemaios_province
 							duration = -1
 						}
@@ -373,8 +376,12 @@ country_event = {
 		}
 		swap_non_generic_missions = yes
 		hidden_effect = {
+			set_variable = {
+				which = nci_center_num_var
+				value = 0
+			}
 			for = {
-				amount = 5
+				amount = 3
 				effect = "
 					random_owned_province = {
 						limit = {
@@ -410,7 +417,7 @@ country_event = {
 		swap_non_generic_missions = yes
 		hidden_effect = {
 			for = {
-				amount = 5
+				amount = 3
 				effect = "
 					random_owned_province = {
 						limit = {
@@ -443,19 +450,14 @@ country_event = {
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = NCI_HELLENIZATION_INFO
 		hidden_effect = {
-			set_heir_culture = hellenic_greek
-			set_ruler_culture = hellenic_greek
+			set_heir_culture = ROOT
+			set_ruler_culture = ROOT
 			every_subject_country = {
 				limit = {
-					culture_group = byzantine
-				}
-				change_primary_culture = hellenic_greek
-				set_heir_culture = hellenic_greek
-				set_ruler_culture = hellenic_greek
-			}
-			every_subject_country = {
-				limit = {
-					is_colonial_nation = yes
+					OR = {
+						is_colonial_nation = yes
+						culture_group = byzantine
+					}
 				}
 				change_primary_culture = ROOT
 				set_heir_culture = ROOT
@@ -1253,17 +1255,6 @@ country_event = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					religion = reformed_hellenic
-				}
-				every_province = {
-					limit = {
-						has_province_modifier = nci_center_of_hellenisation
-					}
-					remove_province_modifier = nci_center_of_hellenisation
-				}
-			}
 		}
 	}
 	
@@ -1629,5 +1620,44 @@ country_event = {
 		}
 		custom_tooltip = AB_EMPTY
 		add_government_reform = nicene_absolute_hellenic_empire
+	}
+}
+
+#Faction Province Workaround
+province_event = {
+	id = ab_nicaea.18
+	title = ab_nicaea.18.t
+	desc = ab_nicaea.18.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_nicaea.18.a
+		ai_chance = { factor = 33 }
+		add_province_modifier = {
+			name = nci_antigonos_province
+			duration = -1
+		}
+	}
+
+	option = {
+		name = ab_nicaea.18.b
+		ai_chance = { factor = 33 }
+		add_province_modifier = {
+			name = nci_seleukos_province
+			duration = -1
+		}
+	}
+
+	option = {
+		name = ab_nicaea.18.c
+		ai_chance = { factor = 33 }
+		add_province_modifier = {
+			name = nci_ptolemaios_province
+			duration = -1
+		}
 	}
 }

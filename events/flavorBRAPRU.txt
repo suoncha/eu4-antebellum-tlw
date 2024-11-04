@@ -1,0 +1,119 @@
+########################################
+# Flavor Events for Brandenburg - Prussia
+#
+# written by Sara Wendel-ùrtqvist
+########################################
+
+namespace = flavor_brapru
+normal_or_historical_nations = yes
+
+# Reform of the Brandenburg Army
+country_event = {
+	id = flavor_brapru.2
+	title = "flavor_brapru.EVTNAME3518"
+	desc = "flavor_brapru.EVTDESC3518"
+	picture = MILITARY_CAMP_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			has_country_flag = brapru_army_reforms_1
+			AND = {
+				NOT = { has_dlc = "Emperor" }
+				tag = BRA
+				is_year = 1600
+				NOT = { is_year = 1700 }
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	option = {
+		name = "flavor_brapru.EVTOPTA3518"
+		add_army_tradition = 20
+		add_mil_power = 150
+		add_army_professionalism = 0.02
+	}
+}
+
+# The Reform of the Prussian Army
+country_event = {
+	id = flavor_brapru.6
+	title = "flavor_brapru.EVTNAME3526"
+	desc = "flavor_brapru.EVTDESC3526"
+	picture = LAND_MILITARY_eventPicture
+	
+	# AB [[[
+	is_triggered_only = yes
+	# ]]]
+	
+	option = {
+		name = "flavor_brapru.EVTOPTA3526"
+		add_army_tradition = 20
+		add_army_professionalism = 0.05
+		if = {
+			limit = { has_dlc = "Rights of Man" }
+			add_government_power = {
+				mechanic_type = militarization_mechanic
+				power_type = militarized_society
+				value = 20
+			}
+			add_mil_power = 100
+		}
+		if = {
+			limit = { NOT = { has_dlc = "Rights of Man" } }
+			add_mil_power = 150
+		}
+	}
+}
+
+# Carl von Clausewitz
+country_event = {
+	id = flavor_brapru.29
+	title = flavor_brapru.29.t
+	desc = flavor_brapru.29.d
+	picture = DIPLOMACY_eventPicture
+
+	# AB [[[
+	is_triggered_only = yes
+	# ]]]
+	
+	option = { # Hire him as an advisor!
+		name = flavor_brapru.29.a
+		ai_chance = {
+			factor = 80
+		}
+		define_advisor = {
+			type = army_reformer
+			name = "Carl von Clausewitz"
+			culture = saxon
+			skill = 3
+			discount = yes
+		}
+		
+	}
+	option = { # Have him lead troops!
+		name = flavor_brapru.29.b
+		ai_chance = {
+			factor = 10
+		}
+		define_general = {
+			name = "Carl von Clausewitz"
+			shock = 3
+			fire = 4
+			manuever = 4
+			siege = 1
+		}
+	}
+	option = { # We don't need his ideas
+		name = flavor_brapru.29.c
+		ai_chance = {
+			factor = 10
+		}
+		add_stability_or_adm_power = yes
+	}
+}

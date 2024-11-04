@@ -3,27 +3,24 @@ country_decisions = {
 	kingdom_of_jerusalem = {
 		major = yes
 		potential = {
-			NOT = { has_country_flag = formed_jerusalem }
-			NOT = { exists = KOJ }
-			normal_or_historical_nations = yes
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
+			ai = no
 			religion = catholic
-			NOT = { tag = OTR }
-			# TLW [[[
-			NOT = { tag = ROM }
-			NOT = { tag = WRE }
-			# ]]]
-			NOT = { culture = swabian } #Barbarossa
 			OR = {
 				owns = 379
 				tag = KNI
 				tag = CYP
 				tag = ATI
 			}
+			NOT = { has_country_flag = formed_jerusalem }
+			NOT = { exists = KOJ }
+			NOT = { tag = OTR }
+			# TLW [[[
+			NOT = { tag = ROM }
+			NOT = { tag = WRE }
+			# ]]]
+			NOT = { culture = swabian } #Barbarossa
 		}
+
 		provinces_to_highlight = {
 			area = palestine_area
 			OR = {
@@ -31,18 +28,18 @@ country_decisions = {
 				NOT = { is_core = ROOT }
 			}
 		}
+
 		allow = {
-			is_at_war = no
-			is_free_or_tributary_trigger = yes
+			ai = no
 			palestine_area = {
 				type = all
 				owned_by = ROOT
 				is_core = ROOT
 			}
-			379 = {
-				is_state = yes
-			}
+			is_at_war = no
+			is_subject = no
 		}
+
 		effect = {
 			add_prestige = 25
 			every_owned_province = {
@@ -94,6 +91,7 @@ country_decisions = {
 				}
 			}
 		}
+
 		ai_will_do = {
 			factor = 0
 		}
@@ -102,18 +100,10 @@ country_decisions = {
 	otr_settlement = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_flag = otr_settlement_flag }
-			religion = catholic
-			OR = {
-				culture_group = french
-				culture_group = latin
-				culture_group = germanic
-				culture_group = iberian
-				culture_group = united_germanic
-			}
 			tag = OTR
+			NOT = { has_country_flag = otr_settlement_flag }
 		}
+
 		provinces_to_highlight = {
 			OR = {
 				province_id = 364
@@ -122,25 +112,24 @@ country_decisions = {
 			}
 			NOT = { owned_by = ROOT }
 		}
+
 		allow = {
+			tag = OTR
 			dip_power = 150
-			is_at_war = no
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
 			owns = 364
 			owns = 1854
 			owns = 1855
+			is_at_war = no
+			is_subject = no
 			any_country = {
 				culture_group = ROOT
-				capital_scope = {
-					superregion = europe_superregion
-				}
 				has_opinion = {
 					who = ROOT
 					value = 125
 				}
 			}
 		}
+
 		effect = {
 			add_dip_power = -150
 			every_owned_province = {
@@ -189,6 +178,7 @@ country_decisions = {
 			}
 			set_country_flag = otr_settlement_flag
 		}
+
 		ai_will_do = {
 			factor = 1
 		}
@@ -197,16 +187,16 @@ country_decisions = {
 	otr_request_manpower = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_modifier = otr_requested_christian_reinforcements }
-			religion = catholic
 			OR = {
 				tag = OTR
 				tag = KOJ
 			}
+			NOT = { has_country_modifier = otr_requested_christian_reinforcements }
 		}
+
 		allow = {
-			papal_influence = 75
+			ai = no
+			papal_influence = 15
 			PAP = {
 				has_opinion = {
 					who = ROOT
@@ -214,8 +204,9 @@ country_decisions = {
 				}
 			}
 		}
+
 		effect = {
-			add_papal_influence = -75
+			add_papal_influence = -15
 			add_country_modifier = {
 				name = otr_requested_manpower
 				duration = 1825
@@ -229,6 +220,7 @@ country_decisions = {
 			}
 			custom_tooltip = OTR_INFLUENCE_EXCHANGE
 		}
+
 		ai_will_do = {
 			factor = 1
 		}
@@ -237,25 +229,29 @@ country_decisions = {
 	otr_request_money = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_modifier = otr_requested_money }
-			religion = catholic
 			OR = {
 				tag = OTR
 				tag = KOJ
 			}
+			NOT = { has_country_modifier = otr_requested_money }
 		}
+
 		allow = {
-			papal_influence = 75
+			OR = {
+				tag = OTR
+				tag = KOJ
+			}
+			papal_influence = 25
 			PAP = {
-					has_opinion = {
-						who = ROOT
-						value = 100
-					}
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
 			}
 		}
+
 		effect = {
-			add_papal_influence = -75
+			add_papal_influence = -25
 			add_years_of_income = 3
 			hidden_effect = {
 				add_country_modifier = {
@@ -266,6 +262,7 @@ country_decisions = {
 			}
 			custom_tooltip = OTR_INFLUENCE_EXCHANGE
 		}
+
 		ai_will_do = {
 			factor = 1
 		}

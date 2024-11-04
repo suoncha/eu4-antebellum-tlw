@@ -1,0 +1,95 @@
+country_decisions = {
+
+	wendish_empire = {
+		major = yes
+		potential = {
+			OR = {
+				culture = Wendish
+				culture = pommeranian
+				culture = sorbian
+			}
+			is_colonial_nation = no
+			NOT = { exists = WEE }
+			NOT = { was_tag = WEE }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 50
+				province_id = 1763
+				province_id = 60
+				province_id = 1858
+				province_id = 4745
+				province_id = 2996
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			OR = {
+				culture = Wendish
+				culture = pommeranian
+				culture = sorbian
+			}
+			owns_core_province = 50
+			owns_core_province = 1763
+			owns_core_province = 60
+			owns_core_province = 1858
+			owns_core_province = 4745
+			owns_core_province = 2996
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = WEE
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			# Only add this monarchy-only reform if we are a monarchy
+			# some nations like Velveti might want to keep their
+			# Slavic Theocracy government reform
+			if = {
+				limit = {
+					government = monarchy
+				}
+				add_government_reform = wee_confederation
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			custom_tooltip = WEE_FORMED_OBD
+			tooltip = {
+				add_country_modifier = {
+					name = "wee_obotrite_legacy"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						was_tag = OBD
+					}
+					add_country_modifier = {
+						name = "wee_obotrite_legacy"
+						duration = -1
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}

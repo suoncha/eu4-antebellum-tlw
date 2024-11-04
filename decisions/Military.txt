@@ -1,0 +1,284 @@
+country_decisions = {
+
+	enlist_privateers = {
+		potential = {
+			has_idea_group = maritime_ideas
+			dip_tech = 8
+			navy_size = 1
+		}
+		allow = {
+			full_idea_group = maritime_ideas
+			navy_size_percentage = 0.5
+			MIL = 3
+		}
+		effect = {
+			add_country_modifier = {
+				name = hire_privateers
+				duration = -1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	state_firearm_regiments = {
+		potential = {
+			ai = no
+			NOT = { has_country_modifier = gunpowder_core }
+			mil_tech = 6
+			NOT = { mil_tech = 19 }
+		}
+		allow = {
+			ai = no
+			army_professionalism = 0.20
+		}
+		effect = {
+			custom_tooltip = explain_state_firearm_regiments
+			add_country_modifier = {
+				name = gunpowder_core
+				duration = -1
+			}
+			set_country_flag = gunpowder_core_activated
+		}
+		ai_will_do = {
+			factor = 0 #Plays it safer with cash
+		}
+	}
+	
+	abolish_state_firearm_regiments = {
+		potential = {
+			ai = no
+			has_country_modifier = gunpowder_core
+		}
+		allow = {
+		}
+		effect = {
+			add_army_professionalism = -0.05
+			remove_country_modifier = gunpowder_core
+			clr_country_flag = gunpowder_core_activated
+		}
+		ai_will_do = {
+			factor = 0 #Plays it safer with cash
+		}
+	}
+	
+	standardized_uniforms = {
+		potential = {
+			ai = no
+			NOT = { has_country_modifier = standardized_uniforms_modifier }
+			NOT = { has_country_modifier = gunpowder_core }
+			mil_tech = 19
+		}
+		allow = {
+			ai = no
+			army_professionalism = 0.40
+		}
+		effect = {
+			custom_tooltip = explain_state_firearm_regiments
+			add_country_modifier = {
+				name = standardized_uniforms_modifier
+				duration = -1
+			}
+		}
+		ai_will_do = {
+			factor = 0 #Plays it safer with cash
+		}
+	}
+	
+	abolish_standardized_uniforms = {
+		potential = {
+			ai = no
+			has_country_modifier = standardized_uniforms_modifier
+		}
+		allow = {
+		}
+		effect = {
+			add_army_professionalism = -0.05
+			remove_country_modifier = standardized_uniforms_modifier
+		}
+		ai_will_do = {
+			factor = 0 #Plays it safer with cash
+		}
+	}
+	
+	kor_righteous_army = {
+		potential = {
+			has_reform = the_righteous_army_reform
+			NOT = { has_country_modifier = the_righteous_army }
+		}
+		allow = {
+			has_reform = the_righteous_army_reform
+			legitimacy = 80
+			is_at_war = yes
+			OR = {
+				is_in_war = {
+					defenders = ROOT
+				}
+				num_of_owned_provinces_with = {
+					culture = ROOT
+					NOT = { controlled_by = ROOT }
+					value = 10
+				}
+			}
+		}
+		effect = {
+			add_legitimacy = -10
+			add_war_exhaustion = -2
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -10
+			}
+			add_country_modifier = { 
+				name = the_righteous_army
+				duration = -1
+				desc = the_righteous_army_tt
+			}
+			custom_tooltip = kor_righteous_army_ct
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	gra_rally_the_volunteers = {
+		potential = {
+			has_reform = volunteers_of_the_faith_reform
+		}
+		allow = {
+			has_reform = volunteers_of_the_faith_reform
+			is_at_war = yes
+			custom_trigger_tooltip = {
+				tooltip = decision_once_every_ten_years
+				OR = {
+					NOT = { has_country_flag = rallied_the_volunteers }
+					had_country_flag = {
+						flag = rallied_the_volunteers
+						days = 3650
+					}
+				}
+			}
+			OR = {
+				is_in_war = {
+					defender_leader = ROOT
+				}
+				mil_power_cost = 50
+			}
+			OR = {
+				any_ally = { religion = ROOT }
+				any_subject_country = { religion = ROOT }
+			}
+		}
+		effect = {
+			clr_country_flag = rallied_the_volunteers
+			set_country_flag = rallied_the_volunteers
+			if = {
+				limit = {
+					is_in_war = {
+						defender_leader = ROOT
+					}
+				}
+				custom_tooltip = por_raise_the_ordenancas_bt
+			}
+			else = {
+				mil_power_cost = 50
+			}
+			custom_tooltip = por_raise_the_ordenancas_ct
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_known_country = {
+								OR = {
+									alliance_with = ROOT
+									is_subject_of = ROOT
+								}
+								religion = ROOT
+							}
+							all_ally = {
+								religion = ROOT
+							}
+							amount = 5
+						}
+					}
+					add_country_modifier = {
+						name = rallied_volunteers_level_5
+						duration = 3650
+					}
+				}
+				else_if = {
+					limit = {
+						calc_true_if = {
+							all_known_country = {
+								OR = {
+									alliance_with = ROOT
+									is_subject_of = ROOT
+								}
+								religion = ROOT
+							}
+							all_ally = {
+								religion = ROOT
+							}
+							amount = 4
+						}
+					}
+					add_country_modifier = {
+						name = rallied_volunteers_level_4
+						duration = 3650
+					}
+				}
+				else_if = {
+					limit = {
+						calc_true_if = {
+							all_known_country = {
+								OR = {
+									alliance_with = ROOT
+									is_subject_of = ROOT
+								}
+								religion = ROOT
+							}
+							all_ally = {
+								religion = ROOT
+							}
+							amount = 3
+						}
+					}
+					add_country_modifier = {
+						name = rallied_volunteers_level_3
+						duration = 3650
+					}
+				}
+				else_if = {
+					limit = {
+						calc_true_if = {
+							all_known_country = {
+								OR = {
+									alliance_with = ROOT
+									is_subject_of = ROOT
+								}
+								religion = ROOT
+							}
+							all_ally = {
+								religion = ROOT
+							}
+							amount = 2
+						}
+					}
+					add_country_modifier = {
+						name = rallied_volunteers_level_2
+						duration = 3650
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = rallied_volunteers_level_1
+						duration = 3650
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -1,0 +1,119 @@
+country_decisions = {
+
+	german_nation = {
+		major = yes
+		potential = {
+			culture_group = germanic
+			OR = {
+				tag = PRU
+				tag = SAX
+				tag = HLV
+				tag = HAS
+				tag = BAV
+				tag = SWA
+				tag = FKN
+				tag = RHL
+				tag = HAB
+			}
+			NOT = { exists = GER }
+			NOT = { was_tag = GER }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 57
+				province_id = 65
+				province_id = 67
+				province_id = 85
+				province_id = 63
+				province_id = 1876
+				province_id = 70
+				province_id = 1874
+			}
+			NOT = { owned_by = ROOT }
+			NOT = { is_core = ROOT }
+		}
+		
+		allow = {
+			culture_group = germanic
+			adm_tech = 10
+			owns_core_province = 57
+			owns_core_province = 65
+			owns_core_province = 67
+			owns_core_province = 85
+			owns_core_province = 63
+			owns_core_province = 1876
+			owns_core_province = 70
+			owns_core_province = 1874
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige_or_monarch_power = { amount = 25 } 
+			change_tag = GER
+			on_change_tag_effect = yes
+			emperor = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_left_empire
+				}
+			}
+			set_in_empire = no
+			emperor = {
+				country_event = { id = hre_event.5 }
+			}
+			# set_government_rank = 2		
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			swap_non_generic_missions = yes
+			hidden_effect = {
+				# Remove bra_confederation if we have it
+				if = {
+					limit = {
+						has_country_modifier = bra_confederation
+					}
+					remove_country_modifier = bra_confederation
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = south_german_confederation_name_override_flag
+						has_country_flag = north_german_confederation_name_override_flag
+					}
+				}
+				restore_country_name = yes
+				clr_country_flag = south_german_confederation_name_override_flag
+				clr_country_flag = north_german_confederation_name_override_flag
+			}
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = germany }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

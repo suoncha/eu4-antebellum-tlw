@@ -1,0 +1,87 @@
+country_decisions = {
+
+	ab_great_moravia = {
+		major = yes
+		potential = {
+			OR = {
+				tag = SLO
+				tag = MVA
+				tag = PNN
+			}
+			NOT = { exists = GMA }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1864
+				province_id = 153
+				province_id = 162
+				province_id = 262
+				province_id = 264
+				province_id = 1763
+				province_id = 60
+				province_id = 2967
+				province_id = 266
+				province_id = 154
+				province_id = 134
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			OR = {
+				tag = SLO
+				tag = MVA
+				tag = PNN
+			}
+			adm_tech = 10
+			owns_core_province = 1864
+			owns_core_province = 153
+			owns_core_province = 162
+			owns_core_province = 262
+			owns_core_province = 264
+			owns_core_province = 1763
+			owns_core_province = 60
+			owns_core_province = 2967
+			owns_core_province = 266
+			owns_core_province = 154
+			owns_core_province = 134
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = GMA
+			add_prestige = 25
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

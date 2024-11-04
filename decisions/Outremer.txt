@@ -1,0 +1,102 @@
+country_decisions = {
+
+	form_outremer = {
+		major = yes
+		potential = {
+			tag = KOJ
+			NOT = { exists = OTR }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 379
+				province_id = 382
+				province_id = 2313
+				province_id = 377
+				province_id = 321
+				province_id = 380
+				province_id = 378
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		allow = {
+			tag = KOJ
+			owns_or_non_sovereign_subject_of = 379
+			owns_or_non_sovereign_subject_of = 382
+			owns_or_non_sovereign_subject_of = 2313
+			owns_or_non_sovereign_subject_of = 377
+			owns_or_non_sovereign_subject_of = 321
+			owns_or_non_sovereign_subject_of = 380
+			owns_or_non_sovereign_subject_of = 378
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = OTR
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			379 = {
+				move_capital_effect = yes
+			}
+			# The Knights are a Theocracy, when they form it we need to
+			# move them
+			if = {
+				limit = {
+					NOT = { government = monarchy }
+				}
+				hidden_effect = {
+					change_government = monarchy
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_reform = crusaderkingdom }
+				}
+				add_government_reform = crusaderkingdom
+			}
+			if = {
+				limit = {
+					is_part_of_hre = yes
+				}
+				every_owned_province = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					set_in_empire = no
+				}
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			set_country_flag = formed_outremer_flag
+			if = {
+				limit = {
+					mission_completed = koj_triumph_cross
+				}
+				if = {
+					limit = {
+						CYP = {
+							is_subject_of = ROOT
+						}
+					}
+					inherit = CYP
+				}
+				if = {
+					limit = {
+						ATI = {
+							is_subject_of = ROOT
+						}
+					}
+					inherit = ATI
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

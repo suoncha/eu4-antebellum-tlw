@@ -1,0 +1,50 @@
+country_decisions = {
+
+	form_hetmanate = {
+		major = yes
+		potential = {
+			tag = ZAZ
+			NOT = { exists = HTM }
+			NOT = { was_tag = HTM }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 280		#Kiev -center
+				province_id = 283		#Zaporozhie -eastern/southern center of rebellions
+				province_id = 261		#Ruthenia/Lvov -western
+				province_id = 279		#Volhynia -western
+				province_id = 289
+				province_id = 291
+				province_id = 284
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = ZAZ
+			owns_core_province = 280		#Kiev -center
+			owns_core_province = 261		#Ruthenia/Lvov -western
+			owns_core_province = 279		#Volhynia -western
+			owns_core_province = 283		#Zaporozhie -eastern/southern center of rebellions
+			owns_core_province = 289
+			owns_core_province = 291
+			owns_core_province = 284
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = HTM
+			remove_non_electors_emperors_from_empire_effect = yes
+			add_government_reform = hetmanate
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_importance = 500		
+	}
+	
+}

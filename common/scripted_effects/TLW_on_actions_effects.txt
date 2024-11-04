@@ -1,34 +1,10 @@
 TLW_on_startup_effect = {
 	if = {
 		limit = {
-			primary_culture = punic
-			NOT = { is_year = 1445 }
-		}
-		country_event = {
-			id = ab_punic.1
-		}
-	}
-	if = {
-		limit = {
-			culture_group = iberian
-			NOT = { tag = ADU }
-			NOT = { is_year = 1445 }
-		}
-		country_event = {
-			id = ab_byzantium.88
-		}
-	}
-	# Custom GUI Setup
-	if = {
-		limit = {
 			ai = no
 		}
 		country_event = {
-			id = ab_byzantium.124
-		}
-		# AB Game Rules
-		country_event = {
-			id = ab_game_rules_event.0
+			id = ab_byzantium.125
 		}
 	}
 }
@@ -587,10 +563,7 @@ TLW_on_siege_won_province_effect = {
 			}
 			is_capital = yes
 			owner = {
-				is_subject_of_type_with_overlord = {
-					who = ROM
-					type = diocese_vassal
-				}
+				is_subject_of_type = diocese_vassal
 				is_in_war = {
 					casus_belli = cb_roman_civil_war
 				}
@@ -667,10 +640,7 @@ TLW_on_siege_won_province_effect = {
 					AND = {
 						owner = {
 							OR = {
-								is_subject_of_type_with_overlord = {
-									who = ROM
-									type = grand_diocese_vassal
-								}
+								is_subject_of_type = grand_diocese_vassal
 								tag = event_target:romanChinaInvasionHorde
 							}
 							war_with = event_target:crisisChina
@@ -907,14 +877,8 @@ TLW_on_battle_won_country_effect = {
 		else_if = {
 			limit = {
 				OR = {
-					is_subject_of_type_with_overlord = {
-						who = ROM
-						type = diocese_vassal
-					}
-					is_subject_of_type_with_overlord = {
-						who = ROM
-						type = grand_diocese_vassal
-					}
+					is_subject_of_type = diocese_vassal
+					is_subject_of_type = grand_diocese_vassal
 				}
 			}
 			ROM = {
@@ -1090,30 +1054,31 @@ TLW_on_province_owner_change_effect = {
 		TLW_cultural_hegemony_province_effect = yes
 	}
 	# Nicaea
-	else_if = {
+	if = {
 		limit = {
 			owner = {
 				has_reform = nicene_hellenic_empire
 			}
 		}
-		random_list = {
-			33 = {
-				add_province_modifier = {
-					name = nci_antigonos_province
-					duration = -1
+		province_event = {
+			id = ab_nicaea.18
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = nci_center_of_hellenisation
+			owner = {
+				OR = {
+					is_subject = no
+					NOT = { is_subject_of_type = diadochi_vassal }
 				}
 			}
-			33 = {
-				add_province_modifier = {
-					name = nci_seleukos_province
-					duration = -1
-				}
-			}
-			33 = {
-				add_province_modifier = {
-					name = nci_ptolemaios_province
-					duration = -1
-				}
+		}
+		remove_province_modifier = nci_center_of_hellenisation
+		event_target:hellenicEmpire = {
+			subtract_variable = {
+				which = nci_center_num_var
+				value = 1
 			}
 		}
 	}
@@ -1320,7 +1285,7 @@ TLW_on_religion_change = {
 TLW_on_dependency_gained_effect = {
 	if = {
 		limit = {
-			has_government_attribute = ab_has_dioceses
+			tag = ROM
 			FROM = {
 				has_country_flag = byz_independent_diocese
 			}
@@ -1335,12 +1300,9 @@ TLW_on_dependency_gained_effect = {
 TLW_on_dependency_lost_effect = {
 	if = {
 		limit = {
-			has_government_attribute = ab_has_dioceses
+			tag = ROM
 			FROM = {
-				is_subject_of_type_with_overlord = {
-					who = ROM
-					type = diocese_vassal
-				}
+				is_subject_of_type = diocese_vassal
 			}
 		}
 		FROM = {

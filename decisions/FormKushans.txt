@@ -1,0 +1,57 @@
+country_decisions = {
+	
+	form_kushans = {
+		major = yes
+		potential = {
+			tag = TCR
+			NOT = { exists = KUS }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 451
+				province_id = 506
+				province_id = 504
+				province_id = 577
+				province_id = 507
+				province_id = 522
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = TCR
+			owns_core_province = 451
+			owns_core_province = 506
+			owns_core_province = 504
+			owns_core_province = 577
+			owns_core_province = 507
+			owns_core_province = 522
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = KUS
+			override_country_name = KUS
+			change_technology_group = muslim
+			change_unit_type = muslim
+			if = {
+				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

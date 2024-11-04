@@ -1,0 +1,60 @@
+country_decisions = {
+	
+	form_carantania = {
+		major = yes
+		potential = {
+			tag = SLV
+			NOT = { exists = SLC }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 129
+				province_id = 130
+				province_id = 4738
+				province_id = 4759
+				province_id = 1863
+				province_id = 4761
+				province_id = 134
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = SLV
+			owns_core_province = 129
+			owns_core_province = 130
+			owns_core_province = 4738
+			owns_core_province = 4759
+			owns_core_province = 1863
+			owns_core_province = 4761
+			owns_core_province = 134
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = SLC
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

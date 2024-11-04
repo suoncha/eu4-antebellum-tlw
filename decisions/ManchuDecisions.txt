@@ -1,0 +1,298 @@
+country_decisions = {
+
+	manchu_nation_1 = {
+		major = yes
+		potential = {
+			primary_culture = manchu
+			is_colonial_nation = no
+			NOT = { exists = MCH }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 730		#Girin
+				province_id = 2108		#Huncun
+			}
+			NOT = { owned_by = ROOT }
+			NOT = { is_core = ROOT }
+		}
+		allow = {
+			primary_culture = manchu
+			owns_core_province = 2108		#Huncun	
+			owns_core_province = 730		#Girin
+			num_of_cities = 20
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			change_primary_culture = manchu_new
+			hidden_effect = {
+				set_ruler_culture = ROOT
+				set_heir_culture = ROOT
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = manchu
+					}
+					change_culture = manchu_new
+				}
+				every_country = {
+					limit = {
+						primary_culture = manchu
+					}
+					change_primary_culture = ROOT
+					set_ruler_culture = ROOT
+					set_heir_culture = ROOT
+				}
+			}
+			custom_tooltip = manchu_culture_tt
+			730 = {
+				move_capital_effect = yes
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					is_city = yes
+				}
+				add_core = MCH
+			}
+			add_prestige = 25
+			change_tag = MCH
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			set_country_flag = formed_manchu_flag
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_importance = 500		
+	}
+	
+	form_jin_dynasty = {
+		major = yes
+		potential = {
+			tag = MCH
+			was_tag = ODL
+			NOT = { exists = QNG }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 704		# Liaoxi
+				province_id = 723		# Xilin Gol
+				province_id = 726		# Liaodong
+				province_id = 1816		# Beijing
+			}
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			tag = MCH
+			owns = 704		# Liaoxi
+			owns = 723		# Xilin Gol
+			owns = 726		# Liaodong
+			owns = 1816		# Beijing
+			is_at_war = no
+			is_subject = no
+			NOT = { has_ruler_modifier = tribal_succession_crisis }
+			OR = {
+				is_emperor_of_china = yes
+				total_development = 1000
+			}
+		}
+		effect = {
+			1816 = {
+				move_capital_effect = yes
+				change_culture = ROOT
+				add_core = ROOT
+			}
+			change_tag = JIN
+			swap_non_generic_missions = yes
+			set_government_rank = 3
+			south_china_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_china_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 3650
+			}
+			if = {
+				limit = {
+					has_reform = steppe_horde
+				}
+				change_government = monarchy
+			}
+			if = {
+				limit = {
+					technology_group = nomad_group
+				}
+				change_technology_group = chinese
+				change_unit_type = chinese
+			}
+			if = {
+				limit = {
+					NOT = { religion = confucianism }
+				}
+				change_religion = confucianism
+				add_harmonized_religion = tengri_pagan_reformed
+			}
+			add_prestige = 10
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			# If Pre-set CNs are not disabled and we have Colonial Nations
+			# are enabled then trigger the event
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = jin }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_manchu_dynasty = {
+		major = yes
+		potential = {
+			tag = MCH
+			NOT = { was_tag = ODL }
+			NOT = { exists = QNG }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 704		# Liaoxi
+				province_id = 723		# Xilin Gol
+				province_id = 726		# Liaodong
+				province_id = 1816		# Beijing
+			}
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			tag = MCH
+			owns = 704		# Liaoxi
+			owns = 723		# Xilin Gol
+			owns = 726		# Liaodong
+			owns = 1816		# Beijing
+			is_at_war = no
+			is_subject = no
+			NOT = { has_ruler_modifier = tribal_succession_crisis }
+			OR = {
+				is_emperor_of_china = yes
+				total_development = 1000
+			}
+		}
+		effect = {
+			1816 = {
+				move_capital_effect = yes
+				change_culture = ROOT
+				add_core = ROOT
+			}
+			change_tag = QNG
+			swap_non_generic_missions = yes
+			set_government_rank = 3
+			south_china_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_china_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 3650
+			}
+			if = {
+				limit = {
+					has_reform = steppe_horde
+				}
+				change_government = monarchy
+			}
+			if = {
+				limit = {
+					technology_group = nomad_group
+				}
+				change_technology_group = chinese
+				change_unit_type = chinese
+			}
+			if = {
+				limit = {
+					NOT = { religion = confucianism }
+				}
+				change_religion = confucianism
+				add_harmonized_religion = tengri_pagan_reformed
+			}
+			add_prestige = 10
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = qing }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+} #End of country decisions

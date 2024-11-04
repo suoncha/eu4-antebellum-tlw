@@ -1,0 +1,923 @@
+namespace = ab_yuan
+normal_or_historical_nations = yes
+
+#The Ailing Emperor and His Empire
+country_event = {
+	id = ab_yuan.1
+	title = ab_yuan.1.t
+	desc = ab_yuan.1.d
+	picture = MERITOCRACY_eventPicture
+	
+	fire_only_once = yes
+
+	major = yes
+	
+	trigger = {
+		tag = YUA
+	}
+	
+	option = {
+		name = ab_yuan.1.a
+		custom_tooltip = YUAN_DISASTER_WARNING
+	}
+}
+
+#The Death of Emperor Shaozong
+country_event = {
+	id = ab_yuan.2
+	title = ab_yuan.2.t
+	desc = ab_yuan.2.d
+	picture = AB_YUAN_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	
+	immediate = {
+		hidden_effect = {
+			add_stability = -6
+		}
+	}
+	
+	option = {
+		name = ab_yuan.2.a
+		ai_chance = { factor = 80 }
+		custom_tooltip = YUAN_DISASTER_CHINESE
+		custom_tooltip = YUAN_DISASTER_INFO
+		set_country_flag = YUA_CHINESE
+		hidden_effect = {
+			define_ruler = {
+				name = "Dongdin"
+				dynasty = "Borjigin"
+				ADM = 5
+				DIP = 3
+				MIL = 3
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				hidden_effect = {
+					kill_heir = {}
+				}
+			}
+			if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+				random_owned_province = {
+					limit = { area = chahar_area }
+						spawn_rebels = {
+							type = nationalist_rebels
+							size = 1
+							leader = "Essen Temugid"
+							friend = TMG
+						}
+				}
+				random_owned_province = {
+					limit = { culture = mongol }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 1
+							leader = "Temur Borjigin"
+						}
+				}
+				random_owned_province = {
+					limit = { culture = mongol }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 1
+						}
+				}
+			}
+			else = {
+				random_owned_province = {
+					limit = { area = chahar_area }
+						spawn_rebels = {
+							type = nationalist_rebels
+							size = 3
+							leader = "Essen Temugid"
+							friend = TMG
+						}
+				}
+				random_owned_province = {
+					limit = { culture = mongol }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 3
+							leader = "Temur Borjigin"
+						}
+				}
+				random_owned_province = {
+					limit = { culture = mongol }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 2
+						}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_yuan.2.b
+		ai_chance = { factor = 5 }
+		set_country_flag = YUA_HORDE
+		hidden_effect = {
+			change_government = tribal
+		}
+		custom_tooltip = YUAN_DISASTER_TRIBES
+		custom_tooltip = YUAN_DISASTER_INFO
+		change_religion = tengri_pagan_reformed
+		change_technology_group = nomad_group
+		add_government_reform = steppe_horde
+		country_event = { id = ab_yuan.3 }
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			swap_free_idea_group = yes
+			if = {
+				limit = {
+					NOT = {
+						has_ruler = "Temur"
+					}
+				}
+				define_ruler = {
+					name = "Temur"
+					dynasty = "Borjigin"
+					ADM = 4
+					DIP = 1
+					MIL = 5
+				}
+			}
+			if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+				random_owned_province = {
+					limit = { area = chahar_area }
+						spawn_rebels = {
+							type = nationalist_rebels
+							size = 1
+							leader = "Essen Temugid"
+							friend = TMG
+						}
+				}
+				random_owned_province = {
+					limit = { culture = shandong_culture }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 1
+							leader = "Dongdin Borjigin"
+						}
+				}
+				random_owned_province = {
+					limit = { culture = shandong_culture }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 1
+						}
+				}
+			}
+			else = {
+				random_owned_province = {
+					limit = { area = chahar_area }
+						spawn_rebels = {
+							type = nationalist_rebels
+							size = 3
+							leader = "Essen Temugid"
+							friend = TMG
+						}
+				}
+				random_owned_province = {
+					limit = { culture = shandong_culture }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 3
+							leader = "Dongdin Borjigin"
+						}
+				}
+				random_owned_province = {
+					limit = { culture = shandong_culture }
+						spawn_rebels = {
+							type = pretender_rebels
+							size = 2
+						}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_yuan.2.c
+		ai_chance = { factor = 15 }
+		set_country_flag = YUA_NESTORIAN
+		custom_tooltip = YUAN_DISASTER_NESTORIAN
+		custom_tooltip = YUAN_DISASTER_INFO
+		change_religion = nestorian
+		capital_scope = {
+			change_religion = nestorian
+		}
+		capital_scope = {
+			add_reform_center = nestorian
+		}
+		hidden_effect = {
+			define_ruler = {
+				name = "Essen"
+				dynasty = "Temugid"
+				ADM = 4
+				DIP = 4
+				MIL = 4
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				hidden_effect = {
+					kill_heir = {}
+				}
+			}
+			swap_non_generic_missions = yes
+			swap_free_idea_group = yes
+			if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+			random_owned_province = {
+				limit = { culture = shandong_culture }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 1
+						leader = "Dongdin Borjigin"
+					}
+			}
+			random_owned_province = {
+				limit = { culture = shandong_culture }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 1
+					}
+			}
+			random_owned_province = {
+				limit = { culture = mongol }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 1
+						leader = "Temur Borjigin"
+					}
+			}
+			}
+			else = {
+			random_owned_province = {
+				limit = { culture = shandong_culture }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 3
+						leader = "Dongdin Borjigin"
+					}
+			}
+			random_owned_province = {
+				limit = { culture = shandong_culture }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 2
+					}
+			}
+			random_owned_province = {
+				limit = { culture = mongol }
+					spawn_rebels = {
+						type = pretender_rebels
+						size = 3
+						leader = "Temur Borjigin"
+					}
+			}
+			}
+		}
+	}
+}
+
+#Surrender the Mandate
+country_event = {
+	id = ab_yuan.3
+	title = ab_yuan.3.t
+	desc = ab_yuan.3.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	
+	immediate = {
+		hidden_effect = {
+			set_country_flag = Yuan_exclude
+			pick_best_tags = {
+				global_trigger = "culture_group = east_asian
+				NOT = { has_country_flag = Yuan_exclude }"
+				scale = total_development
+				1 = yes
+				event_target_name = "Yuan_Target"
+			}
+		}
+	}
+	option = {
+		name = ab_yuan.3.a
+		custom_tooltip = YUA_MANDATE_SURRENDER
+		event_target:Yuan_Target_1 = {
+			country_event = { id = ab_yuan.4 }
+		}
+	}
+}
+
+#Claim the Mandate
+country_event = {
+	id = ab_yuan.4
+	title = ab_yuan.4.t
+	desc = ab_yuan.4.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_country_flag = Yuan_exclude
+		hidden_effect = {
+			pick_best_tags = {
+				global_trigger = "culture_group = east_asian
+				NOT = { has_country_flag = Yuan_exclude }"
+				scale = total_development
+				1 = yes
+				event_target_name = "Yuan_Target"
+			}
+		}
+	}
+	
+	option = {
+		name = ab_yuan.4.a
+		ai_chance = {
+			factor = 100
+		}
+		set_emperor_of_china = ROOT
+		add_truce_with = YUA
+		hidden_effect = {
+			YUA = {
+				remove_country_modifier = lost_mandate_of_heaven
+			}
+		}
+	}
+	
+	option = {
+		ai_chance = {
+			factor = 0
+		}
+		name = ab_yuan.4.b
+		event_target:Yuan_Target_1 = {
+			country_event = { id = ab_yuan.5 }
+		}
+		hidden_effect = {
+			YUA = {
+				remove_country_modifier = lost_mandate_of_heaven
+			}
+		}
+	}
+}
+
+#Claim the Mandate 2
+country_event = {
+	id = ab_yuan.5
+	title = ab_yuan.5.t
+	desc = ab_yuan.5.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_country_flag = Yuan_exclude
+		hidden_effect = {
+			pick_best_tags = {
+				global_trigger = "culture_group = east_asian
+				NOT = { has_country_flag = Yuan_exclude }"
+				scale = total_development
+				1 = yes
+				event_target_name = "Yuan_Target"
+			}
+		}
+	}
+	
+	option = {
+		name = ab_yuan.5.a
+		ai_chance = {
+			factor = 100
+		}
+		set_emperor_of_china = ROOT
+		add_truce_with = YUA
+	}
+	
+	option = {
+		name = ab_yuan.5.b
+		ai_chance = {
+			factor = 0
+		}
+		dismantle_empire_of_china = yes
+	}
+}
+
+#End of the Disaster
+country_event = {
+	id = ab_yuan.6
+	title = ab_yuan.6.t
+	desc = ab_yuan.6.d
+	picture = AB_YUAN_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.6.a
+		add_stability = 1
+		set_country_flag = had_yuan_crisis
+	}
+
+}
+
+#Culture Shift
+country_event = {
+	id = ab_yuan.7
+	title = ab_yuan.7.t
+	desc = ab_yuan.7.d
+	picture = IMPERIAL_SEAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.7.a
+		custom_tooltip = yua_culture_change
+		add_accepted_culture = mongol
+		add_country_modifier = {
+			name = "yua_china_sinicization"
+			duration = -1
+		}
+		change_technology_group = chinese
+		change_unit_type = chinese
+		hidden_effect = {
+			change_primary_culture = Yuan
+			set_heir_culture = Yuan
+			set_ruler_culture = Yuan
+			every_province = {
+				limit = {
+					OR = {
+						culture = chihan
+						culture = jin
+					}
+				}
+				change_culture = Yuan
+			}
+		}
+	}
+}
+
+#Festival
+country_event = {
+	id = ab_yuan.8
+	title = ab_yuan.8.t
+	desc = ab_yuan.8.d
+	picture = URBANISATION_INCIDENT_eventPicture
+	
+	trigger = {
+		has_country_flag = yua_can_earn_festival_bonus
+		NOT = {
+			has_country_modifier = yua_cant_earn_festival_bonus
+		}
+	}
+	
+	option = {
+		name = ab_yuan.8.a
+			add_years_of_income = -0.25
+			add_country_modifier = { 
+				name = yua_festival_reward_power 
+				duration = 1825 
+			} 
+			hidden_effect = {
+			add_country_modifier = { 
+				name = yua_cant_earn_festival_bonus
+				duration = 3650 
+			} 
+		}
+	}
+
+	option = {
+		name = ab_yuan.8.b
+			add_years_of_income = -0.25
+			add_country_modifier = { 
+				name = yua_festival_reward_speed 
+				duration = 1825 
+			} 
+			hidden_effect = {
+			add_country_modifier = { 
+				name = yua_cant_earn_festival_bonus
+				duration = 3650 
+			} 
+		}
+
+	}
+
+	option = {
+		name = ab_yuan.8.c
+			add_years_of_income = -0.25
+			add_country_modifier = { 
+				name = yua_festival_reward_shock
+				duration = 1825 
+			} 
+			hidden_effect = {
+			add_country_modifier = { 
+				name = yua_cant_earn_festival_bonus
+				duration = 3650 
+			} 
+		}
+
+	}
+	
+	option = {
+		name = ab_yuan.8.de
+			add_prestige = -10
+			custom_tooltip = YUAN_NO_DISCIPLINE
+			hidden_effect = {
+			add_country_modifier = { 
+				name = yua_cant_earn_festival_bonus
+				duration = 3650 
+			} 
+		}
+
+	}
+
+}
+
+#Fall of Kyoto
+country_event = {
+	id = ab_yuan.9
+	title = ab_yuan.9.t
+	desc = ab_yuan.9.d
+	picture = SENGOKU_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.9.a
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = yua_control_japan
+				duration = -1
+			}
+			japan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+
+}
+
+#Reunification
+country_event = {
+	id = ab_yuan.10
+	title = ab_yuan.10.t
+	desc = ab_yuan.10.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.10.a
+			add_mandate = 25
+			add_country_modifier = {
+				name = yua_reunited
+				duration = 9125
+			}
+	}
+
+}
+
+#Floppa
+country_event = {
+	id = ab_yuan.11
+	title = ab_yuan.11.t
+	desc = ab_yuan.11.d
+	picture = AB_FLOP_eventPicture
+	
+	trigger = {
+		tag = YUA 
+		dip = 6
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = ab_yuan.11.a
+			add_years_of_income = -0.5
+			custom_tooltip = YUA_FLOP1
+			add_country_modifier = {
+				name = yua_floppa
+				duration = -1
+			}
+	}
+
+	option = {
+		name = ab_yuan.11.b
+		custom_tooltip = YUA_FLOP2
+	}
+}
+
+#Baghdad
+country_event = {
+	id = ab_yuan.12
+	title = ab_yuan.12.t
+	desc = ab_yuan.12.d
+	picture = SUFFERING_CHINESE_VILLAGE_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = MGE
+			tag = YUA
+			tag = KHA
+		}
+		controls = 410
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = ab_yuan.12.a
+			custom_tooltip = YUA_BAGHDAD1
+			add_horde_unity = 20
+			add_treasury = 1000
+			410 = {
+				add_devastation = 100
+			}
+			add_country_modifier = {
+				name = yua_second_sack
+				duration = 5475
+			}
+	}
+
+	option = {
+		name = ab_yuan.12.b
+		add_dip_power = 100
+			add_country_modifier = {
+				name = yua_spared
+				duration = 9125
+			}
+	}
+}
+
+#Qaraqorum
+country_event = {
+	id = ab_yuan.13
+	title = ab_yuan.13.t
+	desc = ab_yuan.13.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = MGE
+			tag = YUA
+			tag = KHA
+		}
+		controls = 2190
+		capital = 2190
+	}
+
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_yuan.13.a
+			add_horde_unity = 10
+			2190 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		mongolia_region = {
+			add_province_modifier = {
+				name = yua_qaraqorum
+				duration = -1
+			}
+		}
+	}
+
+}
+
+#Maragheh
+country_event = {
+	id = ab_yuan.14
+	title = ab_yuan.14.t
+	desc = ab_yuan.14.d
+	picture = MERITOCRACY_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = MGE
+			tag = YUA
+			tag = KHA
+		}
+		owns = 2207
+	}
+
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_yuan.14.a
+			add_years_of_income = -3
+			2207 = {
+				add_base_tax = 3
+			}
+			add_country_modifier = {
+				name = yua_observatory
+				duration = -1
+			}
+	}
+	
+	option = {
+		name = ab_yuan.14.b
+			add_prestige = 10
+	}
+
+}
+
+#Rus
+country_event = {
+	id = ab_yuan.15
+	title = ab_yuan.15.t
+	desc = ab_yuan.15.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_yuan.15.a
+			add_treasury = 1000
+			280 = {
+				add_devastation = 100
+			}
+			310 = {
+				add_devastation = 100
+			}
+			add_country_modifier = {
+				name = "mon_tatar_yoke"
+				duration = -1
+			}
+			poland_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			baltic_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+}
+
+#Converting
+country_event = {
+	id = ab_yuan.16
+	title = ab_yuan.16.t
+	desc = ab_yuan.16.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.16.a
+		add_country_modifier = {
+			name = "yua_nest_faith"
+			duration = -1
+		}
+	}
+	
+
+}
+
+#Patriarchates
+country_event = {
+	id = ab_yuan.17
+	title = ab_yuan.17.t
+	desc = ab_yuan.17.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuan.17.a
+		custom_tooltip = YUA_PATRIARCH
+		add_country_modifier = {
+			name = "yua_nest_patriarch"
+			duration = -1
+		}
+		hidden_effect = {
+			for = {
+				amount = 15
+				effect = "
+					random_owned_province = {
+						limit = {
+							has_state_patriach = yes
+						}
+						add_base_manpower = 1
+					}
+				"
+			}
+		}
+	}
+}
+
+#Mission Help 1
+country_event = {
+	id = ab_yuan.18
+	title = ab_yuan.18.t
+	desc = ab_yuan.18.d
+	picture = MERITOCRACY_eventPicture
+	
+	fire_only_once = yes
+
+	hidden = yes
+	
+	trigger = {
+		tag = YUA
+		has_mission = yuan_china_yam
+		ai = yes
+		NOT = {
+			mission_completed = yuan_china_yam
+		}
+		is_year = 1550
+		num_of_cities = 30
+	}
+	
+	option = {
+		name = ab_yuan.18.a
+		hidden_effect = {
+			for = {
+				amount = 30
+				effect = "
+					random_owned_province = {
+						limit = {
+							NOT = {
+								has_road_building_trigger = yes
+							}
+						}
+						add_building = early_road
+					}
+				"
+			}
+		}
+	}
+}
+
+#Remove Center
+province_event = {
+	id = ab_yuan.19
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = nestorian
+	}
+	
+	option = { }
+}

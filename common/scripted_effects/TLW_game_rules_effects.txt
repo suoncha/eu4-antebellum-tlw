@@ -20,6 +20,14 @@ tlw_game_rules_setup_effect = {
 		value = 1
 	}
 	set_variable = {
+		which = ab_game_rules_nationalism_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_bloodiron_var
+		value = 1
+	}
+	set_variable = {
 		which = ab_game_rules_plagues_var
 		value = 1
 	}
@@ -33,32 +41,6 @@ tlw_game_rules_confirm_effect = {
 				which = ab_game_rules_early_colonization_var
 				value = 2
 			}
-		}
-		if = {
-			limit = {
-				technology_group = north_american
-			}
-			set_global_flag = AB_EARLY_COLONIZATION_PUNIC
-		}
-		else_if = {
-			limit = {
-				OR = {
-					capital_scope = {
-						region = caribbean_sea_region
-					}
-					technology_group = mesoamerican
-				}
-			}
-			set_global_flag = AB_EARLY_COLONIZATION_MAYA
-		}
-		else_if = {
-			limit = {
-				OR = {
-					technology_group = andean
-					technology_group = south_american
-				}
-			}
-			set_global_flag = AB_EARLY_COLONIZATION_INCA
 		}
 		if = {
 			limit = {
@@ -164,10 +146,6 @@ tlw_game_rules_confirm_effect = {
 			country_event = {
 				id = ab_punic.19
 			}
-		}
-		country_event = {
-			id = ab_punic.18
-			days = 12775
 		}
 	}
 	# Emperor of the East
@@ -312,6 +290,28 @@ tlw_game_rules_confirm_effect = {
 				name = cap_strong_ai_buff
 				duration = 20075
 			}
+		}
+	}
+	# Rise of Nationalism
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_nationalism_var
+				value = 2
+			}
+		}
+		set_global_flag = AB_DISABLED_NATIONALISM
+	}
+	# Blood and Iron
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_bloodiron_var
+				value = 2
+			}
+		}
+		country_event = {
+			id = ab_performance.38
 		}
 	}
 	# Plagues

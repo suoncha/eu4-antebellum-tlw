@@ -1,0 +1,57 @@
+country_decisions = {
+	
+	release_armenia = {
+		major = yes
+		
+		potential = {
+			ai = no
+			OR = {
+				tag = NNV
+				was_tag = NNV
+			}
+			NOT = { exists = ARM }
+			mission_completed = nnv_armenia
+			NOT = { has_country_flag = nnv_released_armenia }
+		}
+		allow = {
+			ai = no
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			custom_tooltip = NINEVEH_ARMENIA
+			add_country_modifier = {
+				name = nnv_union
+				duration = -1
+			}
+			custom_tooltip = NNV_REMOVE_INTEGRATE
+			hidden_effect = {
+				armenia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = ARM
+					remove_core = ROOT
+				}
+				release = ARM
+				create_union = ARM
+				ARM = {
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = ROOT
+					change_primary_culture = armenian
+					capital_scope = {
+						change_religion = ROOT
+					}
+				}
+			}
+			set_country_flag = nnv_released_armenia
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+}

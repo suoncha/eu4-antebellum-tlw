@@ -12,6 +12,10 @@ country_event = {
 	
 	option = {
 		name = ab_byzantium.47.a
+		country_event = {
+			id = ab_byzantium.72
+		}
+		custom_tooltip = AB_EMPTY
 		define_general = {
 			shock = 4
 			fire = 6
@@ -20,9 +24,6 @@ country_event = {
 			name = "Belisarius"
 			trait = inspirational_leader_general_personality
 		}
-		custom_tooltip = AB_EMPTY
-		set_country_flag = unlock_decision_strategos_specialty
-		custom_tooltip = BYZSTRATEGOSRECRUIT
 	}
 }
 
@@ -521,10 +522,10 @@ province_event = {
 	hidden = yes
 		
 	trigger = {
-		province_is_diocese_land_trigger = yes
 		owner = {
 			culture_group = roman_g
 		}
+		province_is_diocese_land_trigger = yes
 		NOT = { culture_group = roman_g }
 		any_friendly_coast_border_province = {
 			culture_group = roman_g
@@ -550,7 +551,7 @@ province_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 1200
+		months = 600
 		modifier = {
 			factor = 2.5
 			NOT = {
@@ -1222,10 +1223,7 @@ country_event = {
 			clr_country_flag = byz_court_mixed
 			clr_country_flag = byz_court_greek
 			clr_country_flag = byz_restore_republic
-			clr_country_flag = rus_released_byzantium
-			clr_country_flag = rus_released_latin
 			clr_country_flag = lat_cant_trigger_events
-			clr_country_flag = restored_rome_flag
 			clr_country_flag = formed_westrome_flag
 		}
 	}
@@ -2037,7 +2035,7 @@ province_event = {
 			}
 			change_culture = romano_malay
 		}
-		# TODO: REMOVE AFTER AFRICA UPDATE [[[
+		# TODO: Remove in future update [[[
 		else_if = {
 			limit = {
 				continent = africa
@@ -2072,7 +2070,10 @@ country_event = {
 
 	after = {
 		hidden_effect = {
-			set_country_flag = unlock_decision_strategos_specialty
+			country_event = {
+				id = ab_byzantium.72
+				days = 3650
+			}
 		}
 	}
 	
@@ -2625,8 +2626,8 @@ country_event = {
 		change_technology_group = western
 		change_unit_type = western
 		hidden_effect = {
-			set_heir_culture = cosmopolitan_french
-			set_ruler_culture = cosmopolitan_french	
+			set_heir_culture = ROOT
+			set_ruler_culture = ROOT	
 		}
 	}
 }
@@ -2865,9 +2866,9 @@ country_event = {
 		capital_scope = {
 			change_culture = Visigothic
 		}
-		set_ruler_culture = Visigothic
 		hidden_effect = {
-			set_heir_culture = Visigothic
+			set_ruler_culture = ROOT
+			set_heir_culture = ROOT
 		}
 		custom_tooltip = AB_EMPTY
 		if = {
@@ -3620,7 +3621,7 @@ country_event = {
 	trigger = {
 		any_country = {
 			is_rome_heir = yes
-			is_free_or_tributary_trigger = yes
+			is_subject = no
 			is_at_war = no
 			total_development = 750
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -3635,7 +3636,7 @@ country_event = {
 			any_country = {
 				NOT = { tag = PREV }
 				is_rome_heir = yes
-				is_free_or_tributary_trigger = yes
+				is_subject = no
 				is_at_war = no
 				total_development = 750
 				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -3890,7 +3891,7 @@ country_event = {
 			NOT = { tag = event_target:romanTriumvir1 }
 			NOT = { tag = event_target:romanTriumvir2 }
 			is_rome_heir = yes
-			is_free_or_tributary_trigger = yes
+			is_subject = no
 			is_at_war = no
 			total_development = 750
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -4687,19 +4688,20 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.112.a
-		ai_chance = {
-			factor = 75
-			modifier = {
-				factor = 0
-				has_country_flag = ab_stronger_ai_cap
-			}
+		trigger = {
+			NOT = { has_country_flag = ab_stronger_ai_cap }
 		}
 		add_prestige = 10
 	}
 
 	option = {
 		name = ab_byzantium.112.b
-		ai_chance = { factor = 25 }
+		trigger = {
+			OR = {
+				ai = no
+				has_country_flag = ab_stronger_ai_cap
+			}
+		}
 		highlight = yes
 		set_country_flag = cap_chose_sol_invictus_flag
 		set_ruler_religion = sol_invictus
@@ -4945,7 +4947,6 @@ country_event = {
 
 	option = {
 		name = ab_byzantium.117.a
-		set_country_flag = restored_rome_flag
 		add_ruler_personality = augustus_personality
 		custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 		custom_tooltip = AB_EMPTY
@@ -5342,6 +5343,52 @@ country_event = {
 		set_variable = {
 			which = tlw_diocese_page_var
 			value = 1
+		}
+	}
+}
+
+# Startup Setup
+country_event = {
+	id = ab_byzantium.125
+	title = ab_byzantium.125.t
+	desc = ab_byzantium.125.d
+	picture = CULTURE_eventPicture
+
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_byzantium.125.a
+		# Custom GUI
+		country_event = {
+			id = ab_byzantium.124
+		}
+		# AB Game Rules
+		country_event = {
+			id = ab_game_rules_event.0
+		}
+		# Startup Events
+		every_country = {
+			if = {
+				limit = {
+					culture_group = iberian
+					NOT = { tag = ADU }
+				}
+				country_event = {
+					id = ab_byzantium.88
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = punic
+				}
+				country_event = {
+					id = ab_punic.1
+				}
+			}
 		}
 	}
 }
@@ -6011,7 +6058,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_government_attribute = ab_has_dioceses
+		tag = ROM
 		any_subject_country = {
 			is_subject_of_type = diocese_vassal
 			corruption = 1
@@ -6081,7 +6128,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_government_attribute = ab_has_dioceses
+		tag = ROM
 		any_subject_country = {
 			is_subject_of_type = diocese_vassal
 		}
@@ -6152,7 +6199,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_government_attribute = ab_has_dioceses
+		tag = ROM
 		any_subject_country = {
 			is_subject_of_type = diocese_vassal
 			any_neighbor_country = {
@@ -6266,7 +6313,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_government_attribute = ab_has_dioceses
+		tag = ROM
 		any_subject_country = {
 			is_subject_of_type = diocese_vassal
 			any_neighbor_country = {
@@ -6340,7 +6387,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_government_attribute = ab_has_dioceses
+		tag = ROM
 		any_subject_country = {
 			is_subject_of_type = diocese_vassal
 			NOT = { has_country_modifier = byz_diocese_inward_perfection }

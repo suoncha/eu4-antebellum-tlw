@@ -1,0 +1,180 @@
+country_decisions = {
+	AB_SHH_Recruit_Rajput_Regiments = {
+		potential = {
+			has_country_flag = AB_SHH_activate_rajput_decision
+			OR = {
+				AND = {
+					army_size = 100
+					NOT = { has_country_flag = AB_SHH_1st_rajput_flag }
+				}
+				AND = {
+					army_size = 200
+					NOT = { has_country_flag = AB_SHH_2nd_rajput_flag }
+				}
+				AND = {
+					army_size = 300
+					NOT = { has_country_flag = AB_SHH_3rd_rajput_flag }
+				}
+				AND = {
+					army_size = 400
+					NOT = { has_country_flag = AB_SHH_4th_rajput_flag }
+				}
+				army_size = 500
+			}
+		}
+		allow = {
+		}
+		effect = {
+			if = {
+				limit = { 
+					NOT = { has_country_flag = AB_SHH_1st_rajput_flag } 
+				}
+				set_country_flag = AB_SHH_1st_rajput_flag
+				custom_tooltip = AB_SHH_spawn_10_rajput_in_capital
+				hidden_effect = {
+					capital_scope = {
+						for = {
+							amount = 10
+							effect = "
+								rajput_infantry = ROOT
+							"
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = { has_country_flag = AB_SHH_2nd_rajput_flag }
+				}
+				set_country_flag = AB_SHH_2nd_rajput_flag
+				custom_tooltip = AB_SHH_spawn_10_rajput_in_capital
+				hidden_effect = {
+					capital_scope = {
+						for = {
+							amount = 10
+							effect = "
+								rajput_infantry = ROOT
+							"
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = { has_country_flag = AB_SHH_3rd_rajput_flag }
+				}
+				set_country_flag = AB_SHH_3rd_rajput_flag
+				custom_tooltip = AB_SHH_spawn_10_rajput_in_capital
+				hidden_effect = {
+					capital_scope = {
+						for = {
+							amount = 10
+							effect = "
+								rajput_infantry = ROOT
+							"
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = { has_country_flag = AB_SHH_4th_rajput_flag }
+				}
+				set_country_flag = AB_SHH_4th_rajput_flag
+				custom_tooltip = AB_SHH_spawn_10_rajput_in_capital
+				hidden_effect = {
+					capital_scope = {
+						for = {
+							amount = 10
+							effect = "
+								rajput_infantry = ROOT
+							"
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = { army_size = 500 }
+				clr_country_flag = AB_SHH_activate_rajput_decision
+				custom_tooltip = AB_SHH_spawn_10_rajput_in_capital
+				hidden_effect = {
+					capital_scope = {
+						for = {
+							amount = 10
+							effect = "
+								rajput_infantry = ROOT
+							"
+						}
+					}
+				}
+			}
+		}
+		ai_will_do = { factor = 1 }
+	}
+	AB_SHH_form_afghanistan = {
+		major = yes
+		potential = {
+			tag = SHH
+			NOT = { exists = AFG }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 451
+				province_id = 447
+				province_id = 449
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = SHH
+			owns_core_province = 451 #Lahore
+			owns_core_province = 447 #Sirhind
+			owns_core_province = 449 #Agra
+			mission_completed = AB_Shahi_Ressurgent_Afghanistan
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = AFG
+			restore_country_name = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			change_government = monarchy
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
+					451 = {
+						NOT = { is_capital_of = ROOT }
+					}
+				}
+				451 = { move_capital_effect = yes }
+			}
+			if = {
+				limit = {
+					NOT = { primary_culture = afghani }
+				}
+				change_primary_culture = afghani
+			}
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			451 = {
+			 	add_base_tax = 1
+				add_base_production = 1
+			 	add_base_manpower = 1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -1,0 +1,89 @@
+country_decisions = {
+
+	form_north_sea_empire = {
+		major = yes
+		potential = {
+			culture_group = scandinavian
+			is_colonial_nation = no
+			NOT = { religion_group = christian }
+			NOT = { tag = SCA }
+			NOT = { tag = SWE }
+			NOT = { exists = NSE }
+			NOT = { was_tag = NSE }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1		# Uppland
+				province_id = 6		# Skane
+				province_id = 7		# Vastergotland
+				province_id = 12		# Sjaelland
+				province_id = 15		# Jylland
+				province_id = 17		# Akershus
+				province_id = 245
+				province_id = 243
+				province_id = 1860
+				province_id = 1978
+				province_id = 370
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			culture_group = scandinavian
+			owns_core_province = 1		# Uppland
+			owns_core_province = 6		# Skane
+			owns_core_province = 7		# Vastergotland
+			owns_core_province = 12		# Sjaelland
+			owns_core_province = 15		# Jylland
+			owns_core_province = 17		# Akershus
+			owns_core_province = 245
+			owns_core_province = 243
+			owns_core_province = 1860
+			owns_core_province = 1978
+			owns_core_province = 370
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = NSE
+			remove_non_electors_emperors_from_empire_effect = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}		
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			# If Pre-set CNs are not disabled and we have Colonial Nations
+			# are enabled then trigger the event
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = nse }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

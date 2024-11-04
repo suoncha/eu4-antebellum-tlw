@@ -1,0 +1,2134 @@
+ab_grg_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	grg_princes = {
+		icon = mission_princespersia
+		required_missions = { grg_struggle }
+		position = 2
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				region = persia_region
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = per_righteous
+				duration = 5475
+			}
+			tabarestan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mashhad_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_e_ajam_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			azerbaijan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			birjand_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_year = 1460
+					}
+				}
+				custom_tooltip = GRG_TIMED_UNLOCK
+			}
+			else = {
+				custom_tooltip = GRG_TIMED_UNLOCK_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							is_year = 1460
+						}
+					}
+					country_event = { id = ab_gurgan.1 }
+				}
+			}
+		}
+	}
+
+}
+
+ab_grg_first_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = {
+			has_country_flag = grg_mission_unlocked
+		}
+		NOT = {
+			has_country_flag = grg_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	grg_timed1 = {
+	    icon = mission_unknown_mission
+		required_missions = { grg_princes }
+		position = 3
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GRG_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GRG_UNLOCKABLE
+		}
+	}
+	
+}
+
+ab_grg_first_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		has_country_flag = grg_mission_unlocked
+		NOT = {
+			has_country_flag = grg_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	grg_temur = {
+	    icon = mission_the_ganges_campaign
+		required_missions = { grg_princes }
+		position = 3
+		
+		trigger = {
+			NOT = {
+				is_year = 1460
+			}
+			445 = {
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			4326 = {
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			429 = {
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			431 = {
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			2218 = {
+				owned_by = ROOT 
+				is_core = ROOT
+			}
+			4338 = {
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			4341 = {
+				owned_by = ROOT 
+				is_core = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 445
+				province_id = 4326
+				province_id = 429
+				province_id = 431
+				province_id = 2218
+				province_id = 4338
+				province_id = 4341
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = grg_annihilator
+				duration = -1
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+				}
+				add_core = ROOT
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+				}
+				add_core = ROOT
+			}
+		}
+	}
+	
+}
+
+ab_grg_first_failed = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		has_country_flag = grg_mission_failed
+	}
+	has_country_shield = yes
+	
+}
+
+ab_grg_first_second = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	grg_ilkhans = {
+		icon = mission_ilkhanate
+		required_missions = { grg_power }
+		position = 4
+		
+		trigger = {
+			NOT = {
+				exists = ILK
+			}
+			shirvan_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			tabriz_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ILK
+				AND = {
+					OR = {
+						area = shirvan_area
+						area = tabriz_area
+					}
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_ruler_modifier = {
+				name = grg_bane
+				duration = -1
+			}
+			custom_tooltip = GRG_ILKHANID_CORES
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = ILK
+					}
+					remove_core = ILK
+				}
+			}
+		}
+	}
+	
+	grg_asoristan = {
+		icon = mission_reclaim_lost_territory
+		required_missions = { grg_bozorg }
+		position = 6
+		
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			basra_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			al_jazira_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = iraq_arabi_area
+				area = basra_area
+				area = al_jazira_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			custom_tooltip = GRG_ASORISTAN
+			tooltip = {
+				add_province_modifier = {
+					name = grg_reclamation
+					duration = 5475
+				}
+			}
+			bahrain_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_core = ROOT
+			}
+			hidden_effect = {
+				iraq_arabi_area = {
+					add_province_modifier = {
+						name = grg_reclamation
+						duration = 5475
+					}
+				}
+				iraq_arabi_area = {
+					add_province_modifier = {
+						name = grg_reclamation
+						duration = 5475
+					}
+				}
+				iraq_arabi_area = {
+					add_province_modifier = {
+						name = grg_reclamation
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+	
+	grg_ctesiphon = {
+		icon = mission_advance_to_kalyana
+		required_missions = { grg_asoristan }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+		
+		trigger = {
+			owns = 410
+			410 = {
+				development = 30
+			}
+			410 = {
+				has_tax_building_trigger = yes
+			}
+			410 = {
+				has_production_building_trigger = yes
+			}
+			410 = {
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			set_country_flag = relocated_capital_ctesiphon
+			custom_tooltip = PER_CTESIPHON_CAPITAL
+			410 = {
+				change_province_name = "Ctesiphon"
+				rename_capital = "Ctesiphon"
+			}
+			custom_tooltip = AB_EMPTY
+			410 = {
+				change_trade_goods = silk
+			}
+			custom_tooltip = AB_EMPTY
+			410 = {
+				add_province_modifier = {
+					name = per_ctesiphon
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	grg_nahrawan = {
+		icon = mission_coromandel_trade
+		required_missions = { grg_ctesiphon }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+		
+		trigger = {
+			owns = 410
+			410 = {
+				has_great_project = {
+					type = nahrawan
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PER_MESOPOTAMIA
+			tooltip = {
+				add_province_modifier = {
+					name = per_granary_empire
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				iraq_arabi_area = {
+					add_province_modifier = {
+						name = per_granary_empire
+						duration = -1
+					}
+				}
+				basra_area = {
+					add_province_modifier = {
+						name = per_granary_empire
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	grg_gondeshapur = {
+		icon = mission_rule_the_garjats
+		required_missions = { grg_persian_court }
+		position = 12
+		
+		provinces_to_highlight = {
+			province_id = 4289
+		}
+		
+		trigger = {
+			owns = 4289
+			4289 = {
+				has_building = university
+			}
+			4289 = {
+				development = 20
+			}
+			OR = {
+				AND = {
+					ADM = 6
+					DIP = 6
+				}
+				full_idea_group = innovativeness_ideas
+			}
+			
+		}
+		
+		effect = {
+			add_dip_tech = 1
+		}
+	}
+
+}
+
+
+
+
+ab_grg_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	grg_struggle = {
+		icon = mission_persiamap
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			grown_by_development = 35
+			army_size_percentage = 0.9
+		}
+		
+		effect = {
+			create_general = { tradition = 30 }
+			add_country_modifier = {
+				name = grg_downfall
+				duration = 5475
+			}
+			custom_tooltip = GRG_LOOTING
+		}
+	}
+	
+	grg_great_wall = {
+		icon = mission_fortify_mandu
+		required_missions = { grg_struggle }
+		position = 2
+		
+		provinces_to_highlight = {
+			province_id = 2214
+		}
+		
+		trigger = {
+			2214 = {
+				has_great_project = {
+					type = gurgan
+					tier = 2
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GRG_FORT
+			tooltip = {
+				add_province_modifier = {
+					name = grg_northern_frontier
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_fort_building_trigger = yes
+						OR = {
+							province_id = 2214
+							area = transcaspia_area
+							area = merv_area
+						}
+					}
+					add_province_modifier = {
+						name = grg_northern_frontier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	grg_power = {
+		icon = mission_persiaarmy
+		required_missions = { grg_princes }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = persia_region
+			}
+		}
+		
+		effect = {
+			add_horde_unity = 20
+			persia_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = grg_consolidate
+					duration = 5475
+				}
+			}
+			shirvan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								region = persia_region
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = GRG_ARMY
+				tooltip = {
+					add_country_modifier = {
+						name = grg_hegemon
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GRG_ARMY_NO
+				tooltip = {
+					add_country_modifier = {
+						name = grg_hegemon
+						duration = 7300
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = {
+									region = persia_region
+								}
+								army_size = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = grg_hegemon
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	grg_bozorg = {
+		icon = mission_iran
+		required_missions = { grg_ilkhans grg_power grg_khorasani }
+		position = 5
+		
+		trigger = {
+			NOT = {
+				exists = ILK
+			}
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_gurgan.3 }
+			custom_tooltip = AB_EMPTY
+			basra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	grg_embrace = {
+		icon = mission_firetemple2
+		required_missions = { grg_bozorg }
+		position = 6
+		
+		trigger = {
+			development_in_provinces = {
+				value = 200
+				culture = persian
+			}
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				NOT = { local_autonomy_above_min = 10 }
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = persia_region
+			OR = {
+				local_autonomy_above_min = 10
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+		}
+		
+		effect = {
+			change_religion = zoroastrian
+			add_country_modifier = {
+				name = grg_conversion
+				duration = 5475
+			}
+			define_advisor = {
+				type = missionary
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	grg_seat = {
+		icon = mission_prosperity_in_bengal
+		required_missions = { grg_ctesiphon grg_eternal }
+		position = 8
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 45
+			}
+			capital_scope = {
+				NOT = {
+					num_free_building_slots = 1
+				}
+			}
+			capital_scope = {
+				is_prosperous = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = PER_CAPITAL_DEVELOP
+			capital_scope = {
+				add_province_modifier = {
+					name = per_jewel_empire
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					in_golden_age = yes
+				}
+				custom_tooltip = PER_GOLDEN_AGE_EXTEND
+			}
+			else = {
+				custom_tooltip = PER_GOLDEN_AGE_EXTEND_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 180
+				}
+			}
+		}
+	}
+	
+	grg_mountain_expansion = {
+	    icon = mission_che_the_cave_country
+		required_missions = { }
+		position = 9
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = {
+				num_of_times_improved = 3
+			}
+			OR = {
+				has_terrain = mountain
+				has_terrain = highlands
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = persia_region
+					OR = {
+						has_terrain = mountain
+						has_terrain = highlands
+					}
+					num_of_times_improved = 3
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_per_mountain_expansion
+			}
+		}
+	}
+	
+	grg_persian_court = {
+		icon = mission_gharbianss
+		required_missions = { }
+		position = 11
+		
+		trigger = {
+			OR = {
+				monthly_adm = 13
+				innovativeness = 20
+			}
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = per_splendid_court
+				duration = 9125
+			}
+			if = {
+				limit = {
+					OR = {
+						ruler_has_personality = scholar_personality 
+						ruler_has_personality = free_thinker_personality
+					}
+				}
+				custom_tooltip = PER_TRAITS
+				tooltip = {
+					change_innovativeness = 3
+				}
+			}
+			else = {
+				custom_tooltip = PER_TRAITS_NO
+				tooltip = {
+					change_innovativeness = 3
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							ruler_has_personality = scholar_personality 
+							ruler_has_personality = free_thinker_personality
+						}
+					}
+					change_innovativeness = 3
+				}
+			}
+		}
+	}
+	
+}
+
+ab_grg_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	grg_silk_cities = {
+		icon = mission_conquer_central_deccan
+		required_missions = { grg_consolidate_tribes }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 441
+				province_id = 442
+				province_id = 454
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 441
+			owns = 442
+			owns = 454
+		}
+		
+		effect = {
+			441 = {
+				add_or_upgrade_trade_building = yes
+			}
+			442 = {
+				add_or_upgrade_trade_building = yes
+			}
+			454 = {
+				add_or_upgrade_trade_building = yes
+			}
+			add_country_modifier = {
+				name = grg_control
+				duration = 5475
+			}
+		}
+	}
+	
+	grg_khorasani = {
+		icon = mission_afghan_frontier
+		required_missions = { grg_transoxiana }
+		position = 4
+		
+		trigger = {
+			herat_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			balkh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			kabulistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			ghor_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ghor_area
+				area = kabulistan_area
+				area = balkh_area
+				area = herat_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = {
+				name = grg_khorasan
+				duration = 7300
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	grg_eternal = {
+		icon = mission_fires
+		required_missions = { grg_persianization grg_embrace }
+		position = 7
+		
+		provinces_to_highlight = {
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PER_TEMPLES
+			add_country_modifier = {
+				name = per_blessing_atar
+				duration = 5475
+			}
+			hidden_effect = {
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									has_building = temple
+									has_building = cathedral
+								}
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	grg_textile_industry = {
+		icon = mission_gujarati_textiles
+		required_missions = { grg_eternal }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_production_building_trigger = yes
+					base_production = 6
+					trade_goods = wool
+				}
+				amount = 8
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = wool
+			NOT = {
+				AND = {
+					base_production = 6
+					has_production_building_trigger = yes
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PER_SILK_INDUSTRY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_production_building_trigger = yes
+						trade_goods = wool
+						base_production = 6
+					}
+					random_list = {
+						20 = { 
+							change_trade_goods = silk
+						}
+						80 = { 
+							change_trade_goods = cloth
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					development_in_provinces = {
+						value = 200
+						trade_goods = silk
+					}
+				}
+				custom_tooltip = PER_SILK_PRICE
+				tooltip = {
+					change_price = {
+						trade_goods = silk
+						key = persian_silk_industry
+						value = 0.2
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = PER_SILK_PRICE_NO
+				tooltip = {
+					change_price = {
+						trade_goods = silk
+						key = persian_silk_industry
+						value = 0.2
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						development_in_provinces = {
+							value = 200
+							trade_goods = silk
+						}
+					}
+					change_price = {
+						trade_goods = silk
+						key = persian_silk_industry
+						value = 0.2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	grg_industrial = {
+		icon = mission_industrialize_bengal
+		required_missions = { grg_textile_industry grg_mountain_expansion grg_silk_bazaar }
+		position = 10
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_production_building_trigger = yes
+				}
+				amount = 15
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = per_industrialized
+				duration = 7300
+			}
+		}
+	}
+	
+	grg_government_modern = {
+		icon = mission_into_the_west
+		required_missions = { grg_industrial grg_persian_court grg_educate_masses }
+		position = 12
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = town_hall
+					has_building = state_house
+				}
+			}
+		}
+
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_building = town_hall
+				}
+				amount = 20
+			}
+			calc_true_if = {
+				all_owned_province = {
+					has_building = state_house
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_adm_power = 150
+			add_country_modifier = {
+				name = per_modern_government
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						full_idea_group = state_governance_ideas
+					}
+				}
+				custom_tooltip = PER_GOV
+			}
+			else = {
+				custom_tooltip = PER_GOV_NO
+			}
+		}
+	}
+	
+	grg_iranzamin = {
+	    icon = mission_conquer_persia
+		required_missions = { grg_government_modern }
+		position = 13
+		
+		provinces_to_highlight = {
+			region = persia_region
+			OR = {
+				NOT = { development = 10 }
+				unrest = 1 
+				nationalism = 1 
+			}
+		}
+		
+		trigger = {
+			persia_region = {
+				type = all
+				owned_by = ROOT
+				development = 10
+			}
+			persia_region = {
+				type = all
+				owned_by = ROOT
+				NOT = { unrest = 1 }
+			}
+			persia_region = {
+				type = all
+				owned_by = ROOT
+				NOT = { nationalism = 1 } 
+			}
+		}
+		
+		effect = {
+			override_country_name = IRANZAMIN
+			custom_tooltip = ILK_SHAH
+			set_country_flag = ilk_persian_mis
+			swap_free_idea_group = yes
+			add_country_modifier = {
+				name = ilk_shahanshah
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_grg_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	grg_consolidate_tribes = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = {  }
+		position = 1
+		
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				region = central_asia_region
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 1.5
+			add_country_modifier = {
+				name = grg_recruit
+				duration = 5475
+			}
+			khiva_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kyzylkum_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			merv_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			transoxiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	grg_transoxiana = {
+		icon = mission_advance_to_the_arabian_sea
+		required_missions = { grg_consolidate_tribes }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = central_asia_region
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = grg_nomadic
+				duration = 7300
+			}
+			define_advisor = {
+				type = dragoon
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			balkh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ghor_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kabulistan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			herat_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	grg_indian_frontier = {
+		icon = mission_unite_west_india
+		required_missions = { grg_khorasani }
+		position = 5
+		
+		trigger = {
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kashmir_area
+				area = sind_sagar_area
+				area = multan_area
+				area = sindh_area
+				area = northern_sindh_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = GRG_INDIA_AE
+			add_country_modifier = {
+				name = grg_indian_invasion
+				duration = 5475
+			}
+			lahore_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sirhind_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			marwar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			patan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			saurashtra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ahmedabad_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					504 = {
+						trade_share = {
+							country = ROOT
+							share = 75
+						}
+					}
+				}
+				custom_tooltip = PER_ENTREPOT
+				tooltip = {
+					add_province_modifier = {
+						name = per_entrepot
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = PER_ENTREPOT_NO
+				tooltip = {
+					add_province_modifier = {
+						name = per_entrepot
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							superregion = india_superregion
+						}
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -15
+						apply_calc = no
+					}
+				}
+				if = {
+					limit = {
+						504 = {
+							trade_share = {
+								country = ROOT
+								share = 75
+							}
+						}
+					}
+					504 = {
+						add_province_modifier = {
+							name = per_entrepot
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	grg_persianization = {
+		icon = mission_deccanis
+		required_missions = { grg_bozorg }
+		position = 6
+		
+		trigger = {
+			development_in_provinces = {
+				value = 200
+				culture = persian
+			}
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				NOT = { local_autonomy_above_min = 10 }
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = persia_region
+			OR = {
+				local_autonomy_above_min = 10
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+		}
+		
+		effect = {
+			change_unit_type = iranian
+			change_technology_group = iranian
+		}
+	}
+	
+	grg_silk_bazaar = {
+		icon = mission_dominate_trade_in_bengal
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_trade_building_trigger = yes }
+		}
+		
+		effect = {
+			custom_tooltip = PER_MONEY_TRADE
+			add_country_modifier = {
+				name = "per_silk_trade"
+				duration = 5475
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_trade_building_trigger = yes
+					}
+					owner = {
+						add_treasury = 10
+					}
+				}
+			}
+			custom_tooltip = PER_TRADE_DEV
+		}
+	}
+	
+	grg_educate_masses = {
+		icon = mission_vedic_education
+		required_missions = { }
+		position = 11
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		trigger = {
+			university = 20
+		}
+		
+		effect = {
+			custom_tooltip = PER_ADM_SCALING
+			set_country_flag = ab_improved_persian_advisors
+		}
+	}
+	
+	
+}
+
+ab_grg_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GRG
+			was_tag = GRG
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	grg_humiliate = {
+		icon = mission_ghorde
+		required_missions = { grg_transoxiana }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = GRH
+				owned_by = GLH
+			}
+		}
+		
+		trigger = {
+			OR = {
+				has_won_war_against = {
+					who = GLH
+					max_years_since = 10
+				}
+				has_won_war_against = {
+					who = GRH
+					max_years_since = 10
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = "grg_humiliated"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					has_won_war_against = {
+						who = GLH
+						max_years_since = 10
+					}
+					has_won_war_against = {
+						who = GRH
+						max_years_since = 10
+					}
+				}
+				custom_tooltip = GRG_BOTH
+			}
+			else = {
+				custom_tooltip = GRG_BOTH_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_won_war_against = {
+							who = GLH
+							max_years_since = 10
+						}
+						has_won_war_against = {
+							who = GRH
+							max_years_since = 10
+						}
+					}
+					add_power_projection = {
+						type = GRG_perma_pp
+						amount = 25
+					}
+				}
+			}
+		}
+	}
+	
+	grg_cataphracts = {
+		icon = mission_percataphract
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			army_tradition = 60
+			has_global_modifier_value = {
+				which = cavalry_power
+				value = 0.35
+			}
+		}
+
+		effect = {
+			custom_tooltip = SEL_CAVALRY
+			add_country_modifier = {
+				name = "per_modernized_cataphracts"
+				duration = -1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_cavalry = 10
+						NOT = {
+							num_of_cavalry = 11
+						}
+					}
+					add_mil_power = 50
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 11
+						NOT = {
+							num_of_cavalry = 12
+						}
+					}
+					add_mil_power = 55
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 12
+						NOT = {
+							num_of_cavalry = 13
+						}
+					}
+					add_mil_power = 60
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 13
+						NOT = {
+							num_of_cavalry = 14
+						}
+					}
+					add_mil_power = 65
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 14
+						NOT = {
+							num_of_cavalry = 15
+						}
+					}
+					add_mil_power = 70
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 15
+						NOT = {
+							num_of_cavalry = 16
+						}
+					}
+					add_mil_power = 75
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 16
+						NOT = {
+							num_of_cavalry = 17
+						}
+					}
+					add_mil_power = 80
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 17
+						NOT = {
+							num_of_cavalry = 18
+						}
+					}
+					add_mil_power = 85
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 18
+						NOT = {
+							num_of_cavalry = 19
+						}
+					}
+					add_mil_power = 90
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 19
+						NOT = {
+							num_of_cavalry = 20
+						}
+					}
+					add_mil_power = 95
+				}
+				else_if = {
+					limit = {
+						num_of_cavalry = 20
+					}
+					add_mil_power = 100
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	grg_elephants = {
+		icon = mission_conquer_burma
+		required_missions = { grg_cataphracts }
+		position = 6
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = {
+					superregion = india_superregion
+				}
+				NOT = {
+					has_opinion = {
+						who = ROOT
+						value = 125
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			army_tradition = 80
+			any_country = {
+				capital_scope = {
+					superregion = india_superregion
+				}
+				has_opinion = {
+					who = ROOT
+					value = 125
+				}
+			}
+		}
+
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "per_war_elephants"
+				duration = -1
+			}
+			if = {
+				limit = {
+					has_dlc = "Dharma"
+				}
+				custom_tooltip = PER_ELEPHANTS
+				set_country_flag = per_elephant_sprites
+			}
+			else = {
+				custom_tooltip = PER_ELEPHANTS_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_dlc = "Dharma"
+					}
+					apply_sprite_pack = ab_persia_elephants
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	grg_immortals = {
+		icon = mission_immortal
+		required_missions = { grg_elephants grg_persianization }
+		position = 7
+		
+		trigger = {
+			army_tradition = 95
+			army_professionalism = 0.75
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.2
+			}
+		}
+
+		effect = {
+			custom_tooltip = PER_ALLOW_IMMORTALS
+			hidden_effect = {
+				add_country_modifier = {
+					name = per_unlocked_immortals
+					duration = -1
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	grg_gunpowder_empire = {
+		icon = mission_mnd_siam_revolution
+		required_missions = { grg_immortals }
+		position = 9
+		
+		trigger = {
+			num_of_artillery = 40
+			OR = {
+				has_global_modifier_value = {
+					which = artillery_power
+					value = 0.2
+				}
+				has_global_modifier_value = {
+					which = discipline
+					value = 0.25
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = per_modern_artillery
+				duration = -1
+			}
+			if = {
+				limit = {
+					all_neighbor_country = {
+						ROOT = {
+							has_better_tech_than = {
+								who = PREV
+								amount = 1
+							}
+						}
+					} 
+				}
+				custom_tooltip = PER_MIL_TECH
+				tooltip = {
+					create_general = { tradition = 100 }
+					add_country_modifier = {
+						name = per_future_warfare
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = PER_MIL_TECH_NO
+				tooltip = {
+					create_general = { tradition = 100 }
+					add_country_modifier = {
+						name = per_future_warfare
+						duration = 7300
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						all_neighbor_country = {
+							ROOT = {
+								has_better_tech_than = {
+									who = PREV
+									amount = 1
+								}
+							}
+						} 
+					}
+					create_general = { tradition = 100 }
+					add_country_modifier = {
+						name = per_future_warfare
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	grg_patronize = {
+		icon = mission_plc_governance_act
+		required_missions = { grg_educate_masses }
+		position = 12	
+
+		trigger = {
+			OR = {
+				innovativeness = 40
+				full_idea_group = innovativeness_ideas
+			}
+			all_neighbor_country = {
+				NOT = {
+					tech_difference = 1
+				}
+			} 
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_ruler_modifier = {
+				name = per_patron_of_science
+				duration = -1
+			}
+			define_advisor = {
+				type = in_advisor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	
+}
