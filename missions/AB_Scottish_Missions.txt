@@ -1,0 +1,3141 @@
+AB_sco_branching1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_gaeldom
+				has_country_flag = kingdom_scotland
+				has_country_flag = kingdom_alba
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	sco_branching_6 = {
+		icon = mission_unknown_mission
+		position = 2
+		required_missions = { succession_sco }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_7 = {
+		icon = mission_unknown_mission
+		position = 3
+		required_missions = { sco_branching_6 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_8 = {
+		icon = mission_unknown_mission
+		position = 4
+		required_missions = { sco_branching_7 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_9 = {
+		icon = mission_unknown_mission
+		position = 5
+		required_missions = { sco_branching_8 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+}
+AB_ALB_branching_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_gaeldom
+				has_country_flag = kingdom_scotland
+			}
+		}
+		has_country_flag = kingdom_alba
+	}
+	has_country_shield = yes
+	
+	sco_alba_3 = {
+		icon = mission_alliances
+		position = 3
+		required_missions =  { sco_alba_1 }
+			trigger = {
+				if = {
+					limit = {
+						has_estate = estate_nobles
+					}
+					estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 60
+					}
+				}
+				employed_advisor = {
+					culture = scottish
+				}
+				ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			}
+			effect = {
+				add_ruler_modifier = {
+					name = rebuilder_SCO
+					duration = -1
+				}
+			}
+	}
+	
+	sco_alba_5 = {
+		icon = mission_rb_control_electors
+		position = 5
+		required_missions = { sco_alba_3 }
+		trigger = {
+			accepted_culture = english
+			OR = {
+				236 = {
+					country_or_non_sovereign_subject_holds = ROOT
+					development = 20
+					has_building = marketplace
+				}
+				234 = {
+					country_or_non_sovereign_subject_holds = ROOT 
+					development = 25
+				}
+				244 = {
+					country_or_non_sovereign_subject_holds = ROOT
+					development = 25
+					has_building = barracks
+				}
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = anglo_lord_SCO
+					duration = -1
+			}
+		}
+				
+	}
+}
+AB_ANG_branching_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		or = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_gaeldom
+			}
+		}
+		has_country_flag = kingdom_scotland
+	}
+	has_country_shield = yes
+	sco_ang_4 = {
+		icon = mission_colonial
+		position = 3
+		required_missions = { sco_ang_1 }
+		provinces_to_highlight = {
+			area = ulster_area
+			OR = {
+				NOT = { culture = scottish }
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			}
+		}
+		trigger = {
+			ulster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+				culture = scottish
+			}
+			4121 = {
+				OR = { 
+					has_building = barracks
+					has_building = training_fields
+				}
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			4121 = {
+				add_or_upgrade_trade_building = yes
+				add_base_manpower = 2
+				add_base_production = 2
+				add_base_tax = 2
+			}
+		}
+	}
+	sco_ang_5 = {
+		icon = mission_conquer_50_development
+		position = 4
+		required_missions = { sco_ang_4 }
+		provinces_to_highlight = {
+			OR = {
+				area = ulster_area
+				area = connacht_area
+				area = munster_area 
+				area = leinster_area
+			}
+			NOT = { culture = scottish }
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						area = ulster_area
+						area = connacht_area
+						area = munster_area 
+						area = leinster_area
+					}
+					culture = scottish
+				}
+				amount = 15
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			custom_tooltip = ang_SCO_5TT
+			hidden_effect = {
+				for = {
+					amount = 3
+					effect = "
+						random_owned_province = {
+							limit = {
+								OR = {
+									area = ulster_area
+									area = munster_area
+									area = leinster_area
+									area = connacht_area
+								}
+								culture = scottish
+							}
+							add_base_manpower = 3
+							add_base_production = 3
+							add_base_tax = 3
+						}
+					"
+				}
+			}
+		}
+	}
+	sco_ang_7 = {
+		icon = mission_alliances
+		position = 5
+		required_missions = { sco_ang_3 }
+		trigger = {
+			estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 75
+			}
+			num_of_estate_privileges = {
+				estate = estate_nobles
+				value = 3
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_legitimacy = 25
+		}
+	}
+				
+}
+AB_GAE_branching_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = HSC
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_scotland
+			}
+		}
+		has_country_flag = kingdom_gaeldom 
+	}
+	has_country_shield = yes
+	
+	sco_gae_4 = {
+		icon = mission_rb_scottish_north_sea_trade
+		position = 3
+		required_missions = { sco_gae_1 }
+		trigger = {
+			OR = {
+				is_rival = NOR
+				army_size = NOR
+			}
+			num_of_galley = 10
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			country_event = {
+				id = ab_scottish.5
+			}
+		}
+	}
+	sco_gae_5 = {
+		icon = mission_teutonic_knights
+		position = 4
+		required_missions = { sco_gae_4 }
+		provinces_to_highlight = {
+			OR = {
+				area = kingdom_of_the_isles_area
+				area = highlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			highlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			kingdom_of_the_isles_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = victory_for_the_isles
+				duration = -1
+			}
+		}
+	}
+	sco_gae_6 = {
+		icon = mission_rb_into_ireland
+		position = 5
+		required_missions = {
+			sco_gae_5
+		}
+		provinces_to_highlight = {
+			area = kingdom_of_the_isles_area
+			NOT = {
+				culture = ROOT
+			}
+		}
+		trigger = {
+			OR = {
+				kingdom_of_the_isles_area = { type = all culture = ROOT }
+				AND = {
+					accepted_culture = manx
+					accepted_culture = norse_gael
+				}
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			custom_tooltip = SCO_EVOLVE_1
+			custom_tooltip = SCO_EVOLVE_2
+			hidden_effect = {
+				if = {
+					limit = {
+						kingdom_of_the_isles_area = { type = all culture = ROOT }
+					}
+					set_country_flag = hsc_evolved_ideas1
+					if = {
+						limit = {
+							tag = HSC
+						}
+						country_event = {
+							id = ideagroups.1
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						accepted_culture = manx
+						accepted_culture = norse_gael
+					}
+					set_country_flag = hsc_evolved_ideas2
+					if = {
+						limit = {
+							tag = HSC
+						}
+						country_event = {
+							id = ideagroups.1
+						}
+					}
+				}
+			}
+		}
+	}
+		
+}
+	
+AB_sco_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	succession_sco = {
+		position = 1
+		icon = mission_rb_conquer_scotland
+		required_missions = {}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = DUNKELD_SCO_TT
+					OR = {
+						has_country_flag = ab_sco_succession
+						is_year = 1550
+					}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "sco_secured_succession"
+				duration = 7300
+			}
+		}
+	}
+}
+AB_sco_branching2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_gaeldom
+				has_country_flag = kingdom_scotland
+				has_country_flag = kingdom_alba
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	sco_branching_1 = {
+		icon = mission_unknown_mission
+		position = 2
+		required_missions = { succession_sco }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_2 = {
+		icon = mission_unknown_mission
+		position = 3
+		required_missions = { sco_branching_1 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_3 = {
+		icon = mission_unknown_mission
+		position = 4
+		required_missions = { sco_branching_2 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_4 = {
+		icon = mission_unknown_mission
+		position = 5
+		required_missions = { sco_branching_3 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+	sco_branching_5 = {
+		icon = mission_unknown_mission
+		position = 6
+		required_missions = { sco_branching_4 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SCO_BRANCHING
+				has_country_flag = SCO_BRANCHING
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SCO_BRANCHING
+		}
+	}
+}
+AB_ALB_branching_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_gaeldom
+				has_country_flag = kingdom_scotland
+			}
+		}
+		has_country_flag = kingdom_alba
+	}
+	has_country_shield = yes
+	
+	sco_alba_1 = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = { succession_sco }
+		trigger = {
+			NOT = { num_of_rebel_controlled_provinces = 1 }
+			NOT = { num_of_rebel_armies = 1 }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			add_legitimacy = 15
+			add_ruler_modifier = {
+				name = king_of_king_sco
+				duration = -1
+			}
+		}
+	}
+	
+	sco_alba_2 = {
+		icon = medici_bank_ledgers
+		position = 3
+		required_missions =  { sco_alba_1 }
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture = highland_scottish
+			NOT = { num_of_times_improved_by_owner = 3 }
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+						culture = highland_scottish
+						num_of_times_improved_by_owner = 3
+				}
+				amount = 5
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			country_event = {
+				id = ab_scottish.5
+			}
+		}
+	}
+	
+	sco_alba_4 = {
+		icon = mission_teutonic_knights
+		position = 4
+		required_missions = { sco_alba_2 }
+		provinces_to_highlight = {
+			OR = {
+				area = kingdom_of_the_isles_area
+				area = highlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			highlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			kingdom_of_the_isles_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_ruler_modifier = {
+				name = crusade_won_sco
+				duration = -1
+			}
+		}
+	}
+	
+	sco_alba_6 = {
+		icon = mission_rb_rule_britannia_scottish_version
+		position = 6
+		required_missions = { sco_alba_4 sco_alba_5 }
+		provinces_to_highlight = {
+			OR = {
+				area = kingdom_of_the_isles_area
+				area = highlands_area
+				area = lowlands_area
+				area = scottish_marches_area
+				area = yorkshire_area
+				area = west_midlands_area
+				area = east_midlands_area
+				area = wessex_area
+				area = cornwall_area
+				area = wales_area
+				area = home_counties_area
+				area = east_anglia_area
+			}
+			OR = { 
+				local_autonomy_above_min = 50
+				nationalism = 1
+				NOT = { country_or_subject_holds = ROOT }
+			}
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = ALBA_BRITAIN
+				kingdom_of_the_isles_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				highlands_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				lowlands_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				scottish_marches_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				yorkshire_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				west_midlands_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				east_midlands_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				wessex_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				cornwall_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				home_counties_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				east_anglia_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+				wales_area = {
+					type = all
+					country_or_subject_holds = ROOT
+					NOT = { local_autonomy_above_min = 50 }
+					NOT = { nationalism = 1 }
+				}
+
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {
+			custom_tooltip = EDGAR_ALBA
+			tooltip = {
+				add_country_modifier = {
+					name = EDGAR_ALBAN
+					duration = -1
+				}
+			}
+			custom_tooltip = EDGAR_ALBA_DREAMS
+			tooltip = {
+				add_country_modifier = {
+					name = EDGAR_ALBAN_DREAMS
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_ruler = "Edgar II"
+					}
+					add_country_modifier = {
+						name = EDGAR_ALBAN
+						duration = -1
+					}
+					remove_country_modifier = EDGAR_DUNK
+					remove_country_modifier = king_of_king_sco
+					remove_country_modifier = rebuilder_SCO
+					remove_country_modifier = crusade_won_sco
+					remove_country_modifier = anglo_lord_SCO
+				}
+				else = {
+					add_country_modifier = {
+						name = EDGAR_ALBAN_DREAMS
+						duration = -1
+					}
+				}
+			}
+
+			custom_tooltip = ALBA_IDEAS_1_TT
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = alba_rename
+					}
+					# Swap to new ideas
+					set_country_flag = ALBA_IDEAS_1
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}				
+}
+AB_GAE_branching_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = HSC
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_scotland
+			}
+		}
+		has_country_flag = kingdom_gaeldom 
+	}
+	has_country_shield = yes
+	
+	sco_gae_1 = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = { succession_sco }
+		trigger = {
+			NOT = { num_of_rebel_controlled_provinces = 1 }
+			NOT = { num_of_rebel_armies = 1 }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			add_legitimacy = 15
+			add_country_modifier = {
+				name = king_of_king_GAE
+				duration = 3650
+			}
+		}
+	}
+	
+	sco_gae_2 = {
+		icon = mission_restore_faith_in_the_throne
+		position = 3
+		required_missions = { sco_gae_1 }
+		trigger = {
+			248 = {
+				culture = highland_scottish
+			}
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 70
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_nobles
+					value = 2
+				}
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {
+			custom_tooltip = GAE_SCO_2
+			tooltip = {
+				add_province_modifier = {
+					name = gaelic_SCO
+					duration = 10950
+				}
+			}
+			hidden_effect ={
+				every_owned_province = {
+					limit = {
+						area = lowlands_area
+					}
+					add_province_modifier = {
+						name = gaelic_SCO
+						duration = 10950
+					}
+				}
+			}	
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+		}
+	}
+	sco_gae_3 = {
+		icon = confront_the_lombards
+		position = 4
+		required_missions = { sco_gae_2 }
+		
+		provinces_to_highlight = {
+			area = lowlands_area
+			NOT = {
+				culture = highland_scottish
+			}
+		}
+		
+		trigger = {
+			lowlands_area = { type = all culture = highland_scottish }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		
+		effect = {	
+			lowlands_area = {
+				add_base_manpower = 1
+			}
+			add_country_modifier = {
+				name = sco_cultural_unity
+				duration = -1
+			}
+		}
+	}
+	
+	sco_gae_7 = {
+		icon = mission_rb_control_electors
+		position = 6
+		required_missions = { sco_gae_3 sco_gae_6 }
+		provinces_to_highlight = {
+			OR = {
+				culture = irish
+				culture = norse_gael
+				culture = manx
+				culture = highland_scottish
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			owns_all_provinces = {
+				culture = norse_gael
+			}
+			owns_all_provinces = {
+				culture = manx
+			}
+			owns_all_provinces = {
+				culture = irish
+			}
+			owns_all_provinces = {
+				culture = highland_scottish
+			}
+			accepted_culture = irish
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			country_event = {
+				id = ab_goidelic_revolution.1
+			}
+			custom_tooltip = AB_GDL_SCO
+		}
+	}
+				
+}
+AB_ANG_branching_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		or = {
+			tag = SCO
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+		NOT = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_gaeldom
+			}
+		}
+		has_country_flag = kingdom_scotland
+	}
+	has_country_shield = yes
+	sco_ang_1 = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = { succession_sco }
+		trigger = {
+			NOT = { num_of_rebel_controlled_provinces = 1 }
+			NOT = { num_of_rebel_armies = 1 }
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			add_legitimacy = 15
+			add_ruler_modifier = {
+				name = anglo_king_SCO
+				duration = 3650
+			}
+		}
+	}
+	sco_ang_2 = {
+		icon = mission_rb_unite_the_clans
+		position = 3
+		required_missions = { sco_ang_1 }
+		provinces_to_highlight = {
+			area = highlands_area
+			NOT = {
+				culture = scottish
+			}
+		}
+		trigger = {
+			highlands_area = { 
+				type = all
+				culture = scottish
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			add_country_modifier = {
+				name = anglo_king_SCO_2
+				duration = 12775
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							is_permanent_claim = ROOT
+						}
+						remove_claim = ROOT
+					}
+				}
+				add_territorial_core = ROOT
+			}
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							is_permanent_claim = ROOT
+						}
+						remove_claim = ROOT
+					}
+				}
+				add_territorial_core = ROOT
+			}
+		}
+	}
+	sco_ang_3 = {
+		icon = mission_rb_control_electors
+		position = 4
+		required_missions = { sco_ang_2 }
+		provinces_to_highlight = {
+			OR = {
+				area = scottish_marches_area
+				area = yorkshire_area
+			}
+			OR = {
+				local_autonomy_above_min = 35
+				unrest = 1
+				NOT = { country_or_subject_holds = ROOT }
+			}
+		}
+		trigger = {
+			scottish_marches_area = {
+				type = all
+				country_or_subject_holds = ROOT
+				NOT = { local_autonomy_above_min = 35 }
+				NOT = { unrest = 1 }
+			}
+			yorkshire_area = {
+				type = all
+				country_or_subject_holds = ROOT
+				NOT = { local_autonomy_above_min = 35 }
+				NOT = { unrest = 1 }
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			if = {
+				limit = {
+					exists = ENG
+				}
+				add_casus_belli = {
+					target = ENG
+					type = cb_restore_personal_union
+					months = 180
+				}
+			}
+			else = {
+				grant_all_mana = {
+					mana = 150
+				}
+			}
+		}
+	}
+	sco_ang_6 = {
+		icon = mission_rb_angevin_kingdom
+		position = 6
+		required_missions = { sco_ang_3	}
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = ANG_6_TT_PU
+					AND = {
+						ENG = {
+							junior_union_with = ROOT 
+							NOT = { liberty_desire = 50 }
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+						legitimacy_equivalent = 100
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ANG_6_TT
+					kingdom_of_the_isles_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					highlands_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					lowlands_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					scottish_marches_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					yorkshire_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					west_midlands_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					east_midlands_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					wessex_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					cornwall_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					home_counties_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					east_anglia_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+					wales_area = {
+						type = all
+						country_or_subject_holds = ROOT
+						NOT = { local_autonomy_above_min = 50 }
+						NOT = { nationalism = 1 }
+					}
+				}
+			}
+			ab_not_in_mission_preview_mode = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		effect = {
+			custom_tooltip = ANG_7_TT
+			custom_tooltip = ANG_7_TT_FORMABLE
+			hidden_effect = {
+				set_country_flag = anglo_scot_brit
+				if = {
+					limit = {
+						ENG = {
+							junior_union_with = ROOT
+						}
+					}
+					inherit = ENG
+				}
+				else = {
+					add_adm_power = 100
+				}
+			}
+		}
+	}
+		
+}
+AB_sco_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	invade_the_borders_sco = {
+		icon = mission_crusade_for_varna
+		position = 2
+		required_missions = { succession_sco army_sco }
+		provinces_to_highlight = { 
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			OR = {
+				area = scottish_marches_area
+				area = yorkshire_area
+			}
+		}
+		trigger = {
+			scottish_marches_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			yorkshire_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_war_exhaustion = -3
+			add_country_modifier = {
+				name = charge_SCO_AB
+				duration = 5475
+			}
+			west_midlands_area = { 
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			east_midlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			east_anglia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			
+		}
+	}
+	
+	take_mercia_sco = {
+		icon = mission_rb_into_england
+		position = 4
+		required_missions = { invade_the_borders_sco }
+		provinces_to_highlight = {
+			OR = {
+				area = west_midlands_area
+				area = east_midlands_area
+				area = east_anglia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			west_midlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			east_anglia_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			east_midlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = final_charge_AB_SCO
+				duration = 3650
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			cornwall_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			wessex_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+
+		}
+	}
+	
+	complete_conquest_SCO = {
+		icon = crusader_fleet
+		position = 5
+		required_missions = { take_mercia_sco }
+		provinces_to_highlight = {
+			OR = {
+				area = home_counties_area
+				area = cornwall_area
+				area = wessex_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			home_counties_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			cornwall_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			wessex_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = sco_dethrone_ENG
+				duration = 9125
+			}
+			custom_tooltip = SCO_eng_2
+			custom_tooltip = SCO_ANG_LO
+				tooltip = {
+					ENG = {
+						add_country_modifier = {
+							name = loyal_subject_ANG
+							duration = 3650
+						}
+					}
+				}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							ENG = {
+							is_subject_of_type_with_overlord = { who = ROOT type = personal_union }
+							}
+						}
+					}
+					every_owned_province = {
+						limit = {
+							is_core = ENG
+						}
+						remove_core = ENG
+					}
+					set_global_flag = SCO_eng_destruction
+				}
+				else = {
+					ENG = {
+						add_country_modifier = {
+							name = loyal_subject_ANG
+							duration = -1
+						}
+					}
+				}
+			}	
+		}
+	}
+	
+	birth_of_albion_SCO = {
+		icon = mission_albion2
+		position = 6
+		required_missions = {
+			complete_conquest_SCO welsh_centralize_SCO
+		}
+		
+		trigger = {
+			stability = 2
+			prestige = 50
+			monthly_adm = 7
+			monthly_dip = 7
+			monthly_mil = 7
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_scottish.8
+			}
+		}
+	}
+	
+	sco_naval_dominance_north = {
+		icon = mission_establish_high_seas_navy
+		position = 8
+		required_missions = { scottish_navy_SCO birth_of_albion_SCO }
+		provinces_to_highlight = {
+			owner = {
+				OR = {
+					tag = NOR
+					tag = FRC
+					tag = FRA
+				}
+				NOT = { navy_size = ROOT }
+			}
+		}
+		trigger = {
+			navy_size = NOR
+			if = {
+				limit = {
+					exists = FRC
+				}
+				navy_size = FRC
+			}
+			else = {
+				navy_size = FRA
+			}
+		}
+		effect = {
+			create_admiral = { tradition = 75 }
+			add_country_modifier = {
+				name = sco_rival_fleets
+				duration = 7300
+			}
+			1979 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1978 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			normandy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	conquer_the_isles_SCO = {
+		icon = mission_rb_conquer_the_isles
+		position = 10
+		required_missions = { sco_naval_dominance_north }
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1979
+				province_id = 1978
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			1979 = { country_or_non_sovereign_subject_holds = ROOT }
+			1978 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			1978 = {
+				change_religion = ROOT
+				change_culture = ROOT
+			}
+			1979 = {
+				change_religion = ROOT
+				change_culture = ROOT
+			}
+			western_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	conquenst_of_norway_SCO = {
+		icon = mission_longship
+		position = 11
+		required_missions = { conquer_the_isles_SCO }
+		provinces_to_highlight = {
+			OR = {
+				area = western_norway
+				area = eastern_norway
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			western_norway = { country_or_non_sovereign_subject_holds = ROOT }
+			eastern_norway = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = missions_to_norse_SCO
+				duration = 7300
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	conquest_of_scandi_SCO = {
+		icon = mission_unite_home_region
+		position = 12
+		required_missions = { conquenst_of_norway_SCO }
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						province_id = 1
+						province_id = 12
+						province_id = 20
+					}
+					OR = {
+						NOT = { country_or_non_sovereign_subject_holds = ROOT }
+						NOT = { religion = ROOT }
+					}
+				}
+				AND = {
+					region = scandinavia_region
+					OR = {
+						NOT = { country_or_non_sovereign_subject_holds = ROOT }
+						NOT = { religion = ROOT }
+					}
+					ROOT = {
+						NOT = {
+							calc_true_if = {
+								all_owned_province = {
+									region = scandinavia_region
+									country_or_non_sovereign_subject_holds = ROOT
+									religion = ROOT
+								}
+								amount = 40
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = scandinavia_region
+					religion = ROOT
+				}
+				amount = 40
+			}
+			12 = { country_or_non_sovereign_subject_holds = ROOT religion = ROOT }
+			1 = { country_or_non_sovereign_subject_holds = ROOT religion = ROOT }
+			20 = { country_or_non_sovereign_subject_holds = ROOT religion = ROOT }
+			4144 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		effect = {
+			4144 = {
+				add_great_project_tier = {
+					type = heddal_stave_church
+					tier = 1
+				}
+			}
+			custom_tooltip = SCO_REPLACE_MODIFIER
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = missions_to_norse_SCO 
+					}
+					remove_country_modifier = missions_to_norse_SCO
+					add_country_modifier = {
+						name = missions_to_norse_SCO
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}	
+AB_sco_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	army_sco = {
+		icon = mission_landsknecht_soldier
+		position = 1
+		required_missions = {}
+		provinces_to_highlight = {}
+		
+		trigger = {
+			army_size_percentage = 1
+			manpower_percentage = 0.75
+		}
+		
+		effect = {
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			ulster_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			custom_tooltip = SCO_ENG_TT
+				tooltip = {
+					ENG = {
+						add_country_modifier = {
+							name = SCO_ENG_1
+							duration = 3650
+						}
+					}
+				}
+			hidden_effect = {
+				if = {
+					limit = {
+						ENG = {
+							is_at_war = yes 
+						}
+					}
+					ENG = {
+						add_country_modifier = {
+							name = SCO_ENG_1
+							duration = 3650
+						}
+					}
+				}
+			}
+		}	
+	}
+	
+	scots_army_AB = {
+		icon = army_reforms
+		position = 2
+		required_missions = { army_sco }
+		trigger = {
+			army_professionalism = 0.25
+			has_global_modifier_value = {
+				which = discipline 
+				value = 0.15
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = scots_army
+				duration = -1
+			}
+		}
+	}
+	
+	wales_SCO_AB = {
+		icon = mission_rb_conquer_wales
+		position = 3
+		required_missions = {
+			invade_the_borders_sco
+		}
+		provinces_to_highlight = {
+			area = wales_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			wales_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_mil_power = 50
+			define_advisor = {
+				type = recruitmaster
+				skill = 2
+				discount = yes
+				culture = welsh
+			}
+		}
+	}
+	
+	welsh_centralize_SCO = {
+		icon = interest_of_holland
+		position = 5
+		required_missions = {
+			wales_SCO_AB
+			
+		}
+		
+		provinces_to_highlight = {
+			area = wales_area
+			owned_by = ROOT
+			OR = {
+				NOT = {
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+				NOT = {
+					has_trade_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					area = wales_area
+					AND = {
+						OR = {
+							has_building = barracks
+							has_building = training_fields 
+						}
+						has_trade_building_trigger = yes
+					}
+				}
+				amount = 4
+			}
+		}
+		effect = {
+			custom_tooltip = wales_dev_tt
+			hidden_effect ={
+				242 = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+				241 = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+				4366 = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+			}
+		}
+	}
+		
+	scottish_navy_SCO = {
+		position = 7
+		icon = mission_rb_grow_the_channel
+		required_missions = { }
+		trigger = {
+			OR = {
+				navy_size_percentage = 1
+				navy_size = 40
+			}
+			OR = {
+				num_of_light_ship = 10
+				num_of_heavy_ship = 3
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = marines_SCO
+				duration = -1
+			}
+			random_owned_province = {
+				limit = { has_port = yes }
+				ROOT = {
+					heavy_ship = PREV
+				}
+			}
+		}
+	}
+	
+	pride_of_SCO = {
+		position = 8
+		icon = mission_rb_scottish_north_sea_trade
+		required_missions = { scottish_navy_SCO }
+		trigger = {
+			OR = {
+				and = {
+					naval_morale = 0.15
+					num_of_heavy_ship = 10
+				}
+				num_of_heavy_ship = 15
+			}
+		}
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = pride_navy_SCO
+				duration = 7300
+			}
+			custom_tooltip = SCO_FREE_FLAGSHIP
+			hidden_effect = {
+				if = {
+					limit = {
+						has_or_building_flagship = no
+					}
+					248 = {
+						create_flagship = {	
+							name = "Alba"
+							type = heavy_ship
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	dethrone_normans_SCO = {
+		position = 9
+		icon = mission_rb_angevin_kingdom
+		required_missions = { sco_naval_dominance_north }
+		provinces_to_highlight = {
+			area = normandy_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			normandy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = sco_invasion_france
+				duration = 5475
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			if = {
+				limit = {
+					exists = FRC
+				}
+				custom_tooltip = SCO_RIVAL_FRANCIA
+				tooltip = {
+					FRC = {
+						add_country_modifier = {
+							name = frc_challenged_SCO
+							duration = 5475
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					exists = FRA
+				}
+				custom_tooltip = SCO_RIVAL_FRANCE
+				tooltip = {
+					FRA = {
+						add_country_modifier = {
+							name = frc_challenged_SCO
+							duration = 5475
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = FRC
+						OR = {
+							is_rival = FRC
+							is_enemy = FRC
+						}
+					}
+					FRC = {
+						add_country_modifier = {
+							name = frc_challenged_SCO
+							duration = 5475
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						exists = FRA
+						OR = {
+							is_rival = FRA
+							is_enemy = FRA
+						}
+					}
+					FRA = {
+						add_country_modifier = {
+							name = frc_challenged_SCO
+							duration = 5475
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	settle_in_new_world_SCO = {
+		icon = mission_settlers_north_america
+		position = 12
+		required_missions = { colonial_beginnings_SCO }
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = central_america_superregion
+				superregion = north_america_superregion
+			}
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					or = {
+						superregion = north_america_superregion
+						superregion = central_america_superregion
+					}
+				}
+				amount = 5
+			}
+			treasury = 100
+		}
+		effect = {
+			add_country_modifier = {
+				name = settling_SCO
+				duration = 3650
+			}
+			add_treasury = -100
+			canada_region = {
+				discover_country = ROOT
+			}
+		}
+	}
+	
+	nova_scotia_SCO = {
+		icon = mission_rb_nova_scotia
+		position = 13
+		required_missions = { settle_in_new_world_SCO }
+
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				colonial_region = colonial_canada
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 50 }
+			add_country_modifier = {
+				name = colonial_spree
+				duration = 5475
+			}
+		}
+	}
+	
+	gold_profits_SCO = {
+		position = 14
+		icon = mission_african_gold
+		required_missions = { guinea_colony_SCO }
+		provinces_to_highlight = {
+			OR = {
+				region = niger_region
+				region = guinea_region
+			}
+			trade_goods = gold
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						region = niger_region
+						region = guinea_region
+					}
+				}
+				amount = 25
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						region = niger_region
+						region = guinea_region
+					}
+					trade_goods = gold
+				}
+				amount = 3
+			}
+		}
+		effect = {
+			add_years_of_income = 0.5
+			add_country_modifier = {
+				name = gold_rush_SCO
+				duration = 10950
+			}
+			set_country_flag = sco_increased_gold
+			custom_tooltip = SCO_CHANCE
+		}
+	}		
+	
+
+	
+}
+AB_sco_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	northern_ireland_SCO_AB = {
+		icon = mission_rb_conquer_ulster
+		position = 2
+		required_missions = {
+			army_sco
+		}
+		provinces_to_highlight = {
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			area = ulster_area
+		}
+		trigger = {
+			ulster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			leinster_area = { 
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			connacht_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			munster_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							has_reform = irish_highking_opp
+							has_reform = irish_highking
+							has_reform = irish_highking_reform
+						}
+					}
+				}
+				custom_tooltip = SCO_HK
+				every_country = { 
+					limit = {
+						OR = {
+							has_reform = irish_highking_opp
+							has_reform = irish_highking
+							has_reform = irish_highking_reform
+						}
+					}
+					add_country_modifier = {
+						name = sco_hk_dethrone
+						duration = 3650
+					}
+				}
+			}
+		}
+	}
+	
+	dethrone_hk_sco = {
+		icon = mission_rb_conquer_ireland
+		position = 4
+		required_missions = { 
+			northern_ireland_SCO_AB
+		}
+		provinces_to_highlight = {
+			OR ={
+				area = ulster_area
+				area = leinster_area
+				area = connacht_area
+				area = munster_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			ulster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			leinster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			munster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			connacht_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = SCO_IRE_1
+			set_country_flag = can_release_irish_march
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SCO_IRE_2
+			tooltip = {
+				add_province_modifier = {
+					name = loyal_subject_SCO2
+					duration = 10950
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = ulster_area
+							area = leinster_area
+							area = munster_area
+							area = connacht_area
+						}
+					}
+					add_province_modifier = {
+						name = loyal_subject_SCO2
+						duration = 10950
+					}
+				}
+			}
+		}
+	}
+	
+	manage_the_celts_SCO = {
+		icon = mission_rb_scottish_conquer_london
+		position = 6
+		required_missions = {
+			dethrone_hk_sco
+			welsh_centralize_SCO
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = leinster_area
+				area = munster_area
+				area = connacht_area
+				area = ulster_area
+				area = wales_area
+			}
+			NOT = { culture = ROOT }
+		}
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = INT_CELTS_SCO
+					ulster_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					leinster_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					munster_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					connacht_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					wales_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					calc_true_if = {
+						all_owned_province = {
+							AND = {
+								OR = {
+									area = ulster_area
+									area = leinster_area
+									area = munster_area
+									area = wales_area
+									area = connacht_area
+								}
+								culture = ROOT
+							}
+						}
+						amount = 15
+					}		
+				}
+				AND = {
+					accepted_culture = welsh
+					accepted_culture = irish
+				}
+			}
+		}
+		effect = {
+			add_adm_power = 100
+			
+			custom_tooltip = CELT_MANAGE_TT_1
+			hidden_effect = {
+				if = {
+					limit = {
+						AND = {
+							accepted_culture = welsh
+							accepted_culture = irish
+						}
+					}
+					set_country_flag = CELT_MANAGE_1
+				}
+			}
+			custom_tooltip = CELT_MANAGE_TT_2
+			hidden_effect = {
+				if = {
+					limit = {
+						AND = {
+							ulster_area = {
+								type = all
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+							leinster_area = {
+								type = all
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+							munster_area = {
+								type = all
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+							wales_area = {
+								type = all
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+							connacht_area = {
+								type = all
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+							calc_true_if = {
+								all_owned_province = {
+									OR = {
+										area = ulster_area
+										area = leinster_area
+										area = munster_area
+										area = wales_area
+										area = connacht_area
+									}
+									culture = ROOT
+								}
+								amount = 15
+							}		
+						}
+					}
+					set_country_flag = CELT_MANAGE_2
+				}
+			}
+		}
+	}
+	
+	marine_training_SCO = {
+		icon = mission_sea_battles
+		position = 8
+		required_missions = { scottish_navy_SCO }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = ramparts
+			}
+		}
+		
+		trigger = {
+			num_of_marines = 20
+			navy_tradition = 75
+			calc_true_if = {
+				all_owned_province = {
+					has_building = ramparts
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = marine_training_SCO
+				duration = 7300
+			}
+			custom_tooltip = SCO_MARINE_PERMANENT
+			hidden_effect = {
+				if = {
+					limit = {
+						full_idea_group = naval_ideas
+					}
+					remove_country_modifier = marine_training_SCO
+					add_country_modifier = {
+						name = marine_training_SCO2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	sco_dismantle_france = {
+		position = 10
+		icon = carolingian_empire
+		required_missions = { dethrone_normans_SCO }
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = france_region
+				}
+				amount = 30
+			}
+			
+			OR = {
+				num_of_owned_provinces_with = {
+					value = 15
+					region = france_region
+					culture = ROOT
+				}
+				calc_true_if = {
+					accepted_culture = cosmopolitan_french
+					accepted_culture = gascon 
+					accepted_culture = normand
+					accepted_culture = aquitaine
+					accepted_culture = burgundian
+					accepted_culture = occitain
+					accepted_culture = wallonian
+					accepted_culture = Outremer
+					amount = 3
+				}
+			}
+		}
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = sco_downfall
+				duration = 9125
+			}
+			custom_tooltip = SCO_ALL_FRANCE
+			hidden_effect = {
+				if = {
+					limit = {
+						france_region = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_mil_power = 200
+				}
+			}
+		}
+	}
+	colonial_beginnings_SCO = {
+		icon = mission_look_west
+		position = 11
+		required_missions = {}
+		trigger = {
+			num_of_explorers = 1 
+			num_of_colonists = 1
+		}
+		effect = {
+			add_country_modifier = {
+				name = sco_colonial
+				duration = 5475
+			}
+		}
+	}
+	
+	guinea_colony_SCO = {
+		icon = mission_west_african_ports
+		position = 13
+		required_missions = { colonial_beginnings_SCO }
+		
+		provinces_to_highlight = {
+			region = guinea_region
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				guinea_region = {
+					type = all
+					region = guinea_region
+					OR = {
+						owned_by = ROOT
+						owner = {
+							is_colonial_nation_of = ROOT
+						}
+					}
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "eng_africa_company"
+				duration = 5475
+			}
+			benin_area = {
+				limit = {
+					NOT = { is_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_africa_coast_area = {
+				limit = {
+					NOT = { is_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	south_africa_colony_SCO = {
+		icon = mission_ibeafrica
+		position = 15
+		required_missions = { guinea_colony_SCO }
+		provinces_to_highlight = {
+			region = south_africa_region
+		}
+		trigger = {
+			calc_true_if = {
+				south_africa_region = {
+					type = all
+					OR = {
+						owned_by = ROOT
+						owner = {
+							is_colonial_nation_of = ROOT
+						}
+					}
+				}
+				amount = 10
+			}
+		}
+		effect = {
+			custom_tooltip = SCOTIA_TT
+			tooltip = {
+				add_province_modifier = {
+					name = cape_scotia
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						region = south_africa_region
+						has_port = yes
+					}
+					add_province_modifier = {
+						name = cape_scotia
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+}
+AB_sco_missions_1a = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	income_SCO = {
+		position = 7
+		icon = mission_high_income
+		required_missions = { }
+		trigger = {
+			monthly_income = 10
+			estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 65
+			}
+		}
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_highland_rights
+			}
+		}
+	}
+	
+	rule_from_lothian_SCO = {
+		position = 8
+		icon = reform_bergordnung
+		required_missions = { income_SCO }
+		provinces_to_highlight = {
+			province_id = 248
+		}
+		trigger = {
+			248 = {
+				OR = {
+					has_building = courthouse
+					has_building = town_hall
+				}
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		effect = {
+			248 = {
+				add_or_upgrade_university_building = yes
+			}
+			248 = {
+				add_province_modifier = {
+					name = lothian_SCO 
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	enlightenment_capital = {
+		position = 10
+		icon = mission_rb_trinity_college_dublin
+		required_missions = { rule_from_lothian_SCO }
+		provinces_to_highlight = {
+			province_id = 248
+		}
+		trigger = {
+			NOT = { current_age = age_of_discovery }
+			NOT = { current_age = age_of_reformation }
+			is_great_power = yes
+			or = {
+				absolutism = 80
+				government = republic
+			}
+			248 = {
+				 is_prosperous = yes 
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = enlighten_sco_10
+				duration = 5475
+			}
+		}
+	}
+	
+	scottish_reformation_SCO = {
+		icon = mission_rb_weather_the_reformation
+		required_missions = {}
+		position = 12
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = sco_mission_religion
+				OR  = {
+					has_country_flag = answered_gaelic_question
+					has_country_flag = answered_anglican_question
+
+					# Backwards compatibility
+					has_country_flag = sco_religion
+					has_country_flag = sco_religion1
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					or = {
+						religion = protestant
+						religion = gaelic_ab
+					}
+				}
+				add_church_power = 50
+			}
+			else_if = {
+				limit = {
+					religion = anglican
+				}
+				add_adm_power = 150
+			}
+			else_if = {
+				limit = {
+					religion = catholic
+				}
+				add_papal_influence = 25
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}			
+	
+	sco_true_faith = {
+		icon = show_piety
+		required_missions = { scottish_reformation_SCO }
+		position = 13
+		trigger = {
+			religious_unity = 0.75
+		}
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			add_country_modifier = {
+				name = "sco_reinforced"
+				duration = 7300
+			}
+		}
+	}
+	
+	sco_league_war = {
+		icon = the_holy_league
+		required_missions = { sco_true_faith }
+		position = 15
+		trigger = {
+			if = {
+				limit = {
+					religion = catholic
+				}
+				hre_religion = catholic
+				hre_religion_locked = yes
+			}
+			else = {
+				hre_religion = protestant
+				hre_religion_locked = yes
+			}
+		}
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = "sco_victory"
+				duration = 5475
+			}
+			custom_tooltip = SCO_BID
+			tooltip = {
+				add_country_modifier = {
+					name = "sco_bid"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_ally = {
+								is_elector = yes
+							}
+							amount = 2
+						}
+					}
+					add_country_modifier = {
+						name = "sco_bid"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+}
+			
+AB_sco_missions_2a = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SCO
+			tag = HSC
+			tag = ABO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	sco_acts = {
+	    icon = mission_invade_england
+		required_missions = { birth_of_albion_SCO }
+		position = 7
+		
+		trigger = {
+			legitimacy_equivalent = 95
+			prestige = 95
+			OR = {
+				DIP = 5
+				monthly_dip = 12
+			}
+			has_institution = enlightenment
+			british_isles_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = british_isles_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			set_government_rank = 3
+			custom_tooltip = ENG_ACT_UNION
+			custom_tooltip = ENG_CENTRALIZED
+			tooltip = {
+				add_province_modifier = {
+					name = eng_union_act
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				british_isles_region = {
+					add_province_modifier = {
+						name = eng_union_act
+						duration = -1
+					}
+				}
+			}
+			set_country_flag = ab_unlock_uk_rename
+		}
+	}
+	
+	
+	highlander_livestock_SCO = {
+		position = 8
+		icon = mission_rb_rein_in_the_highland_clans
+		required_missions = {
+			income_SCO
+		}
+		provinces_to_highlight = {
+			area = highlands_area
+			OR = {
+				AND = {
+					OR = {
+						trade_goods = livestock
+						trade_goods = wool
+					}
+					NOT = { has_building = farm_estate }
+					owner = {
+						NOT = {
+							calc_true_if = {
+								all_owned_province = {
+									area = highlands_area
+									has_building = farm_estate
+								}
+								amount = 2
+							}
+						}
+					}
+				}
+				NOT = {
+					has_production_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			highlands_area = {
+				type = all
+				has_production_building_trigger = yes
+			}
+			calc_true_if = {
+				all_owned_province = {
+					area = highlands_area
+					has_building = farm_estate
+				}
+				amount = 2
+			}
+		}
+		
+		effect = {
+			highlands_area = {
+				add_prosperity = 100
+			}
+			custom_tooltip = highland_sco_TT
+			tooltip = {
+				add_province_modifier = {
+					name = highland_sco_dev
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						area = highlands_area
+					}
+					add_province_modifier = {
+						name = highland_sco_dev
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	sco_bank = {
+		icon = mission_rb_the_bank_of_scotland
+		required_missions = { highlander_livestock_SCO rule_from_lothian_SCO }
+		position = 8
+		
+		trigger = {
+			treasury = 1000
+			NOT = {
+				num_of_loans = 1
+			}
+		}
+		
+		effect = {
+			add_corruption = -2
+			add_country_modifier = {
+				name = "bank_of_scotland"
+				duration = 7300
+			}
+		}
+	}
+	
+	sco_education_acts = {
+		icon = mission_rb_the_education_acts
+		required_missions = { sco_bank }
+		position = 9
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		trigger = {
+			university = 3
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = "sco_the_education_acts"
+				duration = 7300
+			}
+			define_advisor = {
+				type = in_advisor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	sco_college_of_justice = {
+		icon = mission_rb_college_of_justice
+		required_missions = { sco_education_acts }
+		position = 10
+		
+		trigger = {
+			innovativeness = 20
+		}
+		
+		effect = {
+			change_government_reform_progress = 50
+			add_country_modifier = {
+				name = "college_of_justice"
+				duration = 7300
+			}
+		}
+	}
+	
+	roads_across_britain_sco = {
+		position = 11
+		icon = mission_rail
+		required_missions = { sco_college_of_justice }
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = royal_road
+					has_building = macadam_road
+				}
+			}
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = royal_road
+						has_building = macadam_road
+					}
+				}
+				amount = 20
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = connected_country_SCO
+				duration = 5475
+			}
+			custom_tooltip = rail_road_SCO_TT
+			hidden_effect = {
+				random_owned_province = {
+					limit = { 
+						OR = {
+							has_building = royal_road
+							has_building = macadam_road
+						}
+					}
+					add_building = rail_road
+				}
+				random_owned_province = {
+					limit = { 
+						OR = {
+							has_building = royal_road
+							has_building = macadam_road
+						}
+					}
+					add_building = rail_road
+				}
+				random_owned_province = {
+					limit = { 
+						OR = {
+							has_building = royal_road
+							has_building = macadam_road
+						}
+					}
+					add_building = rail_road
+				}
+				random_owned_province = {
+					limit = { 
+						OR = {
+							has_building = royal_road
+							has_building = macadam_road
+						}
+					}
+					add_building = rail_road
+				}
+				random_owned_province = {
+					limit = { 
+						OR = {
+							has_building = royal_road
+							has_building = macadam_road
+						}
+					}
+					add_building = rail_road
+				}
+			}
+		}
+	}
+	
+	sco_early_industry = {
+		icon = mission_rb_central_belt_coal_mining
+		required_missions = { roads_across_britain_sco }
+		position = 11
+		provinces_to_highlight = {
+			province_id = 249
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		trigger = {
+			has_institution = enlightenment
+			owns_core_province = 249
+			249 = {
+				base_production = 12
+			}
+		}
+		effect = {
+			249 = {
+				add_base_production = 2
+				add_base_manpower = 2
+				add_base_tax = 2
+			}
+			249 = {
+				add_province_modifier = {
+					name = "central_belt_coal" # goods produced
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	furnaces_SCO = {
+		position = 12
+		icon = mission_rb_build_furnaces
+		required_missions = { sco_early_industry }
+		
+		provinces_to_highlight = {
+			OR = {
+				trade_goods = coal
+				has_latent_trade_goods = coal
+			}
+			NOT = {
+				has_building = furnace
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_building = furnace
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = industrial_SCO
+				duration = 7300
+			}
+			custom_tooltip = SCO_ENGINE
+			tooltip = {
+				add_province_modifier = {
+					name = watts_engine_SCO
+					duration = -1
+				}
+			}
+			hidden_effect = {
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_building = furnace
+							}
+							add_province_modifier = {
+								name = watts_engine_SCO
+								duration = -1
+							}
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+}		
