@@ -4,8 +4,9 @@ country_decisions = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_country_flag = plague_unlock_decisions
-			NOT = { has_country_flag = plague_closed_border }
+			NOT = { has_country_modifier = punic_plague_closed_border }
 		}
 
 		provinces_to_highlight = {
@@ -29,180 +30,18 @@ country_decisions = {
 		}
 
 		allow = {
-			hidden_trigger = {
-				always = yes
-			}
 		}
 
 		effect = {
-			set_country_flag = plague_closed_border
 			add_stability = -1
 			add_country_modifier = {
 				name = punic_plague_closed_border
 				duration = -1
 			}
-			custom_tooltip = PLAGUE_CLOSE_THE_BORDER
-			hidden_effect = {
-				add_country_modifier = {
-					name = punic_plague_close_border_timer
-					duration = 1095
-					hidden = yes
-				}
-			}
 		}
 
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				NOT = {
-					any_neighbor_province = {
-						has_province_modifier = punic_pale_death_prov
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 365
-					}
-				}
-			}
-			modifier = {
-				factor = 0.5
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				had_global_flag = {
-					flag = plague_pale_death
-					days = 365
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 1095
-					}
-				}
-			}
-			modifier = {
-				factor = 0.75
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				had_global_flag = {
-					flag = plague_pale_death
-					days = 1095
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 1825
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				NOT = {
-					any_neighbor_province = {
-						has_province_modifier = punic_gray_fever_prov
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 365
-					}
-				}
-			}
-			modifier = {
-				factor = 0.5
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				had_global_flag = {
-					flag = plague_gray_fever
-					days = 365
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 1095
-					}
-				}
-			}
-			modifier = {
-				factor = 0.75
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				had_global_flag = {
-					flag = plague_gray_fever
-					days = 1095
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 1825
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				NOT = { innovativeness = 10 }
-			}
-			modifier = {
-				factor = 2
-				innovativeness = 25
-			}
+			factor = 0
 		}
 	}
 
@@ -210,7 +49,9 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			has_country_flag = plague_closed_border
+			ai = no
+			has_country_modifier = punic_plague_closed_border
+			NOT = { has_country_modifier = punic_plague_enforced_quarantine }
 		}
 
 		provinces_to_highlight = {
@@ -234,72 +75,14 @@ country_decisions = {
 		}
 
 		allow = {
-			if = {
-				limit = {
-					OR = {
-						AND = {
-							has_global_flag = plague_pale_death
-							capital_scope = {
-								OR = {
-									continent = north_america
-									continent = south_america
-								}
-							}
-						}
-						AND = {
-							has_global_flag = plague_gray_fever
-							NOT = {
-								capital_scope = {
-									OR = {
-										continent = north_america
-										continent = south_america
-									}
-								}
-							}
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = PLAGUE_BORDER_CLOSED_5YEARS
-					NOT = { has_country_modifier = punic_plague_close_border_timer }
-				}
-			}
-			NOT = { has_country_modifier = punic_plague_enforced_quarantine }
 		}
 
 		effect = {
-			clr_country_flag = plague_closed_border
 			remove_country_modifier = punic_plague_closed_border
 		}
 
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_neighbor_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_neighbor_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
+			factor = 0
 		}
 	}
 
@@ -307,8 +90,9 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			has_country_flag = plague_unlock_decisions
-			NOT = { has_country_flag = plague_enforced_quarantine }
+			ai = no
+			has_country_modifier = punic_plague_closed_border
+			NOT = { has_country_modifier = punic_plague_enforced_quarantine }
 		}
 
 		provinces_to_highlight = {
@@ -332,198 +116,17 @@ country_decisions = {
 		}
 
 		allow = {
-			if = {
-				limit = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			else = {
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
-			has_country_modifier = punic_plague_closed_border
 		}
 
 		effect = {
-			set_country_flag = plague_enforced_quarantine
-			add_stability = -1
 			add_country_modifier = {
 				name = punic_plague_enforced_quarantine
 				duration = -1
 			}
-			custom_tooltip = PLAGUE_ENFORCE_QUARANTINE
-			hidden_effect = {
-				add_country_modifier = {
-					name = punic_plague_enforced_quarantine_timer
-					duration = 1095
-					hidden = yes
-				}
-			}
 		}
 
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				NOT = {
-					any_owned_province = {
-						same_continent = capital
-						has_province_modifier = punic_pale_death_prov
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 365
-					}
-				}
-			}
-			modifier = {
-				factor = 0.5
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				had_global_flag = {
-					flag = plague_pale_death
-					days = 365
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 1095
-					}
-				}
-			}
-			modifier = {
-				factor = 0.75
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				had_global_flag = {
-					flag = plague_pale_death
-					days = 1095
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_pale_death
-						days = 1825
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				NOT = {
-					any_owned_province = {
-						same_continent = capital
-						has_province_modifier = punic_gray_fever_prov
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 365
-					}
-				}
-			}
-			modifier = {
-				factor = 0.5
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				had_global_flag = {
-					flag = plague_gray_fever
-					days = 365
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 1095
-					}
-				}
-			}
-			modifier = {
-				factor = 0.75
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				had_global_flag = {
-					flag = plague_gray_fever
-					days = 1095
-				}
-				NOT = {
-					had_global_flag = {
-						flag = plague_gray_fever
-						days = 1825
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				NOT = { innovativeness = 10 }
-			}
-			modifier = {
-				factor = 2
-				innovativeness = 25
-			}
+			factor = 0
 		}
 	}
 
@@ -531,7 +134,8 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			has_country_flag = plague_enforced_quarantine
+			ai = no
+			has_country_modifier = punic_plague_enforced_quarantine
 		}
 
 		provinces_to_highlight = {
@@ -555,76 +159,14 @@ country_decisions = {
 		}
 
 		allow = {
-			if = {
-				limit = {
-					OR = {
-						AND = {
-							has_global_flag = plague_pale_death
-							capital_scope = {
-								OR = {
-									continent = north_america
-									continent = south_america
-								}
-							}
-						}
-						AND = {
-							has_global_flag = plague_gray_fever
-							NOT = {
-								capital_scope = {
-									OR = {
-										continent = north_america
-										continent = south_america
-									}
-								}
-							}
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = PLAGUE_QUARANTINE_ENFORCED_5YEARS
-					NOT = { has_country_modifier = punic_plague_enforced_quarantine_timer }
-				}
-			}
-			else = {
-				hidden_trigger = {
-					always = yes
-				}
-			}
 		}
 
 		effect = {
-			clr_country_flag = plague_enforced_quarantine
 			remove_country_modifier = punic_plague_enforced_quarantine
 		}
 
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
+			factor = 0
 		}
 	}
 }

@@ -24,12 +24,13 @@ country_decisions = {
 		}
 
 		allow = {
-			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
+			religion = canaanite
 			owns_core_province = 965
 			owns_core_province = 967
 			owns_core_province = 938
 			owns_core_province = 2011
 			owns_core_province = 2544
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
 		}
 
 		effect = {
@@ -86,15 +87,15 @@ country_decisions = {
 				religion = canaanite
 				religion = reformed_canaanite
 			}
-			NOT = {
-				OR = {
-					has_country_modifier = punic_religion_oracle_timer
-					has_country_flag = punic_religion_is_waiting_oracle
-				}
-			}
+			NOT = { has_country_modifier = punic_religion_oracle_timer }
+			NOT = { has_country_flag = punic_religion_is_waiting_oracle }
 		}
 
 		allow = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
 			if = {
 				limit = {
 					mission_completed = ctg_champion_of_the_league
@@ -135,15 +136,15 @@ country_decisions = {
 				religion = canaanite
 				religion = reformed_canaanite
 			}
-			NOT = {
-				OR = {
-					has_ruler_modifier = punic_religion_made_a_pilgrimate
-					has_ruler_flag = punic_religion_is_going_on_pilgrimate
-				}
-			}
+			NOT = { has_ruler_flag = punic_religion_made_a_pilgrimate }
+			NOT = { has_ruler_flag = punic_religion_is_going_on_pilgrimate }
 		}
 
 		allow = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
 			if = {
 				limit = {
 					mission_completed = ctg_heart_of_canaanites
@@ -195,6 +196,7 @@ country_decisions = {
 		}
 
 		allow = {
+			primary_culture = punic
 			exists = JOA
 			NOT = { corruption = 5 }
 		}
@@ -220,120 +222,18 @@ country_decisions = {
 		}
 	}
 
-	ai_easima_decision = {
-		potential = {
-			ai = yes
-			tag = event_target:easimaTarget
-			NOT = { has_global_flag = ab_disabled_punic_league }
-		}
-
-		allow = {
-			is_at_war = no
-			REB = {
-                check_variable = {
-                    which = punic_league_value
-                    value = 50
-                }
-				if = {
-					limit = {
-						has_global_flag = north_america_european_threat
-					}
-					NOT = {
-						AND = {
-							has_country_flag = punic_league_reform_passed_1
-							has_country_flag = punic_league_reform_passed_2
-							has_country_flag = punic_league_reform_passed_3
-							has_country_flag = punic_league_reform_passed_4
-							has_country_flag = punic_league_reform_passed_5
-							has_country_flag = punic_league_reform_passed_6
-							has_country_flag = punic_league_reform_passed_7
-							has_country_flag = punic_league_reform_passed_8
-							has_country_flag = punic_league_reform_passed_9
-							has_country_flag = punic_league_reform_passed_10
-						}
-					}
-				}
-				else = {
-					NOT = {
-						AND = {
-							has_country_flag = punic_league_reform_passed_1
-							has_country_flag = punic_league_reform_passed_2
-							has_country_flag = punic_league_reform_passed_3
-							has_country_flag = punic_league_reform_passed_4
-							has_country_flag = punic_league_reform_passed_5
-							has_country_flag = punic_league_reform_passed_6
-						}
-					}
-				}
-            }
-		}
-
-		effect = {
-			REB = {
-                subtract_variable = {
-                    which = punic_league_value
-                    value = 50
-                } 
-            }
-			country_event = {
-				id = ab_punic.33
-			}
-		}
-
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
-	ai_carthage_decision = {
-		potential = {
-			ai = yes
-			tag = event_target:easimaTarget
-			REB = {
-                has_country_flag = punic_league_reform_passed_1
-                has_country_flag = punic_league_reform_passed_2
-                has_country_flag = punic_league_reform_passed_3
-                has_country_flag = punic_league_reform_passed_4
-                has_country_flag = punic_league_reform_passed_5
-                has_country_flag = punic_league_reform_passed_6
-                has_country_flag = punic_league_reform_passed_7
-                has_country_flag = punic_league_reform_passed_8
-                has_country_flag = punic_league_reform_passed_9
-                has_country_flag = punic_league_reform_passed_10
-            }
-			NOT = { has_global_flag = ab_disabled_punic_league }
-		}
-
-		allow = {
-			is_at_war = no
-			REB = {
-                check_variable = {
-                    which = punic_league_value
-                    value = 50
-                }
-            }
-		}
-
-		effect = {
-			country_event = {
-				id = ab_punic.32
-			}
-		}
-
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
 	punic_estate_reform_church = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_global_flag = north_america_european_threat
 			has_estate_privilege = estate_church_punic_primitive_administration
 		}
 
 		allow = {
+			ai = no
+			has_estate_privilege = estate_church_punic_primitive_administration
 			stability = 1
 			adm_power = 200
 			estate_loyalty = {
@@ -353,11 +253,14 @@ country_decisions = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_global_flag = north_america_european_threat
 			has_estate_privilege = estate_church_punic_religious_tolerance
 		}
 
 		allow = {
+			ai = no
+			has_estate_privilege = estate_church_punic_religious_tolerance
 			stability = 1
 			OR = {
 				inquisitor = 3
@@ -384,11 +287,14 @@ country_decisions = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_global_flag = north_america_european_threat
 			has_estate_privilege = estate_nobles_punic_pacifist_civilization
 		}
 
 		allow = {
+			ai = no
+			has_estate_privilege = estate_nobles_punic_pacifist_civilization
 			stability = 1
 			mil_power = 200
 			estate_loyalty = {
@@ -408,11 +314,14 @@ country_decisions = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_global_flag = north_america_european_threat
 			has_estate_privilege = estate_burghers_punic_isolationism
 		}
 
 		allow = {
+			ai = no
+			has_estate_privilege = estate_burghers_punic_isolationism
 			stability = 1
 			dip_power = 200
 			estate_loyalty = {
@@ -432,11 +341,14 @@ country_decisions = {
 		major = yes
 
 		potential = {
+			ai = no
 			has_global_flag = north_america_european_threat
 			has_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
 		}
 
 		allow = {
+			ai = no
+			has_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
 			stability = 3
 			adm_power = 200
 			dip_power = 200
