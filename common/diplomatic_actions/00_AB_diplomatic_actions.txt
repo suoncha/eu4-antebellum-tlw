@@ -89,84 +89,26 @@
 #Cut because the Grand Crusade war doesn't really have any place in the current content, but it could be very useful for the future.
 #Also modders should have the chance to just uncomment it all so they can experience the great 30 Years War like Crusade.
 declarewar = {
-	#condition = {
-	#	tooltip = GRAND_CRUSADE_NO_OTHER_WAR
-	#	potential = { }
-	#	allow = {
-	#		NOT = {
-	#			is_in_war = {
-	#				attacker_leader = ROOT
-	#				casus_belli = cb_grand_crusade
-	#			}
-	#		}
-	#	}
-	#}
-	#effect = {
-	#	if = {
-	#		limit = {
-	#			has_global_flag = grand_crusades_enabled
-	#			has_country_flag = grand_crusader_war_monger_flag
-	#			is_in_war = {
-	#				attacker_leader = ROOT
-	#				casus_belli = cb_grand_crusade
-	#			}
-	#		}
-	#		FROM = {
-	#			save_global_event_target_as = grand_crusade_target
-	#		}
-	#	}
-	#}
-	condition = {
-		tooltip = GRAND_CRUSADE_NO_OTHER_WAR
-		potential = { }
-		allow = {
-			NOT = {
-				is_in_war = {
-					attacker_leader = ROOT
-					casus_belli = cb_grand_crusade
-				}
-			}
-		}
-	}
-	condition = {
-		tooltip = AI_CANNOT_DECLARE_WHEN_STABILITY_LOSS
-		potential = {
-			ai = yes
-		}
-		allow = {
-			ai = yes
-			NOT = {
-				has_global_modifier_value = {
-					which = stability_cost_to_declare_war
-					value = 1
-				}
-			}
-		}
-	}
 	condition = {
 		tooltip = CANNOT_DECLARE_WARS_OTHER_THAN_INDEPENDENCE_WARS
 		potential = {
 			has_country_modifier = revoked_war_rights
-			FROM = { NOT = { overlord_of = ROOT } }
 		}
 		allow = {
-			OR = {
-				NOT = { has_country_modifier = revoked_war_rights }
-				FROM = { overlord_of = ROOT }
-			}
+			FROM = { overlord_of = ROOT }
 		}
 	}
 	# AB [[[
 	condition = {
 		tooltip = GRAND_CRUSADE_NO_OTHER_WAR
-		potential = { }
-		allow = {
-			NOT = {
-				is_in_war = {
-					attacker_leader = ROOT
-					casus_belli = cb_grand_crusade
-				}
+		potential = {
+			is_in_war = {
+				attacker_leader = ROOT
+				casus_belli = cb_grand_crusade
 			}
+		}
+		allow = {
+			always = no
 		}
 	}
 	condition = {
@@ -177,7 +119,7 @@ declarewar = {
 			FROM = { is_part_of_hre = yes }
 		}
 		allow = { 
-			FROM = { is_part_of_hre = no }
+			always = no
 		}
 	}
 	# ]]]
@@ -194,14 +136,20 @@ declarewar = {
 			}
 		}
 		allow = {
-			FROM = {
-				NOT = {
-					OR = {
-						tag = GEO
-						tag = JLR
-					}
-				}
+			always = no
+		}
+	}
+	condition = {
+		tooltip = CANNOT_DECLARE_INTERNAL_LEAGUE_WARS_OTHER_THAN_INDEPENDENCE_WARS
+		potential = {
+			has_reform = ctg_punic_city_reform
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			REB = {
+				has_country_flag = punic_league_reform_passed_9
 			}
+		}
+		allow = {
+			FROM = { overlord_of = ROOT }
 		}
 	}
 	# ]]]
@@ -361,114 +309,6 @@ declarewar = {
 }
 
 allianceaction = {
-	condition = {
-		tooltip = PIRATE_DENIED_ALLIANCE
-		potential = {
-			has_government_attribute = cannot_ally_non_pirates
-		}
-		allow = {
-			OR = {
-				NOT = { has_government_attribute = cannot_ally_non_pirates }
-				FROM = { has_government_attribute = is_pirate_republic_reform }
-			}
-		}
-	}
-	condition = {
-		tooltip = FROM_PIRATE_DENIED_ALLIANCE
-		potential = {
-			FROM = {
-				has_government_attribute = cannot_ally_non_pirates
-			}
-			NOT = { has_government_attribute = is_pirate_republic_reform }
-		}
-		allow = {
-			OR = {
-				has_government_attribute = is_pirate_republic_reform
-				NOT = { FROM = { has_government_attribute = cannot_ally_non_pirates } }
-			}
-		}
-	}
-	condition = {
-		tooltip = REPUBLIC_DENIED_ALLIANCE
-		potential = {
-			has_government_attribute = cannot_ally_non_republics
-		}
-		allow = {
-			OR = {
-				NOT = { has_government_attribute = cannot_ally_non_republics }
-				FROM = { government = republic }
-			}
-		}
-	}
-	condition = {
-		tooltip = FROM_REPUBLIC_DENIED_ALLIANCE
-		potential = {
-			FROM = {
-				has_government_attribute = cannot_ally_non_republics
-			}
-			NOT = { government = republic }
-		}
-		allow = {
-			OR = {
-				government = republic
-				NOT = { FROM = { has_government_attribute = cannot_ally_non_republics } }
-			}
-		}
-	}
-	condition = {
-		tooltip = REV_REPUBLIC_DENIED_ALLIANCE
-		potential = {
-			has_government_attribute = cannot_ally_non_republics_or_non_rev
-		}
-		allow = {
-			OR = {
-				NOT = { has_government_attribute = cannot_ally_non_republics_or_non_rev }
-				FROM = { 
-					OR = {
-						government = republic 
-						is_revolutionary = yes
-					}
-				}
-			}
-		}
-	}
-	condition = {
-		tooltip = FROM_REV_REPUBLIC_DENIED_ALLIANCE
-		potential = {
-			FROM = {
-				has_government_attribute = cannot_ally_non_republics_or_non_rev
-			}
-			NOT = { government = republic }
-			is_revolutionary = no
-		}
-		allow = {
-			OR = {
-				government = republic 
-				is_revolutionary = yes
-				NOT = { FROM = { has_government_attribute = cannot_ally_non_republics_or_non_rev } }
-			}
-		}
-	}
-	condition = {
-		tooltip = CANNOT_MAKE_ALLIANCES
-		potential = {
-			has_government_attribute = cannot_form_alliances
-		}
-		allow = {
-			NOT = { has_government_attribute = cannot_form_alliances }
-		}
-	}
-	condition = {
-		tooltip = FROM_CANNOT_MAKE_ALLIANCES
-		potential = {
-			FROM = {
-				has_government_attribute = cannot_form_alliances
-			}
-		}
-		allow = {
-			NOT = { FROM = { has_government_attribute = cannot_form_alliances } }
-		}
-	}
 	# TLW [[[
 	condition = {
 		tooltip = DISASTER_TAG_CANNOT_ALLY
@@ -476,7 +316,7 @@ allianceaction = {
 			has_country_flag = disaster_tag_cannot_ally
 		}
 		allow = {
-			NOT = { has_country_flag = disaster_tag_cannot_ally }
+			always = no
 		}
 	}
 	condition = {
@@ -487,11 +327,7 @@ allianceaction = {
 			}
 		}
 		allow = {
-			NOT = {
-				FROM = {
-					has_country_flag = disaster_tag_cannot_ally
-				}
-			}
+			always = no
 		}
 	}
 	condition = {
@@ -500,9 +336,7 @@ allianceaction = {
 			has_country_flag = byz_triumvir_flag
 		}
 		allow = {
-			FROM = {
-				has_country_flag = byz_triumvir_flag
-			}
+			always = no
 		}
 	}
 	condition = {
@@ -513,7 +347,7 @@ allianceaction = {
 			}
 		}
 		allow = {
-			has_country_flag = byz_triumvir_flag
+			always = no
 		}
 	}
 	# ]]] 
@@ -528,9 +362,8 @@ annexationaction = {
 		potential = {
 			FROM = {
 				OR = {
-					is_subject_of_type = core_eyalet
-					is_subject_of_type = appanage
 					vassal_of = ROOT
+					is_subject_of_type = appanage
 				}
 			}
 		}
@@ -543,73 +376,24 @@ annexationaction = {
 			}
 		}
 	}
-	condition = {
-		tooltip = CANNOT_ANNEX
-		potential = {
-			FROM = {
-				has_country_modifier = tur_mamlukian_administration
-			}
-		}
-		allow = {
-			FROM = {
-				NOT = { has_country_modifier = tur_mamlukian_administration }
-			}
-		}
-	}
 	# TLW [[[
 	condition = {
 		tooltip = CANNOT_ANNEX_CORE_DIADOCHI
 		potential = {
 			FROM = {
+				is_subject_of_type = diadochi_vassal
 				OR = {
 					tag = AEG
 					tag = HLS
 					tag = HLM
 				}
-				is_subject_of_type = diadochi_vassal
 			}
 		}
 		allow = {
-			FROM = {
-				NOT = {
-					OR = {
-						tag = AEG
-						tag = HLS
-						tag = HLM
-					}
-				}
-			}
+			always = no
 		}
 	}
 	# ]]]
-	condition = {
-		tooltip = NEEDS_50_CROWNLAND_TT
-		potential = {
-			has_government_attribute = need_crownland_to_annex
-			NOT = { crown_land_share = 50 }
-		}
-		allow = {
-			crown_land_share = 50
-		}
-	}
-	condition = {
-		tooltip = NEEDS_TO_HAVE_SEIZED_LAND
-		potential = {
-			has_government_attribute = has_appanages
-			NOT = {
-				check_variable = {
-					which = can_annex_appanages_points
-					value = 1
-				}
-			}
-		}
-		allow = {
-			check_variable = {
-				which = can_annex_appanages_points
-				value = 1
-			}
-		}
-	}
 	effect = {
 		if = {
 			limit = {
@@ -631,9 +415,7 @@ break_alliance = {
 			has_country_flag = byz_triumvir_flag
 		}
 		allow = {
-			FROM = {
-				has_country_flag = byz_triumvir_flag
-			}
+			always = no
 		}
 	}
 	condition = {
@@ -644,7 +426,7 @@ break_alliance = {
 			}
 		}
 		allow = {
-			has_country_flag = byz_triumvir_flag
+			always = no
 		}
 	}
 }
@@ -656,9 +438,7 @@ guaranteeaction = {
 			has_country_flag = byz_triumvir_flag
 		}
 		allow = {
-			FROM = {
-				has_country_flag = byz_triumvir_flag
-			}
+			always = no
 		}
 	}
 	condition = {
@@ -669,8 +449,11 @@ guaranteeaction = {
 			}
 		}
 		allow = {
-			has_country_flag = byz_triumvir_flag
+			always = no
 		}
+	}
+	effect = {
+		change_asha_vahishta = { value = 1 }
 	}
 }
 
@@ -680,6 +463,19 @@ excommunicate_action = {
 			country_event = {
 				id = ab_performance.12
 			}
+		}
+	}
+}
+
+fabricate_claim = {
+	condition = {
+		tooltip = ROOT_IS_CTG_TT
+		potential = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			primary_culture = punic
+		}
+		allow = {
+			tag = CTG
 		}
 	}
 }
