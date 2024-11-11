@@ -1544,6 +1544,87 @@ TLW_on_colonial_nation_established = {
 	}
 }
 
+TLW_on_explore_coast_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = new_world_discovered }
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			NOT = { province_id = 1804 }
+			NOT = { area = greenland_area }
+			is_wasteland = no
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.3
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = { has_global_flag = europe_discovered_punics }
+			is_capital = yes
+			owner = {
+				OR = {
+					culture_group = eastern_algonquian
+					culture_group = punic_g
+				}
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					culture_group = punic_g
+				}
+			}
+			FROM = {
+				set_country_flag = europe_meet_native_punic
+			}
+		}
+		else = {
+			FROM = {
+				set_country_flag = europe_meet_native_greek
+			}
+		}
+		owner = {
+			save_global_event_target_as = discoveredCountry_NA
+		}
+		FROM = {
+			save_global_event_target_as = discoveredCountry_EU
+			country_event = {
+				id = ab_punic.4
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = new_world_discovered
+			trade_goods = gold
+			is_city = yes
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.10
+			}
+		}
+	}
+}
+
 TLW_on_tech_taken = {
 	if = {
 		limit = {
@@ -1563,18 +1644,46 @@ TLW_on_colony_finished_effect = {
 		limit = {
 			continent = north_america
 			owner = {
-				capital_scope = {
-					OR = {
-						continent = europe
-						region = maghreb_region
-						region = egypt_region
-					}
+				OR = {
+					technology_group = muslim
+					technology_group = western
+					technology_group = eastern
 				}
 			}
+		}
+		if = {
+			limit = {
+				NOT = { has_saved_global_event_target = europeanFirstColony }
+			}
+			save_global_event_target_as = europeanFirstColony
 		}
 		owner = {
 			country_event = {
 				id = ab_punic.12
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_flag = north_america_european_threat }
+				calc_true_if = {
+					amount = 10
+					all_province = {
+						continent = north_america
+						is_city = yes
+						owner = {
+							OR = {
+								technology_group = western
+								technology_group = eastern
+								technology_group = muslim
+							}
+						}
+					}
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_punic.14
+				}
 			}
 		}
 	}

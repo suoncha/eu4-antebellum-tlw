@@ -1,5 +1,4 @@
 namespace = ab_punic
-normal_or_historical_nations = yes
 
 ## NORMAL EVENTS
 #Trade company & colony culture spread
@@ -137,6 +136,13 @@ country_event = {
 				}
 			}
 		}
+		# Feudalism
+		REB = {
+			country_event = {
+				id = ab_punic.36
+				days = 1200
+			}
+		}
 	}
 }
 
@@ -159,32 +165,22 @@ country_event = {
 		}
 	}
 
-	fire_only_once = yes
-	
-	trigger = {
-		any_province = {
-			OR = {
-				continent = north_america
-				continent = south_america
-			}
-			NOT = { province_id = 1804 }
-			NOT = { area = greenland_area }
-			is_wasteland = no
-			has_discovered = ROOT
-		}
-		capital_scope = {
-			OR = {
-				continent = europe
-				region = maghreb_region
-				region = egypt_region
-			}
-		}
-		NOT = { has_global_flag = new_world_discovered }
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
 			set_global_flag = new_world_discovered
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			REB = {
+				country_event = {
+					id = ab_punic.16
+					days = 1825
+				}
+			}
 		}
 	}
 
@@ -204,76 +200,30 @@ country_event = {
 	title = ab_punic.4.t
 	desc = {
 		trigger = {
-			any_country = {
-				culture_group = eastern_algonquian
-				capital_scope = {
-					has_discovered = ROOT
-				}
-			}
-			NOT = {
-				any_country = {
-					culture_group = punic_g
-					capital_scope = {
-						has_discovered = ROOT
-					}
-				}
-			}
+			has_country_flag = europe_meet_native_greek
 		}
 		desc = ab_punic.4.d1
 	}
 	desc = {
 		trigger = {
-			any_country = {
-				culture_group = punic_g
-				capital_scope = {
-					has_discovered = ROOT
-				}
-			}
+			has_country_flag = europe_meet_native_punic
 		}
 		desc = ab_punic.4.d2
 	}
 	picture = DHOW_AT_SEA_eventPicture
 
-	fire_only_once = yes
-	
-	trigger = {
-		any_country = {
-			OR = {
-				culture_group = eastern_algonquian
-				culture_group = punic_g
-			}
-			capital_scope = {
-				has_discovered = ROOT
-			}
-		}
-		capital_scope = {
-			OR = {
-				continent = europe
-				region = maghreb_region
-				region = egypt_region
-			}
-		}
-		NOT = { has_global_flag = europe_discovered_punics }
-		has_global_flag = new_world_discovered
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = {
-					OR = {
-						culture_group = eastern_algonquian
-						culture_group = punic_g
-					}
-					capital_scope = {
-						has_discovered = ROOT
-					}
-				}
-				set_country_flag = europe_discovered_punics_native_tag
-				save_event_target_as = discoveredCountry
-			}
-			set_country_flag = europe_discovered_punics_europe_tag
 			set_global_flag = europe_discovered_punics
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = europe_meet_native_punic
+			clr_country_flag = europe_meet_native_greek
 		}
 	}
 
@@ -283,7 +233,7 @@ country_event = {
 			NOT = {
 				AND = {
 					tag = BYZ
-					event_target:discoveredCountry = {
+					event_target:discoveredCountry_NA = {
 						culture_group = punic_g
 					}
 				}
@@ -291,7 +241,7 @@ country_event = {
 		}
 		ai_chance = { factor = 100 }
 		add_treasury = -200
-		event_target:discoveredCountry = {
+		event_target:discoveredCountry_NA = {
 			set_country_flag = pun_receive_colonizer_gift
 			country_event = {
 				id = ab_punic.5
@@ -302,7 +252,7 @@ country_event = {
 	option = {
 		name = ab_punic.4.b
 		ai_chance = { factor = 0 }
-		event_target:discoveredCountry = {
+		event_target:discoveredCountry_NA = {
 			country_event = {
 				id = ab_punic.5
 			}
@@ -515,23 +465,13 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = {
-					has_country_flag = europe_discovered_punics_europe_tag
-				}
+			event_target:discoveredCountry_EU = {
 				capital_scope = {
 					ROOT = {
 						discover_province = PREV
 					}
 					save_event_target_as = capitalProv
 				}
-				save_event_target_as = europeTag
-			}
-			random_country = {
-				limit = {
-					has_country_flag = europe_discovered_punics_native_tag
-				}
-				save_event_target_as = nativeTag
 			}
 		}
 	}
@@ -557,23 +497,13 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = {
-					has_country_flag = europe_discovered_punics_europe_tag
-				}
-				save_event_target_as = europeTag
-			}
-			random_country = {
-				limit = {
-					has_country_flag = europe_discovered_punics_native_tag
-				}
+			event_target:discoveredCountry_NA = {
 				capital_scope = {
 					ROOT = {
 						discover_province = PREV
 					}
 					save_event_target_as = capitalProv
 				}
-				save_event_target_as = nativeTag
 			}
 		}
 	}
@@ -597,25 +527,7 @@ country_event = {
 	
 	fire_only_once = yes
 	
-	trigger = {
-		any_province = {
-			OR = {
-				continent = north_america
-				continent = south_america
-			}
-			is_city = yes
-			trade_goods = gold
-			has_discovered = ROOT
-		}
-		capital_scope = {
-			OR = {
-				continent = europe
-				region = maghreb_region
-				region = egypt_region
-			}
-		}
-		has_global_flag = new_world_discovered
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
@@ -742,28 +654,7 @@ country_event = {
 	
 	is_triggered_only = yes
 
-	immediate = {
-		hidden_effect = {
-			random_province = {
-				limit = {
-					superregion = north_america_superregion
-					is_city = yes
-					owner = {
-						capital_scope = {
-							OR = {
-								continent = europe
-								region = maghreb_region
-								region = egypt_region
-							}
-						}
-					}
-				}
-				save_event_target_as = colonyProv
-			}
-		}
-	}
-
-	goto = colonyProv
+	goto = europeanFirstColony
 	
 	option = {
 		name = ab_punic.13.a
@@ -785,27 +676,16 @@ country_event = {
 
 	hidden = yes
 
-	trigger = {
-		calc_true_if = {
-			amount = 10
-			all_province = {
-				continent = north_america
-				is_city = yes
-				owner = {
-					OR = {
-						technology_group = western
-						technology_group = eastern
-						technology_group = muslim
-					}
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_punic.14.a
 		set_global_flag = plague_gray_fever_enabled
 		set_global_flag = north_america_european_threat
+		set_variable = {
+			which = punic_league_base
+			value = 0.5
+		}
 		every_country = {
 			limit = {
 				technology_group = north_american
@@ -867,28 +747,15 @@ country_event = {
 	desc = ab_punic.16.d
 	picture = POPE_PREACHING_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	hidden = yes
-
-	trigger = {
-		ADU = {
-			OR = {
-				num_of_colonists = 1
-				has_idea_group = exploration_ideas
-				has_idea_group = expansion_ideas
-			}
-		}
-		had_global_flag = {
-			flag = new_world_discovered
-			days = 1825
-		}
-	}
 	
 	option = {
 		name = ab_punic.16.a
 		every_country = {
 			limit = {
+				ai = no
 				capital_scope = {
 					continent = europe
 				}
@@ -916,6 +783,36 @@ country_event = {
 	}
 }
 
+#Punic League Calculation
+country_event = {
+	id = ab_punic.18
+	title = ab_punic.18.t
+	desc = ab_punic.18.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.18
+				days = 30
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.18.a
+		ab_punic_league_calc_effect = yes
+	}
+}
+
 #AI Earlier Colonization Buff
 country_event = {
 	id = ab_punic.19
@@ -934,15 +831,22 @@ country_event = {
 			name = punic_earlier_ai_colonization
 			duration = 12775
 		}
-		every_province = {
-			limit = {
-				OR = {
-					region = carribeans_region
-					area = macaronesia_area
-					area = greenland_area
-					area = newfoundland_area
-				}
+		carribeans_region = {
+			ROOT = {
+				discover_province = PREV
 			}
+		}
+		macaronesia_area = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+		greenland_area = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+		newfoundland_area = {
 			ROOT = {
 				discover_province = PREV
 			}
@@ -983,24 +887,24 @@ country_event = {
 					value = -65
 				}
 				random_list = {
-					40 = {
+					60 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
 							}
 						}
 					}
-					40 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.24
 							}
 						}
 					}
-					20 = {
+					10 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1018,7 +922,7 @@ country_event = {
 					value = -50
 				}
 				random_list = {
-					30 = {
+					45 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
@@ -1032,10 +936,10 @@ country_event = {
 							}
 						}
 					}
-					35 = {
+					20 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1047,24 +951,24 @@ country_event = {
 					value = -40
 				}
 				random_list = {
-					20 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
 							}
 						}
 					}
-					30 = {
+					40 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.24
 							}
 						}
 					}
-					50 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1084,24 +988,24 @@ country_event = {
 					value = -80
 				}
 				random_list = {
-					40 = {
+					60 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
 							}
 						}
 					}
-					40 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.24
 							}
 						}
 					}
-					20 = {
+					10 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1119,7 +1023,7 @@ country_event = {
 					value = -65
 				}
 				random_list = {
-					30 = {
+					45 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
@@ -1133,10 +1037,10 @@ country_event = {
 							}
 						}
 					}
-					35 = {
+					20 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1148,24 +1052,24 @@ country_event = {
 					value = -50
 				}
 				random_list = {
-					20 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.21
 							}
 						}
 					}
-					30 = {
+					40 = {
 						event_target:assassinationTarget = {
 							country_event = {
 								id = ab_punic.24
 							}
 						}
 					}
-					50 = {
+					30 = {
 						event_target:assassinationTarget = {
 							country_event = {
-								id = ab_punic.21
+								id = ab_punic.27
 							}
 						}
 					}
@@ -1526,6 +1430,10 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
+			set_variable = {
+				which = election_point
+				value = 0
+			}
 			if = {
 				limit = {
 					mission_completed = ctg_line_of_leadership
@@ -1533,12 +1441,6 @@ country_event = {
 				set_variable = {
 					which = election_point
 					value = 20
-				}
-			}
-			else = {
-				set_variable = {
-					which = election_point
-					value = 0
 				}
 			}
 		}
@@ -1684,6 +1586,10 @@ country_event = {
 	is_triggered_only = yes
 
 	major = yes
+
+	major_trigger = {
+		technology_group = north_american
+	}
 	
 	option = {
 		name = ab_punic.33.a
@@ -1700,7 +1606,7 @@ country_event = {
 		name = ab_punic.33.b
 		trigger = {
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_2 }
+				has_country_flag = punic_league_reform_passed_1
 			}
 		}
 		ai_chance = { factor = 10 }
@@ -1711,7 +1617,7 @@ country_event = {
 		name = ab_punic.33.c
 		trigger = {
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_3 }
+				has_country_flag = punic_league_reform_passed_2
 			}
 		}
 		ai_chance = { factor = 10 }
@@ -1722,7 +1628,7 @@ country_event = {
 		name = ab_punic.33.e
 		trigger = {
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_4 }
+				has_country_flag = punic_league_reform_passed_3
 			}
 		}
 		ai_chance = { factor = 10 }
@@ -1733,7 +1639,7 @@ country_event = {
 		name = ab_punic.33.f
 		trigger = {
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_5 }
+				has_country_flag = punic_league_reform_passed_4
 			}
 		}
 		ai_chance = { factor = 10 }
@@ -1744,7 +1650,7 @@ country_event = {
 		name = ab_punic.33.g
 		trigger = {
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_6 }
+				has_country_flag = punic_league_reform_passed_5
 			}
 		}
 		ai_chance = { factor = 10 }
@@ -1756,7 +1662,7 @@ country_event = {
 		trigger = {
 			has_global_flag = north_america_european_threat
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_7 }
+				has_country_flag = punic_league_reform_passed_6
 			}
 		}
 		ai_chance = { factor = 25 }
@@ -1768,7 +1674,7 @@ country_event = {
 		trigger = {
 			has_global_flag = north_america_european_threat
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_8 }
+				has_country_flag = punic_league_reform_passed_7
 			}
 		}
 		ai_chance = { factor = 25 }
@@ -1780,7 +1686,7 @@ country_event = {
 		trigger = {
 			has_global_flag = north_america_european_threat
 			REB = {
-				NOT = { has_country_flag = punic_league_reform_passed_9 }
+				has_country_flag = punic_league_reform_passed_8
 			}
 		}
 		ai_chance = { factor = 25 }
@@ -1792,14 +1698,6 @@ country_event = {
 		trigger = {
 			has_global_flag = north_america_european_threat
 			REB = {
-                has_country_flag = punic_league_reform_passed_1
-                has_country_flag = punic_league_reform_passed_2
-                has_country_flag = punic_league_reform_passed_3
-                has_country_flag = punic_league_reform_passed_4
-                has_country_flag = punic_league_reform_passed_5
-                has_country_flag = punic_league_reform_passed_6
-                has_country_flag = punic_league_reform_passed_7
-                has_country_flag = punic_league_reform_passed_8
                 has_country_flag = punic_league_reform_passed_9
             }
 		}
@@ -1913,13 +1811,7 @@ country_event = {
 	desc = ab_punic.36.d
 	picture = USA_EXPLORERS_eventPicture
 
-	fire_only_once = yes
-
-	hidden = yes
-	
-	trigger = {
-		is_year = 1448
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = ab_punic.36.a
@@ -2177,7 +2069,7 @@ country_event = {
 		change_price = {
 			trade_goods = coffee
 			key = "Smuggled Goods"
-			value = 0.025
+			value = 0.05
 			duration = 1825
 		}
 		add_country_modifier = {
@@ -2191,7 +2083,7 @@ country_event = {
 		change_price = {
 			trade_goods = incense
 			key = "Smuggled Goods"
-			value = 0.025
+			value = 0.05
 			duration = 1825
 		}
 		add_country_modifier = {
@@ -2205,7 +2097,7 @@ country_event = {
 		change_price = {
 			trade_goods = sugar
 			key = "Smuggled Goods"
-			value = 0.025
+			value = 0.05
 			duration = 1825
 		}
 		add_country_modifier = {
@@ -2219,7 +2111,7 @@ country_event = {
 		change_price = {
 			trade_goods = spices
 			key = "Smuggled Goods"
-			value = 0.025
+			value = 0.05
 			duration = 1825
 		}
 		add_country_modifier = {
@@ -2233,7 +2125,7 @@ country_event = {
 		change_price = {
 			trade_goods = cocoa
 			key = "Smuggled Goods"
-			value = 0.025
+			value = 0.05
 			duration = 1825
 		}
 		add_country_modifier = {
@@ -2348,10 +2240,10 @@ province_event = {
 		owner = {
 			culture_group = punic_g
 		}
+		NOT = { culture_group = punic_g }
 		any_friendly_coast_border_province = {
 			culture_group = punic_g
 		}
-		NOT = { culture_group = punic_g }
 		OR = {
 			AND = {
 				owner = {
@@ -2539,7 +2431,7 @@ country_event = {
 	}
 }
 
-#AI - Easima
+#AI - Plagues Open Border
 country_event = {
 	id = ab_punic.48
 	title = ab_punic.48.t
@@ -2550,35 +2442,17 @@ country_event = {
 	
 	trigger = {
 		ai = yes
-		has_country_modifier = punic_league_easima_mod
-		NOT = { has_global_flag = ab_disabled_punic_league }
-		is_at_war = no
-		REB = {
-			check_variable = {
-				which = punic_league_value
-				value = 50
-			}
-			NOT = {
-				AND = {
-					has_country_flag = punic_league_reform_passed_1
-					has_country_flag = punic_league_reform_passed_2
-					has_country_flag = punic_league_reform_passed_3
-					has_country_flag = punic_league_reform_passed_4
-					has_country_flag = punic_league_reform_passed_5
-					has_country_flag = punic_league_reform_passed_6
-				}
-			}
-			if = {
-				limit = {
-					has_global_flag = north_america_european_threat
-				}
-				NOT = {
-					AND = {
-						has_country_flag = punic_league_reform_passed_7
-						has_country_flag = punic_league_reform_passed_8
-						has_country_flag = punic_league_reform_passed_9
-						has_country_flag = punic_league_reform_passed_10
-					}
+		has_country_modifier = punic_plague_closed_border
+		NOT = { has_country_modifier = punic_plague_enforced_quarantine }
+		all_owned_province = {
+			NOT = { has_province_modifier = punic_pale_death_prov }
+			NOT = { has_province_modifier = punic_gray_fever_prov }
+		}
+		NOT = {
+			any_neighbor_province = {
+				OR = {
+					has_province_modifier = punic_pale_death_prov
+					has_province_modifier = punic_gray_fever_prov
 				}
 			}
 		}
@@ -2586,19 +2460,11 @@ country_event = {
 	
 	option = {
 		name = ab_punic.48.a
-		REB = {
-			subtract_variable = {
-				which = punic_league_value
-				value = 50
-			} 
-		}
-		country_event = {
-			id = ab_punic.33
-		}
+		remove_country_modifier = punic_plague_closed_border
 	}
 }
 
-#AI - Carthage
+#AI - Plagues Lift Quarantine
 country_event = {
 	id = ab_punic.49
 	title = ab_punic.49.t
@@ -2609,81 +2475,22 @@ country_event = {
 	
 	trigger = {
 		ai = yes
-		has_country_modifier = punic_league_easima_mod
-		NOT = { has_global_flag = ab_disabled_punic_league }
-		is_at_war = no
-		REB = {
-			check_variable = {
-				which = punic_league_value
-				value = 50
-			}
-			has_country_flag = punic_league_reform_passed_1
-			has_country_flag = punic_league_reform_passed_2
-			has_country_flag = punic_league_reform_passed_3
-			has_country_flag = punic_league_reform_passed_4
-			has_country_flag = punic_league_reform_passed_5
-			has_country_flag = punic_league_reform_passed_6
-			has_country_flag = punic_league_reform_passed_7
-			has_country_flag = punic_league_reform_passed_8
-			has_country_flag = punic_league_reform_passed_9
-			has_country_flag = punic_league_reform_passed_10
+		has_country_modifier = punic_plague_enforced_quarantine
+		all_owned_province = {
+			NOT = { has_province_modifier = punic_pale_death_prov }
+			NOT = { has_province_modifier = punic_gray_fever_prov }
 		}
 	}
 	
 	option = {
 		name = ab_punic.49.a
-		country_event = {
-			id = ab_punic.32
-		}
+		remove_country_modifier = punic_plague_enforced_quarantine
 	}
 }
-
-#AI - Plagues Close Border
-country_event = {
-	id = ab_punic.50
-	title = ab_punic.50.t
-	desc = ab_punic.50.d
-	picture = CULTURE_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		ai = yes
-		has_country_modifier = punic_league_easima_mod
-		NOT = { has_global_flag = ab_disabled_punic_league }
-		is_at_war = no
-		REB = {
-			check_variable = {
-				which = punic_league_value
-				value = 50
-			}
-			has_country_flag = punic_league_reform_passed_1
-			has_country_flag = punic_league_reform_passed_2
-			has_country_flag = punic_league_reform_passed_3
-			has_country_flag = punic_league_reform_passed_4
-			has_country_flag = punic_league_reform_passed_5
-			has_country_flag = punic_league_reform_passed_6
-			has_country_flag = punic_league_reform_passed_7
-			has_country_flag = punic_league_reform_passed_8
-			has_country_flag = punic_league_reform_passed_9
-			has_country_flag = punic_league_reform_passed_10
-		}
-	}
-	
-	option = {
-		name = ab_punic.50.a
-	}
-}
-
-#AI - Plagues Open Border
-
-#AI - Plagues Enforce Quarantine
-
-#AI - Plagues Lift Quarantine
 
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden
-province_event = {
+country_event = {
 	id = ab_punic.1000
 	title = ab_punic.1000.t
 	desc = ab_punic.1000.d
@@ -2695,87 +2502,53 @@ province_event = {
 
 	trigger = {
 		NOT = { has_global_flag = AB_DISABLED_PLAGUES }
-		has_port = yes
-		continent = north_america
-		NOT = { region = carribeans_region }
-		NOT = { area = greenland_area }
-		owner = {
-			OR = {
-				technology_group = western
-				technology_group = eastern
-				technology_group = muslim
-			}
-		}
-		had_global_flag = {
-			flag = europe_discovered_punics
-			days = 3650
-		}
 		NOT = { has_global_flag = plague_pale_death }
+		is_colonial_nation = yes
+		capital_scope = {
+			continent = north_america
+			NOT = { region = carribeans_region }
+			NOT = { area = greenland_area }
+		}
 	}
 
 	mean_time_to_happen = {
 		months = 240
-		modifier = {
-			factor = 0.5
-			any_neighbor_province = {
-				owner = {
-					OR = {
-						technology_group = western
-						technology_group = eastern
-						technology_group = muslim
-					}
-				}
-			}
-		}
-		modifier = {
-			factor = 0.5
-			any_neighbor_province = {
-				owner = {
-					technology_group = north_american
-				}
-			}
-		}
 	}
 	
 	option = {
 		name = ab_punic.1000.a
 		set_global_flag = plague_pale_death
-		add_permanent_province_modifier = {
-			name = punic_pale_death_prov
-			duration = 1095
+		capital_scope = {
+			add_permanent_province_modifier = {
+				name = punic_pale_death_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
+			}
 		}
-		province_event = {
-			id = ab_punic.1034
-			days = 1095
+		set_country_flag = plague_pale_death_ground_zero
+		country_event = {
+			id = ab_punic.1002
+			days = 60
 		}
-		owner = {
+		overlord = {
 			set_country_flag = plague_pale_death_ground_zero
 			country_event = {
 				id = ab_punic.1002
 				days = 60
 			}
-			if = {
-				limit = {
-					is_colonial_nation = yes
-				}
-				overlord = {
-					set_country_flag = plague_pale_death_ground_zero
-					country_event = {
-						id = ab_punic.1002
-						days = 60
-					}
-				}
-			}
 		}
 		every_country = {
 			limit = {
+				ai = no
 				capital_scope = {
 					OR = {
 						continent = north_america
 						continent = south_america
 					}
 				}
-				NOT = { has_country_flag = plague_pale_death_ground_zero }
 			}
 			country_event = {
 				id = ab_punic.1002
@@ -2795,12 +2568,10 @@ province_event = {
 	hidden = yes
 
 	trigger = {
+		has_global_flag = plague_pale_death
 		NOT = { has_province_modifier = punic_pale_death_prov }
 		NOT = { has_province_modifier = punic_plague_doctor_immunity }
 		OR = {
-			any_neighbor_province = {
-				has_province_modifier = punic_pale_death_prov
-			}
 			any_friendly_coast_border_province = {
 				has_province_modifier = punic_pale_death_prov
 			}
@@ -2843,28 +2614,28 @@ province_event = {
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_pale_death
 				days = 2190
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_pale_death
 				days = 2555
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_pale_death
 				days = 2920
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_pale_death
 				days = 3285
@@ -2899,38 +2670,29 @@ province_event = {
 			}
 		}
 		modifier = {
-			factor = 4
+			factor = 3
 			owner = {
 				has_country_modifier = punic_plague_enforced_quarantine
 			}
 		}
 		modifier = {
-			factor = 4
+			factor = 3
 			owner = {
 				has_country_modifier = punic_plague_closed_border
 			}
-			all_neighbor_province = {
-				OR = {
-					AND = {
-						owned_by = ROOT
-						NOT = { has_province_modifier = punic_pale_death_prov }
-					}
-					NOT = { owned_by = ROOT }
-				}
-			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			has_tax_building_trigger = yes
 		}
 		modifier = {
-			factor = 5
+			factor = 10
 			owner = {
 				has_country_modifier = punic_pale_death_immunity
 			}
 		}
 		modifier = {
-			factor = 3
+			factor = 10
 			has_province_modifier = punic_plague_recently_infected
 		}
 	}
@@ -2952,6 +2714,51 @@ province_event = {
 			add_permanent_province_modifier = {
 				name = punic_pale_death_cope
 				duration = 1095
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_country_flag = plague_pale_death_contacted }
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+			}
+			province_event = {
+				id = ab_punic.1006
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					ai = yes
+					NOT = { has_country_modifier = punic_plague_closed_border }
+				}
+			}
+			owner = {
+				add_stability = -1
+				add_country_modifier = {
+					name = punic_plague_closed_border
+					duration = -1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					ai = yes
+					NOT = { has_country_modifier = punic_plague_enforced_quarantine }
+				}
+			}
+			owner = {
+				add_country_modifier = {
+					name = punic_plague_enforced_quarantine
+					duration = -1
+				}
 			}
 		}
 	}
@@ -2976,12 +2783,19 @@ country_event = {
 	picture = northamericagfx_PLAGUE_eventPicture
 	
 	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = plague_pale_death_ground_zero
+		}
+	}
 	
 	option = {
 		name = ab_punic.1002.a
 		custom_tooltip = PLAGUE_PALE_DEATH_TT
 		if = {
 			limit = {
+				NOT = { has_country_flag = plague_unlock_decisions }
 				capital_scope = {
 					OR = {
 						continent = north_america
@@ -2998,54 +2812,6 @@ country_event = {
 	}
 }
 
-#The Pale Death - Native First Nof
-country_event = {
-	id = ab_punic.1003
-	title = ab_punic.1003.t
-	desc = ab_punic.1003.d
-	picture = northamericagfx_FAMINE_eventPicture
-	
-	trigger = {
-		NOT = { has_country_flag = plague_pale_death_contacted }
-		capital_scope = {
-			continent = north_america
-		}
-		any_owned_province = {
-			has_province_modifier = punic_pale_death_prov
-		}
-		NOT = {
-			had_global_flag = {
-				flag = plague_pale_death
-				days = 365
-			}
-		}
-	}
-
-	immediate = {
-		hidden_effect = {
-			set_country_flag = plague_pale_death_contacted
-			random_owned_province = {
-				limit = {
-					has_province_modifier = punic_pale_death_prov
-				}
-				save_event_target_as = diseaseProv
-			}
-		}
-	}
-
-	goto = diseaseProv
-	
-	option = {
-		name = ab_punic.1003.a
-		event_target:diseaseProv = {
-			add_base_tax = -1
-			add_base_production = -1
-			add_base_manpower = -1
-			add_devastation = 25
-		}
-	}
-}
-
 #The Pale Death Died Out - Hidden
 country_event = {
 	id = ab_punic.1004
@@ -3059,10 +2825,13 @@ country_event = {
 	
 	trigger = {
 		has_global_flag = plague_pale_death
-		NOT = {
-			any_province = {
-				has_province_modifier = punic_pale_death_prov
-			}
+		north_america = {
+			type = all
+			NOT = { has_province_modifier = punic_pale_death_prov }
+		}
+		south_america = {
+			type = all
+			NOT = { has_province_modifier = punic_pale_death_prov }
 		}
 	}
 	
@@ -3071,10 +2840,16 @@ country_event = {
 		clr_global_flag = plague_pale_death
 		every_country = {
 			limit = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
+				OR = {
+					has_country_flag = plague_pale_death_contacted
+					AND = {
+						ai = no
+						capital_scope = {
+							OR = {
+								continent = north_america
+								continent = south_america
+							}
+						}
 					}
 				}
 			}
@@ -3096,8 +2871,19 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			clr_country_flag = plague_unlock_decisions
 			clr_country_flag = plague_pale_death_contacted
+			if = {
+				limit = {
+					ai = no
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
+				clr_country_flag = plague_unlock_decisions
+			}
 		}
 	}
 	
@@ -3108,53 +2894,47 @@ country_event = {
 }
 
 #The Pale Death Infected Our Country
-country_event = {
+province_event = {
 	id = ab_punic.1006
 	title = ab_punic.1006.t
 	desc = ab_punic.1006.d
 	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
 	
-	trigger = {
-		NOT = { has_country_flag = plague_pale_death_contacted }
-		capital_scope = {
-			continent = north_america
-		}
-		any_owned_province = {
-			has_province_modifier = punic_pale_death_prov
-		}
-		had_global_flag = {
-			flag = plague_pale_death
-			days = 365
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			set_country_flag = plague_pale_death_contacted
-			random_owned_province = {
-				limit = {
-					has_province_modifier = punic_pale_death_prov
-				}
-				save_event_target_as = diseaseProv
+			owner = {
+				set_country_flag = plague_pale_death_contacted
 			}
 		}
 	}
 
-	goto = diseaseProv
+	goto = ROOT
 	
 	option = {
 		name = ab_punic.1006.a
-		event_target:diseaseProv = {
-			add_base_tax = -1
-			add_base_production = -1
-			add_base_manpower = -1
-			add_devastation = 25
+		add_base_tax = -1
+		add_base_production = -1
+		add_base_manpower = -1
+		add_devastation = 25
+		if = {
+			limit = {
+				owner = {
+					ai = no
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			owner = {
+				set_country_flag = plague_unlock_decisions
+			}
+			custom_tooltip = PLAGUE_UNLOCK_DECISIONS
 		}
 	}
 }
 
 #The Gray Fever Appear In Europe - Hidden
-province_event = {
+country_event = {
 	id = ab_punic.1007
 	title = ab_punic.1007.t
 	desc = ab_punic.1007.d
@@ -3166,11 +2946,12 @@ province_event = {
 
 	trigger = {
 		NOT = { has_global_flag = AB_DISABLED_PLAGUES }
-		has_port = yes
-		continent = europe
-		NOT = { area = subarctic_islands_area }
-		has_global_flag = plague_gray_fever_enabled
 		NOT = { has_global_flag = plague_gray_fever }
+		has_global_flag = plague_gray_fever_enabled
+		num_of_colonists = 1
+		capital_scope = {
+			continent = europe
+		}
 	}
 
 	mean_time_to_happen = {
@@ -3262,290 +3043,128 @@ province_event = {
 	option = {
 		name = ab_punic.1007.a
 		set_global_flag = plague_gray_fever
-		add_permanent_province_modifier = {
-			name = punic_gray_fever_prov
-			duration = 1095
+		capital_scope = {
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
+			}
 		}
-		province_event = {
-			id = ab_punic.1034
-			days = 1095
-		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = iberia_region
-					owner = {
-						capital_scope = {
-							region = iberia_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = iberia_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = iberia_region
-					owner = {
-						capital_scope = {
-							region = iberia_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = france_region
-					owner = {
-						capital_scope = {
-							region = france_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = france_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = france_region
-					owner = {
-						capital_scope = {
-							region = france_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = british_isles_region
-					owner = {
-						capital_scope = {
-							region = british_isles_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = british_isles_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = british_isles_region
-					owner = {
-						capital_scope = {
-							region = british_isles_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = low_countries_region
-					owner = {
-						capital_scope = {
-							region = low_countries_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = low_countries_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = low_countries_region
-					owner = {
-						capital_scope = {
-							region = low_countries_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = scandinavia_region
-					owner = {
-						capital_scope = {
-							region = scandinavia_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = scandinavia_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = scandinavia_region
-					owner = {
-						capital_scope = {
-							region = scandinavia_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
-		if = {
+		random_province = {
 			limit = {
-				any_province = {
-					has_port = yes
-					region = maghreb_region
-					owner = {
-						capital_scope = {
-							region = maghreb_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
+				region = maghreb_region
+				has_port = yes
+				owner = {
+					num_of_colonists = 1
 				}
 			}
-			random_province = {
-				limit = {
-					has_port = yes
-					region = maghreb_region
-					owner = {
-						capital_scope = {
-							region = maghreb_region
-						}
-						OR = {
-							num_of_colonists = 1
-							has_idea_group = exploration_ideas
-							has_idea_group = expansion_ideas
-						}
-						NOT = { tag = ROOT }
-					}
-				}
-				add_permanent_province_modifier = {
-					name = punic_gray_fever_prov
-					duration = 1095
-				}
-				province_event = {
-					id = ab_punic.1034
-					days = 1095
-				}
+			add_permanent_province_modifier = {
+				name = punic_gray_fever_prov
+				duration = 1095
+			}
+			province_event = {
+				id = ab_punic.1034
+				days = 1095
 			}
 		}
 		every_country = {
 			limit = {
-				OR = {
-					capital_scope = {
-						OR = {
-							continent = europe
-							region = maghreb_region
-							region = egypt_region
-							region = mashriq_region
-						}
+				ai = no
+				capital_scope = {
+					OR = {
+						continent = europe
+						region = maghreb_region
+						region = egypt_region
+						region = mashriq_region
 					}
-					has_country_flag = plague_gray_fever_contacted
 				}
 			}
 			country_event = {
@@ -3566,15 +3185,11 @@ province_event = {
 	hidden = yes
 
 	trigger = {
+		has_global_flag = plague_gray_fever
 		NOT = { has_province_modifier = punic_gray_fever_prov }
 		NOT = { has_province_modifier = punic_plague_doctor_immunity }
-		OR = {
-			any_neighbor_province = {
-				has_province_modifier = punic_gray_fever_prov
-			}
-			any_friendly_coast_border_province = {
-				has_province_modifier = punic_gray_fever_prov
-			}
+		any_friendly_coast_border_province = {
+			has_province_modifier = punic_gray_fever_prov
 		}
 	}
 
@@ -3609,28 +3224,28 @@ province_event = {
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_gray_fever
 				days = 2190
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_gray_fever
 				days = 2555
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_gray_fever
 				days = 2920
 			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			had_global_flag = {
 				flag = plague_gray_fever
 				days = 3285
@@ -3675,28 +3290,19 @@ province_event = {
 			owner = {
 				has_country_modifier = punic_plague_closed_border
 			}
-			all_neighbor_province = {
-				OR = {
-					AND = {
-						owned_by = ROOT
-						NOT = { has_province_modifier = punic_gray_fever_prov }
-					}
-					NOT = { owned_by = ROOT }
-				}
-			}
 		}
 		modifier = {
-			factor = 1.25
+			factor = 2
 			has_tax_building_trigger = yes
 		}
 		modifier = {
-			factor = 5
+			factor = 10
 			owner = {
 				has_country_modifier = punic_gray_fever_immunity
 			}
 		}
 		modifier = {
-			factor = 3
+			factor = 10
 			has_province_modifier = punic_plague_recently_infected
 		}
 	}
@@ -3720,6 +3326,49 @@ province_event = {
 				duration = 1095
 			}
 		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_country_flag = plague_gray_fever_contacted }
+					capital_scope = {
+						NOT = { continent = north_america }
+						NOT = { continent = south_america }
+					}
+				}
+			}
+			province_event = {
+				id = ab_punic.1013
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					ai = yes
+					NOT = { has_country_modifier = punic_plague_closed_border }
+				}
+			}
+			owner = {
+				add_stability = -1
+				add_country_modifier = {
+					name = punic_plague_closed_border
+					duration = -1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					ai = yes
+					NOT = { has_country_modifier = punic_plague_enforced_quarantine }
+				}
+			}
+			owner = {
+				add_country_modifier = {
+					name = punic_plague_enforced_quarantine
+					duration = -1
+				}
+			}
+		}
 	}
 }
 
@@ -3735,56 +3384,16 @@ country_event = {
 	option = {
 		name = ab_punic.1009.a
 		custom_tooltip = PLAGUE_GRAY_FEVER_TT
-		custom_tooltip = AB_EMPTY
-		set_country_flag = plague_unlock_decisions
-		custom_tooltip = PLAGUE_UNLOCK_DECISIONS
+		if = {
+			limit = {
+				NOT = { has_country_flag = plague_unlock_decisions }
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = plague_unlock_decisions
+			custom_tooltip = PLAGUE_UNLOCK_DECISIONS
+		}
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = PLAGUE_CHURCH_NEGATED_TT
-	}
-}
-
-#The Gray Fever - First Nof
-country_event = {
-	id = ab_punic.1010
-	title = ab_punic.1010.t
-	desc = ab_punic.1010.d
-	picture = FAMINE_eventPicture
-	
-	trigger = {
-		NOT = { has_country_flag = plague_gray_fever_contacted }
-		any_owned_province = {
-			has_province_modifier = punic_gray_fever_prov
-		}
-		NOT = {
-			had_global_flag = {
-				flag = plague_gray_fever
-				days = 365
-			}
-		}
-	}
-
-	immediate = {
-		hidden_effect = {
-			set_country_flag = plague_gray_fever_contacted
-			random_owned_province = {
-				limit = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-				save_event_target_as = diseaseProv
-			}
-		}
-	}
-
-	goto = diseaseProv
-	
-	option = {
-		name = ab_punic.1010.a
-		event_target:diseaseProv = {
-			add_base_tax = -1
-			add_base_production = -1
-			add_base_manpower = -1
-			add_devastation = 15
-		}
 	}
 }
 
@@ -3801,10 +3410,17 @@ country_event = {
 	
 	trigger = {
 		has_global_flag = plague_gray_fever
-		NOT = {
-			any_province = {
-				has_province_modifier = punic_gray_fever_prov
-			}
+		europe = {
+			type = all
+			NOT = { has_province_modifier = punic_gray_fever_prov }
+		}
+		africa = {
+			type = all
+			NOT = { has_province_modifier = punic_gray_fever_prov }
+		}
+		asia = {
+			type = all
+			NOT = { has_province_modifier = punic_gray_fever_prov }
 		}
 	}
 	
@@ -3814,15 +3430,18 @@ country_event = {
 		every_country = {
 			limit = {
 				OR = {
-					capital_scope = {
-						OR = {
-							continent = europe
-							region = maghreb_region
-							region = egypt_region
-							region = mashriq_region
+					has_country_flag = plague_gray_fever_contacted
+					AND = {
+						ai = no
+						capital_scope = {
+							OR = {
+								continent = europe
+								region = maghreb_region
+								region = egypt_region
+								region = mashriq_region
+							}
 						}
 					}
-					has_country_flag = plague_gray_fever_contacted
 				}
 			}
 			country_event = {
@@ -3843,8 +3462,17 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			clr_country_flag = plague_unlock_decisions
 			clr_country_flag = plague_gray_fever_contacted
+			if = {
+				limit = {
+					ai = no
+					capital_scope = {
+						NOT = { continent = north_america }
+						NOT = { continent = south_america }
+					}
+				}
+				clr_country_flag = plague_unlock_decisions
+			}
 		}
 	}
 	
@@ -3855,31 +3483,18 @@ country_event = {
 }
 
 #The Gray Fever Infected Our Country
-country_event = {
+province_event = {
 	id = ab_punic.1013
 	title = ab_punic.1013.t
 	desc = ab_punic.1013.d
 	picture = COUNTRY_COLLAPSE_eventPicture
 	
-	trigger = {
-		NOT = { has_country_flag = plague_gray_fever_contacted }
-		any_owned_province = {
-			has_province_modifier = punic_gray_fever_prov
-		}
-		had_global_flag = {
-			flag = plague_gray_fever
-			days = 365
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
-			set_country_flag = plague_gray_fever_contacted
-			random_owned_province = {
-				limit = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-				save_event_target_as = diseaseProv
+			owner = {
+				set_country_flag = plague_gray_fever_contacted
 			}
 		}
 	}
@@ -3896,10 +3511,14 @@ country_event = {
 		}
 		if = {
 			limit = {
-				NOT = { has_country_flag = plague_unlock_decisions }
+				owner = {
+					ai = no
+				}
 			}
 			custom_tooltip = AB_EMPTY
-			set_country_flag = plague_unlock_decisions
+			owner = {
+				set_country_flag = plague_unlock_decisions
+			}
 			custom_tooltip = PLAGUE_UNLOCK_DECISIONS
 		}
 	}
@@ -3916,30 +3535,8 @@ country_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			AND = {
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -3964,7 +3561,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1014.a
-		add_yearly_manpower = -2
+		add_yearly_manpower = -0.5
 	}
 }
 
@@ -3979,32 +3576,8 @@ country_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-				NOT = { has_country_modifier = punic_pale_death_immunity }
-			}
-			AND = {
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-				NOT = { has_country_modifier = punic_gray_fever_immunity }
-			}
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -4022,29 +3595,8 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			if = {
-				limit = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				random_owned_province = {
-					limit = {
-						has_province_modifier = punic_pale_death_prov
-					}
-					save_event_target_as = diseaseProv
-				}
-			}
-			else = {
-				random_owned_province = {
-					limit = {
-						has_province_modifier = punic_gray_fever_prov
-					}
-					save_event_target_as = diseaseProv
-				}
+			random_owned_province = {
+				save_event_target_as = diseaseProv
 			}
 		}
 	}
@@ -4054,15 +3606,15 @@ country_event = {
 	option = {
 		name = ab_punic.1015.a
 		ai_chance = { factor = 40 }
-		add_years_of_income = -0.25
-		add_yearly_manpower = -1
+		add_years_of_income = -0.125
+		add_yearly_manpower = -0.5
 		random_list = {
-			10 = {
+			30 = {
 				country_event = {
 					id = ab_punic.1016
 				}
 			}
-			90 = {
+			70 = {
 				country_event = {
 					id = ab_punic.1017
 				}
@@ -4076,7 +3628,7 @@ country_event = {
 		add_prestige = -10
 		event_target:diseaseProv = {
 			add_nationalism = 5
-			add_local_autonomy = 25
+			add_local_autonomy = 15
 		}
 	}
 }
@@ -4158,7 +3710,7 @@ country_event = {
 	option = {
 		name = ab_punic.1017.a
 		add_years_of_income = -0.05
-		add_yearly_manpower = -0.25
+		add_yearly_manpower = -0.125
 	}
 }
 
@@ -4173,30 +3725,8 @@ country_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			AND = {
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -4248,7 +3778,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1018.a
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 30 }
 		custom_tooltip = PLAGUE_ALL_PROV_POPULATION_DIE
 		hidden_effect = {
 			event_target:diseaseProv = {
@@ -4263,7 +3793,7 @@ country_event = {
 	option = {
 		name = ab_punic.1018.b
 		ai_chance = {
-			factor = 90
+			factor = 70
 			modifier = {
 				factor = 0
 				OR = {
@@ -4274,56 +3804,33 @@ country_event = {
 			}
 		}
 		event_target:diseaseProv = {
-			if = {
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			random_neighbor_province = {
 				limit = {
-					development = 20
-				}
-				add_base_tax = -2
-				add_base_production = -2
-				add_base_manpower = -2
-			}
-			else = {
-				add_base_tax = -1
-				add_base_production = -1
-				add_base_manpower = -1
-			}
-			if = {
-				limit = {
-					any_neighbor_province = {
-						owned_by = ROOT
-						NOT = {
-							OR = {
-								has_province_modifier = punic_pale_death_prov
-								has_province_modifier = punic_gray_fever_prov
-							}
+					owned_by = ROOT
+					NOT = {
+						OR = {
+							has_province_modifier = punic_pale_death_prov
+							has_province_modifier = punic_gray_fever_prov
 						}
 					}
 				}
-				random_neighbor_province = {
-					limit = {
-						owned_by = ROOT
-						NOT = {
-							OR = {
-								has_province_modifier = punic_pale_death_prov
-								has_province_modifier = punic_gray_fever_prov
-							}
+				random_list = {
+					15 = {
+						province_event = {
+							id = ab_punic.1019
 						}
 					}
-					random_list = {
-						25 = {
-							province_event = {
-								id = ab_punic.1019
-							}
-						}
-						75 = { }
-					}
+					85 = { }
 				}
 			}
 		}
 	}
 }
 
-#Pulse - Surge in Cases - Spread of the Plague
+#Pulse - Spread of the Plague
 province_event = {
 	id = ab_punic.1019
 	title = ab_punic.1019.t
@@ -4354,6 +3861,22 @@ province_event = {
 						duration = 1095
 					}
 				}
+				if = {
+					limit = {
+						owner = {
+							NOT = { has_country_flag = plague_pale_death_contacted }
+							capital_scope = {
+								OR = {
+									continent = north_america
+									continent = south_america
+								}
+							}
+						}
+					}
+					province_event = {
+						id = ab_punic.1006
+					}
+				}
 			}
 			else = {
 				add_permanent_province_modifier = {
@@ -4367,6 +3890,20 @@ province_event = {
 					add_permanent_province_modifier = {
 						name = punic_gray_fever_cope
 						duration = 1095
+					}
+				}
+				if = {
+					limit = {
+						owner = {
+							NOT = { has_country_flag = plague_gray_fever_contacted }
+							capital_scope = {
+								NOT = { continent = north_america }
+								NOT = { continent = south_america }
+							}
+						}
+					}
+					province_event = {
+						id = ab_punic.1013
 					}
 				}
 			}
@@ -4435,30 +3972,8 @@ country_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			AND = {
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -4475,9 +3990,9 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1020.a
-		add_adm_power = -50
-		add_dip_power = -50
-		add_mil_power = -50
+		add_adm_power = -25
+		add_dip_power = -25
+		add_mil_power = -25
 	}
 }
 
@@ -4492,35 +4007,8 @@ country_event = {
 
 	trigger = {
 		OR = {
-			AND = {
-				capital_scope = {
-					OR = {
-						continent = north_america
-						continent = south_america
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_pale_death_prov
-				}
-			}
-			AND = {
-				NOT = {
-					capital_scope = {
-						OR = {
-							continent = north_america
-							continent = south_america
-						}
-					}
-				}
-				any_owned_province = {
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
-		}
-		OR = {
-			has_adm_advisor = yes
-			has_dip_advisor = yes
-			has_mil_advisor = yes
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -4551,6 +4039,10 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
+		OR = {
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
+		}
 		capital_scope = {
 			OR = {
 				has_province_modifier = punic_pale_death_prov
@@ -4572,49 +4064,25 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1022.a
-		ai_chance = { factor = 75 }
-		add_years_of_income = -0.5
+		ai_chance = { factor = 85 }
+		add_years_of_income = -0.25
 		random_list = {
-			25 = {
-				country_event = {
-					id = ab_punic.1023
-				}
+			20 = {
+				kill_ruler = yes
 			}
-			75 = { }
+			80 = { }
 		}
 	}
 
 	option = {
 		name = ab_punic.1022.b
-		ai_chance = { factor = 25 }
+		ai_chance = { factor = 15 }
 		random_list = {
 			50 = {
-				country_event = {
-					id = ab_punic.1023
-				}
+				kill_ruler = yes
 			}
 			50 = { }
 		}
-	}
-}
-
-#Pulse - The Plague Hit Our Ruler - The Ruler Passed Away
-country_event = {
-	id = ab_punic.1023
-	title = ab_punic.1023.t
-	desc = ab_punic.1023.d
-	picture = DEATH_OF_HEIR_eventPicture
-
-	is_triggered_only = yes
-
-	immediate = {
-		hidden_effect = {
-			kill_ruler = yes
-		}
-	}
-	
-	option = {
-		name = ab_punic.1023.a
 	}
 }
 
@@ -4629,22 +4097,8 @@ country_event = {
 
 	trigger = {
 		has_country_modifier = punic_plague_closed_border
-		any_owned_province = {
-			NOT = {
-				OR = {
-					has_province_modifier = punic_pale_death_prov
-					has_province_modifier = punic_gray_fever_prov
-					has_province_modifier = punic_plague_recently_infected
-				}
-			}
-			any_neighbor_province = {
-				NOT = { owned_by = ROOT }
-				OR = {
-					has_province_modifier = punic_pale_death_prov
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
-		}
+		NOT = { has_country_flag = plague_pale_death_contacted }
+		NOT = { has_country_flag = plague_gray_fever_contacted }
 	}
 
 	mean_time_to_happen = {
@@ -4655,12 +4109,6 @@ country_event = {
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
-					NOT = {
-						OR = {
-							has_province_modifier = punic_pale_death_prov
-							has_province_modifier = punic_gray_fever_prov
-						}
-					}
 					any_neighbor_province = {
 						NOT = { owned_by = ROOT }
 						OR = {
@@ -4673,40 +4121,43 @@ country_event = {
 			}
 		}
 	}
-
-	goto = diseaseProv
 	
 	option = {
 		name = ab_punic.1024.a
-		ai_chance = { factor = 60 }
-		add_years_of_income = 0.5
+		ai_chance = { factor = 0 }
+		add_years_of_income = 0.25
 		if = {
 			limit = {
-				OR = {
-					has_country_modifier = punic_pale_death_immunity
-					has_country_modifier = punic_gray_fever_immunity
+				has_saved_event_target = diseaseProv
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_modifier = punic_pale_death_immunity
+						has_country_modifier = punic_gray_fever_immunity
+					}
+				}
+				event_target:diseaseProv = {
+					random_list = {
+						20 = {
+							province_event = {
+								id = ab_punic.1019
+							}
+						}
+						80 = { }
+					}
 				}
 			}
-			event_target:diseaseProv = {
-				random_list = {
-					25 = {
-						province_event = {
-							id = ab_punic.1019
+			else = {
+				event_target:diseaseProv = {
+					random_list = {
+						40 = {
+							province_event = {
+								id = ab_punic.1019
+							}
 						}
+						60 = { }
 					}
-					75 = { }
-				}
-			}
-		}
-		else = {
-			event_target:diseaseProv = {
-				random_list = {
-					50 = {
-						province_event = {
-							id = ab_punic.1019
-						}
-					}
-					50 = { }
 				}
 			}
 		}
@@ -4714,34 +4165,39 @@ country_event = {
 
 	option = {
 		name = ab_punic.1024.b
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 100 }
 		if = {
 			limit = {
-				OR = {
-					has_country_modifier = punic_pale_death_immunity
-					has_country_modifier = punic_gray_fever_immunity
+				has_saved_event_target = diseaseProv
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_modifier = punic_pale_death_immunity
+						has_country_modifier = punic_gray_fever_immunity
+					}
+				}
+				event_target:diseaseProv = {
+					random_list = {
+						1 = {
+							province_event = {
+								id = ab_punic.1019
+							}
+						}
+						99 = { }
+					}
 				}
 			}
-			event_target:diseaseProv = {
-				random_list = {
-					1 = {
-						province_event = {
-							id = ab_punic.1019
+			else = {
+				event_target:diseaseProv = {
+					random_list = {
+						20 = {
+							province_event = {
+								id = ab_punic.1019
+							}
 						}
+						80 = { }
 					}
-					99 = { }
-				}
-			}
-		}
-		else = {
-			event_target:diseaseProv = {
-				random_list = {
-					25 = {
-						province_event = {
-							id = ab_punic.1019
-						}
-					}
-					75 = { }
 				}
 			}
 		}
@@ -4759,12 +4215,8 @@ country_event = {
 
 	trigger = {
 		has_country_modifier = punic_plague_closed_border
-		NOT = {
-			OR = {
-				has_country_modifier = punic_disrupted_trade
-				has_country_modifier = punic_severe_disrupted_trade
-			}
-		}
+		NOT = { has_country_modifier = punic_disrupted_trade }
+		NOT = { has_country_modifier = punic_severe_disrupted_trade }
 	}
 
 	mean_time_to_happen = {
@@ -4773,9 +4225,9 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1025.a
-		ai_chance = { factor = 60 }
-		add_yearly_manpower = -0.25
-		add_dip_power = -100
+		ai_chance = { factor = 70 }
+		add_yearly_manpower = -0.125
+		add_dip_power = -50
 		add_country_modifier = {
 			name = punic_disrupted_trade
 			duration = 3650
@@ -4784,7 +4236,7 @@ country_event = {
 
 	option = {
 		name = ab_punic.1025.b
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 30 }
 		add_country_modifier = {
 			name = punic_severe_disrupted_trade
 			duration = 3650
@@ -4803,25 +4255,8 @@ country_event = {
 
 	trigger = {
 		has_country_modifier = punic_plague_closed_border
-		any_owned_province = {
-			NOT = {
-				OR = {
-					has_province_modifier = punic_pale_death_prov
-					has_province_modifier = punic_gray_fever_prov
-					has_province_modifier = punic_plague_recently_infected
-				}
-			}
-			any_neighbor_province = {
-				NOT = { owned_by = ROOT }
-				base_tax = 2
-				base_production = 2
-				base_manpower = 2
-				OR = {
-					has_province_modifier = punic_pale_death_prov
-					has_province_modifier = punic_gray_fever_prov
-				}
-			}
-		}
+		NOT = { has_country_flag = plague_pale_death_contacted }
+		NOT = { has_country_flag = plague_gray_fever_contacted }
 	}
 
 	mean_time_to_happen = {
@@ -4832,12 +4267,6 @@ country_event = {
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
-					NOT = {
-						OR = {
-							has_province_modifier = punic_pale_death_prov
-							has_province_modifier = punic_gray_fever_prov
-						}
-					}
 					any_neighbor_province = {
 						NOT = { owned_by = ROOT }
 						base_tax = 2
@@ -4871,79 +4300,62 @@ country_event = {
 	
 	option = {
 		name = ab_punic.1026.a
-		ai_chance = {
-			factor = 60
-			modifier = {
-				factor = 0
-				OR = {
-					ruler_has_personality = cruel_personality
-					ruler_has_personality = craven_personality
-					ruler_has_personality = petty_personality
-				}
+		ai_chance = { factor = 0 }
+		if = {
+			limit = {
+				has_saved_event_target = diseaseProv
 			}
-		}
-		event_target:refugeeProv = {
-			if = {
-				limit = {
-					development = 20
-				}
-				add_base_tax = -2
-				add_base_production = -2
-				add_base_manpower = -2
-				custom_tooltip = AB_EMPTY
-				event_target:diseaseProv = {
-					add_base_tax = 2
-					add_base_production = 2
-					add_base_manpower = 2
-				}
-			}
-			else = {
+			event_target:refugeeProv = {
 				add_base_tax = -1
 				add_base_production = -1
 				add_base_manpower = -1
-				custom_tooltip = AB_EMPTY
-				event_target:diseaseProv = {
-					add_base_tax = 1
-					add_base_production = 1
-					add_base_manpower = 1
-				}
 			}
-		}
-		if = {
-			limit = {
-				OR = {
-					has_country_modifier = punic_pale_death_immunity
-					has_country_modifier = punic_gray_fever_immunity
-				}
-			}
+			custom_tooltip = AB_EMPTY
 			event_target:diseaseProv = {
-				random_list = {
-					25 = {
-						province_event = {
-							id = ab_punic.1019
-						}
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_modifier = punic_pale_death_immunity
+						has_country_modifier = punic_gray_fever_immunity
 					}
-					75 = { }
+				}
+				event_target:diseaseProv = {
+					random_list = {
+						20 = {
+							province_event = {
+								id = ab_punic.1019
+							}
+						}
+						80 = { }
+					}
+				}
+			}
+			else = {
+				event_target:diseaseProv = {
+					random_list = {
+						40 = {
+							province_event = {
+								id = ab_punic.1019
+							}
+						}
+						60 = { }
+					}
 				}
 			}
 		}
 		else = {
-			event_target:diseaseProv = {
-				random_list = {
-					50 = {
-						province_event = {
-							id = ab_punic.1019
-						}
-					}
-					50 = { }
-				}
-			}
+			add_years_of_income = -0.125
+			add_yearly_manpower = 0.25
 		}
 	}
 
 	option = {
 		name = ab_punic.1026.b
-		ai_chance = { factor = 40 }
+		ai_chance = { factor = 100 }
 	}
 }
 
@@ -4985,8 +4397,8 @@ country_event = {
 	option = {
 		name = ab_punic.1027.a
 		event_target:diseaseProv = {
-			add_nationalism = 5
-			add_local_autonomy = 25
+			add_nationalism = 2
+			add_local_autonomy = 10
 		}
 	}
 }
@@ -5022,7 +4434,7 @@ country_event = {
 				save_event_target_as = diseaseProv
 				spawn_rebels = {
 					type = leadered_peasant_rebels
-					size = 2
+					size = 1
 					win = yes
 				}
 			}
@@ -5037,7 +4449,7 @@ country_event = {
 			tooltip = {
 				spawn_rebels = {
 					type = leadered_peasant_rebels
-					size = 2
+					size = 1
 				}
 			}
 		}
@@ -5110,13 +4522,9 @@ country_event = {
 
 	trigger = {
 		has_country_modifier = punic_plague_enforced_quarantine
-		any_owned_province = {
-			OR = {
-				has_province_modifier = punic_pale_death_prov
-				has_province_modifier = punic_gray_fever_prov
-			}
-			NOT = { has_province_modifier = punic_pale_death_plague_doctor }
-			NOT = { has_province_modifier = punic_gray_fever_plague_doctor }
+		OR = {
+			has_country_flag = plague_pale_death_contacted
+			has_country_flag = plague_gray_fever_contacted
 		}
 	}
 
@@ -5151,54 +4559,63 @@ country_event = {
 	option = {
 		name = ab_punic.1030.a
 		ai_chance = { factor = 60 }
-		add_adm_power = -100
+		add_adm_power = -50
 		if = {
 			limit = {
-				OR = {
-					has_country_modifier = punic_pale_death_immunity
-					has_country_modifier = punic_gray_fever_immunity
+				has_saved_event_target = diseaseProv
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_modifier = punic_pale_death_immunity
+						has_country_modifier = punic_gray_fever_immunity
+					}
+				}
+				event_target:diseaseProv = {
+					random_list = {
+						1 = {
+							province_event = {
+								id = ab_punic.1031
+							}
+						}
+						14 = {
+							province_event = {
+								id = ab_punic.1032
+							}
+						}
+						85 = {
+							province_event = {
+								id = ab_punic.1033
+							}
+						}
+					}
 				}
 			}
-			event_target:diseaseProv = {
-				random_list = {
-					5 = {
-						province_event = {
-							id = ab_punic.1031
+			else = {
+				event_target:diseaseProv = {
+					random_list = {
+						10 = {
+							province_event = {
+								id = ab_punic.1031
+							}
 						}
-					}
-					20 = {
-						province_event = {
-							id = ab_punic.1032
+						30 = {
+							province_event = {
+								id = ab_punic.1032
+							}
 						}
-					}
-					75 = {
-						province_event = {
-							id = ab_punic.1033
+						60 = {
+							province_event = {
+								id = ab_punic.1033
+							}
 						}
 					}
 				}
 			}
 		}
 		else = {
-			event_target:diseaseProv = {
-				random_list = {
-					25 = {
-						province_event = {
-							id = ab_punic.1031
-						}
-					}
-					35 = {
-						province_event = {
-							id = ab_punic.1032
-						}
-					}
-					40 = {
-						province_event = {
-							id = ab_punic.1033
-						}
-					}
-				}
-			}
+			change_government_reform_progress = 10
+			add_splendor = 25
 		}
 	}
 
@@ -5207,51 +4624,59 @@ country_event = {
 		ai_chance = { factor = 40 }
 		if = {
 			limit = {
-				OR = {
-					has_country_modifier = punic_pale_death_immunity
-					has_country_modifier = punic_gray_fever_immunity
+				has_saved_event_target = diseaseProv
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_modifier = punic_pale_death_immunity
+						has_country_modifier = punic_gray_fever_immunity
+					}
+				}
+				event_target:diseaseProv = {
+					random_list = {
+						10 = {
+							province_event = {
+								id = ab_punic.1031
+							}
+						}
+						30 = {
+							province_event = {
+								id = ab_punic.1032
+							}
+						}
+						60 = {
+							province_event = {
+								id = ab_punic.1033
+							}
+						}
+					}
 				}
 			}
-			event_target:diseaseProv = {
-				random_list = {
-					25 = {
-						province_event = {
-							id = ab_punic.1031
+			else = {
+				event_target:diseaseProv = {
+					random_list = {
+						30 = {
+							province_event = {
+								id = ab_punic.1031
+							}
 						}
-					}
-					35 = {
-						province_event = {
-							id = ab_punic.1032
+						30 = {
+							province_event = {
+								id = ab_punic.1032
+							}
 						}
-					}
-					40 = {
-						province_event = {
-							id = ab_punic.1033
+						40 = {
+							province_event = {
+								id = ab_punic.1033
+							}
 						}
 					}
 				}
 			}
 		}
 		else = {
-			event_target:diseaseProv = {
-				random_list = {
-					60 = {
-						province_event = {
-							id = ab_punic.1031
-						}
-					}
-					30 = {
-						province_event = {
-							id = ab_punic.1032
-						}
-					}
-					10 = {
-						province_event = {
-							id = ab_punic.1033
-						}
-					}
-				}
-			}
+			add_splendor = 5
 		}
 	}
 }
@@ -5267,9 +4692,6 @@ province_event = {
 	
 	option = {
 		name = ab_punic.1031.a
-		owner = {
-			add_prestige = -5
-		}
 	}
 }
 
@@ -5392,7 +4814,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2000.a
-		add_years_of_income = -0.5
+		add_years_of_income = -0.25
 		add_country_modifier = {
 			name = punic_religion_festival_baal_hammon_large
 			duration = 1825
@@ -5401,7 +4823,7 @@ country_event = {
 
 	option = {
 		name = ab_punic.2000.b
-		add_years_of_income = -0.25
+		add_years_of_income = -0.125
 		add_country_modifier = {
 			name = punic_religion_festival_baal_hammon_small
 			duration = 1825
@@ -5437,7 +4859,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2001.a
-		add_dip_power = -50
+		add_dip_power = -25
 		add_country_modifier = {
 			name = punic_religion_rites_tanit
 			duration = 1825
@@ -5832,7 +5254,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2009.a
-		add_years_of_income = -0.5
+		add_years_of_income = -0.25
 	}
 
 	option = {
@@ -5903,7 +5325,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2010.a
-		add_mil_power = -50
+		add_mil_power = -25
 		random_list = {
 			80 = { }
 			15 = {
@@ -5985,7 +5407,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2011.a
-		add_years_of_income = -0.5
+		add_years_of_income = -0.25
 		if = {
 			limit = {
 				NOT = { has_ruler_modifier = punic_helped_the_poor }
@@ -6050,7 +5472,7 @@ country_event = {
 		name = ab_punic.2012.a
 		add_years_of_income = -0.5
 		random_list = {
-			15 = {
+			20 = {
 				hidden_effect = {
 					remove_country_modifier = punic_cursed_sword
 					add_country_modifier = {
@@ -6065,7 +5487,7 @@ country_event = {
 					}
 				}
 			}
-			15 = {
+			20 = {
 				hidden_effect = {
 					remove_country_modifier = punic_cursed_armor
 					add_country_modifier = {
@@ -6080,7 +5502,7 @@ country_event = {
 					}
 				}
 			}
-			15 = {
+			20 = {
 				hidden_effect = {
 					remove_country_modifier = punic_cursed_crown
 					add_country_modifier = {
@@ -6095,7 +5517,7 @@ country_event = {
 					}
 				}
 			}
-			15 = {
+			20 = {
 				hidden_effect = {
 					remove_country_modifier = punic_cursed_amulet
 					add_country_modifier = {
@@ -6110,7 +5532,7 @@ country_event = {
 					}
 				}
 			}
-			40 = { }
+			20 = { }
 		}
 	}
 
@@ -6155,7 +5577,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2013.a
-		add_years_of_income = -0.5
+		add_years_of_income = -0.25
 	}
 
 	option = {
@@ -6219,7 +5641,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2014.a
-		add_mil_power = -50
+		add_mil_power = -25
 		random_list = {
 			80 = { }
 			15 = {
@@ -6294,7 +5716,7 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2015.a
-		add_years_of_income = -0.5
+		add_years_of_income = -0.25
 		if = {
 			limit = {
 				NOT = { has_ruler_modifier = punic_helped_the_poor }
@@ -6332,9 +5754,9 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2016.a
-		add_adm_power = -100
-		add_dip_power = -100
-		add_mil_power = -100
+		add_adm_power = -50
+		add_dip_power = -50
+		add_mil_power = -50
 		add_ruler_modifier = {
 			name = punic_religion_pilgrimate_super_strong
 			duration = 3650
@@ -6343,9 +5765,9 @@ country_event = {
 
 	option = {
 		name = ab_punic.2016.b
-		add_adm_power = -50
-		add_dip_power = -50
-		add_mil_power = -50
+		add_adm_power = -25
+		add_dip_power = -25
+		add_mil_power = -25
 		add_ruler_modifier = {
 			name = punic_religion_pilgrimate_strong
 			duration = 3650
@@ -6390,8 +5812,8 @@ country_event = {
 	
 	option = {
 		name = ab_punic.2017.a
-		add_splendor = -50
-		change_government_reform_progress = -25
+		add_splendor = -25
+		change_government_reform_progress = -10
 		add_country_modifier = {
 			name = punic_religion_necropolis_super_strong
 			duration = 1825
@@ -6400,7 +5822,7 @@ country_event = {
 
 	option = {
 		name = ab_punic.2017.b
-		add_splendor = -50
+		add_splendor = -25
 		add_country_modifier = {
 			name = punic_religion_necropolis_strong
 			duration = 1825
