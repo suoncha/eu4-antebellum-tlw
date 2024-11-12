@@ -2586,6 +2586,7 @@ country_event = {
 	trigger = {
 		NOT = { has_global_flag = AB_DISABLED_PLAGUES }
 		NOT = { has_global_flag = plague_pale_death }
+		has_global_flag = plague_gray_fever_enabled
 		is_colonial_nation = yes
 		OR = {
 			technology_group = western
@@ -2653,6 +2654,9 @@ province_event = {
 		NOT = { has_province_modifier = punic_pale_death_prov }
 		NOT = { has_province_modifier = punic_plague_doctor_immunity }
 		OR = {
+			any_neighbor_province = {
+				has_province_modifier = punic_pale_death_prov
+			}
 			any_friendly_coast_border_province = {
 				has_province_modifier = punic_pale_death_prov
 			}
@@ -3205,8 +3209,13 @@ province_event = {
 		has_global_flag = plague_gray_fever
 		NOT = { has_province_modifier = punic_gray_fever_prov }
 		NOT = { has_province_modifier = punic_plague_doctor_immunity }
-		any_friendly_coast_border_province = {
-			has_province_modifier = punic_gray_fever_prov
+		OR = {
+			any_neighbor_province = {
+				has_province_modifier = punic_gray_fever_prov
+			}
+			any_friendly_coast_border_province = {
+				has_province_modifier = punic_gray_fever_prov
+			}
 		}
 	}
 
