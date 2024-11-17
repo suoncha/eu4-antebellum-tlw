@@ -1004,6 +1004,16 @@ TLW_on_war_won_effect = {
 			duration = 365
 		}
 	}
+	else_if = {
+		limit = {
+			has_country_flag = len_winning_war
+		}
+		remove_country_modifier = len_won_war_mod
+		add_country_modifier = {
+			name = len_won_war_mod
+			duration = 365
+		}
+	}
 }
 
 TLW_on_war_lost_effect = {
@@ -1403,6 +1413,39 @@ TLW_on_province_culture_changed = {
 		}
 		TLW_cultural_hegemony_province_effect = yes
 	}
+	# Hylinia
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = len_convert_england
+			}
+			culture_group = ROOT
+			region = british_isles_region
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = len_convert_bonus
+			}
+		}
+		owner = {
+			random_list = {
+				33 = {
+					add_adm_power = 5
+				}
+				33 = {
+					add_dip_power = 5
+				}
+				33 = {
+					add_mil_power = 5
+				}
+			}
+		}
+	}
 }
 
 TLW_on_province_religion_changed = {
@@ -1548,6 +1591,20 @@ TLW_on_annexed_effect = {
 			id = ab_punic.31
 		}
 	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = len_dominant_culture
+			}
+		}
+		clear_global_event_target = americanLinguaFranca
+		every_country = {
+			limit = {
+				has_country_modifier = len_lesser_culture
+			}
+			remove_country_modifier = len_lesser_culture
+		}
+	}
 }
 
 TLW_on_colonial_nation_established = {
@@ -1659,6 +1716,22 @@ TLW_on_tech_taken = {
 		add_country_modifier = {
 			name = punic_the_elden_ring
 			duration = 1825
+		}
+	}
+}
+
+TLW_on_country_creation = {
+	if = {
+		limit = {
+			has_saved_global_event_target = americanLinguaFranca
+			OR = {
+				tag = CTG
+				tlw_is_american_trigger = yes
+			}
+		}
+		add_country_modifier = {
+			name = len_lesser_culture
+			duration = -1
 		}
 	}
 }

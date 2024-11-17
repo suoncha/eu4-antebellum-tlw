@@ -2774,6 +2774,386 @@ country_event = {
 	}
 }
 
+#Port of Tanythe
+country_event = {
+	id = ab_punic.59
+	title = ab_punic.59.t
+	desc = ab_punic.59.d
+	picture = northamericagfx_CITY_DEVELOPMENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.59.a
+		968 = {
+			add_base_tax = 1
+			add_base_production = 2
+			add_base_manpower = 1
+			move_capital_effect = yes
+			change_trade_goods = glass
+			add_center_of_trade_level = 1
+			add_permanent_province_modifier = {
+				name = punic_port_of_tanythe
+				duration = -1
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.59.b
+		968 = {
+			change_trade_goods = glass
+			add_center_of_trade_level = 1
+			add_permanent_province_modifier = {
+				name = punic_port_of_tanythe
+				duration = -1
+			}
+		}
+		986 = {
+			add_trade_modifier = {
+				who = ROOT
+				duration = -1
+				power = 25
+				key = "Trading with the Hellenes"
+			}
+		}
+	}
+}
+
+#Lingua Franca
+country_event = {
+	id = ab_punic.60
+	title = ab_punic.60.t
+	desc = ab_punic.60.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			save_global_event_target_as = americanLinguaFranca
+		}
+	}
+	
+	option = {
+		name = ab_punic.60.a
+		custom_tooltip = SER_JUSTINIAN_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = ALDIRAQ_perma_pp2
+				amount = 25
+			}
+		}
+		remove_country_modifier = len_lesser_culture
+		add_country_modifier = {
+			name = len_dominant_culture
+			duration = -1
+		}
+		custom_tooltip = LEN_LINGUA_FRANCA_TT
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = CTG
+						tlw_is_american_trigger = yes
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_punic.61
+				}
+			}
+		}
+	}
+}
+
+#Lingua Franca - Everyone Else
+country_event = {
+	id = ab_punic.61
+	title = ab_punic.61.t
+	desc = ab_punic.61.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.61.a
+		add_country_modifier = {
+			name = len_lesser_culture
+			duration = -1
+		}
+		if = {
+			limit = {
+				has_country_modifier = len_dominant_culture
+			}
+			remove_country_modifier = len_dominant_culture
+			remove_power_projection = {
+				type = ALDIRAQ_perma_pp2
+			}
+		}
+		else = {
+			custom_tooltip = LEN_LINGUA_FRANCA_ELSE
+		}
+	}
+}
+
+#Lingua Franca - Fix
+country_event = {
+	id = ab_punic.62
+	title = ab_punic.62.t
+	desc = ab_punic.62.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_country_modifier = len_dominant_culture
+		NOT = { tag = event_target:americanLinguaFranca }
+	}
+	
+	option = {
+		name = ab_punic.62.a
+		save_global_event_target_as = americanLinguaFranca
+	}
+}
+
+#Fall of Tahontaenrat
+country_event = {
+	id = ab_punic.63
+	title = ab_punic.63.t
+	desc = ab_punic.63.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.63.a
+		add_country_modifier = {
+			name = len_fall_of_tahontaenrat
+			duration = 7300
+		}
+	}
+}
+
+#Scholar Specialization
+country_event = {
+	id = ab_punic.64
+	title = ab_punic.64.t
+	desc = ab_punic.64.d
+	picture = northamericagfx_ECONOMY_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.64
+				days = 3650
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.64.a
+		add_country_modifier = {
+			name = punic_school_of_adm
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_punic.64.b
+		add_country_modifier = {
+			name = punic_school_of_dip
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_punic.64.c
+		add_country_modifier = {
+			name = punic_school_of_mil
+			duration = 3650
+		}
+	}
+}
+
+#The Golden Herbs
+country_event = {
+	id = ab_punic.65
+	title = ab_punic.65.t
+	desc = ab_punic.65.d
+	picture = northamericagfx_KING_SICK_IN_BED_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.65.a
+		add_country_modifier = {
+			name = len_golden_blessing
+			duration = -1
+		}
+		custom_tooltip = GER_GOLDEN_AGE 
+		hidden_effect = {
+			if = {
+				limit = {
+					has_had_golden_age = yes
+				}
+				reset_golden_age = yes
+			}
+			else_if = {
+				limit = {
+					in_golden_age = yes
+				}
+				extend_golden_age = 360
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.65.b
+		2566 = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+			change_trade_goods = tea
+			add_province_modifier = {
+				name = len_tea_monopoly
+				duration = -1
+			}
+		}
+	}
+}
+
+#The Great Hellas
+country_event = {
+	id = ab_punic.66
+	title = ab_punic.66.t
+	desc = ab_punic.66.d
+	picture = BYZ_ATHENS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.66.a
+		add_prestige_or_monarch_power = { amount = 50 }
+		custom_tooltip = AB_EMPTY
+		change_innovativeness = 10
+		custom_tooltip = RUM_EVERY_GREEK_PROVINCE
+		tooltip = {
+			change_culture = delaware
+			add_province_modifier = {
+				name = len_the_new_hellas
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = greek
+				}
+				change_culture = delaware
+				add_province_modifier = {
+					name = len_the_new_hellas
+					duration = -1
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.66.b
+		custom_tooltip = LEN_RELEASE_HELLENIC
+		hidden_effect = {
+			balkan_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				remove_core = ROOT
+				add_core = HLE
+			}
+			anatolia_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				remove_core = ROOT
+				add_core = HLE
+			}
+			release = HLE
+			HLE = {
+				change_primary_culture = hellenic_greek
+				change_religion = reformed_hellenic
+				if = {
+					limit = {
+						NOT = { government = monarchy }
+					}
+					change_government = monarchy
+				}
+				set_government_rank = 3
+				add_government_reform = nicene_hellenic_empire
+				save_global_event_target_as = hellenicEmpire
+				country_event = {
+					id = ideagroups.1
+				}
+				add_faction_influence = {
+					faction = faction_nciantigonos
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_nciantigonos
+					influence = -66
+				}
+				every_owned_province = {
+					random_list = {
+						33 = {
+							add_permanent_province_modifier = {
+								name = nci_antigonos_province
+								duration = -1
+							}
+						}
+						33 = {
+							add_permanent_province_modifier = {
+								name = nci_seleukos_province
+								duration = -1
+							}
+						}
+						33 = {
+							add_permanent_province_modifier = {
+								name = nci_ptolemaios_province
+								duration = -1
+							}
+						}
+					}
+				}
+				change_technology_group = eastern
+				change_unit_type = eastern
+				set_capital = 146
+				add_government_power = { 
+					mechanic_type = nicene_militarization_mechanic
+					power_type = nicene_militarized_society
+					value = 100
+				}
+				set_country_flag = nci_religion_hellenic
+				swap_non_generic_missions = yes
+				capital_scope = {
+					change_culture = hellenic_greek
+				}
+				add_accepted_culture = greek
+			}
+			create_union = HLE
+		}
+	}
+}
+
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden
 country_event = {

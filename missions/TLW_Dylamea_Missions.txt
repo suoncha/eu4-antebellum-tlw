@@ -7,23 +7,335 @@ tlw_dylamea_first = {
 	}
 	has_country_shield = yes
 
-	# len_sample = {
-	# 	icon = mission_iroquois_haudenosaunee
-	# 	required_missions = { aldiraq_develop_capital }
-	# 	position = 7
+	len_between_land = {
+		icon = mission_found_havana
+		required_missions = { }
+		position = 7
 
-	# 	provinces_to_highlight = {
-	# 		#
-	# 	}
-
-	# 	trigger = {
-	# 		#
-	# 	}
+		provinces_to_highlight = {
+			province_id = 968
+		}
 		
-	# 	effect = {
-	# 		#
-	# 	}
-	# }
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			968 = {
+				owned_by = ROOT
+			}
+			968 = {
+				is_city = yes
+			}
+			968 = {
+				development = 15
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.59
+			}
+			custom_tooltip = AB_EMPTY
+			massachusetts_bay_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			south_iroquoisia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			great_woods_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_delagouer_nation = {
+		icon = mission_hellenic_statue
+		required_missions = { len_between_land }
+		position = 9
+
+		provinces_to_highlight = {
+			culture = barbiri
+			owned_by = ROOT
+		}
+
+		trigger = {
+			mission_completed = aldiraq_barbiri_unification
+			reform_level = 6
+			development_in_provinces = {
+				value = 200
+				culture = barbiri
+			}
+		}
+		
+		effect = {
+			override_country_name = DELAGOUER
+			change_government = republic
+			change_primary_culture = delaware
+			custom_tooltip = LEN_BARBIRI_TO_DELAWARE
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = delaware
+					old_culture_1 = barbiri
+				}
+				add_government_reform = oligarchy_reform
+			}
+			custom_tooltip = AB_EMPTY
+			country_event = {
+				id = ideagroups.1
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+		}
+	}
+
+	len_transbuniq_company = {
+		icon = mission_ruler_of_north_america
+		required_missions = { len_delagouer_nation }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 986
+				province_id = 965
+				province_id = 2526
+				province_id = 1008
+				province_id = 4883
+			}
+			NOT = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+		}
+		
+		trigger = {
+			986 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			965 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			2526 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			1008 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			4883 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = trader_give_production_efficiency
+			custom_tooltip = FKN_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
+			set_country_flag = len_marketplace_buff
+			custom_tooltip = LEN_BUILDING_MARKETPLACE
+		}
+	}
+
+	len_fur_trade_monopoly = {
+		icon = mission_control_fur_trade
+		required_missions = { len_agunqa_expedition }
+		position = 11
+
+		provinces_to_highlight = {
+			region = hudson_bay_region
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_subjects_with = {
+				value = 25
+				region = hudson_bay_region
+			}
+		}
+		
+		effect = {
+			change_price = {
+				trade_goods = fur
+				key = "Control the Fur Trade"
+				value = 0.15
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CTG_FUR_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = fra_hudson_bay_fur_modifier
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = fur
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	len_tryphonos_codex = {
+		icon = mission_themis
+		required_missions = { }
+		position = 13
+
+		trigger = {
+			mission_completed = len_delagouer_nation
+			has_reform = hyl_military_tribunes_reform
+			innovativeness = 25
+			splendor = 200
+		}
+		
+		effect = {
+			add_splendor = -200
+			add_country_modifier = {
+				name = len_equality_sancris
+				duration = 9125
+			}
+			unlock_government_reform = {
+				government_reform = hyl_military_tribunes_upgrade_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = hyl_military_tribunes_upgrade_reform
+		}
+	}
+
+	len_hylinian_metropolises = {
+		icon = mission_secure_hajj_ports
+		required_missions = { len_tryphonos_codex }
+		position = 15
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			region = canada_region
+			NOT = { development = 30 }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				region = canada_region
+				development = 30
+			}
+		}
+		
+		effect = {
+			canada_region = {
+				add_base_tax = 1
+				add_permanent_province_modifier = {
+					name = punic_buniq_urbanization
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = len_economic_capital
+				duration = -1
+			}
+			if = {
+				limit = {
+					2583 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = azure_cape
+							tier = 2
+						}
+					}
+				}
+				custom_tooltip = LEN_AZURE_CAPE_MAGNIFICENT_YES
+				add_years_of_income = 2
+			}
+			else = {
+				custom_tooltip = LEN_AZURE_CAPE_MAGNIFICENT_NO
+				tooltip = {
+					add_years_of_income = 2
+				}
+			}
+		}
+	}
+
+	len_lingua_franca = {
+		icon = mission_arabian_thalassocracy
+		required_missions = { len_hylinian_metropolises }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = event_target:americanLinguaFranca
+				AND = {
+					owned_by = ROOT
+					NOT = {
+						AND = {
+							culture_group = eastern_algonquian
+							development = 20
+						}
+					}
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					has_saved_global_event_target = americanLinguaFranca
+				}
+				total_development = event_target:americanLinguaFranca
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = LEN_NO_ONE_CLAIMED_LINGUA
+					always = yes
+				}
+			}
+			NOT = { great_power_rank = 4 }
+			num_of_owned_provinces_with = {
+				value = 50
+				culture_group = eastern_algonquian
+				development = 20
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.60
+			}
+		}
+	}
 }
 
 tlw_dylamea_second = {
@@ -34,6 +346,480 @@ tlw_dylamea_second = {
 		tag = LEN
 	}
 	has_country_shield = yes
+
+	len_reach_hylinia = {
+		icon = mission_expand_into_the_forest
+		required_missions = { len_between_land }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = massachusetts_bay_area
+				area = south_iroquoisia_area
+				area = great_woods_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 7
+				OR = {
+					area = massachusetts_bay_area
+					area = south_iroquoisia_area
+					area = great_woods_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			change_government_reform_progress = 50
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = trader
+				skill = 2
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			maine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_maine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			st_john_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trois_rivieres_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_canada_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ottawa_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			laurentian_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_agunqa_expedition = {
+		icon = mission_beyond_the_urals
+		required_missions = { len_reach_hylinia }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				area = trois_rivieres_area
+				area = lower_canada_area
+				area = ottawa_valley_area
+				area = laurentian_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 9
+				OR = {
+					area = trois_rivieres_area
+					area = lower_canada_area
+					area = ottawa_valley_area
+					area = laurentian_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = len_land_of_commerce_buff
+			custom_tooltip = LEN_LAND_OF_COMMERCE_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = len_agunqa_frontier
+				duration = 18250
+			}
+			cote_nord_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			huronia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_canada_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hudson_bay_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_lord_of_great_lakes = {
+		icon = per_reborn_in_fire
+		required_missions = { len_agunqa_expedition }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = huronia_area
+				area = upper_canada_area
+				area = hudson_valley_area
+				area = iroquoisia_area
+				area = westsylvania_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 13
+				OR = {
+					area = huronia_area
+					area = upper_canada_area
+					area = hudson_valley_area
+					area = iroquoisia_area
+					area = westsylvania_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			set_global_flag = ab_disabled_order_of_zoroaster
+			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+			custom_tooltip = AB_EMPTY
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			custom_tooltip = LEN_EVERY_ZOROASTRIAN
+			tooltip = {
+				add_province_modifier = {
+					name = len_zoroastrian_purge
+					duration = 10950
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture_group = iroquoian
+					}
+					add_province_modifier = {
+						name = len_zoroastrian_purge
+						duration = 10950
+					}
+				}
+			}
+			michigan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ohio_country_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kentucky_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					persia_region = {
+						has_discovered = ROOT
+					}
+				}
+				custom_tooltip = LEN_DISCOVER_PERSIA_YES
+				hidden_effect = {
+					every_country = {
+						limit = {
+							religion = zoroastrian
+						}
+						country_event = {
+							id = ab_punic.63
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = LEN_DISCOVER_PERSIA_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_punic.63
+				}
+			}
+		}
+	}
+
+	len_silk_road_domination = {
+		icon = mission_son_own_develop_clothes_and_salt
+		required_missions = { len_lord_of_great_lakes }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				area = michigan_area
+				area = ohio_country_area
+				area = kentucky_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 8
+				OR = {
+					area = michigan_area
+					area = ohio_country_area
+					area = kentucky_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LEN_RANDOM_SILK_PROVINCES
+			tooltip = {
+				change_trade_goods = silk
+			}
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								region = great_lakes_region
+								NOT = { trade_goods = silk }
+							}
+							change_trade_goods = silk
+						}
+					"
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			4883 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = "Control the Silk Road"
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rum_land_of_commerce_buff
+			custom_tooltip = RUM_LAND_OF_COMMERCE_PRIVILEGE
+		}
+	}
+
+	len_cradle_hellenism = {
+		icon = mission_greekn
+		required_missions = { }
+		position = 14
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 146
+				province_id = 5152
+			}
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					religion = ROOT
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			religion = reformed_hellenic
+			146 = {
+				owned_by = ROOT
+			}
+			146 = {
+				religion = ROOT
+			}
+			5152 = {
+				owned_by = ROOT
+			}
+			5152 = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = len_hellenic_union
+				duration = -1
+			}
+			add_accepted_culture_or_dip_power = {
+				culture = greek
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			morea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			macedonia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hudavendigar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aegean_archipelago_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_great_hellas = {
+		icon = mission_alexander
+		required_missions = { len_hylinian_metropolises len_cradle_hellenism len_army_with_state }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				area = morea_area
+				area = ionian_islands_area
+				area = northern_greece_area
+				area = macedonia_area
+				area = thrace_area
+				area = hudavendigar_area
+				area = ionian_islands_area
+				area = aegean_archipelago_area
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			owns = 151
+			owns = 148
+			owns = 317
+			owns = 320
+			owns = 318
+			num_of_owned_provinces_with = {
+				value = 25
+				OR = {
+					area = morea_area
+					area = ionian_islands_area
+					area = northern_greece_area
+					area = macedonia_area
+					area = thrace_area
+					area = hudavendigar_area
+					area = ionian_islands_area
+					area = aegean_archipelago_area
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.66
+			}
+		}
+	}
 }
 
 tlw_dylamea_third = {
@@ -44,6 +830,320 @@ tlw_dylamea_third = {
 		tag = LEN
 	}
 	has_country_shield = yes
+
+	len_tales_palaion_nekron = {
+		icon = mission_amphitheater
+		required_missions = { len_hellenic_reformation }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 956
+		}
+		
+		trigger = {
+			artist = 3
+			956 = {
+				has_great_project = {
+					type = amphitheater_palaioi_nekron
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = byz_religious_diplomats_buff
+			custom_tooltip = BYZ_RELIGIOUS_DIPLOMATS_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			set_country_flag = len_convert_bonus
+			custom_tooltip = LEN_CONVERT_BONUS
+		}
+	}
+
+	len_golden_herbs = {
+		icon = mission_golden_herbs
+		required_missions = { len_reach_hylinia }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2566
+				AND = {
+					OR = {
+						area = maine_area
+						area = eastern_maine_area
+						area = st_john_valley_area
+					}
+					NOT = { owned_by = ROOT }
+				}
+			}
+		}
+
+		trigger = {
+			2566 = {
+				owned_by = ROOT
+			}
+			2566 = {
+				development = 10
+			}
+			num_of_owned_provinces_with = {
+				value = 7
+				OR = {
+					area = maine_area
+					area = eastern_maine_area
+					area = st_john_valley_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.65
+			}
+			custom_tooltip = AB_EMPTY
+			notre_dame_mountains_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_acadia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_acadia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			greenland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_rule_hellenes = {
+		icon = secure_dejima
+		required_missions = { len_agunqa_expedition len_golden_herbs }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = notre_dame_mountains_area
+				area = upper_acadia_area
+				area = lower_acadia_area
+				area = cote_nord_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			primary_culture = delaware
+			num_of_owned_provinces_with = {
+				value = 14
+				OR = {
+					area = notre_dame_mountains_area
+					area = upper_acadia_area
+					area = lower_acadia_area
+					area = cote_nord_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = aldiraq_barbaro_hylinian_republic_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = aldiraq_barbaro_hylinian_republic_reform
+			custom_tooltip = AB_EMPTY
+			canada_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_claim_irlanda = {
+		icon = mission_rb_rule_britannia_irish_version
+		required_missions = { len_foothold }
+		position = 13
+
+		provinces_to_highlight = {
+			OR = {
+				area = munster_area
+				area = ulster_area
+				area = connacht_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			munster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			ulster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			connacht_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = len_irish_manpower
+				duration = -1
+			}
+			custom_tooltip = ENG_IRELAND_CONQUEST
+			tooltip = {
+				add_province_modifier = {
+					name = eng_consolidate_ireland
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							area = munster_area
+							area = leinster_area
+							area = ulster_area
+							area = connacht_area
+						}
+					}
+					add_province_modifier = {
+						name = eng_consolidate_ireland
+						duration = 5475
+					}
+				}
+			}
+			custom_tooltip = ENG_IRE_VASSAL
+			tooltip = {
+				add_country_modifier = {
+					name = eng_consolidate_ireland2
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_subject_country = {
+								capital_scope = {
+									OR = {
+										area = munster_area
+										area = leinster_area
+										area = ulster_area
+										area = connacht_area
+									}
+								}
+							}
+							amount = 2
+						}
+					}
+					add_country_modifier = {
+						name = eng_consolidate_ireland2
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+
+	len_army_with_state = {
+		icon = mission_mansure_army
+		required_missions = { }
+		position = 15
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				AND = {
+					has_manpower_building_trigger = yes
+					has_forcelimit_building_trigger = yes
+				}
+			}
+		}
+
+		trigger = {
+			army_professionalism = 0.5
+			army_tradition = 80
+			num_of_owned_provinces_with = {
+				value = 20
+				has_manpower_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 20
+				has_forcelimit_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = {
+				name = nicaea_infrastructure
+				duration = -1
+			}
+			set_country_flag = vsg_barrack_buff
+			custom_tooltip = VSG_BUILDING_BARRACK
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_manpower_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = vsg_barrack_mod
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	len_god_war = {
+		icon = mission_kratos
+		required_missions = { len_army_with_state }
+		position = 16
+
+		trigger = {
+			religion = reformed_hellenic
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.25
+			}
+			is_hegemon_of_type = military_hegemon
+			hegemon_strength = 100
+		}
+		
+		effect = {
+			set_country_flag = hyl_unlock_kratos_aspect
+			custom_tooltip = HYL_UNLOCK_KRATOS_ASPECT
+			custom_tooltip = AB_EMPTY
+			set_country_flag = len_winning_war
+			custom_tooltip = LEN_WINNING_WAR
+		}
+	}
 }
 
 tlw_dylamea_fourth = {
@@ -54,6 +1154,301 @@ tlw_dylamea_fourth = {
 		tag = LEN
 	}
 	has_country_shield = yes
+
+	len_hellenic_reformation = {
+		icon = mission_reformhellenic
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 956
+				province_id = 2583
+				province_id = 2578
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			owns = 956
+			owns = 2583
+			owns = 2578
+			full_idea_group = religious_ideas
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
+		}
+		
+		effect = {
+			change_religion = reformed_hellenic
+			add_country_modifier = {
+				name = wee_conversion_zeal
+				duration = 3650
+			}
+			custom_tooltip = reform_hellenic_subjects_switch_too
+			custom_tooltip = NCI_HELLENIC_CHANGE_TO_REFORMED_HELLENIC
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						religion = hellenic
+						NOT = { is_subject_of_type = tributary_state }
+					}
+					change_religion = reformed_hellenic
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = hellenic
+					}
+					change_religion = reformed_hellenic
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			ab_mpf_consolidate_rites_effect = yes
+		}
+	}
+
+	len_praise_poseidon = {
+		icon = mission_hellenic_temple
+		required_missions = { len_hellenic_reformation }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 983
+		}
+		
+		trigger = {
+			treasury = 2500
+			dip_power = 200
+			architect = 3
+			983 = {
+				owned_by = ROOT
+			}
+			983 = {
+				has_any_ongoing_construction = no
+			}
+		}
+		
+		effect = {
+			add_treasury = -2500
+			add_dip_power = -200
+			custom_tooltip = HYL_CREATE_POSEIDON
+			set_country_flag = hyl_unlock_temple_poseidon
+			hidden_effect = {
+				983 = {
+					add_great_project = {
+						type = temple_poseidon
+						instant = yes
+					}
+				}
+				983 = {
+					add_great_project_tier = {
+						type = temple_poseidon
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+
+	len_beyond_ibhar = {
+		icon = mission_protect_white_sea_trade
+		required_missions = { len_golden_herbs }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1105
+				province_id = 1104
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			owns_core_province = 1105
+			owns_core_province = 1104
+		}
+		
+		effect = {
+			1104 = {
+				change_trade_goods = ivory
+			}
+			1105 = {
+				change_trade_goods = ivory
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hsa_walrus
+				duration = 7300
+			}
+			custom_tooltip = HAS_DEVELOP_IVORY
+		}
+	}
+
+	len_foothold = {
+		icon = mission_rb_conquer_the_isles
+		required_missions = { len_raid_norse }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				area = kingdom_of_the_isles_area
+				area = highlands_area
+				area = lowlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = kingdom_of_the_isles_area
+					area = highlands_area
+					area = lowlands_area
+				}
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = len_controlled_kutlanda
+				duration = 5475
+			}
+			british_isles_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_invade_anyitira = {
+		icon = mission_frankishengland
+		required_missions = { len_foothold }
+		position = 14
+
+		provinces_to_highlight = {
+			OR = {
+				area = scottish_marches_area
+				area = yorkshire_area
+				area = wales_area
+				area = west_midlands_area
+				area = east_midlands_area
+				area = east_anglia_area
+				area = home_counties_area
+				area = wessex_area
+				area = cornwall_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			scottish_marches_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			yorkshire_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wales_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_anglia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			home_counties_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wessex_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			cornwall_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			british_isles_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -10
+				add_province_modifier = {
+					name = len_hellenization_britain
+					duration = 7300
+				}
+			}
+			set_country_flag = len_convert_england
+			custom_tooltip = LEN_CONVERT_ENGLAND
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = LEN_CLAIM_ENGLISH
+			hidden_effect = {
+				trade_company_english_channel = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+						has_port = yes
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	len_resurrect_stonehenge = {
+		icon = mission_stonehenge
+		required_missions = { len_invade_anyitira }
+		position = 15
+
+		provinces_to_highlight = {
+			province_id = 234
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			inquisitor = 3
+			234 = {
+				religion = ROOT
+			}
+			234 = {
+				has_great_project = {
+					type = stonehenge
+					tier = 2
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = can_use_propagate_religion
+			custom_tooltip = KOJ_PROPAGATE_RELIGION
+			custom_tooltip = AB_EMPTY
+			234 = {
+				add_great_project_tier = {
+					type = stonehenge
+					tier = 1
+				}
+			}
+		}
+	}
 }
 
 tlw_dylamea_fifth = {
@@ -64,4 +1459,373 @@ tlw_dylamea_fifth = {
 		tag = LEN
 	}
 	has_country_shield = yes
+
+	len_wisdom_sosylus = {
+		icon = ven_academy_of_the_unknowns
+		required_missions = { len_hellenic_reformation }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2578
+				AND = {
+					owned_by = ROOT
+					NOT = { has_building = university }
+				}
+			}
+		}
+		
+		trigger = {
+			2578 = {
+				has_great_project = {
+					type = academy_sosylus
+					tier = 3
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				has_building = university
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.64
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = ctg_uni_buff
+			custom_tooltip = CTG_BUILDING_UNI
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_permanent_province_modifier = {
+						name = punic_universal_education_mod
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	len_fleet_endless = {
+		icon = mission_galleys_in_port
+		required_missions = { }
+		position = 9
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_shipyard_building_trigger = no
+			has_port = yes
+		}
+		
+		trigger = {
+			num_of_heavy_ship = 10
+			navy_size = 50
+			num_of_owned_provinces_with = {
+				value = 10
+				has_shipyard_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = punic_high_sea_fleet
+				duration = 9125
+			}
+			subarctic_islands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_raid_norse = {
+		icon = mission_iceland
+		required_missions = { len_beyond_ibhar len_fleet_endless }
+		position = 11
+
+		provinces_to_highlight = {
+			area = subarctic_islands_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				area = subarctic_islands_area
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = len_invasion_of_uruqba
+				duration = 9125
+			}
+			kingdom_of_the_isles_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			highlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lowlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			western_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	len_end_vikings = {
+		icon = mission_norse_faith
+		required_missions = { len_raid_norse }
+		position = 13
+
+		provinces_to_highlight = {
+			OR = {
+				area = northern_norway
+				area = western_norway
+				area = eastern_norway
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			northern_norway = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			western_norway = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			eastern_norway = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = hansa_eliminated_vikings
+				duration = 36500
+			}
+			custom_tooltip = SWE_NORWEGIAN
+			tooltip = {
+				add_province_modifier = {
+					name = swe_integrate_norway
+					duration = 3650
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = norwegian
+					}
+					add_province_modifier = {
+						name = swe_integrate_norway
+						duration = 3650
+					}
+				}
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					accepted_culture = norwegian
+				}
+				custom_tooltip = HAS_ACCEPTED_NORWEGIAN_YES
+			}
+			else = {
+				custom_tooltip = HAS_ACCEPTED_NORWEGIAN_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						accepted_culture = norwegian
+					}
+					every_owned_province = {
+						limit = {
+							culture = norwegian
+						}
+						remove_province_modifier = swe_integrate_norway
+						add_province_modifier = {
+							name = swe_integrate_norway
+							duration = 7300
+						}
+					}
+				}
+			}
+		}
+	}
+
+	len_northern_theosemiad = {
+		icon = mission_unite_scandinavia
+		required_missions = { len_end_vikings }
+		position = 14
+
+		provinces_to_highlight = {
+			region = scandinavia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 35
+				region = scandinavia_region
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			17 = {
+				add_province_modifier = {
+					name = nor_trade_posts_of_the_north
+					duration = -1
+				}
+			}
+			20 = {
+				add_province_modifier = {
+					name = nor_trade_posts_of_the_north
+					duration = -1
+				}
+			}
+			23 = {
+				add_province_modifier = {
+					name = nor_trade_posts_of_the_north
+					duration = -1
+				}
+			}
+			custom_tooltip = LEN_CLAIM_LUBECK
+			hidden_effect = {
+				trade_company_lubeck = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+						has_port = yes
+					}
+					add_permanent_claim = ROOT
+				}
+				trade_company_baltic_sea = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+						has_port = yes
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	len_wealth_uruqba = {
+		icon = mission_control_the_channel
+		required_missions = { len_resurrect_stonehenge len_northern_theosemiad }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 248
+				province_id = 234
+				province_id = 12
+				province_id = 1
+			}
+			NOT = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			248 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			234 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			12 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			1 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = RHL_perma_pp
+					amount = 10
+				}
+			}
+			add_country_modifier = {
+				name = rhl_north_sea_power
+				duration = 36500
+			}
+			custom_tooltip = RHL_NAVAL_BARRAGE
+		}
+	}
 }

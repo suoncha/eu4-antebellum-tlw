@@ -711,6 +711,7 @@ tlw_punic_city_second = {
 		provinces_to_highlight = {
 			country_or_non_sovereign_subject_holds = ROOT
 			has_shipyard_building_trigger = no
+			has_port = yes
 		}
 		
 		trigger = {
@@ -3338,6 +3339,39 @@ tlw_punic_carthage_third = {
 		tag = CTG
 	}
 	has_country_shield = yes
+
+	ctg_lingua_franca = {
+		icon = mission_arabian_thalassocracy
+		required_missions = { ctg_rebirth_of_carthage }
+		position = 17
+
+		provinces_to_highlight = {
+			owned_by = event_target:americanLinguaFranca
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					has_saved_global_event_target = americanLinguaFranca
+				}
+				total_development = event_target:americanLinguaFranca
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = LEN_NO_ONE_CLAIMED_LINGUA
+					always = yes
+				}
+			}
+			NOT = { great_power_rank = 4 }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.60
+			}
+		}
+	}
 
 	ctg_settle_the_islands = {
 		icon = mission_colonize_the_caribbean
