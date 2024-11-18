@@ -1,0 +1,1344 @@
+ab_punic_city_setup_effect = {
+	set_variable = {
+		which = election_point
+		value = 0
+	}
+	set_variable = {
+		which = election_point_growth
+		value = 0
+	}
+	set_variable = {
+		which = election_point_base
+		value = 0
+	}
+	if = {
+		limit = {
+			ai = yes
+		}
+		change_variable = {
+			which = election_point_base
+			value = 2
+		}
+	}
+	set_variable = {
+		which = election_point_diplomatic_reputation
+		value = 0
+	}
+	set_variable = {
+		which = election_point_high_relations
+		value = 0
+	}
+	set_variable = {
+		which = election_point_diplomatic_advisor
+		value = 0
+	}
+	set_variable = {
+		which = punic_league_reform_passed
+		value = 0
+	}
+	set_variable = {
+		which = punic_league_easima_count
+		value = 0
+	}
+}
+
+ab_punic_league_setup_effect = {
+	REB = {
+		set_variable = {
+			which = punic_league_time
+			value = 60
+		}
+		set_variable = {
+			which = punic_league_value
+			value = 20
+		}
+		set_variable = {
+			which = punic_league_base
+			value = 0.1
+		}
+		set_variable = {
+			which = punic_league_growth
+			which = punic_league_base
+		}
+		set_variable = {
+			which = punic_league_stability
+			value = 0
+		}
+		set_variable = {
+			which = punic_league_income
+			value = 0
+		}
+		set_variable = {
+			which = punic_league_province_count
+			value = 0
+		}
+	}
+	PU1 = {
+		save_global_event_target_as = easimaTarget
+		save_global_event_target_as = punicCityTarget1
+		add_country_modifier = {
+			name = punic_league_easima_mod
+			duration = -1
+			hidden = yes
+		}
+		ab_punic_city_setup_effect = yes
+		set_variable = {
+			which = punic_league_easima_count
+			value = 1
+		}
+	}
+	PU2 = {
+		save_global_event_target_as = punicCityTarget2
+		ab_punic_city_setup_effect = yes
+	}
+	PU3 = {
+		save_global_event_target_as = punicCityTarget3
+		ab_punic_city_setup_effect = yes
+	}
+	PU4 = {
+		save_global_event_target_as = punicCityTarget4
+		ab_punic_city_setup_effect = yes
+	}
+	PU5 = {
+		save_global_event_target_as = punicCityTarget5
+		ab_punic_city_setup_effect = yes
+	}
+	PU6 = {
+		save_global_event_target_as = punicCityTarget6
+		ab_punic_city_setup_effect = yes
+	}
+	PU7 = {
+		save_global_event_target_as = punicCityTarget7
+		ab_punic_city_setup_effect = yes
+	}
+	PU8 = {
+		save_global_event_target_as = punicCityTarget8
+		ab_punic_city_setup_effect = yes
+	}
+	PU9 = {
+		save_global_event_target_as = punicCityTarget9
+		ab_punic_city_setup_effect = yes
+	}
+}
+
+ab_punic_league_calc_effect = {
+	### Reset variables
+	set_variable = {
+		which = punic_league_growth
+		which = punic_league_base
+	}
+
+	### Calc League Authority
+	event_target:easimaTarget = {
+		REB = {
+			# Stability
+			export_to_variable = {
+				which = punic_league_stability_easima
+				value = stability
+				who = PREV
+			}
+			set_variable = {            
+				which = punic_league_stability
+				which = punic_league_stability_easima
+			}
+
+			# Monthly Income
+			export_to_variable = {
+				which = punic_league_income_easima
+				value = monthly_income
+				who = PREV
+			}
+			set_variable = {            
+				which = punic_league_income
+				which = punic_league_income_easima
+			}
+
+			# Province Count
+			export_to_variable = {
+				which = punic_league_province_count_easima
+				value = num_of_cities
+				who = PREV
+			}
+			set_variable = {            
+				which = punic_league_province_count
+				which = punic_league_province_count_easima
+			}
+		}
+		every_subject_country = {
+			limit = {
+				is_subject_of_type = punic_city_vassal
+			}
+			REB = {
+				# Stability
+				export_to_variable = {
+					which = punic_league_stability_member
+					value = stability
+					who = PREV
+				}
+				change_variable = {            
+					which = punic_league_stability
+					which = punic_league_stability_member
+				}
+
+				# Monthly Income
+				export_to_variable = {
+					which = punic_league_income_member
+					value = monthly_income
+					who = PREV
+				}
+				change_variable = {            
+					which = punic_league_income
+					which = punic_league_income_member
+				}
+
+				# Province Count
+				export_to_variable = {
+					which = punic_league_province_count_member
+					value = num_of_cities
+					who = PREV
+				}
+				change_variable = {            
+					which = punic_league_province_count
+					which = punic_league_province_count_member
+				}
+			}
+		}
+		every_subject_country = {
+			limit = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+			REB = {
+				# Province Count
+				export_to_variable = {
+					which = punic_league_province_count_member
+					value = num_of_cities
+					who = PREV
+				}
+				change_variable = {            
+					which = punic_league_province_count
+					which = punic_league_province_count_member
+				}
+			}
+		}
+	}
+
+	### Divide League Authority
+	# Stability
+	divide_variable = {
+		which = punic_league_stability
+		value = 100
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = punic_league_stability
+				value = 0.001
+			}
+		}
+		divide_variable = {
+			which = punic_league_stability
+			value = 10
+		}
+	}
+
+	# Monthly Income
+	divide_variable = {
+		which = punic_league_income
+		value = 100
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = punic_league_income
+				value = 0.001
+			}
+		}
+		divide_variable = {
+			which = punic_league_income
+			value = 10
+		}
+	}
+
+	# Province Count
+	divide_variable = {
+		which = punic_league_province_count
+		value = 1000
+	}
+
+	# Finalize
+	change_variable = {
+		which = punic_league_growth
+		which = punic_league_stability
+	}
+	change_variable = {
+		which = punic_league_growth
+		which = punic_league_income
+	}
+	change_variable = {
+		which = punic_league_growth
+		which = punic_league_province_count
+	}
+	change_variable = {
+		which = punic_league_value
+		which = punic_league_growth
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = punic_league_value
+				value = 50
+			}
+			event_target:easimaTarget = {
+				ai = yes
+			}
+			OR = {
+				NOT = { has_country_flag = punic_league_reform_passed_6 }
+				AND = {
+					has_global_flag = north_america_european_threat
+					NOT = { has_country_flag = punic_league_reform_passed_10 }
+				}
+				has_country_flag = punic_league_reform_passed_10
+			}
+		}
+		subtract_variable = {
+			which = punic_league_value
+			value = 50
+		}
+		event_target:easimaTarget = {
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_10
+					}
+				}
+				country_event = {
+					id = ab_punic.32
+				}
+			}
+			else = {
+				country_event = {
+					id = ab_punic.33
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = punic_league_value
+				value = 100
+			}
+		}
+		set_variable = {
+			which = punic_league_value
+			value = 100
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				check_variable = {
+					which = punic_league_value
+					value = 0.001
+				}
+			}
+		}
+		set_variable = {
+			which = punic_league_value
+			value = 0
+		}
+	}
+	
+	if = {
+		limit = {
+			NOT = { has_country_flag = punic_league_reform_passed_10 }
+		}
+		### Calc Election Point
+		event_target:easimaTarget = {
+			ab_punic_league_election_point_calc_effect = yes
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_city_vassal
+				}
+				ab_punic_league_election_point_calc_effect = yes
+			}
+		}
+
+		### Calc Time
+		subtract_variable = {            
+			which = punic_league_time
+			value = 1
+		}
+		if = {
+			limit = {
+				is_variable_equal = {
+					which = punic_league_time
+					value = 0
+				}
+			}
+			set_variable = {
+				which = punic_league_time
+				value = 60
+			}
+			event_target:easimaTarget = {
+				ab_punic_league_new_easima_effect = yes
+			}
+		}
+	}
+}
+
+ab_punic_league_election_point_calc_effect = {
+	### Reset variables
+	set_variable = {
+		which = election_point_growth
+		which = election_point_base
+	}
+
+	### Calc Election Point
+	# Diplomatic Reputation
+	export_to_variable = {
+		which = election_point_diplomatic_reputation
+		value = trigger_value:diplomatic_reputation
+	}
+	round_variable = {
+		which = election_point_diplomatic_reputation
+		value = 0
+	}
+
+	# Good Relations with City States
+	set_variable = {
+		which = election_point_high_relations
+		value = 0
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU1 }
+			reverse_has_opinion = {
+				who = PU1
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU2 }
+			reverse_has_opinion = {
+				who = PU2
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU3 }
+			reverse_has_opinion = {
+				who = PU3
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU4 }
+			reverse_has_opinion = {
+				who = PU4
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU5 }
+			reverse_has_opinion = {
+				who = PU5
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU6 }
+			reverse_has_opinion = {
+				who = PU6
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU7 }
+			reverse_has_opinion = {
+				who = PU7
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU8 }
+			reverse_has_opinion = {
+				who = PU8
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { tag = PU9 }
+			reverse_has_opinion = {
+				who = PU9
+				value = 100
+			}
+		}
+		change_variable = {
+			which = election_point_high_relations
+			value = 1
+		}
+	}
+
+	# Diplomatic Advisor
+	set_variable = {
+		which = election_point_diplomatic_advisor
+		value = 0
+	}
+	if = {
+		limit = {
+			has_dip_advisor_of_level = { level = 5 }
+		}
+		set_variable = {
+			which = election_point_diplomatic_advisor
+			value = 5
+		}
+	}
+	else_if = {
+		limit = {
+			has_dip_advisor_of_level = { level = 4 }
+		}
+		set_variable = {
+			which = election_point_diplomatic_advisor
+			value = 4
+		}
+	}
+	else_if = {
+		limit = {
+			has_dip_advisor_of_level = { level = 3 }
+		}
+		set_variable = {
+			which = election_point_diplomatic_advisor
+			value = 3
+		}
+	}
+	else_if = {
+		limit = {
+			has_dip_advisor_of_level = { level = 2 }
+		}
+		set_variable = {
+			which = election_point_diplomatic_advisor
+			value = 2
+		}
+	}
+	else_if = {
+		limit = {
+			has_dip_advisor_of_level = { level = 1 }
+		}
+		set_variable = {
+			which = election_point_diplomatic_advisor
+			value = 1
+		}
+	}
+
+	# Finalize
+	change_variable = {
+		which = election_point_growth
+		which = election_point_diplomatic_reputation
+	}
+	change_variable = {
+		which = election_point_growth
+		which = election_point_high_relations
+	}
+	change_variable = {
+		which = election_point_growth
+		which = election_point_diplomatic_advisor
+	}
+	change_variable = {
+		which = election_point
+		which = election_point_growth
+	}
+	if = {
+		limit = {
+			NOT = {
+				check_variable = {
+					which = election_point
+					value = 0.001
+				}
+			}
+		}
+		set_variable = {
+			which = election_point
+			value = 0
+		}
+	}
+}
+
+ab_punic_league_new_easima_effect = {
+	save_event_target_as = eumdaCandidate
+	PU1 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU2 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU3 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU4 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU5 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU6 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU7 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU8 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	PU9 = {
+		if = {
+			limit = {
+				is_subject_of = PREV
+				check_variable = {
+					which = election_point
+					which = event_target:eumdaCandidate
+				}
+			}
+			save_event_target_as = eumdaCandidate
+		}
+	}
+	# Same Easima
+	if = {
+		limit = {
+			tag = event_target:eumdaCandidate
+		}
+		change_variable = {
+			which = punic_league_easima_count
+			value = 1
+		}
+		REB = {
+			change_variable = {
+				which = punic_league_value
+				value = 10
+			}
+		}
+	}
+	# Change Easima
+	else = {
+		set_variable = {
+			which = punic_league_easima_count
+			value = 0
+		}
+		remove_country_modifier = punic_league_aldiraq_expansion_mod_easima
+		remove_country_modifier = punic_league_easima_mod
+		remove_country_modifier = punic_league_reform_1_mod_easima
+		remove_country_modifier = punic_league_reform_2_mod_easima
+		remove_country_modifier = punic_league_reform_3_mod_easima
+		remove_country_modifier = punic_league_reform_4_mod_easima
+		remove_country_modifier = punic_league_reform_5_mod_easima
+		remove_country_modifier = punic_league_reform_6_mod_easima
+		remove_country_modifier = punic_league_reform_7_mod_easima
+		remove_country_modifier = punic_league_reform_8_mod_easima
+		remove_country_modifier = punic_league_reform_9_mod_easima
+		event_target:eumdaCandidate = {
+			save_global_event_target_as = newEasima
+			save_global_event_target_as = easimaTarget
+			grant_independence = yes
+			add_government_reform = ctg_punic_league_reform
+			PREV = {
+				add_government_reform = ctg_punic_city_reform
+				every_subject_country = {
+					if = {
+						limit = {
+							is_subject_of_type = punic_city_vassal
+						}
+						event_target:easimaTarget = {
+							create_subject = {
+								subject_type = punic_city_vassal
+								who = PREV
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							is_subject_of_type = punic_tribe_vassal
+						}
+						event_target:easimaTarget = {
+							create_subject = {
+								subject_type = punic_tribe_vassal
+								who = PREV
+							}
+						}
+					}
+					else = {
+						event_target:easimaTarget = {
+							vassalize = PREV
+						}
+					}
+				}
+			}
+			create_subject = {
+				subject_type = punic_city_vassal
+				who = PREV
+			}
+			add_country_modifier = {
+				name = punic_league_easima_mod
+				duration = -1
+				hidden = yes
+			}
+			change_variable = {
+				which = punic_league_easima_count
+				value = 1
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_1
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_1_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_2
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_2_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_3
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_3_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_4
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_4_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_5
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_5_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_6
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_6_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_7
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_7_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_8
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_8_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+			if = {
+				limit = {
+					REB = {
+						has_country_flag = punic_league_reform_passed_9
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_9_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	# Notification
+	event_target:easimaTarget = {
+		if = {
+			limit = {
+				has_saved_global_event_target = newEasima
+			}
+			set_country_flag = punic_league_tag_switch
+		}
+		country_event = {
+			id = ab_punic.30
+		}
+		every_subject_country = {
+			limit = {
+				is_subject_of_type = punic_city_vassal
+			}
+			if = {
+				limit = {
+					has_saved_global_event_target = newEasima
+				}
+				set_country_flag = punic_league_tag_switch
+			}
+			country_event = {
+				id = ab_punic.30
+			}
+		}
+	}
+	clear_global_event_target = newEasima
+}
+
+ab_punic_league_cleanup_effect = {
+	REB = {
+		clr_country_flag = punic_league_reform_passed_1
+		clr_country_flag = punic_league_reform_passed_2
+		clr_country_flag = punic_league_reform_passed_3
+		clr_country_flag = punic_league_reform_passed_4
+		clr_country_flag = punic_league_reform_passed_5
+		clr_country_flag = punic_league_reform_passed_6
+		clr_country_flag = punic_league_reform_passed_7
+		clr_country_flag = punic_league_reform_passed_8
+		clr_country_flag = punic_league_reform_passed_9
+		clr_country_flag = punic_league_reform_passed_10
+	}
+	event_target:easimaTarget = {
+		remove_country_modifier = punic_league_aldiraq_expansion_mod_easima
+		remove_country_modifier = punic_league_easima_mod
+		every_subject_country = {
+			limit = {
+				has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+			}
+			remove_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+		}
+	}
+	set_global_flag = ab_disabled_punic_league
+	clear_global_event_target = easimaTarget
+	clear_global_event_target = punicCityTarget1
+	clear_global_event_target = punicCityTarget2
+	clear_global_event_target = punicCityTarget3
+	clear_global_event_target = punicCityTarget4
+	clear_global_event_target = punicCityTarget5
+	clear_global_event_target = punicCityTarget6
+	clear_global_event_target = punicCityTarget7
+	clear_global_event_target = punicCityTarget8
+	clear_global_event_target = punicCityTarget9
+}
+
+ab_punic_league_reform_1_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_1
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_1_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_1_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_1_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_1_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_2_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_2
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_2_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_2_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_2_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_2_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_3_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_3
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_3_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_3_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_3_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_3_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_4_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_4
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_4_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_4_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_4_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_4_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_5_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_5
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_5_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_5_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_5_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_5_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_6_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_6
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_6_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_6_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_6_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_6_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_7_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_7
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_7_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_7_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_7_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_7_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}
+
+ab_punic_league_reform_8_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_8
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_8_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_8_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_8_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_8_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	custom_tooltip = AB_PUNIC_LEAGUE_DISALLOW_ASSASSINATIONS
+}
+
+ab_punic_league_reform_9_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_9
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_9_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_9_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_9_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_9_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	custom_tooltip = AB_PUNIC_LEAGUE_DISALLOW_INTERNAL_WARS
+}
+
+ab_punic_league_reform_10_effect = {
+	REB = {
+		set_country_flag = punic_league_reform_passed_10
+	}
+	custom_tooltip = EASIMA_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_10_EASIMA
+	custom_tooltip = OTHERS_WILL_RECEIVE
+	custom_tooltip = AB_PUNIC_LEAGUE_REFORM_10_EUMDA
+	hidden_effect = {
+		event_target:easimaTarget = {
+			change_variable = {
+				which = punic_league_reform_passed
+				value = 1
+			}
+			add_country_modifier = {
+				name = punic_league_reform_10_mod_easima
+				duration = -1
+				hidden = yes
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				add_country_modifier = {
+					name = punic_league_reform_10_mod_eumda
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	custom_tooltip = AB_PUNIC_LEAGUE_PERMANENT_EASIMA
+}
