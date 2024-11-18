@@ -1535,6 +1535,8 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	major = yes
+
 	immediate = {
 		hidden_effect = {
 			ab_punic_league_cleanup_effect = yes
@@ -1562,6 +1564,8 @@ country_event = {
 	picture = AB_CARTHAGE_eventPicture
 	
 	is_triggered_only = yes
+
+	major = yes
 
 	immediate = {
 		hidden_effect = {
@@ -3074,6 +3078,144 @@ country_event = {
 		name = ab_punic.66.b
 		custom_tooltip = LEN_RELEASE_HELLENIC
 		TLW_establish_pu_hellenic_empire_effect = yes
+	}
+}
+
+#Rapid Expansion
+country_event = {
+	id = ab_punic.67
+	title = ab_punic.67.t
+	desc = ab_punic.67.d
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_global_flag = ab_buniq_expansion_2
+				}
+				clr_global_flag = ab_buniq_expansion_2
+				set_global_flag = ab_buniq_expansion_3
+			}
+			else_if = {
+				limit = {
+					has_global_flag = ab_buniq_expansion_1
+				}
+				clr_global_flag = ab_buniq_expansion_1
+				set_global_flag = ab_buniq_expansion_2
+			}
+			else_if = {
+				limit = {
+					NOT = { has_global_flag = ab_buniq_expansion_1 }
+					NOT = { has_global_flag = ab_buniq_expansion_3 }
+				}
+				set_global_flag = ab_buniq_expansion_1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.67.a
+		if = {
+			limit = {
+				has_global_flag = ab_buniq_expansion_1
+			}
+			custom_tooltip = RAPID_EXPANSION_AE_BUNIQ_1
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							superregion = north_america_superregion
+						}
+						NOT = { tag = ROOT }
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = 70
+						apply_calc = no
+					}
+					country_event = {
+						id = ab_punic.68
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_global_flag = ab_buniq_expansion_2
+			}
+			custom_tooltip = RAPID_EXPANSION_AE_BUNIQ_2
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							superregion = north_america_superregion
+						}
+						NOT = { tag = ROOT }
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = 50
+						apply_calc = no
+					}
+					country_event = {
+						id = ab_punic.68
+					}
+				}
+			}
+		}
+		else = {
+			custom_tooltip = RAPID_EXPANSION_AE_BUNIQ_3
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							superregion = north_america_superregion
+						}
+						NOT = { tag = ROOT }
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = 30
+						apply_calc = no
+					}
+					country_event = {
+						id = ab_punic.68
+					}
+				}
+			}
+		}
+	}
+}
+
+#Rapid Expansion - Nof
+country_event = {
+	id = ab_punic.68
+	title = ab_punic.68.t
+	desc = ab_punic.68.d
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.68.a
+		if = {
+			limit = {
+				has_global_flag = ab_buniq_expansion_1
+			}
+			custom_tooltip = RAPID_EXPANSION_AE_NOF_1
+		}
+		else_if = {
+			limit = {
+				has_global_flag = ab_buniq_expansion_2
+			}
+			custom_tooltip = RAPID_EXPANSION_AE_NOF_2
+		}
+		else = {
+			custom_tooltip = RAPID_EXPANSION_AE_NOF_3
+		}
 	}
 }
 
@@ -7126,3 +7268,5 @@ country_event = {
 		}
 	}
 }
+
+## ZOROASTRIAN EVENTS
