@@ -16,11 +16,20 @@ tlw_buhutan_first = {
 		position = 8
 
 		provinces_to_highlight = {
-			province_id = 2670
+			OR = {
+				province_id = 2670
+				AND = {
+					owned_by = ROOT
+					has_tax_building_trigger = no
+				}
+			}
 		}
 		
 		trigger = {
-			theologian = 3
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
 			2670 = {
 				has_great_project = {
 					type = holy_fire_iroquoian
@@ -30,10 +39,13 @@ tlw_buhutan_first = {
 		}
 		
 		effect = {
+			change_innovativeness = 5
 			add_country_modifier = {
 				name = royal_fires_modifier
 				duration = -1
 			}
+			set_country_flag = che_tax_buff
+			custom_tooltip = CHE_BUILDING_TAX
 		}
 	}
 
@@ -43,11 +55,11 @@ tlw_buhutan_first = {
 		position = 10
 		
 		trigger = {
-			army_tradition = 95
-			army_professionalism = 0.75
-			has_global_modifier_value = {
-				which = discipline
-				value = 0.2
+			has_mil_advisor_3 = yes
+			OR = {
+				full_idea_group = quality_ideas 
+				full_idea_group = professional_ideas 
+				full_idea_group = quantity_ideas 
 			}
 		}
 		
@@ -68,11 +80,21 @@ tlw_buhutan_first = {
 		position = 11
 
 		provinces_to_highlight = {
-			#
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = { religion = zoroastrian }
 		}
 		
 		trigger = {
-			#
+			army_tradition = 90
+			army_professionalism = 0.8
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.25
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 300
+				religion = zoroastrian
+			}
 		}
 		
 		effect = {
@@ -109,11 +131,23 @@ tlw_buhutan_first = {
 		position = 13
 
 		provinces_to_highlight = {
-			#
+			NOT = { num_of_times_improved = 3 }
+			OR = {
+				has_terrain = forest
+				has_terrain = woods
+			}
+			owned_by = ROOT
 		}
 		
 		trigger = {
-			#
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_terrain = forest
+					has_terrain = woods
+				}
+				num_of_times_improved = 3
+			}
 		}
 		
 		effect = {
@@ -127,15 +161,29 @@ tlw_buhutan_first = {
 		position = 15
 
 		provinces_to_highlight = {
-			#
+			has_manufactory_trigger = no
+			owned_by = ROOT
 		}
 		
 		trigger = {
-			#
+			num_of_owned_provinces_with = {
+				value = 50
+				has_manufactory_trigger = yes
+			}
 		}
 		
 		effect = {
-			#
+			add_years_of_owned_provinces_production_income = {
+				years = 1
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = punic_industrial_revolution
+				duration = -1
+			}
 		}
 	}
 }
@@ -158,17 +206,49 @@ tlw_buhutan_second = {
 		position = 7
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				province_id = 2670
+				province_id = 947
+				province_id = 911
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			#
+			mission_completed = aldiraq_a_new_future
+			owns_or_non_sovereign_subject_of = 2670
+			owns_or_non_sovereign_subject_of = 947
+			owns_or_non_sovereign_subject_of = 911
+			full_idea_group = religious_ideas
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
 		}
 		
 		effect = {
+			add_splendor = 200
+			change_government_reform_progress = 25
 			add_country_modifier = {
 				name = reunification_with_parsees
 				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							religion = zoroastrian
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = SER_DOTF_YES
+				hidden_effect = {
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_DOTF_NO
 			}
 		}
 	}
@@ -224,15 +304,42 @@ tlw_buhutan_second = {
 		position = 11
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				province_id = 917
+				owned_by = CAO
+			}
 		}
 		
 		trigger = {
-			#
+			controls = 917
+			war_score_against = {
+				who = CAO
+				value = 60
+			}
 		}
 		
 		effect = {
-			#
+			upper_louisiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ozarks_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			great_lakes_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -242,11 +349,32 @@ tlw_buhutan_second = {
 		position = 13
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = ozarks_area
+				area = upper_louisiana_area
+				area = iowa_area
+				area = illinois_country_area
+				area = southern_illinois_area
+				area = minnessota_area
+				area = wisconsin_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
+
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				OR = {
+					area = ozarks_area
+					area = upper_louisiana_area
+					area = iowa_area
+					area = illinois_country_area
+					area = southern_illinois_area
+					area = minnessota_area
+					area = wisconsin_area
+				}
+				is_city = yes
+			}
 		}
 		
 		effect = {
@@ -260,15 +388,50 @@ tlw_buhutan_second = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			owned_by = ROOT
+			culture_group = iroquoian
+			NOT = { development = 30 }
 		}
-		
+
 		trigger = {
-			#
+			num_of_owned_provinces_with = {
+				value = 10
+				culture_group = iroquoian
+				development = 30
+			}
 		}
 		
 		effect = {
-			#
+			great_lakes_region = {
+				add_base_manpower = 1
+				add_permanent_province_modifier = {
+					name = punic_buniq_urbanization
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = len_economic_capital
+				duration = -1
+			}
+			if = {
+				limit = {
+					911 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = bridge_molon
+							tier = 2
+						}
+					}
+				}
+				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_YES
+				add_years_of_income = 2
+			}
+			else = {
+				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_NO
+				tooltip = {
+					add_years_of_income = 2
+				}
+			}
 		}
 	}
 
@@ -278,11 +441,28 @@ tlw_buhutan_second = {
 		position = 16
 
 		provinces_to_highlight = {
-			#
+			region = great_plains_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			#
+			OR = {
+				great_plains_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				any_ally = {
+					has_reform = steppe_horde
+					OR = {
+						technology_group = north_american
+						technology_group = high_american
+					}
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+			}
 		}
 		
 		effect = {
@@ -323,12 +503,12 @@ tlw_buhutan_third = {
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_punic.71
+			}
+			custom_tooltip = AB_EMPTY
 			custom_tooltip = ILK_COMET
 			set_country_flag = no_more_comet_sighted_event
-			add_country_modifier = {
-				name = ilk_observatory
-				duration = -1
-			}
 		}
 	}
 
@@ -341,13 +521,21 @@ tlw_buhutan_third = {
 			calc_true_if = {
 				all_subject_country = {
 					religion = zoroastrian
+					total_development = 50
 				}
 				amount = 3
 			}
 		}
 		
 		effect = {
-			#
+			unlock_government_reform = {
+				government_reform = che_zoro_order_satrapy_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = che_legacy_of_molon
+				duration = 36500
+			}
 		}
 	}
 
@@ -357,15 +545,59 @@ tlw_buhutan_third = {
 		position = 11
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = trois_rivieres_area
+				area = lower_canada_area
+				area = notre_dame_mountains_area
+				area = upper_acadia_area
+				area = lower_acadia_area
+				area = cote_nord_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
+
 		trigger = {
-			#
+			owns = 2578
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = trois_rivieres_area
+					area = lower_canada_area
+					area = notre_dame_mountains_area
+					area = upper_acadia_area
+					area = lower_acadia_area
+					area = cote_nord_area
+				}
+				is_city = yes
+			}
 		}
 		
 		effect = {
-			#
+			set_global_flag = ab_disabled_hylinia
+			custom_tooltip = CHE_PREVENT_HYLINIA
+			custom_tooltip = CHE_DESTROY_ACADEMY
+			hidden_effect = {
+				2578 = {
+					set_province_flag = ab_destroyed_academy_sosylus
+					destroy_great_project = {
+						type = academy_sosylus
+					}
+				}
+			}
+			upper_ontario_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_ontario_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -375,15 +607,40 @@ tlw_buhutan_third = {
 		position = 12
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				region = great_lakes_region
+				region = canada_region
+				region = northeast_america_region
+			}
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+					is_city = yes
+				}
+			}
 		}
 		
 		trigger = {
-			#
+			mission_completed = che_heirs_media
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				OR = {
+					region = great_lakes_region
+					region = canada_region
+					region = northeast_america_region
+				}
+				religion = zoroastrian
+				is_city = yes
+			}
 		}
 		
 		effect = {
-			#
+			unlock_government_reform = {
+				government_reform = che_zoro_order_upgrade_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = che_zoro_order_upgrade_reform
 		}
 	}
 
@@ -394,12 +651,15 @@ tlw_buhutan_third = {
 
 		provinces_to_highlight = {
 			OR = {
-				owned_by = event_target:americanLinguaFranca
+				AND = {
+					has_saved_global_event_target = americanLinguaFranca
+					owned_by = event_target:americanLinguaFranca
+				}
 				AND = {
 					owned_by = ROOT
 					NOT = {
 						AND = {
-							culture_group = eastern_algonquian
+							religion = zoroastrian
 							development = 20
 						}
 					}
@@ -424,7 +684,7 @@ tlw_buhutan_third = {
 			NOT = { great_power_rank = 4 }
 			num_of_owned_provinces_with = {
 				value = 50
-				culture_group = eastern_algonquian
+				religion = zoroastrian
 				development = 20
 			}
 		}
@@ -442,11 +702,20 @@ tlw_buhutan_third = {
 		position = 15
 
 		provinces_to_highlight = {
-			#
+			owned_by = JOA
 		}
 		
 		trigger = {
-			#
+			OR = {
+				NOT = { exists = JOA }
+				JOA = {
+					alliance_with = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+			}
 		}
 		
 		effect = {
@@ -473,15 +742,55 @@ tlw_buhutan_fourth = {
 		position = 7
 
 		provinces_to_highlight = {
-			#
+			province_id = 2551
 		}
 		
 		trigger = {
-			#
+			mission_completed = aldiraq_a_new_future
+			2551 = {
+				owned_by = ROOT
+			}
+			2551 = {
+				is_city = yes
+			}
+			2551 = {
+				development = 12
+			}
 		}
 		
 		effect = {
-			#
+			country_event = {
+				id = ab_punic.70
+			}
+			custom_tooltip = AB_EMPTY
+			western_kentucky_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kentucky_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ohio_country_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			miami_river_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -491,15 +800,80 @@ tlw_buhutan_fourth = {
 		position = 8
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = western_kentucky_area
+				area = kentucky_area
+				area = appalachia_area
+				area = ohio_country_area
+				area = miami_river_area
+			}
+			NOT = { owned_by = ROOT }
 		}
-		
+
 		trigger = {
-			#
+			mission_completed = aldiraq_barbiri_unification
+			num_of_owned_provinces_with = {
+				value = 12
+				OR = {
+					area = western_kentucky_area
+					area = kentucky_area
+					area = appalachia_area
+					area = ohio_country_area
+					area = miami_river_area
+				}
+				is_city = yes
+			}
 		}
 		
 		effect = {
-			#
+			change_tag = CHE
+			change_primary_culture = cherokee
+			custom_tooltip = CHE_BARBIRI_TO_CHEROKEE
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = cherokee
+					old_culture_1 = barbiri
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				change_government = theocracy
+			}
+			add_government_reform = che_zoro_order_reform			
+			custom_tooltip = AB_EMPTY
+			country_event = {
+				id = ideagroups.1
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+			hidden_effect = {
+				country_event = {
+					id = ab_punic.67
+				}
+			}
+			michigan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_canada_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			huronia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -509,15 +883,39 @@ tlw_buhutan_fourth = {
 		position = 10
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = michigan_area
+				area = upper_canada_area
+				area = huronia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
+
 		trigger = {
-			#
+			michigan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			upper_canada_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			huronia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
 		}
 		
 		effect = {
-			#
+			set_global_flag = ab_disabled_order_of_zoroaster
+			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+			canada_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -527,11 +925,24 @@ tlw_buhutan_fourth = {
 		position = 11
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = hudson_valley_area
+				area = iroquoisia_area
+				area = westsylvania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
+
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = hudson_valley_area
+					area = iroquoisia_area
+					area = westsylvania_area
+				}
+				is_city = yes
+			}
 		}
 		
 		effect = {
@@ -545,11 +956,24 @@ tlw_buhutan_fourth = {
 		position = 13
 
 		provinces_to_highlight = {
-			#
+			region = france_region
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+					culture_group = iroquoian
+				}
+			}
+			has_discovered = ROOT
 		}
-		
+
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = france_region
+				religion = zoroastrian
+				culture_group = iroquoian
+			}
 		}
 		
 		effect = {
@@ -563,11 +987,43 @@ tlw_buhutan_fourth = {
 		position = 15
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				province_id = 2212
+				province_id = 4430
+				province_id = 2223
+				province_id = 441
+				province_id = 4336
+			}
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+				}
+			}
+			has_discovered = ROOT
 		}
 		
 		trigger = {
-			#
+			2212 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			4430 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			2223 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			441 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			4336 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
 		}
 		
 		effect = {
@@ -616,8 +1072,8 @@ tlw_buhutan_fifth = {
 			}
 			macaronesia_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -637,13 +1093,45 @@ tlw_buhutan_fifth = {
 
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 5
+				value = 3
 				area = macaronesia_area
 			}
 		}
 		
 		effect = {
-			#
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = punic_the_great_invasion
+				duration = 7300
+			}
+			brittany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			poitou_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			guyenne_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			pyrenees_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -653,15 +1141,36 @@ tlw_buhutan_fifth = {
 		position = 11
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				area = brittany_area
+				area = poitou_area
+				area = guyenne_area
+				area = pyrenees_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
-		
+
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = brittany_area
+					area = poitou_area
+					area = guyenne_area
+					area = pyrenees_area
+				}
+			}
 		}
 		
 		effect = {
-			#
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -671,15 +1180,30 @@ tlw_buhutan_fifth = {
 		position = 12
 
 		provinces_to_highlight = {
-			#
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
-		
+
 		trigger = {
-			#
+			ile_de_france_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = france_region
+			}
 		}
 		
 		effect = {
-			#
+			mashriq_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -689,15 +1213,34 @@ tlw_buhutan_fifth = {
 		position = 14
 
 		provinces_to_highlight = {
-			#
+			region = mashriq_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
-		
+
 		trigger = {
-			#
+			owns = 410
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = mashriq_region
+			}
 		}
 		
 		effect = {
-			#
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -707,11 +1250,22 @@ tlw_buhutan_fifth = {
 		position = 16
 
 		provinces_to_highlight = {
-			#
+			OR = {
+				region = persia_region
+				region = khorasan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
-		
+
 		trigger = {
-			#
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 60
+				OR = {
+					region = persia_region
+					region = khorasan_region
+				}
+			}
 		}
 		
 		effect = {

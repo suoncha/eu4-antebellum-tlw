@@ -300,7 +300,10 @@ tlw_dylamea_first = {
 
 		provinces_to_highlight = {
 			OR = {
-				owned_by = event_target:americanLinguaFranca
+				AND = {
+					has_saved_global_event_target = americanLinguaFranca
+					owned_by = event_target:americanLinguaFranca
+				}
 				AND = {
 					owned_by = ROOT
 					NOT = {
@@ -541,8 +544,10 @@ tlw_dylamea_second = {
 		effect = {
 			set_global_flag = ab_disabled_order_of_zoroaster
 			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+			custom_tooltip = LEN_DESTROY_HOLY_FIRE
 			hidden_effect = {
 				2670 = {
+					set_province_flag = ab_destroyed_holy_fire
 					destroy_great_project = {
 						type = holy_fire_iroquoian
 					}
@@ -1217,6 +1222,29 @@ tlw_dylamea_fourth = {
 			}
 			custom_tooltip = AB_EMPTY
 			ab_mpf_consolidate_rites_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							OR = {
+								religion = hellenic
+								religion = reformed_hellenic
+							}
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = SER_DOTF_YES
+				hidden_effect = {
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_DOTF_NO
+			}
 		}
 	}
 
@@ -1550,8 +1578,8 @@ tlw_dylamea_fifth = {
 			}
 			subarctic_islands_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1584,43 +1612,43 @@ tlw_dylamea_fifth = {
 			}
 			kingdom_of_the_isles_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			highlands_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			lowlands_area = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			northern_norway = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			western_norway = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
 			eastern_norway = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
@@ -1682,8 +1710,8 @@ tlw_dylamea_fifth = {
 			}
 			scandinavia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
