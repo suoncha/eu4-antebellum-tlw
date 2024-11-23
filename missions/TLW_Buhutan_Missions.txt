@@ -91,14 +91,32 @@ tlw_buhutan_first = {
 				which = discipline
 				value = 0.25
 			}
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 300
-				religion = zoroastrian
-			}
+			num_of_carolean = 30
 		}
 		
 		effect = {
-			#
+			custom_tooltip = BYZ_RESTORER_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = CHE_perma_pp1
+					amount = 15
+				}
+			}
+			add_country_modifier = {
+				name = che_eternal_flame
+				duration = -1
+			}
+			if = {
+				limit = {
+					num_of_carolean = 100
+				}
+				custom_tooltip = CHE_100_IMMORTALS_YES
+				set_country_flag = che_commandant2_buff
+			}
+			else = {
+				custom_tooltip = CHE_100_IMMORTALS_NO
+			}
+			custom_tooltip = CHE_COMMANDANT2_SCALING
 		}
 	}
 
@@ -118,6 +136,10 @@ tlw_buhutan_first = {
 		}
 		
 		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
 			add_country_modifier = {
 				name = che_mother_clan
 				duration = -1
@@ -151,7 +173,9 @@ tlw_buhutan_first = {
 		}
 		
 		effect = {
-			#
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_forest_expansion
+			}
 		}
 	}
 
@@ -322,6 +346,10 @@ tlw_buhutan_second = {
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_punic.73
+			}
+			custom_tooltip = AB_EMPTY
 			upper_louisiana_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -382,7 +410,16 @@ tlw_buhutan_second = {
 		}
 		
 		effect = {
-			#
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = che_integrating_siouans
+				duration = 7300
+			}
+			set_country_flag = che_mesquakie_spread
+			custom_tooltip = CHE_MESQUAKIE_SPREAD
+			custom_tooltip = AB_EMPTY
+			set_country_flag = che_commandant_buff
+			custom_tooltip = CHE_COMMANDANT_SCALING
 		}
 	}
 
@@ -394,6 +431,7 @@ tlw_buhutan_second = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			culture_group = iroquoian
+			region = great_lakes_region
 			NOT = { development = 30 }
 		}
 
@@ -401,6 +439,7 @@ tlw_buhutan_second = {
 			num_of_owned_provinces_with = {
 				value = 10
 				culture_group = iroquoian
+				region = great_lakes_region
 				development = 30
 			}
 		}
@@ -428,12 +467,12 @@ tlw_buhutan_second = {
 					}
 				}
 				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_YES
-				add_years_of_income = 2
+				add_prestige_or_monarch_power = { amount = 25 }
 			}
 			else = {
 				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_NO
 				tooltip = {
-					add_years_of_income = 2
+					add_prestige_or_monarch_power = { amount = 25 }
 				}
 			}
 		}
@@ -457,10 +496,10 @@ tlw_buhutan_second = {
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 				any_ally = {
-					has_reform = steppe_horde
+					uses_horde_unity = yes
 					OR = {
-						technology_group = north_american
-						technology_group = high_american
+						culture_group = plains_algonquian
+						culture_group = caddoan
 					}
 					has_opinion = {
 						who = ROOT
@@ -471,7 +510,83 @@ tlw_buhutan_second = {
 		}
 		
 		effect = {
-			#
+			if = {
+				limit = {
+					great_plains_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = CHE_CONQUER_HASHDIA_YES
+				set_country_flag = che_tionontate_spread
+				great_plains_region = {
+					add_province_modifier = {
+						name = che_a_new_light
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_CONQUER_HASHDIA_NO
+				tooltip = {
+					great_plains_region = {
+						add_province_modifier = {
+							name = che_a_new_light
+							duration = 7300
+						}
+					}
+				}
+			}
+			custom_tooltip = CHE_HASHDIA_SPREAD
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_ally = {
+						uses_horde_unity = yes
+						OR = {
+							culture_group = plains_algonquian
+							culture_group = caddoan
+						}
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+					NOT = {
+						great_plains_region = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+				}
+				custom_tooltip = CHE_ALLY_HORDE_YES
+				hidden_effect = {
+					random_ally = {
+						limit = {
+							uses_horde_unity = yes
+							OR = {
+								culture_group = plains_algonquian
+								culture_group = caddoan
+							}
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+						country_event = {
+							id = ab_punic.75
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_ALLY_HORDE_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_punic.75
+				}
+			}
 		}
 	}
 }
@@ -590,6 +705,14 @@ tlw_buhutan_third = {
 					}
 				}
 			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = len_agunqa_frontier
+				duration = 9125
+			}
+			set_country_flag = che_huron_spread
+			custom_tooltip = CHE_HURON_SPREAD
+			custom_tooltip = AB_EMPTY
 			upper_ontario_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -631,7 +754,7 @@ tlw_buhutan_third = {
 		trigger = {
 			mission_completed = che_heirs_media
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 100
+				value = 50
 				OR = {
 					region = great_lakes_region
 					region = canada_region
@@ -643,6 +766,11 @@ tlw_buhutan_third = {
 		}
 		
 		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = per_victorious
+				duration = 10950
+			}
 			unlock_government_reform = {
 				government_reform = che_zoro_order_upgrade_reform
 			}
@@ -726,7 +854,47 @@ tlw_buhutan_third = {
 		}
 		
 		effect = {
-			#
+			if = {
+				limit = {
+					NOT = { exists = JOA }
+				}
+				custom_tooltip = CHE_NOT_EXIST_JOA_YES
+				add_mercantilism_or_monarch_power = { amount = 10 }
+			}
+			else = {
+				custom_tooltip = CHE_NOT_EXIST_JOA_NO
+				tooltip = {
+					add_mercantilism_or_monarch_power = { amount = 10 }
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					JOA = {
+						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+				}
+				custom_tooltip = CHE_ALLY_JOA_YES
+				hidden_effect = {
+					JOA = {
+						country_event = {
+							id = ab_punic.75
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_ALLY_JOA_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_punic.75
+				}
+			}
 		}
 	}
 }
@@ -918,12 +1086,37 @@ tlw_buhutan_fourth = {
 		effect = {
 			set_global_flag = ab_disabled_order_of_zoroaster
 			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = zun_yasna
+				duration = -1
+			}
 			canada_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					mission_completed = che_diaspora
+				}
+				custom_tooltip = CHE_COMPLETED_DIASPORA_YES
+				add_country_modifier = {
+					name = per_azar
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = CHE_COMPLETED_DIASPORA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = per_azar
+						duration = -1
+					}
+				}
 			}
 		}
 	}
@@ -956,13 +1149,37 @@ tlw_buhutan_fourth = {
 		}
 		
 		effect = {
-			#
+			add_stability_or_adm_power = yes
+			define_advisor = {
+				type = planner
+				skill = 3
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CHE_EVERY_IROQUOIS
+			tooltip = {
+				add_province_modifier = {
+					name = che_a_new_light
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = iroquois
+					}
+					add_province_modifier = {
+						name = che_a_new_light
+						duration = 7300
+					}
+				}
+			}
 		}
 	}
 
 	che_war_uruqba = {
 		icon = centralize_france
-		required_missions = { che_ghalia_campaign }
+		required_missions = { che_asha_restored che_ghalia_campaign }
 		position = 13
 
 		provinces_to_highlight = {
@@ -987,7 +1204,33 @@ tlw_buhutan_fourth = {
 		}
 		
 		effect = {
-			#
+			set_country_flag = che_europe_spread
+			custom_tooltip = CHE_EUROPE_SPREAD
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = france_region
+						religion = zoroastrian
+						culture_group = iroquoian
+					}
+					change_culture = susquehannock
+					change_original_culture = susquehannock
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = che_zoro_order_final_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = che_zoro_order_final_reform
+			custom_tooltip = AB_EMPTY
+			europe_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 
@@ -1037,7 +1280,28 @@ tlw_buhutan_fourth = {
 		}
 		
 		effect = {
-			#
+			set_country_flag = sty_winning_battle_grant_morale
+			custom_tooltip = STY_GER_EASTERN_SPEAR_BATTLE
+			custom_tooltip = AB_EMPTY
+			set_country_flag = mnk_triumph
+			custom_tooltip = IVR_CONVERT_BONUS
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					num_of_owned_provinces_with = {
+						value = 300
+						religion = zoroastrian
+					}
+				}
+				custom_tooltip = CHE_300_PROVINCES_YES
+				add_adm_tech = 1
+			}
+			else = {
+				custom_tooltip = CHE_300_PROVINCES_NO
+				tooltip = {
+					add_adm_tech = 1
+				}
+			}
 		}
 	}
 }
@@ -1174,6 +1438,11 @@ tlw_buhutan_fifth = {
 		}
 		
 		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = len_invasion_of_uruqba
+				duration = 9125
+			}
 			france_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1185,7 +1454,7 @@ tlw_buhutan_fifth = {
 	}
 
 	che_ghalia_campaign = {
-		icon = carolingian_empire
+		icon = mission_downfall
 		required_missions = { che_landing_uruqba }
 		position = 12
 
@@ -1207,12 +1476,40 @@ tlw_buhutan_fifth = {
 		}
 		
 		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			france_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -10
+				add_province_modifier = {
+					name = che_iroquoian_settlers
+					duration = 9125
+				}
+			}
+			add_country_modifier = {
+				name = ars_fall_of_paris
+				duration = 7300
+			}
 			mashriq_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			custom_tooltip = BYZ_HRE_DISMANTLE
+			tooltip = {
+				add_mil_tech = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { hre_size = 1 }
+					}
+					add_mil_tech = 1
+				}
 			}
 		}
 	}
@@ -1237,6 +1534,19 @@ tlw_buhutan_fifth = {
 		}
 		
 		effect = {
+			410 = {
+				change_province_name = "Ctesiphon"
+				rename_capital = "Ctesiphon"
+				change_trade_goods = silk
+				add_province_modifier = {
+					name = per_ctesiphon
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_prosperity
+				duration = -1
+			}
 			persia_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1269,6 +1579,7 @@ tlw_buhutan_fifth = {
 		}
 
 		trigger = {
+			has_reform = ozo_reformation_great_flame_reform
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 60
 				OR = {
@@ -1279,7 +1590,16 @@ tlw_buhutan_fifth = {
 		}
 		
 		effect = {
-			#
+			override_country_name = PERSIA
+			custom_tooltip = CHE_GODKING_TITLE
+			add_ruler_personality = godking_personality
+			custom_tooltip = CHE_ALWAYS_CONQUEROR
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = ozo_reformation_great_flame_upgrade_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = ozo_reformation_great_flame_upgrade_reform
 		}
 	}
 }

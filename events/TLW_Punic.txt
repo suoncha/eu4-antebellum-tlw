@@ -3322,6 +3322,318 @@ country_event = {
 	}
 }
 
+#Spread of Iroquoian - Hidden
+province_event = {
+	id = ab_punic.72
+	title = ab_punic.72.t
+	desc = ab_punic.72.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+		
+	trigger = {
+		owner = {
+			culture_group = iroquoian
+		}
+		NOT = { culture_group = iroquoian }
+		any_friendly_coast_border_province = {
+			culture_group = iroquoian
+		}
+		OR = {
+			AND = {
+				owner = {
+					has_country_flag = che_huron_spread
+				}
+				culture_group = eastern_algonquian
+			}
+			AND = {
+				owner = {
+					has_country_flag = che_mesquakie_spread
+				}
+				culture_group = siouan
+			}
+			AND = {
+				owner = {
+					has_country_flag = che_tionontate_spread
+				}
+				OR = {
+					culture_group = caddoan
+					culture_group = plains_algonquian
+				}
+			}
+			AND = {
+				owner = {
+					has_country_flag = che_europe_spread
+				}
+				superregion = europe_superregion
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.75
+			religion = owner
+		}
+	}
+	
+	option = {
+		name = ab_punic.72.a
+		if = {
+			limit = {
+				culture_group = eastern_algonquian
+			}
+			change_culture = huron
+			change_original_culture = huron
+		}
+		else_if = {
+			limit = {
+				culture_group = siouan
+			}
+			change_culture = mesquakie
+			change_original_culture = mesquakie
+		}
+		else_if = {
+			limit = {
+				OR = {
+					culture_group = caddoan
+					culture_group = plains_algonquian
+				}
+			}
+			change_culture = tionontate
+			change_original_culture = tionontate
+		}
+		else_if = {
+			limit = {
+				superregion = europe_superregion
+			}
+			change_culture = susquehannock
+			change_original_culture = susquehannock
+		}
+	}
+}
+
+#Raze of Cahokia
+country_event = {
+	id = ab_punic.73
+	title = ab_punic.73.t
+	desc = ab_punic.73.d
+	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.73.a
+		917 = {
+			add_base_tax = -2
+			add_base_production = -2
+			add_base_manpower = -2
+			add_devastation = 100
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CHE_DESTROY_JEWISH_TEMPLE
+		hidden_effect = {
+			917 = {
+				set_province_flag = ab_destroyed_temple_cahokia
+				destroy_great_project = {
+					type = temple_cahokia
+				}
+				every_country = {
+					limit = {
+						religion = jewish
+						tlw_is_american_trigger = yes
+					}
+					country_event = {
+						id = ab_punic.74
+					}
+				}
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		set_country_flag = che_officer_corp_buff
+		custom_tooltip = CHE_OFFICER_CORPS_PRIVILEGE
+	}
+}
+
+#Raze of Cahokia - Jewish Nof
+country_event = {
+	id = ab_punic.74
+	title = ab_punic.74.t
+	desc = ab_punic.74.d
+	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.74.a
+		add_stability = -1
+		tooltip = {
+			917 = {
+				add_base_tax = -2
+				add_base_production = -2
+				add_base_manpower = -2
+				add_devastation = 100
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = CHE_DESTROY_JEWISH_TEMPLE
+	}
+}
+
+# TODO: Fix when Muskogean update
+#Request from the Order
+country_event = {
+	id = ab_punic.75
+	title = ab_punic.75.t
+	desc = ab_punic.75.d
+	picture = northamericagfx_PRAYING_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = ab_punic.76
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.75.a
+		trigger = {
+			OR = {
+				culture_group = plains_algonquian
+				culture_group = caddoan
+			}
+		}
+		add_historical_friend = FROM
+		change_religion = zoroastrian
+		capital_scope = {
+			change_religion = zoroastrian
+		}
+		hidden_effect = {
+			set_ruler_religion = zoroastrian
+			set_heir_religion = zoroastrian
+		}
+		add_country_modifier = {
+			name = che_zoro_trade_relation
+			duration = -1
+		}
+		if = {
+			limit = {
+				tag = JOA
+			}
+			custom_tooltip = CHE_JOA_ALWAYS_ZORO
+		}
+		else = {
+			add_country_modifier = {
+				name = gh_conversion
+				duration = 3650
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				set_country_flag = che_convert_request_accepted
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.75.b
+		trigger = {
+			ai = no
+		}
+	}
+}
+
+#Request from the Order - Nof
+country_event = {
+	id = ab_punic.76
+	title = ab_punic.76.t
+	desc = {
+		trigger = {
+			has_country_flag = che_convert_request_accepted
+		}
+		desc = ab_punic.76.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = che_convert_request_accepted }
+		}
+		desc = ab_punic.76.d2
+	}
+	picture = northamericagfx_PRAYING_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = che_convert_request_accepted
+		}
+	}
+	
+	option = {
+		name = ab_punic.76.a
+		if = {
+			limit = {
+				has_country_flag = che_convert_request_accepted
+			}
+			if = {
+				limit = {
+					NOT = { has_country_modifier = che_zoro_trade_relation }
+				}
+				add_country_modifier = {
+					name = che_zoro_trade_relation
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = che_zoro_trade_relation2
+					duration = -1
+				}
+			}
+			add_historical_friend = FROM
+			tooltip = {
+				FROM = {
+					change_religion = zoroastrian
+					capital_scope = {
+						change_religion = zoroastrian
+					}
+					hidden_effect = {
+						set_ruler_religion = zoroastrian
+						set_heir_religion = zoroastrian
+					}
+					add_country_modifier = {
+						name = che_zoro_trade_relation
+						duration = -1
+					}
+					if = {
+						limit = {
+							FROM = {
+								tag = JOA
+							}
+						}
+						custom_tooltip = CHE_JOA_ALWAYS_ZORO
+					}
+					else = {
+						add_country_modifier = {
+							name = gh_conversion
+							duration = 3650
+						}
+					}
+				}
+			}
+		}
+		else = {
+			add_prestige = -10
+		}
+	}
+}
+
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden
 country_event = {
