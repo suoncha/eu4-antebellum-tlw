@@ -1,0 +1,57 @@
+namespace = time_of_troubles
+
+# End of the Time of Troubles
+country_event = {
+	id = time_of_troubles.10
+	title = "flavor_rus.EVTNAME1110"
+	desc = "flavor_rus.EVTDESC1110"
+	picture = CITY_DEVELOPMENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+		on_non_estate_disaster_end = yes
+		set_country_flag = rus_had_time_of_troubles
+	}
+	
+	option = {		# A stronger COUNTRY will emerge!
+		name = "flavor_rus.EVTOPTA1110"
+		add_adm_power = 100
+	}
+	option = {		# COUNTRY needs a new dynasty!
+		name = "flavor_rus.EVTOPTB1110"
+		add_adm_power = 50
+		if = {
+			limit = {
+				has_regency = no
+			}
+			tooltip = {
+				kill_ruler = yes
+			}
+		}
+		if = {
+			limit = {
+				has_heir = yes
+			}
+			kill_heir = { allow_new_heir = no }
+		}
+		define_ruler = {
+			name = "Mikhail I"
+			dynasty = Romanov
+			adm = 4
+			dip = 2
+			mil = 3
+			max_random_dip = 4
+			max_random_mil = 5
+		}
+		if = {
+			limit = {
+				has_states_general_mechanic = yes
+			}
+			change_statists_vs_orangists = 1
+		}
+	}
+}
