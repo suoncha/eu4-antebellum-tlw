@@ -1618,6 +1618,12 @@ country_event = {
 			duration = 7300
 		}
 		swap_non_generic_missions = yes
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.77
+				days = 365
+			}
+		}
 	}
 }
 
@@ -1643,7 +1649,6 @@ country_event = {
 				NOT = { has_country_flag = punic_league_reform_passed_1 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_1_effect = yes
 	}
 
@@ -1652,9 +1657,9 @@ country_event = {
 		trigger = {
 			REB = {
 				has_country_flag = punic_league_reform_passed_1
+				NOT = { has_country_flag = punic_league_reform_passed_2 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_2_effect = yes
 	}
 
@@ -1663,9 +1668,9 @@ country_event = {
 		trigger = {
 			REB = {
 				has_country_flag = punic_league_reform_passed_2
+				NOT = { has_country_flag = punic_league_reform_passed_3 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_3_effect = yes
 	}
 
@@ -1674,9 +1679,9 @@ country_event = {
 		trigger = {
 			REB = {
 				has_country_flag = punic_league_reform_passed_3
+				NOT = { has_country_flag = punic_league_reform_passed_4 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_4_effect = yes
 	}
 
@@ -1685,9 +1690,9 @@ country_event = {
 		trigger = {
 			REB = {
 				has_country_flag = punic_league_reform_passed_4
+				NOT = { has_country_flag = punic_league_reform_passed_5 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_5_effect = yes
 	}
 
@@ -1696,9 +1701,9 @@ country_event = {
 		trigger = {
 			REB = {
 				has_country_flag = punic_league_reform_passed_5
+				NOT = { has_country_flag = punic_league_reform_passed_6 }
 			}
 		}
-		ai_chance = { factor = 10 }
 		ab_punic_league_reform_6_effect = yes
 	}
 
@@ -1708,9 +1713,9 @@ country_event = {
 			has_global_flag = north_america_european_threat
 			REB = {
 				has_country_flag = punic_league_reform_passed_6
+				NOT = { has_country_flag = punic_league_reform_passed_7 }
 			}
 		}
-		ai_chance = { factor = 25 }
 		ab_punic_league_reform_7_effect = yes
 	}
 
@@ -1720,9 +1725,9 @@ country_event = {
 			has_global_flag = north_america_european_threat
 			REB = {
 				has_country_flag = punic_league_reform_passed_7
+				NOT = { has_country_flag = punic_league_reform_passed_8 }
 			}
 		}
-		ai_chance = { factor = 25 }
 		ab_punic_league_reform_8_effect = yes
 	}
 
@@ -1732,9 +1737,9 @@ country_event = {
 			has_global_flag = north_america_european_threat
 			REB = {
 				has_country_flag = punic_league_reform_passed_8
+				NOT = { has_country_flag = punic_league_reform_passed_9 }
 			}
 		}
-		ai_chance = { factor = 25 }
 		ab_punic_league_reform_9_effect = yes
 	}
 
@@ -1744,10 +1749,23 @@ country_event = {
 			has_global_flag = north_america_european_threat
 			REB = {
                 has_country_flag = punic_league_reform_passed_9
+				NOT = { has_country_flag = punic_league_reform_passed_10 }
             }
 		}
-		ai_chance = { factor = 100 }
 		ab_punic_league_reform_10_effect = yes
+	}
+
+	option = {
+		name = ab_punic.33.l
+		trigger = {
+			has_global_flag = north_america_european_threat
+			REB = {
+                has_country_flag = punic_league_reform_passed_10
+            }
+		}
+		country_event = {
+			id = ab_punic.32
+		}
 	}
 }
 
@@ -3631,6 +3649,51 @@ country_event = {
 		else = {
 			add_prestige = -10
 		}
+	}
+}
+
+#Aldiraq Uprising
+country_event = {
+	id = ab_punic.77
+	title = ab_punic.77.t
+	desc = ab_punic.77.d
+	picture = northamericagfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		any_subject_country = {
+			ai = yes
+			primary_culture = barbiri
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			every_subject_country = {
+				limit = {
+					ai = yes
+					primary_culture = barbiri
+				}
+				add_liberty_desire = 50
+				declare_war_with_cb = {
+					casus_belli = cb_independence_war
+					who = ROOT
+				}
+				capital_scope = {
+					for = {
+						amount = 25
+						effect = "
+							infantry = PREV
+						"
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.77.a
 	}
 }
 
