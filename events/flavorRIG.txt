@@ -1,0 +1,66 @@
+namespace = flavor_rig
+
+#Transfer Money event
+country_event = {
+	id = flavor_rig.5
+	title = none
+	desc = none
+	picture = BATTLE_VISTULA_LAGOON_eventPicture
+	hidden = yes
+    is_triggered_only = yes
+	
+	option = {
+    }
+}
+
+# Become a Reformer State
+country_event = {
+	id = flavor_rig.11
+	title = flavor_rig.10.t
+	desc = flavor_rig.11.desc
+	picture = PROTESTANT_RELIGIOUS_DOUBTS_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			unlock_government_reform = {
+				government_reform = merchant_theocracy_reform
+			}
+		}
+	}
+	
+	option = {	#A Theocracy with a Merchant focus
+		name = flavor_rig.11.a
+		unlock_government_reform = {
+			government_reform = reformer_state_reform
+		}
+		if = {
+			limit = { NOT = { government = theocracy } }
+			change_government = theocracy
+		}
+		add_government_reform = reformer_state_reform
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {	#Thanks, but I don't want to be either of them
+		name = flavor_rig.11.b
+		hidden_effect = {
+			unlock_government_reform = {
+				government_reform = reformer_state_reform
+			}
+		}
+		add_stability_or_adm_power = yes
+		change_government_reform_progress = 100
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = 20
+		}
+		
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
