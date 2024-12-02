@@ -52,11 +52,27 @@ call_diocese_into_wars = {
 		}
 		if = {
 			limit = {
-				is_at_war = no
+				NOT = {
+					is_in_war = {
+						attacker_leader = ROOT
+					}
+				}
+				NOT = {
+					is_in_war = {
+						defender_leader = ROOT
+					}
+				}
 			}
 			custom_trigger_tooltip = {
-				tooltip = ROOT_IS_NOT_AT_WAR_TT
-				is_at_war = yes
+				tooltip = ROOT_IS_NOT_AT_WAR_LEADER_TT
+				OR = {
+					is_in_war = {
+						attacker_leader = ROOT
+					}
+					is_in_war = {
+						defender_leader = ROOT
+					}
+				}
 			}
 		}
 		if = {
@@ -104,19 +120,6 @@ call_diocese_into_wars = {
 						who = ROOT
 						value = 50
 					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				FROM = {
-					is_at_war = yes
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = FROM_IS_AT_WAR_TT
-				FROM = {
-					is_at_war = no
 				}
 			}
 		}
