@@ -257,7 +257,9 @@ tlw_kataqart_first = {
 		}
 		
 		effect = {
-			#
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_marsh_expansion
+			}
 		}
 	}
 
@@ -288,7 +290,22 @@ tlw_kataqart_first = {
 		}
 		
 		effect = {
-			#
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC_BUFF
+			set_country_flag = ab_tus_taking_tech_bonus_improved
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_building_uni
+			custom_tooltip = CCA_BUILDING_UNI
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_permanent_province_modifier = {
+						name = cca_uni_buff
+						duration = -1
+					}
+				}
+			}
 		}
 	}
 }
@@ -316,7 +333,7 @@ tlw_kataqart_second = {
 		
 		trigger = {
 			splendor = 300
-			government_reform_progress = 100
+			government_reform_progress = 50
 			917 = {
 				has_great_project = {
 					type = temple_cahokia
@@ -326,7 +343,14 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
-			#
+			add_splendor = -300
+			change_government_reform_progress = -50
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_scaling_inquisitor
+			custom_tooltip = CCA_INQUISITOR_SCALING
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_convert_grant_mana
+			custom_tooltip = RMG_CONVERT_BONUS
 		}
 	}
 
@@ -349,6 +373,16 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
+			set_country_flag = cca_develop_bitmina
+			custom_tooltip = CCA_DEVELOP_BITMINA
+			custom_tooltip = AB_EMPTY
+			south_appalachia_area = {
+				change_trade_goods = gold
+				add_province_modifier = {
+					name = cca_mines_bitmina
+					duration = -1
+				}
+			}
 			4913 = {
 				if = {
 					limit = {
@@ -463,13 +497,41 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
-			#
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
+				add_base_manpower = 1
+				add_province_modifier = {
+					name = cca_fortress_appalachian
+					duration = -1
+				}
+				upgrade_fort_building = yes
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							province_id = 4913
+							province_id = 934
+							province_id = 941
+							province_id = 4888
+							province_id = 951
+							province_id = 4889
+						}
+					}
+					add_base_manpower = 1
+					add_province_modifier = {
+						name = cca_fortress_appalachian
+						duration = -1
+					}
+					upgrade_fort_building = yes
+				}
+			}
 		}
 	}
 
 	cca_baltsar = {
 		icon = mission_portuguese_malabar
-		required_missions = { cca_rising cca_cahokian_alliance }
+		required_missions = { cca_rising cca_cahokian }
 		position = 11
 
 		provinces_to_highlight = {
@@ -617,6 +679,30 @@ tlw_kataqart_second = {
 				}
 				add_permanent_claim = ROOT
 			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = cca_cahokian_alliance
+				}
+				custom_tooltip = CCA_STILL_ALLY_CAO_YES
+				remove_country_modifier = cca_cahokian_alliance
+				add_country_modifier = {
+					name = cca_cahokian_alliance_buffed
+					duration = -1
+					desc = "for as long as we are allied to them"
+				}
+			}
+			else = {
+				custom_tooltip = CCA_STILL_ALLY_CAO_NO
+				tooltip = {
+					remove_country_modifier = cca_cahokian_alliance
+					add_country_modifier = {
+						name = cca_cahokian_alliance_buffed
+						duration = -1
+						desc = "for as long as we are allied to them"
+					}
+				}
+			}
 		}
 	}
 
@@ -639,7 +725,13 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
-			#
+			add_church_power = -200
+			add_country_modifier = {
+				name = cca_shabbat_celebration
+				duration = 18250
+			}
+			set_country_flag = cca_religious_state_buff
+			custom_tooltip = CCA_RELIGIOUS_STATE_PRIVILEGE
 		}
 	}
 }
@@ -725,7 +817,32 @@ tlw_kataqart_third = {
 		}
 		
 		effect = {
-			#
+			add_stability_or_adm_power = yes
+			add_country_modifier = {
+				name = cca_jewish_conversion
+				duration = -1
+			}
+			if = {
+				limit = {
+					is_defender_of_faith = yes
+				}
+				custom_tooltip = CCA_DOTF_YES
+				define_advisor = {
+					type = inquisitor
+					skill = 3
+					cost_multiplier = 0.25
+				}
+			}
+			else = {
+				custom_tooltip = CCA_DOTF_NO
+				tooltip = {
+					define_advisor = {
+						type = inquisitor
+						skill = 3
+						cost_multiplier = 0.25
+					}
+				}
+			}
 		}
 	}
 
@@ -772,7 +889,7 @@ tlw_kataqart_third = {
 		}
 	}
 
-	cca_cahokian_alliance = {
+	cca_cahokian = {
 		icon = mission_aztec_city_alliance
 		required_missions = { }
 		position = 10
@@ -799,7 +916,14 @@ tlw_kataqart_third = {
 		}
 		
 		effect = {
-			#
+			set_country_flag = cca_winning_war
+			custom_tooltip = CCA_WINNING_WAR
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_cahokian_alliance
+				duration = -1
+				desc = "for as long as we are allied to them"
+			}
 		}
 	}
 
@@ -859,7 +983,30 @@ tlw_kataqart_third = {
 		}
 		
 		effect = {
-			#
+			mississippi_region = {
+				add_base_production = 1
+				add_permanent_province_modifier = {
+					name = punic_buniq_urbanization
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = len_economic_capital
+				duration = -1
+			}
+			if = {
+				limit = {
+					mission_completed = cca_rediscover_tablets
+				}
+				custom_tooltip = CCA_COMPLETED_TABLETS_YES
+				change_government_reform_progress = 100
+			}
+			else = {
+				custom_tooltip = CCA_COMPLETED_TABLETS_NO
+				tooltip = {
+					change_government_reform_progress = 100
+				}
+			}
 		}
 	}
 
@@ -948,7 +1095,23 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			country_event = {
+				id = ab_punic.79
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = ab_ger_great_wall_bonus
+			custom_tooltip = GER_GREAT_WALL_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_fort_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = ger_great_wall_fort_grant_slot
+						duration = -1
+					}
+				}
+			}
 		}
 	}
 
@@ -962,12 +1125,32 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			add_mil_power = 50
+			add_country_modifier = {
+				name = cca_utilize_mercs
+				duration = 7300
+			}
+			if = {
+				limit = {
+					full_idea_group = mercenary_ideas
+				}
+				custom_tooltip = CCA_COMPLETE_MERCENARY_YES
+				hidden_effect = {
+					remove_country_modifier = cca_utilize_mercs
+					add_country_modifier = {
+						name = cca_utilize_mercs
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CCA_COMPLETE_MERCENARY_NO
+			}
 		}
 	}
 
 	cca_lancers = {
-		icon = mission_mansure_army
+		icon = mam_recruit_the_mamluks
 		required_missions = { cca_men_hire }
 		position = 10
 		
@@ -980,13 +1163,22 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = dragoon
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rum_scaling_dragoon
+			custom_tooltip = RUM_DRAGOON_SCALING
 		}
 	}
 
 	cca_peacekeepers = {
 		icon = mission_crush_eyalet_rebellion
-		required_missions = { cca_cahokian_alliance cca_lancers }
+		required_missions = { cca_cahokian cca_lancers }
 		position = 11
 
 		provinces_to_highlight = {
@@ -1004,7 +1196,23 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			add_mil_tech = 1
+			custom_tooltip = CCA_HALVE_MILITARY_HEGEMON
+			set_country_flag = fra_enable_mil_hegemony_flag
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_building_soldier_households
+			custom_tooltip = CCA_BUILDING_SOLDIER_STRONGHOLD_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = soldier_households
+					}
+					add_permanent_province_modifier = {
+						name = cca_additional_manufactory
+						duration = -1
+					}
+				}
+			}
 		}
 	}
 
@@ -1247,6 +1455,11 @@ tlw_kataqart_fifth = {
 		}
 		
 		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = len_invasion_of_uruqba
+				duration = 9125
+			}
 			palestine_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }

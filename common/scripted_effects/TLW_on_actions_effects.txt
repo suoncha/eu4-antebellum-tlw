@@ -300,6 +300,23 @@ TLW_on_dip_development_effect = {
 			75 = { }
 		}
 	}
+	# Cahokia
+	else_if = {
+		limit = {
+			trade_goods = gold
+			owner = {
+				has_country_flag = cca_develop_bitmina
+			}
+		}
+		random_list = {
+			25 = {
+				owner = {
+					add_inflation = -1
+				}
+			}
+			75 = { }
+		}
+	}
 }
 
 TLW_on_mil_development_effect = {
@@ -1023,6 +1040,15 @@ TLW_on_war_won_effect = {
 			duration = 365
 		}
 	}
+	# Cahokia
+	if = {
+		limit = {
+			has_country_flag = cca_winning_war
+		}
+		create_general_scaling_with_tradition_and_pips = {
+			add_siege = 1
+		}
+	}
 }
 
 TLW_on_war_lost_effect = {
@@ -1360,6 +1386,32 @@ TLW_on_province_owner_change_effect = {
 		add_province_modifier = {
 			name = punic_buniq_prosperity
 			duration = -1
+		}
+	}
+	# Cahokia
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_burghers_marsh_expansion
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = marsh
+			}
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_marsh
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = savannah
+			}
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_savanna
+				duration = -1
+			}
 		}
 	}
 }
@@ -1781,6 +1833,34 @@ TLW_on_alliance_broken = {
 			}
 		}
 		create_alliance = FROM
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = cca_cahokian_alliance
+				has_country_modifier = cca_cahokian_alliance_buffed
+			}
+			FROM = {
+				tag = CAO
+			}
+		}
+		remove_country_modifier = cca_cahokian_alliance
+		remove_country_modifier = cca_cahokian_alliance_buffed
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = cca_cahokian_alliance
+					has_country_modifier = cca_cahokian_alliance_buffed
+				}
+			}
+			tag = CAO
+		}
+		FROM = {
+			remove_country_modifier = cca_cahokian_alliance
+			remove_country_modifier = cca_cahokian_alliance_buffed
+		}
 	}
 }
 
