@@ -30,3 +30,81 @@ estate_burghers_punic_isolationism = {
 		factor = 0
 	}
 }
+
+estate_burghers_marsh_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.05
+	loyalty = 0.05
+	is_valid = {
+		has_unlocked_estate_privilege = {
+			estate_privilege = estate_burghers_marsh_expansion
+		}
+	}
+	can_select = {
+		any_owned_province = {
+			OR = {
+				has_terrain = marsh
+				has_terrain = savannah
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_marsh_expansion_gt_marsh
+		tooltip = {
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_marsh
+				duration = -1
+			}
+		}
+		custom_tooltip = estate_burghers_marsh_expansion_gt_savanna
+		tooltip = {
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_savanna
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_terrain = marsh
+				}
+				add_province_modifier = {
+					name = estate_burghers_marsh_expansion_marsh
+					duration = -1
+				}
+			}
+			every_owned_province = {
+				limit = {
+					has_terrain = savannah
+				}
+				add_province_modifier = {
+					name = estate_burghers_marsh_expansion_savanna
+					duration = -1
+				}
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_marsh_expansion_rt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						has_province_modifier = estate_burghers_marsh_expansion_marsh
+						has_province_modifier = estate_burghers_marsh_expansion_savanna
+					}
+				}
+				remove_province_modifier = estate_burghers_marsh_expansion_marsh
+				remove_province_modifier = estate_burghers_marsh_expansion_savanna
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+	}
+}
