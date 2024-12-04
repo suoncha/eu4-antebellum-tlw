@@ -125,7 +125,7 @@ tlw_kataqart_first = {
 					new_culture = yuchi
 					old_culture_1 = barbiri
 				}
-				add_government_reform = elective_monarchy
+				add_government_reform = autocracy_reform
 			}
 			custom_tooltip = AB_EMPTY
 			country_event = {
@@ -197,6 +197,14 @@ tlw_kataqart_first = {
 		}
 		
 		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = cca_quest_alkabiri
+				duration = 9125
+			}
 			carribeans_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -227,7 +235,41 @@ tlw_kataqart_first = {
 		}
 		
 		effect = {
-			#
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			carribeans_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = cca_riches_alkabiri
+					duration = -1
+				}
+			}
+			set_country_flag = cca_new_world_charter
+			custom_tooltip = CCA_NEW_WORLD_CHARTER_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					carribeans_region = {
+						owned_by = ROOT
+						is_colony = yes
+					}
+				}
+				custom_tooltip = CCA_UNFINISHED_CARIB_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_colony = yes
+						}
+						add_colonysize = 200
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CCA_UNFINISHED_CARIB_NO
+			}
+			custom_tooltip = LOT_ALL_COLONY
 		}
 	}
 
@@ -569,6 +611,17 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
+			add_years_of_income = 1
+			custom_tooltip = AB_EMPTY
+			893 = {
+				add_center_of_trade_level = 1
+				add_province_modifier = {
+					name = cca_baltsar_port
+					duration = -1
+				}
+				add_or_upgrade_trade_building = yes
+			}
+			custom_tooltip = AB_EMPTY
 			mississippi_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -651,6 +704,16 @@ tlw_kataqart_second = {
 		}
 		
 		effect = {
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = CCA_perma_pp1
+					amount = 10
+				}
+			}
+			set_country_flag = trader_give_caravan_power
+			custom_tooltip = RUS_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
 			huasteca_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -957,7 +1020,14 @@ tlw_kataqart_third = {
 		}
 		
 		effect = {
-			#
+			unlock_government_reform = {
+				government_reform = cca_muskogean_kingdom_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = cca_muskogean_kingdom_reform
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_develop_muskogean
+			custom_tooltip = CCA_DEVELOP_MUSKOGEAN
 		}
 	}
 
@@ -1235,6 +1305,19 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+			iberia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_local_autonomy = -25
+				add_province_modifier = {
+					name = cca_convert_albiria
+					duration = 7300
+				}
+			}
 			lazio_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1276,7 +1359,29 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			add_prestige_or_monarch_power = { amount = 50 }
+			custom_tooltip = AB_EMPTY
+			set_country_flag = mnk_triumph
+			custom_tooltip = IVR_CONVERT_BONUS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CCA_EVERY_CHRISTIAN
+			tooltip = {
+				add_stability = -1
+				country_event = {
+					id = ab_punic.80
+				}
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = christian
+					}
+					add_stability = -1
+					country_event = {
+						id = ab_punic.80
+					}
+				}
+			}
 		}
 	}
 
@@ -1318,7 +1423,16 @@ tlw_kataqart_fourth = {
 		}
 		
 		effect = {
-			#
+			add_ruler_personality = great_engineer_personality
+			set_country_flag = ab_always_great_engineer
+			custom_tooltip = CCA_ALWAYS_ENGINEER
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_golden_age_judaism
+				duration = -1
+			}
+			set_country_flag = ab_prevent_ruler_negative_trait
+			custom_tooltip = BYZ_PREVENT
 		}
 	}
 }
@@ -1497,6 +1611,10 @@ tlw_kataqart_fifth = {
 		}
 		
 		effect = {
+			country_event = {
+				id = ab_punic.81
+			}
+			custom_tooltip = AB_EMPTY
 			thrace_area = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1566,6 +1684,28 @@ tlw_kataqart_fifth = {
 		}
 		
 		effect = {
+			set_country_flag = cca_convert_muslim
+			custom_tooltip = CCA_CONVERT_MUSLIM
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CCA_EVERY_MUSLIM
+			tooltip = {
+				add_stability = -1
+				country_event = {
+					id = ab_punic.83
+				}
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = muslim
+					}
+					add_stability = -1
+					country_event = {
+						id = ab_punic.83
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			mashriq_region = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT }
@@ -1609,7 +1749,28 @@ tlw_kataqart_fifth = {
 		}
 		
 		effect = {
-			#
+			override_country_name = GREATER_ISRAEL
+			set_country_flag = brn_scaling_inquisitor
+			custom_tooltip = BRN_INQUISITOR_SCALING
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_kingdom_david_mod
+				duration = -1
+			}
+			if = {
+				limit = {
+					379 = {
+						owned_by = ROOT
+						has_province_flag = third_temple_built
+					}
+				}
+				custom_tooltip = CCA_THIRD_TEMPLE_BUILT_YES
+				set_country_flag = cca_scaling_inquisitor2
+			}
+			else = {
+				custom_tooltip = CCA_THIRD_TEMPLE_BUILT_NO
+			}
+			custom_tooltip = CCA_INQUISITOR_SCALING2
 		}
 	}
 }
