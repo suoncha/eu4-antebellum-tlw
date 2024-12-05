@@ -1567,10 +1567,14 @@ country_event = {
 	title = ab_punic.32.t
 	desc = ab_punic.32.d
 	picture = AB_CARTHAGE_eventPicture
-	
-	is_triggered_only = yes
 
 	major = yes
+
+	major_trigger = {
+		knows_country = ROOT
+	}
+	
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
@@ -2268,6 +2272,7 @@ country_event = {
 			hidden_effect = {
 				set_ruler_culture = barbiri
 				set_heir_culture = barbiri
+				save_global_event_target_as = fourthAldiraq
 			}
 			add_country_modifier = {
 				name = punic_iroquoian_punicization
@@ -3917,6 +3922,1177 @@ country_event = {
 		}
 	}
 }
+
+#Tournament of Ahnar - Check
+country_event = {
+	id = ab_punic.84
+	title = ab_punic.84.t
+	desc = ab_punic.84.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+		event_target:easimaTarget = {
+			calc_true_if = {
+				amount = 2
+				all_subject_country = {
+					is_subject_of_type = punic_tribe_vassal
+				}
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.84
+				days = 1825
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.84.a
+		set_global_flag = ab_punic_league_tournament
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.85
+			}
+		}
+	}
+}
+
+#Tournament of Ahnar - Easima
+country_event = {
+	id = ab_punic.85
+	title = ab_punic.85.t
+	desc = ab_punic.85.d
+	picture = muslimgfx_COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.85.a
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_tournament_event_chain
+				duration = -1
+			}
+			country_event = {
+				id = ab_punic.86
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_city_vassal
+				}
+				add_country_modifier = {
+					name = punic_tournament_event_chain
+					duration = -1
+				}
+				country_event = {
+					id = ab_punic.86
+				}
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_tribe_vassal
+				}
+				add_country_modifier = {
+					name = punic_tournament_event_chain
+					duration = -1
+				}
+				country_event = {
+					id = ab_punic.87
+				}
+			}
+		}
+	}
+}
+
+#Tournament of Ahnar - Eumda Bet
+country_event = {
+	id = ab_punic.86
+	title = ab_punic.86.t
+	desc = ab_punic.86.d
+	picture = muslimgfx_DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			set_country_flag = aldiraq_tournament_bet
+			REB = {
+				country_event = {
+					id = ab_punic.88
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.86.a
+		trigger = {
+			LEN = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		set_country_flag = aldiraq_tournament_len
+		custom_tooltip = ALDIRAQ_CHOSEN
+	}
+
+	option = {
+		name = ab_punic.86.b
+		trigger = {
+			POW = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		set_country_flag = aldiraq_tournament_pow
+		custom_tooltip = ALDIRAQ_CHOSEN
+	}
+
+	option = {
+		name = ab_punic.86.c
+		trigger = {
+			COF = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		set_country_flag = aldiraq_tournament_cof
+		custom_tooltip = ALDIRAQ_CHOSEN
+	}
+
+	option = {
+		name = ab_punic.86.e
+		trigger = {
+			has_saved_global_event_target = fourthAldiraq
+			event_target:fourthAldiraq = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		set_country_flag = aldiraq_tournament_fourth
+		custom_tooltip = ALDIRAQ_CHOSEN
+	}
+
+	option = {
+		name = ab_punic.86.f
+		trigger = {
+			ai = no
+		}
+		add_prestige = -10
+	}
+}
+
+#Tournament of Ahnar - Aldiraq Nof
+country_event = {
+	id = ab_punic.87
+	title = ab_punic.87.t
+	desc = ab_punic.87.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.87.a
+		custom_tooltip = ALDIRAQ_GUIDE
+	}
+}
+
+#Tournament of Ahnar - Bet Check
+country_event = {
+	id = ab_punic.88
+	title = ab_punic.88.t
+	desc = ab_punic.88.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = ab_punic_league_tournament
+		event_target:easimaTarget = {
+			has_country_flag = aldiraq_tournament_bet
+			NOT = {
+				any_subject_country = {
+					is_subject_of_type = punic_city_vassal
+					NOT = { has_country_flag = aldiraq_tournament_bet }
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.88.a
+		ab_punic_league_tournament_setup_effect = yes
+	}
+}
+
+#Tournament of Ahnar - Disrupted
+country_event = {
+	id = ab_punic.89
+	title = ab_punic.89.t
+	desc = ab_punic.89.d
+	picture = muslimgfx_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = aldiraq_tournament_bet
+			clr_country_flag = aldiraq_tournament_len
+			clr_country_flag = aldiraq_tournament_pow
+			clr_country_flag = aldiraq_tournament_cof
+			clr_country_flag = aldiraq_tournament_fourth
+			clr_country_flag = aldiraq_tournament_infantry
+			clr_country_flag = aldiraq_tournament_cavalry
+			clr_country_flag = aldiraq_tournament_archer
+			remove_country_modifier = punic_tournament_event_chain
+		}
+	}
+	
+	option = {
+		name = ab_punic.89.a
+		add_prestige = -10
+	}
+}
+
+#Tournament of Ahnar - Army Type Choice
+country_event = {
+	id = ab_punic.90
+	title = ab_punic.90.t
+	desc = {
+		trigger = {
+			tag = event_target:aldiraqTeamA
+		}
+		desc = ab_punic.90.d1
+	}
+	desc = {
+		trigger = {
+			tag = event_target:aldiraqTeamB
+		}
+		desc = ab_punic.90.d2
+	}
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			REB = {
+				country_event = {
+					id = ab_punic.91
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.90.a
+		ai_chance = { factor = 33 }
+		set_country_flag = aldiraq_tournament_infantry
+		custom_tooltip = ALDIRAQ_INFANTRY
+	}
+
+	option = {
+		name = ab_punic.90.b
+		ai_chance = { factor = 33 }
+		set_country_flag = aldiraq_tournament_cavalry
+		custom_tooltip = ALDIRAQ_CAVALRY
+	}
+
+	option = {
+		name = ab_punic.90.c
+		ai_chance = { factor = 33 }
+		set_country_flag = aldiraq_tournament_archer
+		custom_tooltip = ALDIRAQ_ARCHER
+	}
+}
+
+#Tournament of Ahnar - Battle Check
+country_event = {
+	id = ab_punic.91
+	title = ab_punic.91.t
+	desc = ab_punic.91.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = ab_punic_league_tournament
+		event_target:aldiraqTeamA = {
+			OR = {
+				has_country_flag = aldiraq_tournament_infantry
+				has_country_flag = aldiraq_tournament_cavalry
+				has_country_flag = aldiraq_tournament_archer
+			}
+		}
+		event_target:aldiraqTeamB = {
+			OR = {
+				has_country_flag = aldiraq_tournament_infantry
+				has_country_flag = aldiraq_tournament_cavalry
+				has_country_flag = aldiraq_tournament_archer
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.91.a
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_infantry
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_infantry
+						}
+					}
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_cavalry
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_cavalry
+						}
+					}
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_archer
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_archer
+						}
+					}
+				}
+			}
+			event_target:aldiraqTeamA = {
+				country_event = {
+					id = ab_punic.93
+				}
+			}
+			event_target:aldiraqTeamB = {
+				country_event = {
+					id = ab_punic.93
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_infantry
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_archer
+						}
+					}
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_archer
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_cavalry
+						}
+					}
+					AND = {
+						event_target:aldiraqTeamA = {
+							has_country_flag = aldiraq_tournament_cavalry
+						}
+						event_target:aldiraqTeamB = {
+							has_country_flag = aldiraq_tournament_infantry
+						}
+					}
+				}
+			}
+			event_target:aldiraqTeamA = {
+				change_variable = {
+					which = punic_league_tournament_win
+					value = 1
+				}
+				country_event = {
+					id = ab_punic.92
+				}
+			}
+			event_target:aldiraqTeamB = {
+				country_event = {
+					id = ab_punic.94
+				}
+			}
+		}
+		else = {
+			event_target:aldiraqTeamA = {
+				country_event = {
+					id = ab_punic.94
+				}
+			}
+			event_target:aldiraqTeamB = {
+				change_variable = {
+					which = punic_league_tournament_win
+					value = 1
+				}
+				country_event = {
+					id = ab_punic.92
+				}
+			}
+		}
+		event_target:aldiraqTeamA = {
+			clr_country_flag = aldiraq_tournament_infantry
+			clr_country_flag = aldiraq_tournament_cavalry
+			clr_country_flag = aldiraq_tournament_archer
+		}
+		event_target:aldiraqTeamB = {
+			clr_country_flag = aldiraq_tournament_infantry
+			clr_country_flag = aldiraq_tournament_cavalry
+			clr_country_flag = aldiraq_tournament_archer
+		}
+		if = {
+			limit = {
+				has_global_flag = ab_punic_league_2aldiraq
+			}
+			if = {
+				limit = {
+					event_target:aldiraqTeamA = {
+						check_variable = {
+							which = punic_league_tournament_win
+							value = 2
+						}
+					}
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.95
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					event_target:aldiraqTeamB = {
+						check_variable = {
+							which = punic_league_tournament_win
+							value = 2
+						}
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.95
+					}
+				}
+			}
+			else = {
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_global_flag = ab_punic_league_3aldiraq
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 1
+					}
+				}
+				event_target:aldiraqTeam3 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 2
+					}
+				}
+				event_target:aldiraqTeam2 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						event_target:aldiraqTeam2 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam1
+								}
+							}
+						}
+						event_target:aldiraqTeam3 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam1
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam1 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						event_target:aldiraqTeam1 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam2
+								}
+							}
+						}
+						event_target:aldiraqTeam3 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam2
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam2 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						event_target:aldiraqTeam1 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam3
+								}
+							}
+						}
+						event_target:aldiraqTeam2 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam3
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam3 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else = {
+					set_variable = {
+						which = punic_league_tournament_round
+						value = 0
+					}
+					event_target:aldiraqTeam1 = {
+						save_global_event_target_as = aldiraqTeamA
+					}
+					event_target:aldiraqTeam2 = {
+						save_global_event_target_as = aldiraqTeamB
+					}
+					event_target:aldiraqTeamA = {
+						country_event = {
+							id = ab_punic.90
+							days = 1
+						}
+					}
+					event_target:aldiraqTeamB = {
+						country_event = {
+							id = ab_punic.90
+							days = 1
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_global_flag = ab_punic_league_4aldiraq
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 1
+					}
+				}
+				event_target:aldiraqTeam3 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeam4 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 2
+					}
+				}
+				event_target:aldiraqTeam1 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeam3 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 3
+					}
+				}
+				event_target:aldiraqTeam2 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeam4 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 4
+					}
+				}
+				event_target:aldiraqTeam1 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeam4 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_tournament_round
+						value = 5
+					}
+				}
+				event_target:aldiraqTeam2 = {
+					save_global_event_target_as = aldiraqTeamA
+				}
+				event_target:aldiraqTeam3 = {
+					save_global_event_target_as = aldiraqTeamB
+				}
+				event_target:aldiraqTeamA = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+				event_target:aldiraqTeamB = {
+					country_event = {
+						id = ab_punic.90
+						days = 1
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						event_target:aldiraqTeam2 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam1
+								}
+							}
+						}
+						event_target:aldiraqTeam3 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam1
+								}
+							}
+						}
+						event_target:aldiraqTeam4 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam1
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam1 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						event_target:aldiraqTeam1 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam2
+								}
+							}
+						}
+						event_target:aldiraqTeam3 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam2
+								}
+							}
+						}
+						event_target:aldiraqTeam4 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam2
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam2 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						event_target:aldiraqTeam1 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam3
+								}
+							}
+						}
+						event_target:aldiraqTeam2 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam3
+								}
+							}
+						}
+						event_target:aldiraqTeam4 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam3
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam3 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						event_target:aldiraqTeam1 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam4
+								}
+							}
+						}
+						event_target:aldiraqTeam2 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam4
+								}
+							}
+						}
+						event_target:aldiraqTeam3 = {
+							NOT = {
+								check_variable = {
+									which = punic_league_tournament_win
+									which = event_target:aldiraqTeam4
+								}
+							}
+						}
+					}
+					event_target:aldiraqTeam4 = {
+						country_event = {
+							id = ab_punic.95
+						}
+					}
+				}
+				else = {
+					set_variable = {
+						which = punic_league_tournament_round
+						value = 0
+					}
+					event_target:aldiraqTeam1 = {
+						save_global_event_target_as = aldiraqTeamA
+					}
+					event_target:aldiraqTeam2 = {
+						save_global_event_target_as = aldiraqTeamB
+					}
+					event_target:aldiraqTeamA = {
+						country_event = {
+							id = ab_punic.90
+							days = 1
+						}
+					}
+					event_target:aldiraqTeamB = {
+						country_event = {
+							id = ab_punic.90
+							days = 1
+						}
+					}
+				}
+			}
+		}
+		change_variable = {
+			which = punic_league_tournament_round
+			value = 1
+		}
+	}
+}
+
+#Tournament of Ahnar - Win Choice
+country_event = {
+	id = ab_punic.92
+	title = ab_punic.92.t
+	desc = ab_punic.92.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.92.a
+	}
+}
+
+#Tournament of Ahnar - Draw Choice
+country_event = {
+	id = ab_punic.93
+	title = ab_punic.93.t
+	desc = ab_punic.93.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.93.a
+	}
+}
+
+#Tournament of Ahnar - Lose Choice
+country_event = {
+	id = ab_punic.94
+	title = ab_punic.94.t
+	desc = ab_punic.94.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.94.a
+	}
+}
+
+#Tournament of Ahnar - Champion Found
+country_event = {
+	id = ab_punic.95
+	title = ab_punic.95.t
+	desc = ab_punic.95.d
+	picture = muslimgfx_FEAST_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		culture_group = punic_g
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = aldiraq_tournament_infantry
+			clr_country_flag = aldiraq_tournament_cavalry
+			clr_country_flag = aldiraq_tournament_archer
+			clr_global_flag = ab_punic_league_tournament
+			clr_global_flag = ab_punic_league_2aldiraq
+			clr_global_flag = ab_punic_league_3aldiraq
+			clr_global_flag = ab_punic_league_4aldiraq
+			clear_global_event_target = aldiraqTeam1
+			clear_global_event_target = aldiraqTeam2
+			clear_global_event_target = aldiraqTeam3
+			clear_global_event_target = aldiraqTeam4
+			clear_global_event_target = aldiraqTeamA
+			clear_global_event_target = aldiraqTeamB
+			remove_country_modifier = punic_tournament_event_chain
+			event_target:easimaTarget = {
+				every_subject_country = {
+					limit = {
+						is_subject_of_type = punic_tribe_vassal
+						NOT = { tag = ROOT }
+					}
+					remove_country_modifier = punic_tournament_event_chain
+					country_event = {
+						id = ab_punic.96
+					}
+				}
+				remove_country_modifier = punic_tournament_event_chain
+				country_event = {
+					id = ab_punic.97
+				}
+				every_subject_country = {
+					limit = {
+						is_subject_of_type = punic_city_vassal
+					}
+					remove_country_modifier = punic_tournament_event_chain
+					country_event = {
+						id = ab_punic.97
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.95.a
+		add_prestige = 25
+		change_government_reform_progress = 25
+		random_list = {
+			33 = {
+				change_monarch_points_or_power = {
+					power = adm
+					points = 1
+				}
+			}
+			33 = {
+				change_monarch_points_or_power = {
+					power = dip
+					points = 1
+				}
+			}
+			33 = {
+				change_monarch_points_or_power = {
+					power = mil
+					points = 1
+				}
+			}
+		}
+	}
+}
+
+#Tournament of Ahnar - Loser Aldiraq
+country_event = {
+	id = ab_punic.96
+	title = ab_punic.96.t
+	desc = ab_punic.96.d
+	picture = northamericagfx_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = aldiraq_tournament_infantry
+			clr_country_flag = aldiraq_tournament_cavalry
+			clr_country_flag = aldiraq_tournament_archer
+		}
+	}
+	
+	option = {
+		name = ab_punic.96.a
+		add_prestige = -10
+	}
+}
+
+#Tournament of Ahnar - Bet Result
+country_event = {
+	id = ab_punic.97
+	title = ab_punic.97.t
+	desc = ab_punic.97.d
+	picture = muslimgfx_FEAST_eventPicture
+	
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			clr_country_flag = aldiraq_tournament_bet
+			clr_country_flag = aldiraq_tournament_len
+			clr_country_flag = aldiraq_tournament_pow
+			clr_country_flag = aldiraq_tournament_cof
+			clr_country_flag = aldiraq_tournament_fourth
+		}
+	}
+	
+	option = {
+		name = ab_punic.97.a
+		trigger = {
+			OR = {
+				has_country_flag = aldiraq_tournament_len
+				has_country_flag = aldiraq_tournament_pow
+				has_country_flag = aldiraq_tournament_cof
+				has_country_flag = aldiraq_tournament_fourth
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						has_country_flag = aldiraq_tournament_len
+						FROM = {
+							tag = LEN
+						}
+					}
+					AND = {
+						has_country_flag = aldiraq_tournament_pow
+						FROM = {
+							tag = POW
+						}
+					}
+					AND = {
+						has_country_flag = aldiraq_tournament_cof
+						FROM = {
+							tag = COF
+						}
+					}
+					AND = {
+						has_country_flag = aldiraq_tournament_fourth
+						FROM = {
+							NOT = { tag = LEN }
+							NOT = { tag = POW }
+							NOT = { tag = COF }
+						}
+					}
+				}
+			}
+			add_splendor = 100
+			change_government_reform_progress = 15
+			change_variable = {
+				which = election_point
+				value = 25
+			}
+		}
+		else = {
+			subtract_variable = {
+				which = election_point
+				value = 15
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.97.b
+		trigger = {
+			NOT = { has_country_flag = aldiraq_tournament_len }
+			NOT = { has_country_flag = aldiraq_tournament_pow }
+			NOT = { has_country_flag = aldiraq_tournament_cof }
+			NOT = { has_country_flag = aldiraq_tournament_fourth }
+		}
+	}
+}
+
+#Festival of Hannibal's Passage
 
 ## PLAGUE EVENTS
 #The Pale Death Appear In America - Hidden

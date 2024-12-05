@@ -284,6 +284,7 @@ ab_punic_league_calc_effect = {
 	}
 	if = {
 		limit = {
+			NOT = { has_global_flag = ab_punic_league_tournament }
 			check_variable = {
 				which = punic_league_value
 				value = 50
@@ -948,14 +949,17 @@ ab_punic_league_cleanup_effect = {
 	event_target:easimaTarget = {
 		remove_country_modifier = punic_league_aldiraq_expansion_mod_easima
 		remove_country_modifier = punic_league_easima_mod
+		remove_country_modifier = punic_tournament_event_chain
 		every_subject_country = {
-			limit = {
-				has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
-			}
 			remove_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+			remove_country_modifier = punic_tournament_event_chain
 		}
 	}
 	set_global_flag = ab_disabled_punic_league
+	clr_global_flag = ab_punic_league_tournament
+	clr_global_flag = ab_punic_league_2aldiraq
+	clr_global_flag = ab_punic_league_3aldiraq
+	clr_global_flag = ab_punic_league_4aldiraq
 	clear_global_event_target = easimaTarget
 	clear_global_event_target = punicCityTarget1
 	clear_global_event_target = punicCityTarget2
@@ -966,6 +970,13 @@ ab_punic_league_cleanup_effect = {
 	clear_global_event_target = punicCityTarget7
 	clear_global_event_target = punicCityTarget8
 	clear_global_event_target = punicCityTarget9
+	clear_global_event_target = fourthAldiraq
+	clear_global_event_target = aldiraqTeam1
+	clear_global_event_target = aldiraqTeam2
+	clear_global_event_target = aldiraqTeam3
+	clear_global_event_target = aldiraqTeam4
+	clear_global_event_target = aldiraqTeamA
+	clear_global_event_target = aldiraqTeamB
 }
 
 ab_punic_league_reform_1_effect = {
@@ -1329,4 +1340,99 @@ ab_punic_league_reform_10_effect = {
 		}
 	}
 	custom_tooltip = AB_PUNIC_LEAGUE_PERMANENT_EASIMA
+}
+
+ab_punic_league_tournament_setup_effect = {
+	set_variable = {
+		which = punic_league_tournament_round
+		value = 1
+	}
+	event_target:easimaTarget = {
+		# Setting up teams
+		random_subject_country = {
+			limit = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+			save_global_event_target_as = aldiraqTeam1
+			save_global_event_target_as = aldiraqTeamA
+			set_variable = {
+				which = punic_league_tournament_win
+				value = 0
+			}
+		}
+		random_subject_country = {
+			limit = {
+				is_subject_of_type = punic_tribe_vassal
+				NOT = { tag = event_target:aldiraqTeam1 }
+			}
+			save_global_event_target_as = aldiraqTeam2
+			save_global_event_target_as = aldiraqTeamB
+			set_variable = {
+				which = punic_league_tournament_win
+				value = 0
+			}
+		}
+		set_global_flag = ab_punic_league_2aldiraq
+		if = {
+			limit = {
+				calc_true_if = {
+					amount = 3
+					all_subject_country = {
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+			}
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = punic_tribe_vassal
+					NOT = { tag = event_target:aldiraqTeam1 }
+					NOT = { tag = event_target:aldiraqTeam2 }
+				}
+				save_global_event_target_as = aldiraqTeam3
+				set_variable = {
+					which = punic_league_tournament_win
+					value = 0
+				}
+			}
+			clr_global_flag = ab_punic_league_2aldiraq
+			set_global_flag = ab_punic_league_3aldiraq
+		}
+		if = {
+			limit = {
+				calc_true_if = {
+					amount = 4
+					all_subject_country = {
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+			}
+			random_subject_country = {
+				limit = {
+					is_subject_of_type = punic_tribe_vassal
+					NOT = { tag = event_target:aldiraqTeam1 }
+					NOT = { tag = event_target:aldiraqTeam2 }
+					NOT = { tag = event_target:aldiraqTeam3 }
+				}
+				save_global_event_target_as = aldiraqTeam4
+				set_variable = {
+					which = punic_league_tournament_win
+					value = 0
+				}
+			}
+			clr_global_flag = ab_punic_league_3aldiraq
+			set_global_flag = ab_punic_league_4aldiraq
+		}
+	}
+	event_target:aldiraqTeamA = {
+		country_event = {
+			id = ab_punic.90
+			days = 10
+		}
+	}
+	event_target:aldiraqTeamB = {
+		country_event = {
+			id = ab_punic.90
+			days = 10
+		}
+	}
 }
