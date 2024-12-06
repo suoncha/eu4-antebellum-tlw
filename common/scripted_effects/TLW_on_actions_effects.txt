@@ -1662,17 +1662,26 @@ TLW_on_dependency_lost_effect = {
 	if = {
 		limit = {
 			FROM = {
-				has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+				is_subject_of_type = punic_tribe_vassal
 			}
 		}
-		country_event = {
-			id = ab_punic.35
-		}
-		FROM = {
+		if = {
+			limit = {
+				FROM = {
+					has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+				}
+			}
 			country_event = {
 				id = ab_punic.35
 			}
+			FROM = {
+				country_event = {
+					id = ab_punic.35
+				}
+			}
 		}
+		remove_country_modifier = punic_tournament_event_chain
+		remove_country_modifier = punic_festival_event_chain
 	}
 }
 
@@ -1756,6 +1765,24 @@ TLW_on_annexed_effect = {
 				country_event = {
 					id = ab_punic.89
 				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = ab_punic_league_festival
+			FROM = {
+				is_subject_of_type = punic_city_vassal
+			}
+		}
+		clr_global_flag = ab_punic_league_festival
+		clear_global_event_target = punicCityHost
+		every_country = {
+			limit = {
+				has_country_modifier = punic_festival_event_chain
+			}
+			country_event = {
+				id = ab_punic.100
 			}
 		}
 	}
