@@ -968,6 +968,22 @@ ab_punic_league_cleanup_effect = {
 	clr_global_flag = ab_punic_league_2aldiraq
 	clr_global_flag = ab_punic_league_3aldiraq
 	clr_global_flag = ab_punic_league_4aldiraq
+	clr_global_flag = ab_punic_league_incident_muskogean
+	clr_global_flag = having_punic_incident_muskogean
+	clr_global_flag = ab_punic_league_incident_hylinia
+	clr_global_flag = having_punic_incident_hylinia
+	clr_global_flag = ab_punic_league_incident_iroquoian
+	clr_global_flag = having_punic_incident_iroquoian
+	clr_global_flag = ab_punic_league_incident_iron
+	clr_global_flag = having_punic_incident_iron
+	clr_global_flag = ab_punic_league_incident_cahokia
+	clr_global_flag = having_punic_incident_cahokia
+	clr_global_flag = ab_punic_league_incident_silk
+	clr_global_flag = having_punic_incident_silk
+	clr_global_flag = ab_punic_league_incident_horde
+	clr_global_flag = having_punic_incident_horde
+	clr_global_flag = ab_punic_league_incident_mayan
+	clr_global_flag = having_punic_incident_mayan
 	clear_global_event_target = easimaTarget
 	clear_global_event_target = punicCityTarget1
 	clear_global_event_target = punicCityTarget2
@@ -1442,6 +1458,63 @@ ab_punic_league_tournament_setup_effect = {
 		country_event = {
 			id = ab_punic.90
 			days = 10
+		}
+	}
+}
+
+ab_punic_league_incident_failed_effect = {
+	subtract_variable = {
+		which = election_point
+		value = 500
+	}
+	tooltip = {
+		subtract_variable = {
+			which = punic_league_value
+			value = 10
+		}
+	}
+	hidden_effect = {
+		clr_global_flag = having_punic_incident_muskogean
+		clr_global_flag = having_punic_incident_hylinia
+		clr_global_flag = having_punic_incident_iroquoian
+		clr_global_flag = having_punic_incident_iron
+		clr_global_flag = having_punic_incident_cahokia
+		clr_global_flag = having_punic_incident_silk
+		clr_global_flag = having_punic_incident_horde
+		clr_global_flag = having_punic_incident_mayan
+		if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						which = election_point
+						value = 0.001
+					}
+				}
+			}
+			set_variable = {
+				which = election_point
+				value = 0
+			}
+		}
+		REB = {
+			subtract_variable = {
+				which = punic_league_value
+				value = 10
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = punic_league_value
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = punic_league_value
+					value = 0
+				}
+			}
 		}
 	}
 }

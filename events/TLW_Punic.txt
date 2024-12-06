@@ -5079,6 +5079,22 @@ country_event = {
 				which = election_point
 				value = 15
 			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							check_variable = {
+								which = election_point
+								value = 0.001
+							}
+						}
+					}
+					set_variable = {
+						which = election_point
+						value = 0
+					}
+				}
+			}
 		}
 	}
 
@@ -5395,6 +5411,22 @@ country_event = {
 		subtract_variable = {
 			which = election_point
 			value = 25
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = election_point
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = election_point
+					value = 0
+				}
+			}
 		}
 		custom_tooltip = PUNIC_FESTIVAL_SELFHOST_OPINION
 		hidden_effect = {
@@ -6306,6 +6338,937 @@ country_event = {
 			else = {
 				add_country_modifier = {
 					name = punic_festival_mil_other
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Check
+country_event = {
+	id = ab_punic.114
+	title = ab_punic.114.t
+	desc = ab_punic.114.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+	}
+
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_global_flag = ab_punic_league_incident_muskogean }
+						NOT = { has_global_flag = ab_punic_league_incident_hylinia }
+						NOT = { has_global_flag = ab_punic_league_incident_iroquoian }
+						NOT = { has_global_flag = ab_punic_league_incident_iron }
+						NOT = { has_global_flag = ab_punic_league_incident_cahokia }
+						NOT = { has_global_flag = ab_punic_league_incident_silk }
+						NOT = { has_global_flag = ab_punic_league_incident_horde }
+						NOT = { has_global_flag = ab_punic_league_incident_mayan }
+					}
+				}
+				country_event = {
+					id = ab_punic.114
+					days = 3650
+					random = 1825
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.114.a
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_muskogean }
+		}
+		set_global_flag = having_punic_incident_muskogean
+		set_global_flag = ab_punic_league_incident_muskogean
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.116
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.116
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.b
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_hylinia }
+		}
+		set_global_flag = having_punic_incident_hylinia
+		set_global_flag = ab_punic_league_incident_hylinia
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.118
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.118
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.c
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_iroquoian }
+		}
+		set_global_flag = having_punic_incident_iroquoian
+		set_global_flag = ab_punic_league_incident_iroquoian
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.120
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.120
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.e
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_iron }
+		}
+		set_global_flag = having_punic_incident_iron
+		set_global_flag = ab_punic_league_incident_iron
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.122
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.122
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.f
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_cahokia }
+		}
+		set_global_flag = having_punic_incident_cahokia
+		set_global_flag = ab_punic_league_incident_cahokia
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.124
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.124
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.g
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_silk }
+			is_year = 1500
+		}
+		set_global_flag = having_punic_incident_silk
+		set_global_flag = ab_punic_league_incident_silk
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.126
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.126
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.h
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_horde }
+			is_year = 1500
+		}
+		set_global_flag = having_punic_incident_horde
+		set_global_flag = ab_punic_league_incident_horde
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.128
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.128
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.114.i
+		trigger = {
+			NOT = { has_global_flag = ab_punic_league_incident_mayan }
+			is_year = 1500
+		}
+		set_global_flag = having_punic_incident_mayan
+		set_global_flag = ab_punic_league_incident_mayan
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.130
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.130
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Resolved
+country_event = {
+	id = ab_punic.115
+	title = ab_punic.115.t
+	desc = ab_punic.115.d
+	picture = muslimgfx_ADVISOR_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		OR = {
+			is_subject_of_type = punic_city_vassal
+			is_subject_of_type = punic_tribe_vassal
+		}
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = having_punic_incident_muskogean
+			clr_global_flag = having_punic_incident_hylinia
+			clr_global_flag = having_punic_incident_iroquoian
+			clr_global_flag = having_punic_incident_iron
+			clr_global_flag = having_punic_incident_cahokia
+			clr_global_flag = having_punic_incident_silk
+			clr_global_flag = having_punic_incident_horde
+			clr_global_flag = having_punic_incident_mayan
+		}
+	}
+	
+	option = {
+		name = ab_punic.115.a
+		change_variable = {
+			which = election_point
+			value = 50
+		}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+	}
+}
+
+#Punic League Incident - Muskogean Tensions
+country_event = {
+	id = ab_punic.116
+	title = ab_punic.116.t
+	desc = ab_punic.116.d
+	picture = northamericagfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.116.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_MUSKOGEAN
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.117
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						culture_group = muskogean
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.116.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_MUSKOGEAN
+	}
+}
+
+#Punic League Incident - Muskogean Tensions - Failed
+country_event = {
+	id = ab_punic.117
+	title = ab_punic.117.t
+	desc = ab_punic.117.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_muskogean
+	}
+	
+	option = {
+		name = ab_punic.117.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					culture_group = muskogean
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Merchant Feuds
+country_event = {
+	id = ab_punic.118
+	title = ab_punic.118.t
+	desc = ab_punic.118.d
+	picture = muslimgfx_SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.118.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_HYLINIAN
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.119
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						culture_group = eastern_algonquian
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.118.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_HYLINIAN
+	}
+}
+
+#Punic League Incident - Merchant Feuds - Failed
+country_event = {
+	id = ab_punic.119
+	title = ab_punic.119.t
+	desc = ab_punic.119.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_hylinia
+	}
+	
+	option = {
+		name = ab_punic.119.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					culture_group = eastern_algonquian
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - The Order Aggression
+country_event = {
+	id = ab_punic.120
+	title = ab_punic.120.t
+	desc = ab_punic.120.d
+	picture = northamericagfx_LAND_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.120.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_IROQUOIAN
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.121
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						culture_group = iroquoian
+						religion = zoroastrian
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.120.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_IROQUOIAN
+	}
+}
+
+#Punic League Incident - The Order Aggression - Failed
+country_event = {
+	id = ab_punic.121
+	title = ab_punic.121.t
+	desc = ab_punic.121.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_iroquoian
+	}
+	
+	option = {
+		name = ab_punic.121.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					culture_group = iroquoian
+					religion = zoroastrian
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Iron Shortages
+country_event = {
+	id = ab_punic.122
+	title = ab_punic.122.t
+	desc = ab_punic.122.d
+	picture = northamericagfx_OVEREXTENSION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.122.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_IRON
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.123
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						technology_group = buniq_tech
+						iron = 1
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.122.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_IRON
+	}
+}
+
+#Punic League Incident - Iron Shortages - Failed
+country_event = {
+	id = ab_punic.123
+	title = ab_punic.123.t
+	desc = ab_punic.123.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_iron
+	}
+	
+	option = {
+		name = ab_punic.123.a
+		ab_punic_league_incident_failed_effect = yes
+	}
+}
+
+#Punic League Incident - Crisis in Cahokia
+country_event = {
+	id = ab_punic.124
+	title = ab_punic.124.t
+	desc = ab_punic.124.d
+	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.124.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_CAHOKIA
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.125
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						culture_group = siouan
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.124.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_CAHOKIA
+	}
+}
+
+#Punic League Incident - Crisis in Cahokia - Failed
+country_event = {
+	id = ab_punic.125
+	title = ab_punic.125.t
+	desc = ab_punic.125.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_cahokia
+	}
+	
+	option = {
+		name = ab_punic.125.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					culture_group = siouan
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Demands for Silk
+country_event = {
+	id = ab_punic.126
+	title = ab_punic.126.t
+	desc = ab_punic.126.d
+	picture = northamericagfx_MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.126.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		create_conquistador = { tradition = 100 }
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_SILK
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.127
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						primary_culture = shawnee
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.126.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_SILK
+	}
+}
+
+#Punic League Incident - Demands for Silk - Failed
+country_event = {
+	id = ab_punic.127
+	title = ab_punic.127.t
+	desc = ab_punic.127.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_silk
+	}
+	
+	option = {
+		name = ab_punic.127.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					primary_culture = shawnee
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Hashdian Raids
+country_event = {
+	id = ab_punic.128
+	title = ab_punic.128.t
+	desc = ab_punic.128.d
+	picture = northamericagfx_CIVIL_WAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.128.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_HORDE
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.129
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						technology_group = buniq_tech
+						uses_horde_unity = yes
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.128.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_HORDE
+	}
+}
+
+#Punic League Incident - Hashdian Raids - Failed
+country_event = {
+	id = ab_punic.129
+	title = ab_punic.129.t
+	desc = ab_punic.129.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_horde
+	}
+	
+	option = {
+		name = ab_punic.129.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					technology_group = buniq_tech
+					uses_horde_unity = yes
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+#Punic League Incident - Mayan Incursions
+country_event = {
+	id = ab_punic.130
+	title = ab_punic.130.t
+	desc = ab_punic.130.d
+	picture = southamericagfx_CIVIL_WAR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_punic.130.a
+		trigger = {
+			tag = event_target:easimaTarget
+		}
+		create_conquistador = { tradition = 100 }
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_MAYAN
+		hidden_effect = {
+			country_event = {
+				id = ab_punic.131
+				days = 730
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_country = {
+					limit = {
+						religion = mesoamerican_religion
+						is_free_or_tributary_trigger = yes
+						NOT = { war_with = ROOT }
+						NOT = { truce_with = ROOT }
+					}
+					ROOT = {
+						declare_war_with_cb = {
+							casus_belli = cb_easima_trade_war
+							who = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.130.b
+		trigger = {
+			NOT = { tag = event_target:easimaTarget }
+		}
+		custom_tooltip = PUNIC_INCIDENT_GUIDE_MAYAN
+	}
+}
+
+#Punic League Incident - Mayan Incursions - Failed
+country_event = {
+	id = ab_punic.131
+	title = ab_punic.131.t
+	desc = ab_punic.131.d
+	picture = muslimgfx_ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = having_punic_incident_mayan
+	}
+	
+	option = {
+		name = ab_punic.131.a
+		ab_punic_league_incident_failed_effect = yes
+		hidden_effect = {
+			every_country = {
+				limit = {
+					religion = mesoamerican_religion
+				}
+				add_country_modifier = {
+					name = punic_easima_incident_failed
 					duration = 3650
 				}
 			}
