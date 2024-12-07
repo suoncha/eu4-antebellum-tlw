@@ -1,5 +1,4 @@
 namespace = ab_byzantium
-normal_or_historical_nations = yes
 
 # Belisarius Reborn
 country_event = {
@@ -959,48 +958,43 @@ country_event = {
 	desc = ab_byzantium.61.d
 	picture = DHOW_AT_SEA_eventPicture
 
-	fire_only_once = yes
-
-	trigger = {
-		OR = {
-			tag = BYZ
-			tag = ROM
-		}
-		any_country = {
-			primary_culture = punic
-			capital_scope = {
-				OR = {
-					has_discovered = BYZ
-					has_discovered = ROM
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		hidden_effect = {
+			discover_province = 965
 			every_country = {
 				limit = {
 					primary_culture = punic
 				}
 				add_historical_rival = ROOT
-				ROOT = {
-					add_historical_rival = PREV
-				}
 			}
 		}
 	}
 
+	goto = capitalProv
+
 	option = {
 		name = ab_byzantium.61.a
-		tooltip = {
-			every_country = {
-				limit = {
-					primary_culture = punic
+		every_country = {
+			limit = {
+				primary_culture = punic
+			}
+			ROOT = {
+				add_historical_rival = PREV
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					965 = {
+						has_discovered = ROOT
+					}
 				}
-				ROOT = {
-					add_historical_rival = PREV
-				}
+			}
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				discover_province = 965
 			}
 		}
 	}
@@ -5344,6 +5338,7 @@ country_event = {
 			which = tlw_diocese_page_var
 			value = 1
 		}
+		ab_punic_league_setup_effect = yes
 	}
 }
 
@@ -5392,6 +5387,29 @@ country_event = {
 		}
 		country_event = {
 			id = ab_punic.2
+		}
+		# Monthly Calculation
+		REB = {
+			country_event = {
+				id = ab_punic.18
+				days = 20
+			}
+			# Tournament of Ahnar
+			country_event = {
+				id = ab_punic.84
+				days = 450
+			}
+			# Festival of Hannibal's Passage
+			country_event = {
+				id = ab_punic.98
+				days = 1200
+			}
+			# Punic League Incident
+			country_event = {
+				id = ab_punic.114
+				days = 3650
+				random = 1825
+			}
 		}
 	}
 }

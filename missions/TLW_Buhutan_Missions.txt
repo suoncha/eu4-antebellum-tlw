@@ -1,0 +1,1605 @@
+tlw_buhutan_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = POW
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	che_rekindling = {
+		icon = mission_fires
+		required_missions = { che_diaspora }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2670
+				AND = {
+					owned_by = ROOT
+					has_tax_building_trigger = no
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+			2670 = {
+				has_great_project = {
+					type = holy_fire_iroquoian
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = royal_fires_modifier
+				duration = -1
+			}
+			set_country_flag = che_tax_buff
+			custom_tooltip = CHE_BUILDING_TAX
+		}
+	}
+
+	che_immortals = {
+		icon = mission_immortal
+		required_missions = { }
+		position = 10
+		
+		trigger = {
+			has_mil_advisor_3 = yes
+			OR = {
+				full_idea_group = quality_ideas 
+				full_idea_group = professional_ideas 
+				full_idea_group = quantity_ideas 
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PER_ALLOW_IMMORTALS
+			hidden_effect = {
+				add_country_modifier = {
+					name = per_unlocked_immortals
+					duration = -1
+				}
+			}
+		}
+	}
+
+	che_eternal_flame = {
+		icon = per_reborn_in_fire
+		required_missions = { che_immortals }
+		position = 11
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = { religion = zoroastrian }
+		}
+		
+		trigger = {
+			army_tradition = 90
+			army_professionalism = 0.8
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.25
+			}
+			num_of_carolean = 30
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_RESTORER_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = CHE_perma_pp1
+					amount = 15
+				}
+			}
+			add_country_modifier = {
+				name = che_eternal_flame
+				duration = -1
+			}
+			if = {
+				limit = {
+					num_of_carolean = 100
+				}
+				custom_tooltip = CHE_100_IMMORTALS_YES
+				set_country_flag = che_commandant2_buff
+			}
+			else = {
+				custom_tooltip = CHE_100_IMMORTALS_NO
+			}
+			custom_tooltip = CHE_COMMANDANT2_SCALING
+		}
+	}
+
+	che_beloved_woman = {
+		icon = mission_che_the_beloved_woman
+		required_missions = { }
+		position = 12
+
+		trigger = {
+			OR = {
+				employed_advisor = {
+					is_female = yes
+				}
+				is_female = yes
+				has_female_heir = yes
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_country_modifier = {
+				name = che_mother_clan
+				duration = -1
+			}
+		}
+	}
+
+	che_forest_expansion = {
+		icon = mission_che_botanical_exports
+		required_missions = { che_beloved_woman }
+		position = 13
+
+		provinces_to_highlight = {
+			NOT = { num_of_times_improved = 3 }
+			OR = {
+				has_terrain = forest
+				has_terrain = woods
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_terrain = forest
+					has_terrain = woods
+				}
+				num_of_times_improved = 3
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_forest_expansion
+			}
+		}
+	}
+
+	che_industrialization = {
+		icon = industrialized_rhineland
+		required_missions = { che_forest_expansion che_aleazima }
+		position = 15
+
+		provinces_to_highlight = {
+			has_manufactory_trigger = no
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 50
+				has_manufactory_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 1
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = punic_industrial_revolution
+				duration = -1
+			}
+		}
+	}
+}
+
+tlw_buhutan_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = POW
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	che_diaspora = {
+		icon = per_balance_the_three_flames
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2670
+				province_id = 947
+				province_id = 911
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			owns_or_non_sovereign_subject_of = 2670
+			owns_or_non_sovereign_subject_of = 947
+			owns_or_non_sovereign_subject_of = 911
+			full_idea_group = religious_ideas
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
+		}
+		
+		effect = {
+			add_splendor = 200
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = reunification_with_parsees
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							religion = zoroastrian
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = SER_DOTF_YES
+				hidden_effect = {
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SER_DOTF_NO
+			}
+		}
+	}
+
+	che_honor_magi = {
+		icon = mission_hall_magi
+		required_missions = { che_diaspora }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 944
+		}
+		
+		trigger = {
+			treasury = 2500
+			adm_power = 100
+			dip_power = 100
+			architect = 3
+			944 = {
+				owned_by = ROOT
+			}
+			944 = {
+				has_any_ongoing_construction = no
+			}
+		}
+		
+		effect = {
+			add_treasury = -2500
+			add_adm_power = -100
+			add_dip_power = -100
+			custom_tooltip = OZO_CREATE_MAGI
+			set_country_flag = ozo_unlock_hall_magi
+			hidden_effect = {
+				944 = {
+					add_great_project = {
+						type = hall_magi
+						instant = yes
+					}
+				}
+				944 = {
+					add_great_project_tier = {
+						type = hall_magi
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+
+	che_cahokia = {
+		icon = mission_based
+		required_missions = { che_across_the_lakes }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 917
+				owned_by = CAO
+			}
+		}
+		
+		trigger = {
+			controls = 917
+			OR = {
+				NOT = { exists = CAO }
+				war_score_against = {
+					who = CAO
+					value = 60
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.73
+			}
+			custom_tooltip = AB_EMPTY
+			upper_louisiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ozarks_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			great_lakes_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_subjugate_siouans = {
+		icon = mission_tribal_allegiance
+		required_missions = { che_cahokia }
+		position = 13
+
+		provinces_to_highlight = {
+			OR = {
+				area = ozarks_area
+				area = upper_louisiana_area
+				area = iowa_area
+				area = illinois_country_area
+				area = southern_illinois_area
+				area = minnessota_area
+				area = wisconsin_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				OR = {
+					area = ozarks_area
+					area = upper_louisiana_area
+					area = iowa_area
+					area = illinois_country_area
+					area = southern_illinois_area
+					area = minnessota_area
+					area = wisconsin_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = che_integrating_siouans
+				duration = 7300
+			}
+			set_country_flag = che_mesquakie_spread
+			custom_tooltip = CHE_MESQUAKIE_SPREAD
+			custom_tooltip = AB_EMPTY
+			set_country_flag = che_commandant_buff
+			custom_tooltip = CHE_COMMANDANT_SCALING
+		}
+	}
+
+	che_aleazima = {
+		icon = per_the_city_of_daman
+		required_missions = { che_subjugate_siouans }
+		position = 14
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture_group = iroquoian
+			region = great_lakes_region
+			NOT = { development = 30 }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				culture_group = iroquoian
+				region = great_lakes_region
+				development = 30
+			}
+		}
+		
+		effect = {
+			great_lakes_region = {
+				add_base_manpower = 1
+				add_permanent_province_modifier = {
+					name = punic_buniq_urbanization
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = len_economic_capital
+				duration = -1
+			}
+			if = {
+				limit = {
+					911 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = bridge_molon
+							tier = 2
+						}
+					}
+				}
+				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_YES
+				add_prestige_or_monarch_power = { amount = 25 }
+			}
+			else = {
+				custom_tooltip = CHE_BRIDGE_MOLON_MAGNIFICENT_NO
+				tooltip = {
+					add_prestige_or_monarch_power = { amount = 25 }
+				}
+			}
+		}
+	}
+
+	che_convert_plains = {
+		icon = mission_tribute_tax
+		required_missions = { che_aleazima }
+		position = 16
+
+		provinces_to_highlight = {
+			region = great_plains_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			OR = {
+				great_plains_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				any_ally = {
+					uses_horde_unity = yes
+					OR = {
+						culture_group = plains_algonquian
+						culture_group = caddoan
+					}
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					great_plains_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = CHE_CONQUER_HASHDIA_YES
+				set_country_flag = che_tionontate_spread
+				great_plains_region = {
+					add_province_modifier = {
+						name = che_a_new_light
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_CONQUER_HASHDIA_NO
+				tooltip = {
+					great_plains_region = {
+						add_province_modifier = {
+							name = che_a_new_light
+							duration = 7300
+						}
+					}
+				}
+			}
+			custom_tooltip = CHE_HASHDIA_SPREAD
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_ally = {
+						uses_horde_unity = yes
+						OR = {
+							culture_group = plains_algonquian
+							culture_group = caddoan
+						}
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+					NOT = {
+						great_plains_region = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+				}
+				custom_tooltip = CHE_ALLY_HORDE_YES
+				hidden_effect = {
+					random_ally = {
+						limit = {
+							uses_horde_unity = yes
+							OR = {
+								culture_group = plains_algonquian
+								culture_group = caddoan
+							}
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+						country_event = {
+							id = ab_punic.75
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_ALLY_HORDE_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_punic.75
+				}
+			}
+		}
+	}
+}
+
+tlw_buhutan_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = POW
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	che_erie = {
+		icon = qara_qoyunlu_maragheh_observatory
+		required_missions = { che_diaspora }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 947
+		}
+		
+		trigger = {
+			scholar = 3
+			947 = {
+				has_great_project = {
+					type = sky_dome_iroquoian
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.71
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ILK_COMET
+			set_country_flag = no_more_comet_sighted_event
+		}
+	}
+
+	che_heirs_media = {
+		icon = per_tab_legacy_of_eranshahr
+		required_missions = { che_cherokee_order }
+		position = 9
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					religion = zoroastrian
+					total_development = 50
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			unlock_government_reform = {
+				government_reform = che_zoro_order_satrapy_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = che_legacy_of_molon
+				duration = 36500
+			}
+		}
+	}
+
+	che_hylinia = {
+		icon = mission_greekfire
+		required_missions = { che_across_the_lakes }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = trois_rivieres_area
+				area = lower_canada_area
+				area = notre_dame_mountains_area
+				area = upper_acadia_area
+				area = lower_acadia_area
+				area = cote_nord_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			owns = 2578
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = trois_rivieres_area
+					area = lower_canada_area
+					area = notre_dame_mountains_area
+					area = upper_acadia_area
+					area = lower_acadia_area
+					area = cote_nord_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			set_global_flag = ab_disabled_hylinia
+			custom_tooltip = CHE_PREVENT_HYLINIA
+			custom_tooltip = CHE_DESTROY_ACADEMY
+			hidden_effect = {
+				2578 = {
+					set_province_flag = ab_destroyed_academy_sosylus
+					destroy_great_project = {
+						type = academy_sosylus
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = len_agunqa_frontier
+				duration = 9125
+			}
+			set_country_flag = che_huron_spread
+			custom_tooltip = CHE_HURON_SPREAD
+			custom_tooltip = AB_EMPTY
+			upper_ontario_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_ontario_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_asha_restored = {
+		icon = per_build_the_fire_temples
+		required_missions = { che_cahokia che_hylinia che_purify }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				region = great_lakes_region
+				region = canada_region
+				region = northeast_america_region
+			}
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+					is_city = yes
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			mission_completed = che_heirs_media
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				OR = {
+					region = great_lakes_region
+					region = canada_region
+					region = northeast_america_region
+				}
+				religion = zoroastrian
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = per_victorious
+				duration = 10950
+			}
+			unlock_government_reform = {
+				government_reform = che_zoro_order_upgrade_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = che_zoro_order_upgrade_reform
+		}
+	}
+
+	che_lingua_franca = {
+		icon = mission_arabian_thalassocracy
+		required_missions = { che_subjugate_siouans che_asha_restored }
+		position = 14
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					has_saved_global_event_target = americanLinguaFranca
+					owned_by = event_target:americanLinguaFranca
+				}
+				AND = {
+					owned_by = ROOT
+					NOT = {
+						AND = {
+							religion = zoroastrian
+							development = 20
+						}
+					}
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					has_saved_global_event_target = americanLinguaFranca
+				}
+				total_development = event_target:americanLinguaFranca
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = LEN_NO_ONE_CLAIMED_LINGUA
+					always = yes
+				}
+			}
+			NOT = { great_power_rank = 4 }
+			num_of_owned_provinces_with = {
+				value = 50
+				religion = zoroastrian
+				development = 20
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.60
+			}
+		}
+	}
+
+	che_deal_with_devil = {
+		icon = mission_raid_on_iceland
+		required_missions = { che_aleazima }
+		position = 15
+
+		provinces_to_highlight = {
+			owned_by = JOA
+		}
+		
+		trigger = {
+			OR = {
+				NOT = { exists = JOA }
+				JOA = {
+					alliance_with = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = { exists = JOA }
+				}
+				custom_tooltip = CHE_NOT_EXIST_JOA_YES
+				add_mercantilism_or_monarch_power = { amount = 10 }
+			}
+			else = {
+				custom_tooltip = CHE_NOT_EXIST_JOA_NO
+				tooltip = {
+					add_mercantilism_or_monarch_power = { amount = 10 }
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					JOA = {
+						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+				}
+				custom_tooltip = CHE_ALLY_JOA_YES
+				hidden_effect = {
+					JOA = {
+						country_event = {
+							id = ab_punic.75
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CHE_ALLY_JOA_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_punic.75
+				}
+			}
+		}
+	}
+}
+
+tlw_buhutan_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = POW
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	che_behind_mountain = {
+		icon = mission_che_the_cave_country
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			province_id = 2551
+		}
+		
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			2551 = {
+				owned_by = ROOT
+			}
+			2551 = {
+				is_city = yes
+			}
+			2551 = {
+				development = 12
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.70
+			}
+			custom_tooltip = AB_EMPTY
+			western_kentucky_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kentucky_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ohio_country_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			miami_river_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_cherokee_order = {
+		icon = mission_che_principal_peole
+		required_missions = { che_behind_mountain }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = western_kentucky_area
+				area = kentucky_area
+				area = appalachia_area
+				area = ohio_country_area
+				area = miami_river_area
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			mission_completed = aldiraq_barbiri_unification
+			num_of_owned_provinces_with = {
+				value = 12
+				OR = {
+					area = western_kentucky_area
+					area = kentucky_area
+					area = appalachia_area
+					area = ohio_country_area
+					area = miami_river_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			change_tag = CHE
+			change_primary_culture = cherokee
+			custom_tooltip = CHE_BARBIRI_TO_CHEROKEE
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = cherokee
+					old_culture_1 = barbiri
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				change_government = theocracy
+			}
+			add_government_reform = che_zoro_order_reform
+			custom_tooltip = AB_EMPTY
+			country_event = {
+				id = ideagroups.1
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+			hidden_effect = {
+				country_event = {
+					id = ab_punic.67
+				}
+			}
+			michigan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_canada_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			huronia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_across_the_lakes = {
+		icon = mission_ne_great_lakes_conquest
+		required_missions = { che_cherokee_order }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				area = michigan_area
+				area = upper_canada_area
+				area = huronia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			michigan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			upper_canada_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			huronia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			set_global_flag = ab_disabled_order_of_zoroaster
+			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = zun_yasna
+				duration = -1
+			}
+			canada_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					mission_completed = che_diaspora
+				}
+				custom_tooltip = CHE_COMPLETED_DIASPORA_YES
+				add_country_modifier = {
+					name = per_azar
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = CHE_COMPLETED_DIASPORA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = per_azar
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	che_purify = {
+		icon = mission_iroquois_the_five_nations
+		required_missions = { che_across_the_lakes }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = hudson_valley_area
+				area = iroquoisia_area
+				area = westsylvania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = hudson_valley_area
+					area = iroquoisia_area
+					area = westsylvania_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_stability_or_adm_power = yes
+			define_advisor = {
+				type = planner
+				skill = 3
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CHE_EVERY_IROQUOIS
+			tooltip = {
+				add_province_modifier = {
+					name = che_a_new_light
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = iroquois
+					}
+					add_province_modifier = {
+						name = che_a_new_light
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+
+	che_war_uruqba = {
+		icon = centralize_france
+		required_missions = { che_asha_restored che_ghalia_campaign }
+		position = 13
+
+		provinces_to_highlight = {
+			region = france_region
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+					culture_group = iroquoian
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = france_region
+				religion = zoroastrian
+				culture_group = iroquoian
+			}
+		}
+		
+		effect = {
+			set_country_flag = che_europe_spread
+			custom_tooltip = CHE_EUROPE_SPREAD
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = france_region
+						religion = zoroastrian
+						culture_group = iroquoian
+					}
+					change_culture = susquehannock
+					change_original_culture = susquehannock
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = che_zoro_order_final_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = che_zoro_order_final_reform
+			custom_tooltip = AB_EMPTY
+			europe_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_zoroastrian_united = {
+		icon = per_zoroastrian_community
+		required_missions = { che_mesopotamia }
+		position = 15
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2212
+				province_id = 4430
+				province_id = 2223
+				province_id = 441
+				province_id = 4336
+			}
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = zoroastrian
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			2212 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			4430 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			2223 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			441 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+			4336 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = zoroastrian
+			}
+		}
+		
+		effect = {
+			set_country_flag = sty_winning_battle_grant_morale
+			custom_tooltip = STY_GER_EASTERN_SPEAR_BATTLE
+			custom_tooltip = AB_EMPTY
+			set_country_flag = mnk_triumph
+			custom_tooltip = IVR_CONVERT_BONUS
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					num_of_owned_provinces_with = {
+						value = 300
+						religion = zoroastrian
+					}
+				}
+				custom_tooltip = CHE_300_PROVINCES_YES
+				add_adm_tech = 1
+			}
+			else = {
+				custom_tooltip = CHE_300_PROVINCES_NO
+				tooltip = {
+					add_adm_tech = 1
+				}
+			}
+		}
+	}
+}
+
+tlw_buhutan_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = POW
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	che_fleet_endless_seas = {
+		icon = mission_galleys_in_port
+		required_missions = { }
+		position = 8
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_shipyard_building_trigger = no
+			has_port = yes
+		}
+		
+		trigger = {
+			num_of_heavy_ship = 10
+			navy_size = 50
+			num_of_owned_provinces_with = {
+				value = 10
+				has_shipyard_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = punic_high_sea_fleet
+				duration = 9125
+			}
+			macaronesia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_eastern_expedition = {
+		icon = mission_galleass
+		required_missions = { che_cherokee_order che_fleet_endless_seas }
+		position = 9
+
+		provinces_to_highlight = {
+			area = macaronesia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				area = macaronesia_area
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = punic_the_great_invasion
+				duration = 7300
+			}
+			brittany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			poitou_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			guyenne_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			pyrenees_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_landing_uruqba = {
+		icon = mission_rb_conquer_brittany
+		required_missions = { che_eastern_expedition }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = brittany_area
+				area = poitou_area
+				area = guyenne_area
+				area = pyrenees_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = brittany_area
+					area = poitou_area
+					area = guyenne_area
+					area = pyrenees_area
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = len_invasion_of_uruqba
+				duration = 9125
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_ghalia_campaign = {
+		icon = mission_downfall
+		required_missions = { che_landing_uruqba }
+		position = 12
+
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			ile_de_france_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = france_region
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			france_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -10
+				add_province_modifier = {
+					name = che_iroquoian_settlers
+					duration = 9125
+				}
+			}
+			add_country_modifier = {
+				name = ars_fall_of_paris
+				duration = 7300
+			}
+			mashriq_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = BYZ_HRE_DISMANTLE
+			tooltip = {
+				add_mil_tech = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { hre_size = 1 }
+					}
+					add_mil_tech = 1
+				}
+			}
+		}
+	}
+
+	che_mesopotamia = {
+		icon = mission_cradle
+		required_missions = { che_ghalia_campaign }
+		position = 14
+
+		provinces_to_highlight = {
+			region = mashriq_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			owns = 410
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = mashriq_region
+			}
+		}
+		
+		effect = {
+			410 = {
+				change_province_name = "Ctesiphon"
+				rename_capital = "Ctesiphon"
+				change_trade_goods = silk
+				add_province_modifier = {
+					name = per_ctesiphon
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = rum_prosperity
+				duration = -1
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	che_god_lord = {
+		icon = per_tim_legacy_of_timur
+		required_missions = { che_mesopotamia }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				region = persia_region
+				region = khorasan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			has_reform = ozo_reformation_great_flame_reform
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 60
+				OR = {
+					region = persia_region
+					region = khorasan_region
+				}
+			}
+		}
+		
+		effect = {
+			override_country_name = PERSIA
+			custom_tooltip = CHE_GODKING_TITLE
+			add_ruler_personality = godking_personality
+			custom_tooltip = CHE_ALWAYS_CONQUEROR
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = ozo_reformation_great_flame_upgrade_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = ozo_reformation_great_flame_upgrade_reform
+		}
+	}
+}

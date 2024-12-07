@@ -1,0 +1,1776 @@
+tlw_kataqart_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COF
+			tag = CCA
+		}
+	}
+	has_country_shield = yes
+
+	cca_golden_haven = {
+		icon = mission_the_grand_bazaar
+		required_missions = { }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 4882
+		}
+		
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			4882 = {
+				owned_by = ROOT
+			}
+			4882 = {
+				is_city = yes
+			}
+			4882 = {
+				development = 12
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.78
+			}
+			custom_tooltip = AB_EMPTY
+			south_appalachia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			american_georgia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_florida_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			florida_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					JOA = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+				set_country_flag = ctg_unlock_smuggle_goods
+				custom_tooltip = CCA_GOOD_RELATION_WITH_JOA_YES
+			}
+			else = {
+				custom_tooltip = CCA_GOOD_RELATION_WITH_JOA_NO
+			}
+			custom_tooltip = CTG_UNLOCK_SMUGGLE
+		}
+	}
+
+	cca_rising = {
+		icon = mission_colonize_florida
+		required_missions = { cca_golden_haven }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4881
+				area = american_georgia_area
+				area = north_florida_area
+				area = florida_area
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			mission_completed = aldiraq_barbiri_unification
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					province_id = 4881
+					area = american_georgia_area
+					area = north_florida_area
+					area = florida_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			change_tag = CCA
+			change_government = monarchy
+			change_primary_culture = yuchi
+			custom_tooltip = CCA_BARBIRI_TO_YUCHI
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = yuchi
+					old_culture_1 = barbiri
+				}
+				add_government_reform = autocracy_reform
+			}
+			custom_tooltip = AB_EMPTY
+			country_event = {
+				id = ideagroups.1
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+			hidden_effect = {
+				country_event = {
+					id = ab_punic.67
+				}
+			}
+			west_florida_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_louisiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			cuba_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_cuba_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_taino = {
+		icon = mission_caribbean_cn
+		required_missions = { cca_rising }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				area = cuba_area
+				area = east_cuba_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = cuba_area
+					area = east_cuba_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = cca_quest_alkabiri
+				duration = 9125
+			}
+			carribeans_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_alkaribi = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { cca_taino }
+		position = 13
+
+		provinces_to_highlight = {
+			region = carribeans_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = carribeans_region
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			carribeans_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = cca_riches_alkabiri
+					duration = -1
+				}
+			}
+			set_country_flag = cca_new_world_charter
+			custom_tooltip = CCA_NEW_WORLD_CHARTER_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					carribeans_region = {
+						owned_by = ROOT
+						is_colony = yes
+					}
+				}
+				custom_tooltip = CCA_UNFINISHED_CARIB_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_colony = yes
+						}
+						add_colonysize = 200
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CCA_UNFINISHED_CARIB_NO
+			}
+			custom_tooltip = LOT_ALL_COLONY
+		}
+	}
+
+	cca_terraform = {
+		icon = mission_swamp
+		required_missions = { }
+		position = 14
+
+		provinces_to_highlight = {
+			NOT = { num_of_times_improved = 3 }
+			OR = {
+				has_terrain = marsh
+				has_terrain = savannah
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_terrain = marsh
+					has_terrain = savannah
+				}
+				num_of_times_improved = 3
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_marsh_expansion
+			}
+		}
+	}
+
+	cca_academies = {
+		icon = mission_lit_jesuit_academy
+		required_missions = { cca_terraform cca_shabbat }
+		position = 16
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				AND = {
+					has_building = university
+					culture_group = muskogean
+					religion = jewish
+				}
+			}
+		}
+		
+		trigger = {
+			innovativeness = 25
+			num_of_owned_provinces_with = {
+				value = 20
+				has_building = university
+				culture_group = muskogean
+				religion = jewish
+			}
+		}
+		
+		effect = {
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC_BUFF
+			set_country_flag = ab_tus_taking_tech_bonus_improved
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_building_uni
+			custom_tooltip = CCA_BUILDING_UNI
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_permanent_province_modifier = {
+						name = cca_uni_buff
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+tlw_kataqart_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COF
+			tag = CCA
+		}
+	}
+	has_country_shield = yes
+
+	cca_renew_covenant = {
+		icon = mission_temple_cahokia
+		required_missions = { cca_awakening }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 917
+		}
+		
+		trigger = {
+			splendor = 300
+			government_reform_progress = 50
+			917 = {
+				has_great_project = {
+					type = temple_cahokia
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_splendor = -300
+			change_government_reform_progress = -50
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_scaling_inquisitor
+			custom_tooltip = CCA_INQUISITOR_SCALING
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_convert_grant_mana
+			custom_tooltip = RMG_CONVERT_BONUS
+		}
+	}
+
+	cca_bitmina = {
+		icon = mission_zambezi_gold
+		required_missions = { cca_golden_haven }
+		position = 9
+
+		provinces_to_highlight = {
+			area = south_appalachia_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			south_appalachia_area = {
+				type = all
+				owned_by = ROOT
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = cca_develop_bitmina
+			custom_tooltip = CCA_DEVELOP_BITMINA
+			custom_tooltip = AB_EMPTY
+			south_appalachia_area = {
+				change_trade_goods = gold
+				add_province_modifier = {
+					name = cca_mines_bitmina
+					duration = -1
+				}
+			}
+			4913 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			934 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			941 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4888 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			951 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4889 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	cca_fortress = {
+		icon = mission_the_caucasus_tur
+		required_missions = { cca_bitmina }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4913
+				province_id = 934
+				province_id = 941
+				province_id = 4888
+				province_id = 951
+				province_id = 4889
+			}
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 4
+				}
+			}
+		}
+		
+		trigger = {
+			4913 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+			934 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+			941 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+			4888 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+			951 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+			4889 = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 4
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
+				add_base_manpower = 1
+				add_province_modifier = {
+					name = cca_fortress_appalachian
+					duration = -1
+				}
+				upgrade_fort_building = yes
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							province_id = 4913
+							province_id = 934
+							province_id = 941
+							province_id = 4888
+							province_id = 951
+							province_id = 4889
+						}
+					}
+					add_base_manpower = 1
+					add_province_modifier = {
+						name = cca_fortress_appalachian
+						duration = -1
+					}
+					upgrade_fort_building = yes
+				}
+			}
+		}
+	}
+
+	cca_baltsar = {
+		icon = mission_portuguese_malabar
+		required_missions = { cca_rising cca_cahokian }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 893
+				AND = {
+					OR = {
+						area = west_florida_area
+						area = lower_louisiana_area
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			893 = {
+				owned_by = ROOT
+			}
+			893 = {
+				base_manpower = 5
+			}
+			893 = {
+				is_city = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				OR = {
+					area = west_florida_area
+					area = lower_louisiana_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			custom_tooltip = AB_EMPTY
+			893 = {
+				add_center_of_trade_level = 1
+				add_province_modifier = {
+					name = cca_baltsar_port
+					duration = -1
+				}
+				add_or_upgrade_trade_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			mississippi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			alabama_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_american_georgia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			texas_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			coastal_prarie_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rio_grande_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northeast_mexico_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_mayans = {
+		icon = mission_mayan_canoes
+		required_missions = { cca_baltsar }
+		position = 13
+
+		provinces_to_highlight = {
+			OR = {
+				area = texas_area
+				area = coastal_prarie_area
+				area = rio_grande_area
+				area = northeast_mexico_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 13
+				OR = {
+					area = texas_area
+					area = coastal_prarie_area
+					area = rio_grande_area
+					area = northeast_mexico_area
+				}
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = CCA_perma_pp1
+					amount = 10
+				}
+			}
+			set_country_flag = trader_give_caravan_power
+			custom_tooltip = RUS_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
+			huasteca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_mexico_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			campeche_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			yucatan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = cca_cahokian_alliance
+				}
+				custom_tooltip = CCA_STILL_ALLY_CAO_YES
+				remove_country_modifier = cca_cahokian_alliance
+				add_country_modifier = {
+					name = cca_cahokian_alliance_buffed
+					duration = -1
+					desc = "for as long as we are allied to them"
+				}
+			}
+			else = {
+				custom_tooltip = CCA_STILL_ALLY_CAO_NO
+				tooltip = {
+					remove_country_modifier = cca_cahokian_alliance
+					add_country_modifier = {
+						name = cca_cahokian_alliance_buffed
+						duration = -1
+						desc = "for as long as we are allied to them"
+					}
+				}
+			}
+		}
+	}
+
+	cca_shabbat = {
+		icon = mission_cathedral_cities
+		required_missions = { }
+		position = 15
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_tax_building_trigger = no
+		}
+		
+		trigger = {
+			church_power = 200
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_church_power = -200
+			add_country_modifier = {
+				name = cca_shabbat_celebration
+				duration = 18250
+			}
+			set_country_flag = cca_religious_state_buff
+			custom_tooltip = CCA_RELIGIOUS_STATE_PRIVILEGE
+		}
+	}
+}
+
+tlw_kataqart_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COF
+			tag = CCA
+		}
+	}
+	has_country_shield = yes
+
+	cca_awakening = {
+		icon = mission_zionist
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 917
+				province_id = 4903
+				province_id = 4882
+			}
+			NOT = { owned_by = ROOT }
+			NOT = {
+				owner = {
+					religion = jewish
+					alliance_with = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			mission_completed = aldiraq_a_new_future
+			917 = {
+				custom_trigger_tooltip = {
+					tooltip = CCA_IS_JEWISH_LAND
+					owner = {
+						OR = {
+							tag = ROOT
+							AND = {
+								religion = jewish
+								alliance_with = ROOT
+							}
+						}
+					}
+				}
+			}
+			4903 = {
+				custom_trigger_tooltip = {
+					tooltip = CCA_IS_JEWISH_LAND
+					owner = {
+						OR = {
+							tag = ROOT
+							AND = {
+								religion = jewish
+								alliance_with = ROOT
+							}
+						}
+					}
+				}
+			}
+			4882 = {
+				custom_trigger_tooltip = {
+					tooltip = CCA_IS_JEWISH_LAND
+					owner = {
+						OR = {
+							tag = ROOT
+							AND = {
+								religion = jewish
+								alliance_with = ROOT
+							}
+						}
+					}
+				}
+			}
+			full_idea_group = religious_ideas
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
+		}
+		
+		effect = {
+			add_stability_or_adm_power = yes
+			add_country_modifier = {
+				name = cca_jewish_conversion
+				duration = -1
+			}
+			if = {
+				limit = {
+					is_defender_of_faith = yes
+				}
+				custom_tooltip = CCA_DOTF_YES
+				define_advisor = {
+					type = inquisitor
+					skill = 3
+					cost_multiplier = 0.25
+				}
+			}
+			else = {
+				custom_tooltip = CCA_DOTF_NO
+				tooltip = {
+					define_advisor = {
+						type = inquisitor
+						skill = 3
+						cost_multiplier = 0.25
+					}
+				}
+			}
+		}
+	}
+
+	cca_rediscover_tablets = {
+		icon = mission_tablets_jewish
+		required_missions = { cca_awakening }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 920
+		}
+		
+		trigger = {
+			treasury = 2500
+			adm_power = 200
+			architect = 3
+			920 = {
+				owned_by = ROOT
+			}
+			920 = {
+				has_any_ongoing_construction = no
+			}
+		}
+		
+		effect = {
+			add_treasury = -2500
+			add_adm_power = -200
+			custom_tooltip = CAO_CREATE_COVENANT
+			set_country_flag = cao_unlock_tablets_covenant
+			hidden_effect = {
+				920 = {
+					add_great_project = {
+						type = tablets_covenant
+						instant = yes
+					}
+				}
+				920 = {
+					add_great_project_tier = {
+						type = tablets_covenant
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+
+	cca_cahokian = {
+		icon = mission_aztec_city_alliance
+		required_missions = { }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = CAO
+		}
+		
+		trigger = {
+			OR = {
+				NOT = { exists = CAO }
+				CAO = {
+					alliance_with = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+					trust = {
+						who = ROOT
+						value = 80
+					}
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = cca_winning_war
+			custom_tooltip = CCA_WINNING_WAR
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_cahokian_alliance
+				duration = -1
+				desc = "for as long as we are allied to them"
+			}
+		}
+	}
+
+	cca_shattered = {
+		icon = mission_tatar_tribes
+		required_missions = { cca_baltsar }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				area = mississippi_area
+				area = alabama_area
+				area = upper_american_georgia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			mississippi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			alabama_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			upper_american_georgia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			unlock_government_reform = {
+				government_reform = cca_muskogean_kingdom_reform
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = cca_muskogean_kingdom_reform
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_develop_muskogean
+			custom_tooltip = CCA_DEVELOP_MUSKOGEAN
+		}
+	}
+
+	cca_judgment = {
+		icon = mission_apostolic_kingdom
+		required_missions = { cca_shattered }
+		position = 14
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture_group = muskogean
+			region = mississippi_region
+			NOT = { development = 30 }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				culture_group = muskogean
+				region = mississippi_region
+				development = 30
+			}
+		}
+		
+		effect = {
+			mississippi_region = {
+				add_base_production = 1
+				add_permanent_province_modifier = {
+					name = punic_buniq_urbanization
+					duration = -1
+				}
+			}
+			add_country_modifier = {
+				name = len_economic_capital
+				duration = -1
+			}
+			if = {
+				limit = {
+					mission_completed = cca_rediscover_tablets
+				}
+				custom_tooltip = CCA_COMPLETED_TABLETS_YES
+				change_government_reform_progress = 100
+			}
+			else = {
+				custom_tooltip = CCA_COMPLETED_TABLETS_NO
+				tooltip = {
+					change_government_reform_progress = 100
+				}
+			}
+		}
+	}
+
+	cca_lingua_franca = {
+		icon = mission_arabian_thalassocracy
+		required_missions = { cca_shabbat cca_judgment }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					has_saved_global_event_target = americanLinguaFranca
+					owned_by = event_target:americanLinguaFranca
+				}
+				AND = {
+					owned_by = ROOT
+					NOT = {
+						AND = {
+							religion = jewish
+							development = 20
+						}
+					}
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					has_saved_global_event_target = americanLinguaFranca
+				}
+				total_development = event_target:americanLinguaFranca
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = LEN_NO_ONE_CLAIMED_LINGUA
+					always = yes
+				}
+			}
+			NOT = { great_power_rank = 4 }
+			num_of_owned_provinces_with = {
+				value = 50
+				religion = jewish
+				development = 20
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.60
+			}
+		}
+	}
+}
+
+tlw_kataqart_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COF
+			tag = CCA
+		}
+	}
+	has_country_shield = yes
+
+	cca_salem = {
+		icon = mission_wall
+		required_missions = { cca_awakening }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 4903
+		}
+		
+		trigger = {
+			fortification_expert = 3
+			4903 = {
+				has_great_project = {
+					type = walls_salem
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.79
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = ab_ger_great_wall_bonus
+			custom_tooltip = GER_GREAT_WALL_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_fort_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = ger_great_wall_fort_grant_slot
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	cca_men_hire = {
+		icon = mission_iroquois_warriors
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			num_of_mercenaries = 15
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = cca_utilize_mercs
+				duration = 7300
+			}
+			if = {
+				limit = {
+					full_idea_group = mercenary_ideas
+				}
+				custom_tooltip = CCA_COMPLETE_MERCENARY_YES
+				hidden_effect = {
+					remove_country_modifier = cca_utilize_mercs
+					add_country_modifier = {
+						name = cca_utilize_mercs
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = CCA_COMPLETE_MERCENARY_NO
+			}
+		}
+	}
+
+	cca_lancers = {
+		icon = mam_recruit_the_mamluks
+		required_missions = { cca_men_hire }
+		position = 10
+		
+		trigger = {
+			has_global_modifier_value = { 
+				which = cavalry_power
+				value = 0.1
+			}
+			num_of_cavalry = 25
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = dragoon
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rum_scaling_dragoon
+			custom_tooltip = RUM_DRAGOON_SCALING
+		}
+	}
+
+	cca_peacekeepers = {
+		icon = mission_crush_eyalet_rebellion
+		required_missions = { cca_cahokian cca_lancers }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_building = soldier_households }
+		}
+		
+		trigger = {
+			army_professionalism = 0.9
+			army_tradition = 90
+			num_of_owned_provinces_with = {
+				value = 20
+				has_building = soldier_households
+			}
+		}
+		
+		effect = {
+			add_mil_tech = 1
+			custom_tooltip = CCA_HALVE_MILITARY_HEGEMON
+			set_country_flag = fra_enable_mil_hegemony_flag
+			custom_tooltip = AB_EMPTY
+			set_country_flag = cca_building_soldier_households
+			custom_tooltip = CCA_BUILDING_SOLDIER_STRONGHOLD_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = soldier_households
+					}
+					add_permanent_province_modifier = {
+						name = cca_additional_manufactory
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	cca_andalusian = {
+		icon = mission_reclaim_andalucia
+		required_missions = { cca_tariq }
+		position = 12
+
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 40
+				region = iberia_region
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+			iberia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_local_autonomy = -25
+				add_province_modifier = {
+					name = cca_convert_albiria
+					duration = 7300
+				}
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_end_cross = {
+		icon = mission_pf_cross
+		required_missions = { cca_andalusian cca_return_zion }
+		position = 14
+
+		provinces_to_highlight = {
+			OR = {
+				area = thrace_area
+				area = hudavendigar_area
+				area = lazio_area
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			thrace_area = {
+				type = all
+				owned_by = ROOT
+			}
+			hudavendigar_area = {
+				type = all
+				owned_by = ROOT
+			}
+			lazio_area = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 50 }
+			custom_tooltip = AB_EMPTY
+			set_country_flag = mnk_triumph
+			custom_tooltip = IVR_CONVERT_BONUS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CCA_EVERY_CHRISTIAN
+			tooltip = {
+				add_stability = -1
+				country_event = {
+					id = ab_punic.80
+				}
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = christian
+					}
+					add_stability = -1
+					country_event = {
+						id = ab_punic.80
+					}
+				}
+			}
+		}
+	}
+
+	cca_final_testament = {
+		icon = mission_testament
+		required_missions = { cca_judgment cca_end_cross cca_fall_crescent }
+		position = 15
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				continent = europe
+				continent = asia
+				continent = africa
+			}
+			NOT = {
+				AND = {
+					religion = jewish
+					base_tax = 5
+					has_tax_building_trigger = yes
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			is_defender_of_faith = yes
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 150
+				religion = jewish
+				base_tax = 5
+				has_tax_building_trigger = yes
+				OR = {
+					continent = europe
+					continent = asia
+					continent = africa
+				}
+			}
+		}
+		
+		effect = {
+			add_ruler_personality = great_engineer_personality
+			set_country_flag = ab_always_great_engineer
+			custom_tooltip = CCA_ALWAYS_ENGINEER
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_golden_age_judaism
+				duration = -1
+			}
+			set_country_flag = ab_prevent_ruler_negative_trait
+			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+tlw_kataqart_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COF
+			tag = CCA
+		}
+	}
+	has_country_shield = yes
+
+	cca_endless = {
+		icon = mission_galleys_in_port
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_shipyard_building_trigger = no
+			has_port = yes
+		}
+		
+		trigger = {
+			num_of_heavy_ship = 10
+			navy_size = 50
+			num_of_owned_provinces_with = {
+				value = 10
+				has_shipyard_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = punic_high_sea_fleet
+				duration = 9125
+			}
+			macaronesia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_eastern_expedition = {
+		icon = mission_galleass
+		required_missions = { cca_endless }
+		position = 9
+
+		provinces_to_highlight = {
+			area = macaronesia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				area = macaronesia_area
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = punic_the_great_invasion
+				duration = 7300
+			}
+			alentejo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_andalucia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_andalucia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_morocco_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_tariq = {
+		icon = mission_rb_take_gibraltar
+		required_missions = { cca_eastern_expedition }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				area = alentejo_area
+				area = lower_andalucia_area
+				area = upper_andalucia_area
+				area = northern_morocco_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = alentejo_area
+					area = lower_andalucia_area
+					area = upper_andalucia_area
+					area = northern_morocco_area
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = len_invasion_of_uruqba
+				duration = 9125
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_return_zion = {
+		icon = jerusalem
+		required_missions = { cca_tariq }
+		position = 13
+
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			palestine_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.81
+			}
+			custom_tooltip = AB_EMPTY
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hudavendigar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_fall_crescent = {
+		icon = mission_islamic_golden_age
+		required_missions = { cca_return_zion }
+		position = 14
+
+		provinces_to_highlight = {
+			OR = {
+				area = medina_area
+				area = mecca_area
+				region = egypt_region
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			medina_area = {
+				type = all
+				owned_by = ROOT
+			}
+			mecca_area = {
+				type = all
+				owned_by = ROOT
+			}
+			egypt_region = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			set_country_flag = cca_convert_muslim
+			custom_tooltip = CCA_CONVERT_MUSLIM
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CCA_EVERY_MUSLIM
+			tooltip = {
+				add_stability = -1
+				country_event = {
+					id = ab_punic.83
+				}
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = muslim
+					}
+					add_stability = -1
+					country_event = {
+						id = ab_punic.83
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			mashriq_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			arabia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cca_kingdom_david = {
+		icon = geo_crade_of_civilization
+		required_missions = { cca_fall_crescent }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				region = mashriq_region
+				region = arabia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			tag = ISR
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				OR = {
+					region = mashriq_region
+					region = arabia_region
+				}
+			}
+		}
+		
+		effect = {
+			override_country_name = GREATER_ISRAEL
+			set_country_flag = brn_scaling_inquisitor
+			custom_tooltip = BRN_INQUISITOR_SCALING
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cca_kingdom_david_mod
+				duration = -1
+			}
+			if = {
+				limit = {
+					379 = {
+						owned_by = ROOT
+						has_province_flag = third_temple_built
+					}
+				}
+				custom_tooltip = CCA_THIRD_TEMPLE_BUILT_YES
+				set_country_flag = cca_scaling_inquisitor2
+			}
+			else = {
+				custom_tooltip = CCA_THIRD_TEMPLE_BUILT_NO
+			}
+			custom_tooltip = CCA_INQUISITOR_SCALING2
+		}
+	}
+}

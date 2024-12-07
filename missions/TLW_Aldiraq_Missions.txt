@@ -1,0 +1,983 @@
+tlw_aldiraq_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LEN
+			tag = POW
+			tag = COF
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	aldiraq_sword_of_league = {
+		icon = mission_native_build_army_mission
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 1
+				manpower_percentage = 1
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			add_country_modifier = {
+				name = ald_harbalia_war
+				duration = 5475
+			}
+			custom_tooltip = ALDIRAQ_CLAIM_HARBALIA
+			hidden_effect = {
+				LEN = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				POW = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				COF = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	aldiraq_war_of_harbalia = {
+		icon = mission_native_church
+		required_missions = { aldiraq_sword_of_league }
+		position = 2
+
+		provinces_to_highlight = {
+			culture = barbiri
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 8
+				culture = barbiri
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			define_advisor = {
+				type = commandant
+				skill = 2
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ALDIRAQ_CORE_HARBALIA
+			hidden_effect = {
+				LEN = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_core = ROOT
+					}
+				}
+				POW = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_core = ROOT
+					}
+				}
+				COF = {
+					every_owned_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+						}
+						add_core = ROOT
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					army_size = event_target:easimaTarget
+				}
+				custom_tooltip = ALDIRAQ_LARGER_ARMY_THAN_EASIMA_YES
+				add_country_modifier = {
+					name = ald_call_for_independence
+					duration = 3650
+				}
+			}
+			else = {
+				custom_tooltip = ALDIRAQ_LARGER_ARMY_THAN_EASIMA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = ald_call_for_independence
+						duration = 3650
+					}
+				}
+			}
+		}
+	}
+
+	aldiraq_barbiri_unification = {
+		icon = mission_the_caucasus_rus
+		required_missions = { aldiraq_war_of_harbalia }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = LEN
+				owned_by = POW
+				owned_by = COF
+			}
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					NOT = { tag = LEN }
+					NOT = { was_tag = LEN }
+				}
+				NOT = { exists = LEN }
+			}
+			if = {
+				limit = {
+					NOT = { tag = POW }
+					NOT = { was_tag = POW }
+				}
+				NOT = { exists = POW }
+			}
+			if = {
+				limit = {
+					NOT = { tag = COF }
+					NOT = { was_tag = COF }
+				}
+				NOT = { exists = COF }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					has_reform = aldiraq_barbiri_pride_reform
+				}
+				unlock_government_reform = {
+					government_reform = aldiraq_barbiri_pride_upgrade_reform
+				}
+				custom_tooltip = AB_EMPTY
+				add_government_reform = aldiraq_barbiri_pride_upgrade_reform
+			}
+			else = {
+				unlock_government_reform = {
+					government_reform = aldiraq_barbiri_pride_upgrade_reform
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ALDIRAQ_CREATE_FRONTIER
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						is_city = yes
+					}
+					every_empty_neighbor_province = {
+						add_siberian_construction = 1
+					}
+				}
+			}
+		}
+	}
+
+	aldiraq_northern_markets = {
+		icon = ven_capital_of_europe
+		required_missions = { aldiraq_turning_the_tide }
+		position = 6
+
+		provinces_to_highlight = {
+			region = northeast_america_region
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					development = 20
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				region = northeast_america_region
+				development = 20
+			}
+		}
+		
+		effect = {
+			northeast_america_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_base_tax = 1
+				add_province_modifier = {
+					name = punic_buniq_prosperity
+					duration = -1
+				}
+			}
+			set_country_flag = rhl_unlock_planner_bonus
+			custom_tooltip = RHL_SCALING_PLANNER
+		}
+	}
+}
+
+tlw_aldiraq_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LEN
+			tag = POW
+			tag = COF
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	aldiraq_strategic_alliances = {
+		icon = mission_sio_european_trade
+		required_missions = { }
+		position = 2
+
+		trigger = {
+			num_of_allies = 2
+		}
+		
+		effect = {
+			add_dip_power = 100
+			define_advisor = {
+				type = diplomat
+				skill = 1
+				cost_multiplier = 0.25
+			}
+		}
+	}
+
+	aldiraq_a_new_future = {
+		icon = mission_punic
+		required_missions = { aldiraq_war_of_harbalia aldiraq_strategic_alliances aldiraq_develop_capital }
+		position = 3
+
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					has_saved_global_event_target = easimaTarget
+				}
+				is_capital_of = event_target:easimaTarget
+			}
+		}
+		
+		trigger = {
+			is_subject = no
+			is_at_war = no
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.56
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ALDIRAQ_CLAIM_COASTAL
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = punic
+					}
+					add_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_global_flag = ab_disabled_punic_league
+				}
+				custom_tooltip = ALDIRAQ_DISMANTLED_PUNIC_LEAGUE_YES
+				hidden_effect = {
+					add_power_projection = {
+						type = ALDIRAQ_perma_pp1
+						amount = 10
+					}
+				}
+			}
+			else = {
+				custom_tooltip = ALDIRAQ_DISMANTLED_PUNIC_LEAGUE_NO
+			}
+			custom_tooltip = HLV_PP
+		}
+	}
+
+	aldiraq_turning_the_tide = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { aldiraq_barbiri_unification aldiraq_a_new_future }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				region = northeast_america_region
+				region = southeast_america_region
+			}
+			has_port = yes
+			NOT = { owned_by = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					region = northeast_america_region
+					region = southeast_america_region
+				}
+				has_port = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 10 }
+			custom_tooltip = AB_EMPTY
+			add_accepted_culture_or_dip_power = {
+				culture = punic
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			northeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aldiraq_continential_road_system = {
+		icon = mission_pue_chaco_roads
+		required_missions = { aldiraq_turning_the_tide }
+		position = 6
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				has_road_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = punic_roads
+				duration = -1
+			}
+			set_country_flag = byz_building_roads_bonus
+			custom_tooltip = BYZ_BUILDING_ROADS_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_road_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = byz_roads_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+tlw_aldiraq_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LEN
+			tag = POW
+			tag = COF
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	aldiraq_structured_government = {
+		icon = mission_the_roman_sultan
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			culture = punic
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			government_reform_progress = 25
+			splendor = 100
+			any_neighbor_country = {
+				has_institution = renaissance
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = -25
+			add_splendor = -100
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_punic_administration
+			}
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_institution_embracement = {
+					which = feudalism
+					value = 100
+				}
+				add_institution_embracement = {
+					which = renaissance
+					value = 50
+				}
+			}
+		}
+	}
+
+	aldiraq_develop_capital = {
+		icon = mission_pue_sky_city
+		required_missions = { aldiraq_structured_government }
+		position = 2
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				grown_by_development = 5
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+				custom_tooltip = AB_EMPTY
+				add_or_upgrade_tax_building = yes
+			}
+		}
+	}
+
+	aldiraq_dawn_of_new_era = {
+		icon = mission_nidaros
+		required_missions = { aldiraq_develop_capital }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				is_institution_origin = new_world_i
+				AND = {
+					owned_by = ROOT
+					OR = {
+						has_shipyard_building_trigger = no
+						has_dock_building_trigger = no
+					}
+					has_port = yes
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			is_institution_enabled = new_world_i
+			custom_trigger_tooltip = {
+				tooltip = HAS_HAD_EUROPEAN_THREAT
+				has_global_flag = north_america_european_threat
+			}
+			any_owned_province = {
+				has_shipyard_building_trigger = yes
+				has_dock_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			set_country_flag = hansa_buff_new_world_charters_flag
+			custom_tooltip = HAS_NEW_WORLD_CHARTERS_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_institution_embracement = {
+					which = new_world_i
+					value = 50
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					full_idea_group = exploration_ideas
+				}
+				custom_tooltip = ALDIRAQ_COMPLETE_EXPLORATION_YES
+				country_event = {
+					id = ab_punic.39
+				}
+			}
+			else = {
+				custom_tooltip = ALDIRAQ_COMPLETE_EXPLORATION_NO
+				tooltip = {
+					country_event = {
+						id = ab_punic.39
+					}
+				}
+			}
+		}
+	}
+
+	aldiraq_embrace_printing_age = {
+		icon = mission_court_education
+		required_missions = { aldiraq_dawn_of_new_era }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				is_institution_origin = printing_press
+				province_id = 955
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			is_institution_enabled = printing_press
+			955 = {
+				base_production = 10
+			}
+			955 = {
+				has_tax_building_trigger = yes
+			}
+			955 = {
+				has_production_building_trigger = yes
+			}
+			955 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			change_price = {
+				trade_goods = paper
+				key = "Izabel Press"
+				value = 0.15
+				duration = -1
+			}
+			add_country_modifier = {
+				name = ald_public_knowledge
+				duration = -1
+			}
+			955 = {
+				add_building = mills
+				add_institution_embracement = {
+					which = printing_press
+					value = 50
+				}
+			}
+		}
+	}
+
+	aldiraq_southern_plantations = {
+		icon = mission_cocoa
+		required_missions = { aldiraq_turning_the_tide }
+		position = 6
+
+		provinces_to_highlight = {
+			region = southeast_america_region
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					development = 20
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				region = southeast_america_region
+				development = 20
+			}
+		}
+		
+		effect = {
+			southeast_america_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_base_tax = 1
+				add_province_modifier = {
+					name = punic_buniq_prosperity
+					duration = -1
+				}
+			}
+			set_country_flag = ctg_scaling_planner
+			custom_tooltip = CTG_PLANNER_SCALING
+		}
+	}
+}
+
+tlw_aldiraq_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LEN
+			tag = POW
+			tag = COF
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	aldiraq_control_factions = {
+		icon = balance_the_estates
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			stability = 1
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 60
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 60
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+		}
+	}
+
+	aldiraq_circle_thuhun = {
+		icon = mission_iroquois_haudenosaunee
+		required_missions = { aldiraq_develop_capital aldiraq_control_factions aldiraq_forest_warriors }
+		position = 3
+
+		trigger = {
+			has_adm_advisor_2 = yes
+			has_dip_advisor_2 = yes
+			has_mil_advisor_2 = yes
+			is_in_deficit = no
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.57
+			}
+		}
+	}
+
+	aldiraq_legacy_two_worlds = {
+		icon = mission_into_africa
+		required_missions = { aldiraq_circle_thuhun aldiraq_adopt_professionalism }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				is_capital_of = ROOT
+				AND = {
+					owned_by = ROOT
+					has_courthouse_building_trigger = no
+				}
+			}
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 40
+			}
+			num_of_owned_provinces_with = {
+				value = 20
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = aldiraq_punic_administration_buff
+			custom_tooltip = ALDIRAQ_PUNIC_ADMINISTRATION_PRIVILEGE_BUFF
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+				add_province_modifier = {
+					name = ald_heart_of_buniq
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = { 
+						NOT = { 
+							any_province = { 
+								higher_development_than = PREV 
+							}
+						}
+					}
+				}
+				custom_tooltip = CTG_HIGHEST_CITY_YES
+				add_splendor = 400
+			}
+			else = {
+				custom_tooltip = CTG_HIGHEST_CITY_NO
+				tooltip = {
+					add_splendor = 400
+				}
+			}
+		}
+	}
+}
+
+tlw_aldiraq_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LEN
+			tag = POW
+			tag = COF
+			tag = CHE
+		}
+	}
+	has_country_shield = yes
+
+	aldiraq_forest_warriors = {
+		icon = mission_berzerker
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			army_size = 15
+			OR = {
+				army_professionalism = 0.15
+				army_tradition = 25
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 15 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = ald_king_of_woods
+				duration = 7300
+			}
+		}
+	}
+
+	aldiraq_adopt_professionalism = {
+		icon = mission_devshirme_system
+		required_missions = { aldiraq_forest_warriors }
+		position = 4
+		
+		trigger = {
+			army_reformer = 2
+			army_size = 35
+			OR = {
+				army_professionalism = 0.35
+				army_tradition = 50
+			}
+			mil_tech = 6
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					has_reform = aldiraq_relentless_ambush_reform
+				}
+				unlock_government_reform = {
+					government_reform = aldiraq_relentless_ambush_upgrade_reform
+				}
+				custom_tooltip = AB_EMPTY
+				add_government_reform = aldiraq_relentless_ambush_upgrade_reform
+			}
+			else = {
+				unlock_government_reform = {
+					government_reform = aldiraq_relentless_ambush_upgrade_reform
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = sty_winning_battle_grant_morale
+			custom_tooltip = STY_GER_EASTERN_SPEAR_BATTLE
+		}
+	}
+
+	aldiraq_war_thunder = {
+		icon = mission_cannons_firing
+		required_missions = { aldiraq_adopt_professionalism }
+		position = 5
+		
+		trigger = {
+			has_global_modifier_value = { 
+				which = artillery_power
+				value = 0.1
+			}
+			num_of_artillery = 20
+			mil_tech = 11
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = rmg_superior_firepower
+				duration = 7300
+			}
+			if = {
+				limit = {
+					full_idea_group = professional_ideas
+				}
+				custom_tooltip = ALDIRAQ_COMPLETE_PROFESSIONAL_YES
+				add_country_modifier = {
+					name = ald_thunder_storm
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = ALDIRAQ_COMPLETE_PROFESSIONAL_NO
+				tooltip = {
+					add_country_modifier = {
+						name = ald_thunder_storm
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aldiraq_technological_ascendancy = {
+		icon = mission_ground_shaker
+		required_missions = { aldiraq_legacy_two_worlds aldiraq_war_thunder }
+		position = 6
+
+		provinces_to_highlight = {
+			owner = {
+				technology_group = western
+				OR = {
+					NOT = { alliance_with = ROOT }
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			any_ally = {
+				technology_group = western
+				has_opinion = {
+					who = ROOT
+					value = 150
+				}
+			}
+			mil_tech = 16
+			army_professionalism = 0.5
+			army_size = 150
+			manpower = 200
+			total_development = 600
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_punic.58
+			}
+		}
+	}
+}

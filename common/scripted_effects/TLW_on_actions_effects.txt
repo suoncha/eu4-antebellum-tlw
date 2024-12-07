@@ -67,6 +67,18 @@ TLW_on_new_monarch_effect = {
 		}
 		set_dynasty = "Ptolemaios"
 	}
+	else_if = {
+		limit = {
+			has_reform = ozo_reformation_great_flame_upgrade_reform
+		}
+		add_ruler_personality = godking_personality
+	}
+	else_if = {
+		limit = {
+			has_country_flag = ab_always_great_engineer
+		}
+		add_ruler_personality = great_engineer_personality
+	}
 }
 
 TLW_on_adm_development_effect = {
@@ -267,6 +279,62 @@ TLW_on_dip_development_effect = {
 				faction = faction_nciptolemaios
 				influence = 1
 			}
+		}
+	}
+	# Punic
+	else_if = {
+		limit = {
+			OR = {
+				AND = {
+					trade_goods = tobacco
+					owner = {
+						has_country_flag = ctg_tobacco_develop
+					}
+				}
+				AND = {
+					trade_goods = cotton
+					owner = {
+						has_country_flag = ctg_cotton_develop
+					}
+				}
+			}
+		}
+		random_list = {
+			25 = {
+				add_base_production = 1
+			}
+			75 = { }
+		}
+	}
+	# Cahokia
+	else_if = {
+		limit = {
+			trade_goods = gold
+			owner = {
+				has_country_flag = cca_develop_bitmina
+			}
+		}
+		random_list = {
+			25 = {
+				owner = {
+					add_inflation = -1
+				}
+			}
+			75 = { }
+		}
+	}
+	if = {
+		limit = {
+			culture_group = muskogean
+			owner = {
+				has_country_flag = cca_develop_muskogean
+			}
+		}
+		random_list = {
+			10 = {
+				add_base_production = 1
+			}
+			90 = { }
 		}
 	}
 }
@@ -946,9 +1014,51 @@ TLW_on_war_won_effect = {
 		}
 		add_stability_or_adm_power = yes
 	}
+	# Punic
+	if = {
+		limit = {
+			has_country_flag = ctg_winning_war_melqart
+		}
+		remove_country_modifier = punic_melqart_won_war_mod
+		add_country_modifier = {
+			name = punic_melqart_won_war_mod
+			duration = 365
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_flag = len_winning_war
+		}
+		remove_country_modifier = len_won_war_mod
+		add_country_modifier = {
+			name = len_won_war_mod
+			duration = 365
+		}
+	}
+	if = {
+		limit = {
+			has_disaster = punic_fourth_war
+			FROM = {
+				tag = ROM
+			}
+		}
+		country_event = {
+			id = ab_punic.156
+		}
+	}
+	# Cahokia
+	if = {
+		limit = {
+			has_country_flag = cca_winning_war
+		}
+		create_general_scaling_with_tradition_and_pips = {
+			add_siege = 1
+		}
+	}
 }
 
 TLW_on_war_lost_effect = {
+	# Rome
 	if = {
 		limit = {
 			has_country_modifier = byz_reconquest_of_the_levant
@@ -959,6 +1069,62 @@ TLW_on_war_lost_effect = {
 		remove_country_modifier = byz_reconquest_of_the_levant
 		FROM = {
 			remove_country_modifier = byz_reconquest_of_the_levant_nizzarids
+		}
+	}
+	# Punic
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			has_country_modifier = punic_league_easima_mod
+		}
+		subtract_variable = {
+			which = election_point
+			value = 100
+		}
+		if = {
+			limit = {
+				NOT = {
+					check_variable = {
+						which = election_point
+						value = 0.001
+					}
+				}
+			}
+			set_variable = {
+				which = election_point
+				value = 0
+			}
+		}
+		REB = {
+			subtract_variable = {
+				which = punic_league_value
+				value = 5
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = punic_league_value
+							value = 0.001
+						}
+					}
+				}
+				set_variable = {
+					which = punic_league_value
+					value = 0
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_disaster = punic_fourth_war
+			FROM = {
+				tag = ROM
+			}
+		}
+		country_event = {
+			id = ab_punic.157
 		}
 	}
 }
@@ -1184,6 +1350,89 @@ TLW_on_province_owner_change_effect = {
 		add_core = AEG
 		cede_province = AEG
 	}
+	# Punic
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_religious_tolerance
+			}
+			OR = {
+				religion = canaanite
+				religion = zoroastrian
+				religion = jewish
+				religion = hellenic
+				religion = totemism
+			}
+		}
+		add_province_modifier = {
+			name = punic_pact_of_shalim_mod
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_abrahamic_tolerance
+			}
+			OR = {
+				religion_group = christian
+				religion_group = muslim
+				religion_group = christian
+			}
+		}
+		add_province_modifier = {
+			name = punic_abrahamic_mod
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					region = northeast_america_region
+					owner = {
+						mission_completed = ctg_northern_prosperity
+					}
+				}
+				AND = {
+					region = southeast_america_region
+					owner = {
+						mission_completed = ctg_southern_riches
+					}
+				}
+			}
+		}
+		add_province_modifier = {
+			name = punic_buniq_prosperity
+			duration = -1
+		}
+	}
+	# Cahokia
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_burghers_marsh_expansion
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = marsh
+			}
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_marsh
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = savannah
+			}
+			add_province_modifier = {
+				name = estate_burghers_marsh_expansion_savanna
+				duration = -1
+			}
+		}
+	}
 }
 
 TLW_on_province_culture_changed = {
@@ -1244,6 +1493,39 @@ TLW_on_province_culture_changed = {
 		}
 		TLW_cultural_hegemony_province_effect = yes
 	}
+	# Hylinia
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = len_convert_england
+			}
+			culture_group = ROOT
+			region = british_isles_region
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = len_convert_bonus
+			}
+		}
+		owner = {
+			random_list = {
+				33 = {
+					add_adm_power = 5
+				}
+				33 = {
+					add_dip_power = 5
+				}
+				33 = {
+					add_mil_power = 5
+				}
+			}
+		}
+	}
 }
 
 TLW_on_province_religion_changed = {
@@ -1268,6 +1550,69 @@ TLW_on_province_religion_changed = {
 		}
 		else = {
 			TLW_rome_monument_downgrade_effect = yes
+		}
+	}
+	# Punic
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_religious_tolerance
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					religion = canaanite
+					religion = zoroastrian
+					religion = jewish
+					religion = hellenic
+					religion = totemism
+				}
+				NOT = { has_province_modifier = punic_pact_of_shalim_mod }
+			}
+			add_province_modifier = {
+				name = punic_pact_of_shalim_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = punic_pact_of_shalim_mod
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_punic_abrahamic_tolerance
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					religion_group = christian
+					religion_group = muslim
+					religion_group = christian
+				}
+				NOT = { has_province_modifier = punic_abrahamic_mod }
+			}
+			add_province_modifier = {
+				name = punic_abrahamic_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = punic_abrahamic_mod
+		}
+	}
+	# Cahokia
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = cca_convert_muslim
+			}
+		}
+		add_province_modifier = {
+			name = cca_islam_to_judaism
+			duration = 7300
 		}
 	}
 }
@@ -1313,6 +1658,133 @@ TLW_on_dependency_lost_effect = {
 			add_government_reform = rom_former_diocese
 		}
 	}
+	if = {
+		limit = {
+			FROM = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+				}
+			}
+			country_event = {
+				id = ab_punic.35
+			}
+			FROM = {
+				country_event = {
+					id = ab_punic.35
+				}
+			}
+		}
+		remove_country_modifier = punic_tournament_event_chain
+		remove_country_modifier = punic_festival_event_chain
+	}
+}
+
+TLW_on_annexed_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+			}
+		}
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.35
+			}
+		}
+	}
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			FROM = {
+				has_country_modifier = punic_league_easima_mod
+			}
+		}
+		FROM = {
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				grant_independence = yes
+			}
+		}
+		country_event = {
+			id = ab_punic.31
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = len_dominant_culture
+			}
+		}
+		clear_global_event_target = americanLinguaFranca
+		every_country = {
+			limit = {
+				has_country_modifier = len_lesser_culture
+			}
+			remove_country_modifier = len_lesser_culture
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = ab_punic_league_tournament
+			FROM = {
+				is_subject_of_type = punic_tribe_vassal
+			}
+		}
+		clr_global_flag = ab_punic_league_tournament
+		clr_global_flag = ab_punic_league_2aldiraq
+		clr_global_flag = ab_punic_league_3aldiraq
+		clr_global_flag = ab_punic_league_4aldiraq
+		clear_global_event_target = aldiraqTeam1
+		clear_global_event_target = aldiraqTeam2
+		clear_global_event_target = aldiraqTeam3
+		clear_global_event_target = aldiraqTeam4
+		clear_global_event_target = aldiraqTeamA
+		clear_global_event_target = aldiraqTeamB
+		event_target:easimaTarget = {
+			country_event = {
+				id = ab_punic.89
+			}
+			every_subject_country = {
+				limit = {
+					OR = {
+						is_subject_of_type = punic_city_vassal
+						is_subject_of_type = punic_tribe_vassal
+					}
+				}
+				country_event = {
+					id = ab_punic.89
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = ab_punic_league_festival
+			FROM = {
+				is_subject_of_type = punic_city_vassal
+			}
+		}
+		clr_global_flag = ab_punic_league_festival
+		clear_global_event_target = punicCityHost
+		every_country = {
+			limit = {
+				has_country_modifier = punic_festival_event_chain
+			}
+			country_event = {
+				id = ab_punic.100
+			}
+		}
+	}
 }
 
 TLW_on_colonial_nation_established = {
@@ -1334,6 +1806,116 @@ TLW_on_colonial_nation_established = {
 	}
 }
 
+TLW_on_explore_coast_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = new_world_discovered }
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			NOT = { province_id = 1804 }
+			NOT = { area = greenland_area }
+			is_wasteland = no
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.3
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = { has_global_flag = europe_discovered_punics }
+			is_capital = yes
+			owner = {
+				OR = {
+					culture_group = eastern_algonquian
+					culture_group = punic_g
+				}
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					culture_group = punic_g
+				}
+			}
+			FROM = {
+				set_country_flag = europe_meet_native_punic
+			}
+		}
+		else = {
+			FROM = {
+				set_country_flag = europe_meet_native_greek
+			}
+		}
+		owner = {
+			save_global_event_target_as = discoveredCountry_NA
+		}
+		FROM = {
+			save_global_event_target_as = discoveredCountry_EU
+			country_event = {
+				id = ab_punic.4
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_global_flag = new_world_discovered
+			trade_goods = gold
+			is_city = yes
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.10
+			}
+		}
+	}
+}
+
+TLW_on_tech_taken = {
+	if = {
+		limit = {
+			has_country_flag = ctg_elden_ring
+		}
+		remove_country_modifier = punic_the_elden_ring
+		add_country_modifier = {
+			name = punic_the_elden_ring
+			duration = 1825
+		}
+	}
+}
+
+TLW_on_country_creation = {
+	if = {
+		limit = {
+			has_saved_global_event_target = americanLinguaFranca
+			OR = {
+				tag = CTG
+				tlw_is_american_trigger = yes
+			}
+		}
+		add_country_modifier = {
+			name = len_lesser_culture
+			duration = -1
+		}
+	}
+}
+
 TLW_on_alliance_broken = {
 	if = {
 		limit = {
@@ -1343,5 +1925,162 @@ TLW_on_alliance_broken = {
 			}
 		}
 		create_alliance = FROM
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = cca_cahokian_alliance
+				has_country_modifier = cca_cahokian_alliance_buffed
+			}
+			FROM = {
+				tag = CAO
+			}
+		}
+		remove_country_modifier = cca_cahokian_alliance
+		remove_country_modifier = cca_cahokian_alliance_buffed
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = cca_cahokian_alliance
+					has_country_modifier = cca_cahokian_alliance_buffed
+				}
+			}
+			tag = CAO
+		}
+		FROM = {
+			remove_country_modifier = cca_cahokian_alliance
+			remove_country_modifier = cca_cahokian_alliance_buffed
+		}
+	}
+}
+
+TLW_on_colony_finished_effect = {
+	# Colonization
+	if = {
+		limit = {
+			continent = north_america
+			owner = {
+				OR = {
+					technology_group = muslim
+					technology_group = western
+					technology_group = eastern
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_saved_global_event_target = europeanFirstColony }
+			}
+			save_global_event_target_as = europeanFirstColony
+		}
+		owner = {
+			country_event = {
+				id = ab_punic.12
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_flag = north_america_european_threat }
+				calc_true_if = {
+					amount = 10
+					all_province = {
+						continent = north_america
+						is_city = yes
+						owner = {
+							OR = {
+								technology_group = western
+								technology_group = eastern
+								technology_group = muslim
+							}
+						}
+					}
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_punic.14
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			current_age = age_of_discovery
+			owner = {
+				religion = catholic
+			}
+			had_global_flag = {
+				flag = new_world_discovered
+				days = 1825
+			}
+		}
+		owner = {
+			add_papal_influence = 5
+		}
+	}
+	# Punic
+	if = {
+		limit = {
+			NOT = { has_global_flag = ab_disabled_punic_league }
+			owner = {
+				OR = {
+					has_country_modifier = punic_league_easima_mod
+					is_subject_of_type = punic_tribe_vassal
+				}
+			}
+		}
+		owner = {
+			if = {
+				limit = {
+					has_country_modifier = punic_league_easima_mod
+				}
+				change_variable = {
+					which = election_point
+					value = 50
+				}
+			}
+		}
+		REB = {
+			change_variable = {
+				which = punic_league_value
+				value = 5
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = punic_league_value
+						value = 100
+					}
+				}
+				set_variable = {
+					which = punic_league_value
+					value = 100
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ctg_finish_colony_1
+			}
+			superregion = north_america_superregion
+		}
+		add_base_tax = 1
+		add_base_production = 1
+		add_base_manpower = 1
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ctg_finish_colony_2
+			}
+		}
+		add_province_modifier = {
+			name = punic_early_development_mod
+			duration = 1825
+		}
 	}
 }

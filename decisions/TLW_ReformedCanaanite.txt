@@ -5,23 +5,32 @@ country_decisions = {
 
 		potential = {
 			religion = canaanite
-			tag = CTG
 		}
 
 		provinces_to_highlight = {
 			OR = {
-				province_id = 226
-				province_id = 341
-				province_id = 1751
+				province_id = 965
+				province_id = 967
+				province_id = 938
+				province_id = 2011
+				province_id = 2544
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					is_core = ROOT
+				}
+			}
 		}
 
 		allow = {
-			full_idea_group = religious_ideas
-			owns_or_non_sovereign_subject_of = 226
-			owns_or_non_sovereign_subject_of = 341
-			owns_or_non_sovereign_subject_of = 1751
+			religion = canaanite
+			owns_core_province = 965
+			owns_core_province = 967
+			owns_core_province = 938
+			owns_core_province = 2011
+			owns_core_province = 2544
+			NOT = { has_estate_privilege = estate_church_punic_religious_tolerance }
 		}
 
 		effect = {
@@ -51,10 +60,311 @@ country_decisions = {
 			}
 			custom_tooltip = AB_EMPTY
 			ab_mpf_consolidate_rites_effect = yes
+			# Defender of Faith
+			hidden_effect = {
+				if = {
+					limit = {
+						mission_completed = ctg_champion_of_the_league
+					}
+					set_defender_of_the_faith = {
+						who = ROOT
+						religion = ROOT
+					}
+				}
+			}
 		}
 
 		ai_will_do = {
 			factor = 1
+		}
+	}
+
+	punic_oracle_decision = {
+		major = yes
+
+		potential = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			NOT = { has_country_modifier = punic_religion_oracle_timer }
+			NOT = { has_country_flag = punic_religion_is_waiting_oracle }
+		}
+
+		allow = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			if = {
+				limit = {
+					mission_completed = ctg_champion_of_the_league
+				}
+				adm_power = 25
+			}
+			else = {
+				adm_power = 50
+			}
+		}
+
+		effect = {
+			set_country_flag = punic_religion_is_waiting_oracle
+			if = {
+				limit = {
+					mission_completed = ctg_champion_of_the_league
+				}
+				add_adm_power = -25
+			}
+			else = {
+				add_adm_power = -50
+			}
+			country_event = {
+				id = ab_punic.2002
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	punic_pilgrimate_decision = {
+		major = yes
+
+		potential = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			NOT = { has_ruler_flag = punic_religion_made_a_pilgrimate }
+			NOT = { has_ruler_flag = punic_religion_is_going_on_pilgrimate }
+		}
+
+		allow = {
+			OR = {
+				religion = canaanite
+				religion = reformed_canaanite
+			}
+			if = {
+				limit = {
+					mission_completed = ctg_heart_of_canaanites
+				}
+				years_of_income = 0.15
+				dip_power = 25
+			}
+			else = {
+				years_of_income = 0.3
+				dip_power = 50
+			}
+		}
+
+		effect = {
+			set_ruler_flag = punic_religion_is_going_on_pilgrimate
+			if = {
+				limit = {
+					mission_completed = ctg_heart_of_canaanites
+				}
+				add_years_of_income = -0.15
+				add_dip_power = -25
+			}
+			else = {
+				add_years_of_income = -0.3
+				add_dip_power = -50
+			}
+			country_event = {
+				id = ab_punic.2008
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	punic_smuggle_decision = {
+		major = yes
+
+		potential = {
+			has_country_flag = ctg_unlock_smuggle_goods
+			exists = JOA
+			NOT = {
+				OR = {
+					has_country_modifier = punic_smuggle_timer
+					has_country_flag = punic_is_waiting_smuggle
+				}
+			}
+		}
+
+		allow = {
+			primary_culture = punic
+			exists = JOA
+			NOT = { corruption = 5 }
+		}
+
+		effect = {
+			set_country_flag = punic_is_waiting_smuggle
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_corruption = 0.5
+			}
+			else = {
+				add_corruption = 1
+			}
+			country_event = {
+				id = ab_punic.41
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	punic_estate_reform_church = {
+		major = yes
+
+		potential = {
+			ai = no
+			has_global_flag = north_america_european_threat
+			has_estate_privilege = estate_church_punic_primitive_administration
+		}
+
+		allow = {
+			ai = no
+			has_estate_privilege = estate_church_punic_primitive_administration
+			stability = 1
+			adm_power = 200
+			estate_loyalty = {
+				estate = estate_church
+				loyalty = 60
+			}
+		}
+
+		effect = {
+			add_stability = -1
+			add_adm_power = -200
+			remove_estate_privilege = estate_church_punic_primitive_administration
+		}
+	}
+
+	punic_estate_reform_religion = {
+		major = yes
+
+		potential = {
+			ai = no
+			has_global_flag = north_america_european_threat
+			has_estate_privilege = estate_church_punic_religious_tolerance
+		}
+
+		allow = {
+			ai = no
+			has_estate_privilege = estate_church_punic_religious_tolerance
+			stability = 1
+			OR = {
+				inquisitor = 2
+				theologian = 2
+			}
+		}
+
+		effect = {
+			add_stability = -1
+			if = {
+				limit = {
+					advisor = theologian
+				}
+				kill_advisor = theologian
+			}
+			else = {
+				kill_advisor = inquisitor
+			}
+			remove_estate_privilege = estate_church_punic_religious_tolerance
+		}
+	}
+
+	punic_estate_reform_nobles = {
+		major = yes
+
+		potential = {
+			ai = no
+			has_global_flag = north_america_european_threat
+			has_estate_privilege = estate_nobles_punic_pacifist_civilization
+		}
+
+		allow = {
+			ai = no
+			has_estate_privilege = estate_nobles_punic_pacifist_civilization
+			stability = 1
+			mil_power = 200
+			estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 60
+			}
+		}
+
+		effect = {
+			add_stability = -1
+			add_mil_power = -200
+			remove_estate_privilege = estate_nobles_punic_pacifist_civilization
+		}
+	}
+
+	punic_estate_reform_burghers = {
+		major = yes
+
+		potential = {
+			ai = no
+			has_global_flag = north_america_european_threat
+			has_estate_privilege = estate_burghers_punic_isolationism
+		}
+
+		allow = {
+			ai = no
+			has_estate_privilege = estate_burghers_punic_isolationism
+			stability = 1
+			dip_power = 200
+			estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 60
+			}
+		}
+
+		effect = {
+			add_stability = -1
+			add_dip_power = -200
+			remove_estate_privilege = estate_burghers_punic_isolationism
+		}
+	}
+
+	punic_estate_reform_horde = {
+		major = yes
+
+		potential = {
+			ai = no
+			has_global_flag = north_america_european_threat
+			has_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
+		}
+
+		allow = {
+			ai = no
+			has_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
+			stability = 3
+			adm_power = 200
+			dip_power = 200
+			mil_power = 200
+			estate_loyalty = {
+				estate = estate_nomadic_tribes
+				loyalty = 60
+			}
+		}
+
+		effect = {
+			add_stability = -3
+			add_adm_power = -200
+			add_dip_power = -200
+			add_mil_power = -200
+			remove_estate_privilege = estate_nomadic_tribes_punic_primitive_horde
 		}
 	}
 }
