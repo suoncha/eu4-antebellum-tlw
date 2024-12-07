@@ -2674,84 +2674,6 @@ country_event = {
 	}
 }
 
-#The Fourth Punic War
-country_event = {
-	id = ab_punic.54
-	title = ab_punic.54.t
-	desc = ab_punic.54.d
-	picture = AB_ROMANCIVILWAR_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ab_punic.54.a
-		custom_tooltip = FOURTH_PUNIC_WAR
-		set_country_flag = punic_fourth_punic_war
-		set_country_flag = had_fourth_punic_war
-	}
-}
-
-#The Fourth Punic War - Capital Capture
-country_event = {
-	id = ab_punic.55
-	title = ab_punic.55.t
-	desc = ab_punic.55.d
-	picture = COUNTRY_COLLAPSE_eventPicture
-	
-	is_triggered_only = yes
-
-	after = {
-		hidden_effect = {
-			if = {
-				limit = {
-					ai = no
-				}
-				clear_global_event_target = punicFourthWarCapital
-			}
-		}
-	}
-	
-	option = {
-		name = ab_punic.55.a
-		trigger = {
-			NOT = {
-				event_target:punicFourthWarCapital = {
-					is_capital_of = ROOT
-				}
-			}
-		}
-		add_adm_power = 100
-		add_dip_power = 100
-		add_mil_power = 100
-		custom_tooltip = AB_EMPTY
-		event_target:punicFourthWarCapital = {
-			add_devastation = 100
-			add_base_tax = -20
-			add_base_production = -20
-			add_base_manpower = -20
-			change_trade_goods = salt
-		}
-	}
-
-	option = {
-		name = ab_punic.55.b
-		trigger = {
-			event_target:punicFourthWarCapital = {
-				is_capital_of = ROOT
-			}
-		}
-		tooltip = {
-			event_target:punicFourthWarCapital = {
-				add_devastation = 100
-				add_base_tax = -20
-				add_base_production = -20
-				add_base_manpower = -20
-				change_trade_goods = salt
-			}
-		}
-	}
-}
-
 #What Lies Ahead?
 country_event = {
 	id = ab_punic.56
@@ -7943,6 +7865,7 @@ country_event = {
 				technology_group = eastern
 				technology_group = muslim
 			}
+			is_free_or_tributary_trigger = yes
 		}
 	}
 	
@@ -7963,6 +7886,7 @@ country_event = {
 					technology_group = eastern
 					technology_group = muslim
 				}
+				is_free_or_tributary_trigger = yes
 			}
 			country_event = {
 				id = ab_punic.149
@@ -8015,6 +7939,430 @@ country_event = {
 			FROM = {
 				join_all_offensive_wars_of = event_target:buniqCoalitionTarget
 			}
+		}
+	}
+}
+
+#Fourth Punic War - Start
+country_event = {
+	id = ab_punic.151
+	title = ab_punic.151.t
+	desc = ab_punic.151.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			ROM = {
+				country_event = {
+					id = ab_punic.153
+				}
+				country_event = {
+					id = ab_punic.158
+					days = 30
+				}
+				country_event = {
+					id = ab_punic.159
+					days = 60
+				}
+				country_event = {
+					id = ab_punic.160
+					days = 90
+				}
+				country_event = {
+					id = ab_punic.162
+					days = 120
+				}
+			}
+			country_event = {
+				id = ab_punic.158
+				days = 30
+			}
+			country_event = {
+				id = ab_punic.159
+				days = 60
+			}
+			country_event = {
+				id = ab_punic.160
+				days = 90
+			}
+			country_event = {
+				id = ab_punic.161
+				days = 120
+			}
+			country_event = {
+				id = ab_punic.154
+				days = 180
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.151.a
+		custom_tooltip = FOURTH_PUNIC_WAR_INFO
+	}
+}
+
+#Fourth Punic War - End
+country_event = {
+	id = ab_punic.152
+	title = ab_punic.152.t
+	desc = ab_punic.152.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_punic.152.a
+		remove_country_modifier = punic_fourth_war_mobilizing
+		remove_country_modifier = punic_fourth_war_economy
+		remove_country_modifier = punic_fourth_war_fleet
+		ROM = {
+			remove_country_modifier = punic_rome_cannot_decl_war
+			remove_country_modifier = punic_fourth_war_mobilizing
+			remove_country_modifier = punic_fourth_war_economy
+			remove_country_modifier = punic_fourth_war_fleet
+		}
+	}
+}
+
+#Tension Rising - Rome
+country_event = {
+	id = ab_punic.153
+	title = ab_punic.153.t
+	desc = ab_punic.153.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = punic_rome_cannot_decl_war
+				duration = -1
+				desc = "until the end of the war"
+			}
+		}
+	}
+
+	option = {
+		name = ab_punic.153.a
+		tooltip = {
+			add_country_modifier = {
+				name = punic_rome_cannot_decl_war
+				duration = -1
+				desc = "until the end of the war"
+			}
+		}
+		custom_tooltip = FOURTH_PUNIC_WAR_INFO
+	}
+}
+
+#The Fourth Punic War - Carthage
+country_event = {
+	id = ab_punic.154
+	title = ab_punic.154.t
+	desc = ab_punic.154.d
+	picture = AB_ROMANCIVILWAR_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			declare_war_with_cb = {
+				casus_belli = cb_fourth_punic_war
+				who = ROM
+			}
+			every_neighbor_country = {
+				limit = {
+					NOT = { alliance_with = ROOT }
+					is_free_or_tributary_trigger = yes
+					has_opinion = {
+						who = ROM
+						value = 100
+					}
+				}
+				join_all_defensive_wars_of = ROM
+			}
+			ROM = {
+				country_event = {
+					id = ab_punic.155
+				}
+				every_neighbor_country = {
+					limit = {
+						NOT = { alliance_with = ROM }
+						is_free_or_tributary_trigger = yes
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+					join_all_offensive_wars_of = ROOT
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_punic.154.a
+		tooltip = {
+			declare_war_with_cb = {
+				casus_belli = cb_fourth_punic_war
+				who = ROM
+			}
+		}
+	}
+}
+
+#The Fourth Punic War - Rome
+country_event = {
+	id = ab_punic.155
+	title = ab_punic.155.t
+	desc = ab_punic.155.d
+	picture = AB_ROMANCIVILWAR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.155.a
+		tooltip = {
+			CTG = {
+				declare_war_with_cb = {
+					casus_belli = cb_fourth_punic_war
+					who = ROM
+				}
+			}
+		}
+	}
+}
+
+#New Era of Dominance
+country_event = {
+	id = ab_punic.156
+	title = ab_punic.156.t
+	desc = ab_punic.156.d
+	picture = BYZ_REVOLUTION_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.156.a
+		custom_tooltip = FOURTH_PUNIC_WAR_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = CTG_perma_pp4
+				amount = 50
+			}
+		}
+		add_adm_tech = 1
+		add_dip_tech = 1
+		add_mil_tech = 1
+		custom_tooltip = AB_EMPTY
+		if = {
+			limit = {
+				tag = CTG
+			}
+			set_country_flag = had_fourth_punic_war
+			tooltip = {
+				ROM = {
+					add_prestige = -200
+					add_country_modifier = {
+						name = punic_fourth_war_defeat
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				ROM = {
+					country_event = {
+						id = ab_punic.157
+					}
+				}
+			}
+		}
+		else = {
+			tooltip = {
+				CTG = {
+					add_prestige = -200
+					add_country_modifier = {
+						name = punic_fourth_war_defeat
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+#Ashes of Defeat
+country_event = {
+	id = ab_punic.157
+	title = ab_punic.157.t
+	desc = ab_punic.157.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.157.a
+		add_prestige = -200
+		add_country_modifier = {
+			name = punic_fourth_war_defeat
+			duration = -1
+		}
+		if = {
+			limit = {
+				tag = CTG
+			}
+			set_country_flag = had_fourth_punic_war
+			tooltip = {
+				ROM = {
+					custom_tooltip = FOURTH_PUNIC_WAR_PP
+					add_adm_tech = 1
+					add_dip_tech = 1
+					add_mil_tech = 1
+				}
+			}
+			hidden_effect = {
+				ROM = {
+					country_event = {
+						id = ab_punic.156
+					}
+				}
+			}
+		}
+		else = {
+			tooltip = {
+				CTG = {
+					custom_tooltip = FOURTH_PUNIC_WAR_PP
+					add_adm_tech = 1
+					add_dip_tech = 1
+					add_mil_tech = 1
+				}
+			}
+		}
+	}
+}
+
+#Call to Arms
+country_event = {
+	id = ab_punic.158
+	title = ab_punic.158.t
+	desc = ab_punic.158.d
+	picture = MILITARY_CAMP_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.158.a
+		add_country_modifier = {
+			name = punic_fourth_war_mobilizing
+			duration = -1
+			desc = "until the end of the war"
+		}
+	}
+}
+
+#Economic Disruptions
+country_event = {
+	id = ab_punic.159
+	title = ab_punic.159.t
+	desc = ab_punic.159.d
+	picture = CORRUPTION_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.159.a
+		add_country_modifier = {
+			name = punic_fourth_war_economy
+			duration = -1
+			desc = "until the end of the war"
+		}
+	}
+}
+
+#Invasion Fleet
+country_event = {
+	id = ab_punic.160
+	title = ab_punic.160.t
+	desc = ab_punic.160.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.160.a
+		add_country_modifier = {
+			name = punic_fourth_war_fleet
+			duration = -1
+			desc = "until the end of the war"
+		}
+	}
+}
+
+#Return of Hannibal
+country_event = {
+	id = ab_punic.161
+	title = ab_punic.161.t
+	desc = ab_punic.161.d
+	picture = ADVISOR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.161.a
+		define_general = {
+			shock = 6
+			fire = 5
+			manuever = 5
+			siege = 5
+			name = "Hannibal"
+			trait = inspirational_leader_general_personality
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = punic_fourth_war_hannibal
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_punic.161.b
+		add_country_modifier = {
+			name = punic_fourth_war_myth
+			duration = 3650
+		}
+	}
+}
+
+#Senate Divided
+country_event = {
+	id = ab_punic.162
+	title = ab_punic.162.t
+	desc = ab_punic.162.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_punic.162.a
+		add_country_modifier = {
+			name = punic_fourth_war_defensive
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_punic.162.b
+		add_country_modifier = {
+			name = punic_fourth_war_offensive
+			duration = 3650
 		}
 	}
 }

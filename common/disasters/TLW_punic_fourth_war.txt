@@ -1,0 +1,53 @@
+punic_fourth_war = {
+	potential = {
+		tag = CTG
+		NOT = { has_country_flag = had_fourth_punic_war }
+	}
+	
+	can_start = {
+		has_any_disaster = no
+		total_development = 1000
+		custom_trigger_tooltip = {
+			tooltip = HAS_HAD_RISE_OF_CARTHAGE
+			has_country_flag = had_rise_of_carthage
+		}
+		exists = ROM
+		NOT = { war_with = ROM }
+		NOT = { truce_with = ROM }
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+		OR = {
+			NOT = { exists = ROM }
+			war_with = ROM
+			truce_with = ROM
+		}
+	}
+	
+	progress = {
+		modifier = {
+			factor = 50
+			always = yes
+		}
+	}
+	
+	modifier = {
+		diplomatic_reputation = -2
+		improve_relation_modifier = -0.5
+		reduced_liberty_desire = -10
+		trade_efficiency = -0.25
+		can_not_declare_war = yes
+	}
+	
+	can_end = {
+		is_at_war = no
+		custom_trigger_tooltip = {
+			tooltip = FOURTH_PUNIC_WAR_END_TRIGGER
+			has_country_flag = had_fourth_punic_war
+		}
+	}
+	
+	on_start = ab_punic.151
+	on_end = ab_punic.152
+}

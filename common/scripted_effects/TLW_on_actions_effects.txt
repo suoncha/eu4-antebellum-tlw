@@ -909,31 +909,6 @@ TLW_on_siege_won_province_effect = {
 			add_permanent_claim = controller
 		}
 	}
-	# Punic
-	if = {
-		limit = {
-			is_capital = yes
-			controller = {
-				has_country_flag = punic_fourth_punic_war
-			}
-			owner = {
-				has_country_flag = punic_fourth_punic_war
-			}
-		}
-		save_global_event_target_as = punicFourthWarCapital
-		controller = {
-			clr_country_flag = punic_fourth_punic_war
-			country_event = {
-				id = ab_punic.55
-			}
-		}
-		owner = {
-			clr_country_flag = punic_fourth_punic_war
-			country_event = {
-				id = ab_punic.55
-			}
-		}
-	}
 }
 
 TLW_on_battle_won_unit = {
@@ -1060,6 +1035,17 @@ TLW_on_war_won_effect = {
 			duration = 365
 		}
 	}
+	if = {
+		limit = {
+			has_disaster = punic_fourth_war
+			FROM = {
+				tag = ROM
+			}
+		}
+		country_event = {
+			id = ab_punic.156
+		}
+	}
 	# Cahokia
 	if = {
 		limit = {
@@ -1072,6 +1058,7 @@ TLW_on_war_won_effect = {
 }
 
 TLW_on_war_lost_effect = {
+	# Rome
 	if = {
 		limit = {
 			has_country_modifier = byz_reconquest_of_the_levant
@@ -1084,6 +1071,7 @@ TLW_on_war_lost_effect = {
 			remove_country_modifier = byz_reconquest_of_the_levant_nizzarids
 		}
 	}
+	# Punic
 	if = {
 		limit = {
 			NOT = { has_global_flag = ab_disabled_punic_league }
@@ -1126,6 +1114,17 @@ TLW_on_war_lost_effect = {
 					value = 0
 				}
 			}
+		}
+	}
+	if = {
+		limit = {
+			has_disaster = punic_fourth_war
+			FROM = {
+				tag = ROM
+			}
+		}
+		country_event = {
+			id = ab_punic.157
 		}
 	}
 }
