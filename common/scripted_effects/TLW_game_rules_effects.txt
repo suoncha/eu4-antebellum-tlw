@@ -35,6 +35,10 @@ tlw_game_rules_setup_effect = {
 		which = ab_game_rules_plagues_var
 		value = 1
 	}
+	set_variable = {
+		which = ab_game_rules_carthage_var
+		value = 1
+	}
 }
 
 tlw_game_rules_confirm_effect = {
@@ -337,5 +341,29 @@ tlw_game_rules_confirm_effect = {
 			}
 		}
 		set_global_flag = AB_DISABLED_PLAGUES
+	}
+	# Rebirth of Carthage
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_carthage_var
+				value = 2
+			}
+		}
+		event_target:easimaTarget = {
+			add_country_modifier = {
+				name = punic_stronger_ai_city
+				duration = -1
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_city_vassal
+				}
+				add_country_modifier = {
+					name = punic_stronger_ai_city
+					duration = -1
+				}
+			}
+		}
 	}
 }
