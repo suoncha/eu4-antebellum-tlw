@@ -1685,6 +1685,21 @@ TLW_on_dependency_lost_effect = {
 }
 
 TLW_on_annexed_effect = {
+	# Punic
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = len_dominant_culture
+			}
+		}
+		clear_global_event_target = americanLinguaFranca
+		every_country = {
+			limit = {
+				has_country_modifier = len_lesser_culture
+			}
+			remove_country_modifier = len_lesser_culture
+		}
+	}
 	if = {
 		limit = {
 			FROM = {
@@ -1721,16 +1736,20 @@ TLW_on_annexed_effect = {
 	}
 	if = {
 		limit = {
+			has_global_flag = ab_punic_league_festival
 			FROM = {
-				has_country_modifier = len_dominant_culture
+				is_subject_of_type = punic_city_vassal
 			}
 		}
-		clear_global_event_target = americanLinguaFranca
+		clr_global_flag = ab_punic_league_festival
+		clear_global_event_target = punicCityHost
 		every_country = {
 			limit = {
-				has_country_modifier = len_lesser_culture
+				has_country_modifier = punic_festival_event_chain
 			}
-			remove_country_modifier = len_lesser_culture
+			country_event = {
+				id = ab_punic.100
+			}
 		}
 	}
 	if = {
@@ -1767,22 +1786,39 @@ TLW_on_annexed_effect = {
 			}
 		}
 	}
+	# Hylinian League
 	if = {
 		limit = {
-			has_global_flag = ab_punic_league_festival
 			FROM = {
-				is_subject_of_type = punic_city_vassal
+				has_reform = hyl_symmachia_republic_reform
 			}
+			NOT = { exists = INN }
+			NOT = { exists = MAH }
+			NOT = { exists = OSH }
+			NOT = { exists = STA }
+			NOT = { exists = MLS }
+			NOT = { exists = MIK }
+			NOT = { exists = HYL }
 		}
-		clr_global_flag = ab_punic_league_festival
-		clear_global_event_target = punicCityHost
-		every_country = {
-			limit = {
-				has_country_modifier = punic_festival_event_chain
+		country_event = {
+			id = ab_hylinia.17
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = che_zoro_tribe_reform
 			}
-			country_event = {
-				id = ab_punic.100
-			}
+			NOT = { exists = ARN }
+			NOT = { exists = ATT }
+			NOT = { exists = ERI }
+			NOT = { exists = FOX }
+			NOT = { exists = OTT }
+			NOT = { exists = POT }
+			NOT = { exists = OZO }
+		}
+		country_event = {
+			id = ab_hylinia.18
 		}
 	}
 }
