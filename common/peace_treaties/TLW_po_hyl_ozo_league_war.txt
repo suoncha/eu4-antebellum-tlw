@@ -1,0 +1,109 @@
+po_hyl_ozo_league_war = {
+	category = 6
+	power_projection = humiliated_rival
+	power_cost_base = 1.0
+	prestige_base = 1.0
+	ae_base = 0
+	warscore_cost = {
+		all_provinces = 0
+		no_provinces = 50.0 
+		owner_keeps = 0.0 
+		conquered = 0.0 
+		returned_core = 0.0 
+		released_nation = 0.0 
+		cancelled_subject = 0.0 
+		concede_colonial_region = 0.0 
+	}
+	warscore_cap = 50
+	requires_is_allowed = yes
+
+	is_visible = {
+		always = yes
+	}
+	is_allowed = {
+		always = yes
+	}
+
+	effect = {
+		if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 0
+					}
+				}
+			}
+			country_event = {
+				id = ab_hylinia.2
+			}
+		}
+		else_if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 1
+					}
+				}
+			}
+			country_event = {
+				id = ab_hylinia.6
+			}
+		}
+		else_if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 2
+					}
+				}
+			}
+			country_event = {
+				id = ab_hylinia.9
+			}
+		}
+		else_if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 3
+					}
+				}
+			}
+			country_event = {
+				id = ab_hylinia.12
+			}
+		}
+		else = {
+			country_event = {
+				id = ab_hylinia.15
+			}
+		}
+		REB = {
+			change_variable = {
+				which = mithraic_war_count
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_reform = hyl_symmachia_republic_reform
+			}
+			REB = {
+				change_variable = {
+					which = mithraic_war_hyl
+					value = 1
+				}
+			}
+		}
+	}
+	ai_weight = { 
+		export_to_variable = {
+			variable_name = ai_value 
+			value = 100
+		}
+	}
+}

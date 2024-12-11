@@ -1518,3 +1518,202 @@ ab_punic_league_incident_failed_effect = {
 		}
 	}
 }
+
+ab_hyl_ozo_start_effect = {
+	INN = {
+		save_global_event_target_as = mithraic_hylTarget
+	}
+	STA = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_hylTarget
+			}
+			save_global_event_target_as = mithraic_hylTarget
+		}
+	}
+	OSH = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_hylTarget
+			}
+			save_global_event_target_as = mithraic_hylTarget
+		}
+	}
+	MAH = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_hylTarget
+			}
+			save_global_event_target_as = mithraic_hylTarget
+		}
+	}
+	MLS = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_hylTarget
+			}
+			save_global_event_target_as = mithraic_hylTarget
+		}
+	}
+	MIK = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_hylTarget
+			}
+			save_global_event_target_as = mithraic_hylTarget
+		}
+	}
+	POT = {
+		save_global_event_target_as = mithraic_ozoTarget
+	}
+	FOX = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_ozoTarget
+			}
+			save_global_event_target_as = mithraic_ozoTarget
+		}
+	}
+	OTT = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_ozoTarget
+			}
+			save_global_event_target_as = mithraic_ozoTarget
+		}
+	}
+	ERI = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_ozoTarget
+			}
+			save_global_event_target_as = mithraic_ozoTarget
+		}
+	}
+	ATT = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_ozoTarget
+			}
+			save_global_event_target_as = mithraic_ozoTarget
+		}
+	}
+	ARN = {
+		if = {
+			limit = {
+				total_development = event_target:mithraic_ozoTarget
+			}
+			save_global_event_target_as = mithraic_ozoTarget
+		}
+	}
+	if = {
+		limit = {
+			event_target:mithraic_hylTarget = {
+				OR = {
+					has_country_modifier = hyl_mithraic_winner_1
+					has_country_modifier = hyl_mithraic_winner_2
+					has_country_modifier = hyl_mithraic_winner_3
+					has_country_modifier = hyl_mithraic_winner_4
+				}
+			}
+		}
+		event_target:mithraic_hylTarget = {
+			declare_war_with_cb = {
+				casus_belli = cb_hyl_ozo_league_war
+				who = event_target:mithraic_ozoTarget
+			}
+		}
+		every_country = {
+			limit = {
+				has_reform = hyl_symmachia_republic_reform
+			}
+			if = {
+				limit = {
+					any_war_enemy_country = {
+						has_reform = hyl_symmachia_republic_reform
+					}
+				}
+				every_war_enemy_country = {
+					limit = {
+						has_reform = hyl_symmachia_republic_reform
+					}
+					white_peace = PREV
+				}
+			}
+			join_all_offensive_wars_of = event_target:mithraic_hylTarget
+		}
+		every_country = {
+			limit = {
+				has_reform = che_zoro_tribe_reform
+			}
+			if = {
+				limit = {
+					any_war_enemy_country = {
+						has_reform = che_zoro_tribe_reform
+					}
+				}
+				every_war_enemy_country = {
+					limit = {
+						has_reform = che_zoro_tribe_reform
+					}
+					white_peace = PREV
+				}
+			}
+			join_all_defensive_wars_of = event_target:mithraic_ozoTarget
+			add_country_modifier = {
+				name = hyl_mithraic_defensive_buff
+				duration = 1825
+			}
+		}
+	}
+	else = {
+		event_target:mithraic_ozoTarget = {
+			declare_war_with_cb = {
+				casus_belli = cb_hyl_ozo_league_war
+				who = event_target:mithraic_hylTarget
+			}
+		}
+		every_country = {
+			limit = {
+				has_reform = hyl_symmachia_republic_reform
+			}
+			if = {
+				limit = {
+					any_war_enemy_country = {
+						has_reform = hyl_symmachia_republic_reform
+					}
+				}
+				every_war_enemy_country = {
+					limit = {
+						has_reform = hyl_symmachia_republic_reform
+					}
+					white_peace = PREV
+				}
+			}
+			join_all_defensive_wars_of = event_target:mithraic_hylTarget
+			add_country_modifier = {
+				name = hyl_mithraic_defensive_buff
+				duration = 1825
+			}
+		}
+		every_country = {
+			limit = {
+				has_reform = che_zoro_tribe_reform
+			}
+			if = {
+				limit = {
+					any_war_enemy_country = {
+						has_reform = che_zoro_tribe_reform
+					}
+				}
+				every_war_enemy_country = {
+					limit = {
+						has_reform = che_zoro_tribe_reform
+					}
+					white_peace = PREV
+				}
+			}
+			join_all_offensive_wars_of = event_target:mithraic_ozoTarget
+		}
+	}
+}

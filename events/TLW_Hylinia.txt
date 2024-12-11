@@ -15,17 +15,946 @@ country_event = {
 	}
 }
 
-#League Wars - ATT & MLS
-# country_event = {
-# 	id = ab_hylinia.1
-# 	title = ab_hylinia.1.t
-# 	desc = ab_hylinia.1.d
-# 	picture = NORSE_TEMPLE_eventPicture
+#Mithraic Wars - Kerameikos Struggle
+country_event = {
+	id = ab_hylinia.1
+	title = ab_hylinia.1.t
+	desc = ab_hylinia.1.d
+	picture = northamericagfx_MILITARY_CAMP_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
 	
-# 	is_triggered_only = yes
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			declare_war_with_cb = {
+				casus_belli = cb_hyl_ozo_league_war
+				who = ATT
+			}
+			every_country = {
+				limit = {
+					has_reform = hyl_symmachia_republic_reform
+				}
+				join_all_offensive_wars_of = ROOT
+			}
+			every_country = {
+				limit = {
+					has_reform = che_zoro_tribe_reform
+				}
+				join_all_defensive_wars_of = ATT
+			}
+		}
+	}
 	
-# 	option = {
-# 		name = ab_hylinia.1.a
-# 		custom_tooltip = HYL_FACTION_GREEK
-# 	}
-# }
+	option = {
+		name = ab_hylinia.1.a
+		custom_tooltip = HYL_OZO_WAR_GUIDE
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = HYL_OZO_WAR_FUTURE
+	}
+}
+
+#Mithraic Wars - Kerameikos Struggle - Victory
+country_event = {
+	id = ab_hylinia.2
+	title = ab_hylinia.2.t
+	desc = ab_hylinia.2.d
+	picture = northamericagfx_MERCHANTS_TALKING_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+		NOT = { has_reform = hyl_symmachia_republic_reform }
+		NOT = { has_reform = che_zoro_tribe_reform }
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_reform = hyl_symmachia_republic_reform
+						has_reform = che_zoro_tribe_reform
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_hylinia.3
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_hylinia.4
+					days = 7300
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.2.a
+		add_army_tradition = 15
+		4892 = {
+			add_siberian_construction = 1
+			change_trade_goods = chinaware
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = hyl_mithraic_winner_1
+			duration = 9125
+		}
+	}
+}
+
+#Mithraic Wars - Kerameikos Struggle - Nof
+country_event = {
+	id = ab_hylinia.3
+	title = ab_hylinia.3.t
+	desc = ab_hylinia.3.d
+	picture = northamericagfx_MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.3.a
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			add_army_tradition = 10
+		}
+		else = {
+			add_war_exhaustion = 2
+		}
+		tooltip = {
+			4892 = {
+				custom_tooltip = HYL_BECOME_FROM_FRONTIER
+				change_trade_goods = chinaware
+			}
+		}
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hyl_mithraic_winner_1
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Mithraic Wars - Check
+country_event = {
+	id = ab_hylinia.4
+	title = ab_hylinia.4.t
+	desc = ab_hylinia.4.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = ab_disabled_order_of_zoroaster }
+		NOT = { has_global_flag = ab_disabled_hylinia }
+		NOT = { has_global_flag = ab_unlocked_order_of_zoroaster }
+		NOT = { has_global_flag = ab_unlocked_order_of_zoroaster }
+		OR = {
+			exists = INN
+			exists = STA
+			exists = OSH
+			exists = MAH
+			exists = MLS
+			exists = MIK
+		}
+		OR = {
+			exists = POT
+			exists = FOX
+			exists = OTT
+			exists = ERI
+			exists = ATT
+			exists = ARN
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clear_global_event_target = mithraic_hylTarget
+			clear_global_event_target = mithraic_ozoTarget
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.4.a
+		ab_hyl_ozo_start_effect = yes
+		if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:mithraic_hylTarget = {
+						OR = {
+							has_country_modifier = hyl_mithraic_winner_1
+							has_country_modifier = hyl_mithraic_winner_2
+							has_country_modifier = hyl_mithraic_winner_3
+							has_country_modifier = hyl_mithraic_winner_4
+						}
+					}
+				}
+				event_target:mithraic_hylTarget = {
+					country_event = {
+						id = ab_hylinia.5
+					}
+				}
+			}
+			else = {
+				event_target:mithraic_ozoTarget = {
+					country_event = {
+						id = ab_hylinia.5
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:mithraic_hylTarget = {
+						OR = {
+							has_country_modifier = hyl_mithraic_winner_1
+							has_country_modifier = hyl_mithraic_winner_2
+							has_country_modifier = hyl_mithraic_winner_3
+							has_country_modifier = hyl_mithraic_winner_4
+						}
+					}
+				}
+				event_target:mithraic_hylTarget = {
+					country_event = {
+						id = ab_hylinia.8
+					}
+				}
+			}
+			else = {
+				event_target:mithraic_ozoTarget = {
+					country_event = {
+						id = ab_hylinia.8
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				REB = {
+					is_variable_equal = {
+						which = mithraic_war_count
+						value = 3
+					}
+				}
+			}
+			if = {
+				limit = {
+					event_target:mithraic_hylTarget = {
+						OR = {
+							has_country_modifier = hyl_mithraic_winner_1
+							has_country_modifier = hyl_mithraic_winner_2
+							has_country_modifier = hyl_mithraic_winner_3
+							has_country_modifier = hyl_mithraic_winner_4
+						}
+					}
+				}
+				event_target:mithraic_hylTarget = {
+					country_event = {
+						id = ab_hylinia.11
+					}
+				}
+			}
+			else = {
+				event_target:mithraic_ozoTarget = {
+					country_event = {
+						id = ab_hylinia.11
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					event_target:mithraic_hylTarget = {
+						OR = {
+							has_country_modifier = hyl_mithraic_winner_1
+							has_country_modifier = hyl_mithraic_winner_2
+							has_country_modifier = hyl_mithraic_winner_3
+							has_country_modifier = hyl_mithraic_winner_4
+						}
+					}
+				}
+				event_target:mithraic_hylTarget = {
+					country_event = {
+						id = ab_hylinia.14
+					}
+				}
+			}
+			else = {
+				event_target:mithraic_ozoTarget = {
+					country_event = {
+						id = ab_hylinia.14
+					}
+				}
+			}
+		}
+	}
+}
+
+#Mithraic Wars - Elephantine Dispute
+country_event = {
+	id = ab_hylinia.5
+	title = ab_hylinia.5.t
+	desc = ab_hylinia.5.d
+	picture = FORESTS_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.5.a
+		if = {
+			limit = {
+				has_country_modifier = hyl_mithraic_defensive_buff
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = hyl_mithraic_defensive_buff
+					duration = 1825
+				}
+			}
+		}
+		custom_tooltip = HYL_OZO_WAR_GUIDE
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = HYL_OZO_WAR_FUTURE
+	}
+}
+
+#Mithraic Wars - Elephantine Dispute - Victory
+country_event = {
+	id = ab_hylinia.6
+	title = ab_hylinia.6.t
+	desc = ab_hylinia.6.d
+	picture = FROZEN_VILLAGE_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+		NOT = { has_reform = hyl_symmachia_republic_reform }
+		NOT = { has_reform = che_zoro_tribe_reform }
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_reform = hyl_symmachia_republic_reform
+						has_reform = che_zoro_tribe_reform
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_hylinia.7
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_hylinia.4
+					days = 7300
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.6.a
+		add_army_professionalism = 0.05
+		4912 = {
+			add_siberian_construction = 1
+			change_trade_goods = ivory
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = hyl_mithraic_winner_2
+			duration = 9125
+		}
+	}
+}
+
+#Mithraic Wars - Elephantine Dispute - Nof
+country_event = {
+	id = ab_hylinia.7
+	title = ab_hylinia.7.t
+	desc = ab_hylinia.7.d
+	picture = FROZEN_VILLAGE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.7.a
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			add_army_professionalism = 0.02
+		}
+		else = {
+			add_stability = -1
+		}
+		tooltip = {
+			4912 = {
+				custom_tooltip = HYL_BECOME_FROM_FRONTIER
+				change_trade_goods = ivory
+			}
+		}
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hyl_mithraic_winner_2
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Mithraic Wars - Scented Dominion
+country_event = {
+	id = ab_hylinia.8
+	title = ab_hylinia.8.t
+	desc = ab_hylinia.8.d
+	picture = indiangfx_EXPLORERS_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.8.a
+		if = {
+			limit = {
+				has_country_modifier = hyl_mithraic_defensive_buff
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = hyl_mithraic_defensive_buff
+					duration = 1825
+				}
+			}
+		}
+		custom_tooltip = HYL_OZO_WAR_GUIDE
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = HYL_OZO_WAR_FUTURE
+	}
+}
+
+#Mithraic Wars - Scented Dominion - Victory
+country_event = {
+	id = ab_hylinia.9
+	title = ab_hylinia.9.t
+	desc = ab_hylinia.9.d
+	picture = indiangfx_ECONOMY_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+		NOT = { has_reform = hyl_symmachia_republic_reform }
+		NOT = { has_reform = che_zoro_tribe_reform }
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_reform = hyl_symmachia_republic_reform
+						has_reform = che_zoro_tribe_reform
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_hylinia.10
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_hylinia.4
+					days = 7300
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.9.a
+		add_prestige = 25
+		4890 = {
+			add_siberian_construction = 1
+			change_trade_goods = cloves
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = hyl_mithraic_winner_3
+			duration = 9125
+		}
+	}
+}
+
+#Mithraic Wars - Scented Dominion - Nof
+country_event = {
+	id = ab_hylinia.10
+	title = ab_hylinia.10.t
+	desc = ab_hylinia.10.d
+	picture = indiangfx_ECONOMY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.10.a
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			add_prestige = 15
+		}
+		else = {
+			add_army_tradition = -15
+		}
+		tooltip = {
+			4890 = {
+				custom_tooltip = HYL_BECOME_FROM_FRONTIER
+				change_trade_goods = cloves
+			}
+		}
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hyl_mithraic_winner_3
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Mithraic Wars - Agunqa Crisis
+country_event = {
+	id = ab_hylinia.11
+	title = ab_hylinia.11.t
+	desc = ab_hylinia.11.d
+	picture = USA_FUR_TRADE_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.11.a
+		if = {
+			limit = {
+				has_country_modifier = hyl_mithraic_defensive_buff
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = hyl_mithraic_defensive_buff
+					duration = 1825
+				}
+			}
+		}
+		custom_tooltip = HYL_OZO_WAR_GUIDE
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = HYL_OZO_WAR_FUTURE
+	}
+}
+
+#Mithraic Wars - Agunqa Crisis - Victory
+country_event = {
+	id = ab_hylinia.12
+	title = ab_hylinia.12.t
+	desc = ab_hylinia.12.d
+	picture = TRADE_GOODS_FURS_FISH_AND_SALT_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+		NOT = { has_reform = hyl_symmachia_republic_reform }
+		NOT = { has_reform = che_zoro_tribe_reform }
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_reform = hyl_symmachia_republic_reform
+						has_reform = che_zoro_tribe_reform
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_hylinia.13
+				}
+			}
+			REB = {
+				country_event = {
+					id = ab_hylinia.4
+					days = 7300
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.12.a
+		add_country_modifier = {
+			name = hyl_agunqa_trade_victory
+			duration = -1
+		}
+		1005 = {
+			add_trade_modifier = {
+				who = ROOT
+				duration = -1
+				power = 25
+				key = "Agunqa Trade"
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = hyl_mithraic_winner_4
+			duration = 9125
+		}
+	}
+}
+
+#Mithraic Wars - Agunqa Crisis - Nof
+country_event = {
+	id = ab_hylinia.13
+	title = ab_hylinia.13.t
+	desc = ab_hylinia.13.d
+	picture = TRADE_GOODS_FURS_FISH_AND_SALT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.13.a
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			add_country_modifier = {
+				name = hyl_agunqa_trade_victory
+				duration = -1
+			}
+		}
+		else = {
+			add_mercantilism = -5
+			custom_tooltip = AB_EMPTY
+		}
+		tooltip = {
+			1005 = {
+				add_trade_modifier = {
+					who = FROM
+					duration = -1
+					power = 25
+					key = "Agunqa Trade"
+				}
+			}
+		}
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hyl_mithraic_winner_4
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Mithraic Wars - Mantle of Buniq
+country_event = {
+	id = ab_hylinia.14
+	title = ab_hylinia.14.t
+	desc = ab_hylinia.14.d
+	picture = maghrebi_SHIP_SAILING_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.14.a
+		if = {
+			limit = {
+				has_country_modifier = hyl_mithraic_defensive_buff
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = hyl_mithraic_defensive_buff
+					duration = 1825
+				}
+			}
+		}
+		custom_tooltip = HYL_OZO_WAR_GUIDE
+	}
+}
+
+#Mithraic Wars - Mantle of Buniq - Victory
+country_event = {
+	id = ab_hylinia.15
+	title = ab_hylinia.15.t
+	desc = ab_hylinia.15.d
+	picture = INDIAN_WARS_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+		NOT = { has_reform = hyl_symmachia_republic_reform }
+		NOT = { has_reform = che_zoro_tribe_reform }
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_reform = hyl_symmachia_republic_reform
+						has_reform = che_zoro_tribe_reform
+					}
+					NOT = { tag = ROOT }
+				}
+				country_event = {
+					id = ab_hylinia.16
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.15.a
+		add_country_modifier = {
+			name = hyl_mithraic_winner_5
+			duration = -1
+		}
+		if = {
+			limit = {
+				REB = {
+					NOT = {
+						check_variable = {
+							which = mithraic_war_hyl
+							value = 2
+						}
+					}
+				}
+			}
+			set_global_flag = ab_unlocked_order_of_zoroaster
+			custom_tooltip = HYL_UNLOCK_ZOROASTER
+			custom_tooltip = AB_EMPTY
+			set_global_flag = ab_disabled_hylinia
+			custom_tooltip = CHE_PREVENT_HYLINIA
+		}
+		else_if = {
+			limit = {
+				REB = {
+					check_variable = {
+						which = mithraic_war_hyl
+						value = 4
+					}
+				}
+			}
+			set_global_flag = ab_unlocked_hylinia
+			custom_tooltip = HYL_UNLOCK_HYLINIA
+			custom_tooltip = AB_EMPTY
+			set_global_flag = ab_disabled_order_of_zoroaster
+			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+		}
+		else = {
+			set_global_flag = ab_unlocked_hylinia
+			custom_tooltip = HYL_UNLOCK_HYLINIA
+			custom_tooltip = AB_EMPTY
+			set_global_flag = ab_unlocked_order_of_zoroaster
+			custom_tooltip = HYL_UNLOCK_ZOROASTER
+		}
+	}
+}
+
+#Mithraic Wars - Mantle of Buniq - Nof
+country_event = {
+	id = ab_hylinia.16
+	title = ab_hylinia.16.t
+	desc = ab_hylinia.16.d
+	picture = INDIAN_WARS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_hylinia.16.a
+		if = {
+			limit = {
+				culture_group = FROM
+			}
+			add_country_modifier = {
+				name = hyl_mithraic_winner_5
+				duration = -1
+			}
+		}
+		else = {
+			add_army_professionalism = -0.1
+			custom_tooltip = AB_EMPTY
+		}
+		if = {
+			limit = {
+				REB = {
+					NOT = {
+						check_variable = {
+							which = mithraic_war_hyl
+							value = 2
+						}
+					}
+				}
+			}
+			custom_tooltip = HYL_UNLOCK_ZOROASTER
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = CHE_PREVENT_HYLINIA
+		}
+		else_if = {
+			limit = {
+				REB = {
+					check_variable = {
+						which = mithraic_war_hyl
+						value = 4
+					}
+				}
+			}
+			custom_tooltip = HYL_UNLOCK_HYLINIA
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = LEN_PREVENT_ORDER_OF_ZOROASTER
+		}
+		else = {
+			custom_tooltip = HYL_UNLOCK_HYLINIA
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = HYL_UNLOCK_ZOROASTER
+		}
+	}
+}
+
+#The League Collapsed
+country_event = {
+	id = ab_hylinia.17
+	title = ab_hylinia.17.t
+	desc = ab_hylinia.17.d
+	picture = muslimgfx_PLAGUE_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_global_flag = ab_unlocked_order_of_zoroaster
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.17.a
+		custom_tooltip = HYL_UNLOCK_ZOROASTER
+	}
+}
+
+#The Order Dismantled
+country_event = {
+	id = ab_hylinia.18
+	title = ab_hylinia.18.t
+	desc = ab_hylinia.18.d
+	picture = muslimgfx_COUNTRY_COLLAPSE_eventPicture
+
+	major = yes
+
+	major_trigger = {
+		technology_group = buniq_tech
+	}
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_global_flag = ab_unlocked_hylinia
+		}
+	}
+	
+	option = {
+		name = ab_hylinia.18.a
+		custom_tooltip = HYL_UNLOCK_HYLINIA
+	}
+}
