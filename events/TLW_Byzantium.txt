@@ -797,6 +797,11 @@ province_event = {
 	hidden = yes
 		
 	trigger = {
+		region = anatolia_region
+		NOT = { culture = greek }
+		any_friendly_coast_border_province = {
+			culture = greek
+		}
 		owner = {
 			OR = {
 				AND = {
@@ -809,11 +814,6 @@ province_event = {
 				}
 			}
 		}
-		region = anatolia_region
-		any_friendly_coast_border_province = {
-			culture = greek
-		}
-		NOT = { culture = greek }
 	}
 
 	mean_time_to_happen = {
@@ -1170,28 +1170,6 @@ country_event = {
 		}
 		custom_tooltip = AB_EMPTY
 		custom_tooltip = BYZ_RUSSO_ROMAN
-	}
-}
-
-#Remove Italy Conquest modifier
-province_event = {
-	id = ab_byzantium.66
-	title = ab_byzantium.66.t
-	desc = ab_byzantium.66.d
-	picture = CULTURE_eventPicture
-
-	hidden = yes
-
-	trigger = {
-		region = italy_region
-		has_province_modifier = byz_cheaper_italy_conquest
-		owned_by = BYZ
-		is_core = BYZ
-	}
-
-	option = {
-		name = ab_byzantium.66.a
-		remove_province_modifier = byz_cheaper_italy_conquest
 	}
 }
 
@@ -2214,30 +2192,6 @@ country_event = {
 	}
 }
 
-#Remove Integrating Persia modifier
-province_event = {
-	id = ab_byzantium.77
-	title = ab_byzantium.77.t
-	desc = ab_byzantium.77.d
-	picture = AB_COURT_eventPicture
-
-	hidden = yes
-
-	trigger = {
-		has_province_modifier = byz_integrate_persia
-		OR = {
-			is_core = ROM
-			is_core = RDZ
-			is_core = RDV
-		}
-	}
-
-	option = {
-		name = ab_byzantium.77.a
-		remove_province_modifier = byz_integrate_persia
-	}
-}
-
 #Roman Caucasia
 country_event = {
 	id = ab_byzantium.78
@@ -2544,6 +2498,11 @@ province_event = {
 		owner = {
 			primary_culture = Visigothic
 		}
+		NOT = { culture = Visigothic }
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture = Visigothic
+		}
 		OR = {
 			AND = {
 				OR = {
@@ -2566,11 +2525,6 @@ province_event = {
 				}
 			}
 		}
-		any_neighbor_province = {
-			owned_by = ROOT
-			culture = Visigothic
-		}
-		NOT = { culture = Visigothic }
 	}
 
 	mean_time_to_happen = {
@@ -2895,23 +2849,7 @@ country_event = {
 	desc = ab_byzantium.90.d
 	picture = CRUSADER_HORDE_eventPicture
 
-	fire_only_once = yes
-	
-	trigger = {
-		tag = FRC
-		is_emperor = yes
-		NOT = { truce_with = ADU }
-		ADU = {
-			is_in_war = {
-				defender_leader = ADU
-				casus_belli = cb_grand_crusade_reconquista
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		months = 1
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		random_country = {
@@ -3613,11 +3551,25 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
+		total_development = 750
+		is_rome_heir = yes
+		is_subject = no
+		is_at_war = no
+		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+			value = 75
+			OR = {
+				superregion = europe_superregion
+				superregion = near_east_superregion
+				region = balkan_region
+				region = maghreb_region
+			}
+		}
 		any_country = {
+			total_development = 750
 			is_rome_heir = yes
+			NOT = { tag = ROOT }
 			is_subject = no
 			is_at_war = no
-			total_development = 750
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 75
 				OR = {
@@ -3627,46 +3579,15 @@ country_event = {
 					region = maghreb_region
 				}
 			}
-			any_country = {
-				NOT = { tag = PREV }
-				is_rome_heir = yes
-				is_subject = no
-				is_at_war = no
-				total_development = 750
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 75
-					OR = {
-						superregion = europe_superregion
-						superregion = near_east_superregion
-						region = balkan_region
-						region = maghreb_region
-					}
-				}
-			}
 		}
 	}
 
 	immediate = {
 		hidden_effect = {
+			save_global_event_target_as = romanTriumvir1
 			random_country = {
 				limit = {
-					is_rome_heir = yes
-					total_development = 750
-					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-						value = 75
-						OR = {
-							superregion = europe_superregion
-							superregion = near_east_superregion
-							region = balkan_region
-							region = maghreb_region
-						}
-					}
-				}
-				save_global_event_target_as = romanTriumvir1
-			}
-			random_country = {
-				limit = {
-					NOT = { tag = event_target:romanTriumvir1 }
+					NOT = { tag = ROOT }
 					is_rome_heir = yes
 					total_development = 750
 					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -3699,10 +3620,8 @@ country_event = {
 			}
 		}
 		else = {
-			event_target:romanTriumvir1 = {
-				country_event = {
-					id = ab_byzantium.105
-				}
+			country_event = {
+				id = ab_byzantium.105
 			}
 		}
 	}
@@ -3881,45 +3800,26 @@ country_event = {
 
 	trigger = {
 		has_global_flag = AB_TRIUMVIRATE_SET
-		any_country = {
-			NOT = { tag = event_target:romanTriumvir1 }
-			NOT = { tag = event_target:romanTriumvir2 }
-			is_rome_heir = yes
-			is_subject = no
-			is_at_war = no
-			total_development = 750
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-				value = 75
-				OR = {
-					superregion = europe_superregion
-					superregion = near_east_superregion
-					region = balkan_region
-					region = maghreb_region
-				}
+		total_development = 750
+		NOT = { tag = event_target:romanTriumvir1 }
+		NOT = { tag = event_target:romanTriumvir2 }
+		is_rome_heir = yes
+		is_subject = no
+		is_at_war = no
+		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+			value = 75
+			OR = {
+				superregion = europe_superregion
+				superregion = near_east_superregion
+				region = balkan_region
+				region = maghreb_region
 			}
 		}
 	}
 
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = {
-					NOT = { tag = event_target:romanTriumvir1 }
-					NOT = { tag = event_target:romanTriumvir2 }
-					is_rome_heir = yes
-					total_development = 750
-					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-						value = 75
-						OR = {
-							superregion = europe_superregion
-							superregion = near_east_superregion
-							region = balkan_region
-							region = maghreb_region
-						}
-					}
-				}
-				save_global_event_target_as = romanTriumvir3
-			}
+			save_global_event_target_as = romanTriumvir3
 		}
 	}
 
@@ -4676,8 +4576,8 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1445
 		tag = CAP
+		is_year = 1445
 	}
 
 	option = {
@@ -5143,16 +5043,11 @@ country_event = {
 	desc = ab_byzantium.119.d
 	picture = MYSTIC_IN_PRAYER_eventPicture
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		mission_completed = trc_the_mad_dukes_gambit
 		religion = sol_invictus
 		has_ruler = "Robert XI"
-	}
-
-	mean_time_to_happen = {
-		days = 1825
 	}
 
 	option = {
