@@ -1724,7 +1724,6 @@ country_event = {
 			add_province_modifier = {
 				name = byz_cheaper_italy_conquest
 				duration = -1
-				desc = "until conquered by us"
 			}
 		}
 	}
@@ -2175,20 +2174,26 @@ province_event = {
 	hidden = yes
 
 	trigger = {
+		ROM = {
+			has_disaster = byzantium_biased_cultural_sphere
+		}
+		province_is_diocese_land_trigger = yes
 		OR = {
 			AND = {
+				ROM = {
+					has_country_flag = byz_revolt_latinsphere
+				}
 				OR = {
 					superregion = europe_superregion
 					region = maghreb_region
 					region = carpathia_region
 				}
 				NOT = { area = carinthia_area }
-				ROM = {
-					has_disaster = byzantium_biased_cultural_sphere
-					has_country_flag = byz_revolt_latinsphere
-				}
 			}
 			AND = {
+				ROM = {
+					has_country_flag = byz_revolt_hellenosphere
+				}
 				OR = {
 					superregion = eastern_europe_superregion
 					superregion = near_east_superregion
@@ -2211,12 +2216,11 @@ province_event = {
 				}
 				NOT = { region = tibet_region }
 				NOT = { area = liaoning_area }
-				ROM = {
-					has_disaster = byzantium_biased_cultural_sphere
-					has_country_flag = byz_revolt_hellenosphere
-				}
 			}
 			AND = {
+				ROM = {
+					has_country_flag = byz_revolt_persosphere
+				}
 				OR = {
 					superregion = india_superregion
 					region = khorasan_region
@@ -2234,12 +2238,11 @@ province_event = {
 						}
 					}
 				}
-				ROM = {
-					has_disaster = byzantium_biased_cultural_sphere
-					has_country_flag = byz_revolt_persosphere
-				}
 			}
 			AND = {
+				ROM = {
+					has_country_flag = byz_revolt_sinosphere
+				}
 				OR = {
 					superregion = china_superregion
 					superregion = east_indies_superregion
@@ -2248,15 +2251,10 @@ province_event = {
 					region = japan_region
 					area = liaoning_area
 				}
-				ROM = {
-					has_disaster = byzantium_biased_cultural_sphere
-					has_country_flag = byz_revolt_sinosphere
-				}
 			}
 		}
 		NOT = { has_province_modifier = byz_revolting_province }
 		NOT = { has_province_modifier = byz_revolting_province_centre }
-		province_is_diocese_land_trigger = yes
 		any_neighbor_province = {
 			OR = {
 				has_province_modifier = byz_revolting_province
@@ -2375,12 +2373,12 @@ country_event = {
 	hidden = yes
 
 	trigger = {
+		ROM = {
+			has_disaster = byzantium_biased_cultural_sphere
+		}
 		OR = {
 			is_subject_of_type = diocese_vassal
 			is_subject_of_type = grand_diocese_vassal
-		}
-		ROM = {
-			has_disaster = byzantium_biased_cultural_sphere
 		}
 		any_neighbor_country = {
 			OR = {
