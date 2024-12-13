@@ -4226,6 +4226,10 @@ country_event = {
 	trigger = {
 		has_global_flag = AB_TRIUMVIRATE_SET
 		OR = {
+			tag = event_target:romanTriumvir1
+			tag = event_target:romanTriumvir2
+		}
+		OR = {
 			AND = {
 				exists = ROM
 				ROM = {
@@ -4265,10 +4269,21 @@ country_event = {
 						province_id = 1232
 						province_id = 2324
 					}
-					OR = {
-						country_or_non_sovereign_subject_holds = event_target:romanTriumvir1
-						country_or_non_sovereign_subject_holds = event_target:romanTriumvir2
-						country_or_non_sovereign_subject_holds = event_target:romanTriumvir3
+					if = {
+						limit = {
+							has_saved_global_event_target = romanTriumvir3
+						}
+						OR = {
+							country_or_non_sovereign_subject_holds = event_target:romanTriumvir1
+							country_or_non_sovereign_subject_holds = event_target:romanTriumvir2
+							country_or_non_sovereign_subject_holds = event_target:romanTriumvir3
+						}
+					}
+					else = {
+						OR = {
+							country_or_non_sovereign_subject_holds = event_target:romanTriumvir1
+							country_or_non_sovereign_subject_holds = event_target:romanTriumvir2
+						}
 					}
 				}
 			}
