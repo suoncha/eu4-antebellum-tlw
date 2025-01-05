@@ -87,7 +87,14 @@ marketplace = {
 	}
 
 	ai_will_do = {
-		factor = 1.5 # Because hard-coded AI only considers what it will gain, not what its enemies will lose.
+		factor = 1
+		modifier = {
+			factor = 10
+			OR = {
+				province_has_center_of_trade_of_level = 1
+				has_river_estuary_trigger = yes
+			}
+		}
 	}
 }
 
@@ -124,6 +131,10 @@ workshop = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 10
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -387,31 +398,18 @@ barracks = {
 	on_obsolete = {
 	}
 
-#	# THIS = Province, FROM = Builder(not nessecairly owner, can be overlord)
-#	on_built = {
-#		FROM = {
-#			add_army_professionalism = 0.005
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
-#	on_destroyed = {
-#		FROM = {
-#			add_army_professionalism = -0.01
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
-#	on_obsolete = {
-#		hidden_effect = {
-#			FROM = {
-#				add_army_professionalism = -0.005
-#			}
-#		}
-#	}
-
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 10
+			owner_is_colonial_nation = no
+			OR = {
+				trade_goods = grain
+				trade_goods = livestock
+				trade_goods = fish
+				trade_goods = wine
+			}
+		}
 	}
 }
 
@@ -657,7 +655,6 @@ fort_15th = {
 }
 
 coastal_defence = {
-
 	cost = 100
 	time = 12
 	build_trigger = {
@@ -670,10 +667,9 @@ coastal_defence = {
 	}
 
 	ai_will_do = {
-		factor = 1
+		factor = 0
 	}
 }
-
 
 ################################################
 # Tier 2, 16th Century Buildings
@@ -843,51 +839,7 @@ dock = {
 	}
 
 	ai_will_do = {
-		factor = 1
-		modifier = {
-			current_age = age_of_discovery 
-			owner = { NOT = { navy_size = 25 } }
-			factor = 0.25
-		}
-		modifier = {
-			current_age = age_of_reformation
-			owner = { NOT = { navy_size = 50 } }
-			factor = 0.35
-		}
-		modifier = {
-			current_age = age_of_absolutism
-			owner = { NOT = { navy_size = 75 } }
-			factor = 0.5
-		}
-		modifier = {
-			current_age = age_of_revolutions 
-			owner = { NOT = { navy_size = 100 } }
-			factor = 0.75
-		}
-		modifier = {
-			owner = {
-				OR = {
-					full_idea_group = naval_ideas
-					has_idea_group = maritime_ideas
-				}
-			}
-			factor = 1.25
-		}
-		modifier = {
-			owner = {
-				capital_scope = { 
-					has_port = yes 
-					is_island = yes 
-				}
-			}
-			factor = 1.35
-		}
-		modifier = {
-			owner = {
-				sailors_percentage = 0.75 
-			}
-			factor = 0
-		}
+		factor = 0
 	}
 }
 
@@ -898,28 +850,6 @@ regimental_camp = {
 		land_forcelimit = 1
 	}
 
-#	# THIS = Province, FROM = Builder(not nessecairly owner, can be overlord)
-#	on_built = {
-#		FROM = {
-#			add_army_professionalism = 0.005
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
-#	on_destroyed = {
-#		FROM = {
-#			add_army_professionalism = -0.01
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
-#	on_obsolete = {
-#		hidden_effect = {
-#			FROM = {
-#				add_army_professionalism = -0.005
-#			}
-#		}
-#	}
 	on_built = {
 		add_development_from_building = {
 			building = regimental_camp
@@ -1152,7 +1082,6 @@ fort_16th = {
 }
 
 naval_battery = {
-
 	make_obsolete = coastal_defence
 	cost = 200
 	time = 12
@@ -1167,7 +1096,7 @@ naval_battery = {
 	}
 
 	ai_will_do = {
-		factor = 1
+		factor = 0
 	}
 }
 
@@ -1331,7 +1260,6 @@ cathedral = {
 	}
 }
 
-
 university = {
 	cost = 300
 	time = 12
@@ -1478,7 +1406,14 @@ trade_depot = {
 	}
 
 	ai_will_do = {
-		factor = 1.5 # Because hard-coded AI only considers what it will gain, not what its enemies will lose.
+		factor = 1
+		modifier = {
+			factor = 10
+			OR = {
+				province_has_center_of_trade_of_level = 1
+				has_river_estuary_trigger = yes
+			}
+		}
 	}
 }
 
@@ -1546,29 +1481,6 @@ training_fields = {
 	time = 12
 
 	make_obsolete = barracks
-
-#	# THIS = Province, FROM = Builder(not nessecairly owner, can be overlord)
-#	on_built = {
-#		FROM = {
-#			add_army_professionalism = 0.01
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
-#	on_destroyed = {
-#		FROM = {
-#			add_army_professionalism = -0.02
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
-#	on_obsolete = {
-#		hidden_effect = {
-#			FROM = {
-#				add_army_professionalism = -0.01
-#			}
-#		}
-#	}
 
 	modifier = {
 		local_manpower_modifier = 1
@@ -1673,9 +1585,18 @@ training_fields = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 10
+			owner_is_colonial_nation = no
+			OR = {
+				trade_goods = grain
+				trade_goods = livestock
+				trade_goods = fish
+				trade_goods = wine
+			}
+		}
 	}
 }
-
 
 fort_17th = {
 	cost = 600
@@ -1834,8 +1755,6 @@ fort_17th = {
 	}
 }
 
-
-
 ################################################
 # Tier 4, 18th Century Buildings
 ################################################
@@ -1905,7 +1824,14 @@ stock_exchange = {
 	}
 
 	ai_will_do = {
-		factor = 1.5 # Because hard-coded AI only considers what it will gain, not what its enemies will lose.
+		factor = 1
+		modifier = {
+			factor = 10
+			OR = {
+				province_has_center_of_trade_of_level = 1
+				has_river_estuary_trigger = yes
+			}
+		}
 	}
 }
 
@@ -1987,7 +1913,14 @@ greatmarket = {
 	}
 
 	ai_will_do = {
-		factor = 1.5 # Because hard-coded AI only considers what it will gain, not what its enemies will lose.
+		factor = 1
+		modifier = {
+			factor = 10
+			OR = {
+				province_has_center_of_trade_of_level = 1
+				has_river_estuary_trigger = yes
+			}
+		}
 	}
 }
 
@@ -2029,10 +1962,12 @@ counting_house = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 10
+			owner_is_colonial_nation = yes
+		}
 	}
 }
-
-
 
 # AB [[[
 factory = {
@@ -2094,10 +2029,13 @@ factory = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 10
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 # ]]]
-
 
 town_hall = {
 	cost = 200
@@ -2280,9 +2218,8 @@ drydock = {
 	on_obsolete = {
 	}
 
-
 	ai_will_do = {
-		factor = 1
+		factor = 0
 	}
 }
 
@@ -2290,31 +2227,7 @@ conscription_center = {
 	cost = 400
 	time = 12
 
-
 	make_obsolete = regimental_camp
-
-#	# THIS = Province, FROM = Builder(not nessecairly owner, can be overlord)
-#	on_built = {
-#		FROM = {
-#			add_army_professionalism = 0.01
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
-#	on_destroyed = {
-#		FROM = {
-#			add_army_professionalism = -0.02
-#		}
-#	}
-#
-#	# THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
-#	on_obsolete = {
-#		hidden_effect = {
-#			FROM = {
-#				add_army_professionalism = -0.01
-#			}
-#		}
-#	}
 
 	modifier = {
 		land_forcelimit = 2
@@ -2396,8 +2309,6 @@ conscription_center = {
 		}
 	}
 }
-
-
 
 fort_18th = {
 	cost = 800
@@ -2728,6 +2639,10 @@ wharf = {
 			NOT = { num_free_building_slots = 3 }
 			factor = 1.5
 		}
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2766,6 +2681,10 @@ weapons = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2806,6 +2725,10 @@ textile = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2848,6 +2771,10 @@ plantations = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2890,6 +2817,10 @@ tradecompany = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2945,6 +2876,10 @@ farm_estate = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -2986,6 +2921,10 @@ mills = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = yes
+		}
 	}
 }
 
@@ -3021,7 +2960,7 @@ furnace = {
 	}
 
 	ai_will_do = {
-		factor = 1
+		factor = 100
 	}
 }
 
@@ -3079,19 +3018,7 @@ ramparts = {
 		}
 	}
 	ai_will_do = {
-		factor = 1
-		modifier = {
-			factor = 0
-			from = { num_of_loans = 3 }
-		}
-		modifier = {
-			factor = 20
-			has_terrain = mountain
-		}
-		modifier = {
-			factor = 0
-			from = { personality = ai_militarist }
-		}
+		factor = 0
 	}
 }
 
@@ -3167,6 +3094,16 @@ soldier_households = {
 
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 100
+			owner_is_colonial_nation = no
+			OR = {
+				trade_goods = grain
+				trade_goods = livestock
+				trade_goods = fish
+				trade_goods = wine
+			}
+		}
 	}
 }
 
@@ -3226,10 +3163,9 @@ impressment_offices = {
 	}
 
 	ai_will_do = {
-		factor = 1
+		factor = 0
 	}
 }
-
 
 state_house = {
 	manufactory = {
@@ -3304,6 +3240,15 @@ state_house = {
 	}
 
 	ai_will_do = {
-		factor = 1
+		factor = 0.1
+		modifier = {
+			factor = 100
+			num_of_times_expanded_infrastructure = 1
+			OR = {
+				trade_goods = paper
+				trade_goods = glass
+				trade_goods = gems
+			}
+		}
 	}
 }
