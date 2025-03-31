@@ -1091,6 +1091,37 @@ on_trade_good_changed_government_effect = {
 }
 
 on_battle_won_unit_effect = {
+    if = {
+        limit = {
+            unit_owner = {
+                has_government_mechanic = divine_authority_mechanic
+            }
+            is_ruler_commanding_unit = yes
+        }
+        unit_owner = {
+            set_variable = {
+                which = monarch_kill
+                which = land_units_killed
+            }
+            while = {
+                limit = {
+                    check_variable = {
+                        which = monarch_kill
+                        value = 100
+                    }
+                }
+                change_variable = {
+                    which = monarch_kill
+                    value = -100
+                }
+                add_government_power = { 
+                    mechanic_type = divine_authority_mechanic 
+                    power_type = divine_authority
+                    value = 0.01
+                }
+            }
+        }
+    }
 	if = {
         limit = {
             unit_owner = {
