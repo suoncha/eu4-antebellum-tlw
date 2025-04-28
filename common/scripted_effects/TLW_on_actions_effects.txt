@@ -10,6 +10,26 @@ TLW_on_startup_effect = {
 			id = ab_byzantium.10000
 		}
 	}
+	# TODO: Remove after 1.95
+	if = {
+		limit = {
+			NOT = { has_global_flag = AB_CULTURE_CONVERSION_SETUP }
+		}
+		set_global_flag = AB_CULTURE_CONVERSION_SETUP
+		every_province = {
+			limit = {
+				is_city = yes
+			}
+			set_variable = {
+				which = culture_conversion_var
+				value = 0
+			}
+			set_variable = {
+				which = culture_conversion_change_var
+				value = 0
+			}
+		}
+	}
 }
 
 TLW_on_new_monarch_effect = {
@@ -1149,6 +1169,8 @@ TLW_on_general_recruited = {
 }
 
 TLW_on_province_owner_change_effect = {
+	# Culture Conversion
+	TLW_culture_conversion_calc_effect = yes
 	# Rome
 	if = {
 		limit = {
@@ -1442,6 +1464,8 @@ TLW_on_province_owner_change_effect = {
 }
 
 TLW_on_province_culture_changed = {
+	# Culture Conversion
+	TLW_culture_conversion_calc_effect = yes
 	# Rome
 	if = {
 		limit = {
@@ -1620,6 +1644,19 @@ TLW_on_province_religion_changed = {
 			name = cca_islam_to_judaism
 			duration = 7300
 		}
+	}
+}
+
+TLW_on_primary_culture_changed = {
+	# Culture Conversion
+	every_owned_province = {
+		limit = {
+			check_variable = {
+				which = culture_conversion_var
+				value = 0.001
+			}
+		}
+		TLW_culture_conversion_calc_effect = yes
 	}
 }
 

@@ -1,0 +1,71 @@
+namespace = ab_culture_conversion
+
+# Colony Calc
+province_event = {
+	id = ab_culture_conversion.0
+	title = ab_culture_conversion.0.t
+	desc = ab_culture_conversion.0.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { culture = owner }
+		owner = {
+			is_colonial_nation = yes
+		}
+	}
+		
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						which = culture_conversion_var
+						value = 100
+					}
+				}
+				change_culture = owner
+				change_original_culture = owner
+			}
+			else = {
+				province_event = {
+					id = ab_culture_conversion.0
+					days = 30
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_culture_conversion.0.a
+		change_variable = {
+			which = culture_conversion_var
+			which = culture_conversion_change_var
+		}
+		set_variable = {
+			which = culture_conversion_change_var
+			value = 0.2
+		}
+		if = {
+			limit = {
+				religion_group = owner
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				culture_group = owner
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 10
+			}
+		}
+	}
+}
