@@ -69,3 +69,107 @@ province_event = {
 		}
 	}
 }
+
+# Hellenization Calc
+province_event = {
+	id = ab_culture_conversion.1
+	title = ab_culture_conversion.1.t
+	desc = ab_culture_conversion.1.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { culture_group = hellenic_g }
+		owner = {
+			culture_group = hellenic_g
+			OR = {
+				is_subject_of_type = diadochi_vassal
+				has_government_attribute = ab_has_diadochi
+			}
+		}
+	}
+		
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						which = culture_conversion_var
+						value = 100
+					}
+				}
+				province_event = {
+					id = ab_nicaea.10
+				}
+			}
+			else = {
+				province_event = {
+					id = ab_culture_conversion.1
+					days = 30
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_culture_conversion.1.a
+		change_variable = {
+			which = culture_conversion_var
+			which = culture_conversion_change_var
+		}
+		set_variable = {
+			which = culture_conversion_change_var
+			value = 0.35
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_friendly_coast_border_province = {
+						culture_group = hellenic_g
+					}
+				}
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				any_neighbor_province = {
+					culture_group = hellenic_g
+				}
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					religion = hellenic
+					religion = reformed_hellenic
+				}
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					is_subject_of_type = diadochi_vassal
+				}
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 2
+			}
+		}
+	}
+}

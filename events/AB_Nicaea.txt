@@ -479,67 +479,6 @@ country_event = {
 
 #Hellenization
 province_event = {
-	id = ab_nicaea.9
-	title = ab_nicaea.9.t
-	desc = ab_nicaea.9.d
-	picture = CULTURE_eventPicture
-	
-	hidden = yes
-	
-	mean_time_to_happen = {
-		months = 360
-		modifier = {
-			factor = 2.5
-			NOT = {
-				any_neighbor_province = {
-					culture_group = hellenic_g
-				}
-			}
-		}
-		modifier = {
-			factor = 0.5
-			OR = {
-				religion = hellenic
-				religion = reformed_hellenic
-			}
-		}
-		modifier = {
-			factor = 0.5
-			owner = {
-				is_subject_of_type = diadochi_vassal
-			}
-		}
-		modifier = {
-			factor = 0.5
-			owner = {
-				has_country_flag = ab_stronger_ai_nci
-			}
-		}
-	}
-	
-	trigger = {
-		owner = {
-			culture_group = hellenic_g
-		}
-		NOT = {
-			culture_group = hellenic_g
-		}
-		has_owner_accepted_culture = yes
-		any_friendly_coast_border_province = {
-			culture_group = hellenic_g
-		}
-	}
-
-	option = {
-		name = ab_nicaea.9.a
-		province_event = {
-			id = ab_nicaea.10
-		}
-	}
-}
-
-#Hellenization - Trigger for Diadochi Creation
-province_event = {
 	id = ab_nicaea.10
 	title = ab_nicaea.10.t
 	desc = ab_nicaea.10.d
@@ -1168,6 +1107,13 @@ country_event = {
 					free_vassal = PREV
 				}
 			}
+			# Culture Conversion
+			every_owned_province = {
+				remove_province_modifier = nci_antigonos_province
+				remove_province_modifier = nci_ptolemaios_province
+				remove_province_modifier = nci_seleukos_province
+				TLW_culture_conversion_calc_effect = yes
+			}
 		}
 		hidden_effect = {
 			every_country = {
@@ -1273,6 +1219,13 @@ country_event = {
 					free_vassal = PREV
 				}
 			}
+			# Culture Conversion
+			every_owned_province = {
+				remove_province_modifier = nci_antigonos_province
+				remove_province_modifier = nci_ptolemaios_province
+				remove_province_modifier = nci_seleukos_province
+				TLW_culture_conversion_calc_effect = yes
+			}
 		}
 		hidden_effect = {
 			every_country = {
@@ -1377,6 +1330,13 @@ country_event = {
 				ROOT = {
 					free_vassal = PREV
 				}
+			}
+			# Culture Conversion
+			every_owned_province = {
+				remove_province_modifier = nci_antigonos_province
+				remove_province_modifier = nci_ptolemaios_province
+				remove_province_modifier = nci_seleukos_province
+				TLW_culture_conversion_calc_effect = yes
 			}
 		}
 		hidden_effect = {
@@ -1506,6 +1466,15 @@ country_event = {
 		}
 		custom_tooltip = AB_EMPTY
 		add_government_reform = nicene_absolute_hellenic_empire
+		hidden_effect = {
+			# Culture Conversion
+			every_owned_province = {
+				limit = {
+					NOT = { culture_group = hellenic_g }
+				}
+				TLW_culture_conversion_calc_effect = yes
+			}
+		}
 	}
 }
 
