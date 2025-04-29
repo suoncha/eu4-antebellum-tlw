@@ -35,4 +35,39 @@ TLW_culture_conversion_calc_effect = {
 			id = ab_culture_conversion.1
 		}
 	}
+	# Romanization
+	if = {
+		limit = {
+			NOT = { culture_group = roman_g }
+			owner = {
+				culture_group = roman_g
+			}
+			province_is_diocese_land_trigger = yes
+		}
+		province_event = {
+			id = ab_culture_conversion.2
+		}
+	}
+	# Spread of Greek Culture in Anatolia
+	if = {
+		limit = {
+			region = anatolia_region
+			NOT = { culture = greek }
+			owner = {
+				OR = {
+					AND = {
+						mission_completed = byzantium_frontier
+						tag = BYZ
+					}
+					AND = {
+						mission_completed = lat_avenge
+						tag = LAT
+					}
+				}
+			}
+		}
+		province_event = {
+			id = ab_culture_conversion.3
+		}
+	}
 }

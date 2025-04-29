@@ -137,38 +137,598 @@ province_event = {
 				value = 0
 			}
 		}
-		if = {
-			limit = {
-				any_neighbor_province = {
-					culture_group = hellenic_g
+		else = {
+			if = {
+				limit = {
+					any_neighbor_province = {
+						culture_group = hellenic_g
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
 				}
 			}
-			multiply_variable = {
-				which = culture_conversion_change_var
-				value = 2
+			if = {
+				limit = {
+					OR = {
+						religion = hellenic
+						religion = reformed_hellenic
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
 			}
+			if = {
+				limit = {
+					owner = {
+						is_subject_of_type = diadochi_vassal
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
+			}
+		}
+	}
+}
+
+# Romanization Calc
+province_event = {
+	id = ab_culture_conversion.2
+	title = ab_culture_conversion.2.t
+	desc = ab_culture_conversion.2.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { culture_group = roman_g }
+		owner = {
+			culture_group = roman_g
+		}
+		province_is_diocese_land_trigger = yes
+	}
+		
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						which = culture_conversion_var
+						value = 100
+					}
+				}
+				province_event = {
+					id = ab_byzantium.71
+				}
+			}
+			else = {
+				province_event = {
+					id = ab_culture_conversion.2
+					days = 30
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_culture_conversion.2.a
+		change_variable = {
+			which = culture_conversion_var
+			which = culture_conversion_change_var
+		}
+		set_variable = {
+			which = culture_conversion_change_var
+			value = 0.15
 		}
 		if = {
 			limit = {
 				OR = {
-					religion = hellenic
-					religion = reformed_hellenic
+					AND = {
+						region = low_countries_region
+						ROM = {
+							NOT = { has_country_flag = rom_belgica_isof_gallia }
+							NOT = { has_country_flag = rom_belgica_isof_germania }
+						}
+					}
+					AND = {
+						region = caucasia_region
+						ROM = {
+							NOT = { has_country_flag = rom_caucasia_isof_anatolia }
+							NOT = { has_country_flag = rom_caucasia_isof_persia }
+						}
+					}
 				}
 			}
 			multiply_variable = {
 				which = culture_conversion_change_var
-				value = 2
+				value = 0
 			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					any_friendly_coast_border_province = {
+						culture_group = roman_g
+					}
+				}
+			}
+			multiply_variable = {
+				which = culture_conversion_change_var
+				value = 0
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					NOT = {
+						any_neighbor_province = {
+							culture_group = roman_g
+						}
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						stability = 2
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.1
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						absolutism = 50
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.1
+				}
+			}
+			if = {
+				limit = {
+					owner = {
+						has_country_modifier = byz_friend_diocese
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.25
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						culture_group = french
+						culture_group = iberian
+						culture_group = latin
+						culture_group = romanian_culture_group
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.25
+				}
+			}
+			if = {
+				limit = {
+					is_prosperous = yes
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.25
+				}
+			}
+			if = {
+				limit = {
+					has_building = early_road
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.1
+				}
+			}
+			else_if = {
+				limit = {
+					has_building = gravel_road
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.2
+				}
+			}
+			else_if = {
+				limit = {
+					has_building = royal_road
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.35
+				}
+			}
+			else_if = {
+				limit = {
+					has_building = macadam_road
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.45
+				}
+			}
+			else_if = {
+				limit = {
+					has_building = rail_road
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.6
+				}
+			}
+			if = {
+				limit = {
+					has_building = courthouse
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.1
+				}
+			}
+			else_if = {
+				limit = {
+					has_building = town_hall
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.2
+				}
+			}
+			if = {
+				limit = {
+					has_building = university
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					has_seat_in_parliament = yes
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							culture_group = iranian
+							ROM = {
+								religion = zoroastrian
+							}
+						}
+						AND = {
+							culture_group = turko_semitic
+							ROM = {
+								religion_group = muslim
+							}
+						}
+						AND = {
+							culture_group = east_slavic
+							ROM = {
+								was_tag = UKR
+							}
+						}
+						AND = {
+							culture_group = west_slavic
+							ROM = {
+								was_tag = POL
+							}
+						}
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							OR = {
+								superregion = europe_superregion
+								region = maghreb_region
+								region = carpathia_region
+							}
+							NOT = { area = carinthia_area }
+							ROM = {
+								has_country_flag = byz_faster_romanization_latincities
+							}
+						}
+						AND = {
+							OR = {
+								region = khorasan_region
+								region = persia_region
+							}
+							ROM = {
+								has_country_flag = byz_faster_romanization_persia
+							}
+						}
+						AND = {
+							superregion = india_superregion
+							ROM = {
+								has_country_flag = byz_faster_romanization_india
+							}
+						}
+						AND = {
+							superregion = china_superregion
+							ROM = {
+								has_country_flag = byz_faster_romanization_china
+							}
+						}
+						AND = {
+							OR = {
+								region = burma_region
+								region = indo_china_region
+							}
+							ROM = {
+								has_country_flag = byz_faster_romanization_indochina
+							}
+						}
+						AND = {
+							OR = {
+								region = malaya_region
+								region = indonesia_region
+								region = moluccas_region
+							}
+							ROM = {
+								has_country_flag = byz_faster_romanization_eastindies
+							}
+						}
+						AND = {
+							OR = {
+								region = korea_region
+								region = japan_region
+								area = liaoning_area
+							}
+							ROM = {
+								has_country_flag = byz_faster_romanization_fareast
+							}
+						}
+						AND = {
+							region = italy_region
+							ROM = {
+								has_country_flag = cap_embraced_sol_invictus
+							}
+						}
+					}
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 2
+				}
+			}
+			# Debuff
+			if = {
+				limit = {
+					unrest = 3
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					unrest = 6
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					unrest = 9
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					unrest = 12
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					nationalism = 5
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					nationalism = 10
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					nationalism = 15
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					nationalism = 20
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					local_autonomy = 20
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					local_autonomy = 40
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					local_autonomy = 60
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+			if = {
+				limit = {
+					local_autonomy = 80
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 0.8
+				}
+			}
+		}
+	}
+}
+
+# Spread of Greek Culture in Anatolia Calc
+province_event = {
+	id = ab_culture_conversion.3
+	title = ab_culture_conversion.3.t
+	desc = ab_culture_conversion.3.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		region = anatolia_region
+		NOT = { culture = greek }
+		owner = {
+			OR = {
+				AND = {
+					mission_completed = byzantium_frontier
+					tag = BYZ
+				}
+				AND = {
+					mission_completed = lat_avenge
+					tag = LAT
+				}
+			}
+		}
+	}
+		
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						which = culture_conversion_var
+						value = 100
+					}
+				}
+				change_culture = greek
+				change_original_culture = greek
+			}
+			else = {
+				province_event = {
+					id = ab_culture_conversion.3
+					days = 30
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_culture_conversion.3.a
+		change_variable = {
+			which = culture_conversion_var
+			which = culture_conversion_change_var
+		}
+		set_variable = {
+			which = culture_conversion_change_var
+			value = 0.4
 		}
 		if = {
 			limit = {
-				owner = {
-					is_subject_of_type = diadochi_vassal
+				NOT = {
+					any_friendly_coast_border_province = {
+						culture = greek
+					}
 				}
 			}
 			multiply_variable = {
 				which = culture_conversion_change_var
-				value = 2
+				value = 0
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					religion = owner
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 1.35
+				}
+			}
+			if = {
+				limit = {
+					culture_group = byzantine
+				}
+				multiply_variable = {
+					which = culture_conversion_change_var
+					value = 10
+				}
 			}
 		}
 	}

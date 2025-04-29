@@ -27,6 +27,37 @@ defined_text = {
 			}
 		}
 	}
+	# Romanization
+	text = {
+		localisation_key = AB_CULTURE_CONVERSION_ROMAN
+		trigger = {
+			NOT = { culture_group = roman_g }
+			owner = {
+				culture_group = roman_g
+			}
+			province_is_diocese_land_trigger = yes
+		}
+	}
+	# Spread of Greek Culture in Anatolia
+	text = {
+		localisation_key = AB_CULTURE_CONVERSION_ANATOLIA_BYZ
+		trigger = {
+			region = anatolia_region
+			NOT = { culture = greek }
+			owner = {
+				OR = {
+					AND = {
+						mission_completed = byzantium_frontier
+						tag = BYZ
+					}
+					AND = {
+						mission_completed = lat_avenge
+						tag = LAT
+					}
+				}
+			}
+		}
+	}
 	# Default
 	text = {
 		localisation_key = AB_CULTURE_CONVERSION_DEFAULT
@@ -147,6 +178,480 @@ defined_text = {
 			owner = {
 				is_subject_of_type = diadochi_vassal
 			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+# Romanization
+defined_text = {
+	name = GetLockedRomanRegionSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			OR = {
+				AND = {
+					region = low_countries_region
+					ROM = {
+						NOT = { has_country_flag = rom_belgica_isof_gallia }
+						NOT = { has_country_flag = rom_belgica_isof_germania }
+					}
+				}
+				AND = {
+					region = caucasia_region
+					ROM = {
+						NOT = { has_country_flag = rom_caucasia_isof_anatolia }
+						NOT = { has_country_flag = rom_caucasia_isof_persia }
+					}
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetNotBorderRomanCultureSeaSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_friendly_coast_border_province = {
+					culture_group = roman_g
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetNotBorderRomanCultureLandSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_neighbor_province = {
+					culture_group = roman_g
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetRomeTwoStabilitySign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			ROM = {
+				stability = 2
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetRomeFiftyAbsolutismSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			ROM = {
+				absolutism = 50
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetOwnedByFavoredDioceseSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			owner = {
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetRomanceCultureGroupSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			OR = {
+				culture_group = french
+				culture_group = iberian
+				culture_group = latin
+				culture_group = romanian_culture_group
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetIsProsperousSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			is_prosperous = yes
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasRoadSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			has_road_building_trigger = yes
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasCourthouseSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			has_courthouse_building_trigger = yes
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasUniversitySign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			has_building = university
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasParliamentSeatSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			has_seat_in_parliament = yes
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasRomanizationRewardSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			OR = {
+				AND = {
+					culture_group = iranian
+					ROM = {
+						religion = zoroastrian
+					}
+				}
+				AND = {
+					culture_group = turko_semitic
+					ROM = {
+						religion_group = muslim
+					}
+				}
+				AND = {
+					culture_group = east_slavic
+					ROM = {
+						was_tag = UKR
+					}
+				}
+				AND = {
+					culture_group = west_slavic
+					ROM = {
+						was_tag = POL
+					}
+				}
+				AND = {
+					OR = {
+						superregion = europe_superregion
+						region = maghreb_region
+						region = carpathia_region
+					}
+					NOT = { area = carinthia_area }
+					ROM = {
+						has_country_flag = byz_faster_romanization_latincities
+					}
+				}
+				AND = {
+					OR = {
+						region = khorasan_region
+						region = persia_region
+					}
+					ROM = {
+						has_country_flag = byz_faster_romanization_persia
+					}
+				}
+				AND = {
+					superregion = india_superregion
+					ROM = {
+						has_country_flag = byz_faster_romanization_india
+					}
+				}
+				AND = {
+					superregion = china_superregion
+					ROM = {
+						has_country_flag = byz_faster_romanization_china
+					}
+				}
+				AND = {
+					OR = {
+						region = burma_region
+						region = indo_china_region
+					}
+					ROM = {
+						has_country_flag = byz_faster_romanization_indochina
+					}
+				}
+				AND = {
+					OR = {
+						region = malaya_region
+						region = indonesia_region
+						region = moluccas_region
+					}
+					ROM = {
+						has_country_flag = byz_faster_romanization_eastindies
+					}
+				}
+				AND = {
+					OR = {
+						region = korea_region
+						region = japan_region
+						area = liaoning_area
+					}
+					ROM = {
+						has_country_flag = byz_faster_romanization_fareast
+					}
+				}
+				AND = {
+					region = italy_region
+					ROM = {
+						has_country_flag = cap_embraced_sol_invictus
+					}
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasRomanizationUnrestSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			unrest = 3
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasRomanizationNationalismSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			nationalism = 5
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetHasRomanizationAutonomySign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			local_autonomy = 20
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+# Spread of Greek Culture in Anatolia
+defined_text = {
+	name = GetNotBorderGreekCultureSeaSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_friendly_coast_border_province = {
+					culture = greek
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetSameReligionSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			religion = owner
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+defined_text = {
+	name = GetByzantineCultureGroupSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			culture_group = byzantine
 		}
 	}
 	text = {
