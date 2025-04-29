@@ -22,6 +22,10 @@ custom_button = {
             }
         }
         NOT = { has_province_modifier = nci_center_of_hellenisation }
+        region_for_scope_province = {
+            type = all
+            NOT = { has_province_modifier = nci_center_of_hellenisation }
+        }
     }
     trigger = {
         owner = {
@@ -31,10 +35,12 @@ custom_button = {
         custom_trigger_tooltip = {
             tooltip = AB_ALREADY_HAVE_HELLENISATION_CENTER
             NOT = {
-                check_variable = {
-					which = nci_center_num_var
-					value = 5
-				}
+                event_target:hellenicEmpire = {
+                    check_variable = {
+                        which = nci_center_num_var
+                        value = 5
+                    }
+                }
             }
         }
         if = {
@@ -126,14 +132,65 @@ custom_button = {
     }
     effect = {
         custom_tooltip = AB_EFFECT_HELLENISATION_CENTER
-        add_permanent_province_modifier = {
-            name = nci_center_of_hellenisation
-            duration = -1
+        tooltip = {
+            add_permanent_province_modifier = {
+                name = nci_center_of_hellenisation
+                duration = -1
+            }
         }
         hidden_effect = {
-            change_variable = {            
-                which = nci_center_num_var
-                value = 1
+            if = {
+                limit = {
+                    NOT = {
+                        region_for_scope_province = {
+                            type = any
+                            NOT = { religion = reformed_hellenic }
+                            owner = {
+                                OR = {
+                                    tag = event_target:hellenicEmpire
+                                    is_subject_of_type = diadochi_vassal
+                                }
+                            }
+                        }
+                    }
+                }
+                event_target:hellenicEmpire = {
+                    country_event = {
+                        id = ab_nicaea.20
+                    }
+                }
+            }
+            else = {
+                add_permanent_province_modifier = {
+                    name = nci_center_of_hellenisation
+                    duration = -1
+                }
+                event_target:hellenicEmpire = {
+                    change_variable = {            
+                        which = nci_center_num_var
+                        value = 1
+                    }
+                }
+                random_province = {
+                    limit = {
+                        region = ROOT
+                        NOT = { religion = reformed_hellenic }
+                        owner = {
+                            OR = {
+                                tag = event_target:hellenicEmpire
+                                is_subject_of_type = diadochi_vassal
+                            }
+                        }
+                    }
+                    set_variable = {
+                        which = religion_conversion_hellenic_var
+                        value = 12
+                    }
+                    province_event = {
+                        id = ab_nicaea.21
+                        days = 30
+                    }
+                }
             }
         }
     }
@@ -152,10 +209,24 @@ custom_button = {
         custom_tooltip = AB_REMOVE_EFFECT_HELLENISATION_CENTER
         remove_province_modifier = nci_center_of_hellenisation
         hidden_effect = {
-            subtract_variable = {
-				which = nci_center_num_var
-				value = 1
-			}
+            event_target:hellenicEmpire = {
+                subtract_variable = {
+                    which = nci_center_num_var
+                    value = 1
+                }
+            }
+            region = {
+                limit = {
+                    check_variable = {
+                        which = religion_conversion_hellenic_var
+                        value = 0.001
+                    }
+                }
+                set_variable = {
+                    which = religion_conversion_hellenic_var
+                    value = 0
+                }
+            }
         }
     }
     tooltip = AB_REMOVE_HELLENISATION_CENTER

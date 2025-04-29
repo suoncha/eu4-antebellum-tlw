@@ -1265,9 +1265,11 @@ TLW_on_province_owner_change_effect = {
 		limit = {
 			has_province_modifier = nci_center_of_hellenisation
 			owner = {
-				OR = {
-					is_subject = no
-					NOT = { is_subject_of_type = diadochi_vassal }
+				NOT = {
+					OR = {
+						tag = event_target:hellenicEmpire
+						is_subject_of_type = diadochi_vassal
+					}
 				}
 			}
 		}
@@ -1276,6 +1278,87 @@ TLW_on_province_owner_change_effect = {
 			subtract_variable = {
 				which = nci_center_num_var
 				value = 1
+			}
+		}
+		region = {
+			limit = {
+				check_variable = {
+					which = religion_conversion_hellenic_var
+					value = 0.001
+				}
+			}
+			set_variable = {
+				which = religion_conversion_hellenic_var
+				value = 0
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				which = religion_conversion_hellenic_var
+				value = 0.001
+			}
+			owner = {
+				NOT = {
+					OR = {
+						tag = event_target:hellenicEmpire
+						is_subject_of_type = diadochi_vassal
+					}
+				}
+			}
+		}
+		set_variable = {
+			which = religion_conversion_hellenic_var
+			value = 0
+		}
+		if = {
+			limit = {
+				NOT = {
+					region_for_scope_province = {
+						type = any
+						NOT = { religion = reformed_hellenic }
+						owner = {
+							OR = {
+								tag = event_target:hellenicEmpire
+								is_subject_of_type = diadochi_vassal
+							}
+						}
+					}
+				}
+			}
+			event_target:hellenicEmpire = {
+				country_event = {
+					id = ab_nicaea.20
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				region_for_scope_province = {
+					type = any
+					has_province_modifier = nci_center_of_hellenisation
+				}
+			}
+			random_province = {
+				limit = {
+					region = ROOT
+					NOT = { religion = reformed_hellenic }
+					owner = {
+						OR = {
+							tag = event_target:hellenicEmpire
+							is_subject_of_type = diadochi_vassal
+						}
+					}
+				}
+				set_variable = {
+					which = religion_conversion_hellenic_var
+					value = 12
+				}
+				province_event = {
+					id = ab_nicaea.21
+					days = 30
+				}
 			}
 		}
 	}
@@ -1580,6 +1663,63 @@ TLW_on_province_religion_changed = {
 		}
 		else = {
 			TLW_rome_monument_downgrade_effect = yes
+		}
+	}
+	# Nicaea
+	if = {
+		limit = {
+			check_variable = {
+				which = religion_conversion_hellenic_var
+				value = 0.001
+			}
+			religion = reformed_hellenic
+		}
+		set_variable = {
+			which = religion_conversion_hellenic_var
+			value = 0
+		}
+		if = {
+			limit = {
+				NOT = {
+					region_for_scope_province = {
+						type = any
+						NOT = { religion = reformed_hellenic }
+						owner = {
+							OR = {
+								tag = event_target:hellenicEmpire
+								is_subject_of_type = diadochi_vassal
+							}
+						}
+					}
+				}
+			}
+			event_target:hellenicEmpire = {
+				country_event = {
+					id = ab_nicaea.20
+				}
+			}
+		}
+		else = {
+			random_province = {
+				limit = {
+					region = ROOT
+					NOT = { religion = reformed_hellenic }
+					owner = {
+						OR = {
+							tag = event_target:hellenicEmpire
+							is_subject_of_type = diadochi_vassal
+						}
+					}
+				}
+				set_variable = {
+					which = religion_conversion_hellenic_var
+					value = 12
+				}
+				province_event = {
+					id = ab_nicaea.21
+					days = 30
+				}
+			}
 		}
 	}
 	# Punic
