@@ -74,10 +74,10 @@ defined_text = {
 	text = {
 		localisation_key = AB_CULTURE_CONVERSION_VISIGOTHIC
 		trigger = {
+			NOT = { culture = Visigothic }
 			owner = {
 				primary_culture = Visigothic
 			}
-			NOT = { culture = Visigothic }
 			OR = {
 				AND = {
 					OR = {
@@ -99,6 +99,104 @@ defined_text = {
 						mission_completed = vsg_finish_reconquista
 					}
 				}
+			}
+		}
+	}
+	# Punicization
+	text = {
+		localisation_key = AB_CULTURE_CONVERSION_PUNIC
+		trigger = {
+			NOT = { culture_group = punic_g }
+			owner = {
+				culture_group = punic_g
+			}
+			OR = {
+				AND = {
+					owner = {
+						has_country_flag = ctg_barbiri_spread
+					}
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+				}
+				AND = {
+					owner = {
+						mission_completed = ctg_restoration_of_iberia
+					}
+					OR = {
+						region = iberia_region
+						region = france_region
+					}
+				}
+				AND = {
+					owner = {
+						mission_completed = ctg_the_lost_world
+					}
+					region = maghreb_region
+				}
+				AND = {
+					owner = {
+						mission_completed = ctg_return_to_phoenicia
+					}
+					superregion = near_east_superregion
+				}
+				AND = {
+					owner = {
+						mission_completed = ctg_punic_italy
+					}
+					continent = europe
+				}
+			}
+		}
+	}
+	# Spread of Iroquoian Culture
+	text = {
+		localisation_key = AB_CULTURE_CONVERSION_IROQUOIAN
+		trigger = {
+			NOT = { culture_group = iroquoian }
+			owner = {
+				culture_group = iroquoian
+			}
+			OR = {
+				AND = {
+					owner = {
+						has_country_flag = che_huron_spread
+					}
+					culture_group = eastern_algonquian
+				}
+				AND = {
+					owner = {
+						has_country_flag = che_mesquakie_spread
+					}
+					culture_group = siouan
+				}
+				AND = {
+					owner = {
+						has_country_flag = che_tionontate_spread
+					}
+					OR = {
+						culture_group = caddoan
+						culture_group = plains_algonquian
+					}
+				}
+				AND = {
+					owner = {
+						has_country_flag = che_europe_spread
+					}
+					superregion = europe_superregion
+				}
+			}
+		}
+	}
+	# Spread of Hebrew Culture
+	text = {
+		localisation_key = AB_CULTURE_CONVERSION_HEBREW
+		trigger = {
+			superregion = near_east_superregion
+			NOT = { culture = hebrew }
+			owner = {
+				has_country_flag = cca_hebrew_spread
 			}
 		}
 	}
@@ -740,6 +838,75 @@ defined_text = {
 			NOT = {
 				any_neighbor_province = {
 					culture = Visigothic
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+# Punicization
+defined_text = {
+	name = GetNotBorderPunicCultureSeaSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_friendly_coast_border_province = {
+					culture_group = punic_g
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+# Spread of Iroquoian Culture
+defined_text = {
+	name = GetNotBorderIroquoianCultureSeaSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_friendly_coast_border_province = {
+					culture_group = iroquoian
+				}
+			}
+		}
+	}
+	text = {
+		localisation_key = AB_NO_CONDITION_SIGN
+		trigger = {
+			always = yes
+		}
+	}
+}
+
+# Spread of Hebrew Culture
+defined_text = {
+	name = GetNotBorderHebrewCultureSeaSign
+	random = no
+
+	text = {
+		localisation_key = AB_YES_CONDITION_SIGN
+		trigger = {
+			NOT = {
+				any_friendly_coast_border_province = {
+					culture = hebrew
 				}
 			}
 		}

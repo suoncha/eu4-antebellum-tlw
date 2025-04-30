@@ -2297,8 +2297,6 @@ country_event = {
 				name = punic_iroquoian_punicization
 				duration = 3650
 			}
-			custom_tooltip = PUN_BARBIRI_SPREAD
-			custom_tooltip = AB_EMPTY
 			country_event = {
 				id = ideagroups.1
 			}
@@ -2353,11 +2351,13 @@ country_event = {
 				name = punic_iroquoian_punicization
 				duration = 3650
 			}
-			set_country_flag = ctg_barbiri_spread
-			custom_tooltip = PUN_BARBIRI_SPREAD
-			custom_tooltip = AB_EMPTY
 			country_event = {
 				id = ideagroups.1
+			}
+			hidden_effect = {
+				every_owned_province = {
+					change_culture = barbiri
+				}
 			}
 		}
 	}
@@ -2378,7 +2378,7 @@ country_event = {
 	}
 }
 
-#Spread of Barbiri - Hidden
+#Punicization - Trigger
 province_event = {
 	id = ab_punic.45
 	title = ab_punic.45.t
@@ -2386,62 +2386,8 @@ province_event = {
 	picture = CULTURE_eventPicture
 	
 	hidden = yes
-		
-	trigger = {
-		owner = {
-			culture_group = punic_g
-		}
-		NOT = { culture_group = punic_g }
-		any_friendly_coast_border_province = {
-			culture_group = punic_g
-		}
-		OR = {
-			AND = {
-				owner = {
-					has_country_flag = ctg_barbiri_spread
-				}
-				OR = {
-					continent = north_america
-					continent = south_america
-				}
-			}
-			AND = {
-				owner = {
-					mission_completed = ctg_restoration_of_iberia
-				}
-				OR = {
-					region = iberia_region
-					region = france_region
-				}
-			}
-			AND = {
-				owner = {
-					mission_completed = ctg_the_lost_world
-				}
-				region = maghreb_region
-			}
-			AND = {
-				owner = {
-					mission_completed = ctg_return_to_phoenicia
-				}
-				superregion = near_east_superregion
-			}
-			AND = {
-				owner = {
-					mission_completed = ctg_punic_italy
-				}
-				continent = europe
-			}
-		}
-	}
 
-	mean_time_to_happen = {
-		months = 240
-		modifier = {
-			factor = 0.75
-			religion = owner
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_punic.45.a
@@ -3634,53 +3580,8 @@ province_event = {
 	picture = CULTURE_eventPicture
 	
 	hidden = yes
-		
-	trigger = {
-		owner = {
-			culture_group = iroquoian
-		}
-		NOT = { culture_group = iroquoian }
-		any_friendly_coast_border_province = {
-			culture_group = iroquoian
-		}
-		OR = {
-			AND = {
-				owner = {
-					has_country_flag = che_huron_spread
-				}
-				culture_group = eastern_algonquian
-			}
-			AND = {
-				owner = {
-					has_country_flag = che_mesquakie_spread
-				}
-				culture_group = siouan
-			}
-			AND = {
-				owner = {
-					has_country_flag = che_tionontate_spread
-				}
-				OR = {
-					culture_group = caddoan
-					culture_group = plains_algonquian
-				}
-			}
-			AND = {
-				owner = {
-					has_country_flag = che_europe_spread
-				}
-				superregion = europe_superregion
-			}
-		}
-	}
 
-	mean_time_to_happen = {
-		months = 240
-		modifier = {
-			factor = 0.75
-			religion = owner
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_punic.72.a
@@ -4128,41 +4029,14 @@ country_event = {
 		custom_tooltip = AB_EMPTY
 		set_country_flag = cca_hebrew_spread
 		custom_tooltip = CCA_HEBREW_SPREAD
-	}
-}
-
-#Spread of Hebrew - Hidden
-province_event = {
-	id = ab_punic.82
-	title = ab_punic.82.t
-	desc = ab_punic.82.d
-	picture = CULTURE_eventPicture
-	
-	hidden = yes
-		
-	trigger = {
-		owner = {
-			has_country_flag = cca_hebrew_spread
+		hidden_effect = {
+			near_east_superregion = {
+				limit = {
+					owned_by = ROOT
+				}
+				TLW_culture_conversion_calc_effect = yes
+			}
 		}
-		superregion = near_east_superregion
-		NOT = { culture = hebrew }
-		any_friendly_coast_border_province = {
-			culture = hebrew
-		}
-	}
-
-	mean_time_to_happen = {
-		months = 240
-		modifier = {
-			factor = 0.75
-			religion = owner
-		}
-	}
-	
-	option = {
-		name = ab_punic.82.a
-		change_culture = hebrew
-		change_original_culture = hebrew
 	}
 }
 
