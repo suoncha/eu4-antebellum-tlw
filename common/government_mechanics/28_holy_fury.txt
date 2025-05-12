@@ -1,0 +1,65 @@
+holy_fury_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Rights of Man"
+	}
+
+	powers = {
+		holy_fury = {
+			gui = holy_fury_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					morale_damage = 0.1
+					infantry_power = 0.1
+					war_exhaustion = -0.10
+					monthly_holy_fury = -0.25
+				}
+			}
+		}
+	}
+	
+	interactions = {
+		holy_fury_boost_holy_fury = {
+			gui = holy_fury_gov_mech
+			cost_type = holy_fury
+			center = no
+			trigger = {
+				mil_power_cost = 50
+				not = {
+					has_government_power = {
+						mechanic_type = holy_fury_mechanic
+						power_type = holy_fury
+						value = 100
+					}
+				}
+			}
+			effect = { 
+				mil_power_cost = 50
+				add_government_power = {
+					mechanic_type = holy_fury_mechanic
+					power_type = holy_fury
+					value = 10
+				}
+			}
+			cooldown_years = 0
+			ai_chance = {
+				factor = 0
+				modifier = {
+					factor = 10
+					not = {
+						has_government_power = {
+							mechanic_type = holy_fury_mechanic
+							power_type = holy_fury
+							value = 90
+						}
+					}
+					mil_power_cost = 500
+					is_at_war = yes
+				}
+			}
+		}
+	}
+}
