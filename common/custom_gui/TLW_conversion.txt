@@ -1,0 +1,54 @@
+### CULTURE CONVERSION ###
+custom_icon = {
+	name = culture_conversion_frame
+	potential = {
+	}
+}
+
+custom_icon = {
+	name = culture_conversion_bar
+	potential = {
+	}
+	tooltip = AB_CULTURE_CONVERSION_TOOLTIP
+	frame_variable = "culture_conversion_var"
+}
+
+custom_button = {
+    name = culture_conversion_refresh
+    potential = {
+    }
+    trigger = {
+		custom_trigger_tooltip = {
+			tooltip = AB_NOT_REFRESHABLE_CULTURE_CONVERSION
+			NOT = { has_country_modifier = culture_conversion_refresh_timer }
+		}
+    }
+    effect = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = culture_conversion_refresh_timer
+				duration = 365
+			}
+			every_province = {
+				limit = {
+					is_city = yes
+				}
+				TLW_culture_conversion_refresh_effect = yes
+			}
+		}
+    }
+    tooltip = AB_CULTURE_CONVERSION_REFRESH_TT
+}
+
+### RELIGION CONVERSION ###
+custom_icon = {
+	name = religion_conversion_bar
+	potential = {
+		check_variable = {
+			which = religion_conversion_hellenic_var
+			value = 0.001
+		}
+	}
+	tooltip = AB_RELIGION_CONVERSION_HELLENIC
+	frame_variable = "religion_conversion_hellenic_var"
+}

@@ -102,9 +102,15 @@ declarewar = {
 	condition = {
 		tooltip = GRAND_CRUSADE_NO_OTHER_WAR
 		potential = {
-			is_in_war = {
-				attacker_leader = ROOT
-				casus_belli = cb_grand_crusade
+			OR = {
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_grand_crusade
+				}
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_europa_crusade
+				}
 			}
 		}
 		allow = {
@@ -155,16 +161,6 @@ declarewar = {
 	# ]]]
 	effect = {
 		on_war_declaration_effect = yes
-		if = {
-			limit = { 
-				has_country_flag = nor_norwegian_independence_modifier
-				FROM = { tag = DAN }
-			}
-			add_country_modifier = {
-				name = nor_norwegian_independence_war_mod
-				duration = -1
-			}
-		}
 		# AB [[[
 		# Thanks Inferno
 		if = {
@@ -175,7 +171,7 @@ declarewar = {
 			}
 			set_country_flag = frc_had_morale_modifier
 			add_country_modifier = {
-				name = "frc_valencia_avenge"
+				name = frc_valencia_avenge
 				duration = -1
 			}
 		}
@@ -242,6 +238,67 @@ declarewar = {
 			add_country_modifier = {
 				name = inward_war
 				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_teu_joined_hre
+				NOT = {
+					OR = {
+						tag = PRU
+						tag = LVI
+					}
+				}
+				is_part_of_hre = yes
+				FROM = { is_part_of_hre = yes }
+			}
+			clr_country_flag = ab_teu_joined_hre
+			country_event = {
+				id = teuton_event.12
+				days = 10
+			}
+		}
+		if = {
+			limit = {
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_europa_crusade
+				}
+			}
+			add_country_modifier = {
+				name = pap_europa_crusade_helper
+				duration = -1
+				hidden = yes
+			}
+			FROM = {
+				save_global_event_target_as = europa_crusade_target
+				every_neighbor_country = {
+					limit = {
+						religion = catholic
+					}
+					country_event = {
+						id = ab_papal.16
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_flag = AB_DIRECT_COLONIAL_WAR
+				FROM = {
+					is_colonial_nation = yes
+				}
+				OR = {
+					# TLW [[[
+					tag = CTG
+					tlw_is_american_trigger = yes
+					# ]]]
+				}
+			}
+			FROM = {
+				overlord = {
+					join_all_defensive_wars_of = FROM
+				}
 			}
 		}
 		# ]]]
@@ -323,24 +380,38 @@ declarewar = {
 				id = ab_performance.26
 			}
 		}
-		if = {
-			limit = {
-				has_global_flag = AB_DIRECT_COLONIAL_WAR
-				FROM = {
-					is_colonial_nation = yes
-				}
-				OR = {
-					tag = CTG
-					tlw_is_american_trigger = yes
-				}
-			}
+		# ]]]
+	}
+}
+
+# Thanks Nitrogue for suggesting this
+demand_unlawful_territory_action = {
+	condition = {
+		tooltip = fate_of_francia_supported_the_war_tooltip
+		potential = { 
 			FROM = {
-				overlord = {
-					join_all_defensive_wars_of = FROM
-				}
+				has_country_modifier = fate_of_francia_emperor_timer
 			}
 		}
-		# ]]]
+		allow = { 
+			always = no
+		}
+	}
+	condition = {
+		tooltip = fate_of_francia_supported_the_war_tooltip
+		potential = {
+			# This flag only applies to the emperor if it is the carolingians
+			OR = {
+				tag = FRC
+				was_tag = FRC
+			}
+			FROM = {
+				has_country_modifier = fate_of_francia_carolingian_timer
+			}
+		}
+		allow = { 
+			always = no
+		}
 	}
 }
 
@@ -512,18 +583,6 @@ fabricate_claim = {
 		}
 		allow = {
 			tag = CTG
-		}
-	}
-}
-
-demand_unlawful_territory_action = {
-	condition = {
-		tooltip = AB_EMPTY
-		potential = {
-			ai = yes
-		}
-		allow = {
-			always = no
 		}
 	}
 }

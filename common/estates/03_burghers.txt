@@ -21,13 +21,6 @@ estate_burghers = {
 				NOT = { has_estate = estate_jains }
 			}
 		}
-		#NOT = { has_government_attribute = is_merchant_republic }
-		#NOT = { has_reform = veche_republic }
-		#NOT = { has_reform = trading_city }
-		#OR = {
-		#	NOT = { has_reform = celestial_empire }
-		#	has_dlc = "Mandate of Heaven"
-		#}
 	}
 
 	# These scale with loyalty & power
@@ -156,21 +149,6 @@ estate_burghers = {
 		influence = 5
 	}
 	influence_modifier = {
-		desc = EST_VAL_EAST_AFRICAN_TRADE_CITIES
-		trigger = {
-			capital_scope = {
-				OR = {
-					area = central_swahili_coast_area
-					area = mombasa_area
-					area = mozambique_area
-					area = northern_swahili_coast_area
-					area = mogadishu_area
-				}
-			}
-		}
-		influence = 5
-	}
-	influence_modifier = {
 		desc = EST_VAL_LOW_TRADE_INCOME
 		trigger = {
 			NOT = { trade_income_percentage = 0.25 }
@@ -217,19 +195,21 @@ estate_burghers = {
                 tag = FIN
                 was_tag = FIN
             }
-            OR = {
-                religion = suomi_pagan
-                religion = reformed_suomi
-            }
         }
     }
+	# TLW [[[
 	custom_name = {
 		desc = estate_emporoi
 		trigger = {
-			tag = BYZ
-			culture_group = byzantine
+			OR = {
+				primary_culture = greek
+				primary_culture = sclavinian
+				primary_culture = greco_roman
+				culture_group = hellenic_g
+			}
 		}
 	}
+	# ]]]
 	custom_name = {
 		desc = estate_quartersmasters
 		trigger = {
@@ -240,31 +220,18 @@ estate_burghers = {
 		desc = estate_gorozhane
 		trigger = {
 			culture_group = east_slavic
-			NOT = {
-				primary_culture = Litvin
-			}
+			NOT = { primary_culture = Litvin }
 		}
 	}
 	custom_name = {
 		desc = estate_hutukhshan
-			trigger = {
-				OR = {
-					tag = PER
-					tag = PRZ
-					tag = PRC
-					tag = PMN
-					tag = SSN
-					tag = SHP
-					tag = KRN
-					tag = ISP
-					tag = ZKD
-					tag = INJ
-					tag = MRV
-					tag = SRN
-					tag = KYN
-					tag = MRH
-				}
+		trigger = {
+			OR = {
+				ab_is_persia_trigger = yes
+				has_reform = persianprince
+				has_reform = persianprincet
 			}
+		}
 	}
 	custom_name = {
 		desc = estate_sweden_borgare
@@ -285,6 +252,13 @@ estate_burghers = {
 		desc = estate_shangbang
 		trigger = {
 			culture_group = east_asian
+		}
+	}
+	custom_name = {
+		desc = estate_neoconfucian_reformers
+		trigger = {
+			tag = KOR
+			religion = confucianism
 		}
 	}
 	custom_name = {
@@ -313,18 +287,6 @@ estate_burghers = {
 	}
 	# ]]]
 	# TLW [[[
-	custom_name = {
-		desc = estate_emporoi
-		trigger = {
-			OR = {
-				primary_culture = greek
-				primary_culture = greco_roman
-				primary_culture = sclavinian
-				culture_group = hellenic_g
-			}
-			NOT = { tag = BYZ }
-		}
-	}
 	custom_name = {
 		desc = estate_equestrians
 		trigger = {
@@ -362,8 +324,7 @@ estate_burghers = {
 	custom_name = {
 		desc = estate_merchant_guilds
 		trigger = {
-			OR = {	#Just like "NOT = { religion_group = Christian }", but at least it doesn't override estate names for new religion groups
-				#Still needs more diversity
+			OR = {
 				religion_group = muslim
 				religion_group = eastern
 				religion_group = dharmic
@@ -427,14 +388,11 @@ estate_burghers = {
 		estate_burghers_exkousseiai_for_latins
 		estate_burghers_BYZ_single_market
 		estate_burghers_ARB_oasis_development
-		#estate_burghers_YEM_coffee_monopoly
 		estate_burghers_persian_rugs
 		estate_burghers_hungarian_royal_cities
         estate_burghers_italian_coastal_influence
-        #estate_burghers_livestock_regulations
         estate_burghers_arabian_traders
         estate_burghers_omani_marines
-        #estate_burghers_ITA_promote_latin_merchants
         estate_burghers_ITA_permit_merchant_colonists
         estate_burghers_GER_customs_union
         estate_burghers_GER_turn_towards_mercantilism
