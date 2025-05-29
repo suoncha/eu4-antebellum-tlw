@@ -1,0 +1,755 @@
+ab_game_rules_setup_effect = {
+	set_country_flag = ab_game_rules_menu_opened
+	set_variable = {
+		which = ab_game_rules_page_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_preset_cn_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_migratory_tribes_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_early_colonization_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_directcolonial_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_colored_subjects_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_frankish_crisis_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_hussites_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_ottomans_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_golden_horde_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_dunkeld_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_yuan_crisis_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_white_lotus_var
+		value = 1
+	}
+	### TLW [[[
+	set_variable = {
+		which = ab_game_rules_emperor_east_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_visigoths_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_pendragon_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_mademperor_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_nationalism_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_bloodiron_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_plagues_var
+		value = 1
+	}
+	set_variable = {
+		which = ab_game_rules_carthage_var
+		value = 1
+	}
+	### TLW ]]]
+}
+
+ab_game_rules_back_page_effect = {
+    # First Page
+    if = {
+        limit = {
+            ab_game_rules_page = { page = 1 }
+        }
+        set_variable = {
+            which = ab_game_rules_page_var
+            value = 4 # TLW
+        }
+    }
+    else = {
+        subtract_variable = {            
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+}
+
+ab_game_rules_next_page_effect = {
+    # Last Page
+    if = {
+        limit = {
+            ab_game_rules_page = { page = 4 } # TLW
+        }
+        set_variable = {
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+    else = {
+        change_variable = {            
+            which = ab_game_rules_page_var
+            value = 1
+        }
+    }
+}
+
+ab_game_rules_back_option_effect = {
+	# First Option
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = $var$
+				value = 1
+			}
+		}
+		set_variable = {
+			which = $var$
+			value = $num$
+		}
+	}
+	else = {
+		subtract_variable = {            
+			which = $var$
+			value = 1
+		}
+	}
+}
+
+ab_game_rules_next_option_effect = {
+	# Last Option
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = $var$
+				value = $num$
+			}
+		}
+		set_variable = {
+			which = $var$
+			value = 1
+		}
+	}
+	else = {
+		change_variable = {            
+			which = $var$
+			value = 1
+		}
+	}
+}
+
+ab_game_rules_confirm_effect = {
+	clr_country_flag = ab_game_rules_menu_opened
+	remove_country_modifier = ab_set_gamerule_timer
+	# Preset CN
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_preset_cn_var
+				value = 2
+			}
+		}
+		set_global_flag = NO_CNS
+	}
+	# Migratory Tribes
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_migratory_tribes_var
+				value = 2
+			}
+		}
+		every_province = {
+			limit = {
+				OR = {
+					continent = north_america
+					continent = south_america
+					continent = oceania
+				}
+				owner = {
+					government = native
+				}
+			}
+			if = {
+				limit = {
+					has_building = fort_15th
+				}
+				remove_building = fort_15th
+			}
+			cede_province = ---
+		}
+	}
+	# Early AI Colonization
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_early_colonization_var
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ADU = {
+					ai = yes
+				}
+			}
+			ADU = {
+				country_event = {
+					id = ab_game_rules_event.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				FRC = {
+					ai = yes
+				}
+			}
+			FRC = {
+				country_event = {
+					id = ab_game_rules_event.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				ENG = {
+					ai = yes
+				}
+			}
+			ENG = {
+				country_event = {
+					id = ab_game_rules_event.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				HOL = {
+					ai = yes
+				}
+			}
+			HOL = {
+				country_event = {
+					id = ab_game_rules_event.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOR = {
+					ai = yes
+				}
+			}
+			NOR = {
+				country_event = {
+					id = ab_game_rules_event.1
+				}
+			}
+		}
+	}
+	# Direct Colonial War
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_directcolonial_var
+				value = 2
+			}
+		}
+		set_global_flag = AB_DIRECT_COLONIAL_WAR
+	}
+	# Overlord Colored Subjects
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_colored_subjects_var
+				value = 2
+			}
+		}
+		set_global_flag = AB_COLORED_SUBJECT_ALL
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_subject = yes
+					is_colonial_nation = no
+				}
+				change_country_color = {
+					country = overlord
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_colored_subjects_var
+				value = 3
+			}
+		}
+		set_global_flag = AB_COLORED_SUBJECT_VASSAL
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						is_vassal = yes
+						is_march = yes
+					}
+				}
+				change_country_color = {
+					country = overlord
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_colored_subjects_var
+				value = 4
+			}
+		}
+		set_global_flag = AB_COLORED_SUBJECT_PU
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_subject_of_type = personal_union
+				}
+				change_country_color = {
+					country = overlord
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_colored_subjects_var
+				value = 5
+			}
+		}
+		set_global_flag = AB_COLORED_SUBJECT_TRIBUTARY
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_subject_of_type = tributary_state
+				}
+				change_country_color = {
+					country = overlord
+				}
+			}
+		}
+	}
+	# Frankish Succession
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_frankish_crisis_var
+				value = 2
+			}
+		}
+		FRC = {
+			set_country_flag = ab_game_rules_frankish_disaster
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_frankish_crisis_var
+				value = 3
+			}
+		}
+		FRC = {
+			set_country_flag = ab_game_rules_frankish_abdicate
+		}
+	}
+	# Return of the Hussites
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_hussites_var
+				value = 2
+			}
+		}
+		BOH = {
+			set_country_flag = ab_game_rules_hussite_hussite
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_hussites_var
+				value = 3
+			}
+		}
+		BOH = {
+			set_country_flag = ab_game_rules_hussite_catholic
+		}
+	}
+	# Rise of the Ottomans
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_ottomans_var
+				value = 2
+			}
+		}
+		BYZ = {
+			set_country_flag = ab_game_rules_ottomans_enabled
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_ottomans_var
+				value = 3
+			}
+		}
+		BYZ = {
+			set_country_flag = ab_game_rules_ottomans_disabled
+		}
+	}
+	# Fate of the Golden Horde
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_golden_horde_var
+				value = 2
+			}
+		}
+		GLH = {
+			set_country_flag = ab_game_rules_glh_horde
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_golden_horde_var
+				value = 3
+			}
+		}
+		GLH = {
+			set_country_flag = ab_game_rules_glh_tataria
+		}
+	}
+	# Dunkeld Legacy
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_dunkeld_var
+				value = 2
+			}
+		}
+		SCO = {
+			set_country_flag = ab_game_rules_sco_gael
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_dunkeld_var
+				value = 3
+			}
+		}
+		SCO = {
+			set_country_flag = ab_game_rules_sco_albion
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_dunkeld_var
+				value = 4
+			}
+		}
+		SCO = {
+			set_country_flag = ab_game_rules_sco_brit
+		}
+	}
+	# Yuan Crisis
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_yuan_crisis_var
+				value = 2
+			}
+		}
+		YUA = {
+			set_country_flag = ab_game_rules_yuan_sinicized
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_yuan_crisis_var
+				value = 3
+			}
+		}
+		YUA = {
+			set_country_flag = ab_game_rules_yuan_nestorian
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_yuan_crisis_var
+				value = 4
+			}
+		}
+		YUA = {
+			set_country_flag = ab_game_rules_yuan_horde
+		}
+	}
+	# White Lotus
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_white_lotus_var
+				value = 2
+			}
+		}
+		HNN = {
+			set_country_flag = ab_game_rules_hnn_maitreya
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_white_lotus_var
+				value = 3
+			}
+		}
+		HNN = {
+			set_country_flag = ab_game_rules_hnn_confucian
+		}
+	}
+	### TLW [[[
+	# Emperor of the East
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_emperor_east_var
+				value = 2
+			}
+		}
+		BYZ = {
+			set_country_flag = ab_stronger_ai_byz
+			set_country_flag = had_16th_crisis
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_emperor_east_var
+				value = 3
+			}
+		}
+		KNI = {
+			set_country_flag = ab_stronger_ai_lat
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_emperor_east_var
+				value = 4
+			}
+		}
+		AKG = {
+			set_country_flag = ab_stronger_ai_akg
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_emperor_east_var
+				value = 5
+			}
+		}
+		SRK = {
+			set_country_flag = ab_stronger_ai_srk
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_emperor_east_var
+				value = 6
+			}
+		}
+		NCI = {
+			set_country_flag = ab_stronger_ai_nci
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	# Rise of the Visigoths
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_visigoths_var
+				value = 2
+			}
+		}
+		ASU = {
+			set_country_flag = ab_stronger_ai_vsg
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_visigoths_var
+				value = 3
+			}
+		}
+		GUY = {
+			set_country_flag = ab_stronger_ai_aqt
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	# Pendragon
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_pendragon_var
+				value = 2
+			}
+		}
+		WLS = {
+			set_country_flag = ab_stronger_ai_brn
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	# The Mad Emperor
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_mademperor_var
+				value = 2
+			}
+		}
+		CAP = {
+			set_country_flag = ab_stronger_ai_cap
+			add_country_modifier = {
+				name = ab_stronger_ai_rome
+				duration = 20075
+			}
+		}
+	}
+	# Rise of Nationalism
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_nationalism_var
+				value = 2
+			}
+		}
+		set_global_flag = AB_DISABLED_NATIONALISM
+	}
+	# Blood and Iron
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_bloodiron_var
+				value = 2
+			}
+		}
+		country_event = {
+			id = tlw_game_rules_event.4
+		}
+	}
+	# Plagues
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_plagues_var
+				value = 2
+			}
+		}
+		set_global_flag = AB_DISABLED_PLAGUES
+	}
+	# Rebirth of Carthage
+	if = {
+		limit = {
+			is_variable_equal = {
+				which = ab_game_rules_carthage_var
+				value = 2
+			}
+		}
+		event_target:easimaTarget = {
+			add_country_modifier = {
+				name = ab_stronger_ai_punic
+				duration = -1
+			}
+			every_subject_country = {
+				limit = {
+					is_subject_of_type = punic_city_vassal
+				}
+				add_country_modifier = {
+					name = ab_stronger_ai_punic
+					duration = -1
+				}
+			}
+		}
+	}
+	### TLW ]]]
+}

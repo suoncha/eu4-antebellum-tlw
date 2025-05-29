@@ -1,0 +1,7033 @@
+aqt_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_appanage_support = {
+		icon = unite_the_wittelsbachs
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					is_subject_of = FRC
+				}
+				num_of_allies = 1
+				calc_true_if = {
+					all_ally = {
+						is_subject_of_type = appanage
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+					amount = 1
+				}
+			}
+			else = {
+				NOT = { exists = FRC }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					is_subject_of = FRC
+					FRC = {
+						ai = yes
+					}
+				}
+				add_country_modifier = {
+					name = aqt_appanage_alliance
+					duration = 3650
+				}
+				custom_tooltip = AQT_APPANAGE_ALLY_LD
+				hidden_effect = {
+					every_ally = {
+						limit = {
+							is_subject_of_type = appanage
+						}
+						add_liberty_desire = 10
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_subject_of = FRC
+					FRC = {
+						ai = no
+					}
+				}
+				add_country_modifier = {
+					name = aqt_appanage_alliance
+					duration = 3650
+				}
+			}
+			else = {
+				add_prestige_or_monarch_power = {
+					amount = 10
+				}
+			}
+		}
+	}
+
+	aqt_bourbonnais = {
+		icon = unite_the_realm
+
+		required_missions = { aqt_reclaim_cores }
+		position = 4
+	
+		provinces_to_highlight = {
+			OR = {
+				area = massif_central_area
+				owned_by = BOU
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = { exists = BOU }
+			massif_central_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			190 = {
+				change_culture = occitain
+			}
+			massif_central_area = {
+				add_province_modifier = {
+					name = aqt_aquitaine_reconquest
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+aqt_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_prepare_army = {
+		icon = protect_against_austria
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				OR = {
+					manpower_percentage = 1
+					army_size_percentage = 1
+				}
+				num_of_generals = 1
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					is_subject_of = FRC
+				}
+				add_country_modifier = {
+					name = aqt_revolt_preparations
+					duration = 1825
+				}
+			}
+			define_advisor = {
+				type = commandant
+				skill = 1
+				discount = yes
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				remove_ruler_personality = intricate_web_weaver_personality
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 100
+				add_treasury = 1000
+				add_stability = 2
+				capital_scope = {
+					for = {
+						amount = 60
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+				FRC = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_treasury = -200
+						add_manpower = -20
+						every_owned_province = {
+							add_territorial_core = ROOT
+						}
+						ROOT = {
+							declare_war_with_cb = {
+								casus_belli = cb_core
+								who = FRC
+								war_goal_province = 4112
+							}
+						}
+						every_owned_province = {
+							limit = {
+								is_neighbor_of = ROOT
+							}
+							change_controller = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+
+	aqt_revolt_francia = {
+		icon = mission_paladins
+		required_missions = { aqt_appanage_support aqt_prepare_army aqt_gather_allies }
+		position = 2
+	
+		provinces_to_highlight = {
+			owned_by = FRC
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					exists = FRC
+				}
+				is_in_war = {
+					casus_belli = cb_independence_war
+					attacker_leader = ROOT
+					defender_leader = FRC
+				}
+			}
+			else = {
+				NOT = { exists = FRC }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					exists = FRC
+				}
+				add_yearly_manpower = 4
+				add_prestige_or_monarch_power = {
+					amount = 25
+				}
+				if = {
+					limit = {
+						FRC = {
+							has_disaster = frankish_succession_crisis
+						}
+					}
+					custom_tooltip = LOT_FRC_DISASTER
+					add_country_modifier = {
+						name = lot_exploit
+						duration = 3650
+					}
+				}
+				else = {
+					custom_tooltip = LOT_FRC_DISASTER_NO
+					tooltip = {
+						add_country_modifier = {
+							name = lot_exploit
+							duration = 3650
+						}
+					}
+				}
+			}
+			else = {
+				add_adm_power = 100
+			}
+		}
+	}
+
+	aqt_reclaim_cores = {
+		icon = mission_strengthen_the_vegvar
+		required_missions = { aqt_revolt_francia }
+		position = 3
+	
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4694
+				province_id = 196
+				province_id = 4112
+				province_id = 194
+				province_id = 195
+				province_id = 4697
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			owns_core_province = 4694
+			owns_core_province = 196
+			owns_core_province = 4112
+			owns_core_province = 194
+			owns_core_province = 195
+			owns_core_province = 4697
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = aqt_gascony_rise
+				duration = 7300
+			}
+			languedoc_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			guyenne_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			massif_central_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			poitou_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				france_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	aqt_poitou = {
+		icon = develop_provence
+		required_missions = { aqt_reclaim_cores }
+		position = 4
+	
+		provinces_to_highlight = {
+			area = poitou_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			poitou_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			poitou_area = {
+				change_culture = gascon
+			}
+			poitou_area = {
+				add_province_modifier = {
+					name = aqt_aquitaine_reconquest
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	aqt_aquitaine = {
+		icon = mission_aquitaine
+		required_missions = { aqt_bourbonnais aqt_poitou aqt_toulouse }
+		position = 5
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		trigger = {
+			legitimacy = 100
+			custom_trigger_tooltip = {
+				tooltip = LOT_MORE_DEV
+				NOT = {
+					OR = {
+						FRC = {
+							total_development = ROOT
+						}
+						FRA = {
+							total_development = ROOT
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_aquitaine.2
+			}
+			custom_tooltip = AB_EMPTY
+			change_primary_culture = aquitaine
+			capital_scope = {
+				change_culture = aquitaine
+			}
+			hidden_effect = {
+				set_ruler_culture = ROOT
+				set_heir_culture = ROOT
+				add_accepted_culture_or_dip_power = {
+					culture = gascon
+					dip_reward = yes 
+				}
+				if = {
+					limit = {
+						consort_culture = gascon
+					}
+					set_consort_culture = aquitaine
+				}
+			}
+			custom_tooltip = AQT_AQUITAINE_CULTURE_SPREADING
+			set_country_flag = aqt_aquitaine_conversion_flag
+			france_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+aqt_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_gather_allies = {
+		icon = mission_alliances
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else_if = {
+				limit = {
+					is_subject_of = FRC
+				}
+				custom_trigger_tooltip = {
+					tooltip = AQT_FRC_RIVAL_SUPPORTING_INDEPENDENCE
+					FRC = {
+						any_enemy_country = {
+							is_supporting_independence_of = ROOT	
+						}
+					}
+				}
+			}
+			else = {
+				NOT = { exists = FRC }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					is_subject_of = FRC
+				}
+				custom_tooltip = AQT_FRC_RIVAL_TRUST
+				hidden_effect = {
+					every_country = {
+						limit = {
+							is_rival = FRC
+							is_supporting_independence_of = ROOT
+						}
+						add_trust = {
+							who = ROOT
+							value = 10
+							mutual = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						LOT = {
+							is_rival = FRC
+							is_supporting_independence_of = ROOT
+						}
+					}
+					custom_tooltip = AQT_LOT_GAIN_CORE
+					hidden_effect = {
+						LOT = {
+							every_neighbor_province = {
+								limit = {
+									owned_by = FRC
+									NOT = { is_core = ROOT	}
+								}
+								add_core = LOT
+							}
+						}
+					}
+				}
+				else = {
+					custom_tooltip = AQT_LOT_GAIN_CORE_NO
+				}
+			}
+			else = {
+				add_dip_power = 50
+			}
+		}
+	}
+
+	aqt_toulouse = {
+		icon = mission_invade_occitania
+		required_missions = { aqt_reclaim_cores }
+		position = 4
+	
+		provinces_to_highlight = {
+			OR = {
+				area = guyenne_area
+				area = languedoc_area
+				owned_by = TOU
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = { exists = TOU }
+			guyenne_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			languedoc_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_aquitaine.1
+			}
+			custom_tooltip = AB_EMPTY
+			guyenne_area = {
+				add_province_modifier = {
+					name = aqt_aquitaine_reconquest
+					duration = 3650
+				}
+			}
+			languedoc_area = {
+				add_province_modifier = {
+					name = aqt_aquitaine_reconquest
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+aqt_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_artillery = {
+		icon = mission_guns_of_urban
+		required_missions = { aqt_reform_army }
+		position = 2
+		
+		trigger = {
+			num_of_artillery = 20
+			army_tradition = 70
+			mil_tech = 10
+		}
+		
+		effect = {
+			define_advisor = {
+				type = siegeengineer
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = aqt_artillery
+				duration = 7300
+			}
+			if = {
+				limit = {
+					full_idea_group = infrastructure_ideas
+				}
+				custom_tooltip = BYZ_COMPLETE_INFRA_YES
+				add_country_modifier = {
+					name = aqt_siege_engines
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_COMPLETE_INFRA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = aqt_siege_engines
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aqt_fortify_pyrenees = {
+		icon = alpine_fortifications
+		required_missions = { aqt_toulouse }
+		position = 5
+	
+		provinces_to_highlight = {
+			OR = {
+				area = pyrenees_area
+				area = languedoc_area
+			}
+			NOT = { base_manpower = 5 }
+			province_has_current_tech_fort_trigger = no
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				pyrenees_area = {
+					owned_by = ROOT
+				}
+				languedoc_area = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				pyrenees_area = {
+					owned_by = ROOT
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 5
+				}
+				languedoc_area = {
+					owned_by = ROOT
+					province_has_current_tech_fort_trigger = yes
+					base_manpower = 5
+				}
+			}
+		}
+		
+		effect = {
+			pyrenees_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = geo_passes
+					duration = -1
+				}
+			}
+			languedoc_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = geo_passes
+					duration = -1
+				}
+			}
+			custom_tooltip = AQT_CLAIM_CHRISTIAN_IBERIA
+			hidden_effect = {
+				iberia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+						religion = catholic
+					}
+					add_claim = ROOT
+				}
+			}
+			if = {
+				limit = {
+					basque_country = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS
+				hidden_effect = {
+					basque_country = {
+						add_province_modifier = {
+							name = geo_passes
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AQT_FORTIFY_NAVARRA_BONUS_NO
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				iberia_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
+aqt_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_reform_army = {
+		icon = army_reforms
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_tradition = 35
+			army_professionalism = 0.25
+			has_mil_advisor_2 = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = aqt_army_reform
+				duration = 9125
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 3
+				discount = yes
+			}
+		}
+	}
+
+	aqt_frankish_knight = {
+		icon = mission_frankishknights
+		required_missions = { aqt_reform_army }
+		position = 2
+	
+		provinces_to_highlight = {
+			province_id = 183
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			owns_core_province = 183
+			OR = { 
+				has_global_modifier_value = { 
+					which = cavalry_power
+					value = 0.2
+				}
+				num_of_cavalry = 25
+			}
+			army_professionalism = 0.35
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = aqt_frankish_cavalry
+				duration = -1
+			}
+		}
+	}
+
+	aqt_legions_of_aquitaine = {
+		icon = fra_grande_armee
+		required_missions = { aqt_frankish_knight }
+		position = 3
+		
+		trigger = {
+			has_global_modifier_value = { 
+				which = discipline
+				value = 0.15
+			}
+			army_professionalism = 0.75
+			army_size = 150
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_country_modifier = {
+				name = aqt_legions
+				duration = 36500
+			}
+			custom_tooltip = AQT_UPGRADE_LEGION_REFORM
+			hidden_effect = {
+				if = {
+					limit = {
+						have_had_reform = aquitain_legion_reform
+					}
+					add_government_reform = aquitain_legion_reform_new
+				}
+			}
+		}
+	}
+
+	aqt_navarra = {
+		icon = mission_subjugate_navarra
+		required_missions = { }
+		position = 4
+	
+		provinces_to_highlight = {
+			OR = {
+				owned_by = NAV
+				AND = {
+					NOT = { exists = NAV }
+					area = basque_country
+				}
+			}
+		}
+		
+		trigger = {
+			OR = {
+				alliance_with = NAV
+				is_rival = NAV
+				AND = {
+					NOT = { exists = NAV }
+					basque_country = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 1
+			if = {
+				limit = {
+					alliance_with = NAV
+				}
+				custom_tooltip = AQT_NAVARRA_ALLY
+			}
+			else = {
+				custom_tooltip = AQT_NAVARRA_ALLY_NO
+			}
+			if = {
+				limit = {
+					OR = {
+						is_rival = NAV
+						is_enemy = NAV
+					}
+				}
+				custom_tooltip = AQT_NAVARRA_RIVAL
+			}
+			else = {
+				custom_tooltip = AQT_NAVARRA_RIVAL_NO
+			}
+			if = {
+				limit = {
+					NOT = { exists = NAV }
+					basque_country = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = AQT_NAVARRA_CONQUER
+			}
+			else = {
+				custom_tooltip = AQT_NAVARRA_CONQUER_NO
+			}
+			tooltip = {
+				add_accepted_culture_or_dip_power = {
+					culture = basque
+					dip_reward = yes
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						alliance_with = NAV
+					}
+					NAV = {
+						add_trust = {
+							who = ROOT
+							value = 25
+							mutual = yes
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						OR = {
+							is_rival = NAV
+							is_enemy = NAV
+						}
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = NAV
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = { exists = NAV }
+						basque_country = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_accepted_culture_or_dip_power = {
+						culture = basque
+						dip_reward = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_first_aquitaine_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GUY
+	}
+	has_country_shield = yes
+
+	aqt_upper_burgundy_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_aquitaine }
+		position = 6
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_switzerland_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_upper_burgundy_locked }
+		position = 8
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_south_germany_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_switzerland_locked }
+		position = 10
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+}
+
+aqt_second_aquitaine_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = GUY
+	}
+	has_country_shield = yes
+
+	aqt_britanny_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_aquitaine }
+		position = 7
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_secure_channel_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_britanny_locked }
+		position = 8
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_prepare_fleet_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_master_of_france_locked }
+		position = 9
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_invade_england_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_prepare_fleet_locked }
+		position = 10
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_north_germany_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_south_germany_locked aqt_low_countries_locked }
+		position = 11
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+}
+
+aqt_third_aquitaine_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = GUY
+	}
+	has_country_shield = yes
+
+	aqt_destroy_francia_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_aquitaine }
+		position = 6
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_master_of_france_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_britanny_locked aqt_destroy_francia_locked aqt_lower_burgundy_locked }
+		position = 8
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_low_countries_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_master_of_france_locked }
+		position = 10
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+}
+
+aqt_fourth_aquitaine_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = GUY
+	}
+	has_country_shield = yes
+
+	aqt_lower_burgundy_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_fortify_pyrenees }
+		position = 7
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_lombardy_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_lower_burgundy_locked }
+		position = 8
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_rome_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_lombardy_locked }
+		position = 9
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_sicily_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_rome_locked }
+		position = 10
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_latin_empire_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_sicily_locked }
+		position = 11
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+}
+
+aqt_fifth_aquitaine_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = GUY
+	}
+	has_country_shield = yes
+
+	aqt_unite_iberians_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_fortify_pyrenees aqt_navarra }
+		position = 6
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_valencia_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_unite_iberians_locked }
+		position = 8
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+
+	aqt_andalusia_locked = {
+		icon = mission_locked_mission
+		required_missions = { aqt_valencia_locked }
+		position = 10
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_UNLOCKABLE
+		}
+	}
+}
+
+aqt_first_aquitaine_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_upper_burgundy = {
+		icon = alpine_defenses
+		required_missions = { aqt_aquitaine }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = bourgogne_area
+				area = west_burgundy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    bourgogne_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_burgundy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = aqt_defeat_the_welf
+				duration = 9125
+			}
+			romandie_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_switzerland = {
+		icon = reorganize_the_confederacy
+		required_missions = { aqt_upper_burgundy }
+		position = 8
+	
+		provinces_to_highlight = {
+			OR = {
+				area = romandie_area
+				area = switzerland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    romandie_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    switzerland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOT_SWITZERLAND
+			set_country_flag = aqt_switzerland_conversion_flag
+			tooltip = {
+				add_province_modifier = {
+					name = lot_reorganize
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				romandie_area = {
+					add_province_modifier = {
+						name = lot_reorganize
+						duration = -1
+					}
+				}
+				switzerland_area = {
+					add_province_modifier = {
+						name = lot_reorganize
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = AQT_AQUITAINE_CULTURE_SWISS
+			set_country_flag = aqt_switzerland_bonus
+			tooltip = {
+				add_country_modifier = {
+					name = mlo_the_swiss_mercs
+					duration = -1
+				}
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+
+	aqt_south_germany = {
+		icon = revenge_for_nicopolis
+		required_missions = { aqt_switzerland }
+		position = 10
+	
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = south_german_region
+				value = 30
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 10
+			add_country_modifier = {
+				name = aqt_riches_of_germany
+				duration = 9125
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+aqt_second_aquitaine_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_britanny = {
+		icon = mission_rb_conquer_brittany
+		required_missions = { aqt_aquitaine }
+		position = 7
+	
+		provinces_to_highlight = {
+			area = brittany_area
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				local_autonomy = 10
+				nationalism = 10
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				brittany_area = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				brittany_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				brittany_area = {
+					type = all
+					NOT = {
+						local_autonomy = 10
+					}
+				}
+				brittany_area = {
+					type = all
+					NOT = {
+						nationalism = 10
+					}
+				}
+			}
+		}
+		
+		effect = {
+			brittany_area = {
+				add_nationalism = -10
+			}
+			brittany_area = {
+				add_province_modifier = {
+					name = frc_armorican
+					duration = 18250
+				}
+			}
+			custom_tooltip = FRC_BRETON_CULTURE
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = breton_new
+					old_culture_1 = breton
+				}
+				169 = { change_original_culture = breton_new }
+				170 = { change_original_culture = breton_new }
+				171 = { change_original_culture = breton_new }
+				172 = { change_original_culture = breton_new }
+				4384 = { change_original_culture = breton_new }
+			}
+		}
+	}
+
+	aqt_secure_channel = {
+		icon = mission_control_the_channel
+		required_missions = { aqt_britanny }
+		position = 8
+	
+		provinces_to_highlight = {
+			province_id = 1269 
+		}
+		
+		trigger = {
+			1269 = { 
+				trade_share = {
+					country = ROOT 
+					share = 75
+				}
+			}
+			if = { 
+				limit = { has_dlc = "Mare Nostrum" }
+				OR = {
+					full_idea_group = trade_ideas 
+					mercantilism = 50 
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fra_channel_dominance_modifier
+				duration = -1 
+			}
+			if = { 
+				limit = { 
+					1269 = { highest_value_trade_node = yes }
+				}
+				custom_tooltip = FRC_NODE_YES
+				hidden_effect = { 
+					every_owned_province = {
+						limit = { 
+							same_trade_node_as = 1269
+							province_has_center_of_trade_of_level = 1 
+						}
+						owner = { add_mercantilism = 1 }
+					}
+				}
+			}
+			else = {
+				custom_tooltip = FRC_NODE_NO
+			}
+		}
+	}
+
+	aqt_prepare_fleet = {
+		icon = mission_establish_high_seas_navy
+		required_missions = { aqt_master_of_france }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ENG
+				owned_by = GBR
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOT_MORE_SHIPS
+				NOT = {
+					OR = {
+						ENG = {
+							navy_size = ROOT
+						}
+						GBR = {
+							navy_size = ROOT
+						}
+					}
+				}
+			}
+			num_of_heavy_ship = 20
+			navy_size = 50
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = lot_naval
+				duration = 7300
+			}
+			87 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 1
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			cornwall_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wessex_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_invade_england = {
+		icon = mission_frankishengland
+		required_missions = { aqt_prepare_fleet }
+		position = 10
+	
+		provinces_to_highlight = {
+			OR = {
+				area = cornwall_area
+				area = wessex_area
+				area = home_counties_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = cornwall_area
+					area = wessex_area
+					area = home_counties_area
+				}
+				value = 6
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = { 
+				name = aqt_invasion_of_england
+				duration = 5475
+			}
+			british_isles_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					ENG = {
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
+						}
+					}
+				}
+				custom_tooltip = RIVAL_ENG_YES
+				add_country_modifier = {
+					name = wls_dragons
+					duration = 9125
+				}
+			}
+			else = {
+				custom_tooltip = RIVAL_ENG_NO
+				tooltip = {
+					add_country_modifier = {
+						name = wls_dragons
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	aqt_north_germany = {
+		icon = mission_bloodiron
+		required_missions = { aqt_south_germany aqt_low_countries }
+		position = 11
+	
+		provinces_to_highlight = {
+			region = north_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = north_german_region
+				value = 25
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = lot_reforge
+				duration = 9125
+			}
+			custom_tooltip = AQT_EVOLVING_NI1
+			custom_tooltip = AB_EMPTY
+			north_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				set_country_flag = aqt_evolved_ideas1
+				if = {
+					limit = {
+						tag = AQT
+					}
+					swap_free_idea_group = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = WRE
+						tag = ROM
+					}
+				}
+				custom_tooltip = BRN_COMPLETE_AS_ROME_YES
+				add_country_modifier = {
+					name = aqt_conqueror_of_germania
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = BRN_COMPLETE_AS_ROME_NO
+				tooltip = {
+					add_country_modifier = {
+						name = aqt_conqueror_of_germania
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_third_aquitaine_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_destroy_francia = {
+		icon = mission_downfall
+		required_missions = { aqt_aquitaine }
+		position = 6
+	
+		provinces_to_highlight = {
+			area = ile_de_france_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			ile_de_france_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = dip
+			}
+			add_country_modifier = {
+				name = ars_fall_of_paris
+				duration = 7300
+			}
+			custom_tooltip = LOT_UNLOCK_PALADINS
+			custom_tooltip = AB_EMPTY
+			france_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				add_country_modifier = {
+					name = ab_unlock_10_paladins
+					duration = -1
+				}
+			}
+		}
+	}
+
+	aqt_master_of_france = {
+		icon = centralize_france
+		required_missions = { aqt_britanny aqt_destroy_francia aqt_lower_burgundy }
+		position = 8
+
+		ai_weight = {
+			factor = 2000
+		}
+	
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = france_region
+				value = 40
+			}
+		}
+		
+		effect = {
+			france_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -10
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_government_power = {
+						mechanic_type = southern_vs_northern_french_mechanic
+						power_type = southernfrenchness
+						value = 0
+					}
+				}
+				custom_tooltip = YES_AQT_SOUTHERN_SUPREMACY
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								culture = aquitaine
+								culture = occitain
+								culture = gascon
+							}
+						}
+						add_province_modifier = {
+							name = aqt_southern_supremacy
+							duration = 9125
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = NO_AQT_SOUTHERN_SUPREMACY
+			}
+			tooltip = {
+				add_province_modifier = {
+					name = aqt_southern_supremacy
+					duration = 10950
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_government_power = {
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = 0
+						}
+					}
+				}
+				custom_tooltip = YES_AQT_NORTHERN_SUPREMACY
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								culture = cosmopolitan_french
+								culture = burgundian
+								culture = normand
+								culture = wallonian
+							}
+						}
+						add_province_modifier = {
+							name = aqt_northern_supremacy
+							duration = 9125
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = NO_AQT_NORTHERN_SUPREMACY
+			}
+			tooltip = {
+				add_province_modifier = {
+					name = aqt_northern_supremacy
+					duration = 10950
+				}
+			}
+			low_countries_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				british_isles_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	aqt_low_countries = {
+		icon = ned_dykes
+		required_missions = { aqt_master_of_france }
+		position = 10
+	
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = low_countries_region
+				value = 15
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.63
+			}
+			custom_tooltip = AB_EMPTY
+			low_countries_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+			}
+			custom_tooltip = LOT_MARKETPLACE
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_trade_building_trigger = yes
+							}
+							upgrade_trade_building = yes
+						}
+					"
+				}
+			}
+			custom_tooltip = AQT_WALLOON_SPREAD
+		}
+	}
+}
+
+aqt_fourth_aquitaine_unlocked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_lower_burgundy = {
+		icon = negotiate_for_avignon
+		required_missions = { aqt_fortify_pyrenees }
+		position = 7
+
+		ai_weight = {
+			factor = 1000
+		}
+	
+		provinces_to_highlight = {
+			OR = {
+				area = savoy_dauphine_area
+				area = provence_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				savoy_dauphine_area = {
+					type = all
+				}
+				provence_area = {
+					type = all
+				}
+			}
+			else = {
+				savoy_dauphine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				provence_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			201 = {
+				add_great_project_tier = {
+					type = royal_palace_of_arles
+					tier = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					accepted_culture = occitain
+				}
+				custom_tooltip = AQT_OCCITAN_BONUS
+				201 = {
+					add_base_tax = 2
+					add_base_production = 2
+					add_base_manpower = 2
+				}
+			}
+			else = {
+				custom_tooltip = AQT_OCCITAN_BONUS_NO
+				tooltip = {
+					201 = {
+						add_base_tax = 2
+						add_base_production = 2
+						add_base_manpower = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	aqt_lombardy = {
+		icon = mission_conquer_north_italy
+		required_missions = { aqt_lower_burgundy }
+		position = 8
+	
+		provinces_to_highlight = {
+			OR = {
+				area = lombardy_area
+				area = piedmont_area
+				area = emilia_romagna_area
+				area = liguria_area 
+				area = po_valley_area 
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = lombardy_area
+					area = piedmont_area
+					area = emilia_romagna_area
+					area = liguria_area 
+					area = po_valley_area 
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_ITALY_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = italy_region
+						}
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			add_country_modifier = {
+				name = wls_italian_wars
+				duration = 7300
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			corsica_sardinia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_rome = {
+		icon = mission_colosseum
+		required_missions = { aqt_lombardy }
+		position = 9
+	
+		provinces_to_highlight = {
+			province_id = 118
+		}
+		
+		trigger = {
+			118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_stability_or_adm_power = yes
+			set_country_flag = general_flag_Rome_flag
+			add_country_modifier = {
+				name = ab_rome_liberation
+				duration = -1
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = WLS_OCCUPATION
+		}
+	}
+
+	aqt_sicily = {
+		icon = mission_sicsultanate
+		required_missions = { aqt_rome }
+		position = 10
+
+		ai_weight = {
+			factor = 1000
+		}
+	
+		provinces_to_highlight = {
+			OR = {
+				area = sicily_area
+				area = western_sicily_area
+				owned_by = SIC
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			NOT = { exists = SIC }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_lombardy.4
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = pap_italy_liberated
+				duration = 36500
+			}
+			custom_tooltip = TRC_TRINACRIAN_CULTURE
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = sicilian
+					}
+					change_culture = trinacrian
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			balkan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_latin_empire = {
+		icon = mission_phoenix
+		required_missions = { aqt_sicily }
+		position = 11
+	
+		provinces_to_highlight = {
+			area = thrace_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			NOT = { exists = BYZ }
+			NOT = { exists = LAT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_jerusalem.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = pap_patriarchates
+				duration = 9125
+			}
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+aqt_fifth_aquitaine_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_unite_iberians = {
+		icon = chivalry_is_not_dead
+		required_missions = { aqt_fortify_pyrenees aqt_navarra }
+		position = 6
+	
+		provinces_to_highlight = {
+			OR = {
+				area = galicia_area
+				area = asturias_area
+				area = basque_country
+				province_id = 208
+				province_id = 4553
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			owns_or_non_sovereign_subject_of = 208
+			owns_or_non_sovereign_subject_of = 4553
+		    asturias_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    basque_country = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    galicia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = { 
+				name = frc_turning_the_tide
+				duration = 5475
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_claim = ROOT
+			}
+			if = {
+				limit = {
+					NAV = {
+						is_subject_of_type_with_overlord = {
+							who = ROOT
+							type = march
+						}
+						NOT = { liberty_desire = 1 }
+					}
+				}
+				custom_tooltip = AQT_UNITE_IBERIANS_NAVARRA_BONUS
+				hidden_effect = {
+					inherit = NAV
+				}
+			}
+			else = {
+				custom_tooltip = AQT_UNITE_IBERIANS_NAVARRA_BONUS_NO
+			}
+		}
+	}
+
+	aqt_valencia = {
+		icon = mission_cordoba
+		required_missions = { aqt_unite_iberians }
+		position = 8
+	
+		provinces_to_highlight = {
+			OR = {
+				area = valencia_area
+				area = catalonia_area
+				area = aragon_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			valencia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    catalonia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    aragon_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religion = catholic
+				}
+				220 = {
+					change_religion = catholic
+				}
+				custom_tooltip = ARS_CENTER_VALENCIA
+				hidden_effect = {
+					220 = {
+						add_reform_center = catholic
+					}
+					220 = {
+						province_event = {
+							id = ab_francia.38
+							days = 9125
+						}
+					}
+				}
+				custom_tooltip = AB_EMPTY
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_modifier = frc_turning_the_tide
+				}
+				custom_tooltip = AQT_VALENCIA_SPEEDRUN_BONUS
+				add_country_modifier = {
+					name = lot_iberian_crusade
+					duration = 18250
+				}
+			}
+			else = {
+				custom_tooltip = AQT_VALENCIA_SPEEDRUN_BONUS_NO
+				tooltip = {
+					add_country_modifier = {
+						name = lot_iberian_crusade
+						duration = 18250
+					}
+				}
+			}
+		}
+	}
+
+	aqt_andalusia = {
+		icon = mission_reclaim_andalucia
+		required_missions = { aqt_valencia }
+		position = 10
+	
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			iberia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_ANDALUSIAN_REMOVED
+			add_accepted_culture_or_dip_power = {
+				culture = castillian
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			iberia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = byzantium_roman_iberia
+					duration = -1
+				}
+			}
+			maghreb_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						region = iberia_region
+						culture = andalucian
+					}
+					add_devastation = 10
+					add_base_tax = -1
+					add_base_production = -1
+					add_base_manpower = -1
+					if = {
+						limit = {
+							OR = {
+								area = valencia_area
+								area = baleares_area
+							}
+						}
+						change_culture = Valencian
+					}
+					else_if = {
+						limit = {
+							OR = {
+								area = beieras_area
+								area = alentejo_area
+							}
+						}
+						change_culture = Lusitanian
+					}
+					else_if = {
+						limit = {
+							area = extremadura_area
+						}
+						change_culture = leonese
+					}
+					else = {
+						change_culture = castillian
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_first_second = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_settle_north = {
+		icon = mission_rb_colonise_canada
+		required_missions = { aqt_discover_america }
+		position = 13
+	
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			has_discovered = ROOT
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_canada
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 75 }
+			add_country_modifier = {
+				name = eng_rb_established_shipping
+				duration = 7300
+			}
+		}
+	}
+
+	aqt_hudson_bay = {
+		icon = mission_rb_settle_the_north
+		required_missions = { aqt_settle_north }
+		position = 14
+	
+		provinces_to_highlight = { 
+			region = canada_region 
+			trade_goods = fur 
+			has_manufactory_trigger = no
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = { 
+				trade_goods = fur 
+				value = 4
+				has_manufactory_trigger = yes 
+			}
+		}
+		
+		effect = {
+			custom_tooltip = FRC_CANADA_FUR_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = fra_hudson_bay_fur_modifier
+					duration = -1 
+				}
+			}
+			hidden_effect = {
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+				random_province = {
+					limit = {
+						region = canada_region
+						country_or_non_sovereign_subject_holds = ROOT 
+						trade_goods = fur 
+						has_manufactory_trigger = yes
+						NOT = { has_province_modifier = fra_hudson_bay_fur_modifier }
+					}
+					add_province_modifier = {
+						name = fra_hudson_bay_fur_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_second_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_discover_america = {
+		icon = mission_explore_the_world
+		required_missions = { }
+		position = 12
+		
+		trigger = {
+			num_of_explorers = 1 
+			custom_trigger_tooltip = {
+				tooltip = AQT_DISCOVERY_TT
+				OR = {
+					north_america = {
+						has_discovered = ROOT
+					}
+					south_america = {
+						has_discovered = ROOT
+					}
+					new_world = {
+						has_discovered = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = the_unknown_frontier
+				duration = 5475
+			}
+			define_advisor = {
+				type = navigator
+				skill = 1
+				cost_multiplier = 0.75
+			}
+		}
+	}
+
+	aqt_caribbean = {
+		icon = mission_colonial
+		required_missions = { aqt_discover_america }
+		position = 13
+	
+		provinces_to_highlight = { 
+			colonial_region = colonial_the_carribean 
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			any_subject_country = {
+				is_colonial_nation_of = ROOT
+				capital_scope = {
+					colonial_region = colonial_the_carribean
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { 
+					any_subject_country = {
+						is_colonial_nation_of = ROOT
+						capital_scope = {
+							colonial_region = colonial_the_carribean
+						}
+					}
+				}
+				random_subject_country = {
+					limit = { 
+						is_colonial_nation_of = ROOT
+						capital_scope = {
+							colonial_region = colonial_the_carribean
+						}
+					}
+					add_country_modifier = {
+						name = fra_colonial_rush_modifier 
+						duration = 7300 
+					}
+					capital_scope = {
+						add_base_tax = 2 
+						add_base_production = 2 
+						add_base_manpower = 2 
+					}
+				}
+			}
+			else = {
+				custom_tooltip = fra_subject_haiti_gains_following_tt
+				tooltip = {
+					add_country_modifier = {
+						name = fra_colonial_rush_modifier 
+						duration = 7300 
+					}
+					add_base_tax = 2
+					add_base_production = 2 
+					add_base_manpower = 2
+				}
+			}
+		}
+	}
+
+	aqt_east_coast = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { aqt_caribbean }
+		position = 14
+	
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			has_discovered = ROOT
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_eastern_america
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = eng_settle_new_world
+				duration = 7300
+			}
+			if = {
+				limit = {
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 20
+						colonial_region = colonial_eastern_america
+						is_city = yes
+					}
+				}
+				custom_tooltip = FRC_EAST_20_YES
+				southeast_america_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				northeast_america_region = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			else = {
+				custom_tooltip = FRC_EAST_20_NO
+				tooltip = {
+					southeast_america_region = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					northeast_america_region = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	aqt_louisiana = {
+		icon = mission_colonize_louisiana
+		required_missions = { aqt_east_coast }
+		position = 15
+	
+		provinces_to_highlight = {
+			colonial_region = colonial_louisiana
+			has_discovered = ROOT
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				colonial_region = colonial_louisiana
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = FRC_COLONIST_MODIFIER
+			set_country_flag = ab_colonist_modifier
+			define_advisor = {
+				type = colonist
+				skill = 3
+				cost_multiplier = 0.5
+			}
+		}
+	}
+}
+
+aqt_third_second = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_bordeaux = {
+		icon = toulon_dockyards
+		required_missions = { aqt_develop_south }
+		position = 13
+	
+		provinces_to_highlight = {
+			province_id = 174
+		}
+		
+		trigger = {
+			174 = {
+				owned_by = ROOT
+			}
+			174 = {
+				development = 40
+			}
+			174 = {
+				has_trade_building_trigger = yes
+			}
+			174 = {
+				has_shipyard_building_trigger = yes
+			}
+			174 = {
+				has_dock_building_trigger = yes
+			}
+			174 = {
+				OR = {
+					has_building = navalministry
+					has_building = colonialministry
+					has_building = commerceministry
+				}
+			}
+		}
+		
+		effect = {
+			174 = {
+				add_province_modifier = {
+					name = aqt_bordeaux_port
+					duration = -1
+				}
+			}
+			custom_tooltip = AQT_UPGRADING_CENTER_OF_TRADE_BONUS
+			set_country_flag = aqt_bordeaux_bonus
+		}
+	}
+
+	aqt_brazil = {
+		icon = mission_caribbean_cn
+		required_missions = { aqt_caribbean }
+		position = 14
+	
+		provinces_to_highlight = {
+			colonial_region = colonial_brazil
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_colonize_brazil_seven
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 7
+					colonial_region = colonial_brazil
+					is_city = yes
+				}
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_years_of_income = 2
+			custom_tooltip = AB_EMPTY
+			brazil_region = {
+				limit = {
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+aqt_fourth_second = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_develop_south = {
+		icon = appease_the_estates
+		required_missions = { }
+		position = 12
+	
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				culture = occitain
+				culture = gascon
+				culture = aquitaine
+			}
+			NOT = { development = 10 }
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AQT_ALL_SOUTHERN_PROVINCES_OVER_10_DEVELOPMENT
+				NOT = {
+					any_owned_province = {
+						OR = {
+							culture = occitain
+							culture = gascon
+							culture = aquitaine
+						}
+						NOT = { development = 10 }
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_ALL_SOUTHERN_PROVINCES_GAIN_PROSPERITY
+			tooltip = {
+				add_province_modifier = {
+					name = aqt_prosperity
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							culture = occitain
+							culture = gascon
+							culture = aquitaine
+						}
+					}
+					add_province_modifier = {
+						name = aqt_prosperity
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aqt_college = {
+		icon = mission_early_modern_university
+		required_missions = { aqt_develop_south }
+		position = 13
+	
+		provinces_to_highlight = {
+			province_id = 196
+		}
+		
+		trigger = {
+			196 = {
+				owned_by = ROOT
+			}
+			196 = {
+				development = 40
+			}
+			196 = {
+				has_tax_building_trigger = yes
+			}
+			196 = {
+				has_courthouse_building_trigger = yes
+			}
+			196 = {
+				has_building = university
+			}
+			196 = {
+				OR = {
+					has_building = intelministry
+					has_building = externalministry
+					has_building = embassy
+				}
+			}
+		}
+		
+		effect = {
+			196 = {
+				add_province_modifier = {
+					name = aqt_toulouse_college
+					duration = -1
+				}
+			}
+			custom_tooltip = AQT_BUILDING_UNIVERSITY_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_base_tax = 1
+				}
+			}
+		}
+	}
+
+	aqt_industrial_expansion = {
+		icon = mission_rb_prospect_for_coal
+		required_missions = { aqt_increase_production }
+		position = 14
+	
+		provinces_to_highlight = {
+			OR = { 
+				AND = {
+					has_manufactory_trigger = no 
+					owned_by = ROOT 
+				}
+				if = {
+					limit = {
+						has_dlc = "Rule Britannia"
+					}
+					owned_by = ROOT
+					trade_goods = coal
+					NOT = { has_building = furnace }
+				}
+				else = {
+					owned_by = ROOT
+					has_production_building_trigger = no
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				has_manufactory_trigger = yes 
+				value = 50 
+			}
+			OR = { 
+				has_institution = industrialization
+				if = { 
+					limit = { has_dlc = "Rule Britannia" }
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						has_building = furnace 
+						value = 5
+					}
+				}
+				else = { 
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						has_production_building_trigger = yes
+						value = 30
+					}
+				}
+			}
+			OR = {
+				is_hegemon_of_type = economic_hegemon
+				monthly_income = 1000
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = fra_french_industrial_revolution_modifier
+				duration = 18250
+			}
+			if = { 
+				limit = { 
+					2753 = {
+						country_or_non_sovereign_subject_holds = ROOT 
+						development = 40 
+					}
+					196 = {
+						country_or_non_sovereign_subject_holds = ROOT 
+						development = 40 
+					}
+					175 = {
+						country_or_non_sovereign_subject_holds = ROOT 
+						development = 40 
+					}
+					174 = {
+						country_or_non_sovereign_subject_holds = ROOT 
+						development = 40 
+					}
+				}
+				custom_tooltip = FRA_CANAL_MIDI_YES
+			}
+			else = {
+				custom_tooltip = FRA_CANAL_MIDI_NO
+			}
+			tooltip = {
+				add_province_modifier = {
+					name = fra_canal_royal_en_languedoc_modifier
+					duration = -1 
+				}
+			}
+			hidden_effect = {
+				if = { 
+					limit = { 
+						2753 = {
+							country_or_non_sovereign_subject_holds = ROOT 
+							development = 40 
+						}
+						196 = {
+							country_or_non_sovereign_subject_holds = ROOT 
+							development = 40 
+						}
+						175 = {
+							country_or_non_sovereign_subject_holds = ROOT 
+							development = 40 
+						}
+						174 = {
+							country_or_non_sovereign_subject_holds = ROOT 
+							development = 40 
+						}
+					}
+					2753 = {
+						add_province_modifier = {
+							name = fra_canal_royal_en_languedoc_modifier
+							duration = -1 
+						}
+					}
+					196 = {
+						add_province_modifier = {
+							name = fra_canal_royal_en_languedoc_modifier 
+							duration = -1 
+						}
+					}
+					175 = { 
+						add_province_modifier = {
+							name = fra_canal_royal_en_languedoc_modifier
+							duration = -1 
+						}
+					}
+					174 = {
+						add_province_modifier = {
+							name = fra_canal_royal_en_languedoc_modifier
+							duration = -1 
+						}
+					}
+				}
+			}		
+		}
+	}
+}
+
+aqt_fifth_second = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+			tag = GUY
+		}
+	}
+	has_country_shield = yes
+
+	aqt_increase_production = {
+		icon = mission_have_manufactories
+		required_missions = { aqt_develop_south }
+		position = 13
+	
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_production_building_trigger = no
+				NOT = { base_production = 6 }
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				base_production = 6
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = lom_industrial_economys
+				duration = 5475
+			}
+		}
+	}
+
+	aqt_wine_industry = {
+		icon = mission_wine_monopolies
+		required_missions = { aqt_increase_production }
+		position = 15
+	
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = wine
+			OR = {
+				has_production_building_trigger = no
+				NOT = { has_building = farm_estate }
+				NOT = { base_production = 10 }
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 8
+				trade_goods = wine
+				base_production = 10
+				has_production_building_trigger = yes
+				has_building = farm_estate
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AQT_WINE_PROVINCE_BONUS
+			tooltip = {
+				add_province_modifier = {
+					name = aqt_wine_monopoly
+					duration = -1
+				}
+			}
+			change_price = {
+				trade_goods = wine
+				key = aquitain_wine
+				value = 0.25
+				duration = -1
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = wine
+					}
+					add_province_modifier = {
+						name = aqt_wine_monopoly
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+# Eastern
+aqt_third_eastern = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_imperial_restoration = {
+		icon = mission_westrome
+		required_missions = { }
+		position = 15
+				
+		provinces_to_highlight = {
+			OR = {
+				region = balkan_region
+				region = anatolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					region = balkan_region
+					region = anatolia_region
+				}
+				value = 80
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = vsg_restore_west_empire
+				duration = -1
+			}
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_theme_system
+			}
+			custom_tooltip = AB_EMPTY
+			carpathia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mashriq_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_liberate_holy_land = {
+		icon = jerusalem
+		required_missions = { aqt_imperial_restoration }
+		position = 16
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		trigger = {
+		    palestine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    trans_jordan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syrian_desert_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    aleppo_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = trans_jordan_area
+				area = syria_area
+				area = syrian_desert_area
+				area = aleppo_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.97
+			}
+			custom_tooltip = AB_EMPTY
+			mashriq_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = rum_c_triumph
+					duration = 5475
+				}
+			}
+			set_country_flag = brn_scaling_inquisitor
+			custom_tooltip = BRN_INQUISITOR_SCALING
+			if = {
+				limit = {
+					is_defender_of_faith = yes
+				}
+				custom_tooltip = LAT_COT
+			}
+			else = {
+				custom_tooltip = LAT_COT_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = catholic
+					}
+					379 = {
+						change_religion = ROOT
+						add_reform_center = catholic
+						province_event = {
+							id = ab_latin.15
+							days = 9125
+						}
+					}
+				}
+			}
+		}
+	}
+
+	aqt_schism = {
+		icon = mission_pf_cross
+		required_missions = { aqt_liberate_holy_land aqt_egypt }
+		position = 18
+		
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				region = iberia_region
+				region = balkan_region
+				region = anatolia_region
+				region = egypt_region
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+			NOT = { religion = catholic }
+		}
+		
+		trigger = {
+			tag = ROM
+			OR = {
+				is_papal_controller = yes
+				NOT = { exists = PAP }
+			}
+			papal_influence = 100
+			italy_region = {
+				type = all
+				religion = catholic
+			}
+			iberia_region = {
+				type = all
+				religion = catholic
+			}
+			balkan_region = {
+				type = all
+				religion = catholic
+			}
+			anatolia_region = {
+				type = all
+				religion = catholic
+			}
+			egypt_region = {
+				type = all
+				religion = catholic
+			}
+			palestine_area = {
+				type = all
+				religion = catholic
+			}
+			syria_area = {
+				type = all
+				religion = catholic
+			}
+			aleppo_area = {
+				type = all
+				religion = catholic
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 50 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = pap_schism_mended
+				duration = 18250
+			}
+			custom_tooltip = PAP_SCHISM_TOOLTIP
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					country_event = {
+						id = flavor_pap.11
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			ruthenia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			russia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = LAT_ORTHODOX_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						religion = orthodox
+					}
+					add_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = UKR
+				}
+				custom_tooltip = UKR_EXIST_YES
+				add_casus_belli = {
+					target = UKR
+					type = cb_establish_diocese
+					months = 300
+				}
+			}
+			else = {
+				custom_tooltip = UKR_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						target = UKR
+						type = cb_establish_diocese
+						months = 300
+					}
+				}
+			}
+		}
+	}
+
+	aqt_rus_union = {
+		icon = mission_rule_ruthenia
+		position = 20
+		required_missions = { aqt_schism }
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 280
+				province_id = 295
+				province_id = 310
+				if = {
+					limit = {
+						exists = UKR
+					}
+					owned_by = UKR
+				}
+				else = {
+					owner = {
+						culture_group = east_slavic
+					}
+				}
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			owns_or_non_sovereign_subject_of = 280
+			owns_or_non_sovereign_subject_of = 295
+			owns_or_non_sovereign_subject_of = 310
+			if = {
+				limit = {
+					exists = UKR
+				}
+				UKR = {
+					is_subject_of = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					NOT = { liberty_desire = 50 }
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						culture_group = east_slavic
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+						NOT = { liberty_desire = 50 }
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = AB_DIOCESE_RUSSIA_CB
+			add_country_modifier = {
+				name = byz_rus_tsar
+				duration = -1
+			}
+			custom_tooltip = BYZ_UNION_25_YEARS
+			tooltip = {
+				country_event = {
+					id = ab_byzantium.65
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						exists = UKR
+					}
+					calc_true_if = {
+						all_subject_country = {
+							culture_group = east_slavic
+							is_subject_of = ROOT
+						}
+						amount = 3
+					}
+				}
+				custom_tooltip = BYZ_UNION_PRINCES_YES
+			}
+			else = {
+				custom_tooltip = BYZ_UNION_PRINCES_NO
+			}
+			hidden_effect = {
+				TLW_establish_diocese_russia_effect = yes
+				country_event = {
+					id = ab_byzantium.65
+					days = 9125
+				}
+			}
+		}
+	}
+}
+
+aqt_fourth_eastern = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_found_the_grand_armada = {
+		icon = mission_galleass
+		required_missions = { aqt_imperial_restoration }
+		position = 16
+		
+		trigger = {
+			navy_size = 200
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_navy_tradition = 25
+			add_country_modifier = {
+				name = vsg_the_grand_armada
+				duration = -1
+			}
+			set_country_flag = rus_scaling_naval_reformer
+			custom_tooltip = RUS_NAVAL_REFORMER_SCALING
+		}
+	}
+
+	aqt_egypt = {
+		icon = mission_nizzarid
+		required_missions = { aqt_control_maghreb }
+		position = 17
+		
+		ai_weight = {
+			factor = 1000
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_aqt
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				358 = { religion = catholic }
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = egypt_region
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					province_id = 358
+					NOT = { religion = catholic }
+				}
+			}
+			has_discovered = ROOT
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_latin.3
+			}
+			custom_tooltip = AB_EMPTY
+			dongola_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1232 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2324 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
+aqt_fifth_eastern = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = AQT
+			was_tag = AQT
+		}
+	}
+	has_country_shield = yes
+
+	aqt_control_maghreb = {
+		icon = mission_combat_barbary_piracy
+		position = 16
+		required_missions = { }
+
+		ai_weight = {
+			factor = 1000
+		}
+	
+		trigger = {
+			tunisia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			djerba_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			tripolitania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			northern_morocco_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			kabylia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			barbary_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = djerba_area
+				area = tunisia_area
+				area = tripolitania_area
+				area = northern_morocco_area
+				area = kabylia_area
+				area = barbary_coast_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = byzantium_sons
+				duration = 7300
+			}
+			set_country_flag = lat_burgher_force_draft_buff
+			custom_tooltip = LAT_BURGHER_FORCE_DRAFT_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_mecca = {
+		icon = mission_into_arabia
+		required_missions = { aqt_egypt }
+		position = 18
+		
+		trigger = {
+		    mecca_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = mecca_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_latin.9
+			}
+			custom_tooltip = AB_EMPTY
+			arabia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+# Rome
+aqt_first_rome_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_newworld_base_locked = {
+		icon = mission_unknown_mission
+		position = 16
+		required_missions = { }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_conquer_seas_locked = {
+		icon = mission_unknown_mission
+		position = 18
+		required_missions = { aqt_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+}
+
+aqt_first_rome = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_newworld_base = {
+		icon = mission_caribbean_cn
+		position = 16
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				colonial_region = colonial_the_carribean
+				colonial_region = colonial_mexico
+				colonial_region = colonial_colombia
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					colonial_region = colonial_the_carribean
+					colonial_region = colonial_mexico
+					colonial_region = colonial_colombia
+				}
+				value = 40
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			add_country_modifier = {
+				name = byz_america_base
+				duration = 10950
+			}
+			northeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_conquer_seas = {
+		icon = mission_the_triangle_trade
+		position = 18
+		required_missions = { aqt_newworld_base }
+				
+		provinces_to_highlight = {
+			owner_is_colonial_nation = yes
+			country_or_non_sovereign_subject_holds = ROOT
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation = yes
+				}
+				amount = 12
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.60
+			}
+		}
+	}
+
+	aqt_reform_imperial_army = {
+		icon = ven_army_republic
+		position = 20
+		required_missions = { }
+
+		trigger = {
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.1
+			}
+			army_tradition = 75
+			army_size = 250
+		}
+
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = byzantium_prof_army
+				duration = -1
+			}
+			if = {
+				limit = {
+					full_idea_group = infrastructure_ideas
+				}
+				custom_tooltip = BYZ_COMPLETE_INFRA_YES
+				add_country_modifier = {
+					name = byz_siege_engines
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_COMPLETE_INFRA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = byz_siege_engines
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aqt_finest = {
+		icon = mission_romanfinest
+		position = 21
+		required_missions = { aqt_reform_imperial_army }
+
+		trigger = {
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.2
+			}
+			army_tradition = 100
+			army_professionalism = 0.9
+			army_size = 500
+			calc_true_if = {
+				all_subject_country = {
+					is_subject_of_type = diocese_vassal
+				}
+				amount = 4
+			}
+			reform_level = 7
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.47
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = byzprofessionalism
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzprofessionalism
+		}
+	}
+
+	aqt_grandarmy = {
+		icon = mission_redcoats
+		position = 23
+		required_missions = { aqt_finest }
+
+		trigger = {
+			army_size = 1200
+			manpower = 1000
+			hegemon_strength = 100
+			calc_true_if = {
+				all_subject_country = {
+					is_subject_of_type = diocese_vassal
+				}
+				amount = 8
+			}
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_GRAND_ARMY_LEGION_REQUIREMENT
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 75
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_GRAND_ARMY_DIOCESE_REQUIREMENT
+					has_government_mechanic = roman_professionalism_mechanic
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = -75
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_mil_tech = 1
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 75
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = byzlegio
+					}
+					add_government_reform = byzlegio
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_NO
+			}
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = byzlegio
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_government_mechanic = roman_professionalism_mechanic
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = -75
+						}
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = rom_legio
+					}
+					every_subject_country = {
+						limit = {
+							OR = {
+								is_subject_of_type = diocese_vassal
+								is_subject_of_type = grand_diocese_vassal
+							}
+						}
+						add_government_reform = rom_legio
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_NO
+			}
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = rom_legio
+				}
+			}
+		}
+	}
+}
+
+aqt_second_rome_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_colonial_empire_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_louisiana aqt_imperial_restoration }
+		position = 16
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_punics_locked = {
+		icon = mission_unknown_mission
+		position = 17
+		required_missions = { aqt_newworld_base_locked }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+
+	aqt_europe_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_schism }
+		position = 19
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+}
+
+aqt_second_rome = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_colonial_empire = {
+		icon = mission_ruler_of_north_america
+		required_missions = { aqt_louisiana aqt_imperial_restoration }
+		position = 16
+		
+		provinces_to_highlight = {
+			culture_group = roman_g
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				culture_group = roman_g
+				OR = {
+					continent = north_america
+					continent = south_america
+				}
+				value = 200
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 5
+			custom_tooltip = GEN_COLONIAL_CHARTER
+			set_country_flag = ab_upgrade_colonial_charters
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_LATIN_RENAME
+			set_country_flag = byz_rename_imperium_romanum
+			if = {
+				limit = {
+					colonialministry = 1
+				}
+				custom_tooltip = GEN_MINISTRY_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_colony = yes
+						}
+						add_colonysize = 200
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEN_MINISTRY_NO
+			}
+		}
+	}
+
+	aqt_punics = {
+		icon = mission_punic
+		position = 17
+		required_missions = { aqt_newworld_base }
+		
+		provinces_to_highlight = {
+			OR = {
+				region = northeast_america_region
+				region = southeast_america_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			northeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			southeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			965 = {
+				change_trade_goods = salt
+			}
+			add_country_modifier = {
+				name = byz_punics_defeated
+				duration = 10950
+			}
+			north_america_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = CTG }
+				}
+				custom_tooltip = BYZ_PUNICS_GONE_YES
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = punic_g
+						}
+						add_devastation = 100
+						add_base_tax = -10
+						add_base_production = -10
+						add_base_manpower = -10
+						change_culture = owner
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_PUNICS_GONE_NO
+			}
+		}
+	}
+
+	aqt_europe = {
+		icon = peace_in_europe
+		required_missions = { aqt_schism }
+		position = 19
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						region = scandinavia_region
+						region = british_isles_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					OR = {
+						region = wendia_region
+						region = poland_region
+						region = baltic_region
+					}
+					NOT = { owned_by = UKR }
+				}
+			}
+		}
+		
+		trigger = {
+			scandinavia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			british_isles_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wendia_region = {
+				type = all
+				owned_by = UKR
+			}
+			poland_region = {
+				type = all
+				owned_by = UKR
+			}
+			baltic_region = {
+				type = all
+				owned_by = UKR
+			}
+			UKR = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.64
+			}
+		}
+	}
+
+	aqt_cities_latin = {
+		icon = mission_the_golden_city
+		required_missions = { }
+		position = 20
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 118
+			    province_id = 225
+		      	province_id = 341
+		      	province_id = 183
+				province_id = 236
+				province_id = 1876
+				province_id = 134
+				province_id = 12
+			}
+		}
+
+		trigger = {
+		    118 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			225 = {
+			    province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			341 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			183 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			236 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			1876 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			134 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			12 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_latincities
+			custom_tooltip = BYZ_LATIN_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 118
+							province_id = 225
+							province_id = 341
+							province_id = 183
+							province_id = 236
+							province_id = 1876
+							province_id = 134
+							province_id = 12
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
+	aqt_library = {
+		icon = bibliotheca_corviana
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = { 
+			province_id = 358
+		}
+
+		trigger = {
+			treasury = 2500
+			adm_power = 200
+			advisor = scholar
+			358 = { country_or_non_sovereign_subject_holds = ROOT }
+			358 = { has_any_ongoing_construction = no }
+		}
+
+		effect = {
+			add_treasury = -2500
+			add_adm_power = -200
+		    custom_tooltip = BYZ_CREATE_LIBRARY
+			set_country_flag = byzantine_library_build
+			hidden_effect = {
+				358 = {
+					add_great_project = {
+						type = library_alexandria
+						instant = yes
+					}
+				}
+				358 = {
+					add_great_project_tier = {
+						type = library_alexandria
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_third_rome = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_ministries = {
+		icon = empower_the_junkers
+		required_missions = { }
+		position = 21
+
+		trigger = {
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			custom_trigger_tooltip = {
+				tooltip = AQT_UNLOCKED_NI
+				OR = {
+					has_idea = aqt_seventh
+					has_idea = imperium_sine_fine
+				}
+			}
+		}
+
+		effect = {
+			add_stability_or_adm_power = yes
+			add_splendor = 400
+			add_country_modifier = {
+				name = byzantium_ministries
+				duration = 9125
+			}
+		}
+	}
+
+	aqt_roman_law = {
+		icon = mission_themis
+		position = 22
+		required_missions = { aqt_ministries }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_courthouse_building_trigger = no
+		}
+
+		trigger = {
+			OR = {
+				adm = 5
+				monthly_adm = 9
+			}
+			adm_power = 150
+			num_of_owned_provinces_with = {
+				value = 40
+				has_courthouse_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_adm_power = -150
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = byzantium_roman_law
+				duration = -1
+			}
+		}
+	}
+
+	aqt_nomos = {
+		icon = mission_justinian
+		position = 23
+		required_missions = { aqt_library aqt_roman_law aqt_wall }
+
+		trigger = {
+			monthly_adm = 10
+			monthly_dip = 10
+			monthly_mil = 10
+			absolutism = 75
+		}
+
+		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = byzantium_law
+				duration = -1
+			}
+			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+aqt_fourth_rome_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_cultural_hegemony_locked = {
+		icon = mission_unknown_mission
+		position = 19
+		required_missions = { aqt_schism }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_UNLOCKABLE
+				always = no
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_UNLOCKABLE
+		}
+	}
+}
+
+aqt_fourth_rome = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_cultural_hegemony = {
+		icon = mission_cultural_hegemony
+		position = 19
+		required_missions = { aqt_schism }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			NOT = {
+				AND = {
+					culture_group = roman_g
+					has_road_building_trigger = yes
+					has_courthouse_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 1000
+				province_is_diocese_land_trigger = yes
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_GOLDEN_AGE 
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_cultural_hegemony
+				duration = -1
+			}
+			custom_tooltip = BYZ_CULTURAL_HEGEMONY_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = byz_cultural_hegemony_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 600
+				}
+				else = {
+					reset_golden_age = yes
+				}
+				every_province = {
+					limit = {
+						culture_group = roman_g
+					}
+					add_province_modifier = {
+						name = byz_cultural_hegemony_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aqt_cities_byzantine = {
+		icon = mission_ottoman_law
+		required_missions = { }
+		position = 20
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 146
+			    province_id = 148
+		      	province_id = 145
+		      	province_id = 317
+				province_id = 318
+				province_id = 358
+				province_id = 2313
+			}
+		}
+
+		trigger = {
+			151 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		    146 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			148 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			145 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			317 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			318 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			358 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			2313 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 151
+							province_id = 146
+							province_id = 148
+							province_id = 145
+							province_id = 317
+							province_id = 318
+							province_id = 358
+							province_id = 2313
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
+	aqt_wall = {
+		icon = byz_reinforce_constantinople
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+
+		trigger = {
+			mil_power = 200
+			manpower = 25
+			treasury = 2500
+			advisor = fortification_expert
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			151 = {
+				has_any_ongoing_construction = no
+			}
+		}
+
+		effect = {
+			add_mil_power = -200
+			add_manpower = -25
+			add_treasury = -2500
+			custom_tooltip = BYZ_CREATE_MONUMENT
+			set_country_flag = byzantine_monument_flag
+			hidden_effect = {
+				151 = {
+					add_great_project = {
+						type = theodosian
+						instant = yes
+					}
+				}
+				151 = {
+					add_great_project_tier = {
+						type = theodosian
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_fifth_rome = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+	}
+	has_country_shield = yes
+
+	aqt_money = {
+		icon = dominant_economy
+		required_missions = { }
+		position = 20
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 151
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				}
+				AND = {
+					province_id = 358
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+				AND = {
+					province_id = 377
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {  
+		    NOT = { num_of_loans = 1 }
+			151 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			358 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			377 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			OR = {
+				monthly_adm = 12
+				full_idea_group = economic_ideas
+			}
+			advisor = treasurer
+		}
+
+		effect = {
+		    set_country_flag = rmg_monetary_policy_no_power_cost_flag
+			add_inflation = -5
+			add_country_modifier = {
+				name = byz_gold_standard
+				duration = -1
+			}
+			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
+		}
+	}
+
+	aqt_roads = {
+		icon = mission_royal_roads
+		position = 21
+		required_missions = { aqt_money }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 100
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_building_roads_bonus
+			add_country_modifier = {
+				name = byz_roads
+				duration = -1
+			}
+			custom_tooltip = BYZ_BUILDING_ROADS_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_road_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = byz_roads_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	aqt_wonders = {
+		icon = mission_romanwonders
+		position = 23
+		required_missions = { aqt_roads }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			has_great_project = {
+				type = any
+				tier = 0
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+			reform_level = 6
+		}
+
+		effect = {
+			unlock_government_reform = {
+				government_reform = byzengineering
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzengineering
+		}
+	}
+}
+
+# Persian War
+aqt_fourth_persian_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		NOT = { has_country_flag = byz_persian_war_victory }
+	}
+	has_country_shield = yes
+
+	aqt_georgia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_persia_locked }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_persosphere_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_cities_persian_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_persosphere_locked }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+}
+
+aqt_fourth_persian_unlocked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		has_country_flag = byz_persian_war_victory
+	}
+	has_country_shield = yes
+
+	aqt_georgia = {
+		icon = mission_georgia
+		required_missions = { aqt_persia }
+		position = 25
+
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			samtskhe_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kartli_kakheti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			imereti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			armenia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			shirvan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.78
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = per_looting
+				duration = 7300
+			}
+			if = {
+				limit = {
+					circassia_area = {
+						type = all
+						owned_by = UKR
+					}
+					dagestan_area = {
+						type = all
+						owned_by = UKR
+					}
+				}
+				custom_tooltip = BYZ_RUS_CAUCASIA_YES
+				circassia_area = {
+					change_culture = romano_scythic
+					change_religion = ROOT
+				}
+				dagestan_area = {
+					change_culture = romano_scythic
+					change_religion = ROOT
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_RUS_CAUCASIA_NO
+				tooltip = {
+					circassia_area = {
+						change_culture = romano_scythic
+						change_religion = ROOT
+					}
+					dagestan_area = {
+						change_culture = romano_scythic
+						change_religion = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	aqt_persosphere = {
+		icon = mission_iran
+		required_missions = { }
+		position = 26
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			culture = perso_roman
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				culture = perso_roman
+			}
+		}
+
+		effect = {
+			set_country_flag = unlocked_faction_romepersian
+			set_country_flag = byz_faster_romanization_persia
+			custom_tooltip = BYZ_PERSIAN_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = PER_ADM_DEV
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								region = persia_region
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+				add_faction = faction_byzpersian
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 20
+				}
+			}
+		}
+	}
+
+	aqt_cities_persian = {
+		icon = per_purify_the_holy_sites
+		required_missions = { aqt_persosphere }
+		position = 27
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 416
+			    province_id = 428
+		      	province_id = 429
+		      	province_id = 2218
+				province_id = 431
+				province_id = 4341
+				province_id = 445
+				province_id = 451
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+		    416 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			428 = {
+			    province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			429 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			2218 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			431 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			4341 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			445 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			451 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 416
+							province_id = 428
+							province_id = 429
+							province_id = 2218
+							province_id = 431
+							province_id = 4341
+							province_id = 445
+							province_id = 451
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_fifth_persian_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		NOT = { has_country_flag = byz_persian_war_victory }
+	}
+	has_country_shield = yes
+
+	aqt_persia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_turkmen_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_persia_locked }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_ariana_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_invade_india_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_ariana_locked }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	aqt_maharajas_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_invade_india_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+}
+
+aqt_fifth_persian_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		has_country_flag = byz_persian_war_victory
+	}
+	has_country_shield = yes
+
+	aqt_persia = {
+		icon = per_tab_ziyarids_successor
+		required_missions = { }
+		position = 24
+
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			persia_region = {
+				add_local_autonomy = -50
+				add_province_modifier = {
+					name = per_restored_iran
+					duration = 9125
+				}
+			}
+			if = {
+				limit = {
+					UKR = {
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
+				central_asia_region = {
+					limit = {
+						NOT = { is_core = UKR }
+						NOT = { is_permanent_claim = UKR }
+					}
+					add_permanent_claim = UKR
+				}
+			}
+			else = {
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
+				tooltip = {
+					central_asia_region = {
+						limit = {
+							NOT = { is_core = UKR }
+							NOT = { is_permanent_claim = UKR }
+						}
+						add_permanent_claim = UKR
+					}
+				}
+			}
+		}
+	}
+
+	aqt_turkmen = {
+		icon = mission_central_asian_steppes
+		required_missions = { aqt_persia }
+		position = 25
+
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { owned_by = UKR }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_mercenaries = 100
+			central_asia_region = {
+				type = all
+				owned_by = UKR
+			}
+			UKR = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			set_country_flag = ab_free_mercs
+			custom_tooltip = PER_FREE_MERCS
+			custom_tooltip = AB_EMPTY
+			central_asia_region = {
+				add_province_modifier = {
+					name = byz_integrate_turkmen
+					duration = 7300
+				}
+			}
+			add_country_modifier = {
+				name = per_turkic_mercenaries
+				duration = -1
+			}
+		}
+	}
+
+	aqt_ariana = {
+		icon = mission_silk_road
+		required_missions = { }
+		position = 26
+
+		provinces_to_highlight = {
+			region = khorasan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			set_country_flag = commandants_give_global_supply_limit_modifier
+			define_advisor = {
+				type = commandant
+				skill = 3
+				culture = perso_roman
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_COMMANDANT_SCALING
+			custom_tooltip = AB_EMPTY
+			northern_sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_invade_india = {
+		icon = mission_rb_take_north_india
+		required_missions = { aqt_ariana }
+		position = 27
+
+		provinces_to_highlight = {
+			OR = {
+				area = sindh_area
+				area = northern_sindh_area
+				area = multan_area
+				area = kashmir_area
+				area = sind_sagar_area
+				area = lahore_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_yearly_manpower = 4
+			add_country_modifier = {
+				name = byz_invade_india
+				duration = 7300
+			}
+			west_india_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			hindusthan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+		}
+	}
+
+	aqt_maharajas = {
+		icon = mission_indian_empire
+		required_missions = { aqt_invade_india }
+		position = 28
+
+		provinces_to_highlight = {
+			superregion = india_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				superregion = india_superregion
+			}
+		}
+
+		effect = {
+			india_superregion = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = byz_integrate_indian
+					duration = 7300
+				}
+			}
+			add_country_modifier = {
+				name = yua_horde_claim_india
+				duration = 9125
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = byz_invade_india
+				}
+				custom_tooltip = BYZ_SPEEDRUN_INDIA_YES
+				set_country_flag = byz_faster_romanization_india
+			}
+			else = {
+				custom_tooltip = BYZ_SPEEDRUN_INDIA_NO
+			}
+		}
+	}
+}
+
+# Dragon Emperor
+aqt_first_chinese_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	aqt_tibet_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	aqt_mongolia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_tibet_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	aqt_far_east_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_mongolia_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+aqt_first_chinese_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	aqt_tibet = {
+		icon = mission_lhasa
+		required_missions = { }
+		position = 24
+
+		provinces_to_highlight = {
+			region = tibet_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 18
+				region = tibet_region
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_religious_diplomats_buff
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = vajrayana
+				culture = tibeto_roman
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_RELIGIOUS_DIPLOMATS_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					UKR = {
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
+				mongolia_region = {
+					limit = {
+						NOT = { is_core = UKR }
+						NOT = { is_permanent_claim = UKR }
+					}
+					add_permanent_claim = UKR
+				}
+			}
+			else = {
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
+				tooltip = {
+					mongolia_region = {
+						limit = {
+							NOT = { is_core = UKR }
+							NOT = { is_permanent_claim = UKR }
+						}
+						add_permanent_claim = UKR
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { mission_completed = aqt_burma }
+				}
+				custom_tooltip = BYZ_CONQUER_TIBET_FIRST_YES
+				set_country_flag = byz_conquer_tibet_first
+			}
+			else = {
+				custom_tooltip = BYZ_CONQUER_TIBET_FIRST_NO
+			}
+		}
+	}
+
+	aqt_mongolia = {
+		icon = mission_unify_mongolia
+		required_missions = { aqt_tibet }
+		position = 26
+
+		provinces_to_highlight = {
+			region = mongolia_region
+			NOT = { owned_by = UKR }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			mongolia_region = {
+				type = all
+				owned_by = UKR
+			}
+			UKR = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = china_integrate_mongol
+				duration = -1
+			}
+			liaoning_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			japan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					UKR = {
+						is_subject_of_type = grand_diocese_vassal
+					}
+				}
+				custom_tooltip = UKR_IS_OUR_DIOCESE_YES
+				manchuria_region = {
+					limit = {
+						NOT = { is_core = UKR }
+						NOT = { is_permanent_claim = UKR }
+						NOT = { area = liaoning_area }
+					}
+					add_permanent_claim = UKR
+				}
+			}
+			else = {
+				custom_tooltip = UKR_IS_OUR_DIOCESE_NO
+				tooltip = {
+					manchuria_region = {
+						limit = {
+							NOT = { is_core = UKR }
+							NOT = { is_permanent_claim = UKR }
+							NOT = { area = liaoning_area }
+						}
+						add_permanent_claim = UKR
+					}
+				}
+			}
+		}
+	}
+
+	aqt_far_east = {
+		icon = jap_financial_cliques
+		required_missions = { aqt_mongolia }
+		position = 28
+
+		provinces_to_highlight = {
+			superregion = far_east_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			735 = { country_or_non_sovereign_subject_holds = ROOT }
+			1020 = { country_or_non_sovereign_subject_holds = ROOT }
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				superregion = far_east_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_fareast
+			country_event = {
+				id = ab_byzantium.81
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_FAR_EAST_CAPITALS
+			custom_tooltip = AB_EMPTY
+			oceanea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+aqt_second_chinese_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	aqt_invade_china_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_tibet_locked aqt_burma_locked }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	aqt_cities_chinese_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_invade_china_locked }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+aqt_second_chinese_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	aqt_invade_china = {
+		icon = mission_jaded
+		required_missions = { aqt_tibet aqt_burma }
+		position = 25
+
+		provinces_to_highlight = {
+			superregion = china_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				superregion = china_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_china
+			set_country_flag = unlocked_faction_romechinese
+			enable_estate_effect = {
+				estate = estate_eunuchs
+			}
+			custom_tooltip = BYZ_CHINESE_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_CHINA_ADM_DEV
+			hidden_effect = {
+                for = {
+                    amount = 20
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								superregion = china_superregion
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+				add_faction = faction_byzchinese
+				add_faction_influence = {
+					faction = faction_byzchinese
+					influence = 15
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			china_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_cities_chinese = {
+		icon = mission_asian_city
+		required_missions = { aqt_invade_china }
+		position = 27
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 1816
+				province_id = 667
+		    	province_id = 1821
+		    	province_id = 679
+				province_id = 700
+				province_id = 672
+				province_id = 682
+				province_id = 684
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+		    1816 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			667 = {
+			    province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			1821 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			679 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			700 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			672 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			682 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			684 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 1816
+							province_id = 667
+							province_id = 1821
+							province_id = 679
+							province_id = 700
+							province_id = 672
+							province_id = 682
+							province_id = 684
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+aqt_third_chinese_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	aqt_burma_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 24
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	aqt_indochina_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_burma_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	aqt_east_indies_locked = {
+		icon = mission_unknown_mission
+		required_missions = { aqt_indochina_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+aqt_third_chinese_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = AQT
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	aqt_burma = {
+		icon = mission_conquer_lower_burma_tau
+		required_missions = { }
+		position = 24
+
+		provinces_to_highlight = {
+			region = burma_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 22
+				region = burma_region
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = flavor_mch.12
+			}
+			custom_tooltip = AB_EMPTY
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			indo_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { mission_completed = aqt_tibet }
+				}
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_YES
+				set_country_flag = byz_conquer_burma_first
+			}
+			else = {
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_NO
+			}
+		}
+	}
+
+	aqt_indochina = {
+		icon = mission_rule_indochina
+		required_missions = { aqt_burma }
+		position = 26
+
+		provinces_to_highlight = {
+			region = indo_china_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 45
+				region = indo_china_region
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_indochina
+			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
+			custom_tooltip = AB_EMPTY
+			add_absolutism = 10
+			add_country_modifier = {
+				name = byz_wealth_of_indochina
+				duration = -1
+			}
+			east_indies_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_east_indies = {
+		icon = mission_las_islas_filipinas
+		required_missions = { aqt_indochina }
+		position = 28
+
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				superregion = east_indies_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_eastindies
+			custom_tooltip = BYZ_SEA_MARITIME_CAPITALS
+			custom_tooltip = AB_EMPTY
+			change_price = {
+                trade_goods = spices
+                key = "Monopolization of Spices"
+                value = 0.15
+                duration = -1
+            }
+			add_country_modifier = {
+				name = gor_spice_trade
+				duration = -1
+			}
+			oceanea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	aqt_asia = {
+		icon = mission_warring
+		required_missions = { aqt_far_east aqt_east_indies aqt_maharajas }
+		position = 29
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						superregion = far_east_superregion
+						superregion = china_superregion
+						superregion = east_indies_superregion
+						superregion = india_superregion
+						region = oceanea_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					region = east_siberia_region
+					NOT = { owned_by = UKR }
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			far_east_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			china_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_indies_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			india_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			oceanea_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_siberia_region = {
+				type = all
+				owned_by = UKR
+			}
+			UKR = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.82
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = yua_china_tiger
+				duration = 18250
+			}
+		}
+	}
+}

@@ -1,0 +1,391 @@
+country_decisions = {
+	#Catholic
+	restore_roman_empire = {
+		major = yes
+
+		potential = {
+			tag = WRE
+			NOT = { exists = ROM }
+		}
+		provinces_to_highlight = {
+			OR = {
+				#Core Regions
+				region = anatolia_region
+				region = egypt_region
+				region = italy_region
+				region = france_region
+				region = iberia_region
+				region = balkan_region
+				#England
+				area = east_midlands_area
+				area = west_midlands_area
+				area = yorkshire_area
+				area = wessex_area
+				area = home_counties_area
+				area = east_anglia_area
+				area = wales_area
+				area = scottish_marches_area
+				area = cornwall_area						
+				#Africa
+				area = tripolitania_area
+				area = djerba_area
+				area = tunisia_area
+				area = kabylia_area
+				area = barbary_coast_area
+				area = northern_morocco_area
+				#Syria
+				area = syria_area
+				area = aleppo_area
+				area = palestine_area
+				#Etc
+				area = carinthia_area
+				province_id = 1232
+				province_id = 2324
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		allow = {
+			tag = WRE
+			custom_trigger_tooltip = {
+				tooltip = ROME_CATHOLIC_RESTORED_BORDER
+				italy_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				iberia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				france_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				egypt_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				balkan_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				anatolia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				scottish_marches_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				yorkshire_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				wales_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				west_midlands_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				east_midlands_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				east_anglia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				home_counties_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				wessex_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				cornwall_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				carinthia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tripolitania_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				djerba_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				tunisia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				kabylia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				barbary_coast_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				northern_morocco_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				1232 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				2324 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			if = {
+				limit = {
+					was_tag = BRN
+				}
+				mission_completed = land_of_britons
+			}
+			religion = catholic
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_ruler_personality = augustus_personality
+			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
+			custom_tooltip = AB_EMPTY
+			# Inherit
+			if = {
+				limit = {
+					overlord_of = VSV
+				}
+				inherit = VSV
+			}
+			if = {
+				limit = {
+					overlord_of = VSO
+				}
+				inherit = VSO
+			}
+			if = {
+				limit = {
+					overlord_of = VSS
+				}
+				inherit = VSS
+			}
+			if = {
+				limit = {
+					overlord_of = LAT
+				}
+				inherit = LAT
+			}
+			if = {
+				limit = {
+					overlord_of = KOJ
+				}
+				inherit = KOJ
+			}
+			if = {
+				limit = {
+					overlord_of = OTR
+				}
+				inherit = OTR
+			}
+			set_country_flag = general_flag_Rome_flag
+			change_tag = ROM
+			on_change_tag_effect = yes
+			# Name & Culture
+			if = {
+				limit = {
+					culture_group = gaelic
+				}
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = romano_british
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				change_primary_culture = romano_british
+			}
+			else_if = {
+				limit = {
+					culture_group = iberian
+				}
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = hispano_roman
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				change_primary_culture = hispano_roman
+			}
+			else_if = {
+				limit = {
+					culture_group = french
+				}
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = gallo_roman
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				change_primary_culture = gallo_roman
+			}
+			else_if = {
+				limit = {
+					culture_group = germanic
+				}
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = romano_germanic
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				change_primary_culture = romano_germanic
+			}
+			else = {
+				if = {
+					limit = {
+						government = republic
+					}
+					override_country_name = ROMANREPUBLIC
+				}
+				else_if = {
+					limit = {
+						government = theocracy
+					}
+					override_country_name = ROMANTHEOCRACY
+				}
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = roman_new
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				change_primary_culture = roman_new
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							culture_group = byzantine
+							province_id = 151
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = turkish_christian
+								culture = goths
+								province_id = 151
+							}
+						}
+						change_culture = greco_roman
+					}
+					else = {
+						change_culture = illyro_roman
+					}
+				}
+				every_subject_country = {
+					limit = {
+						is_colonial_nation = yes
+					}
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			# The rest
+			if = {
+				limit = {
+					is_emperor = no
+				}
+				custom_tooltip = restore_roman_empire_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_part_of_hre = yes
+						}
+						set_in_empire = no
+					}
+				}
+			}
+			hidden_effect = {
+				set_heir_culture = ROOT
+				set_ruler_culture = ROOT
+				118 = {
+					add_core = ROOT
+					province_event = {
+						id = ab_byzantium.71
+					}
+				}
+				country_event = {
+					id = ab_byzantium.67
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+			swap_non_generic_missions = yes
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = ab_stronger_ai_vsg
+					has_country_flag = ab_stronger_ai_brn
+					has_country_flag = ab_stronger_ai_aqt
+				}
+				ai = yes
+			}
+		}
+	}
+	
+}

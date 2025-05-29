@@ -1,0 +1,590 @@
+TLW_establish_diocese_russia_effect = {
+	if = {
+		limit = {
+			NOT = { exists = UKR }
+		}
+		random_subject_country = {
+			limit = {
+				culture_group = east_slavic
+				is_subject_of = ROOT
+				has_opinion = {
+					who = ROOT
+					value = 200
+				}
+				NOT = { liberty_desire = 50 }
+			}
+			change_tag = UKR
+			swap_non_generic_missions = yes
+		}
+		every_subject_country = {
+			limit = {
+				culture_group = east_slavic
+				is_subject_of = ROOT
+			}
+			UKR = {
+				inherit = PREV
+			}
+		}
+	}
+	create_subject = {
+		subject_type = grand_diocese_vassal
+		who = UKR
+	}
+	UKR = {
+		override_country_name = DIOCESISRUSSIA
+		change_religion = ROOT
+		change_technology_group = western
+		change_unit_type = western
+		if = {
+			limit = {
+				NOT = { government = monarchy }
+			}
+			change_government = monarchy
+		}
+		add_government_reform = rom_grand_diocese
+		country_event = {
+			id = ideagroups.1
+		}
+		set_capital = 280
+		change_country_color = {
+			country = ROOT
+		}
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		complete_mission = ab_russia_consolidate
+		complete_mission = ab_shade_khan
+		complete_mission = ab_tatar_yoke
+		complete_mission = ab_russia_fields
+		complete_mission = ab_russia_crimea
+		complete_mission = ab_russia_game
+		russia_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		crimea_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+		ural_region = {
+			limit = {
+				NOT = { is_permanent_claim = UKR }
+				NOT = { is_core = UKR }
+			}
+			add_permanent_claim = UKR
+		}
+	}
+}
+
+TLW_establish_diocese_tataria_effect = {
+	every_owned_province = {
+		limit = {
+			OR = {
+				superregion = eastern_europe_superregion
+				region = central_asia_region
+				area = dagestan_area
+				area = circassia_area
+			}
+			NOT = { region = carpathia_region }
+			NOT = { region = balkan_region }
+			NOT = { area = crimea_area }
+		}
+		remove_core = ROOT
+		add_core = GLH
+	}
+	release = GLH
+	create_subject = {
+		subject_type = grand_diocese_vassal
+		who = GLH
+	}
+	GLH = {
+		override_country_name = DIOCESISTATARIA
+		change_religion = ROOT
+		change_technology_group = eastern
+		change_unit_type = eastern
+		if = {
+			limit = {
+				NOT = { government = monarchy }
+			}
+			change_government = monarchy
+		}
+		add_government_reform = rom_grand_diocese
+		set_capital = 466
+		change_country_color = {
+			country = ROOT
+		}
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		set_country_flag = glh_european_tree
+		clr_country_flag = glh_horde_tree
+		clr_country_flag = glh_picked_orthodox
+		clr_country_flag = glh_picked_buddhist
+		clr_country_flag = glh_picked_judaism
+		clr_country_flag = glh_picked_nestorian
+		clr_country_flag = glh_picked_tengri
+		clr_country_flag = glh_can_convert
+		set_country_flag = glh_has_picked_religion
+		if = {
+			limit = {
+				ROM = {
+					religion = sunni
+				}
+			}
+			set_country_flag = glh_picked_sunni
+		}
+		else = {
+			clr_country_flag = glh_picked_sunni
+			set_country_flag = glh_picked_zoroastrian
+		}
+		swap_non_generic_missions = yes
+		country_event = {
+			id = ideagroups.1
+		}
+		complete_mission = glh_embrace_feudalism
+		complete_mission = glh_stabilize
+		complete_mission = glh_crimea
+		complete_mission = glh_reconciliation
+		complete_mission = glh_westernize
+		dagestan_area = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		circassia_area = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		russia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		central_asia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		ural_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+			}
+			add_permanent_claim = GLH
+		}
+		west_siberia_region = {
+			limit = {
+				NOT = { is_permanent_claim = GLH }
+				NOT = { is_core = GLH }
+				is_city = yes
+			}
+			add_permanent_claim = GLH
+		}
+	}
+}
+
+TLW_cultural_hegemony_province_effect = {
+	if = {
+		limit = {
+			culture_group = roman_g
+			has_courthouse_building_trigger = yes
+			has_road_building_trigger = yes
+		}
+		add_province_modifier = {
+			name = byz_cultural_hegemony_province
+			duration = -1
+		}
+	}
+}
+
+TLW_switch_flag_triumvirate_effect = {
+	if = {
+		limit = {
+			tag = event_target:romanTriumvir1
+		}
+		set_country_flag = romanTriumvir1
+	}
+	else_if = {
+		limit = {
+			tag = event_target:romanTriumvir2
+		}
+		set_country_flag = romanTriumvir2
+	}
+	else_if = {
+		limit = {
+			tag = event_target:romanTriumvir3
+		}
+		set_country_flag = romanTriumvir3
+	}
+}
+
+TLW_switch_target_triumvirate_effect = {
+	if = {
+		limit = {
+			has_country_flag = romanTriumvir1
+		}
+		clr_country_flag = romanTriumvir1
+		save_global_event_target_as = romanTriumvir1
+	}
+	else_if = {
+		limit = {
+			has_country_flag = romanTriumvir2
+		}
+		clr_country_flag = romanTriumvir2
+		save_global_event_target_as = romanTriumvir2
+	}
+	else_if = {
+		limit = {
+			has_country_flag = romanTriumvir3
+		}
+		clr_country_flag = romanTriumvir3
+		save_global_event_target_as = romanTriumvir3
+	}
+}
+
+TLW_roman_dismantle_china_effect = {
+	event_target:crisisChina = {
+		add_country_modifier = {
+			name = byz_fallen_emperor
+			duration = -1
+		}
+		every_owned_province = {
+			if = {
+				limit = {
+					OR = {
+						culture = manchu_new
+						culture_group = evenks
+					}
+				}
+				add_core = MCH
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture = vietnamese_new
+						culture_group = thai_group
+					}
+				}
+				add_core = CGS
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture = tibetan_new
+						culture = tibetan
+					}
+				}
+				add_core = TIB
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture = Yuan
+						culture_group = Mongolian
+					}
+				}
+				add_core = YUA
+			}
+			else_if = {
+				limit = {
+					OR = {
+						culture = korean_new
+						culture_group = korean_g
+					}
+				}
+				add_core = KOR
+			}
+			else_if = {
+				limit = {
+					culture = chihan
+				}
+				add_core = YAN
+			}
+			else_if = {
+				limit = {
+					culture = cantonese
+				}
+				add_core = YUE
+			}
+			else_if = {
+				limit = {
+					culture = jin
+				}
+				add_core = JIN
+			}
+			else_if = {
+				limit = {
+					culture = wu
+				}
+				add_core = WUU
+			}
+			else_if = {
+				limit = {
+					culture = chimin
+				}
+				add_core = MIN
+			}
+			else_if = {
+				limit = {
+					culture = hakka
+				}
+				add_core = HUA
+			}
+			else_if = {
+				limit = {
+					culture = gan
+				}
+				add_core = NNG
+			}
+			else_if = {
+				limit = {
+					culture = xiang
+				}
+				add_core = CHC
+			}
+			else_if = {
+				limit = {
+					culture = sichuanese
+				}
+				add_core = SHU
+			}
+			else_if = {
+				limit = {
+					culture = jianghuai
+				}
+				add_core = MNG
+			}
+			else_if = {
+				limit = {
+					culture = xibei
+				}
+				add_core = CSH
+			}
+			else_if = {
+				limit = {
+					culture = hubei
+				}
+				add_core = CXI
+			}
+			else_if = {
+				limit = {
+					culture = zhongyuan
+				}
+				add_core = LNG
+			}
+			else_if = {
+				limit = {
+					culture = shandong_culture
+				}
+				add_core = QIC
+			}
+			remove_core = event_target:crisisChina
+		}
+		release_all_subjects = yes
+		release_all_possible_countries = yes
+	}
+	dismantle_empire_of_china = yes
+}
+
+TLW_establish_pu_hellenic_empire_effect = {
+	hidden_effect = {
+		balkan_region = {
+			limit = {
+				owned_by = ROOT
+			}
+			remove_core = ROOT
+			add_core = HLE
+		}
+		anatolia_region = {
+			limit = {
+				owned_by = ROOT
+			}
+			remove_core = ROOT
+			add_core = HLE
+		}
+		release = HLE
+		HLE = {
+			change_primary_culture = hellenic_greek
+			change_religion = reformed_hellenic
+			if = {
+				limit = {
+					NOT = { government = monarchy }
+				}
+				change_government = monarchy
+			}
+			set_government_rank = 3
+			add_government_reform = nicene_hellenic_empire
+			save_global_event_target_as = hellenicEmpire
+			country_event = {
+				id = ideagroups.1
+			}
+			add_faction_influence = {
+				faction = faction_nciantigonos
+				influence = 100
+			}
+			add_faction_influence = {
+				faction = faction_nciantigonos
+				influence = -66
+			}
+			every_owned_province = {
+				random_list = {
+					33 = {
+						add_permanent_province_modifier = {
+							name = nci_antigonos_province
+							duration = -1
+						}
+					}
+					33 = {
+						add_permanent_province_modifier = {
+							name = nci_seleukos_province
+							duration = -1
+						}
+					}
+					33 = {
+						add_permanent_province_modifier = {
+							name = nci_ptolemaios_province
+							duration = -1
+						}
+					}
+				}
+			}
+			change_technology_group = eastern
+			change_unit_type = eastern
+			set_capital = 146
+			add_government_power = { 
+				mechanic_type = nicene_militarization_mechanic
+				power_type = nicene_militarized_society
+				value = 100
+			}
+			set_country_flag = nci_religion_hellenic
+			swap_non_generic_missions = yes
+			capital_scope = {
+				change_culture = hellenic_greek
+			}
+			add_accepted_culture = greek
+			complete_mission = nicene_fleet
+			complete_mission = nicene_aegean
+			complete_mission = nicene_latins
+			complete_mission = nicene_legions
+			complete_mission = nicene_smyrna
+			complete_mission = nicene_refugees
+			complete_mission = nicene_byzantium
+			complete_mission = nicene_secure
+			complete_mission = nicene_hellenic
+		}
+		create_union = HLE
+	}
+}
+
+TLW_switch_to_hellenic_empire_effect = {
+	change_tag = HLE
+	change_primary_culture = hellenic_greek
+	restore_country_name = yes
+	custom_tooltip = LEN_HYLINIAN_TO_GREEK
+	custom_tooltip = NCI_HELLENIZATION_INFO
+	hidden_effect = {
+		every_owned_province = {
+			limit = {
+				OR = {
+					culture_group = eastern_algonquian
+					culture_group = byzantine
+				}
+			}
+			province_event = {
+				id = ab_nicaea.10
+			}
+		}
+		change_government = monarchy
+		set_government_rank = 3
+		add_government_reform = nicene_hellenic_empire
+		save_global_event_target_as = hellenicEmpire
+		country_event = {
+			id = ideagroups.1
+		}
+		add_faction_influence = {
+			faction = faction_nciantigonos
+			influence = 100
+		}
+		add_faction_influence = {
+			faction = faction_nciantigonos
+			influence = -66
+		}
+		every_owned_province = {
+			random_list = {
+				33 = {
+					add_permanent_province_modifier = {
+						name = nci_antigonos_province
+						duration = -1
+					}
+				}
+				33 = {
+					add_permanent_province_modifier = {
+						name = nci_seleukos_province
+						duration = -1
+					}
+				}
+				33 = {
+					add_permanent_province_modifier = {
+						name = nci_ptolemaios_province
+						duration = -1
+					}
+				}
+			}
+		}
+		add_government_power = { 
+			mechanic_type = nicene_militarization_mechanic
+			power_type = nicene_militarized_society
+			value = 100
+		}
+		set_country_flag = nci_religion_hellenic
+		capital_scope = {
+			change_culture = hellenic_greek
+		}
+		add_accepted_culture = greek
+	}
+	custom_tooltip = AB_EMPTY
+	swap_non_generic_missions = yes
+	custom_tooltip = LEN_HELLAS_LOSE_MISSION
+	hidden_effect = {
+		complete_mission = nicene_fleet
+		complete_mission = nicene_aegean
+		complete_mission = nicene_latins
+		complete_mission = nicene_legions
+		complete_mission = nicene_smyrna
+		complete_mission = nicene_refugees
+		complete_mission = nicene_byzantium
+		complete_mission = nicene_secure
+		complete_mission = nicene_hellenic
+	}
+}

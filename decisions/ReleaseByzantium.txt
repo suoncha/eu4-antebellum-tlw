@@ -1,0 +1,133 @@
+country_decisions = {
+	
+	rus_release_byzantium = {
+		major = yes
+
+		potential = {
+			has_country_flag = rus_release_byz
+			religion = orthodox
+			NOT = { exists = BYZ }
+			any_owned_province = {
+				culture = greek
+				NOT = { is_capital_of = ROOT }
+			}
+		}
+		allow = {
+		}
+		effect = {
+			custom_tooltip = RUS_BYZANTIUM
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = greek
+						NOT = { is_capital_of = ROOT }
+					}
+					add_core = BYZ
+					remove_core = ROOT
+				}
+				release = BYZ
+				if = {
+					limit = {
+						government = monarchy
+					}
+					create_union = BYZ
+				}
+				else = {
+					vassalize = BYZ
+				}
+				BYZ = {
+					change_religion = orthodox
+					add_manpower = 10
+					add_treasury = 100
+					complete_mission = byzantium_roman
+					complete_mission = byzantium_reinforce
+					complete_mission = byzantium_court
+					complete_mission = byzantium_imperial_army
+					complete_mission = byzantium_economy
+					complete_mission = byzantium_crisis
+					complete_mission = byzantium_traitors
+					every_owned_province = {
+						remove_core = ROOT
+						remove_claim = ROOT
+					}
+					set_country_flag = had_16th_crisis
+				}
+			}
+			BYZ = {
+				add_country_modifier = {
+					name = byz_loyal_union
+					duration = -1
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	rus_release_latin = {
+		major = yes
+
+		potential = {
+			has_country_flag = rus_release_byz
+			OR = {
+				religion = catholic
+				religion = hussite
+			}
+			NOT = { exists = LAT }
+			any_owned_province = {
+				culture = greek
+				NOT = { is_capital_of = ROOT }
+			}
+		}
+
+		allow = {
+		}
+
+		effect = {
+			custom_tooltip = RUS_LATIN
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = greek
+						NOT = { is_capital_of = ROOT }
+					}
+					remove_core = ROOT
+					add_core = LAT
+				}
+				release = LAT
+				if = {
+					limit = {
+						government = monarchy
+					}
+					create_union = LAT
+				}
+				else = {
+					vassalize = LAT
+				}
+				LAT = {
+					set_country_flag = lat_cant_trigger_events
+					change_religion = catholic
+					add_manpower = 10
+					add_treasury = 100
+					every_owned_province = {
+						remove_core = ROOT
+						remove_claim = ROOT
+					}
+				}
+			}
+			LAT = {
+				add_country_modifier = {
+					name = byz_loyal_union
+					duration = -1
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+}

@@ -1,0 +1,795 @@
+ab_add_or_upgrade_road_building = {
+	custom_tooltip = ab_add_or_upgrade_road_building_tooltip
+	hidden_effect = {
+		if = {
+			limit = {
+				has_building = early_road
+			}
+			add_building = gravel_road
+		}
+		else_if = {
+			limit = {
+				has_building = gravel_road
+			}
+			add_building = royal_road
+		}
+		else_if = {
+			limit = {
+				has_building = royal_road
+			}
+			add_building = macadam_road
+		}
+		else_if = {
+			limit = {
+				has_building = macadam_road
+			}
+			add_building = rail_road
+		}
+		else_if = {
+			limit = {
+				has_building = rail_road
+			}
+			add_base_production = 1
+		}
+		else = {
+			add_building = early_road
+		}
+	}
+}
+
+ab_upgrade_road_building = {
+	custom_tooltip = ab_upgrade_road_building_tooltip
+	hidden_effect = {
+		if = {
+			limit = {
+				has_building = early_road
+			}
+			add_building = gravel_road
+		}
+		else_if = {
+			limit = {
+				has_building = gravel_road
+			}
+			add_building = royal_road
+		}
+		else_if = {
+			limit = {
+				has_building = royal_road
+			}
+			add_building = macadam_road
+		}
+		else_if = {
+			limit = {
+				has_building = macadam_road
+			}
+			add_building = rail_road
+		}
+		else_if = {
+			limit = {
+				has_building = rail_road
+			}
+			add_base_production = 1
+		}
+	}
+}
+
+ab_building_trade_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = has_trade_building_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = len_marketplace_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = len_additional_slot
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_trade_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = has_trade_building_grant_dip
+			}
+		}
+		add_base_production = -1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = len_additional_slot
+		}
+		remove_province_modifier = len_additional_slot
+	}
+	# ]]]
+}
+
+ab_building_tax_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = norway_mead_halls
+			}
+			OR = {
+				religion = norse_pagan_reformed
+				religion = reformed_norse
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = pol_building_temple
+			}
+			OR = {
+				religion = slavic_pagan
+				religion = reformed_slavic
+			}
+		}
+		add_province_modifier = {
+			name = pol_slavic_holy_grounds
+			duration = -1
+		}
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = che_tax_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = che_rekindling
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_tax_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = norway_mead_halls
+			}
+			OR = {
+				religion = norse_pagan_reformed
+				religion = reformed_norse
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = pol_slavic_holy_grounds
+		}
+		remove_province_modifier = pol_slavic_holy_grounds
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = che_rekindling
+		}
+		remove_province_modifier = che_rekindling
+	}
+	# ]]]
+}
+
+ab_building_production_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_2_AB
+			}
+		}
+		add_base_production = 1
+	}
+}
+
+ab_removing_production_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_2_AB
+			}
+			NOT = {
+				nationalism = 0
+			}
+		}
+		add_base_production = -1
+	}
+}
+
+ab_building_courthouse_effect = {
+	if = { 
+		limit = { 
+			FROM = {
+				has_country_flag = fra_courthouse_bonus_flag
+			}
+		}
+		add_province_modifier = {
+			name = fra_improved_court_houses_modifier
+			duration = -1 
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_1_AB
+			}
+		}
+		add_nationalism = -2
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = pap_courthouse_bonus
+			}
+		}
+		add_base_tax = 1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			ROM = {
+				has_country_modifier = byz_cultural_hegemony
+			}
+		}
+		TLW_cultural_hegemony_province_effect = yes
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ctg_courthouse_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = punic_cultural_hegemony_mod
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_courthouse_effect = {
+	if = {
+		limit = {
+			has_province_modifier = fra_improved_court_houses_modifier
+		}
+		remove_province_modifier = fra_improved_court_houses_modifier
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_1_AB
+			}
+			NOT = {
+				nationalism = 0
+			}
+		}
+		add_nationalism = 2
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = pap_courthouse_bonus
+			}
+		}
+		add_base_tax = -1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = byz_cultural_hegemony_province
+		}
+		remove_province_modifier = byz_cultural_hegemony_province
+	}
+	if = {
+		limit = {
+			has_province_modifier = punic_cultural_hegemony_mod
+		}
+		remove_province_modifier = punic_cultural_hegemony_mod
+	}
+	# ]]]
+}
+
+ab_building_manpower_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_barrack_grant_extra_manpower_flag
+			}
+		}
+		add_province_modifier = {
+			name = ivr_extra_manpower_1
+			duration = -1
+		}
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = vsg_barrack_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = vsg_barrack_mod
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			FROM = {
+				has_country_flag = ctg_barrack_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = punic_iscine_mod
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_manpower_effect = {
+	if = {
+		limit = {
+			has_province_modifier = ivr_extra_manpower_1
+		}
+		remove_province_modifier = ivr_extra_manpower_1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = vsg_barrack_mod
+		}
+		remove_province_modifier = vsg_barrack_mod
+	}
+	else_if = {
+		limit = {
+			has_province_modifier = punic_iscine_mod
+		}
+		remove_province_modifier = punic_iscine_mod
+	}
+	# ]]]
+}
+
+ab_building_shipyard_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_shipyard_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = 1
+	}
+}
+
+ab_removing_shipyard_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_shipyard_grant_dip
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = -1
+	}
+}
+
+ab_building_fort_effect = {
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = eng_improved_infrastructure
+					has_country_flag = rhl_building_fort
+				}
+			}
+		}
+		add_base_manpower = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_ger_great_wall_bonus
+			}
+		}
+		add_province_modifier = {
+			name = ger_great_wall_fort_grant_slot
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_forts_grant_armyprof
+			}
+		}
+		FROM = {
+			add_army_professionalism = 0.01
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = hab_forts_buffs_flag
+			}
+		}
+		add_province_modifier = {
+			name = hab_buffed_forts_modifier
+			duration = -1
+			hidden = yes
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ned_buffed_forts_flag
+				NOT = {
+					full_idea_group = defensive_ideas
+				}
+			}
+			region = low_countries_region
+		}
+		add_province_modifier = {
+			name = ned_low_countries_fort_buff
+			duration = -1
+			hidden = yes
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				has_country_flag = ned_buffed_forts_flag
+				full_idea_group = defensive_ideas
+			}
+			region = low_countries_region
+		}
+		add_province_modifier = {
+			name = ned_low_countries_fort_buff_buffed
+			duration = -1
+			hidden = yes
+		}
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_estate_privilege = estate_nobles_theme_system
+			}
+			base_manpower = 5
+		}
+		add_permanent_province_modifier = {
+			name = byz_estate_theme
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_fort_effect = {
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = eng_improved_infrastructure
+					has_country_flag = rhl_building_fort
+				}
+			}
+		}
+		add_base_manpower = -1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_province_modifier = ger_great_wall_fort_grant_slot
+			}
+		}
+		remove_province_modifier = ger_great_wall_fort_grant_slot
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_forts_grant_armyprof
+			}
+		}
+		FROM = {
+			add_army_professionalism = -0.01
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = hab_buffed_forts_modifier
+		}
+		remove_province_modifier = hab_buffed_forts_modifier
+	}
+	if = {
+		limit = {
+			has_province_modifier = ned_low_countries_fort_buff
+		}
+		remove_province_modifier = ned_low_countries_fort_buff
+	}
+	if = {
+		limit = {
+			has_province_modifier = ned_low_countries_fort_buff_buffed
+		}
+		remove_province_modifier = ned_low_countries_fort_buff_buffed
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = byz_estate_theme
+		}
+		remove_province_modifier = byz_estate_theme
+	}
+	# ]]]
+}
+
+ab_building_university_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ars_uni_grant_adm
+			}
+		}
+		add_base_tax = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = rmg_uni_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_university_bonus
+			}
+		}
+		add_province_modifier = {
+			name = tus_university_buff
+			duration = -1
+		}
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ctg_uni_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = punic_universal_education_mod
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = cca_building_uni
+			}
+		}
+		add_permanent_province_modifier = {
+			name = cca_uni_buff
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_university_effect = {
+	if = {
+		limit = {
+			FROM = { has_country_flag = ars_uni_grant_adm }
+		}
+		add_base_tax = -1
+	}
+	if = {
+		limit = {
+			FROM = { has_country_flag = rmg_uni_grant_dip }
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = tus_university_buff
+		}
+		remove_province_modifier = tus_university_buff
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = punic_universal_education_mod
+		}
+		remove_province_modifier = punic_universal_education_mod
+	}
+	if = {
+		limit = {
+			has_province_modifier = cca_uni_buff
+		}
+		remove_province_modifier = cca_uni_buff
+	}
+	# ]]]
+}
+
+ab_building_road_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_swa_building_roads_bonus
+			}
+		}
+		add_province_modifier = {
+			name = swa_imperial_builders_province
+			duration = -1
+		}
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = byz_building_roads_bonus
+			}
+		}
+		add_permanent_province_modifier = {
+			name = byz_roads_province
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			ROM = {
+				has_country_modifier = byz_cultural_hegemony
+			}
+		}
+		TLW_cultural_hegemony_province_effect = yes
+	}
+	# ]]]
+}
+
+ab_removing_road_effect = {
+	if = {
+		limit = {
+			has_province_modifier = swa_imperial_builders_province
+		}
+		remove_province_modifier = swa_imperial_builders_province
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = byz_roads_province
+		}
+		remove_province_modifier = byz_roads_province
+	}
+	if = {
+		limit = {
+			has_province_modifier = byz_cultural_hegemony_province
+		}
+		remove_province_modifier = byz_cultural_hegemony_province
+	}
+	# ]]]
+}
+
+ab_building_dock_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = 1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ctg_dock_buff
+			}
+		}
+		add_permanent_province_modifier = {
+			name = punic_thapsus_mod
+			duration = -1
+		}
+	}
+	# ]]]	
+}
+
+ab_removing_dock_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = -1
+	}
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = punic_thapsus_mod
+		}
+		remove_province_modifier = punic_thapsus_mod
+	}
+	# ]]]
+}
+
+ab_building_coastal_defence_effect = {
+	if = { 
+		limit = { 
+			FROM = {
+				has_country_flag = ab_upgrade_coastal
+			}
+		}
+		add_province_modifier = {
+			name = ab_upgraded_coastal
+			duration = -1 
+		}
+	}
+}
+
+ab_removing_coastal_defence_effect = {
+	if = {
+		limit = {
+			has_province_modifier = ab_upgraded_coastal
+		}
+		remove_province_modifier = ab_upgraded_coastal
+	}
+}
+
+ab_building_soldier_households_effect = {
+	# TLW [[[
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = cca_building_soldier_households
+			}
+		}
+		add_permanent_province_modifier = {
+			name = cca_additional_manufactory
+			duration = -1
+		}
+	}
+	# ]]]
+}
+
+ab_removing_soldier_households_effect = {
+	# TLW [[[
+	if = {
+		limit = {
+			has_province_modifier = cca_additional_manufactory
+		}
+		remove_province_modifier = cca_additional_manufactory
+	}
+	# ]]]
+}

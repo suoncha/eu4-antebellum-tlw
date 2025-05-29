@@ -102,9 +102,15 @@ declarewar = {
 	condition = {
 		tooltip = GRAND_CRUSADE_NO_OTHER_WAR
 		potential = {
-			is_in_war = {
-				attacker_leader = ROOT
-				casus_belli = cb_grand_crusade
+			OR = {
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_grand_crusade
+				}
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_europa_crusade
+				}
 			}
 		}
 		allow = {
@@ -155,16 +161,6 @@ declarewar = {
 	# ]]]
 	effect = {
 		on_war_declaration_effect = yes
-		if = {
-			limit = { 
-				has_country_flag = nor_norwegian_independence_modifier
-				FROM = { tag = DAN }
-			}
-			add_country_modifier = {
-				name = nor_norwegian_independence_war_mod
-				duration = -1
-			}
-		}
 		# AB [[[
 		# Thanks Inferno
 		if = {
@@ -175,7 +171,7 @@ declarewar = {
 			}
 			set_country_flag = frc_had_morale_modifier
 			add_country_modifier = {
-				name = "frc_valencia_avenge"
+				name = frc_valencia_avenge
 				duration = -1
 			}
 		}
@@ -202,38 +198,38 @@ declarewar = {
 			FROM = {
 				save_global_event_target_as = grand_crusade_target
 			}
-			# TLW [[[
 			every_country = {
 				limit = {
 					religion = catholic
-					is_at_war = no
 					is_subject = no
 					knows_country = ROOT
+					NOT = { tag = ROOT }
+					NOT = { war_with = ROOT }
 					NOT = { truce_with = FROM }
 					NOT = { alliance_with = FROM }
 				}
 				country_event = {
-					id = ab_performance.35
+					id = ab_performance.33
 					days = 10
-					random = 20
+					random = 30
 				}
 			}
 			every_country = {
 				limit = {
 					religion = FROM
-					is_at_war = no
 					is_subject = no
 					knows_country = FROM
+					NOT = { tag = FROM }
+					NOT = { war_with = FROM }
 					NOT = { truce_with = ROOT }
 					NOT = { alliance_with = ROOT }
 				}
 				country_event = {
-					id = ab_performance.36
+					id = ab_performance.34
 					days = 10
-					random = 20
+					random = 30
 				}
 			}
-			# ]]]
 		}
 		if = {
 			limit = {
@@ -242,6 +238,131 @@ declarewar = {
 			add_country_modifier = {
 				name = inward_war
 				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_teu_joined_hre
+				NOT = {
+					OR = {
+						tag = PRU
+						tag = LVI
+					}
+				}
+				is_part_of_hre = yes
+				FROM = { is_part_of_hre = yes }
+			}
+			clr_country_flag = ab_teu_joined_hre
+			country_event = {
+				id = teuton_event.12
+				days = 10
+			}
+		}
+		if = {
+			limit = {
+				is_in_war = {
+					attacker_leader = ROOT
+					casus_belli = cb_europa_crusade
+				}
+			}
+			add_country_modifier = {
+				name = pap_europa_crusade_helper
+				duration = -1
+				hidden = yes
+			}
+			FROM = {
+				save_global_event_target_as = europa_crusade_target
+				every_neighbor_country = {
+					limit = {
+						religion = catholic
+					}
+					country_event = {
+						id = ab_papal.16
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_flag = AB_DIRECT_COLONIAL_WAR
+				FROM = {
+					is_colonial_nation = yes
+				}
+				OR = {
+					# TLW [[[
+					tag = CTG
+					tlw_is_american_trigger = yes
+					# ]]]
+				}
+			}
+			FROM = {
+				overlord = {
+					join_all_defensive_wars_of = FROM
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_emperor_of_china = yes
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = FROM
+					casus_belli = cb_chinese_unification
+				}
+				NOT = { has_country_modifier = waging_war_for_china }
+			}
+			country_event = {
+				id = ab_performance.17
+			}
+		}
+		if = {
+			limit = {
+				hre_reform_passed = emperor_reichskrieg
+				OR = {
+					is_emperor = yes
+					is_elector = yes
+				}
+				FROM = {
+					is_part_of_hre = no
+				}
+				NOT = { has_country_modifier = defense_of_the_empire_modifier }
+			}
+			country_event = {
+				id = ab_performance.26
+			}
+		}
+		if = {
+			limit = {
+				religion = jewish
+				has_church_aspect = judaism_yom_kippur_aspect
+				NOT = { has_country_modifier = judaism_yom_kippur_aspect_war_modifier }
+			}
+			country_event = {
+				id = ab_performance.27
+			}
+		}
+		if = {
+			limit = {
+				has_government_attribute = ahmudan_system
+				NOT = { has_country_modifier = ahmudan_system_attacker }
+			}
+			add_country_modifier = {
+				name = ahmudan_system_attacker
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_government_attribute = ahmudan_system
+					NOT = { has_country_modifier = ahmudan_system_defender }
+				}
+			}
+			FROM = {
+				add_country_modifier = {
+					name = ahmudan_system_defender
+					duration = -1
+				}
 			}
 		}
 		# ]]]
@@ -283,113 +404,48 @@ declarewar = {
 				id = ab_byzantium.79
 			}
 		}
-		else_if = {
-			limit = {
-				is_emperor_of_china = yes
-				is_in_war = {
-					attacker_leader = ROOT
-					defender_leader = FROM
-					casus_belli = cb_chinese_unification
-				}
-				NOT = { has_country_modifier = waging_war_for_china }
-			}
-			country_event = {
-				id = ab_performance.16
-			}
-		}
-		else_if = {
-			limit = {
-				hre_reform_passed = emperor_reichskrieg
-				OR = {
-					is_emperor = yes
-					is_elector = yes
-				}
-				FROM = {
-					is_part_of_hre = no
-				}
-				NOT = { has_country_modifier = defense_of_the_empire_modifier }
-			}
-			country_event = {
-				id = ab_performance.25
-			}
-		}
-		else_if = {
-			limit = {
-				religion = jewish
-				has_church_aspect = judaism_yom_kippur_aspect
-				NOT = { has_country_modifier = judaism_yom_kippur_aspect_war_modifier }
-			}
-			country_event = {
-				id = ab_performance.26
-			}
-		}
-		if = {
-			limit = {
-				has_global_flag = AB_DIRECT_COLONIAL_WAR
-				FROM = {
-					is_colonial_nation = yes
-				}
-				OR = {
-					tag = CTG
-					tlw_is_american_trigger = yes
-				}
-			}
-			FROM = {
-				overlord = {
-					join_all_defensive_wars_of = FROM
-				}
-			}
-		}
 		# ]]]
 	}
 }
 
-allianceaction = {
-	# TLW [[[
+# Thanks Nitrogue for suggesting this
+demand_unlawful_territory_action = {
 	condition = {
-		tooltip = DISASTER_TAG_CANNOT_ALLY
-		potential = {
-			has_country_flag = disaster_tag_cannot_ally
+		tooltip = fate_of_francia_supported_the_war_tooltip
+		potential = { 
+			FROM = {
+				has_country_modifier = fate_of_francia_emperor_timer
+			}
 		}
-		allow = {
+		allow = { 
 			always = no
 		}
 	}
 	condition = {
-		tooltip = FROM_DISASTER_TAG_CANNOT_ALLY
+		tooltip = fate_of_francia_supported_the_war_tooltip
 		potential = {
+			# This flag only applies to the emperor if it is the carolingians
+			OR = {
+				tag = FRC
+				was_tag = FRC
+			}
 			FROM = {
-				has_country_flag = disaster_tag_cannot_ally
+				has_country_modifier = fate_of_francia_carolingian_timer
 			}
 		}
-		allow = {
+		allow = { 
 			always = no
 		}
 	}
-	condition = {
-		tooltip = TRIUMVIR_TAG_CANNOT_ALLY
-		potential = {
-			has_country_flag = byz_triumvir_flag
-		}
-		allow = {
-			FROM = {
-				has_country_flag = byz_triumvir_flag
-			}
-		}
-	}
-	condition = {
-		tooltip = FROM_TRIUMVIR_TAG_CANNOT_ALLY
-		potential = {
-			FROM = {
-				has_country_flag = byz_triumvir_flag
-			}
-		}
-		allow = {
-			has_country_flag = byz_triumvir_flag
-		}
-	}
-	# ]]] 
+}
+
+excommunicate_action = {
 	effect = {
+		FROM = {
+			country_event = {
+				id = ab_performance.14
+			}
+		}
 	}
 }
 
@@ -432,19 +488,57 @@ annexationaction = {
 	}
 	# ]]]
 	effect = {
-		if = {
-			limit = {
-				FROM = { is_subject_of_type = appanage }
-			}
-			subtract_variable = {
-				which = can_annex_appanages_points
-				value = 1
-			}
-		}
 	}
 }
 
 # TLW [[[
+allianceaction = {
+	condition = {
+		tooltip = DISASTER_TAG_CANNOT_ALLY
+		potential = {
+			has_country_flag = disaster_tag_cannot_ally
+		}
+		allow = {
+			always = no
+		}
+	}
+	condition = {
+		tooltip = FROM_DISASTER_TAG_CANNOT_ALLY
+		potential = {
+			FROM = {
+				has_country_flag = disaster_tag_cannot_ally
+			}
+		}
+		allow = {
+			always = no
+		}
+	}
+	condition = {
+		tooltip = TRIUMVIR_TAG_CANNOT_ALLY
+		potential = {
+			has_country_flag = byz_triumvir_flag
+		}
+		allow = {
+			FROM = {
+				has_country_flag = byz_triumvir_flag
+			}
+		}
+	}
+	condition = {
+		tooltip = FROM_TRIUMVIR_TAG_CANNOT_ALLY
+		potential = {
+			FROM = {
+				has_country_flag = byz_triumvir_flag
+			}
+		}
+		allow = {
+			has_country_flag = byz_triumvir_flag
+		}
+	}
+	effect = {
+	}
+}
+
 break_alliance = {
 	condition = {
 		tooltip = TRIUMVIR_TAG_CANNOT_ALLY
@@ -493,16 +587,6 @@ guaranteeaction = {
 	}
 }
 
-excommunicate_action = {
-	effect = {
-		FROM = {
-			country_event = {
-				id = ab_performance.12
-			}
-		}
-	}
-}
-
 fabricate_claim = {
 	condition = {
 		tooltip = ROOT_IS_CTG_TT
@@ -512,18 +596,6 @@ fabricate_claim = {
 		}
 		allow = {
 			tag = CTG
-		}
-	}
-}
-
-demand_unlawful_territory_action = {
-	condition = {
-		tooltip = AB_EMPTY
-		potential = {
-			ai = yes
-		}
-		allow = {
-			always = no
 		}
 	}
 }

@@ -1,0 +1,6562 @@
+ab_rum_muslim_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { tag = SEL }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_balance = {
+		icon = per_protect_the_west_iranian
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				is_year = 1445
+			}
+			else = {
+				num_of_allies = 2
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RUM_TRUST
+			add_country_modifier = {
+				name = rum_c_achieve
+				duration = 5475
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = {
+						who = ROOT
+						value = 10
+						mutual = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				add_ruler_personality = augustus_personality
+				create_general = { tradition = 100 }
+				add_manpower = 50
+				add_treasury = 500
+				every_province = {
+					limit = {
+						culture = turkish
+					}
+					add_core = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_core
+					who = SEL
+					war_goal_province = 329
+				}
+				SEL = {
+					if = {
+						limit = {
+							ai = yes
+						}
+						add_stability = -3
+						add_manpower = -20
+						every_owned_province = {
+							limit = {
+								OR = {
+									is_neighbor_of = ROOT
+									province_id = 329
+								}
+							}
+							change_controller = ROOT
+						}
+					}
+				}
+				capital_scope = {
+					for = {
+						amount = 20
+						effect = "
+							infantry = ROOT
+						"
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_legacy = {
+		icon = geo_turkoman
+		required_missions = { rum_muslim_balance rum_muslim_beyliks }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = rum_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				rum_area = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				rum_area = {
+					type = all
+					is_core = ROOT
+					owned_by = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_zrum.3
+			}
+			custom_tooltip = AB_EMPTY
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_nicaea = {
+	    icon = mission_pontic_reconquest
+		required_missions = { rum_muslim_legacy }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = NCI
+				area = hudavendigar_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			NOT = { exists = NCI }
+			hudavendigar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = rum_m_bulwark
+				duration = 9125
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_bulgaria = {
+		icon = push_on_to_bulgaria
+		required_missions = { rum_muslim_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = macedonia_area
+				area = bulgaria_area
+				area = silistria_area
+				area = thrace_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			macedonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bulgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			silistria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_dip_power = 150
+			add_country_modifier = {
+				name = rum_c_balkan
+				duration = 9125
+			}
+			wallachia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			serbia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rascia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = SER
+				}
+				custom_tooltip = SER_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = SER
+				}
+			}
+			else = {
+				custom_tooltip = SER_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = SER
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = WAL
+				}
+				custom_tooltip = WAL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = WAL
+				}
+			}
+			else = {
+				custom_tooltip = WAL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = WAL
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = MOL
+				}
+				custom_tooltip = MOL_EXIST_YES
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = MOL
+				}
+			}
+			else = {
+				custom_tooltip = MOL_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = MOL
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_balkans = {
+		icon = mission_balkan_conquest
+		required_missions = { rum_muslim_bulgaria }
+		position = 9
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = serbia_area
+				area = rascia_area
+				area = wallachia_area
+				area = moldavia_area
+				area = bessarabia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    serbia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    rascia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    wallachia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    moldavia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    bessarabia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_c_subjugate
+				duration = 5475
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_austria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			austria_proper_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			balkan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = RUM_BALKAN_SUBJECTS
+			tooltip = {
+				add_country_modifier = {
+					name = rum_c_consolidate
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_subjects = 2
+					}
+					add_country_modifier = {
+						name = rum_c_consolidate
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_sipahi = {
+	    icon = per_recruit_the_qizilbash
+		required_missions = { rum_muslim_balkans }
+		position = 11
+		
+		trigger = {
+			num_of_cavalry = 25
+			advisor = dragoon
+		}
+		
+		effect = {
+			set_country_flag = rum_scaling_dragoon
+			custom_tooltip = RUM_DRAGOON_SCALING
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = seljuk_sipahi
+				duration = -1
+			}
+			carpathia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_discipline = {
+	    icon = mission_janissaries
+		required_missions = { rum_muslim_sipahi }
+		position = 12
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_manpower_building_trigger = no
+		}
+
+		trigger = {
+			army_professionalism = 0.5
+			num_of_owned_provinces_with = {
+				value = 20
+				has_manpower_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_corruption = -5
+			add_mil_power = 100
+			add_country_modifier = {
+				name = seljuk_army
+				duration = -1
+			}
+		}
+	}
+}
+
+ab_rum_muslim_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { tag = SEL }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_beyliks = {
+		icon = mam_persia
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+		}
+
+		trigger = {
+			grown_by_development = 30
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 10 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_c_beyliks
+				duration = 7300
+			}
+			custom_tooltip = RUM_CLAIM
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = turkish
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	rum_muslim_unite_the_turks = {
+		icon = per_qizilbash_loyalty
+		required_missions = { rum_muslim_beyliks }
+		position = 3
+		
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = turkish
+				NOT = { tag = ROOT }
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+				is_free_or_tributary_trigger = yes
+			}
+		}
+
+		trigger = {
+			any_subject_country = {
+				primary_culture = turkish
+				NOT = { tag = SEL }
+				NOT = { tag = SRK }
+			}
+			custom_trigger_tooltip = {
+				tooltip = RUM_NO_INDEPENDENT_TURKISH_BEYLIK
+				NOT = {
+					any_country = {
+						primary_culture = turkish
+						NOT = { tag = ROOT }
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+						is_free_or_tributary_trigger = yes
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = commandant
+				skill = 2
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RUM_ANNEX_EVERY_BEYLIKS
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						primary_culture = turkish
+						NOT = { tag = SEL }
+						NOT = { tag = SRK }
+					}
+					ROOT = {
+						inherit = PREV
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_crimea = {
+	    icon = mission_feodosia_port
+		required_missions = { rum_muslim_legacy }
+		position = 4
+		
+		trigger = {
+		    crimea_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_c_crimea
+				duration = 7300
+			}
+			crimea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_armenia = {
+	    icon = arm_etchmiadzin_cathedral
+		required_missions = { rum_muslim_anatolia }
+		position = 5
+		
+		trigger = {
+		    armenia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = armenia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = RUM_M_ARMENIA
+			tooltip = {
+				add_nationalism = -10
+				add_province_modifier = {
+					name = seluk_displace
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = armenian
+					}
+					add_nationalism = -10
+					add_province_modifier = {
+						name = seluk_displace
+						duration = -1
+					}
+				}
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_city = {
+	    icon = mission_fall_of_constantinople
+		required_missions = { rum_muslim_nicaea }
+		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			owns = 151
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_seljuk.13
+			}
+			custom_tooltip = AB_EMPTY
+			bulgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			silistria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			macedonia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				balkan_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rum_muslim_kaiser = {
+	    icon = mission_the_roman_sultan
+		required_missions = { rum_muslim_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						area = northern_greece_area
+						area = morea_area
+						area = ionian_islands_area
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					province_id = 151
+					NOT = {
+						151 = { is_capital_of = ROOT }
+					}
+				}
+			}
+		}
+
+		trigger = {
+			tag = RUM
+			151 = {
+				is_capital_of = ROOT
+			}
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			morea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			ionian_islands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			set_government_rank = 3
+			custom_tooltip = AB_EMPTY
+			add_accepted_culture_or_dip_power = {
+				culture = greek
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			151 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_m_kaiser
+				duration = -1
+			}
+			custom_tooltip = RUM_BANISH
+			tooltip = {
+				add_country_modifier = {
+					name = rum_latins
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						aegean_archipelago_area = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_country_modifier = {
+						name = rum_latins
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_ottomans = {
+		icon = mission_the_grand_bazaar
+		required_missions = { rum_muslim_kaiser }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					has_trade_building_trigger = yes
+				}
+				AND = {
+					province_id = 151
+					NOT = {
+						151 = {
+							has_great_project = {
+								type = ottoman_market
+								tier = 2
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			151 = {
+				has_great_project = {
+					type = ottoman_market
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 70
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_burghers
+					value = 4
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = trader_give_production_efficiency
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 20
+			}
+			add_country_modifier = {
+				name = rum_c_ottomans
+				duration = -1
+			}
+			custom_tooltip = FKN_TRADER_SCALING
+		}
+	}
+	
+	rum_muslim_janissary = {
+	    icon = mission_janissary_soldier
+		required_missions = { rum_muslim_balkans }
+		position = 10
+		
+		trigger = {
+			num_of_infantry = 35
+			janissary_percentage = 0.25
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = seljuk_janissaries
+				duration = -1
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 3
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	rum_muslim_pashas = {
+		icon = mission_pasha
+		required_missions = { rum_muslim_janissary }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_pasha = no
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 50
+				has_pasha = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = sel_pashas
+				duration = -1
+			}
+			custom_tooltip = SEL_PASHA
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SEL_PASHA_REFORMED
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_pasha = yes
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+}
+
+ab_rum_muslim_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { tag = SEL }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_bridging = {
+		icon = mission_conquer_malwa_mer
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_road_building_trigger = yes
+			}
+		}
+	
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = seljuk_bridging
+				duration = 7300
+			}
+		}
+	}
+
+	rum_muslim_caravan = {
+		icon = mission_saharan_route
+		required_missions = { rum_muslim_bridging }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					OR = {
+						has_trade_building_trigger = no
+						province_has_center_of_trade_of_level = 1
+					}
+				}
+				AND = {
+					province_id = 377
+					NOT = { is_strongest_trade_power = ROOT }
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_centers_of_trade = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				has_trade_building_trigger = yes
+			}
+			377 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+	
+		effect = {
+			set_country_flag = rum_land_of_commerce_buff
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 10
+			}
+			add_country_modifier = {
+				name = seljuk_caravans
+				duration = -1
+			}
+			custom_tooltip = RUM_LAND_OF_COMMERCE_PRIVILEGE
+			custom_tooltip = SEL_TRADE_MISSION
+			tooltip = {
+				define_advisor = {
+					type = trader
+					skill = 2
+					cost_multiplier = 0.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						trade_income_percentage = 0.35
+					}
+					define_advisor = {
+						type = trader
+						skill = 2
+						cost_multiplier = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_capital = {
+	    icon = mission_pacify_punjab
+		required_missions = { rum_muslim_acities }
+		position = 3
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = { development = 30 }
+			capital_scope = { has_tax_building_trigger = yes }
+			capital_scope = { has_production_building_trigger = yes }
+			capital_scope = { has_trade_building_trigger = yes }
+		}
+		
+		effect = {
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+				add_province_modifier = {
+					name = rum_m_seat
+					duration = -1
+				}
+				upgrade_tax_building = yes
+			}
+		}
+	}
+	
+	rum_muslim_anatolia = {
+	    icon = mission_anatolian_conquest
+		required_missions = { rum_muslim_legacy }
+		position = 4
+		
+		trigger = {
+		    num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = anatolia_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			anatolia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -20
+			}
+			add_country_modifier = {
+				name = rum_c_anatolia
+				duration = 7300
+			}
+			armenia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				mashriq_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rum_muslim_landfall = {
+		icon = mission_invade_apulia
+		required_missions = { rum_muslim_anatolia }
+		position = 6
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		provinces_to_highlight = {
+			region = italy_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				italy_region = {
+					owned_by = ROOT
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					region = italy_region
+					value = 5
+				}
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			add_country_modifier = {
+				name = rum_m_invasion
+				duration = 7300
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				italy_region = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rum_muslim_sicily = {
+		icon = per_unify_the_shia_realms
+		required_missions = { rum_muslim_city rum_muslim_landfall }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sicily_area
+				area = western_sicily_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = rum_m_italiyyan
+				duration = 9125
+			}
+			custom_tooltip = RUM_CORE_SICILY
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = SIC
+					}
+					add_territorial_core = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_rome = {
+		icon = mission_colosseum
+		required_missions = { rum_muslim_sicily }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 118
+		}
+		
+		trigger = {
+			118 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_zrum.6
+			}
+			custom_tooltip = RUM_EVOLVING_IDEA_1
+			hidden_effect = {
+				if = {
+					limit = {
+						tag = RUM
+					}
+					set_country_flag = rum1_evolved_ideas
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_iron = {
+		icon = mission_conquer_north_italy
+		required_missions = { rum_muslim_rome }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+				area = tuscany_area
+				area = po_valley_area
+				area = lombardy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			tuscany_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			po_valley_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = byzantium_iron_crown
+				duration = 9125
+			}
+			custom_tooltip = RUM_SUNNI_CENTER
+			hidden_effect = {
+				118 = {
+					add_reform_center = sunni
+				}
+				118 = {
+					province_event = {
+						id = ab_jalayirid.2
+						days = 9125
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_roman_ambition = {
+		icon = mission_eyalet_crisis
+		required_missions = { rum_muslim_pashas rum_muslim_iron rum_muslim_andalusia }
+		position = 12
+
+		ai_weight = {
+			factor = 5000
+		}
+
+		trigger = {
+			primary_culture = turkish_new
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				is_year = 1500
+			}
+			else = {
+				iberia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+			italy_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			carinthia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = iberia_region
+				region = italy_region
+				area = carinthia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_ruler_personality = augustus_personality
+			custom_tooltip = SER_JUSTINIAN_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = SER_perma_pp
+					amount = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			# TLW [[[
+			TLW_switch_flag_triumvirate_effect = yes
+			# ]]]
+			change_tag = ROM
+			on_change_tag_effect = yes
+			# TLW [[[
+			TLW_switch_target_triumvirate_effect = yes
+			# ]]]
+			override_country_name = CALIPHATUMROMANUM
+			custom_tooltip = AB_EMPTY
+			change_primary_culture = romano_arabic
+			custom_tooltip = RUM_FASTER_ROMANIZATION_MUSLIM
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_ROMANIZATION_ON_DECISION
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture_group = byzantine
+					}
+					if = {
+						limit = {
+							OR = {
+								culture = greek
+								culture = pontic_greek
+								culture = goths
+							}
+						}
+						change_culture = greco_roman
+					}
+					else_if = {
+						limit = {
+							culture = turkish_christian
+						}
+						change_culture = romano_scythic
+					}
+					else = {
+						change_culture = illyro_roman
+					}
+				}
+				# Rum Helper [[[
+				every_owned_province = {
+					limit = {
+						culture = turkish_new
+					}
+					change_culture = romano_scythic
+				}
+				capital_scope = {
+					province_event = {
+						id = ab_byzantium.71
+					}
+					every_neighbor_province = {
+						limit = {
+							owned_by = ROOT
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+				# ]]]
+				every_subject_country = {
+					limit = {
+						is_colonial_nation = yes
+					}
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
+				}
+				for = {
+                    amount = 10
+                    effect = "
+						random_owned_province = {
+							limit = {
+								OR = {
+									superregion = europe_superregion
+									region = maghreb_region
+									region = carpathia_region
+								}
+								NOT = { area = carinthia_area }
+								NOT = { culture_group = roman_g }
+							}
+							province_event = {
+								id = ab_byzantium.71
+							}
+						}
+                    "
+                }
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = restore_roman_empire_tt
+			hidden_effect = {
+				set_heir_culture = ROOT
+				set_ruler_culture = ROOT
+				151 = {
+					change_culture = ROOT
+				}
+				every_owned_province = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					set_in_empire = no
+				}
+				118 = {
+					add_core = ROOT
+					province_event = {
+						id = ab_byzantium.71
+					}
+				}
+				country_event = {
+					id = ab_byzantium.67
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+			add_country_modifier = {
+				name = centralization_modifier
+				duration = 7300
+			}
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = rome }
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { tag = SEL }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_acities = {
+	    icon = despot_stefans_legacy
+		required_missions = { rum_muslim_bridging rum_muslim_convert }
+		position = 2
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				region = anatolia_region
+				development = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			NOT = { development = 15 }
+			region = anatolia_region
+			owned_by = ROOT
+		}
+		
+		effect = {
+			add_splendor = 200
+			add_country_modifier = {
+				name = rum_c_architecture
+				duration = 9125
+			}
+			define_advisor = {
+				type = planner
+				skill = 2
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	rum_muslim_industry = {
+	    icon = mission_industrialize_bengal
+		required_missions = { rum_muslim_acities }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_manufactory_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 30
+				has_manufactory_trigger = yes
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 100
+			add_country_modifier = {
+				name = seljuk_indus
+				duration = 9125
+			}
+			custom_tooltip = AB_15_MANUFCATORIES_PROD
+			hidden_effect = {	
+                for = {
+                    amount = 15
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_manufactory_trigger = yes
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	rum_muslim_syria = {
+		icon = arm_proclaim_great_armenia
+		position = 5
+		required_missions = { rum_muslim_anatolia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = aleppo_area
+				area = syria_area
+				area = syrian_desert_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				aleppo_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syria_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syrian_desert_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+			else = {
+				aleppo_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+				syrian_desert_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 3
+			add_country_modifier = {
+				name = seljuk_levantine
+				duration = 9125
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = SELJUK_NIZZARID
+			tooltip = {
+				add_ruler_modifier = {
+					name = seljuk_breaker
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							NAZ = {
+								total_development = ROOT
+							}
+						}
+					}
+					add_ruler_modifier = {
+						name = seljuk_breaker
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_palestine = {
+		icon = jerusalem
+		position = 7
+		required_missions = { rum_muslim_syria }
+
+		ai_weight = {
+			factor = 1000
+		}
+		
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				palestine_area = {
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+			else = {
+				palestine_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT	
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					piety = 0
+				}
+				add_piety = 0.5
+			}
+			else = {
+				add_piety = -0.5
+			}
+			add_country_modifier = {
+				name = sel_jerusalem_custodian
+				duration = -1
+			}
+			tabuk_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				country_event = {
+					id = ab_seljuk.15
+				}
+			}
+		}
+	}
+	
+	rum_muslim_egypt = {
+		icon = mission_nizzarid
+		required_missions = { rum_muslim_palestine }
+		position = 9
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = egypt_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = egypt_region
+				}
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = seljuk_usurper
+				duration = -1
+			}
+			maghreb_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dongola_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1232 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2324 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rum_muslim_maghreb = {
+		icon = mission_reconquer_ceuta
+		required_missions = { rum_muslim_egypt }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = maghreb_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 13
+					region = maghreb_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 23
+					region = maghreb_region
+				}
+			}
+		}
+		
+		effect = {
+			add_adm_power = 150
+			maghreb_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -15
+			}
+			add_country_modifier = {
+				name = rum_m_berber
+				duration = 9125
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_andalusia = {
+		icon = mission_reclaim_andalucia
+		required_missions = { rum_muslim_maghreb }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_country_flag = ab_stronger_ai_akg
+					ai = yes
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					region = iberia_region
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 25
+					region = iberia_region
+				}
+			}
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = andalucian
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_m_andalus
+				duration = -1
+			}
+			custom_tooltip = RUM_IBERIA
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = iberia_region
+						religion_group = muslim
+					}
+					add_base_tax = 1
+				}
+			}
+		}
+	}
+	
+}
+
+ab_rum_muslim_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+			was_tag = RUM
+		}
+		NOT = { tag = SEL }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_convert = {
+		icon = mission_quran
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			culture = turkish
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { religion = ROOT }
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				culture = turkish
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					piety = 0 
+				}
+				add_piety = 0.1
+			}
+			else = {
+				add_piety = -0.1
+			}
+			define_advisor = {
+				type = theologian
+				skill = 2
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	rum_muslim_mosques = {
+		icon = per_convert_persia
+		required_missions = { rum_muslim_convert }
+		position = 3
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_tax_building_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 20
+			}
+			custom_tooltip = RUM_MUSLIM_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rum_c_muslim
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						religion_group = muslim
+					}
+					add_province_modifier = {
+						name = rum_c_muslim
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_fate = {
+		icon = per_our_religious_direction
+		required_missions = { rum_muslim_mosques }
+		position = 4
+		
+		trigger = {
+			OR = {
+				AND = {
+					custom_trigger_tooltip = {
+						tooltip = seljuk_tolerance_heathen
+						has_global_modifier_value = {
+							which = tolerance_heathen
+							value = 2
+						}
+					}
+					num_of_estate_privileges = {
+						estate = estate_dhimmi
+						value = 4
+					}
+				}
+				AND = {
+					custom_trigger_tooltip = {
+						tooltip = seljuk_tolerance_own
+						has_global_modifier_value = {
+							which = tolerance_own
+							value = 4
+						}
+					}
+					religious_unity = 0.9
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SELJUK_REL_1
+			tooltip = {
+				add_country_modifier = {
+					name = seljuk_rights
+					duration = -1
+				}
+			}
+			custom_tooltip = SELJUK_REL_2
+			tooltip = {
+				add_country_modifier = {
+					name = seljuk_true
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						AND = {
+							has_global_modifier_value = {
+								which = tolerance_heathen
+								value = 2
+							}
+							num_of_estate_privileges = {
+								estate = estate_dhimmi
+								value = 4
+							}
+						}
+					}
+					add_country_modifier = {
+						name = seljuk_rights
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							has_global_modifier_value = {
+								which = tolerance_own
+								value = 4
+							}
+							religious_unity = 0.9
+						}
+					}
+					add_country_modifier = {
+						name = seljuk_true
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_sword = {
+		icon = per_sword_of_our_faith
+		required_missions = { rum_muslim_fate }
+		position = 5
+		
+		provinces_to_highlight = {
+			NOT = { owned_by = ROOT }
+			religion_group = muslim
+		}
+		
+		trigger = {
+			prestige = 95
+			is_defender_of_faith = yes
+			num_of_owned_provinces_with = {
+				value = 150
+				religion_group = muslim
+			}
+		}
+		
+		effect = {
+			set_country_flag = rum_religious_state_buff
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_country_modifier = {
+				name = rum_m_sword
+				duration = -1
+			}
+			custom_tooltip = RUM_RELIGIOUS_STATE_PRIVILEGE
+		}
+	}
+	
+	rum_muslim_baghdad = {
+	    icon = mission_cradle_of_civilization
+		required_missions = { rum_muslim_syria }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = iraq_arabi_area
+				area = al_jazira_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			al_jazira_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_adm_power = 100
+			custom_tooltip = SEL_DEVASTATION
+			custom_tooltip = AB_EMPTY
+			410 = {
+				add_great_project_tier = {
+					type = nahrawan
+					tier = 1
+				}
+				add_or_upgrade_tax_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			basra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				al_jazira_area = {
+					add_devastation = -100
+				}
+				iraq_arabi_area = {
+					add_devastation = -100
+				}
+			}
+		}
+	}
+	
+	rum_muslim_house = {
+	    icon = mission_gawans_madrasar
+		required_missions = { rum_muslim_baghdad }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+
+		trigger = {
+			dip = 5
+			410 = { development = 25 }
+			410 = { has_building = university }
+		}
+		
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = sel_house
+				duration = 12775
+			}
+			410 = {
+				add_great_project_tier = {
+					type = baghdad
+					tier = 1
+				}
+			}
+		}
+	}
+	
+	rum_muslim_cities = {
+		icon = mission_into_arabia
+		position = 8
+		required_missions = { rum_muslim_palestine }
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 384
+				province_id = 385
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			384 = { country_or_non_sovereign_subject_holds = ROOT }
+			385 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			385 = {
+				add_great_project_tier = {
+					type = kaaba
+					tier = 1
+				}
+				add_province_modifier = {
+					name = rum_m_holy_city
+					duration = -1
+				}
+			}
+			arabia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_caliphate = {
+		icon = per_unify_islam
+		required_missions = { rum_muslim_egypt rum_muslim_cities }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				local_autonomy_above_min = 10
+				nationalism = 1
+			}
+		}
+		
+		trigger = {
+			legitimacy_equivalent = 100
+			egypt_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+				NOT = { local_autonomy_above_min = 10 }
+				NOT = { nationalism = 1 }
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_seljuk.15
+			}
+		}
+	}
+	
+	rum_muslim_aden = {
+		icon = mam_highway_empire
+		position = 11
+		required_missions = { rum_muslim_caliphate }
+	
+		trigger = {
+			yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			upper_yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			asir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			tihama_al_yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = yemen_area
+				area = upper_yemen_area
+				area = asir_area
+				area = tihama_al_yemen_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = rum_c_explore
+				duration = 9125
+			}
+			388 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			malaya_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_fareast = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { rum_muslim_aden }
+		position = 12
+		
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				superregion = east_indies_superregion
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rum_spice_control
+				duration = 9125
+			}
+			johor_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			malaya_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			malacca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_sumatra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			jambi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+# Rome
+ab_rum_muslim_first_rome = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+	}
+	has_country_shield = yes
+
+	rum_muslim_reform_imperial_army = {
+		icon = ven_army_republic
+		position = 13
+		required_missions = { }
+
+		trigger = {
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.1
+			}
+			army_tradition = 75
+			army_size = 250
+		}
+
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = byzantium_prof_army
+				duration = -1
+			}
+			if = {
+				limit = {
+					full_idea_group = infrastructure_ideas
+				}
+				custom_tooltip = BYZ_COMPLETE_INFRA_YES
+				add_country_modifier = {
+					name = byz_siege_engines
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_COMPLETE_INFRA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = byz_siege_engines
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_finest = {
+		icon = mission_romanfinest
+		position = 14
+		required_missions = { rum_muslim_reform_imperial_army }
+
+		trigger = {
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.2
+			}
+			army_tradition = 100
+			army_professionalism = 0.9
+			army_size = 500
+			calc_true_if = {
+				all_subject_country = {
+					is_subject_of_type = diocese_vassal
+				}
+				amount = 4
+			}
+			reform_level = 7
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.47
+			}
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = byzprofessionalism
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzprofessionalism
+		}
+	}
+
+	rum_muslim_grandarmy = {
+		icon = mission_redcoats
+		position = 16
+		required_missions = { rum_muslim_finest rum_muslim_muskets }
+
+		trigger = {
+			army_size = 1200
+			manpower = 1000
+			hegemon_strength = 100
+			calc_true_if = {
+				all_subject_country = {
+					is_subject_of_type = diocese_vassal
+				}
+				amount = 8
+			}
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_GRAND_ARMY_LEGION_REQUIREMENT
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 75
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BYZ_GRAND_ARMY_DIOCESE_REQUIREMENT
+					has_government_mechanic = roman_professionalism_mechanic
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = -75
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_mil_tech = 1
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_government_power = { 
+						mechanic_type = roman_professionalism_mechanic
+						power_type = romanprofessionalism
+						value = 75
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = byzlegio
+					}
+					add_government_reform = byzlegio
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_LEGION_NO
+			}
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = byzlegio
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_government_mechanic = roman_professionalism_mechanic
+					NOT = {
+						has_government_power = { 
+							mechanic_type = roman_professionalism_mechanic
+							power_type = romanprofessionalism
+							value = -75
+						}
+					}
+				}
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_YES
+				hidden_effect = {
+					unlock_government_reform = {
+						government_reform = rom_legio
+					}
+					every_subject_country = {
+						limit = {
+							OR = {
+								is_subject_of_type = diocese_vassal
+								is_subject_of_type = grand_diocese_vassal
+							}
+						}
+						add_government_reform = rom_legio
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GRAND_ARMY_DIOCESE_NO
+			}
+			tooltip = {
+				unlock_government_reform = {
+					government_reform = rom_legio
+				}
+			}
+		}
+	}
+
+	rum_muslim_alpine = {
+	    icon = the_alpine_wall
+		required_missions = { rum_muslim_restored_rome }
+		position = 17
+		
+		trigger = {
+		    switzerland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    romandie_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = switzerland_area
+				area = romandie_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = byzantium_western_campaigns
+				duration = 7300
+			}
+			alsace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lorraine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_rhineland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wallonia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			flanders_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			brabant_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_rhine = {
+	    icon = mission_rhine
+		required_missions = { rum_muslim_alpine }
+		position = 18
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = brabant_area
+					area = flanders_area
+					area = wallonia_area
+					area = lower_rhineland_area
+					area = lorraine_area
+					area = alsace_area
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = brabant_area
+				area = flanders_area
+				area = wallonia_area
+				area = lower_rhineland_area
+				area = lorraine_area
+				area = alsace_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 50 }
+			add_country_modifier = {
+				name = byzantium_imperial_border
+				duration = -1
+			}
+			low_countries_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_belgica = {
+	    icon = ned_dykes
+		required_missions = { rum_muslim_rhine }
+		position = 19
+		
+		trigger = {
+		    low_countries_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.63
+			}
+			custom_tooltip = AB_EMPTY
+			97 = {
+				add_great_project_tier = {
+					type = dutch_polders
+					tier = 1
+				}
+				add_great_project_tier = {
+					type = amsterdam_bourse
+					tier = 1
+				}
+			}
+		}
+	}
+
+	rum_muslim_cultural_hegemony = {
+		icon = mission_cultural_hegemony
+		position = 21
+		required_missions = { rum_muslim_belgica rum_muslim_germany }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			NOT = {
+				AND = {
+					culture_group = roman_g
+					has_road_building_trigger = yes
+					has_courthouse_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 1000
+				province_is_diocese_land_trigger = yes
+				culture_group = roman_g
+				has_road_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_GOLDEN_AGE 
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_cultural_hegemony
+				duration = -1
+			}
+			custom_tooltip = BYZ_CULTURAL_HEGEMONY_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = byz_cultural_hegemony_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					extend_golden_age = 600
+				}
+				else = {
+					reset_golden_age = yes
+				}
+				every_province = {
+					limit = {
+						culture_group = roman_g
+					}
+					add_province_modifier = {
+						name = byz_cultural_hegemony_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_cities_latin = {
+		icon = mission_the_golden_city
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 118
+			    province_id = 225
+		      	province_id = 341
+		      	province_id = 183
+				province_id = 236
+				province_id = 1876
+				province_id = 134
+				province_id = 12
+			}
+		}
+
+		trigger = {
+		    118 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			225 = {
+			    province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			341 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			183 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			236 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			1876 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			134 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+			12 = {
+				province_is_diocese_land_trigger = yes
+				development = 27
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_latincities
+			custom_tooltip = BYZ_LATIN_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 118
+							province_id = 225
+							province_id = 341
+							province_id = 183
+							province_id = 236
+							province_id = 1876
+							province_id = 134
+							province_id = 12
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_roman_law = {
+		icon = mission_themis
+		position = 23
+		required_missions = { }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_courthouse_building_trigger = no
+		}
+
+		trigger = {
+			OR = {
+				adm = 5
+				monthly_adm = 9
+			}
+			adm_power = 150
+			num_of_owned_provinces_with = {
+				value = 40
+				has_courthouse_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_adm_power = -150
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = byzantium_roman_law
+				duration = -1
+			}
+		}
+	}
+
+	rum_muslim_nomos = {
+		icon = mission_justinian
+		position = 24
+		required_missions = { rum_muslim_roman_law rum_muslim_university }
+
+		trigger = {
+			monthly_adm = 10
+			monthly_dip = 10
+			monthly_mil = 10
+			absolutism = 75
+		}
+
+		effect = {
+			set_country_flag = ab_prevent_ruler_negative_trait
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = byzantium_law
+				duration = -1
+			}
+			custom_tooltip = BYZ_PREVENT
+		}
+	}
+}
+
+ab_rum_muslim_second_rome = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+	}
+	has_country_shield = yes
+
+	rum_muslim_colonize_siberia = {
+		icon = mission_beyond_the_urals
+		required_missions = { rum_muslim_pontic_steppe }
+		position = 14
+		
+		provinces_to_highlight = {
+			region = ural_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			ural_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			set_country_flag = rus_cossack_expeditions_buff
+			create_conquistador = { tradition = 100 }
+			add_country_modifier = {
+				name = rus_explore_siberia
+				duration = 7300
+			}
+			custom_tooltip = RUS_RECRUIT_COSSACK_EXPEDITIONS_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					GLH = {
+						NOT = {
+							has_idea = glhe_seventh
+						}
+					}
+				}
+				custom_tooltip = RUM_MUSLIM_SIBERIAFRONTIER_GAINED_YES
+				GLH = {
+					add_country_modifier = {
+						name = rum_siberia_expansion
+						duration = 18250
+					}
+				}
+				custom_tooltip = RUM_MUSLIM_SIBERIAFRONTIER_NOTGAINED_NO
+				tooltip = {
+					GLH = {
+						add_country_modifier = {
+							name = rum_siberia_expansion_settler
+							duration = 18250
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RUM_MUSLIM_SIBERIAFRONTIER_GAINED_NO
+				tooltip = {
+					GLH = {
+						add_country_modifier = {
+							name = rum_siberia_expansion
+							duration = 18250
+						}
+					}
+				}
+				custom_tooltip = RUM_MUSLIM_SIBERIAFRONTIER_NOTGAINED_YES
+				GLH = {
+					add_country_modifier = {
+						name = rum_siberia_expansion_settler
+						duration = 18250
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_muskets = {
+		icon = ven_navy_mission_2
+		position = 15
+		required_missions = { }
+
+		provinces_to_highlight = {
+			owner = {
+				technology_group = western
+				OR = {
+					NOT = { alliance_with = ROOT }
+					NOT = {
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = { 
+			any_country = {
+				alliance_with = ROOT
+				technology_group = western
+				has_opinion = {
+					who = ROOT
+					value = 200
+				}
+			}
+			mil_tech = 14
+			army_professionalism = 0.7
+		}
+
+		effect = {
+			change_technology_group = western
+			change_unit_type = western
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_guns
+				duration = 9125
+			}
+			custom_tooltip = BYZ_ROME_DOCTRINE
+		}
+	}
+
+	rum_muslim_arelat = {
+		icon = unite_the_realm
+		required_missions = { rum_muslim_restored_rome }
+		position = 17
+		
+		provinces_to_highlight = {
+			OR = {
+				area = provence_area
+				area = savoy_dauphine_area
+				area = west_burgundy_area
+				area = bourgogne_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			provence_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			savoy_dauphine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_burgundy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bourgogne_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 80 }
+			add_country_modifier = {
+				name = byzantium_western
+				duration = 9125
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = BYZ_MIL_TECH
+			tooltip = {
+				add_yearly_manpower = 4
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								mil_tech = ROOT
+							}
+						}
+					}
+					add_yearly_manpower = 4
+				}
+			}
+		}
+	}
+
+	rum_muslim_fortify_rhine = {
+		icon = alpine_fortifications
+		required_missions = { rum_muslim_rhine }
+		position = 19
+		
+		provinces_to_highlight = {
+			OR = {
+				area = inner_austria_area
+				area = austria_proper_area
+				area = switzerland_area
+				area = alsace_area
+				area = lorraine_area
+				area = lower_rhineland_area
+				area = wallonia_area
+				area = brabant_area
+				area = flanders_area
+			}
+			OR = {
+				NOT = { base_manpower = 5 }
+				province_has_current_tech_fort_trigger = no
+			}
+			province_is_diocese_land_trigger = yes
+		}
+		
+		trigger = {
+			inner_austria_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			austria_proper_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			switzerland_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			alsace_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			lorraine_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			lower_rhineland_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			wallonia_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			brabant_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+			flanders_area = {
+				province_is_diocese_land_trigger = yes
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
+				add_base_manpower = 1
+				upgrade_fort_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							area = inner_austria_area
+							area = austria_proper_area
+							area = switzerland_area
+							area = alsace_area
+							area = lorraine_area
+							area = lower_rhineland_area
+							area = wallonia_area
+							area = brabant_area
+							area = flanders_area
+						}
+						province_has_current_tech_fort_trigger = yes
+						base_manpower = 5
+						province_is_diocese_land_trigger = yes
+					}
+					add_base_manpower = 1
+					upgrade_fort_building = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			north_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_germany = {
+		icon = the_imperial_border
+		required_missions = { rum_muslim_fortify_rhine }
+		position = 20
+		
+		provinces_to_highlight = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 80
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = byz_german_conquest
+				duration = -1
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_university = {
+		icon = mission_rb_trinity_college_dublin
+		position = 23
+		required_missions = { }
+
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+
+		trigger = {
+			OR = {
+				dip = 4
+				monthly_dip = 8
+			}
+			151 = { owned_by = ROOT }
+			151 = { has_building = university }
+		}
+
+		effect = {
+			set_country_flag = koj_scholar_chance
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byzantium_uni
+				duration = -1
+			}
+			custom_tooltip = KOJ_SCHOLAR
+			custom_tooltip = AB_EMPTY
+		}
+	}
+}
+
+ab_rum_muslim_third_rome = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+	}
+	has_country_shield = yes
+
+	rum_muslim_pontic_steppe = {
+		icon = mission_lit_harness_steppes
+		required_missions = { }
+		position = 13
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 18
+				region = crimea_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = crimea_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			set_country_flag = rus_cossack_leaders_buff
+			add_country_modifier = {
+				name = trk_mounted_dread
+				duration = 9125
+			}
+			custom_tooltip = RUS_RECRUIT_COSSACK_LEADERS_PRIVILEGE
+			custom_tooltip = RUS_EMPTY
+			ural_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			central_asia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = RUM_MUSLIM_CLAIM_TATAR_PROVINCES
+			hidden_effect = {
+				every_province = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+						culture_group = tartar
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = RUS_EMPTY
+			if = {
+				limit = {
+					exists = GLH
+				}
+				custom_tooltip = RUM_MUSLIM_CLAIM_GOLDENHORDE_YES
+				hidden_effect = {
+					GLH = {
+						every_owned_province = {
+							limit = {
+								NOT = { is_permanent_claim = ROOT }
+								NOT = { is_core = ROOT }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RUM_MUSLIM_CLAIM_GOLDENHORDE_NO
+			}
+		}
+	}
+	
+	rum_muslim_restore_tataria = {
+		icon = mission_genghis_khan
+		required_missions = { rum_muslim_pontic_steppe }
+		position = 15
+		
+		trigger = {
+			NOT = { exists = GLH }
+			owns_all_provinces = { 
+				culture_group = tartar
+			}
+			num_of_owned_provinces_with = {
+				value = 35
+				OR = {
+					region = central_asia_region
+					region = ural_region
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = GLH
+				region = ural_region
+				region = central_asia_region
+				culture_group = tartar
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = AB_DIOCESE_TATARIA_CB
+			add_country_modifier = {
+				name = rum_sultan_of_tataria
+				duration = -1
+			}
+			custom_tooltip = RUM_UNION_MISSIONTREE
+			tooltip = {
+				country_event = {
+					id = ab_byzantium.84
+				}
+			}
+			hidden_effect = {
+				TLW_establish_diocese_tataria_effect = yes
+			}
+		}
+	}
+
+	rum_muslim_restored_rome = {
+		icon = mission_westrome
+		required_missions = { rum_muslim_muskets rum_muslim_money }
+		position = 16
+				
+		trigger = {
+			OR = {
+				manpower_percentage = 1
+				army_size_percentage = 1
+			}
+			NOT = { governing_capacity_percentage = 0.8 }
+			religious_unity = 0.85
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = byzantium_eastern_empire
+				duration = -1
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			romandie_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			provence_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			savoy_dauphine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_burgundy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bourgogne_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			pyrenees_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			guyenne_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			languedoc_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			massif_central_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = BYZ_EXPLO
+			tooltip = {
+				add_country_modifier = {
+					name = byzantium_unknown
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1975 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_country_modifier = {
+						name = byzantium_unknown
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_dethrone = {
+		icon = mission_downfall
+		required_missions = { rum_muslim_arelat rum_muslim_aquitania }
+		position = 18
+		
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				region = france_region
+			}
+		}
+		
+		effect = {
+			236 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byzantium_carolingian
+				duration = 9125
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			custom_tooltip = AB_EMPTY
+			cornwall_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wessex_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_anglia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_midlands_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_midlands_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wales_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = BYZ_HRE_DISMANTLE
+			tooltip = {
+				add_country_modifier = {
+					name = byzantium_bane
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { hre_size = 1 }
+					}
+					add_country_modifier = {
+						name = byzantium_bane
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_restoration = {
+		icon = mission_frankishengland
+		required_missions = { rum_muslim_dethrone }
+		position = 19
+		
+		provinces_to_highlight = {
+			OR = {
+				area = scottish_marches_area
+				area = yorkshire_area
+				area = wales_area
+				area = west_midlands_area
+				area = east_midlands_area
+				area = east_anglia_area
+				area = home_counties_area
+				area = wessex_area
+				area = cornwall_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			scottish_marches_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			yorkshire_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wales_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_anglia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			home_counties_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wessex_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			cornwall_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_absolutism = 20
+			add_ruler_modifier = {
+				name = byzantium_orbis
+				duration = -1
+			}
+			custom_tooltip = BYZ_PAX_ROMANA
+			tooltip = {
+				add_province_modifier = {
+					name = byzantium_pax
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					add_province_modifier = {
+						name = byzantium_pax
+						duration = -1
+					}
+				}
+			}
+			british_isles_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_europe = {
+		icon = peace_in_europe
+		required_missions = { rum_muslim_germany rum_muslim_restoration }
+		position = 21
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						region = scandinavia_region
+						region = british_isles_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					OR = {
+						region = wendia_region
+						region = poland_region
+						region = baltic_region
+					}
+					NOT = { owned_by = GLH }
+				}
+			}
+		}
+		
+		trigger = {
+			scandinavia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			british_isles_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wendia_region = {
+				type = all
+				owned_by = GLH
+			}
+			poland_region = {
+				type = all
+				owned_by = GLH
+			}
+			baltic_region = {
+				type = all
+				owned_by = GLH
+			}
+			GLH = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.64
+			}
+		}
+	}
+
+	rum_muslim_megalopolis = {
+		icon = mission_megalopolis
+		required_missions = { }
+		position = 22
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			151 = { owned_by = ROOT }
+			151 = { development = 65 }
+			151 = { num_of_buildings_in_province = 10 }
+		}
+		
+		effect = {
+			151 = {
+				add_province_modifier = {
+					name = BYZ_megalopolis_modifier_1
+					duration = -1
+				}
+			}
+			custom_tooltip = BYZ_modifier_will_double
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = BYZ_monarch_reigns_in_byzantium
+				duration = -1
+			}
+		}
+	}
+
+	rum_muslim_gigalopolis = {
+		icon = take_constantinople
+		required_missions = { rum_muslim_megalopolis }
+		position = 23
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 316
+			}
+		}
+		
+		trigger = {
+			151 = {
+				development = 85
+			}
+			316 = {
+				owned_by = ROOT
+				development = 40
+			}
+			architect = 4
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = byz_urbanization
+				duration = -1
+			}
+			151 = {
+				add_province_modifier = {
+					name = byz_gigalopolis
+					duration = -1
+				}
+			}
+			316 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					316 = {
+						development = 50
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA1_YES
+				316 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA1_NO
+				tooltip = {
+					316 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_ecumenopolis = {
+		icon = mission_constantinople
+		required_missions = { rum_muslim_university rum_muslim_gigalopolis rum_muslim_sophia }
+		position = 24
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 151
+				province_id = 316
+				province_id = 149
+				province_id = 4779
+			}
+		}
+		
+		trigger = {
+			151 = {
+				development = 120
+			}
+			316 = {
+				development = 70
+			}
+			149 = {
+				owned_by = ROOT
+				development = 50
+			}
+			4779 = {
+				owned_by = ROOT
+				development = 50
+			}
+			architect = 5
+		}
+		
+		effect = {
+			custom_tooltip = BYZ_URBANIZATION_UPGRADE
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				remove_country_modifier = byz_urbanization
+				add_country_modifier = {
+					name = byz_massive_urbanization
+					duration = -1
+				}
+			}
+			151 = {
+				add_province_modifier = {
+					name = byz_ecumenopolis
+					duration = -1
+				}
+			}
+			149 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			4779 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				add_province_modifier = {
+					name = byz_greater_constantinople_area
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					149 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA2_YES
+				149 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA2_NO
+				tooltip = {
+					149 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					4779 = {
+						development = 60
+					}
+				}
+				custom_tooltip = BYZ_GREATER_AREA3_YES
+				4779 = {
+					change_trade_goods = coal
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_GREATER_AREA3_NO
+				tooltip = {
+					4779 = {
+						change_trade_goods = coal
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_fourth_rome = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+	}
+	has_country_shield = yes
+
+	rum_muslim_turkmen = {
+		icon = mission_central_asian_steppes
+		required_missions = { rum_muslim_pontic_steppe }
+		position = 14
+
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { owned_by = GLH }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_mercenaries = 100
+			central_asia_region = {
+				type = all
+				owned_by = GLH
+			}
+			GLH = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			set_country_flag = ab_free_mercs
+			custom_tooltip = PER_FREE_MERCS
+			custom_tooltip = AB_EMPTY
+			central_asia_region = {
+				add_province_modifier = {
+					name = byz_integrate_turkmen
+					duration = 7300
+				}
+			}
+			add_country_modifier = {
+				name = per_turkic_mercenaries
+				duration = -1
+			}
+		}
+	}
+
+	rum_muslim_money = {
+		icon = dominant_economy
+		required_missions = { }
+		position = 15
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 151
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				}
+				AND = {
+					province_id = 358
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+				AND = {
+					province_id = 377
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 60
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {  
+		    NOT = { num_of_loans = 1 }
+			151 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			358 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			377 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			OR = {
+				monthly_adm = 12
+				full_idea_group = economic_ideas
+			}
+			advisor = treasurer
+		}
+
+		effect = {
+		    set_country_flag = rmg_monetary_policy_no_power_cost_flag
+			add_inflation = -5
+			add_country_modifier = {
+				name = byz_gold_standard
+				duration = -1
+			}
+			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
+		}
+	}
+
+	rum_muslim_aquitania = {
+		icon = mission_invade_occitania
+		required_missions = { rum_muslim_restored_rome }
+		position = 17
+		
+		provinces_to_highlight = {
+			OR = {
+				area = pyrenees_area
+				area = guyenne_area
+				area = languedoc_area
+				area = massif_central_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			pyrenees_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			guyenne_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			languedoc_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			massif_central_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			183 = {
+				owner = {
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_establish_diocese
+						months = 240
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = byz_aquitania
+				duration = 3650
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_punics = {
+		icon = mission_punic
+		position = 19
+		required_missions = { rum_muslim_newworld_base }
+		
+		provinces_to_highlight = {
+			OR = {
+				region = northeast_america_region
+				region = southeast_america_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			northeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			southeast_america_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			965 = {
+				change_trade_goods = salt
+			}
+			add_country_modifier = {
+				name = byz_punics_defeated
+				duration = 10950
+			}
+			north_america_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = CTG }
+				}
+				custom_tooltip = BYZ_PUNICS_GONE_YES
+				hidden_effect = {
+					every_province = {
+						limit = {
+							culture_group = punic_g
+						}
+						add_devastation = 100
+						add_base_tax = -10
+						add_base_production = -10
+						add_base_manpower = -10
+						change_culture = owner
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_PUNICS_GONE_NO
+			}
+		}
+	}
+
+	rum_muslim_sophia = {
+		icon = end_the_schism
+		required_missions = { }
+		position = 23
+		
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+		
+		trigger = {
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			151 = {
+				has_great_project = {
+					type = hagia_sophia
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+			151 = {
+				add_province_modifier = {
+					name = rum_m_ayasofya
+					duration = -1
+				}
+			}
+			custom_tooltip = RUM_M_TRUST
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = muslim
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_fifth_rome = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+	}
+	has_country_shield = yes
+
+	rum_muslim_roman_industries = {
+		icon = mission_industrial_forging
+		position = 13
+		required_missions = { }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = { 
+				has_manufactory_trigger = no 
+				has_production_building_trigger = no
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				has_manufactory_trigger = yes
+				has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 1
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = byz_industry
+				duration = 18250
+			}
+		}
+	}
+
+	rum_muslim_roads = {
+		icon = mission_royal_roads
+		position = 14
+		required_missions = { rum_muslim_roman_industries }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 100
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_building_roads_bonus
+			add_country_modifier = {
+				name = byz_roads
+				duration = -1
+			}
+			custom_tooltip = BYZ_BUILDING_ROADS_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_road_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = byz_roads_province
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_wonders = {
+		icon = mission_romanwonders
+		position = 16
+		required_missions = { rum_muslim_money rum_muslim_roads }
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			has_great_project = {
+				type = any
+				tier = 0
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+			reform_level = 6
+		}
+
+		effect = {
+			unlock_government_reform = {
+				government_reform = byzengineering
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = byzengineering
+		}
+	}
+
+	rum_muslim_odyssey = {
+		icon = mission_look_west
+		position = 17
+		required_missions = { rum_muslim_restored_rome }
+				
+		provinces_to_highlight = {
+			owned_by = ROOT
+			is_colony = yes
+		}
+
+		trigger = {
+			num_of_colonies = 3
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = byzantium_colonies
+				duration = 9125
+			}
+		}
+	}
+
+	rum_muslim_newworld_base = {
+		icon = mission_caribbean_cn
+		position = 18
+		required_missions = { rum_muslim_odyssey }
+		
+		provinces_to_highlight = {
+			OR = {
+				colonial_region = colonial_the_carribean
+				colonial_region = colonial_mexico
+				colonial_region = colonial_colombia
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					colonial_region = colonial_the_carribean
+					colonial_region = colonial_mexico
+					colonial_region = colonial_colombia
+				}
+				value = 40
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			add_country_modifier = {
+				name = byz_america_base
+				duration = 10950
+			}
+			northeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southeast_america_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_conquer_seas = {
+		icon = mission_the_triangle_trade
+		position = 19
+		required_missions = { rum_muslim_newworld_base }
+				
+		provinces_to_highlight = {
+			owner_is_colonial_nation = yes
+			country_or_non_sovereign_subject_holds = ROOT
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation = yes
+				}
+				amount = 12
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_byzantium.60
+			}
+		}
+	}
+
+	rum_muslim_cities_byzantine = {
+		icon = mission_ottoman_law
+		required_missions = { }
+		position = 22
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 146
+			    province_id = 148
+		      	province_id = 145
+		      	province_id = 317
+				province_id = 318
+				province_id = 358
+				province_id = 2313
+			}
+		}
+
+		trigger = {
+		    146 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			148 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			145 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			317 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			318 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			358 = {
+				province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			2313 = {
+			    province_is_diocese_land_trigger = yes
+				development = 22
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 146
+							province_id = 148
+							province_id = 145
+							province_id = 317
+							province_id = 318
+							province_id = 358
+							province_id = 2313
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = byzantine }
+							ROOT = { tag = BYZ }
+						}
+						add_devastation = 15 
+						change_culture = greek 
+						add_province_modifier = {
+							name = byz_forced_hellenized
+							duration = 7300 
+						}
+					}
+					else_if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+							ROOT = { tag = ROM }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_library = {
+		icon = bibliotheca_corviana
+		required_missions = { }
+		position = 23
+
+		provinces_to_highlight = { 
+			province_id = 358
+		}
+
+		trigger = {
+			treasury = 2500
+			adm_power = 200
+			advisor = scholar
+			358 = { country_or_non_sovereign_subject_holds = ROOT }
+			358 = { has_any_ongoing_construction = no }
+		}
+
+		effect = {
+			add_treasury = -2500
+			add_adm_power = -200
+		    custom_tooltip = BYZ_CREATE_LIBRARY
+			set_country_flag = byzantine_library_build
+			hidden_effect = {
+				358 = {
+					add_great_project = {
+						type = library_alexandria
+						instant = yes
+					}
+				}
+				358 = {
+					add_great_project_tier = {
+						type = library_alexandria
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_wall = {
+		icon = byz_reinforce_constantinople
+		required_missions = { rum_muslim_sophia rum_muslim_library }
+		position = 24
+
+		provinces_to_highlight = { 
+			province_id = 151
+		}
+
+		trigger = {
+			mil_power = 200
+			manpower = 25
+			treasury = 2500
+			advisor = fortification_expert
+			151 = { country_or_non_sovereign_subject_holds = ROOT }
+			151 = { has_any_ongoing_construction = no }
+			151 = {
+				has_great_project = {
+					type = hagia_sophia
+					tier = 3
+				}
+			}
+		}
+
+		effect = {
+			add_mil_power = -200
+			add_manpower = -25
+			add_treasury = -2500
+			custom_tooltip = BYZ_CREATE_MONUMENT
+			set_country_flag = byzantine_monument_flag
+			hidden_effect = {
+				151 = {
+					add_great_project = {
+						type = theodosian
+						instant = yes
+					}
+				}
+				151 = {
+					add_great_project_tier = {
+						type = theodosian
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+}
+
+# Persian War
+ab_rum_muslim_fourth_persian_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_persian_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_georgia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_persia_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_persosphere_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_cities_persian_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_persosphere_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+}
+
+ab_rum_muslim_fourth_persian_unlocked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_georgia = {
+		icon = mission_georgia
+		required_missions = { rum_muslim_persia }
+		position = 26
+
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = { area = circassia_area }
+			NOT = { area = dagestan_area }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			samtskhe_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kartli_kakheti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			imereti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			armenia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			shirvan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.78
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = per_looting
+				duration = 7300
+			}
+			if = {
+				limit = {
+					circassia_area = {
+						type = all
+						owned_by = GLH
+					}
+					dagestan_area = {
+						type = all
+						owned_by = GLH
+					}
+				}
+				custom_tooltip = RUM_GLH_CAUCASIA_YES
+				circassia_area = {
+					change_culture = romano_scythic
+					change_religion = ROOT
+				}
+				dagestan_area = {
+					change_culture = romano_scythic
+					change_religion = ROOT
+				}
+			}
+			else = {
+				custom_tooltip = RUM_GLH_CAUCASIA_NO
+				tooltip = {
+					circassia_area = {
+						change_culture = romano_scythic
+						change_religion = ROOT
+					}
+					dagestan_area = {
+						change_culture = romano_scythic
+						change_religion = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	rum_muslim_persosphere = {
+		icon = mission_iran
+		required_missions = { }
+		position = 27
+
+		provinces_to_highlight = {
+			province_is_diocese_land_trigger = yes
+			culture = perso_roman
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				province_is_diocese_land_trigger = yes
+				culture = perso_roman
+			}
+		}
+
+		effect = {
+			set_country_flag = unlocked_faction_romepersian
+			set_country_flag = byz_faster_romanization_persia
+			custom_tooltip = BYZ_PERSIAN_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = PER_ADM_DEV
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								region = persia_region
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+				add_faction = faction_byzpersian
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 20
+				}
+			}
+		}
+	}
+
+	rum_muslim_cities_persian = {
+		icon = per_purify_the_holy_sites
+		required_missions = { rum_muslim_persosphere }
+		position = 28
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 416
+			    province_id = 428
+		      	province_id = 429
+		      	province_id = 2218
+				province_id = 431
+				province_id = 4341
+				province_id = 445
+				province_id = 451
+			}
+		}
+
+		trigger = {
+		    416 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			428 = {
+			    province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			429 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			2218 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			431 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			4341 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			445 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+			451 = {
+				province_is_diocese_land_trigger = yes
+				development = 32
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 416
+							province_id = 428
+							province_id = 429
+							province_id = 2218
+							province_id = 431
+							province_id = 4341
+							province_id = 445
+							province_id = 451
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_fifth_persian_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_persian_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_persia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_ariana_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_invade_india_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_ariana_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+
+	rum_muslim_maharajas_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_invade_india_locked }
+		position = 29
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_PERSIA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_PERSIA
+		}
+	}
+}
+
+ab_rum_muslim_fifth_persian_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_persian_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_persia = {
+		icon = per_tab_ziyarids_successor
+		required_missions = { }
+		position = 25
+
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			persia_region = {
+				add_local_autonomy = -50
+				add_province_modifier = {
+					name = per_restored_iran
+					duration = 9125
+				}
+			}
+		}
+	}
+
+	rum_muslim_ariana = {
+		icon = mission_silk_road
+		required_missions = { }
+		position = 27
+
+		provinces_to_highlight = {
+			region = khorasan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			set_country_flag = commandants_give_global_supply_limit_modifier
+			define_advisor = {
+				type = commandant
+				skill = 3
+				culture = perso_roman
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_COMMANDANT_SCALING
+			custom_tooltip = AB_EMPTY
+			northern_sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_invade_india = {
+		icon = mission_rb_take_north_india
+		required_missions = { rum_muslim_ariana }
+		position = 28
+
+		provinces_to_highlight = {
+			OR = {
+				area = sindh_area
+				area = northern_sindh_area
+				area = multan_area
+				area = kashmir_area
+				area = sind_sagar_area
+				area = lahore_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_yearly_manpower = 4
+			add_country_modifier = {
+				name = byz_invade_india
+				duration = 7300
+			}
+			west_india_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+			hindusthan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			}
+		}
+	}
+
+	rum_muslim_maharajas = {
+		icon = mission_indian_empire
+		required_missions = { rum_muslim_invade_india }
+		position = 29
+
+		provinces_to_highlight = {
+			superregion = india_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				superregion = india_superregion
+			}
+		}
+
+		effect = {
+			india_superregion = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = byz_integrate_indian
+					duration = 7300
+				}
+			}
+			add_country_modifier = {
+				name = yua_horde_claim_india
+				duration = 9125
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = byz_invade_india
+				}
+				custom_tooltip = BYZ_SPEEDRUN_INDIA_YES
+				set_country_flag = byz_faster_romanization_india
+			}
+			else = {
+				custom_tooltip = BYZ_SPEEDRUN_INDIA_NO
+			}
+		}
+	}
+}
+
+# Dragon Emperor
+ab_rum_muslim_first_chinese_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_tibet_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_mongolia_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_tibet_locked }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_far_east_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_mongolia_locked }
+		position = 29
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_first_chinese_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_tibet = {
+		icon = mission_lhasa
+		required_missions = { }
+		position = 25
+
+		provinces_to_highlight = {
+			region = tibet_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 18
+				region = tibet_region
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_religious_diplomats_buff
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = vajrayana
+				culture = tibeto_roman
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_RELIGIOUS_DIPLOMATS_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { mission_completed = rum_zoroastrian_burma }
+				}
+				custom_tooltip = BYZ_CONQUER_TIBET_FIRST_YES
+				set_country_flag = byz_conquer_tibet_first
+			}
+			else = {
+				custom_tooltip = BYZ_CONQUER_TIBET_FIRST_NO
+			}
+		}
+	}
+
+	rum_muslim_mongolia = {
+		icon = mission_unify_mongolia
+		required_missions = { rum_muslim_tibet }
+		position = 27
+
+		provinces_to_highlight = {
+			region = mongolia_region
+			NOT = { owned_by = GLH }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			mongolia_region = {
+				type = all
+				owned_by = GLH
+			}
+			GLH = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = china_integrate_mongol
+				duration = -1
+			}
+			liaoning_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			japan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_far_east = {
+		icon = jap_financial_cliques
+		required_missions = { rum_muslim_mongolia }
+		position = 29
+
+		provinces_to_highlight = {
+			superregion = far_east_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			735 = { country_or_non_sovereign_subject_holds = ROOT }
+			1020 = { country_or_non_sovereign_subject_holds = ROOT }
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				superregion = far_east_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_fareast
+			country_event = {
+				id = ab_byzantium.81
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_FAR_EAST_CAPITALS
+			custom_tooltip = AB_EMPTY
+			oceanea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_rum_muslim_second_chinese_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_invade_china_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_tibet_locked rum_muslim_burma_locked }
+		position = 26
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_cities_chinese_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_invade_china_locked }
+		position = 28
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_second_chinese_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_invade_china = {
+		icon = mission_jaded
+		required_missions = { rum_muslim_tibet rum_muslim_burma }
+		position = 26
+
+		provinces_to_highlight = {
+			superregion = china_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+				superregion = china_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_china
+			set_country_flag = unlocked_faction_romechinese
+			enable_estate_effect = {
+				estate = estate_eunuchs
+			}
+			custom_tooltip = BYZ_CHINESE_CAPITALS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_CHINA_ADM_DEV
+			hidden_effect = {
+                for = {
+                    amount = 20
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								superregion = china_superregion
+							}
+							add_base_tax = 1
+                        }
+                    "
+                }
+				add_faction = faction_byzchinese
+				add_faction_influence = {
+					faction = faction_byzchinese
+					influence = 15
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			china_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_cities_chinese = {
+		icon = mission_asian_city
+		required_missions = { rum_muslim_invade_china }
+		position = 28
+
+		provinces_to_highlight = {
+		    OR = {
+				province_id = 1816
+				province_id = 667
+		    	province_id = 1821
+		    	province_id = 679
+				province_id = 700
+				province_id = 672
+				province_id = 682
+				province_id = 684
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+		    1816 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			667 = {
+			    province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			1821 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			679 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			700 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			672 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			682 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+			684 = {
+				province_is_diocese_land_trigger = yes
+				development = 37
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				has_courthouse_building_trigger = yes
+				has_manufactory_trigger = yes
+				has_building = university
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_DEVELOP_CITIES_REWARD_TT
+			tooltip = {
+				add_province_modifier = {
+                    name = byz_city
+				    duration = -1
+				}
+				upgrade_trade_building = yes
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 1816
+							province_id = 667
+							province_id = 1821
+							province_id = 679
+							province_id = 700
+							province_id = 672
+							province_id = 682
+							province_id = 684
+						}
+					}
+					add_permanent_province_modifier = {
+						name = byz_city
+						duration = -1
+					}
+					upgrade_trade_building = yes
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					if = {
+						limit = {
+							NOT = { culture_group = roman_g }
+						}
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_third_chinese_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		NOT = { has_country_flag = byz_chinese_war_victory }
+	}
+	has_country_shield = yes
+
+	rum_muslim_burma_locked = {
+		icon = mission_unknown_mission
+		required_missions = { }
+		position = 25
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_indochina_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_burma_locked }
+		position = 27
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+
+	rum_muslim_east_indies_locked = {
+		icon = mission_unknown_mission
+		required_missions = { rum_muslim_indochina_locked }
+		position = 29
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_BEATING_CHINA
+				always = no
+			}
+		}
+
+		effect = {
+			custom_tooltip = BYZ_BEATING_CHINA
+		}
+	}
+}
+
+ab_rum_muslim_third_chinese_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ROM
+		was_tag = RUM
+		religion_group = muslim
+		has_country_flag = byz_chinese_war_victory
+	}
+	has_country_shield = yes
+
+	rum_muslim_burma = {
+		icon = mission_conquer_lower_burma_tau
+		required_missions = { }
+		position = 25
+
+		provinces_to_highlight = {
+			region = burma_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 22
+				region = burma_region
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = flavor_mch.12
+			}
+			custom_tooltip = AB_EMPTY
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			indo_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { mission_completed = rum_muslim_tibet }
+				}
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_YES
+				set_country_flag = byz_conquer_burma_first
+			}
+			else = {
+				custom_tooltip = BYZ_CONQUER_BURMA_FIRST_NO
+			}
+		}
+	}
+
+	rum_muslim_indochina = {
+		icon = mission_rule_indochina
+		required_missions = { rum_muslim_burma }
+		position = 27
+
+		provinces_to_highlight = {
+			region = indo_china_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 45
+				region = indo_china_region
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_indochina
+			custom_tooltip = BYZ_SEA_MAINLAND_CAPITALS
+			custom_tooltip = AB_EMPTY
+			add_absolutism = 10
+			add_country_modifier = {
+				name = byz_wealth_of_indochina
+				duration = -1
+			}
+			east_indies_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_east_indies = {
+		icon = mission_las_islas_filipinas
+		required_missions = { rum_muslim_indochina }
+		position = 29
+
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 100
+				superregion = east_indies_superregion
+			}
+		}
+
+		effect = {
+			set_country_flag = byz_faster_romanization_eastindies
+			custom_tooltip = BYZ_SEA_MARITIME_CAPITALS
+			custom_tooltip = AB_EMPTY
+			change_price = {
+                trade_goods = spices
+                key = "Monopolization of Spices"
+                value = 0.15
+                duration = -1
+            }
+			add_country_modifier = {
+				name = gor_spice_trade
+				duration = -1
+			}
+			oceanea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rum_muslim_asia = {
+		icon = mission_warring
+		required_missions = { rum_muslim_far_east rum_muslim_east_indies rum_muslim_maharajas }
+		position = 30
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						superregion = far_east_superregion
+						superregion = china_superregion
+						superregion = east_indies_superregion
+						superregion = india_superregion
+						region = oceanea_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					region = east_siberia_region
+					NOT = { owned_by = GLH }
+				}
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			far_east_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			china_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_indies_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			india_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			oceanea_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_siberia_region = {
+				type = all
+				owned_by = GLH
+			}
+			GLH = {
+				is_subject_of = ROOT
+				trust = { who = ROOT value = 100 }
+				NOT = { liberty_desire = 1 }
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_byzantium.82
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = yua_china_tiger
+				duration = 18250
+			}
+		}
+	}
+}

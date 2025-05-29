@@ -1,0 +1,3908 @@
+# TLW Decisions GUI
+custom_window = {
+	name = tlw_decision_gui_window
+	potential = {
+		ai = no
+	}
+}
+
+# Open Menu Button
+custom_button = {
+    name = ab_diocese_management_open_button
+    potential = {
+        tag = ROM
+    }
+    trigger = {
+        hidden_trigger = {
+			NOT = { has_country_flag = byz_diocese_menu_opened }
+		}
+    }
+    effect = {
+        set_country_flag = byz_diocese_menu_opened
+    }
+    tooltip = AB_OPEN_DIOCESE_MENU
+}
+
+# ========== Etc
+# Menu
+custom_window = {
+	name = ab_diocese_management_menu_window
+	potential = {
+        ai = no
+		has_country_flag = byz_diocese_menu_opened
+	}
+}
+
+# Background
+custom_icon = {
+	name = ab_diocese_management_image
+	potential = {
+	}
+	frame_variable = "tlw_diocese_page_var"
+}
+
+# Close Menu Button
+custom_button = {
+    name = ab_diocese_management_close_button
+    potential = {
+    }
+    trigger = {
+    }
+    effect = {
+        clr_country_flag = byz_diocese_menu_opened
+    }
+    tooltip = AB_CLOSE_DIOCESE_MENU
+}
+# ========== Etc
+
+# Page 1
+custom_window = {
+	name = ab_diocese_management_page1_window
+	potential = {
+		tlw_diocese_page = { page = 1 }
+	}
+}
+
+#Diocesis Graecia
+custom_button = {
+    name = ab_diocese_graecia_create
+    potential = {
+        NOT = { exists = RDC }
+    }
+    trigger = {
+        owns_core_province = 151
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            capital_scope = {
+                NOT = { region = balkan_region }
+                NOT = { region = anatolia_region }
+                NOT = { region = caucasia_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = balkan_region }
+                NOT = { region = anatolia_region }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_caucasia_isof_anatolia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                            area = ionian_islands_area
+                            region = caucasia_region
+                        }
+                        NOT = {
+                            OR = {
+                                area = circassia_area
+                                area = dagestan_area
+                                province_id = 4780
+                                province_id = 3001
+                                province_id = 1764
+                            }
+                        }
+                    }
+                    add_core = RDC
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                            area = ionian_islands_area
+                        }
+                        NOT = {
+                            OR = {
+                                province_id = 4780
+                                province_id = 3001
+                                province_id = 1764
+                            }
+                        }
+                    }
+                    add_core = RDC
+                    remove_core = ROOT
+                }
+            }
+            release = RDC
+            create_subject = {
+                who = RDC
+                subject_type = diocese_vassal
+            }
+            RDC = {
+                change_primary_culture = greco_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 151
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
+        }
+    }
+    tooltip = AB_DIOCESE_GRAECIA
+}
+
+custom_button = {
+    name = ab_diocese_graecia_feed
+    potential = {
+        overlord_of = RDC
+    }
+    trigger = {
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            any_owned_province = {
+                OR = {
+                    region = anatolia_region
+                    region = caucasia_region
+                    area = macedonia_area
+                    area = northern_greece_area
+                    area = morea_area
+                    area = thrace_area
+                }
+                NOT = {
+                    OR = {
+                        area = circassia_area
+                        area = dagestan_area
+                        province_id = 4780
+                        province_id = 3001
+                        province_id = 1764
+                    }
+                }
+            }
+        }
+        else = {
+            any_owned_province = {
+                OR = {
+                    region = anatolia_region
+                    area = macedonia_area
+                    area = northern_greece_area
+                    area = morea_area
+                    area = thrace_area
+                }
+                NOT = {
+                    OR = {
+                        province_id = 4780
+                        province_id = 3001
+                        province_id = 1764
+                    }
+                }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_caucasia_isof_anatolia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                            area = ionian_islands_area
+                            region = caucasia_region
+                        }
+                        NOT = {
+                            OR = {
+                                area = circassia_area
+                                area = dagestan_area
+                                province_id = 4780
+                                province_id = 3001
+                                province_id = 1764
+                            }
+                        }
+                    }
+                    add_core = RDC
+                    cede_province = RDC
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = anatolia_region
+                            area = macedonia_area
+                            area = northern_greece_area
+                            area = morea_area
+                            area = thrace_area
+                            area = ionian_islands_area
+                        }
+                        NOT = {
+                            OR = {
+                                province_id = 4780
+                                province_id = 3001
+                                province_id = 1764
+                            }
+                        }
+                    }
+                    add_core = RDC
+                    cede_province = RDC
+                    remove_core = ROOT
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_anatolia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
+        }
+    }
+    tooltip = AB_DIOCESE_GRAECIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_graecia_annex
+    potential = {
+        overlord_of = RDC
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDC = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDC = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDC
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Italia
+custom_button = {
+    name = ab_diocese_italia_create
+    potential = {
+        NOT = { exists = RD1 }
+    }
+    trigger = {
+        owns_core_province = 118
+        capital_scope = {
+            NOT = { region = italy_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = italy_region
+                }
+                add_core = RD1
+                remove_core = ROOT
+            }
+            release = RD1
+            create_subject = {
+                who = RD1
+                subject_type = diocese_vassal
+            }
+            RD1 = {
+                change_primary_culture = roman_new
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 118
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ITALIA
+}
+
+custom_button = {
+    name = ab_diocese_italia_feed
+    potential = {
+        overlord_of = RD1
+    }
+    trigger = {
+        any_owned_province = {
+            region = italy_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = italy_region
+                }
+                add_core = RD1
+                cede_province = RD1
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ITALIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_italia_annex
+    potential = {
+        overlord_of = RD1
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD1 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD1 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD1
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Hispania
+custom_button = {
+    name = ab_diocese_hispania_create
+    potential = {
+        NOT = { exists = RD2 }
+    }
+    trigger = {
+        owns_core_province = 225
+        capital_scope = {
+            NOT = { region = iberia_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = iberia_region
+                }
+                add_core = RD2
+                remove_core = ROOT
+            }
+            release = RD2
+            create_subject = {
+                who = RD2
+                subject_type = diocese_vassal
+            }
+            RD2 = {
+                change_primary_culture = hispano_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 225
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_HISPANIA
+}
+
+custom_button = {
+    name = ab_diocese_hispania_feed
+    potential = {
+        overlord_of = RD2
+    }
+    trigger = {
+        any_owned_province = {
+            region = iberia_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = iberia_region
+                }
+                add_core = RD2
+                cede_province = RD2
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_HISPANIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_hispania_annex
+    potential = {
+        overlord_of = RD2
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD2 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD2 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD2
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Africa
+custom_button = {
+    name = ab_diocese_africa_create
+    potential = {
+        NOT = { exists = RD3 }
+    }
+    trigger = {
+        owns_core_province = 341
+        capital_scope = {
+            NOT = { region = maghreb_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = maghreb_region
+                }
+                add_core = RD3
+                remove_core = ROOT
+            }
+            release = RD3
+            create_subject = {
+                who = RD3
+                subject_type = diocese_vassal
+            }
+            RD3 = {
+                change_primary_culture = afro_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 341
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_AFRICA
+}
+
+custom_button = {
+    name = ab_diocese_africa_feed
+    potential = {
+        overlord_of = RD3
+    }
+    trigger = {
+        any_owned_province = {
+            region = maghreb_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = maghreb_region
+                }
+                add_core = RD3
+                cede_province = RD3
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_AFRICA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_africa_annex
+    potential = {
+        overlord_of = RD3
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD3 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD3 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD3
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Gallia
+custom_button = {
+    name = ab_diocese_gallia_create
+    potential = {
+        NOT = { exists = RD4 }
+    }
+    trigger = {
+        owns_core_province = 183
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            capital_scope = {
+                NOT = { region = france_region }
+                NOT = { region = low_countries_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = france_region }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_belgica_isof_gallia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = france_region
+                            region = low_countries_region
+                        }
+                    }
+                    add_core = RD4
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = france_region
+                    }
+                    add_core = RD4
+                    remove_core = ROOT
+                }
+            }
+            release = RD4
+            create_subject = {
+                who = RD4
+                subject_type = diocese_vassal
+            }
+            RD4 = {
+                change_primary_culture = gallo_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 183
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
+        }
+    }
+    tooltip = AB_DIOCESE_GALLIA
+}
+
+custom_button = {
+    name = ab_diocese_gallia_feed
+    potential = {
+        overlord_of = RD4
+    }
+    trigger = {
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            any_owned_province = {
+                OR = {
+                    region = france_region
+                    region = low_countries_region
+                }
+            }
+        }
+        else = {
+            any_owned_province = {
+                region = france_region
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_belgica_isof_gallia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = france_region
+                            region = low_countries_region
+                        }
+                    }
+                    add_core = RD4
+                    cede_province = RD4
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = france_region
+                    }
+                    add_core = RD4
+                    cede_province = RD4
+                    remove_core = ROOT
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_gallia
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
+        }
+    }
+    tooltip = AB_DIOCESE_GALLIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_gallia_annex
+    potential = {
+        overlord_of = RD4
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD4 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD4 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD4
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Britannia
+custom_button = {
+    name = ab_diocese_britannia_create
+    potential = {
+        NOT = { exists = RD5 }
+    }
+    trigger = {
+        owns_core_province = 236
+        capital_scope = {
+            NOT = { region = british_isles_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = british_isles_region
+                }
+                add_core = RD5
+                remove_core = ROOT
+            }
+            release = RD5
+            create_subject = {
+                who = RD5
+                subject_type = diocese_vassal
+            }
+            RD5 = {
+                change_primary_culture = romano_british
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 236
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_BRITANNIA
+}
+
+custom_button = {
+    name = ab_diocese_britannia_feed
+    potential = {
+        overlord_of = RD5
+    }
+    trigger = {
+        any_owned_province = {
+            region = british_isles_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = british_isles_region
+                }
+                add_core = RD5
+                cede_province = RD5
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_BRITANNIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_britannia_annex
+    potential = {
+        overlord_of = RD5
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD5 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD5 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD5
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Germania
+custom_button = {
+    name = ab_diocese_germania_create
+    potential = {
+        NOT = { exists = RD6 }
+    }
+    trigger = {
+        owns_core_province = 1876
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            capital_scope = {
+                NOT = { region = north_german_region }
+                NOT = { region = low_countries_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = north_german_region }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_belgica_isof_germania
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = north_german_region
+                            region = low_countries_region
+                        }
+                    }
+                    add_core = RD6
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = north_german_region
+                    }
+                    add_core = RD6
+                    remove_core = ROOT
+                }
+            }
+            release = RD6
+            create_subject = {
+                who = RD6
+                subject_type = diocese_vassal
+            }
+            RD6 = {
+                change_primary_culture = romano_germanic
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 1876
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
+        }
+    }
+    tooltip = AB_DIOCESE_GERMANIA
+}
+
+custom_button = {
+    name = ab_diocese_germania_feed
+    potential = {
+        overlord_of = RD6
+    }
+    trigger = {
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            any_owned_province = {
+                OR = {
+                    region = north_german_region
+                    region = low_countries_region
+                }
+            }
+        }
+        else = {
+            any_owned_province = {
+                region = north_german_region
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_belgica_isof_germania
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = north_german_region
+                            region = low_countries_region
+                        }
+                    }
+                    add_core = RD6
+                    cede_province = RD6
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = north_german_region
+                    }
+                    add_core = RD6
+                    cede_province = RD6
+                    remove_core = ROOT
+                }
+            }     
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_belgica_isof_germania
+            }
+            custom_tooltip = AB_DIOCESE_BELGICA
+        }
+    }
+    tooltip = AB_DIOCESE_GERMANIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_germania_annex
+    potential = {
+        overlord_of = RD6
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD6 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD6 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD6
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Rhaetia
+custom_button = {
+    name = ab_diocese_rhaetia_create
+    potential = {
+        NOT = { exists = RD7 }
+    }
+    trigger = {
+        owns_core_province = 134
+        capital_scope = {
+            NOT = { region = south_german_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = south_german_region
+                    NOT = { area = carinthia_area }
+                }
+                add_core = RD7
+                remove_core = ROOT
+            }
+            release = RD7
+            create_subject = {
+                who = RD7
+                subject_type = diocese_vassal
+            }
+            RD7 = {
+                change_primary_culture = romano_germanic
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 134
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_RHAETIA
+}
+
+custom_button = {
+    name = ab_diocese_rhaetia_feed
+    potential = {
+        overlord_of = RD7
+    }
+    trigger = {
+        any_owned_province = {
+            region = south_german_region
+            NOT = { area = carinthia_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = south_german_region
+                    NOT = { area = carinthia_area }
+                }
+                add_core = RD7
+                cede_province = RD7
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_RHAETIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_rhaetia_annex
+    potential = {
+        overlord_of = RD7
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD7 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD7 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD7
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Scandia
+custom_button = {
+    name = ab_diocese_scandia_create
+    potential = {
+        NOT = { exists = RD8 }
+    }
+    trigger = {
+        owns_core_province = 12
+        capital_scope = {
+            NOT = { region = scandinavia_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = scandinavia_region
+                }
+                add_core = RD8
+                remove_core = ROOT
+            }
+            release = RD8
+            create_subject = {
+                who = RD8
+                subject_type = diocese_vassal
+            }
+            RD8 = {
+                change_primary_culture = romano_nordic
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 12
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SCANDIA
+}
+
+custom_button = {
+    name = ab_diocese_scandia_feed
+    potential = {
+        overlord_of = RD8
+    }
+    trigger = {
+        any_owned_province = {
+            region = scandinavia_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = scandinavia_region
+                }
+                add_core = RD8
+                cede_province = RD8
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SCANDIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_scandia_annex
+    potential = {
+        overlord_of = RD8
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD8 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD8 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD8
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Illyria
+custom_button = {
+    name = ab_diocese_illyria_create
+    potential = {
+        NOT = { exists = RD9 }
+    }
+    trigger = {
+        owns_core_province = 4239
+        capital_scope = {
+            NOT = { area = croatia_area }
+            NOT = { area = slavonia_area }
+            NOT = { area = bosnia_area }
+            NOT = { area = rascia_area }
+            NOT = { area = albania_area }
+            NOT = { area = serbia_area }
+            NOT = { area = bulgaria_area }
+            NOT = { area = silistria_area }
+            NOT = { area = east_adriatic_coast_area }
+            NOT = { area = carinthia_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        area = croatia_area
+                        area = slavonia_area
+                        area = bosnia_area
+                        area = rascia_area
+                        area = albania_area
+                        area = serbia_area
+                        area = bulgaria_area
+                        area = silistria_area
+                        area = east_adriatic_coast_area
+                        area = carinthia_area
+                        province_id = 4780
+                        province_id = 3001
+                        province_id = 1764
+                    }
+                }
+                add_core = RD9
+                remove_core = ROOT
+            }
+            release = RD9
+            create_subject = {
+                who = RD9
+                subject_type = diocese_vassal
+            }
+            RD9 = {
+                change_primary_culture = illyro_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 4239
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ILLYRIA
+}
+
+custom_button = {
+    name = ab_diocese_illyria_feed
+    potential = {
+        overlord_of = RD9
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                area = croatia_area
+                area = slavonia_area
+                area = bosnia_area
+                area = rascia_area
+                area = albania_area
+                area = serbia_area
+                area = bulgaria_area
+                area = silistria_area
+                area = east_adriatic_coast_area
+                area = carinthia_area
+                province_id = 4780
+                province_id = 3001
+                province_id = 1764
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        area = croatia_area
+                        area = slavonia_area
+                        area = bosnia_area
+                        area = rascia_area
+                        area = albania_area
+                        area = serbia_area
+                        area = bulgaria_area
+                        area = silistria_area
+                        area = east_adriatic_coast_area
+                        area = carinthia_area
+                        province_id = 4780
+                        province_id = 3001
+                        province_id = 1764
+                    }
+                }
+                add_core = RD9
+                cede_province = RD9
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ILLYRIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_illyria_annex
+    potential = {
+        overlord_of = RD9
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RD9 = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RD9 = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RD9
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Orientis
+custom_button = {
+    name = ab_diocese_orientis_create
+    potential = {
+        NOT = { exists = RDX }
+    }
+    trigger = {
+        owns_core_province = 2313
+        capital_scope = {
+            NOT = { region = mashriq_region }
+        }
+        NOT = { religion = zoroastrian }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = mashriq_region
+                }
+                add_core = RDX
+                remove_core = ROOT
+            }
+            release = RDX
+            create_subject = {
+                who = RDX
+                subject_type = diocese_vassal
+            }
+            RDX = {
+                change_religion = ROOT
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_primary_culture = greco_roman
+                }
+                else = {
+                    change_primary_culture = romano_arabic
+                }
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 2313
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ORIENTIS
+}
+
+custom_button = {
+    name = ab_diocese_orientis_feed
+    potential = {
+        overlord_of = RDX
+    }
+    trigger = {
+        any_owned_province = {
+            region = mashriq_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = mashriq_region
+                }
+                add_core = RDX
+                cede_province = RDX
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ORIENTIS_FEED
+}
+
+custom_button = {
+    name = ab_diocese_orientis_annex
+    potential = {
+        overlord_of = RDX
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDX = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDX = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDX
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Aegyptus
+custom_button = {
+    name = ab_diocese_aegyptus_create
+    potential = {
+        NOT = { exists = RDQ }
+    }
+    trigger = {
+        owns_core_province = 358
+        capital_scope = {
+            NOT = { region = egypt_region }
+            NOT = { area = saharan_oases }
+            NOT = { area = dongola_area }
+            NOT = { province_id = 1232 }
+            NOT = { province_id = 2324 }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = egypt_region
+                        area = saharan_oases
+                        area = dongola_area
+                        province_id = 1232
+                        province_id = 2324
+                    }
+                }
+                add_core = RDQ
+                remove_core = ROOT
+            }
+            release = RDQ
+            create_subject = {
+                who = RDQ
+                subject_type = diocese_vassal
+            }
+            RDQ = {
+                change_religion = ROOT
+                if = {
+                    limit = {
+                        religion_group = christian
+                    }
+                    change_primary_culture = greco_roman
+                }
+                else = {
+                    change_primary_culture = romano_arabic
+                }
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 358
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_AEGYPTUS
+}
+
+custom_button = {
+    name = ab_diocese_aegyptus_feed
+    potential = {
+        overlord_of = RDQ
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = egypt_region
+                area = saharan_oases
+                area = dongola_area
+                province_id = 1232
+                province_id = 2324
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = egypt_region
+                        area = saharan_oases
+                        area = dongola_area
+                        province_id = 1232
+                        province_id = 2324
+                    }
+                }
+                add_core = RDQ
+                cede_province = RDQ
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_AEGYPTUS_FEED
+}
+
+custom_button = {
+    name = ab_diocese_aegyptus_annex
+    potential = {
+        overlord_of = RDQ
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDQ = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDQ = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDQ
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Arabia
+custom_button = {
+    name = ab_diocese_arabia_create
+    potential = {
+        NOT = { exists = RDW }
+    }
+    trigger = {
+        owns_core_province = 388
+        capital_scope = {
+            NOT = { region = arabia_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = arabia_region
+                }
+                add_core = RDW
+                remove_core = ROOT
+            }
+            release = RDW
+            create_subject = {
+                who = RDW
+                subject_type = diocese_vassal
+            }
+            RDW = {
+                change_primary_culture = romano_arabic
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 388
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ARABIA
+}
+
+custom_button = {
+    name = ab_diocese_arabia_feed
+    potential = {
+        overlord_of = RDW
+    }
+    trigger = {
+        any_owned_province = {
+            region = arabia_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = arabia_region
+                }
+                add_core = RDW
+                cede_province = RDW
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ARABIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_arabia_annex
+    potential = {
+        overlord_of = RDW
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDW = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDW = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDW
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Persia
+custom_button = {
+    name = ab_diocese_persia_create
+    potential = {
+        NOT = { exists = RDZ }
+    }
+    trigger = {
+        owns_core_province = 2218
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            capital_scope = {
+                NOT = { region = persia_region }
+                NOT = { region = caucasia_region }
+            }
+        }
+        else = {
+            capital_scope = {
+                NOT = { region = persia_region }
+            }
+        }
+        NOT = { religion = zoroastrian }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_caucasia_isof_persia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = persia_region
+                            region = caucasia_region
+                        }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
+                    }
+                    add_core = RDZ
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = persia_region
+                    }
+                    add_core = RDZ
+                    remove_core = ROOT
+                }
+            }
+            release = RDZ
+            create_subject = {
+                who = RDZ
+                subject_type = diocese_vassal
+            }
+            RDZ = {
+                change_primary_culture = perso_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 2218
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
+        }
+    }
+    tooltip = AB_DIOCESE_PERSIA
+}
+
+custom_button = {
+    name = ab_diocese_persia_feed
+    potential = {
+        overlord_of = RDZ
+    }
+    trigger = {
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            any_owned_province = {
+                OR = {
+                    region = persia_region
+                    region = caucasia_region
+                }
+                NOT = { area = circassia_area }
+                NOT = { area = dagestan_area }
+            }
+        }
+        else = {
+            any_owned_province = {
+                region = persia_region
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = rom_caucasia_isof_persia
+                }
+                every_owned_province = {
+                    limit = {
+                        OR = {
+                            region = persia_region
+                            region = caucasia_region
+                        }
+                        NOT = { area = circassia_area }
+                        NOT = { area = dagestan_area }
+                    }
+                    add_core = RDZ
+                    cede_province = RDZ
+                    remove_core = ROOT
+                }
+            }
+            else = {
+                every_owned_province = {
+                    limit = {
+                        region = persia_region
+                    }
+                    add_core = RDZ
+                    cede_province = RDZ
+                    remove_core = ROOT
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = rom_caucasia_isof_persia
+            }
+            custom_tooltip = AB_DIOCESE_CAUCASIA
+        }
+    }
+    tooltip = AB_DIOCESE_PERSIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_persia_annex
+    potential = {
+        overlord_of = RDZ
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDZ = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDZ = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDZ
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Ariana
+custom_button = {
+    name = ab_diocese_ariana_create
+    potential = {
+        NOT = { exists = RDV }
+    }
+    trigger = {
+        owns_core_province = 445
+        capital_scope = {
+            NOT = { region = khorasan_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = khorasan_region
+                }
+                add_core = RDV
+                remove_core = ROOT
+            }
+            release = RDV
+            create_subject = {
+                who = RDV
+                subject_type = diocese_vassal
+            }
+            RDV = {
+                change_primary_culture = perso_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 445
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ARIANA
+}
+
+custom_button = {
+    name = ab_diocese_ariana_feed
+    potential = {
+        overlord_of = RDV
+    }
+    trigger = {
+        any_owned_province = {
+            region = khorasan_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = khorasan_region
+                }
+                add_core = RDV
+                cede_province = RDV
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ARIANA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_ariana_annex
+    potential = {
+        overlord_of = RDV
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDV = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDV = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDV
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis India
+custom_button = {
+    name = ab_diocese_india_create
+    potential = {
+        NOT = { exists = RDJ }
+    }
+    trigger = {
+        owns_core_province = 507
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = west_india_region
+                        region = hindusthan_region
+                    }
+                    NOT = { area = baghelkhand_area }
+                    NOT = { area = purvanchal_area }
+                    NOT = { area = bihar_area }
+                    NOT = { area = mithila_area }
+                    NOT = { area = nepal_area }
+                }
+                add_core = RDJ
+                remove_core = ROOT
+            }
+            release = RDJ
+            create_subject = {
+                who = RDJ
+                subject_type = diocese_vassal
+            }
+            RDJ = {
+                change_primary_culture = indo_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 507
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDIA
+}
+
+custom_button = {
+    name = ab_diocese_india_feed
+    potential = {
+        overlord_of = RDJ
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = west_india_region
+                region = hindusthan_region
+            }
+            NOT = { area = baghelkhand_area }
+            NOT = { area = purvanchal_area }
+            NOT = { area = bihar_area }
+            NOT = { area = mithila_area }
+            NOT = { area = nepal_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = west_india_region
+                        region = hindusthan_region
+                    }
+                    NOT = { area = baghelkhand_area }
+                    NOT = { area = purvanchal_area }
+                    NOT = { area = bihar_area }
+                    NOT = { area = mithila_area }
+                    NOT = { area = nepal_area }
+                }
+                add_core = RDJ
+                cede_province = RDJ
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_india_annex
+    potential = {
+        overlord_of = RDJ
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDJ = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDJ = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDJ
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Gangarida
+custom_button = {
+    name = ab_diocese_gangarida_create
+    potential = {
+        NOT = { exists = RDK }
+    }
+    trigger = {
+        owns_core_province = 563
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = bengal_region
+                        area = baghelkhand_area
+                        area = purvanchal_area
+                        area = bihar_area
+                        area = mithila_area
+                        area = nepal_area
+                        area = berar_area
+                        area = gondwana_area
+                    }
+                }
+                add_core = RDK
+                remove_core = ROOT
+            }
+            release = RDK
+            create_subject = {
+                who = RDK
+                subject_type = diocese_vassal
+            }
+            RDK = {
+                change_primary_culture = indo_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 563
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_GANGARIDA
+}
+
+custom_button = {
+    name = ab_diocese_gangarida_feed
+    potential = {
+        overlord_of = RDK
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = bengal_region
+                area = baghelkhand_area
+                area = purvanchal_area
+                area = bihar_area
+                area = mithila_area
+                area = nepal_area 
+                area = berar_area
+                area = gondwana_area
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = bengal_region
+                        area = baghelkhand_area
+                        area = purvanchal_area
+                        area = bihar_area
+                        area = mithila_area
+                        area = nepal_area
+                        area = berar_area
+                        area = gondwana_area
+                    }
+                }
+                add_core = RDK
+                cede_province = RDK
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_GANGARIDA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_gangarida_annex
+    potential = {
+        overlord_of = RDK
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDK = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDK = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDK
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Taprobana
+custom_button = {
+    name = ab_diocese_taprobana_create
+    potential = {
+        NOT = { exists = RDL }
+    }
+    trigger = {
+        owns_core_province = 541
+        capital_scope = {
+            NOT = { superregion = india_superregion }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = coromandel_region
+                        region = deccan_region
+                    }
+                    NOT = { area = berar_area }
+                    NOT = { area = gondwana_area }
+                }
+                add_core = RDL
+                remove_core = ROOT
+            }
+            release = RDL
+            create_subject = {
+                who = RDL
+                subject_type = diocese_vassal
+            }
+            RDL = {
+                change_primary_culture = indo_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 541
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_TAPROBANA
+}
+
+custom_button = {
+    name = ab_diocese_taprobana_feed
+    potential = {
+        overlord_of = RDL
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = coromandel_region
+                region = deccan_region
+            }
+            NOT = { area = berar_area }
+            NOT = { area = gondwana_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = coromandel_region
+                        region = deccan_region
+                    }
+                    NOT = { area = berar_area }
+                    NOT = { area = gondwana_area }
+                }
+                add_core = RDL
+                cede_province = RDL
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_TAPROBANA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_taprobana_annex
+    potential = {
+        overlord_of = RDL
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDL = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDL = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDL
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Dacia
+custom_button = {
+    name = ab_diocese_dacia_create
+    potential = {
+        NOT = { exists = RDR }
+    }
+    trigger = {
+        owns_core_province = 153
+        capital_scope = {
+            NOT = { region = carpathia_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = carpathia_region
+                }
+                add_core = RDR
+                remove_core = ROOT
+            }
+            release = RDR
+            create_subject = {
+                who = RDR
+                subject_type = diocese_vassal
+            }
+            RDR = {
+                change_primary_culture = daco_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 153
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                OR = {
+                    overlord_of = WAL
+                    overlord_of = MOL
+                }
+            }
+            country_event = {
+                id = ab_byzantium.58
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_DACIA
+}
+
+custom_button = {
+    name = ab_diocese_dacia_feed
+    potential = {
+        overlord_of = RDR
+    }
+    trigger = {
+        any_owned_province = {
+            region = carpathia_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = carpathia_region
+                }
+                add_core = RDR
+                cede_province = RDR
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_DACIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_dacia_annex
+    potential = {
+        overlord_of = RDR
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDR = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDR = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDR
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Tibetum
+custom_button = {
+    name = ab_diocese_tibetum_create
+    potential = {
+        NOT = { exists = RDP }
+    }
+    trigger = {
+        OR = {
+            AND = {
+                owns_core_province = 677
+                custom_trigger_tooltip = {
+                    tooltip = AB_CONQUER_TIBET_FIRST
+                    has_country_flag = byz_conquer_tibet_first
+                } 
+            }
+            AND = {
+                owns_core_province = 586
+                custom_trigger_tooltip = {
+                    tooltip = AB_CONQUER_BURMA_FIRST
+                    has_country_flag = byz_conquer_burma_first
+                }
+            }
+        }
+        capital_scope = {
+            NOT = { region = tibet_region }
+            NOT = { region = burma_region }
+            NOT = { region = xinan_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = tibet_region
+                        region = burma_region
+                        region = xinan_region
+                    }
+                    NOT = { area = sichuan_area }
+                    NOT = { area = chuanbei_area }
+                }
+                add_core = RDP
+                remove_core = ROOT
+            }
+            release = RDP
+            create_subject = {
+                who = RDP
+                subject_type = diocese_vassal
+            }
+            if = {
+                limit = {
+                    has_country_flag = byz_conquer_tibet_first
+                }
+                RDP = {
+                    override_country_name = DIOCESISTIBETUM
+                    set_capital = 677
+                }
+            }
+            else = {
+                RDP = {
+                    override_country_name = DIOCESISBIRMANIA
+                    set_capital = 586
+                }
+            }
+            RDP = {
+                change_primary_culture = tibeto_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_TIBETUM
+}
+
+custom_button = {
+    name = ab_diocese_tibetum_feed
+    potential = {
+        overlord_of = RDP
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = tibet_region
+                region = burma_region
+                region = xinan_region
+            }
+            NOT = { area = sichuan_area }
+            NOT = { area = chuanbei_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = tibet_region
+                        region = burma_region
+                        region = xinan_region
+                    }
+                    NOT = { area = sichuan_area }
+                    NOT = { area = chuanbei_area }
+                }
+                add_core = RDP
+                cede_province = RDP
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_TIBETUM_FEED
+}
+
+custom_button = {
+    name = ab_diocese_tibetum_annex
+    potential = {
+        overlord_of = RDP
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDP = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDP = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDP
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis North China
+custom_button = {
+    name = ab_diocese_sina_septentrionalis_create
+    potential = {
+        NOT = { exists = RDD }
+    }
+    trigger = {
+        owns_core_province = 1816
+        capital_scope = {
+            NOT = { superregion = china_superregion }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_china_region
+                        area = sichuan_area
+                        area = chuanbei_area
+                    }
+                }
+                add_core = RDD
+                remove_core = ROOT
+            }
+            release = RDD
+            create_subject = {
+                who = RDD
+                subject_type = diocese_vassal
+            }
+            RDD = {
+                change_primary_culture = sino_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 1816
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SINA_SEPTENTRIONALIS
+}
+
+custom_button = {
+    name = ab_diocese_sina_septentrionalis_feed
+    potential = {
+        overlord_of = RDD
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = north_china_region
+                area = sichuan_area
+                area = chuanbei_area
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = north_china_region
+                        area = sichuan_area
+                        area = chuanbei_area
+                    }
+                }
+                add_core = RDD
+                cede_province = RDD
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SINA_SEPTENTRIONALIS_FEED
+}
+
+custom_button = {
+    name = ab_diocese_sina_septentrionalis_annex
+    potential = {
+        overlord_of = RDD
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDD = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDD = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDD
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis South China
+custom_button = {
+    name = ab_diocese_sina_australis_create
+    potential = {
+        NOT = { exists = RDF }
+    }
+    trigger = {
+        owns_core_province = 1821
+        capital_scope = {
+            NOT = { superregion = china_superregion }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = south_china_region
+                }
+                add_core = RDF
+                remove_core = ROOT
+            }
+            release = RDF
+            create_subject = {
+                who = RDF
+                subject_type = diocese_vassal
+            }
+            RDF = {
+                change_primary_culture = sino_roman
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 1821
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SINA_AUSTRALIS
+}
+
+custom_button = {
+    name = ab_diocese_sina_australis_feed
+    potential = {
+        overlord_of = RDF
+    }
+    trigger = {
+        any_owned_province = {
+            region = south_china_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = south_china_region
+                }
+                add_core = RDF
+                cede_province = RDF
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_SINA_AUSTRALIS_FEED
+}
+
+custom_button = {
+    name = ab_diocese_sina_australis_annex
+    potential = {
+        overlord_of = RDF
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDF = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDF = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDF
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Iaponia
+custom_button = {
+    name = ab_diocese_iaponia_create
+    potential = {
+        NOT = { exists = RDG }
+    }
+    trigger = {
+        OR = {
+            AND = {
+                owns_core_province = 735
+                custom_trigger_tooltip = {
+                    tooltip = AB_CENTER_OF_FAR_EAST_KOREA
+                    has_country_flag = byz_center_of_far_east_korea
+                } 
+            }
+            AND = {
+                owns_core_province = 1020
+                custom_trigger_tooltip = {
+                    tooltip = AB_CENTER_OF_FAR_EAST_JAPAN
+                    has_country_flag = byz_center_of_far_east_japan
+                }
+            }
+        }
+        capital_scope = {
+            NOT = { region = japan_region }
+            NOT = { region = korea_region }
+            NOT = { area = liaoning_area }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = japan_region
+                        region = korea_region
+                        area = liaoning_area
+                    }
+                }
+                add_core = RDG
+                remove_core = ROOT
+            }
+            release = RDG
+            create_subject = {
+                who = RDG
+                subject_type = diocese_vassal
+            }
+            if = {
+                limit = {
+                    has_country_flag = byz_center_of_far_east_korea
+                }
+                RDG = {
+                    override_country_name = DIOCESISCOREA
+                    change_primary_culture = romano_korean
+                    set_capital = 735
+                    set_country_flag = enable_korean_palace_flag
+                }
+            }
+            else = {
+                RDG = {
+                    override_country_name = DIOCESISIAPONIA
+                    change_primary_culture = romano_japanese
+                    set_capital = 1020
+                    add_country_modifier = {
+                        name = byz_roman_samurai
+                        duration = -1
+                    }
+                    add_country_modifier = {
+                        name = jap_reformed_samurai_modifier
+                        duration = -1
+                    }
+                }
+            }
+            RDG = {
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_IAPONIA
+}
+
+custom_button = {
+    name = ab_diocese_iaponia_feed
+    potential = {
+        overlord_of = RDG
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                region = japan_region
+                region = korea_region
+                area = liaoning_area
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        region = japan_region
+                        region = korea_region
+                        area = liaoning_area
+                    }
+                }
+                add_core = RDG
+                cede_province = RDG
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_IAPONIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_iaponia_annex
+    potential = {
+        overlord_of = RDG
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDG = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDG = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDG
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Indosina
+custom_button = {
+    name = ab_diocese_indosina_create
+    potential = {
+        NOT = { exists = RDH }
+    }
+    trigger = {
+        owns_core_province = 600
+        capital_scope = {
+            NOT = { region = indo_china_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indo_china_region
+                }
+                add_core = RDH
+                remove_core = ROOT
+            }
+            release = RDH
+            create_subject = {
+                who = RDH
+                subject_type = diocese_vassal
+            }
+            RDH = {
+                change_primary_culture = romano_tai
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 600
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDOSINA
+}
+
+custom_button = {
+    name = ab_diocese_indosina_feed
+    potential = {
+        overlord_of = RDH
+    }
+    trigger = {
+        any_owned_province = {
+            region = indo_china_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indo_china_region
+                }
+                add_core = RDH
+                cede_province = RDH
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDOSINA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_indosina_annex
+    potential = {
+        overlord_of = RDH
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDH = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDH = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDH
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Malaesia
+custom_button = {
+    name = ab_diocese_malaesia_create
+    potential = {
+        NOT = { exists = RDB }
+    }
+    trigger = {
+        owns_core_province = 596
+        capital_scope = {
+            NOT = { region = malaya_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = malaya_region
+                }
+                add_core = RDB
+                remove_core = ROOT
+            }
+            release = RDB
+            create_subject = {
+                who = RDB
+                subject_type = diocese_vassal
+            }
+            RDB = {
+                change_primary_culture = romano_malay
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 596
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_MALAESIA
+}
+
+custom_button = {
+    name = ab_diocese_malaesia_feed
+    potential = {
+        overlord_of = RDB
+    }
+    trigger = {
+        any_owned_province = {
+            region = malaya_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = malaya_region
+                }
+                add_core = RDB
+                cede_province = RDB
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_MALAESIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_malaesia_annex
+    potential = {
+        overlord_of = RDB
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDB = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDB = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDB
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Indonesia
+custom_button = {
+    name = ab_diocese_indonesia_create
+    potential = {
+        NOT = { exists = RDN }
+    }
+    trigger = {
+        owns_core_province = 630
+        capital_scope = {
+            NOT = { region = indonesia_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indonesia_region
+                }
+                add_core = RDN
+                remove_core = ROOT
+            }
+            release = RDN
+            create_subject = {
+                who = RDN
+                subject_type = diocese_vassal
+            }
+            RDN = {
+                change_primary_culture = romano_malay
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 630
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDONESIA
+}
+
+custom_button = {
+    name = ab_diocese_indonesia_feed
+    potential = {
+        overlord_of = RDN
+    }
+    trigger = {
+        any_owned_province = {
+            region = indonesia_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = indonesia_region
+                }
+                add_core = RDN
+                cede_province = RDN
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_INDONESIA_FEED
+}
+
+custom_button = {
+    name = ab_diocese_indonesia_annex
+    potential = {
+        overlord_of = RDN
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDN = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDN = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDN
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Moluccae
+custom_button = {
+    name = ab_diocese_moluccae_create
+    potential = {
+        NOT = { exists = RDS }
+    }
+    trigger = {
+        owns_core_province = 651
+        capital_scope = {
+            NOT = { region = moluccas_region }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = moluccas_region
+                }
+                add_core = RDS
+                remove_core = ROOT
+            }
+            release = RDS
+            create_subject = {
+                who = RDS
+                subject_type = diocese_vassal
+            }
+            RDS = {
+                change_primary_culture = romano_malay
+                change_religion = ROOT
+                change_government = republic
+                add_government_reform = rom_diocese
+                kill_ruler = yes
+                set_capital = 651
+                capital_scope = {
+                    province_event = {
+                        id = ab_byzantium.71
+                    }
+                }
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_MOLUCCAE
+}
+
+custom_button = {
+    name = ab_diocese_moluccae_feed
+    potential = {
+        overlord_of = RDS
+    }
+    trigger = {
+        any_owned_province = {
+            region = moluccas_region
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    region = moluccas_region
+                }
+                add_core = RDS
+                cede_province = RDS
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_MOLUCCAE_FEED
+}
+
+custom_button = {
+    name = ab_diocese_moluccae_annex
+    potential = {
+        overlord_of = RDS
+    }
+    trigger = {
+        custom_trigger_tooltip = {
+            tooltip = AB_ALL_PROVINCES_ROMANIZED
+            RDS = {
+                all_owned_province = {
+                    culture_group = roman_g
+                }
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = AB_CANNOT_ANNEX_FRIEND_DIOCESE
+            RDS = {
+                NOT = { has_country_modifier = byz_friend_diocese }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            inherit = RDS
+            country_event = {
+                id = ab_byzantium.2005
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_ANNEX
+}
+
+#Diocesis Russia
+custom_icon = {
+    name = ab_diocese_flag_ukr
+    potential = {
+        NOT = { was_tag = UKR }
+        religion_group = christian
+    }
+}
+
+custom_button = {
+    name = ab_diocese_russia_feed
+    potential = {
+        UKR = {
+            is_subject_of_type = grand_diocese_vassal
+        }
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                superregion = eastern_europe_superregion
+                superregion = tartary_superregion
+                region = manchuria_region
+                area = circassia_area
+                area = dagestan_area
+            }
+            NOT = {
+                OR = {
+                    region = balkan_region
+                    region = carpathia_region
+                    region = tibet_region
+                    area = crimea_area
+                    area = liaoning_area
+                }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        superregion = eastern_europe_superregion
+                        superregion = tartary_superregion
+                        region = manchuria_region
+                        area = circassia_area
+                        area = dagestan_area
+                    }
+                    NOT = {
+                        OR = {
+                            region = balkan_region
+                            region = carpathia_region
+                            region = tibet_region
+                            area = crimea_area
+                            area = liaoning_area
+                        }
+                    }
+                }
+                add_core = UKR
+                cede_province = UKR
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_RUSSIA_FEED
+}
+
+#Diocesis Tataria
+custom_icon = {
+    name = ab_diocese_flag_glh
+    potential = {
+        NOT = { religion_group = christian }
+    }
+}
+
+custom_button = {
+    name = ab_diocese_tataria_feed
+    potential = {
+        GLH = {
+            is_subject_of_type = grand_diocese_vassal
+        }
+    }
+    trigger = {
+        any_owned_province = {
+            OR = {
+                superregion = eastern_europe_superregion
+                superregion = tartary_superregion
+                region = manchuria_region
+                area = circassia_area
+                area = dagestan_area
+            }
+            NOT = {
+                OR = {
+                    region = balkan_region
+                    region = carpathia_region
+                    region = tibet_region
+                    area = crimea_area
+                    area = liaoning_area
+                }
+            }
+        }
+		is_at_war = no
+		is_subject = no
+		has_any_disaster = no
+		NOT = { overextension_percentage = 0.001 }
+    }
+    effect = {
+        hidden_effect = {
+            every_owned_province = {
+                limit = {
+                    OR = {
+                        superregion = eastern_europe_superregion
+                        superregion = tartary_superregion
+                        region = manchuria_region
+                        area = circassia_area
+                        area = dagestan_area
+                    }
+                    NOT = {
+                        OR = {
+                            region = balkan_region
+                            region = carpathia_region
+                            region = tibet_region
+                            area = crimea_area
+                            area = liaoning_area
+                        }
+                    }
+                }
+                add_core = GLH
+                cede_province = GLH
+                remove_core = ROOT
+            }
+        }
+    }
+    tooltip = AB_DIOCESE_RUSSIA_FEED
+}
