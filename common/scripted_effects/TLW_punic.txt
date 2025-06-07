@@ -123,257 +123,259 @@ ab_punic_league_setup_effect = {
 
 ab_punic_league_calc_effect = {
 	### Reset variables
-	set_variable = {
-		which = punic_league_growth
-		which = punic_league_base
+	REB = {
+		set_variable = {
+			which = punic_league_growth
+			which = punic_league_base
+		}
 	}
 
 	### Calc League Authority
-	event_target:easimaTarget = {
+	REB = {
+		# Stability
+		export_to_variable = {
+			which = punic_league_stability_easima
+			value = stability
+			who = PREV
+		}
+		set_variable = {            
+			which = punic_league_stability
+			which = punic_league_stability_easima
+		}
+
+		# Monthly Income
+		export_to_variable = {
+			which = punic_league_income_easima
+			value = monthly_income
+			who = PREV
+		}
+		set_variable = {            
+			which = punic_league_income
+			which = punic_league_income_easima
+		}
+
+		# Province Count
+		export_to_variable = {
+			which = punic_league_province_count_easima
+			value = num_of_cities
+			who = PREV
+		}
+		set_variable = {            
+			which = punic_league_province_count
+			which = punic_league_province_count_easima
+		}
+	}
+	every_subject_country = {
+		limit = {
+			is_subject_of_type = punic_city_vassal
+		}
 		REB = {
 			# Stability
 			export_to_variable = {
-				which = punic_league_stability_easima
+				which = punic_league_stability_member
 				value = stability
 				who = PREV
 			}
-			set_variable = {            
+			change_variable = {            
 				which = punic_league_stability
-				which = punic_league_stability_easima
+				which = punic_league_stability_member
 			}
 
 			# Monthly Income
 			export_to_variable = {
-				which = punic_league_income_easima
+				which = punic_league_income_member
 				value = monthly_income
 				who = PREV
 			}
-			set_variable = {            
+			change_variable = {            
 				which = punic_league_income
-				which = punic_league_income_easima
+				which = punic_league_income_member
 			}
 
 			# Province Count
 			export_to_variable = {
-				which = punic_league_province_count_easima
+				which = punic_league_province_count_member
 				value = num_of_cities
 				who = PREV
 			}
-			set_variable = {            
+			change_variable = {            
 				which = punic_league_province_count
-				which = punic_league_province_count_easima
+				which = punic_league_province_count_member
 			}
 		}
-		every_subject_country = {
-			limit = {
-				is_subject_of_type = punic_city_vassal
-			}
-			REB = {
-				# Stability
-				export_to_variable = {
-					which = punic_league_stability_member
-					value = stability
-					who = PREV
-				}
-				change_variable = {            
-					which = punic_league_stability
-					which = punic_league_stability_member
-				}
-
-				# Monthly Income
-				export_to_variable = {
-					which = punic_league_income_member
-					value = monthly_income
-					who = PREV
-				}
-				change_variable = {            
-					which = punic_league_income
-					which = punic_league_income_member
-				}
-
-				# Province Count
-				export_to_variable = {
-					which = punic_league_province_count_member
-					value = num_of_cities
-					who = PREV
-				}
-				change_variable = {            
-					which = punic_league_province_count
-					which = punic_league_province_count_member
-				}
-			}
+	}
+	every_subject_country = {
+		limit = {
+			is_subject_of_type = punic_tribe_vassal
 		}
-		every_subject_country = {
-			limit = {
-				is_subject_of_type = punic_tribe_vassal
+		REB = {
+			# Province Count
+			export_to_variable = {
+				which = punic_league_province_count_member
+				value = num_of_cities
+				who = PREV
 			}
-			REB = {
-				# Province Count
-				export_to_variable = {
-					which = punic_league_province_count_member
-					value = num_of_cities
-					who = PREV
-				}
-				change_variable = {            
-					which = punic_league_province_count
-					which = punic_league_province_count_member
-				}
+			change_variable = {            
+				which = punic_league_province_count
+				which = punic_league_province_count_member
 			}
 		}
 	}
 
 	### Divide League Authority
-	# Stability
-	divide_variable = {
-		which = punic_league_stability
-		value = 100
-	}
-	if = {
-		limit = {
-			check_variable = {
-				which = punic_league_stability
-				value = 0.001
-			}
-		}
+	REB = {
+		# Stability
 		divide_variable = {
 			which = punic_league_stability
-			value = 10
+			value = 100
 		}
-	}
-
-	# Monthly Income
-	divide_variable = {
-		which = punic_league_income
-		value = 100
-	}
-	if = {
-		limit = {
-			check_variable = {
-				which = punic_league_income
-				value = 0.001
+		if = {
+			limit = {
+				check_variable = {
+					which = punic_league_stability
+					value = 0.001
+				}
+			}
+			divide_variable = {
+				which = punic_league_stability
+				value = 10
 			}
 		}
+
+		# Monthly Income
 		divide_variable = {
 			which = punic_league_income
-			value = 10
+			value = 100
 		}
-	}
+		if = {
+			limit = {
+				check_variable = {
+					which = punic_league_income
+					value = 0.001
+				}
+			}
+			divide_variable = {
+				which = punic_league_income
+				value = 10
+			}
+		}
 
-	# Province Count
-	divide_variable = {
-		which = punic_league_province_count
-		value = 1000
-	}
+		# Province Count
+		divide_variable = {
+			which = punic_league_province_count
+			value = 1000
+		}
 
-	# Finalize
-	change_variable = {
-		which = punic_league_growth
-		which = punic_league_stability
-	}
-	change_variable = {
-		which = punic_league_growth
-		which = punic_league_income
-	}
-	change_variable = {
-		which = punic_league_growth
-		which = punic_league_province_count
-	}
-	change_variable = {
-		which = punic_league_value
-		which = punic_league_growth
-	}
-	if = {
-		limit = {
-			NOT = { has_global_flag = ab_punic_league_tournament }
-			NOT = { has_global_flag = ab_punic_league_festival }
-			check_variable = {
+		# Finalize
+		change_variable = {
+			which = punic_league_growth
+			which = punic_league_stability
+		}
+		change_variable = {
+			which = punic_league_growth
+			which = punic_league_income
+		}
+		change_variable = {
+			which = punic_league_growth
+			which = punic_league_province_count
+		}
+		change_variable = {
+			which = punic_league_value
+			which = punic_league_growth
+		}
+		if = {
+			limit = {
+				NOT = { has_global_flag = ab_punic_league_tournament }
+				NOT = { has_global_flag = ab_punic_league_festival }
+				check_variable = {
+					which = punic_league_value
+					value = 50
+				}
+				event_target:easimaTarget = {
+					ai = yes
+				}
+				OR = {
+					NOT = { has_country_flag = punic_league_reform_passed_6 }
+					AND = {
+						has_global_flag = north_america_european_threat
+						NOT = { has_country_flag = punic_league_reform_passed_10 }
+					}
+					has_country_flag = punic_league_reform_passed_10
+				}
+			}
+			subtract_variable = {
 				which = punic_league_value
 				value = 50
 			}
 			event_target:easimaTarget = {
-				ai = yes
-			}
-			OR = {
-				NOT = { has_country_flag = punic_league_reform_passed_6 }
-				AND = {
-					has_global_flag = north_america_european_threat
-					NOT = { has_country_flag = punic_league_reform_passed_10 }
+				country_event = {
+					id = ab_punic.33
 				}
-				has_country_flag = punic_league_reform_passed_10
 			}
 		}
-		subtract_variable = {
-			which = punic_league_value
-			value = 50
-		}
-		event_target:easimaTarget = {
-			country_event = {
-				id = ab_punic.33
+		if = {
+			limit = {
+				check_variable = {
+					which = punic_league_value
+					value = 100
+				}
 			}
-		}
-	}
-	if = {
-		limit = {
-			check_variable = {
+			set_variable = {
 				which = punic_league_value
 				value = 100
 			}
 		}
-		set_variable = {
-			which = punic_league_value
-			value = 100
-		}
-	}
-	else_if = {
-		limit = {
-			NOT = {
-				check_variable = {
-					which = punic_league_value
-					value = 0.001
-				}
-			}
-		}
-		set_variable = {
-			which = punic_league_value
-			value = 0
-		}
-	}
-	
-	if = {
-		limit = {
-			NOT = { has_country_flag = punic_league_reform_passed_10 }
-		}
-		### Calc Election Point
-		event_target:easimaTarget = {
-			ab_punic_league_election_point_calc_effect = yes
-			every_subject_country = {
-				limit = {
-					is_subject_of_type = punic_city_vassal
-				}
-				ab_punic_league_election_point_calc_effect = yes
-			}
-		}
-
-		### Calc Time
-		subtract_variable = {            
-			which = punic_league_time
-			value = 1
-		}
-		if = {
+		else_if = {
 			limit = {
-				is_variable_equal = {
-					which = punic_league_time
-					value = 0
+				NOT = {
+					check_variable = {
+						which = punic_league_value
+						value = 0.001
+					}
 				}
 			}
 			set_variable = {
-				which = punic_league_time
-				value = 60
-			}
-			event_target:easimaTarget = {
-				ab_punic_league_new_easima_effect = yes
+				which = punic_league_value
+				value = 0
 			}
 		}
+		
+		if = {
+			limit = {
+				NOT = { has_country_flag = punic_league_reform_passed_10 }
+			}
+			### Calc Election Point
+			event_target:easimaTarget = {
+				ab_punic_league_election_point_calc_effect = yes
+				every_subject_country = {
+					limit = {
+						is_subject_of_type = punic_city_vassal
+					}
+					ab_punic_league_election_point_calc_effect = yes
+				}
+			}
+
+			### Calc Time
+			subtract_variable = {            
+				which = punic_league_time
+				value = 1
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = punic_league_time
+						value = 0
+					}
+				}
+				set_variable = {
+					which = punic_league_time
+					value = 60
+				}
+				event_target:easimaTarget = {
+					ab_punic_league_new_easima_effect = yes
+				}
+			}
+		}		
 	}
 }
 
@@ -1626,6 +1628,7 @@ ab_hyl_ozo_start_effect = {
 		every_country = {
 			limit = {
 				has_reform = hyl_symmachia_republic_reform
+				NOT = { tag = event_target:mithraic_hylTarget }
 			}
 			if = {
 				limit = {
@@ -1645,6 +1648,7 @@ ab_hyl_ozo_start_effect = {
 		every_country = {
 			limit = {
 				has_reform = che_zoro_tribe_reform
+				NOT = { tag = event_target:mithraic_ozoTarget }
 			}
 			if = {
 				limit = {

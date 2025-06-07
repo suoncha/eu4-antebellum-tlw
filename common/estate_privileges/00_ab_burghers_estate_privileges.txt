@@ -1,0 +1,1435 @@
+estate_burghers_ottoman_loans = {
+	icon = privilege_ottoman
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.1
+	is_valid = {
+		any_owned_province = {
+			has_great_project = {
+				type = ottoman_market
+				tier = 1
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_indebted_to_ottomans
+		if = {
+			limit = {
+				NOT = { has_country_flag = no_mercantilism_loss_estate_privilege_flag }
+				NOT = { has_government_attribute = no_mercantilism_loss_from_privilege }
+			}
+			add_mercantilism = -1
+		}
+		tooltip = {
+			add_inflation = 3
+		}
+		hidden_effect = {
+			add_inflation = 2.5
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			add_loan = {
+				fixed_interest = 0
+				duration = 60
+				estate_loan = yes
+			}
+			if = {
+				limit = {
+					has_country_flag = BYZ_buff_burgher_loans_flag
+				}
+				add_loan = {
+					fixed_interest = 0
+					duration = 60
+					estate_loan = yes
+				}
+				add_loan = {
+					fixed_interest = 0
+					duration = 60
+					estate_loan = yes
+				}
+			}
+		}
+	}
+	penalties = {
+		trade_efficiency = -0.05
+	}
+	benefits = {
+	}
+	can_select = {
+		if = {
+			limit = {
+				has_estate_privilege = estate_burghers_ottoman_loans
+			}
+			has_estate_loan = yes
+		}
+	}
+	can_revoke = {
+		has_estate_loan = no
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_burghers_highland_rights = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.15
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = income_SCO
+			has_unlocked_estate_privilege = { estate_privilege = estate_burghers_highland_rights }
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = unlocked_privilege_estate_burghers_highland_rights
+			has_unlocked_estate_privilege = { estate_privilege = estate_burghers_highland_rights }
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = hills
+				has_terrain = highlands
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_highland_rights_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = hills
+			}
+			add_province_modifier = {
+				name = estate_burghers_highland_rights_hills
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = highlands
+			}
+			add_province_modifier = {
+				name = estate_burghers_highland_rights_highlands
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_highland_rights_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_highland_rights_hills
+					has_province_modifier = estate_burghers_highland_rights_highlands
+				}
+			}
+			remove_province_modifier = estate_burghers_highland_rights_hills
+			remove_province_modifier = estate_burghers_highland_rights_highlands
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_highland_rights_hills
+					has_province_modifier = estate_burghers_highland_rights_highlands
+				}
+			}
+			remove_province_modifier = estate_burghers_highland_rights_hills
+			remove_province_modifier = estate_burghers_highland_rights_highlands
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = highlands
+					has_terrain = hills
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_ire_deforestation = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = cot_deforestation
+			has_mission = ire_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ire_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_ire_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ire_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_ire_deforestation_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				OR = {
+					area = ulster_area
+					area = leinster_area
+					area = connacht_area
+					area = munster_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_ire_deforestation_dev
+				duration = -1
+			}
+			}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_ire_deforestation_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_ire_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_ire_deforestation_dev
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_ire_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_ire_deforestation_dev
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_lit_deforestation = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	is_valid = {
+		OR = {
+			has_mission = lit_forest
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_lit_deforestation
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_lit_deforestation
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_lit_deforestation
+			}
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_lit_deforestation_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_lit_deforestation_dev
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_lit_deforestation_revoke
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_lit_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_lit_deforestation_dev
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_lit_deforestation_dev
+			}
+			remove_province_modifier = estate_burghers_lit_deforestation_dev
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = woods
+					has_terrain = forest
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_panslavism = {
+	icon = privilege_royal_authority
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = ab_russia_panslavism
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_panslavism
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_completed_russian_panslavism
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_panslavism
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				culture_group = west_slavic
+				culture_group = east_slavic
+				culture_group = south_slavic
+			}
+			NOT = {
+				has_owner_accepted_culture = yes
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = rus_panslavism_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = {
+					has_owner_accepted_culture = yes
+				}
+				OR = {
+					culture_group = west_slavic
+					culture_group = east_slavic
+					culture_group = south_slavic
+				}
+			}
+			add_province_modifier = {
+				name = rus_panslavism
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	on_revoked = {
+		custom_tooltip = rus_panslavism_remove_tt
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	on_invalid = {
+		custom_tooltip = rus_panslavism_remove_tt
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = rus_panslavism
+			}
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_burghers_orthodox_tolerance = {
+	icon = privilege_tolerance_heretics
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		religion_group = christian
+		NOT = { religion = orthodox }
+		NOT = { religion = coptic }
+		# AB [[[
+		any_owned_province = {
+			OR = {
+				religion = orthodox
+				religion = coptic
+			}
+		}
+		# ]]]
+		# TLW [[[
+		NOT = {
+			OR = {
+				tag = ROM
+				is_subject_of = ROM
+				has_country_flag = ab_is_rome_heir
+				overlord = {
+					has_country_flag = ab_is_rome_heir
+				}
+			}
+		}
+		# ]]]
+	}
+	can_select = {
+		religion_group = christian
+		NOT = { religion = orthodox }
+		NOT = { religion = coptic }
+		any_owned_province = {
+			OR = {
+				religion = orthodox
+				religion = coptic
+			}
+		}
+	}
+	on_granted = {
+		if = {
+			limit = { has_estate_privilege = estate_church_anti_heresy_act }
+			remove_estate_privilege = estate_church_anti_heresy_act
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = -20
+			}
+		}
+		custom_tooltip = estate_burghers_orthodox_tolerance_effect_tooltip
+		hidden_effect = {
+			set_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					religion = orthodox
+					religion = coptic
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_guaranteed_autonomy_mod
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_orthodox_tolerance_revoke_effect_tooltip
+		hidden_effect = {
+			clr_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	on_invalid = {
+		custom_tooltip = estate_burghers_orthodox_tolerance_revoke_effect_tooltip
+		hidden_effect = {
+			clr_country_flag = burghers_tolerates_orthodoxy
+		}
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_guaranteed_autonomy_mod
+			}
+			remove_province_modifier = estate_burghers_guaranteed_autonomy_mod
+		}
+	}
+	penalties = {
+		church_loyalty_modifier = -0.1
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					OR = {
+						religion = orthodox
+						religion = coptic
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			government = theocracy
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+		# AB [[[
+		modifier = {
+			factor = 0
+			OR = {
+				tag = VOL
+				was_tag = VOL
+			}
+		}
+		# ]]]
+	}
+}
+
+estate_burghers_per_mountain_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = per_mountain_expansion
+			has_mission = grg_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_per_mountain_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_per_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_per_mountain_expansion
+			}
+		}
+		any_owned_province = {
+			region = persia_region
+			OR = {
+				has_terrain = highlands
+				has_terrain = mountain
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_per_mountain_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+				region = persia_region
+			}
+			add_province_modifier = {
+				name = estate_burghers_per_mountain_expansion
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = highlands
+				region = persia_region		
+			}
+			add_province_modifier = {
+				name = estate_burghers_per_highlands_expansion
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_per_mountain_tt_remove
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_per_highlands_expansion
+					has_province_modifier = estate_burghers_per_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_per_mountain_expansion
+			remove_province_modifier = estate_burghers_per_highlands_expansion
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_per_highlands_expansion
+					has_province_modifier = estate_burghers_per_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_per_mountain_expansion
+			remove_province_modifier = estate_burghers_per_highlands_expansion
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = highlands
+				}
+				region = persia_region
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+AB_estate_burghers_urbanization = {
+	icon = privilege_grant_new_world_charter
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0
+	is_valid = {
+		OR = {
+			has_mission = AB_Shahi_Urbanization
+			has_unlocked_estate_privilege = {
+				estate_privilege = AB_estate_burghers_urbanization
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_AB_estate_burghers_urbanization
+			has_unlocked_estate_privilege = {
+				estate_privilege = AB_estate_burghers_urbanization
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = mountain
+				has_terrain = drylands
+				has_terrain = desert
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = AB_estate_burghers_urbanization_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_mountain_dev_cost
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = drylands
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_drylands_dev_cost
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = desert
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_desert_dev_cost
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = AB_estate_burghers_urbanization_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = AB_SHH_decrease_mountain_dev_cost
+					has_province_modifier = AB_SHH_decrease_drylands_dev_cost
+					has_province_modifier = AB_SHH_decrease_desert_dev_cost
+				}
+			}
+			remove_province_modifier = AB_SHH_decrease_mountain_dev_cost
+			remove_province_modifier = AB_SHH_decrease_drylands_dev_cost
+			remove_province_modifier = AB_SHH_decrease_desert_dev_cost
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = AB_SHH_decrease_mountain_dev_cost
+					has_province_modifier = AB_SHH_decrease_drylands_dev_cost
+					has_province_modifier = AB_SHH_decrease_desert_dev_cost
+				}
+			}
+			remove_province_modifier = AB_SHH_decrease_mountain_dev_cost
+			remove_province_modifier = AB_SHH_decrease_drylands_dev_cost
+			remove_province_modifier = AB_SHH_decrease_desert_dev_cost
+		}
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_burghers_cultivate_the_drylands = {
+	icon = privilege_dev_cost_desert
+	land_share = 5
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_mission = koj_cultivate_the_holy_land
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_cultivate_the_drylands
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_cultivate_the_drylands_tt
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_cultivate_the_drylands
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+			}
+			has_terrain = drylands
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					region = mashriq_region
+					region = egypt_region
+				}
+				has_terrain = drylands
+			}
+			add_province_modifier = {
+				name = koj_cultivate_drylands
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_rt
+	}
+	on_revoked_province = {
+		if = {
+			limit = { has_province_modifier = koj_cultivate_drylands }
+			remove_province_modifier = koj_cultivate_drylands
+		}
+	}
+	on_invalid = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_rt
+	}
+	on_invalid_province = {
+		if = {
+			limit = { has_province_modifier = koj_cultivate_drylands }
+			remove_province_modifier = koj_cultivate_drylands
+		}
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_burghers_hlv_mountain_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = hlv_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_hlv_mountain_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_hlv_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_hlv_mountain_expansion
+			}
+		}
+		any_owned_province = {
+			OR = {
+				area = romandie_area
+				area = switzerland_area
+				area = tirol_area
+			}
+			OR = {
+				has_terrain = hills
+				has_terrain = mountain
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_hlv_mountain_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+					area = tirol_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_hlv_mountain_expansion
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = hills
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+					area = tirol_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_hlv_hills_expansion
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_hlv_mountain_tt_remove
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_hlv_hills_expansion
+					has_province_modifier = estate_burghers_hlv_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_hlv_hills_expansion
+			remove_province_modifier = estate_burghers_hlv_mountain_expansion
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_hlv_hills_expansion
+					has_province_modifier = estate_burghers_hlv_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_hlv_hills_expansion
+			remove_province_modifier = estate_burghers_hlv_mountain_expansion
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = hills
+				}
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+					area = tirol_area
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_ivr_mountain_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = ivr_fortress_italy
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ivr_mountain_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_ivr_mountain_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_ivr_mountain_expansion
+			}
+		}
+		any_owned_province = {
+			OR = {
+				area = romandie_area
+				area = switzerland_area
+				region = italy_region
+				area = tirol_area
+				area = savoy_dauphine_area
+			}
+			OR = {
+				has_terrain = hills
+				has_terrain = mountain
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_ivr_mountain_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+					region = italy_region
+					area = tirol_area
+					area = savoy_dauphine_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_hlv_mountain_expansion
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = hills
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+					region = italy_region
+					area = tirol_area
+					area = savoy_dauphine_area
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_hlv_hills_expansion
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_ivr_mountain_tt_remove
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_hlv_hills_expansion
+					has_province_modifier = estate_burghers_hlv_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_hlv_hills_expansion
+			remove_province_modifier = estate_burghers_hlv_mountain_expansion
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = estate_burghers_hlv_hills_expansion
+					has_province_modifier = estate_burghers_hlv_mountain_expansion
+				}
+			}
+			remove_province_modifier = estate_burghers_hlv_hills_expansion
+			remove_province_modifier = estate_burghers_hlv_mountain_expansion
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = hills
+				}
+				OR = {
+					area = romandie_area
+					area = switzerland_area
+				}
+				value = 8
+			}
+		}
+		modifier = {
+			factor = 0
+			is_absolutism_active = yes
+		}
+	}
+}
+
+estate_burghers_italo_balkan_unity = {
+	icon = privilege_grant_autonomy
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = rmg_bulgaria
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_italo_balkan_unity
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_italo_balkan_unity
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_italo_balkan_unity
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = estate_burghers_italo_balkan_unity_has_eligible_province_tt
+			any_owned_province = {
+				has_owner_accepted_culture = no
+				OR = {
+					culture_group = south_slavic
+					culture_group = byzantine
+				}
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_italo_balkan_unity_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_owner_accepted_culture = no
+				OR = {
+					culture_group = south_slavic
+					culture_group = byzantine
+				}
+			}
+			if = {
+				limit = {
+					owner = { mission_completed = rmg_balkan_metropolises }
+				}
+				remove_province_modifier = rmg_balkan_unity
+				add_province_modifier = {
+					name = rmg_balkan_unity_buffed
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = rmg_balkan_unity
+					duration = -1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_province_modifier = rmg_balkan_unity
+					has_province_modifier = rmg_balkan_unity_buffed
+				}
+			}
+			remove_province_modifier = rmg_balkan_unity
+			remove_province_modifier = rmg_balkan_unity_buffed
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_italo_balkan_unity_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = rmg_balkan_unity
+					has_province_modifier = rmg_balkan_unity_buffed
+				}
+			}
+			remove_province_modifier = rmg_balkan_unity
+			remove_province_modifier = rmg_balkan_unity_buffed
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = rmg_balkan_unity
+					has_province_modifier = rmg_balkan_unity_buffed
+				}
+			}
+			remove_province_modifier = rmg_balkan_unity
+			remove_province_modifier = rmg_balkan_unity_buffed
+		}
+	}
+	conditional_modifier = {
+		trigger = { mission_completed = rmg_balkan_metropolises }
+		modifier = {
+			max_absolutism = 10
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
+estate_burghers_saxon_woods_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = sax_clear_the_woods
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_saxon_woods_expansion
+			}
+		}
+		NOT = {
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_german_woods_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_saxon_woods_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_saxon_woods_expansion
+			}
+		}
+		any_owned_province = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			has_terrain = woods
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_saxon_woods_expansion_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = woods
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_saxon_woods_expansion_mod
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_saxon_woods_expansion_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_saxon_woods_expansion_mod
+			}
+			remove_province_modifier = estate_burghers_saxon_woods_expansion_mod
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_saxon_woods_expansion_mod
+			}
+			remove_province_modifier = estate_burghers_saxon_woods_expansion_mod
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				has_terrain = woods
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+				value = 8
+			}
+		}
+	}
+}
+
+estate_burghers_german_woods_expansion = {
+	icon = privilege_dev_cost
+	max_absolutism = -10
+	influence = 0.1
+	loyalty = 0.05
+	land_share = 5
+	is_valid = {
+		OR = {
+			has_mission = ab_germany_sax_2
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_german_woods_expansion
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_german_woods_expansion
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_german_woods_expansion
+			}
+		}
+		any_owned_province = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			has_terrain = woods
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_german_woods_expansion_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = woods
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+			}
+			add_province_modifier = {
+				name = estate_burghers_german_woods_expansion_mod
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_german_woods_expansion_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_german_woods_expansion_mod
+			}
+			remove_province_modifier = estate_burghers_german_woods_expansion_mod
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = estate_burghers_german_woods_expansion_mod
+			}
+			remove_province_modifier = estate_burghers_german_woods_expansion_mod
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 2
+			num_of_owned_provinces_with = {
+				has_terrain = woods
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+				value = 8
+			}
+		}
+	}
+}
