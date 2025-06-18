@@ -413,18 +413,20 @@ ab_rum_muslim_first = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = RUM_BALKAN_SUBJECTS
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					num_of_subjects = 2
+				}
+				custom_tooltip = RUM_BALKAN_SUBJECTS_YES
 				add_country_modifier = {
 					name = rum_c_consolidate
 					duration = 9125
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						num_of_subjects = 2
-					}
+			else = {
+				custom_tooltip = RUM_BALKAN_SUBJECTS_NO
+				tooltip = {
 					add_country_modifier = {
 						name = rum_c_consolidate
 						duration = 9125
@@ -828,21 +830,26 @@ ab_rum_muslim_second = {
 				name = rum_m_kaiser
 				duration = -1
 			}
-			custom_tooltip = RUM_BANISH
-			tooltip = {
+			if = {
+				limit = {
+					aegean_archipelago_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = RUM_BANISH_YES
+				add_devotion = 10
+				add_legitimacy = 20
 				add_country_modifier = {
 					name = rum_latins
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						aegean_archipelago_area = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT
-						}
-					}
+			else = {
+				custom_tooltip = RUM_BANISH_NO
+				tooltip = {
+					add_devotion = 10
+					add_legitimacy = 20
 					add_country_modifier = {
 						name = rum_latins
 						duration = -1
@@ -1057,7 +1064,6 @@ ab_rum_muslim_third = {
 		}
 	
 		effect = {
-			set_country_flag = rum_land_of_commerce_buff
 			add_estate_loyalty = {
 				estate = estate_burghers
 				loyalty = 10
@@ -1066,20 +1072,23 @@ ab_rum_muslim_third = {
 				name = seljuk_caravans
 				duration = -1
 			}
+			set_country_flag = rum_land_of_commerce_buff
 			custom_tooltip = RUM_LAND_OF_COMMERCE_PRIVILEGE
-			custom_tooltip = SEL_TRADE_MISSION
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					trade_income_percentage = 0.35
+				}
+				custom_tooltip = SEL_TRADE_MISSION_YES
 				define_advisor = {
 					type = trader
 					skill = 2
 					cost_multiplier = 0.5
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						trade_income_percentage = 0.35
-					}
+			else = {
+				custom_tooltip = SEL_TRADE_MISSION_NO
+				tooltip = {
 					define_advisor = {
 						type = trader
 						skill = 2
@@ -1843,24 +1852,26 @@ ab_rum_muslim_fourth = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = SELJUK_NIZZARID
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						NAZ = {
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = SELJUK_NIZZARID_YES
 				add_ruler_modifier = {
-					name = seljuk_breaker
+					name = "seljuk_breaker"
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							NAZ = {
-								total_development = ROOT
-							}
-						}
-					}
+			else = {
+				custom_tooltip = SELJUK_NIZZARID_NO
+				tooltip = {
 					add_ruler_modifier = {
-						name = seljuk_breaker
+						name = "seljuk_breaker"
 						duration = -1
 					}
 				}
@@ -2262,49 +2273,53 @@ ab_rum_muslim_fifth = {
 		}
 		
 		effect = {
-			custom_tooltip = SELJUK_REL_1
-			tooltip = {
+			if = {
+				limit = {
+					has_global_modifier_value = {
+						which = tolerance_heathen
+						value = 2
+					}
+					num_of_estate_privileges = {
+						estate = estate_dhimmi
+						value = 4
+					}
+				}
+				custom_tooltip = SELJUK_REL_1_YES
+				add_yearly_manpower = 2
 				add_country_modifier = {
 					name = seljuk_rights
 					duration = -1
 				}
 			}
-			custom_tooltip = SELJUK_REL_2
-			tooltip = {
-				add_country_modifier = {
-					name = seljuk_true
-					duration = -1
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						AND = {
-							has_global_modifier_value = {
-								which = tolerance_heathen
-								value = 2
-							}
-							num_of_estate_privileges = {
-								estate = estate_dhimmi
-								value = 4
-							}
-						}
-					}
+			else = {
+				custom_tooltip = SELJUK_REL_1_NO
+				tooltip = {
+					add_yearly_manpower = 2
 					add_country_modifier = {
 						name = seljuk_rights
 						duration = -1
 					}
 				}
-				else_if = {
-					limit = {
-						AND = {
-							has_global_modifier_value = {
-								which = tolerance_own
-								value = 4
-							}
-							religious_unity = 0.9
-						}
+			}
+			if = {
+				limit = {
+					has_global_modifier_value = {
+						which = tolerance_own
+						value = 4
 					}
+					religious_unity = 0.9
+				}
+				custom_tooltip = SELJUK_REL_2_YES
+				add_corruption = -2
+				add_country_modifier = {
+					name = seljuk_true
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = SELJUK_REL_2_NO
+				tooltip = {
+					add_corruption = -2
 					add_country_modifier = {
 						name = seljuk_true
 						duration = -1
@@ -3434,19 +3449,21 @@ ab_rum_muslim_second_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_MIL_TECH
-			tooltip = {
-				add_yearly_manpower = 4
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								mil_tech = ROOT
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							mil_tech = ROOT
 						}
 					}
+				}
+				custom_tooltip = BYZ_MIL_TECH_YES
+				add_yearly_manpower = 4
+			}
+			else = {
+				custom_tooltip = BYZ_MIL_TECH_NO
+				tooltip = {
 					add_yearly_manpower = 4
 				}
 			}
@@ -3995,18 +4012,19 @@ ab_rum_muslim_third_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_HRE_DISMANTLE
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_LOT_3_BAI_YES
 				add_country_modifier = {
 					name = byzantium_bane
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { hre_size = 1 }
-					}
+			else = {
+				custom_tooltip = AB_LOT_3_BAI_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_bane
 						duration = -1

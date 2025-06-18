@@ -376,21 +376,22 @@ latin_second_group = {
 					duration = -1
 				}
 			}
-			custom_tooltip = BYZ_TOP_DEV
-			tooltip = { 
-				add_splendor = 100
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						151 = { 
-							NOT = { 
-								any_province = { 
-									higher_development_than = PREV 
-								}
+			if = {
+				limit = {
+					151 = {
+						NOT = {
+							any_province = {
+								higher_development_than = PREV
 							}
 						}
 					}
+				}
+				custom_tooltip = BYZ_TOP_DEV_YES
+				add_splendor = 100
+			}
+			else = {
+				custom_tooltip = BYZ_TOP_DEV_NO
+				tooltip = {
 					add_splendor = 100
 				}
 			}
@@ -2506,23 +2507,25 @@ latin_fifth_group_2 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = NICENE_RUM
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						AND = {
+							exists = RUM
+							exists = SEL
+						}
+					}
+				}
+				custom_tooltip = NICENE_RUM_YES
 				add_country_modifier = {
 					name = ser_triumph_anatolia
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							AND = {
-								exists = RUM
-								exists = SEL
-							}
-						}
-					}
+			else = {
+				custom_tooltip = NICENE_RUM_NO
+				tooltip = {
 					add_country_modifier = {
 						name = ser_triumph_anatolia
 						duration = -1
@@ -3319,19 +3322,21 @@ latin_second_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_MIL_TECH
-			tooltip = {
-				add_yearly_manpower = 4
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								mil_tech = ROOT
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							mil_tech = ROOT
 						}
 					}
+				}
+				custom_tooltip = BYZ_MIL_TECH_YES
+				add_yearly_manpower = 4
+			}
+			else = {
+				custom_tooltip = BYZ_MIL_TECH_NO
+				tooltip = {
 					add_yearly_manpower = 4
 				}
 			}
@@ -3643,18 +3648,19 @@ latin_third_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_HRE_DISMANTLE
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_LOT_3_BAI_YES
 				add_country_modifier = {
 					name = byzantium_bane
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { hre_size = 1 }
-					}
+			else = {
+				custom_tooltip = AB_LOT_3_BAI_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_bane
 						duration = -1

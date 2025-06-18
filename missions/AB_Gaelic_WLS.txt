@@ -1583,20 +1583,24 @@ BRN_branch_2 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = WLS_EMPEROR
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					emperor = {
+						NOT = {
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = WLS_EMPEROR_YES
 				add_country_modifier = {
 					name = wls_invade_empire
 					duration = 9125
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						emperor = {
-							NOT = { total_development = ROOT }
-						}
-					}
+			else = {
+				custom_tooltip = WLS_EMPEROR_NO
+				tooltip = {
 					add_country_modifier = {
 						name = wls_invade_empire
 						duration = 9125
@@ -1754,18 +1758,19 @@ BRN_branch_2 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_HRE_DISMANTLE
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_LOT_3_BAI_YES
 				add_country_modifier = {
 					name = byzantium_bane
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { hre_size = 1 }
-					}
+			else = {
+				custom_tooltip = AB_LOT_3_BAI_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_bane
 						duration = -1
@@ -2036,6 +2041,8 @@ BRN_branch_3 = {
 		
 		effect = {
 			add_legitimacy = 25
+			set_country_flag = general_flag_Rome_flag
+			custom_tooltip = WLS_OCCUPATION
 			add_country_modifier = {
 				name = wls_conquest_rome
 				duration = 7300
@@ -2047,19 +2054,26 @@ BRN_branch_3 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = WLS_SICILY
-			hidden_effect = {
-				every_province = {
-					limit = {
-						owned_by = SIC
-						region = italy_region
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = SIC
+				}
+				custom_tooltip = WLS_SICILY_YES
+				hidden_effect = {
+					SIC = {
+						every_owned_province = {
+							limit = {
+								region = italy_region
+							}
+							add_territorial_core = ROOT
+						}
 					}
-					add_territorial_core = ROOT
 				}
 			}
-			custom_tooltip = AB_EMPTY
-			set_country_flag = general_flag_Rome_flag
-			custom_tooltip = WLS_OCCUPATION
+			else = {
+				custom_tooltip = WLS_SICILY_NO
+			}
 		}
 	}
 
@@ -2424,28 +2438,26 @@ BRN_branch_4 = {
 			}
 			scandinavia_region = {
 				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = ENG_DAN_NOR_EXIST
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = DAN }
+					NOT = { exists = NOR }
+				}
+				custom_tooltip = ENG_DAN_NOR_EXIST_YES
 				add_country_modifier = {
 					name = eng_northern_crusaders
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							exists = DAN
-						}
-						NOT = {
-							exists = NOR
-						}
-					}
+			else = {
+				custom_tooltip = ENG_DAN_NOR_EXIST_NO
+				tooltip = {
 					add_country_modifier = {
 						name = eng_northern_crusaders
 						duration = -1
@@ -2987,20 +2999,22 @@ BRN_branch_5 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = WLS_ANDALUSIA
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					ADU = {
+						NOT = { army_size = ROOT }
+					}
+				}
+				custom_tooltip = WLS_ANDALUSIA_YES
 				add_country_modifier = {
 					name = wls_second_crusade
 					duration = 5475
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						ADU = {
-							NOT = { army_size = ROOT }
-						}
-					}
+			else = {
+				custom_tooltip = WLS_ANDALUSIA_NO
+				tooltip = {
 					add_country_modifier = {
 						name = wls_second_crusade
 						duration = 5475
@@ -3065,20 +3079,23 @@ BRN_branch_5 = {
 				add_permanent_claim = ROOT
 			}
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = WLS_DEFENDER
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = catholic
-						NOT = {
-							any_country = {
-								religion = catholic
-								is_defender_of_faith = yes
-							}
+			if = {
+				limit = {
+					religion = catholic
+					NOT = {
+						any_country = {
+							religion = catholic
+							is_defender_of_faith = yes
 						}
 					}
+				}
+				custom_tooltip = WLS_DEFENDER_YES
+				hidden_effect = {
 					set_defender_of_the_faith = { who = ROOT religion = ROOT }
 				}
+			}
+			else = {
+				custom_tooltip = WLS_DEFENDER_NO
 			}
 			if = {
 				limit = {

@@ -2326,19 +2326,21 @@ byz_slot2_europe_unlocked = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_MIL_TECH
-			tooltip = {
-				add_yearly_manpower = 4
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								mil_tech = ROOT
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							mil_tech = ROOT
 						}
 					}
+				}
+				custom_tooltip = BYZ_MIL_TECH_YES
+				add_yearly_manpower = 4
+			}
+			else = {
+				custom_tooltip = BYZ_MIL_TECH_NO
+				tooltip = {
 					add_yearly_manpower = 4
 				}
 			}
@@ -3249,11 +3251,22 @@ byz_slot3_army = {
 				}
 			}
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = BYZ_CENTER
-			hidden_effect = {
-				118 = {
-					add_reform_center = orthodox
+			if = {
+				limit = {
+					OR = {
+						current_age = age_of_discovery
+						current_age = age_of_reformation
+					}
 				}
+				custom_tooltip = BYZ_CENTER_YES
+				hidden_effect = {
+					118 = {
+						add_reform_center = orthodox
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_CENTER_NO
 			}
 		}
 	}
@@ -3529,25 +3542,25 @@ byz_slot3_europe_unlocked = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_HRE_DISMANTLE
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_LOT_3_BAI_YES
 				add_country_modifier = {
 					name = byzantium_bane
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { hre_size = 1 }
-					}
+			else = {
+				custom_tooltip = AB_LOT_3_BAI_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_bane
 						duration = -1
 					}
 				}
 			}
-		}
 	}
 	
 	byzantium_restoration = {
@@ -4752,8 +4765,16 @@ byz_slot5_balkan = {
 				add_permanent_claim = ROOT
 			}
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = BYZ_HELLESPONT
-			tooltip = {
+			if = {
+				limit = {
+					151 = {
+						has_coast_defense_building_trigger = yes
+					}
+					4779 = {
+						has_coast_defense_building_trigger = yes
+					}
+				}
+				custom_tooltip = BYZ_HELLESPONT_YES
 				thrace_area = {
 					add_province_modifier = {
 						name = byzantium_reinf
@@ -4761,16 +4782,9 @@ byz_slot5_balkan = {
 					}
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						151 = {
-							has_coast_defense_building_trigger = yes
-						}
-						4779 = {
-							has_coast_defense_building_trigger = yes
-						}
-					}
+			else = {
+				custom_tooltip = BYZ_HELLESPONT_NO
+				tooltip = {
 					thrace_area = {
 						add_province_modifier = {
 							name = byzantium_reinf
@@ -5103,16 +5117,18 @@ byz_slot5_balkan = {
 					add_permanent_claim = ROOT
 				}
 			}
-			custom_tooltip = BYZ_NAZ_EXIST
-			tooltip = {
-				add_army_tradition = 25
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = NAZ }
+				}
+				custom_tooltip = VEN_NAZ_DEAD_YES
+				add_army_tradition_or_mil_power = { amount = 25 }
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { exists = NAZ }
-					}
-					add_army_tradition = 25
+			else = {
+				custom_tooltip = VEN_NAZ_DEAD_NO
+				tooltip = {
+					add_army_tradition_or_mil_power = { amount = 25 }
 				}
 			}
 			if = {
@@ -5311,15 +5327,16 @@ byz_slot5_balkan = {
 				name = byzantium_mare
 				duration = -1
 			}
-			custom_tooltip = BYZ_TRADE_SHARE
-			tooltip = {
+			if = {
+				limit = {
+					trade_income_percentage = 0.5
+				}
+				custom_tooltip = ENG_TRADE_INCOME_YES
 				add_years_of_income = 1.5
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						trade_income_percentage = 0.5
-					}
+			else = {
+				custom_tooltip = ENG_TRADE_INCOME_NO
+				tooltip = {
 					add_years_of_income = 1.5
 				}
 			}
@@ -5411,29 +5428,32 @@ byz_slot5_balkan = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_EXPLO
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					1975 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+				custom_tooltip = BYZ_EXPLO_YES
 				add_country_modifier = {
 					name = byzantium_unknown
 					duration = 7300
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						1975 = {
-							trade_share = {
-								country = ROOT
-								share = 50
-							}
-						}
-					}
+			else = {
+				custom_tooltip = BYZ_EXPLO_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_unknown
 						duration = 7300
 					}
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					tag = ROM
@@ -5604,17 +5624,19 @@ byz_slot1_tall = {
 				skill = 1
 				cost_multiplier = 0.5
 			}
-			custom_tooltip = BYZ_RENAI_OWN
-			tooltip = { 
-				change_government_reform_progress = 25 
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						any_owned_province = {
-							is_institution_origin = renaissance
-						}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_owned_province = {
+						is_institution_origin = renaissance
 					}
+				}
+				custom_tooltip = RMG_RENAI_OWN_YES
+				change_government_reform_progress = 25
+			}
+			else = {
+				custom_tooltip = RMG_RENAI_OWN_NO
+				tooltip = {
 					change_government_reform_progress = 25
 				}
 			}
@@ -5640,16 +5662,15 @@ byz_slot1_tall = {
 		}
 
 		effect = {
-			set_country_flag = koj_scholar_chance
 			change_monarch_points_or_power = {
 				points = 1
 				power = dip
 			}
-			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = byzantium_uni
 				duration = -1
 			}
+			set_country_flag = koj_scholar_chance
 			custom_tooltip = KOJ_SCHOLAR
 			custom_tooltip = AB_EMPTY
 		}
@@ -6523,21 +6544,22 @@ byz_slot4_tall = {
 					duration = -1
 				}
 			}
-			custom_tooltip = BYZ_TOP_DEV
-			tooltip = { 
-				add_splendor = 100
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						151 = { 
-							NOT = { 
-								any_province = { 
-									higher_development_than = PREV 
-								}
+			if = {
+				limit = {
+					151 = {
+						NOT = {
+							any_province = {
+								higher_development_than = PREV
 							}
 						}
 					}
+				}
+				custom_tooltip = BYZ_TOP_DEV_YES
+				add_splendor = 100
+			}
+			else = {
+				custom_tooltip = BYZ_TOP_DEV_NO
+				tooltip = {
 					add_splendor = 100
 				}
 			}

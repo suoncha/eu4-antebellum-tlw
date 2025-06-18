@@ -23,22 +23,21 @@ glh_eu_first_group = {
 		}
 		
 		effect = {
-			custom_tooltip = GLH_NO_TENGRI
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { religion = tengri_pagan_reformed }
+				}
+				custom_tooltip = GLH_NO_TENGRI_YES
 				add_country_modifier = {
-					name = "gh_finish_conversion"
+					name = gh_finish_conversion
 					duration = 3650
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							religion = tengri_pagan_reformed
-						}
-					}
+			else = {
+				custom_tooltip = GLH_NO_TENGRI_NO
+				tooltip = {
 					add_country_modifier = {
-						name = "gh_finish_conversion"
+						name = gh_finish_conversion
 						duration = 3650
 					}
 				}
@@ -379,33 +378,40 @@ glh_eu_first_sunni_branching = {
 		}
 		
 		effect = {
-			custom_tooltip = GLH_MUSLIM_1
-			tooltip = {
+			if = {
+				limit = {
+					has_estate_privilege = estate_dhimmi_guaranteed_autonomy
+				}
+				custom_tooltip = JAPAN_AINU_1_YES
 				add_country_modifier = {
-					name = "gh_tolerant"
+					name = gh_tolerant
 					duration = 5475
 				}
 			}
-			custom_tooltip = GLH_MUSLIM_2
-			tooltip = {
-				add_country_modifier = {
-					name = "gh_teachings"
-					duration = 5475
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_estate_privilege = estate_dhimmi_guaranteed_autonomy
-					}
+			else = {
+				custom_tooltip = JAPAN_AINU_1_NO
+				tooltip = {
 					add_country_modifier = {
-						name = "gh_tolerant"
+						name = gh_tolerant
 						duration = 5475
 					}
 				}
-				else = {
+			}
+			if = {
+				limit = {
+					check_variable = { which = num_converted_religion value = 10 }
+				}
+				custom_tooltip = JAPAN_AINU_2_YES
+				add_country_modifier = {
+					name = gh_teachings
+					duration = 5475
+				}
+			}
+			else = {
+				custom_tooltip = JAPAN_AINU_2_NO
+				tooltip = {
 					add_country_modifier = {
-						name = "gh_teachings"
+						name = gh_teachings
 						duration = 5475
 					}
 				}
@@ -1017,21 +1023,22 @@ glh_eu_second_group = {
 		effect = {
 			create_admiral = { tradition = 50 }
 			add_country_modifier = {
-				name = "gh_blac_sea"
+				name = gh_blac_sea
 				duration = 9125
 			}
-			custom_tooltip = GLH_CENTER
-			tooltip = {
+			if = {
+				limit = {
+					num_of_owned_provinces_with = {
+						province_has_center_of_trade_of_level = 2
+						value = 4
+					}
+				}
+				custom_tooltip = GLH_CENTER_YES
 				add_years_of_income = 1.5
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						num_of_owned_provinces_with = {
-							province_has_center_of_trade_of_level = 2
-							value = 4
-						}
-					}
+			else = {
+				custom_tooltip = GLH_CENTER_NO
+				tooltip = {
 					add_years_of_income = 1.5
 				}
 			}
@@ -1213,8 +1220,11 @@ glh_eu_second_group = {
 				name = glh_steppe
 				duration = -1
 			}
-			custom_tooltip = GLH_BUDDHIST
-			tooltip = {
+			if = {
+				limit = {
+					religion = vajrayana
+				}
+				custom_tooltip = GLH_BUDDHIST_YES
 				add_accepted_culture_or_dip_power = {
 					culture = mongol
 					dip_reward = yes
@@ -1224,11 +1234,9 @@ glh_eu_second_group = {
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = vajrayana
-					}
+			else = {
+				custom_tooltip = GLH_BUDDHIST_NO
+				tooltip = {
 					add_accepted_culture_or_dip_power = {
 						culture = mongol
 						dip_reward = yes
@@ -1282,22 +1290,26 @@ glh_eu_third_group = {
 					cost = 0
 				}
 			}
-			custom_tooltip = GLH_ORTHODOX_EUROPE
-			custom_tooltip = GH_GOTHIA
-			hidden_effect = {
-				if = {
-					limit = {
-						OR = {
-							religion = orthodox
-							religion = nestorian
-						}
+			custom_tooltip = AB_EMTPY
+			if = {
+				limit = {
+					OR = {
+						religion = orthodox
+						religion = nestorian
 					}
+				}
+				custom_tooltip = GLH_ORTHODOX_EUROPE_YES
+				hidden_effect = {
 					add_country_modifier = {
-						name = "gh_gothia"
+						name = gh_gothia
 						duration = 5475
 					}
 				}
 			}
+			else = {
+				custom_tooltip = GLH_ORTHODOX_EUROPE_NO
+			}
+			custom_tooltip = GH_GOTHIA
 		}
 	}
 	
@@ -1326,43 +1338,38 @@ glh_eu_third_group = {
 		}
 		
 		effect = {
-			custom_tooltip = GLH_BYZ1
-			tooltip = {
+			if = {
+				limit = {
+					exists = BYZ
+				}
+				custom_tooltip = GLH_BYZ1_YES
 				add_country_modifier = {
-					name = "gh_hellespont"
+					name = gh_hellespont
 					duration = 5475
 				}
 				151 = {
-					if = {
-						limit = {
-							NOT = { is_core = ROOT }
-							NOT = { is_permanent_claim = ROOT }
-						}
-						add_claim = ROOT
-					}
+					add_claim = ROOT
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = GLH_BYZ2_NO
+				tooltip = {
+					add_dip_power = 100
 				}
 			}
-			custom_tooltip = GLH_BYZ2
-			hidden_effect = {
-				if = {
-					limit = { exists = BYZ }
+			else = {
+				custom_tooltip = GLH_BYZ1_NO
+				tooltip = {
 					add_country_modifier = {
-						name = "gh_hellespont"
+						name = gh_hellespont
 						duration = 5475
 					}
 					151 = {
-						if = {
-							limit = {
-								NOT = { is_core = ROOT }
-								NOT = { is_permanent_claim = ROOT }
-							}
-							add_claim = ROOT
-						}
+						add_claim = ROOT
 					}
 				}
-				else = {
-					add_dip_power = 100
-				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = GLH_BYZ2_YES
+				add_dip_power = 100
 			}
 		}
 	}
@@ -1545,10 +1552,8 @@ glh_eu_fourth_group = {
 		}
 		
 		effect = {
-			custom_tooltip = GLH_INHERIT_ALN
-			custom_tooltip = GLH_INHERIT_CMN
 			add_country_modifier = {
-				name = "gh_caucasian"
+				name = gh_caucasian
 				duration = 5475
 			}
 			caucasia_region = {
@@ -1558,8 +1563,12 @@ glh_eu_fourth_group = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = GLH_GUARD
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					religion = tengri_pagan_reformed
+				}
+				custom_tooltip = GLH_GUARD_YES
 				define_advisor = {
 					type = dragoon
 					skill = 2
@@ -1568,43 +1577,51 @@ glh_eu_fourth_group = {
 					cost_multiplier = 0.5
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = tengri_pagan_reformed
-					}
+			else = {
+				custom_tooltip = GLH_GUARD_NO
+				tooltip = {
 					define_advisor = {
 						type = dragoon
 						skill = 2
-						religion = ROOT
-						culture = ROOT
+						religion = tengri_pagan_reformed
+						culture = cuman_culture
 						cost_multiplier = 0.5
 					}
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						exists = ALN
-						ALN = {
-							is_subject_of = GLH
-							is_subject_of_type = tributary_state
-							has_opinion = { who = GLH value = 200 }
-						}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					ALN = {
+						is_subject_of = GLH
+						is_subject_of_type = tributary_state
+						has_opinion = { who = GLH value = 200 }
 					}
+				}
+				custom_tooltip = GLH_INHERIT_ALN_YES
+				hidden_effect = {
 					inherit = ALN
 				}
-				if = {
-					limit = {
-						exists = CMN
-						CMN = {
-							is_subject_of = GLH
-							is_subject_of_type = tributary_state
-							has_opinion = { who = GLH value = 200 }
-						}
+			}
+			else = {
+				custom_tooltip = GLH_INHERIT_ALN_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					CMN = {
+						is_subject_of = GLH
+						is_subject_of_type = tributary_state
+						has_opinion = { who = GLH value = 200 }
 					}
+				}
+				custom_tooltip = GLH_INHERIT_CMN_YES
+				hidden_effect = {
 					inherit = CMN
 				}
+			}
+			else = {
+				custom_tooltip = GLH_INHERIT_CMN_NO
 			}
 		}
 	}
@@ -1628,24 +1645,25 @@ glh_eu_fourth_group = {
 			add_army_tradition = 20
 			310 = {
 				add_province_modifier = {
-					name = "gh_novgorod"
+					name = gh_novgorod
 					duration = 5475
 				}
 			}
-			custom_tooltip = GLH_NOV_PROVINCES
-			tooltip = {
+			if = {
+				limit = {
+					NOV = {
+						NOT = { num_of_cities = 10 }
+					}
+				}
+				custom_tooltip = GLH_NOV_PROVINCES_YES
 				add_power_projection = {
 					type = mission_rewards_power_projection
 					amount = 20
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOV = {
-							NOT = { num_of_cities = 10 }
-						}
-					}
+			else = {
+				custom_tooltip = GLH_NOV_PROVINCES_NO
+				tooltip = {
 					add_power_projection = {
 						type = mission_rewards_power_projection
 						amount = 20
@@ -1909,18 +1927,20 @@ glh_eu_fifth_group = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = GLH_RUS_SUNNI
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					religion = sunni
+				}
+				custom_tooltip = GLH_AVENGE_PERSIA_YES
 				add_country_modifier = {
 					name = glh_islamize
 					duration = 5475
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = sunni
-					}
+			else = {
+				custom_tooltip = GLH_AVENGE_PERSIA_NO
+				tooltip = {
 					add_country_modifier = {
 						name = glh_islamize
 						duration = 5475
@@ -2029,6 +2049,7 @@ glh_eu_fifth_group = {
 					add_center_of_trade_level = 1
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			if = {
 				limit = {
 					religion = nestorian

@@ -345,21 +345,23 @@ ab_rum_christian_first = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = RUM_BALKAN_SUBJECTS
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					num_of_subjects = 2
+				}
+				custom_tooltip = RUM_BALKAN_SUBJECTS_YES
 				add_country_modifier = {
 					name = rum_c_consolidate
-					duration = 18250
+					duration = 9125
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						num_of_subjects = 2
-					}
+			else = {
+				custom_tooltip = RUM_BALKAN_SUBJECTS_NO
+				tooltip = {
 					add_country_modifier = {
 						name = rum_c_consolidate
-						duration = 18250
+						duration = 9125
 					}
 				}
 			}
@@ -435,33 +437,41 @@ ab_rum_christian_first = {
 		}
 		
 		effect = {
-			custom_tooltip = RUM_HRE_1
-			tooltip = {
-				add_mil_power = 250
-				add_country_modifier = {
-					name = rum_c_dismantled
-					duration = -1
+			if = {
+				limit = {
+					is_emperor = yes
 				}
-			}
-			custom_tooltip = RUM_HRE_2
-			tooltip = {
+				custom_tooltip = AB_ENG_ROMAN_EMPERORSHIP_YES
 				add_dip_power = 250
 				add_country_modifier = {
 					name = rum_c_emperor
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						is_emperor = yes
-					}
+			else = {
+				custom_tooltip = AB_ENG_ROMAN_EMPERORSHIP_NO
+				tooltip = {
+					add_dip_power = 250
 					add_country_modifier = {
 						name = rum_c_emperor
 						duration = -1
 					}
 				}
-				else = {
+			}
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_ENG_ROMAN_DESTROY_THE_EMPIRE_YES
+				add_mil_power = 250
+				add_country_modifier = {
+					name = rum_c_dismantled
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = AB_ENG_ROMAN_DESTROY_THE_EMPIRE_NO
+				tooltip = {
 					add_mil_power = 250
 					add_country_modifier = {
 						name = rum_c_dismantled
@@ -887,21 +897,26 @@ ab_rum_christian_second = {
 				name = rum_turkism
 				duration = -1
 			}
-			custom_tooltip = RUM_BANISH
-			tooltip = {
+			if = {
+				limit = {
+					aegean_archipelago_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = RUM_BANISH_YES
+				add_republican_tradition = 10
+				add_legitimacy = 20
 				add_country_modifier = {
 					name = rum_latins
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						aegean_archipelago_area = {
-							type = all
-							country_or_non_sovereign_subject_holds = ROOT
-						}
-					}
+			else = {
+				custom_tooltip = RUM_BANISH_NO
+				tooltip = {
+					add_republican_tradition = 10
+					add_legitimacy = 20
 					add_country_modifier = {
 						name = rum_latins
 						duration = -1
@@ -1549,11 +1564,22 @@ ab_rum_christian_third = {
 				name = healing_the_schism
 				duration = -1
 			}
-			custom_tooltip = BYZ_CENTER
-			hidden_effect = {
-				118 = {
-					add_reform_center = orthodox
+			if = {
+				limit = {
+					OR = {
+						current_age = age_of_discovery
+						current_age = age_of_reformation
+					}
 				}
+				custom_tooltip = BYZ_CENTER_YES
+				hidden_effect = {
+					118 = {
+						add_reform_center = orthodox
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BYZ_CENTER_NO
 			}
 		}
 	}
@@ -2099,18 +2125,23 @@ ab_rum_christian_fourth = {
 					add_permanent_claim = ROOT
 				}
 			}
-			
-			custom_tooltip = RUM_NIZZARID
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { exists = NAZ }
-					}
-					every_province = {
-						limit = {
-							is_core = NAZ
-						}
-						remove_core = NAZ
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { exists = NAZ }
+				}
+				custom_tooltip = VEN_NAZ_DEAD_YES
+				add_power_projection = {
+					type = mission_rewards_power_projection
+					amount = 25
+				}
+			}
+			else = {
+				custom_tooltip = VEN_NAZ_DEAD_NO
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
 					}
 				}
 			}
@@ -2327,18 +2358,21 @@ ab_rum_christian_fifth = {
 				name = rum_c_defender_temporary
 				duration = 9125
 			}
-			custom_tooltip = RUM_C_MODIFIER
-			hidden_effect = {
-				if = {
-					limit = {
-						mission_completed = rum_christian_pentarchy
-					}
+			if = {
+				limit = {
+					mission_completed = rum_christian_pentarchy
+				}
+				custom_tooltip = RUM_C_MODIFIER_YES
+				hidden_effect = {
 					remove_country_modifier = rum_c_defender_temporary
 					add_country_modifier = {
 						name = rum_c_defender_permanent
 						duration = -1
 					}
 				}
+			}
+			else = {
+				custom_tooltip = RUM_C_MODIFIER_NO
 			}
 		}
 	}
@@ -3231,19 +3265,21 @@ ab_rum_christian_second_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_MIL_TECH
-			tooltip = {
-				add_yearly_manpower = 4
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								mil_tech = ROOT
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							mil_tech = ROOT
 						}
 					}
+				}
+				custom_tooltip = BYZ_MIL_TECH_YES
+				add_yearly_manpower = 4
+			}
+			else = {
+				custom_tooltip = BYZ_MIL_TECH_NO
+				tooltip = {
 					add_yearly_manpower = 4
 				}
 			}
@@ -3667,18 +3703,19 @@ ab_rum_christian_third_rome = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = BYZ_HRE_DISMANTLE
-			tooltip = {
+			if = {
+				limit = {
+					NOT = { hre_size = 1 }
+				}
+				custom_tooltip = AB_LOT_3_BAI_YES
 				add_country_modifier = {
 					name = byzantium_bane
 					duration = -1
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { hre_size = 1 }
-					}
+			else = {
+				custom_tooltip = AB_LOT_3_BAI_NO
+				tooltip = {
 					add_country_modifier = {
 						name = byzantium_bane
 						duration = -1

@@ -277,17 +277,17 @@ NCI_missions_1_stratocracy_unlocked = {
 			set_country_flag = sty_winning_battle_grant_morale
 			custom_tooltip = STY_GER_EASTERN_SPEAR_BATTLE
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = NCI_THREAT
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								tech_difference = 1
-								technology_group = western
-							}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							tech_difference = 1
+							technology_group = western
 						}
 					}
+				}
+				custom_tooltip = NCI_THREAT_YES
+				hidden_effect = {
 					every_country = {
 						limit = {
 							OR = {
@@ -304,6 +304,9 @@ NCI_missions_1_stratocracy_unlocked = {
 						}
 					}
 				}
+			}
+			else = {
+				custom_tooltip = NCI_THREAT_NO
 			}
 		}
 	}
@@ -692,22 +695,23 @@ NCI_missions_2 = {
 				name = nicaea_battle
 				duration = 5475
 			}
-			custom_tooltip = NICAEA_RIVAL_ROME
-			tooltip = {
+			if = {
+				limit = {
+					NOT = {
+						BYZ = {
+							navy_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = NICAEA_RIVAL_ROME_YES
 				add_country_modifier = {
 					name = nicaea_rival_rome
 					duration = 9125
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							BYZ = {
-								navy_size = ROOT
-							}
-						}
-					}
+			else = {
+				custom_tooltip = NICAEA_RIVAL_ROME_NO
+				tooltip = {
 					add_country_modifier = {
 						name = nicaea_rival_rome
 						duration = 9125
@@ -1192,15 +1196,16 @@ HLE_missions_2 = {
 				name = byzantium_mare
 				duration = -1
 			}
-			custom_tooltip = BYZ_TRADE_SHARE
-			tooltip = {
+			if = {
+				limit = {
+					trade_income_percentage = 0.5
+				}
+				custom_tooltip = ENG_TRADE_INCOME_YES
 				add_years_of_income = 1.5
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						trade_income_percentage = 0.5
-					}
+			else = {
+				custom_tooltip = ENG_TRADE_INCOME_NO
+				tooltip = {
 					add_years_of_income = 1.5
 				}
 			}
@@ -1543,21 +1548,22 @@ NCI_missions_3 = {
 				}
 			}
 			custom_tooltip = AB_EMPTY
-			custom_tooltip = BYZ_TOP_DEV
-			tooltip = { 
-				add_splendor = 100
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						151 = { 
-							NOT = { 
-								any_province = { 
-									higher_development_than = PREV 
-								}
+			if = {
+				limit = {
+					151 = {
+						NOT = {
+							any_province = {
+								higher_development_than = PREV
 							}
 						}
 					}
+				}
+				custom_tooltip = BYZ_TOP_DEV_YES
+				add_splendor = 100
+			}
+			else = {
+				custom_tooltip = BYZ_TOP_DEV_NO
+				tooltip = {
 					add_splendor = 100
 				}
 			}
@@ -3178,17 +3184,18 @@ HLE_missions_4 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = NICENE_SILK_ROAD
-			hidden_effect = {
-				if = {
-					limit = {
-						4341 = {
-							trade_share = {
-								country = ROOT
-								share = 75
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					4341 = {
+						trade_share = {
+							country = ROOT
+							share = 75
 						}
 					}
+				}
+				custom_tooltip = NICENE_SILK_ROAD_YES
+				hidden_effect = {
 					every_owned_province = {
 						limit = {
 							trade_goods = silk
@@ -3197,6 +3204,9 @@ HLE_missions_4 = {
 						add_base_production = 2
 					}
 				}
+			}
+			else = {
+				custom_tooltip = NICENE_SILK_ROAD_NO
 			}
 		}
 	}
@@ -3383,25 +3393,27 @@ HLE_missions_4 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = SELJUK_INDIA
-			tooltip = {
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = { 
+								superregion = india_superregion
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = SELJUK_INDIA_YES
 				add_country_modifier = {
 					name = sel_hydaspes
 					duration = 7300
 				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							any_country = {
-								capital_scope = { 
-									superregion = india_superregion
-								}
-								army_size = ROOT
-							}
-						}
-					}
+			else = {
+				custom_tooltip = SELJUK_INDIA_NO
+				tooltip = {
 					add_country_modifier = {
 						name = sel_hydaspes
 						duration = 7300
@@ -3836,20 +3848,22 @@ HLE_missions_5 = {
 				}
 				add_permanent_claim = ROOT
 			}
-			custom_tooltip = NICENE_RUM
-			tooltip = {
-				add_army_tradition_or_mil_power = { amount = 25 }
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							AND = {
-								exists = RUM
-								exists = SEL
-							}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						AND = {
+							exists = RUM
+							exists = SEL
 						}
 					}
+				}
+				custom_tooltip = NICENE_RUM_YES
+				add_army_tradition_or_mil_power = { amount = 25 }
+			}
+			else = {
+				custom_tooltip = NICENE_RUM_NO
+				tooltip = {
 					add_army_tradition_or_mil_power = { amount = 25 }
 				}
 			}
