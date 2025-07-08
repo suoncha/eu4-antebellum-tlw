@@ -1,0 +1,394 @@
+country_decisions = {
+
+	levant_greek = {
+		potential = {
+			has_country_flag = levant_greek_flag
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		allow = {
+			hidden_trigger = {
+				has_country_flag = levant_greek_flag
+			}
+			dip_power = 300
+			palestine_area = {
+				type = all
+				owned_by = ROOT
+			}
+			syria_area = {
+				type = all
+				owned_by = ROOT
+			}
+			aleppo_area = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			clr_country_flag = levant_greek_flag
+			add_dip_power = -300
+			custom_tooltip = EVERY_REQUIRE_PROVINCE
+			tooltip = {
+				add_devastation = 15 
+				change_culture = ROOT 
+				add_province_modifier = {
+					name = byz_forced_hellenized
+					duration = 7300 
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = palestine_area
+							area = syria_area
+							area = aleppo_area
+						}
+					}
+					add_devastation = 15 
+					change_culture = ROOT 
+					add_province_modifier = {
+						name = byz_forced_hellenized
+						duration = 7300 
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	unite_romanian_vassals = {
+		potential = {
+			overlord_of = WAL
+		    overlord_of = MOL
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = WAL
+				owned_by = MOL
+			}
+		}
+
+		allow = {
+			dip_power = 50
+		}
+		
+		effect = {
+			add_dip_power = -50
+			WAL = {
+				inherit = MOL
+				add_liberty_desire = -25
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	rule_rus_byz = {
+		major = yes
+
+		potential = {
+			religion_group = christian
+			NOT = { has_country_flag = rule_rus_byz_flag }
+			OR = {
+				overlord_of = UKR
+				any_subject_country = {
+					culture_group = east_slavic
+				}
+			}
+			NOT = { culture_group = east_slavic }
+			UKR = {
+				NOT = { is_subject_of_type = grand_diocese_vassal }
+			}
+		}
+
+		allow = {
+			ai = no
+			if = {
+				limit = {
+					religion = catholic
+				}
+				papal_influence = 100
+			}
+			else_if = {
+				limit = {
+					religion = orthodox
+				}
+				patriarch_authority = 1
+			}
+			else = {
+				church_power = 100
+			}
+			if = {
+				limit = {
+					overlord_of = UKR
+				}
+				UKR = {
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+				}
+			}
+			else = {
+				calc_true_if = {
+					all_subject_country = {
+						culture_group = east_slavic
+						has_opinion = {
+							who = ROOT
+							value = 200
+						}
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			set_country_flag = rule_rus_byz_flag
+			if = {
+				limit = {
+					religion = catholic
+				}
+				add_papal_influence = -100
+			}
+			else_if = {
+				limit = {
+					religion = orthodox
+				}
+				add_patriarch_authority = -1
+			}
+			else = {
+				add_church_power = -100
+			}
+			if = {
+				limit = {
+					overlord_of = UKR
+				}
+				UKR = {
+					add_country_modifier = {
+						name = byz_loyal_union
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = EVERY_REQUIRE_SUBJECT
+				tooltip = {
+					add_country_modifier = {
+						name = byz_loyal_union
+						duration = -1
+					}
+				}
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							culture_group = east_slavic
+							has_opinion = {
+								who = ROOT
+								value = 200
+							}
+						}
+						add_country_modifier = {
+							name = byz_loyal_union
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	show_favored_diocese = {
+		potential = {
+			tag = ROM
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				is_subject_of_type = diocese_vassal
+				has_country_modifier = byz_friend_diocese
+			}
+		}
+
+		allow = {
+			always = no
+		}
+		
+		effect = {
+			custom_tooltip = SHOW_FAVORED_DIOCESE_TT
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	byzantium_spawn_samurai = {
+		potential = {
+			has_country_flag = byz_center_of_far_east_japan
+			overlord_of = RDG
+			NOT = { has_country_modifier = byz_samurai_timer }
+		}
+
+		allow = {
+			mil_power = 50
+		}
+		
+		effect = {
+			add_mil_power = -50
+			custom_tooltip = BYZ_SPAWN_SAMURAI_TT
+			hidden_effect = {
+				RDG = {
+					every_owned_province = {
+						limit = {
+							culture = romano_japanese
+						}
+						1020 = {
+							samurai_infantry = ROOT
+						}
+					}
+				}
+				add_country_modifier = {
+					name = byz_samurai_timer
+					duration = 1825
+					hidden = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	establish_rdy = {
+		major = yes
+		potential = {
+			tag = ROM
+			NOT = { exists = RDY }
+		}
+		allow = {
+			tag = ROM # TODO: Change to mission reward
+			NOT = { exists = RDY }
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					superregion = southern_africa_superregion
+					region = niger_region
+					region = guinea_region
+					region = sahel_region
+					region = horn_of_africa_region
+				}
+			}
+			is_subject = no
+			is_at_war = no
+		}
+		effect = {
+			custom_tooltip = ROM_ESTABLISH_RDY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							superregion = southern_africa_superregion
+							region = niger_region
+							region = guinea_region
+							region = sahel_region
+							region = horn_of_africa_region
+						}
+					}
+					cede_province = RDY
+					add_core = RDY
+				}
+				create_subject = {
+					subject_type = commercial_enterprise
+					subject = RDY
+				}
+				RDY = {
+					change_government = republic
+					add_government_reform = trade_company_government
+					change_religion = ROOT
+					change_primary_culture = romano_nigerian
+					add_adm_power = 100
+					add_dip_power = 100
+					add_mil_power = 100
+					add_treasury = 200
+					set_prestige_to_zero = yes
+					add_republican_tradition = 100
+					swap_free_idea_group = yes
+					change_technology_group = western
+					change_unit_type = western
+					capital_scope = {
+						province_event = {
+							id = ab_byzantium.71
+						}
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	expand_rdy = {
+		major = yes
+		potential = {
+			tag = ROM
+			overlord_of = RDY
+			any_owned_province = {
+				OR = {
+					superregion = southern_africa_superregion
+					region = niger_region
+					region = guinea_region
+					region = sahel_region
+					region = horn_of_africa_region
+				}
+			}
+		}
+		allow = {
+			is_subject = no
+			is_at_war = no
+		}
+		effect = {
+			custom_tooltip = ROM_CEDE_PROVINCES_TO_RDY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							superregion = southern_africa_superregion
+							region = niger_region
+							region = guinea_region
+							region = sahel_region
+							region = horn_of_africa_region
+						}
+					}
+					cede_province = RDY
+					add_core = RDY
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

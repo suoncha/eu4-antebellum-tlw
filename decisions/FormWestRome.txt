@@ -4,19 +4,21 @@ country_decisions = {
 		major = yes
 
 		potential = {
-			has_country_flag = ab_is_rome_heir
+			ai = no
 			religion_group = christian
 			capital_scope = {
 				superregion = europe_superregion
 			}
 			OR = {
-				tag = BRN
+				has_country_flag = ab_is_rome_heir
 				culture_group = french
 				culture_group = iberian
 				culture_group = latin
 				culture_group = germanic
 			}
 			NOT = { exists = WRE }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
 			NOT = { tag = ROM }
 		}
 		provinces_to_highlight = {
@@ -35,10 +37,7 @@ country_decisions = {
 				if = {
 					limit = {
 						ROOT = {
-							OR = {
-								culture_group = gaelic
-								culture_group = scandinavian
-							}
+							tag = BRN
 						}
 					}
 					OR = {
@@ -71,9 +70,7 @@ country_decisions = {
 		}
 
 		allow = {
-			hidden_trigger = {
-				has_country_flag = ab_is_rome_heir
-			}
+			ai = no
 			capital_scope = {
 				superregion = europe_superregion
 			}
@@ -94,44 +91,42 @@ country_decisions = {
 				OR = {
 					religion = catholic
 					religion = sol_invictus
+					religion = orthodox
 				}
-				if = {
-					limit = {
-						culture_group = iberian
-					}
-					tag = VSG
+				118 = {
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				if = {
 					limit = {
 						tag = BRN
 					}
-					british_isles_region = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 40
+						region = british_isles_region
 					}
 				}
 				else_if = {
 					limit = {
 						culture_group = germanic
 					}
-					south_german_region = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 40
+						region = south_german_region
 					}
 				}
 				else = {
-					iberia_region = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 40
+						region = iberia_region
 					}
 				}
-				france_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 40
+					region = france_region
 				}
-				italy_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 40
+					region = italy_region
 				}
 			}
 			is_at_war = no
@@ -148,42 +143,37 @@ country_decisions = {
 			on_change_tag_effect = yes
 			# TLW [[[
 			TLW_switch_target_triumvirate_effect = yes
-			# ]]]
 			if = {
 				limit = {
-					culture_group = iberian
+					overlord_of = VSV
 				}
-				if = {
-					limit = {
-						overlord_of = VSV
-					}
-					VSV = {
-						change_country_color = {
-							country = WRE
-						}
-					}
-				}
-				if = {
-					limit = {
-						overlord_of = VSO
-					}
-					VSO = {
-						change_country_color = {
-							country = WRE
-						}
-					}
-				}
-				if = {
-					limit = {
-						overlord_of = VSS
-					}
-					VSS = {
-						change_country_color = {
-							country = WRE
-						}
+				VSV = {
+					change_country_color = {
+						country = WRE
 					}
 				}
 			}
+			if = {
+				limit = {
+					overlord_of = VSO
+				}
+				VSO = {
+					change_country_color = {
+						country = WRE
+					}
+				}
+			}
+			if = {
+				limit = {
+					overlord_of = VSS
+				}
+				VSS = {
+					change_country_color = {
+						country = WRE
+					}
+				}
+			}
+			# ]]]
 			if = {
 				limit = {
 					NOT = { government_rank = 3 }
@@ -218,6 +208,7 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
+			# TLW [[[
 			hidden_effect = {
 				country_event = {
 					id = ab_byzantium.87
@@ -240,6 +231,7 @@ country_decisions = {
 					}
 				}
 			}
+			# ]]]
 		}
 		
 		ai_will_do = {

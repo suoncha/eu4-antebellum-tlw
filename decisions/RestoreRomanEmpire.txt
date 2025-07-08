@@ -46,113 +46,44 @@ country_decisions = {
 		}
 		allow = {
 			tag = WRE
-			custom_trigger_tooltip = {
-				tooltip = ROME_CATHOLIC_RESTORED_BORDER
-				italy_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				iberia_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				france_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				egypt_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				balkan_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				anatolia_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				scottish_marches_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				yorkshire_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				wales_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				west_midlands_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				east_midlands_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				east_anglia_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				home_counties_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				wessex_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				cornwall_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				syria_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				aleppo_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				palestine_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				carinthia_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				tripolitania_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				djerba_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				tunisia_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				kabylia_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				barbary_coast_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				northern_morocco_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				1232 = {
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				2324 = {
-					country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				religion = catholic
+				religion = sol_invictus
+				religion = orthodox
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 400
+				custom_trigger_tooltip = {
+					tooltip = ROME_CATHOLIC_RESTORED_BORDER
+					OR = {
+						region = anatolia_region
+						region = egypt_region
+						region = italy_region
+						region = france_region
+						region = iberia_region
+						region = balkan_region
+						area = east_midlands_area
+						area = west_midlands_area
+						area = yorkshire_area
+						area = wessex_area
+						area = home_counties_area
+						area = east_anglia_area
+						area = wales_area
+						area = scottish_marches_area
+						area = cornwall_area
+						area = tripolitania_area
+						area = djerba_area
+						area = tunisia_area
+						area = kabylia_area
+						area = barbary_coast_area
+						area = northern_morocco_area
+						area = syria_area
+						area = aleppo_area
+						area = palestine_area
+						area = carinthia_area
+						province_id = 1232
+						province_id = 2324
+					}
 				}
 			}
 			if = {
@@ -161,7 +92,6 @@ country_decisions = {
 				}
 				mission_completed = land_of_britons
 			}
-			religion = catholic
 			is_at_war = no
 			is_subject = no
 		}
@@ -194,21 +124,21 @@ country_decisions = {
 				}
 				inherit = LAT
 			}
-			if = {
-				limit = {
-					overlord_of = KOJ
-				}
-				inherit = KOJ
-			}
-			if = {
-				limit = {
-					overlord_of = OTR
-				}
-				inherit = OTR
-			}
 			set_country_flag = general_flag_Rome_flag
 			change_tag = ROM
 			on_change_tag_effect = yes
+			if = {
+				limit = {
+					government = republic
+				}
+				override_country_name = ROMANREPUBLIC
+			}
+			else_if = {
+				limit = {
+					government = theocracy
+				}
+				override_country_name = ROMANTHEOCRACY
+			}
 			# Name & Culture
 			if = {
 				limit = {
@@ -271,18 +201,6 @@ country_decisions = {
 				change_primary_culture = romano_germanic
 			}
 			else = {
-				if = {
-					limit = {
-						government = republic
-					}
-					override_country_name = ROMANREPUBLIC
-				}
-				else_if = {
-					limit = {
-						government = theocracy
-					}
-					override_country_name = ROMANTHEOCRACY
-				}
 				hidden_effect = {
 					every_province = {
 						limit = {

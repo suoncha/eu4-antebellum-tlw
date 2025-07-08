@@ -1,0 +1,212 @@
+assassinate_political_rival = {
+	category = animism
+
+	require_acceptance = no
+
+	is_visible = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+		primary_culture = punic
+		FROM = {
+			primary_culture = punic
+		}
+		REB = {
+			NOT = { has_country_flag = punic_league_reform_passed_8 }
+		}
+	}
+
+	is_allowed = {
+		if = {
+			limit = {
+				NOT = {
+					has_spy_network_in = {
+						who = FROM
+						value = 50
+					}
+				}
+				NOT = { full_idea_group = spy_ideas }
+			}
+			custom_trigger_tooltip = {
+				tooltip = REQUIRES_50_SPY_NETWORK_TT
+				has_spy_network_in = {
+					who = FROM
+					value = 50
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_spy_network_in = {
+						who = FROM
+						value = 40
+					}
+				}
+				full_idea_group = spy_ideas
+			}
+			custom_trigger_tooltip = {
+				tooltip = REQUIRES_40_SPY_NETWORK_TT
+				has_spy_network_in = {
+					who = FROM
+					value = 40
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_modifier = punic_league_was_assassinated_timer
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = FROM_RECENT_ASSASSINATED_TT
+				FROM = {
+					NOT = { has_country_modifier = punic_league_was_assassinated_timer }
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = punic_league_discovered_assassinated_timer
+			}
+			custom_trigger_tooltip = {
+				tooltip = ROOT_RECENT_ASSASSINATED_TT
+				NOT = { has_country_modifier = punic_league_discovered_assassinated_timer }
+			}
+		}
+	}
+
+	on_accept = {
+		FROM = {
+			save_global_event_target_as = assassinationTarget
+		}
+		country_event = {
+			id = ab_punic.20
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = {
+		NOT = { has_saved_global_event_target = assassinationTarget }
+		OR = {
+			AND = {
+				full_idea_group = spy_ideas
+				has_spy_network_in = {
+					who = FROM
+					value = 50
+				}
+			}
+			AND = {
+				NOT = { full_idea_group = spy_ideas }
+				has_spy_network_in = {
+					who = FROM
+					value = 65
+				}
+			}
+		}
+		FROM = {
+			check_variable = {
+				which = election_point
+				which = ROOT
+			}
+		}
+	}
+}
+
+allow_aldiraq_expansion = {
+	category = animism
+
+	require_acceptance = no
+
+	is_visible = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+		has_country_modifier = punic_league_easima_mod
+		FROM = {
+			is_subject_of_type_with_overlord = {
+				who = ROOT
+				type = punic_tribe_vassal
+			}
+			NOT = { has_country_modifier = punic_league_aldiraq_expansion_mod_rayi }
+		}
+	}
+
+	is_allowed = {
+		if = {
+			limit = {
+				any_subject_country = {
+					has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HAS_ALDIRAQ_EXPANDING
+				NOT = {
+					any_subject_country = {
+						has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+					}
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		country_event = {
+			id = ab_punic.34
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.34
+			}
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = {
+		always = yes
+	}
+}
+
+revoke_aldiraq_expansion = {
+	category = animism
+
+	require_acceptance = no
+
+	is_visible = {
+		NOT = { has_global_flag = ab_disabled_punic_league }
+		has_country_modifier = punic_league_easima_mod
+		FROM = {
+			has_country_modifier = punic_league_aldiraq_expansion_mod_rayi
+		}
+	}
+
+	is_allowed = {
+	}
+
+	on_accept = {
+		country_event = {
+			id = ab_punic.35
+		}
+		FROM = {
+			country_event = {
+				id = ab_punic.35
+			}
+			add_liberty_desire = 20
+		}
+	}
+	
+	on_decline = {
+	}
+
+	ai_will_do = {
+		FROM = {
+			NOT = { has_country_modifier = punic_league_aldiraq_expansion_ai_timer }
+			NOT = {
+				any_owned_province = {
+					is_city = no
+				}
+			}
+		}
+	}
+}
