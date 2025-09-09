@@ -65,7 +65,27 @@ estate_nobles_french_strong_duchies = {
 estate_nobles_strong_duchies = {
 	icon = privilege_royal_authority
 	max_absolutism = -10
-	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	# ABMP [[[
+	conditional_modifier = {
+		trigger = {
+			has_absolutism_reduction_for_estate_privileges = yes
+			NOT = {
+				has_government_attribute = no_absolutism_from_boier_privileges
+			}
+		}
+		modifier = {
+			max_absolutism = 2
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_government_attribute = no_absolutism_from_boier_privileges
+		}
+		modifier = {
+			max_absolutism = 10
+		}
+	}
+	# ]]]
 	influence = 0.1
 	loyalty = 0.05
 	is_valid = {
@@ -126,6 +146,17 @@ estate_nobles_strong_duchies = {
 		}
 		modifier = {
 			max_absolutism = 10
+		}
+	}
+	# ]]]
+	# ABMP [[[
+	can_revoke = {
+		if = {
+			limit = {
+				is_or_was_wallachia = yes
+				has_wallachia_purged_the_estates = no
+			}
+			has_wallachia_not_compromised_with_the_boieri = yes
 		}
 	}
 	# ]]]

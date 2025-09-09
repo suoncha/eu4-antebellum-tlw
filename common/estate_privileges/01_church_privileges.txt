@@ -260,6 +260,26 @@ estate_church_religious_state = {
 		}
 	}
 	# ]]]
+    # ABMP [[[
+	loyalty_scaled_conditional_modifier = {
+		trigger = { 
+			has_country_flag = wal_religious_state_buff
+		}
+		modifier = { 
+			manpower_in_true_faith_provinces = 0.3
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			has_country_flag = wal_religious_state_buff
+		}
+		modifier = {
+			church_loyalty_modifier = 0.05
+			max_absolutism = 5
+			church_privilege_slots = 1
+		}
+	}
+	# ]]]	
 	ai_will_do = {
 		factor = 100
 		modifier = {
@@ -815,6 +835,26 @@ estate_church_monopoly_of_wine = {
 	icon = privilege_monopoly_of_goods_wine
 	max_absolutism = -10
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	# ABMP [[[
+	conditional_modifier = {
+		trigger = {
+			has_country_flag = wal_buffed_wine_monopoly
+			has_absolutism_reduction_for_estate_privileges = no
+		}
+		modifier = {
+			max_absolutism = 10
+		}
+	}
+	conditional_modifier = {
+		trigger = {
+			has_country_flag = wal_buffed_wine_monopoly
+			has_absolutism_reduction_for_estate_privileges = yes
+		}
+		modifier = {
+			max_absolutism = 8
+		}
+	}
+	# ]]]
 	loyalty = 0.05
 	is_valid = {
 		NOT = { religion_group = muslim }
@@ -839,7 +879,39 @@ estate_church_monopoly_of_wine = {
 			limit = {
 				wine = 1
 			}
-			add_mercantilism = 1
+			# ABMP [[[
+			if = {
+				limit = {
+					has_country_flag = wal_buffed_wine_monopoly
+				}
+				add_mercantilism = 2
+				custom_tooltip = every_owned_moldavian_wine_province_tooltip
+				tooltip = {
+					add_province_modifier = {
+						name = wallachia_moldavian_wine_monopolies
+						duration = 4380
+					}
+				}
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								area = moldavia_area
+								area = bessarabia_area
+							}
+							trade_goods = wine
+						}
+						add_province_modifier = {
+							name = wallachia_moldavian_wine_monopolies
+							duration = 4380
+						}
+					}
+				}
+			}
+			# ]]]
+			else = {
+				add_mercantilism = 1
+			}
 		}
 		add_years_of_owned_provinces_production_income = {
 			years = 8
@@ -1082,6 +1154,21 @@ estate_church_for_the_faith = {
 			# ]]]
 		}
 	}
+	# ABMP [[[
+	conditional_modifier = {
+		trigger = {
+			has_country_flag = wal_expansionist_zealotry_buff
+		}
+		modifier = {
+			max_absolutism = 5
+			church_privilege_slots = 1
+		}
+	}
+	loyalty_scaled_conditional_modifier = {
+		trigger = { has_country_flag = wal_expansionist_zealotry_buff }
+		modifier = { warscore_cost_vs_other_religion = -0.1 }
+	}
+	# ]]]
 	penalties = {
 	}
 	ai_will_do = {
@@ -1918,15 +2005,40 @@ estate_church_development_of_temples = {
 	influence = 0.05
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	# ABMP [[[
+	conditional_modifier = {
+		trigger = {
+			has_country_flag = buffed_development_of_temples
+		}
+		modifier = {
+			church_privilege_slots = 1
+			church_influence_modifier = -0.05
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	is_valid = {
 		has_dlc = "Domination"
 	}
 	on_granted = {
 		custom_tooltip = estate_church_development_of_temples_gt
 		tooltip = {
-			add_province_modifier = {
-				name = estate_church_development_of_temples_mod
-				duration = -1
+			# ABMP [[[
+			if = {
+				limit = {
+					has_country_flag = buffed_development_of_temples
+				}
+				add_province_modifier = {
+					name = buffed_estate_church_development_of_temples_mod
+					duration = -1
+				}
+			}
+			# ]]]
+			else = {
+				add_province_modifier = {
+					name = estate_church_development_of_temples_mod
+					duration = -1
+				}
 			}
 		}
 	}
@@ -1943,10 +2055,25 @@ estate_church_development_of_temples = {
 				}
 				has_tax_building_trigger = yes
 			}
-			add_province_modifier = {
-				name = estate_church_development_of_temples_mod
-				duration = -1
+			# ABMP [[[
+			if = {
+				limit = {
+					owner = {
+						has_country_flag = buffed_development_of_temples
+					}
+				}
+				add_province_modifier = {
+					name = buffed_estate_church_development_of_temples_mod
+					duration = -1
+				}
 			}
+			# ]]]
+			else = {
+				add_province_modifier = {
+					name = estate_church_development_of_temples_mod
+					duration = -1
+				}
+			}	
 		}
 	}
 	on_invalid_province = {
@@ -1954,12 +2081,24 @@ estate_church_development_of_temples = {
 			limit = { has_province_modifier = estate_church_development_of_temples_mod }
 			remove_province_modifier = estate_church_development_of_temples_mod
 		}
+		# ABMP [[[
+		if = {
+			limit = { has_province_modifier = buffed_estate_church_development_of_temples_mod }
+			remove_province_modifier = buffed_estate_church_development_of_temples_mod
+		}
+		# ]]]
 	}
 	on_revoked_province = {
 		if = {
 			limit = { has_province_modifier = estate_church_development_of_temples_mod }
 			remove_province_modifier = estate_church_development_of_temples_mod
 		}
+		# ABMP [[[
+		if = {
+			limit = { has_province_modifier = buffed_estate_church_development_of_temples_mod }
+			remove_province_modifier = buffed_estate_church_development_of_temples_mod
+		}
+		# ]]]
 	}
 
 	mechanics = {

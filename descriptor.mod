@@ -11,6 +11,9 @@ tags={
 name="Ante Bellum - The Lost World - Local"
 dependencies={
 	"Ante Bellum"
+	"Ante Bellum - Map Borders Overhaul"
+	"Ante Bellum Flavor"
+	"PotionSeller's AB Mission Pack"
 }
 picture="thumbnail.png"
 supported_version="v1.37.*"

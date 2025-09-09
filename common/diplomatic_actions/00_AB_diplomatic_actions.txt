@@ -159,6 +159,23 @@ declarewar = {
 		}
 	}
 	# ]]]
+	# ABMP [[[
+	condition = {
+		tooltip = CANNOT_DECLARE_WARS_TEUTONS_HRE
+		potential = {
+			ai = yes
+			has_country_flag = hre_sanctioned_prince
+			FROM = {
+				is_part_of_hre = yes
+			}
+		}
+		allow = {
+			FROM = {
+				is_part_of_hre = no
+			}
+		}
+	}
+    # ]]]
 	effect = {
 		on_war_declaration_effect = yes
 		# AB [[[
@@ -405,6 +422,86 @@ declarewar = {
 			}
 		}
 		# ]]]
+		# ABMP [[[
+		# Sanctioned Princes Call In Emperor Against Them
+		if = {
+			limit = {
+				has_country_flag = hre_sanctioned_prince
+				is_part_of_hre = yes
+				FROM = {
+					is_part_of_hre = yes
+				}
+			}
+			save_event_target_as = sanctioned_prince
+			random_country = {
+				limit = {
+					is_in_war = {
+						attacker_leader = event_target:sanctioned_prince
+						defender_leader = THIS
+					}
+					is_part_of_hre = yes
+				}
+				emperor = {
+					join_all_defensive_wars_of = PREV
+				}
+			}
+		}
+		# Impaler T3 reduces war exhaustion penalty scaled by the amount of stab hit reduction
+		if = {
+			limit = {
+				ruler_has_personality = impaler3_personality
+			}
+			hidden_effect = {
+				export_to_variable = {
+					which = stab_cost_for_war
+					value = modifier:stability_cost_to_declare_war
+					who = ROOT
+				}
+				while = {
+					limit = {
+						NOT = {
+							check_variable = {
+								which = stab_cost_for_war
+								value = 0
+							}
+						}
+					}
+					add_war_exhaustion = -1
+					change_variable = {
+						which = stab_cost_for_war
+						value = 1
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					is_in_war = {
+						casus_belli = cb_dacian_indian_campaign
+						defender_leader = THIS
+					}
+				}
+			}
+			FROM = {
+				set_country_flag = in_cb_dacian_indian_campaign_war
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_ae_reduced_from_winning_coalition_wars = yes
+				}		
+			}
+			every_country = {
+				limit = {
+					war_with = FROM
+					is_in_coalition_war = yes
+				}
+				set_country_flag = reduce_ae_with_coalition_target_if_lose
+			}
+		}
+        # ]]]
 	}
 }
 
@@ -437,6 +534,26 @@ demand_unlawful_territory_action = {
 			always = no
 		}
 	}
+	# ABMP [[[
+	condition = {
+		tooltip = imperial_schism_war_ut_tooltip
+		potential = {
+			FROM = {
+				has_joined_emperor_in_imperial_schism_war = yes
+			}
+			has_emperor_won_imperial_schism_war = yes
+			NOT = {
+				had_global_flag = {
+					flag = hre_schism_war_emperor_victory
+					days = 3650
+				}
+			}
+		}
+		allow = { 
+			always = no
+		}
+	}
+    # ]]]
 }
 
 excommunicate_action = {
