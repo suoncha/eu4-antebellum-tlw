@@ -1,0 +1,104 @@
+country_decisions = {
+	wal_form_dacia = {
+		major = yes
+		potential = {
+			tag = WAL
+			NOT = { mission_completed = wal_the_great_feast }
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+				area = moldavia_area
+				area = bessarabia_area
+				province_id = 4706
+			}
+			NOT = {
+				AND = {
+					is_core = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		allow = {
+			tag = WAL
+			if = {
+				limit = {
+					NOT = { has_country_flag = early_form_dacia }
+				}
+				adm_tech = 10
+			}
+			transylvania_area = {
+				type = all
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			southern_transylvania_area = {
+				type = all
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			moldavia_area = {
+				type = all
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bessarabia_area = {
+				type = all
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			4706 = {
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			is_subject = no
+			is_at_war = no
+		}
+		effect = {
+			hidden_effect = {
+				export_government_power_to_variable = {
+					mechanic_type = wallachian_terror_mechanic
+					power_type = terror_power
+				}
+			}
+			change_tag = DAC
+			if = {
+				limit = {
+					NOT = {
+						government_rank = 2
+					}
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = {
+					has_won_wallachian_civil_war = yes
+				}
+				add_government_reform = dacian_autocracy
+			}
+			else_if = {
+				limit = {
+					has_won_wallachian_civil_war = no
+					has_voivode_lost_wallachian_civil_war = no
+				}
+				add_government_reform = dacian_kingdom
+			}
+			hidden_effect = {
+				variable_government_power_effect = {
+					var = terror_power_amount
+					mechanic_type = wallachian_terror_mechanic
+					power_type = terror_power
+					scaled_with_gain_modifier = no
+				}
+			}
+			country_event = {
+				id = AB_wallachia_events.10
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+}

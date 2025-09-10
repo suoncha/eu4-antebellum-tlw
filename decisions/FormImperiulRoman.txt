@@ -1,0 +1,87 @@
+country_decisions = {
+	wal_form_imperiul_roman = {
+		major = yes
+		potential = {
+			has_country_flag = allow_form_imperiul_roman
+			OR = {
+				tag = WAL
+				was_tag = WAL
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				eastern_roman_empire_province_cb_trigger = yes
+				western_roman_empire_province_cb_trigger = yes
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		allow = {
+			hidden_trigger = {
+				has_country_flag = allow_form_imperiul_roman
+			}
+			has_all_imperiul_roman_provinces = yes
+			is_subject = no
+			is_at_war = no
+		}
+		effect = {
+			clr_country_flag = allow_form_imperiul_roman
+			if = {
+				limit = {
+					has_government_mechanic = wallachian_terror_mechanic
+				}
+				hidden_effect = {
+					export_government_power_to_variable = {
+						mechanic_type = wallachian_terror_mechanic
+						power_type = terror_power
+					}
+				}
+			}
+			change_tag = ROD
+			set_government_rank = 3
+			if = {
+				limit = {
+					has_government_mechanic = wallachian_terror_mechanic
+				}
+				if = {
+					limit = {
+						has_won_wallachian_civil_war = yes
+					}
+					add_government_reform = dacian_roman_autocracy
+				}
+				else_if = {
+					limit = {
+						has_won_wallachian_civil_war = no
+						has_voivode_lost_wallachian_civil_war = no
+					}
+					add_government_reform = dacian_roman_empire
+				}
+				hidden_effect = {
+					variable_government_power_effect = {
+						var = terror_power_amount
+						mechanic_type = wallachian_terror_mechanic
+						power_type = terror_power
+						scaled_with_gain_modifier = no
+					}
+				}
+			}
+			else = {
+				add_government_reform = roman_elective_monarchy
+				hidden_effect = {
+					tuh_balance_faction_influence_effect = yes
+					tuh_add_faction_influence_based_on_ruler_dynasty_effect = yes
+					tuh_house_influence_ruler_modifier_effect = yes
+					tuh_set_current_ruling_house_variable_effect = yes
+				}
+			}
+			country_event = {
+				id = AB_wallachia_events.41
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+}
