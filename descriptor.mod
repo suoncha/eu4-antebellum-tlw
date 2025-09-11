@@ -13,7 +13,7 @@ dependencies={
 	"Ante Bellum"
 	"Ante Bellum - Map Borders Overhaul"
 	"Ante Bellum Flavor"
-	"PotionSeller's AB Mission Pack"
+	"PotionSeller's Ante Bellum Mission Pack"
 }
 picture="thumbnail.png"
 supported_version="v1.37.*"
