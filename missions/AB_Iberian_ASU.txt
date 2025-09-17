@@ -71,64 +71,6 @@ ibemin_first = {
 			}
 		}
 	}
-
-	ibe_iberian_identity = {
-	    icon = mission_iberia
-		required_missions = { ibe_reconquistador }
-		position = 5
-
-		ai_weight = {
-			factor = 1000
-		}
-		
-		trigger = {
-			if = {
-				limit = {
-					has_country_flag = ab_stronger_ai_vsg
-					ai = yes
-				}
-				num_of_owned_provinces_with = {
-					value = 25
-					region = iberia_region
-				}
-			}
-			else = {
-				is_subject = no
-				is_at_war = no
-				owns_core_province = 213
-				owns_core_province = 214
-				owns_core_province = 215
-				owns_core_province = 216
-				owns_core_province = 219
-				owns_core_province = 220
-				owns_core_province = 231
-				owns_core_province = 227
-			}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 213
-				province_id = 214
-				province_id = 215
-				province_id = 216
-				province_id = 219
-				province_id = 220
-				province_id = 231
-				province_id = 227
-			}
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
-		}
-		
-		effect = {
-			country_event = {
-				id = ab_byzantium.89
-			}
-		}
-	}
 }
 
 ibemin_second = {
@@ -157,13 +99,11 @@ ibemin_second = {
 		
 		provinces_to_highlight = {
 			OR = {
-				area = galicia_area
-				area = asturias_area
-				area = basque_country
-				province_id = 208
-				province_id = 4553
+				owned_by = ASU
+				owned_by = GAL
+				owned_by = NAV
 			}
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -175,41 +115,42 @@ ibemin_second = {
 				is_year = 1445
 			}
 			else = {
-				208 = { owned_by = ROOT }
-				4553 = { owned_by = ROOT }
-				asturias_area = {
-					type = all
-					owned_by = ROOT
+				if = {
+					limit = {
+						NOT = { tag = ASU }
+					}
+					OR = {
+						overlord_of = ASU
+						NOT = { exists = ASU }
+					}
 				}
-				basque_country = {
-					type = all
-					owned_by = ROOT
+				if = {
+					limit = {
+						NOT = { tag = GAL }
+					}
+					OR = {
+						overlord_of = GAL
+						NOT = { exists = GAL }
+					}
 				}
-				galicia_area = {
-					type = all
-					owned_by = ROOT
+				if = {
+					limit = {
+						NOT = { tag = NAV }
+					}
+					OR = {
+						overlord_of = NAV
+						NOT = { exists = NAV }
+					}
 				}
 			}
 		}
 		
 		effect = {
-			add_adm_power = 100
-			add_country_modifier = {
-				name = "ibe_united"
-				duration = 7300
+			country_event = {
+				id = ab_visigoths.1
 			}
-			if = {
-				limit = {
-					has_country_modifier = vsg_defeat_of_valencia
-				}
-				remove_country_modifier = vsg_defeat_of_valencia
-			}
-			if = {
-				limit = {
-					has_country_modifier = vsg_defeat_of_valencia_asturias
-				}
-				remove_country_modifier = vsg_defeat_of_valencia_asturias
-			}
+			custom_tooltip = AB_EMPTY
+			remove_country_modifier = vsg_defeat_of_valencia
 			iberia_region = {
 				limit = {
 					NOT = { owned_by = ROOT }
@@ -268,20 +209,6 @@ ibemin_second = {
 					type = cb_grand_crusade_reconquista
 					months = 300
 					target = ADU
-				}
-				every_province = {
-					limit = {
-						OR = {
-							owned_by = GAL
-							owned_by = NAV
-						}
-					}
-					add_territorial_core = ROOT
-				}
-				declare_war_with_cb = {
-					casus_belli = cb_core
-					who = NAV
-					war_goal_province = 210
 				}
 			}
 		}
