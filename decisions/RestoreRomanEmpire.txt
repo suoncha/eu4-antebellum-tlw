@@ -191,40 +191,39 @@ country_decisions = {
 					custom_tooltip = AB_EMPTY
 					change_primary_culture = roman_new
 				}
-			}		
-			custom_tooltip = AB_EMPTY
-			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
-			hidden_effect = {
-				every_province = {
-					limit = {
-						OR = {
-							culture_group = byzantine
-							province_id = 151
-						}
-					}
-					if = {
+				custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
+				hidden_effect = {
+					every_province = {
 						limit = {
 							OR = {
-								culture = greek
-								culture = pontic_greek
-								culture = turkish_christian
-								culture = goths
+								culture_group = byzantine
 								province_id = 151
 							}
 						}
-						change_culture = greco_roman
+						if = {
+							limit = {
+								OR = {
+									culture = greek
+									culture = pontic_greek
+									culture = turkish_christian
+									culture = goths
+									province_id = 151
+								}
+							}
+							change_culture = greco_roman
+						}
+						else = {
+							change_culture = illyro_roman
+						}
 					}
-					else = {
-						change_culture = illyro_roman
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						change_primary_culture = ROOT
+						set_heir_culture = ROOT
+						set_ruler_culture = ROOT
 					}
-				}
-				every_subject_country = {
-					limit = {
-						is_colonial_nation = yes
-					}
-					change_primary_culture = ROOT
-					set_heir_culture = ROOT
-					set_ruler_culture = ROOT
 				}
 			}
 			custom_tooltip = AB_EMPTY
