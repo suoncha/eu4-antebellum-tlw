@@ -1,6 +1,6 @@
 namespace = ab_visigoths
 
-#Aftermath of the Crusader
+# Aftermath of the Crusader
 country_event = {
 	id = ab_visigoths.0
 	title = ab_visigoths.0.t
@@ -109,7 +109,7 @@ country_event = {
 	}
 }
 
-#Future of Iberia
+# Crown of Hispania, United
 country_event = {
 	id = ab_visigoths.1
 	title = ab_visigoths.1.t
@@ -120,12 +120,26 @@ country_event = {
 
 	option = {
 		name = ab_visigoths.1.a
-		ai_chance = {
-			factor = 50
-			modifier = {
-				factor = 0
-				has_country_flag = ab_stronger_ai_vsg
+		trigger = {
+			NOT = { has_country_flag = ab_stronger_ai_vsg }
+		}
+		if = {
+			limit = {
+				overlord_of = ASU
 			}
+			inherit = ASU
+		}
+		if = {
+			limit = {
+				overlord_of = NAV
+			}
+			inherit = NAV
+		}
+		if = {
+			limit = {
+				overlord_of = GAL
+			}
+			inherit = GAL
 		}
 		change_tag = IBE
 		swap_non_generic_missions = yes
@@ -170,31 +184,65 @@ country_event = {
 					limit = {
 						is_colonial_nation = yes
 					}
-					# It is OK to fire all of them because the usage
-					# of country_event checks the triggers
-					country_event = { id = colonial_iberia.1 }
-					country_event = { id = colonial_iberia.2 }
-					country_event = { id = colonial_iberia.3 }
-					country_event = { id = colonial_iberia.4 }
-					country_event = { id = colonial_iberia.5 }
-					country_event = { id = colonial_iberia.6 }
-					country_event = { id = colonial_iberia.7 }
-					country_event = { id = colonial_iberia.8 }
-					country_event = { id = colonial_iberia.9 }
-					country_event = { id = colonial_iberia.10 }
-					country_event = { id = colonial_iberia.11 }
-					country_event = { id = colonial_iberia.12 }
+					ab_swap_to_preset_cn_tag = { tag = iberia }
 				}
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_achiev.1
 			}
 		}
 	}
 
 	option = {
 		name = ab_visigoths.1.b
-		ai_chance = { factor = 50 }
 		highlight = yes
+		if = {
+			limit = {
+				overlord_of = ASU
+			}
+			inherit = ASU
+		}
+		if = {
+			limit = {
+				overlord_of = NAV
+			}
+			inherit = NAV
+		}
+		if = {
+			limit = {
+				overlord_of = GAL
+			}
+			inherit = GAL
+		}
 		set_country_flag = ab_is_rome_heir
-		change_tag = VSG
+		if = {
+			limit = {
+				tag = ASU
+			}
+			change_tag = VSG
+		}
+		else_if = {
+			limit = {
+				tag = GAL
+			}
+			custom_tooltip = VSG_RENAME_SUEBI
+			hidden_effect = {
+				change_tag = VSG
+				override_country_name = SUEBI
+			}
+		}
+		else_if = {
+			limit = {
+				tag = NAV
+			}
+			custom_tooltip = VSG_RENAME_VASCONIA
+			hidden_effect = {
+				change_tag = VSG
+				override_country_name = VASCONIA
+			}
+		}
 		swap_non_generic_missions = yes
 		remove_non_electors_emperors_from_empire_effect = yes
 		if = {
@@ -202,11 +250,6 @@ country_event = {
 				NOT = { government_rank = 2 }
 			}
 			set_government_rank = 2
-		}
-		custom_tooltip = AB_EMPTY
-		hidden_effect = {
-			set_ruler_culture = ROOT
-			set_heir_culture = ROOT
 		}
 		custom_tooltip = AB_EMPTY
 		if = {
@@ -229,10 +272,13 @@ country_event = {
 			name = "centralization_modifier"
 			duration = 7300
 		}
+		set_country_flag = ab_unlock_mission_switch
+		set_country_flag = ab_missionswitch_rome_default
+		custom_tooltip = AB_UNLOCK_MISSION_SWITCH
 	}
 }
 
-#Reconquista - Francia joins the war?
+# Reconquista - Francia joins the war?
 country_event = {
 	id = ab_visigoths.2
 	title = ab_visigoths.2.t
@@ -241,25 +287,26 @@ country_event = {
 
 	is_triggered_only = yes
 
-	immediate = {
-		random_country = {
-			limit = {
-				mission_completed = ibe_north
-				is_in_war = {
-					casus_belli = cb_grand_crusade_reconquista
-				}
-			}
-			save_event_target_as = reconquistaIberian
-		}
-	}
-
 	option = {
 		name = ab_visigoths.2.a
 		ai_chance = { factor = 100 }
-		join_all_offensive_wars_of = event_target:reconquistaIberian
-		event_target:reconquistaIberian = {
-			country_event = {
-				id = ab_visigoths.3
+		if = {
+			limit = {
+				exists = IBE
+			}
+			join_all_offensive_wars_of = IBE
+			IBE = {
+				country_event = {
+					id = ab_visigoths.3
+				}
+			}
+		}
+		else = {
+			join_all_offensive_wars_of = VSG
+			VSG = {
+				country_event = {
+					id = ab_visigoths.3
+				}
 			}
 		}
 	}
@@ -271,7 +318,7 @@ country_event = {
 	}
 }
 
-#Reconquista - Francia will join the war
+# Reconquista - Francia will join the war
 country_event = {
 	id = ab_visigoths.3
 	title = ab_visigoths.3.t
@@ -284,7 +331,7 @@ country_event = {
 		name = ab_visigoths.3.a
 		add_trust = {
 			who = FRC
-			value = 15
+			value = 25
 			mutual = yes
 		}
 	}
@@ -298,33 +345,10 @@ country_event = {
 	picture = CIVIL_WAR_eventPicture
 
 	hidden = yes
-
-	fire_only_once = yes
-
-	trigger = {
-		ai = yes
-		has_country_flag = ab_stronger_ai_vsg
-		OR = {
-			NOT = { exists = GAL }
-			overlord_of = GAL
-		}
-		OR = {
-			NOT = { exists = NAV }
-			overlord_of = NAV
-		}
-		army_size_percentage = 0.5
-		NOT = { truce_with = ADU }
-		is_at_war = no
-		FRC = {
-			NOT = { truce_with = ADU }
-			is_at_war = no
-		}
-	}
+	is_triggered_only = yes
 
 	option = {
-		name = ab_byzantium.103.a
-		inherit = GAL
-		inherit = NAV
+		name = ab_visigoths.4.a
 		declare_war_with_cb = {
 			casus_belli = cb_grand_crusade_reconquista
 			who = ADU
@@ -352,6 +376,176 @@ country_event = {
 					}
 					change_controller = ROOT
 				}
+			}
+		}
+	}
+}
+
+# Rome Formation Heritage
+country_event = {
+	id = ab_visigoths.5
+	title = ab_visigoths.5.t
+	desc = ab_visigoths.5.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_visigoths.5.a
+		add_country_modifier = {
+			name = rome_formedbyvisigoths
+			duration = -1
+		}
+	}
+}
+
+# True Faith of Hispania
+country_event = {
+	id = ab_visigoths.6
+	title = ab_visigoths.6.t
+	desc = {
+		trigger = {
+			OR = {
+				CAP = {
+					has_country_flag = cap_chose_sol_invictus_flag
+				}
+				TRC = {
+					has_country_flag = cap_chose_sol_invictus_flag
+				}
+				ROM = {
+					has_country_flag = cap_chose_sol_invictus_flag
+				}
+			}
+		}
+		desc = ab_visigoths.6.d1
+	}
+	desc = {
+		trigger = {
+			CAP = {
+				NOT = { has_country_flag = cap_chose_sol_invictus_flag }
+			}
+			TRC = {
+				NOT = { has_country_flag = cap_chose_sol_invictus_flag }
+			}
+			ROM = {
+				NOT = { has_country_flag = cap_chose_sol_invictus_flag }
+			}
+		}
+		desc = ab_visigoths.6.d2
+	}
+	picture = AB_ECLIPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_visigoths.6.a
+		highlight = yes
+		if = {
+			limit = {
+				NOT = { is_religion_enabled = sol_invictus }
+			}
+			enable_religion = sol_invictus
+		}
+		change_religion = sol_invictus
+		hidden_effect = {
+			set_ruler_religion = sol_invictus
+			set_heir_religion = sol_invictus
+		}
+		custom_tooltip = SOL_SPAWN_CENTER
+		hidden_effect = {
+			capital_scope = {
+				change_religion = sol_invictus
+				add_reform_center = sol_invictus
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		set_country_flag = vsg_religion_sol
+		custom_tooltip = VSG_UNLOCK_MISSION_SOL
+		hidden_effect = {
+			for = {
+				amount = 3
+				effect = "
+					random_owned_province = {
+						limit = {
+							religion = catholic
+						}
+						catholic_rebels = 3
+					}
+				"
+			}
+		}
+	}
+
+	option = {
+		name = ab_visigoths.6.b
+		change_religion = orthodox
+		hidden_effect = {
+			set_ruler_religion = orthodox
+			set_heir_religion = orthodox
+		}
+		custom_tooltip = ORTHODOX_SPAWN_CENTER
+		hidden_effect = {
+			capital_scope = {
+				change_religion = orthodox
+				add_reform_center = orthodox
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		set_country_flag = vsg_religion_orthodox
+		custom_tooltip = VSG_UNLOCK_MISSION_ORTHODOX
+		hidden_effect = {
+			for = {
+				amount = 3
+				effect = "
+					random_owned_province = {
+						limit = {
+							religion = catholic
+						}
+						catholic_rebels = 3
+					}
+				"
+			}
+		}
+	}
+
+	option = {
+		name = ab_visigoths.6.c
+		add_legitimacy = 20
+		add_prestige = 20
+		add_papal_influence = 50
+		add_country_modifier = {
+			name = vsg_choose_catholic
+			duration = 7300
+		}
+		set_country_flag = vsg_religion_catholic
+		custom_tooltip = VSG_UNLOCK_MISSION_CATHOLIC
+	}
+}
+
+# La Judería
+country_event = {
+	id = ab_visigoths.7
+	title = ab_visigoths.7.t
+	desc = ab_visigoths.7.d
+	picture = muslimgfx_MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_visigoths.7.a
+		225 = {
+			add_building = marketplace
+			add_permanent_province_modifier = {
+				name = vsg_cordoba_jews
+				duration = -1
 			}
 		}
 	}

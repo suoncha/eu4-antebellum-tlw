@@ -1,0 +1,619 @@
+### AB Events ###
+namespace = wales_flavor
+
+country_event = {
+	id = wales_flavor.1
+	title = wales_flavor.1.t
+	desc = wales_flavor.1.d 
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = wales_flavor.1.a
+		236 = {
+			change_culture = welsh
+			add_province_modifier = {
+				name = relocated_welsh
+				duration = 9125
+			}
+		}
+	}
+	
+	option = {
+		name = wales_flavor.1.b
+		236 = {
+			add_base_tax = 2
+			add_base_production = 1
+			add_province_modifier = {
+				name = relocating_welsh
+				duration = 9125
+			}
+		}
+	}
+}
+country_event = {
+	id =  wales_flavor.2
+	title = wales_flavor.2.t
+	desc = wales_flavor.2.d
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = wales_flavor.2.a
+		change_tag = BRN
+		hidden_effect = {
+			ab_update_preset_cn_colors = yes
+		}
+		if = {
+			limit = { has_custom_ideas = no }
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		swap_non_generic_missions = yes
+		set_government_rank = 2
+	}
+}
+country_event = {
+	id =  wales_flavor.3
+	title = wales_flavor.3.t
+	desc = wales_flavor.3.d
+	picture = ENLIGHTENMENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = wales_flavor.3.a
+		custom_tooltip = wales_flavor.3.BRITTONIC_REVOLUTION
+		custom_tooltip = AB_EMPTY
+		
+		add_country_modifier = {
+			name = brit_culture
+			duration = -1
+		}
+
+		change_primary_culture = briton
+		add_accepted_culture = welsh
+		capital_scope = {
+			change_culture = briton
+			add_province_modifier = {
+				name = briton_acceptance
+				duration = -1
+			}
+		}
+	}
+}
+province_event = {
+	id = wales_flavor.4
+	title = wales_flavor.4.t
+	desc = wales_flavor.4.d
+	picture = CULTURE_eventPicture
+	
+	trigger = {
+		any_friendly_coast_border_province = { 
+			owner = {
+				tag = FROM
+			}
+			OR = {
+				has_province_modifier = briton_acceptance
+				culture = briton 
+			}
+		}
+		owner = {
+			primary_culture = briton
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = briton_acceptance
+				has_province_modifier = briton_rejection
+				culture = briton
+				owner = {
+					has_country_modifier = brt_domninance2
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 1.25
+			development = 15
+		}
+		modifier = {
+			factor = 0.5
+			nacionalizmus = 100
+		}
+		modifier = {
+			factor = 0.85
+			culture = english
+		}
+		modifier = {
+			factor = 0.75
+			culture = welsh
+		}
+		modifier = {
+			factor = 0.25
+			has_province_modifier = briton_apathy1
+		}
+		modifier = {
+			factor = 5
+			NOT = { region = british_isles_region }
+		}
+	}
+	
+	option = {
+		name = wls_acceptance1
+		add_province_modifier = {
+			name = briton_acceptance
+			duration = -1
+		}
+	}
+}
+province_event = {
+	id = wales_flavor.5
+	title = wales_flavor.5.t
+	desc = wales_flavor.5.d
+	picture = REFORM_eventPicture
+	
+	trigger = {
+		has_province_modifier = briton_acceptance
+		NOT = { culture = briton }
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = brn_welsh_123
+		change_culture = briton
+	}
+}
+province_event = {
+	id = wales_flavor.6
+	title = wales_flavor.6.t
+	desc = wales_flavor.6.d
+	picture = ANGRY_MOB_eventPicture
+		
+	trigger = {
+		# Make it so Brittonic only spreads to the same
+		# continent as the capital
+		owner = {
+			capital_scope = {
+				same_continent = ROOT
+			}
+		}
+		any_friendly_coast_border_province = { 
+			owner = {
+				tag = FROM
+			}
+			OR = {
+				has_province_modifier = briton_acceptance
+				culture = briton 
+			}
+		}
+		owner = {
+			primary_culture = briton
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = briton_acceptance
+				has_province_modifier = briton_rejection
+				culture = briton
+				owner = {
+					has_country_modifier = brt_domninance2
+				}
+			}
+		}
+	}
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = {
+				NOT = { stability = 1 }
+			}
+		}
+		modifier = {
+			factor = 2
+			owner = {
+				stability = 1
+			}
+		}
+	}
+	
+	option = {
+		name = brt_reject 
+		add_province_modifier = {
+			name = briton_rejection
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = brt_reject2
+		add_province_modifier = {
+			name = briton_rejection
+			duration = 1825
+		}
+		owner = {
+			add_years_of_income = -0.05
+		}
+	}
+	
+	option = {
+		name = brt_reject3
+		add_province_modifier = {
+			name = briton_rejection
+			duration = 1825
+		}
+		spawn_rebels = {
+			type = noble_rebels
+			size = 2
+		}
+	}
+}
+province_event = {
+	id = wales_flavor.7
+	title = wales_flavor.7.t
+	desc = wales_flavor.7.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+		
+	trigger = {
+		# Make it so Brittonic only spreads to the same
+		# continent as the capital
+		owner = {
+			capital_scope = {
+				same_continent = ROOT
+			}
+		}
+		any_friendly_coast_border_province = { 
+			owned_by = ROOT
+				OR = {
+					has_province_modifier = briton_acceptance
+					culture = briton 
+				}
+			}
+		owner = {
+			primary_culture = briton
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = briton_acceptance
+				has_province_modifier = briton_apathy1
+				has_province_modifier = briton_rejection
+				culture = briton
+				owner = {
+					has_country_modifier = brt_domninance2
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	option = {
+		name = brt_apathy
+		add_province_modifier = {
+			name = briton_apathy1
+			duration = 1825
+		}
+	}
+	
+	option = {
+		name = brt_apathy2
+		owner = {
+			add_years_of_income = -0.1
+		}
+		add_province_modifier = {
+			name = briton_apathy1
+			duration = 3650
+		}
+	}
+}
+country_event = {
+	id =  wales_flavor.8
+	title = wales_flavor.8.t
+	desc = wales_flavor.8.d
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = brt_domination
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						has_province_modifier = briton_acceptance
+						has_province_modifier = briton_apathy1
+						has_province_modifier = briton_rejection
+					}
+				}
+				remove_province_modifier = briton_acceptance
+				remove_province_modifier = briton_apathy1
+				remove_province_modifier = briton_rejection
+			}
+		}
+		remove_country_modifier = brit_culture
+		add_country_modifier = {
+			name = brt_domninance2
+			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = wales_flavor.9
+	title = wales_flavor.9.t
+	desc = wales_flavor.9.d
+	picture = LAND_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_modifier = brit_culture
+		calc_true_if = {
+			all_owned_province = {
+				OR = {
+					area = east_anglia_area 
+					area = home_counties_area
+					area = west_midlands_area
+				}
+				culture = briton
+			}
+			amount = 5
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	immediate = {
+	hidden_effect = {
+		east_anglia_area = {
+			limit = {
+				owned_by = ROOT
+			}
+			add_core = ESX
+		}
+		home_counties_area = {
+			limit = {
+				owned_by = ROOT
+			}
+			add_core = ESX
+		}
+		237 = {
+			add_core = ESX
+		}
+		release = ESX
+		ESX = {
+			change_government = monarchy
+		}
+		ESX = {
+			define_ruler = {
+				culture = english
+			}
+			add_manpower = 10
+			add_country_modifier = {
+				name = rebel_brt
+				duration = 1825
+			}
+			capital_scope = {
+				build_to_forcelimit = {
+					infantry = 0.6
+					cavalry = 0.1
+					artillery = 0.3
+				}
+			}
+		}
+	}
+	}
+	
+	option = {
+		name = rebellion_ess
+		declare_war_with_cb = {
+			who = ESX
+			casus_belli = cb_core 
+			war_goal_province = 236
+		}
+	}
+}
+country_event = {
+	id = wales_flavor.10
+	title = wales_flavor.10.t
+	desc = wales_flavor.10.d
+	picture = LAND_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_modifier = brit_culture
+		calc_true_if = {
+			all_owned_province = {
+				OR = {
+					area = highlands_area 
+					area = kingdom_of_the_isles_area
+					area = lowlands_area
+				}
+				culture = briton
+			}
+			amount = 5
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	immediate = {
+	hidden_effect = {
+		highlands_area = {
+			if = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_core = HSC 
+			}
+		}
+		253 = {
+			if = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_core = HSC 
+			}
+		}
+		4364 = {
+			if = {
+				limit = { 
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_core = HSC 
+			}
+		}
+		release = HSC 
+		HSC = {
+			change_government = monarchy
+		}
+		HSC = {
+			define_ruler = {
+				culture = highland_scottish
+			}
+			add_manpower = 10
+			add_country_modifier = {
+				name = rebel_brt
+				duration = 1825
+			}
+			capital_scope = {
+				build_to_forcelimit = {
+					infantry = 0.6
+					cavalry = 0.1
+					artillery = 0.3
+				}
+			}
+			random_owned_province = {
+				limit = {
+					has_port = yes
+				}
+				build_to_forcelimit = {
+					galley = 0.3
+					light_ship = 0.3
+					transport = 0.2
+				}
+			}
+		}
+	}
+	}
+	option = {
+		name = rebellion_hsc
+		declare_war_with_cb = {
+			who = HSC
+			casus_belli = cb_core 
+			war_goal_province = 250
+		}
+	}
+}
+country_event = {
+	id = wales_flavor.11
+	title = wales_flavor.11.t
+	desc = wales_flavor.11.d
+	picture = LAND_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_modifier = brit_culture
+		calc_true_if = {
+			all_owned_province = {
+				OR = {
+					area = connacht_area
+					area = leinster_area
+					area = ulster_area
+					area = munster_area
+				}
+				culture = briton
+			}
+			amount = 5
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	immediate = {
+		hidden_effect = {
+			munster_area = {
+				if = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_core = IRE 
+				}
+			}
+			5131 = {
+				if = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_core = IRE 
+				}
+			}
+			375 = {
+				if = {
+					limit = { 
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_core = IRE 
+				}
+			}
+			release = IRE 
+			IRE = {
+				change_government = monarchy
+			}
+			IRE = {
+				define_ruler = {
+					culture = highland_scottish
+				}
+				add_manpower = 10
+				add_country_modifier = {
+					name = rebel_brt
+					duration = 1825
+				}
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.6
+						cavalry = 0.1
+						artillery = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.3
+						light_ship = 0.3
+						transport = 0.2
+					}
+				}
+			}
+		}
+	}
+	option = {
+    	name = rebellion_ire
+    	declare_war_with_cb = {
+        	who = IRE
+        	casus_belli = cb_core 
+        	war_goal_province = 4378
+    	}
+	}
+}
+
+### TLW Events ###
+namespace = ab_prydain

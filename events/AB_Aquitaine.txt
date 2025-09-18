@@ -1,0 +1,206 @@
+namespace = ab_aquitaine
+normal_or_historical_nations = yes
+
+#Move Capital to Tolouse ( inland, easier to defend, etc... )
+country_event = {
+	id = ab_aquitaine.1
+	title = ab_aquitaine.1.t
+	desc = ab_aquitaine.1.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_aquitaine.1.a
+		196 = {
+			move_capital_effect = yes
+		}
+		196 = {
+			change_culture = gascon
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		196 = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+		}
+	}
+
+	option = {
+		name = ab_aquitaine.1.b
+		capital_scope = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+	}
+}
+
+#Restoration of Aquitaine - a Romanphile Kingdom trying to revive Rome legacy like Prydain
+country_event = {
+	id = ab_aquitaine.2
+	title = ab_aquitaine.2.t
+	desc = ab_aquitaine.2.d
+	picture = FREE_CITY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_aquitaine.2.a
+		add_power_projection_mission = { amount = 25 }
+		if = {
+			limit = {
+				is_part_of_hre = yes
+				is_elector = no
+				is_emperor = no
+			}
+			emperor = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_left_empire
+				}
+			}
+			set_in_empire = no
+			emperor = {
+				country_event = { id = hre_event.5 }
+			}
+		}
+		if = {
+			limit = {
+				NOT = { government_rank = 2 }
+			}
+			set_government_rank = 2
+		}
+		change_tag = AQT
+		if = {
+			limit = { has_custom_ideas = no }
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		swap_non_generic_missions = yes
+		add_country_modifier = {
+			name = "centralization_modifier"
+			duration = 7300
+		}
+		add_government_reform = aquitain_kingdom_reform
+	}
+}
+
+#Aquitain Culture - Hidden Event
+province_event = {
+	id = ab_aquitaine.3
+	title = ab_aquitaine.3.t
+	desc = ab_aquitaine.3.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = aqt_aquitaine_conversion_flag
+			culture = aquitaine
+		}
+		OR = {
+			culture = occitain
+			culture = gascon
+			culture = basque
+			culture = aragonese
+			culture = catalan
+			AND = {
+				culture = swiss
+				owner = { has_country_flag = aqt_switzerland_conversion_flag }
+			}
+		}
+		any_neighbor_province = {
+			culture = aquitaine
+		}
+	}
+	
+	option = {
+		name = ab_aquitaine.3.a
+		change_culture = aquitaine
+		change_original_culture = aquitaine
+	}
+}
+
+#Walloon Culture - Hidden Event
+province_event = {
+	id = ab_aquitaine.4
+	title = ab_aquitaine.4.t
+	desc = ab_aquitaine.4.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			culture_group = french
+			mission_completed = aqt_low_countries
+		}
+		region = low_countries_region
+		NOT = { culture_group = french }
+		any_neighbor_province = {
+			culture = wallonian
+		}
+	}
+	
+	option = {
+		name = ab_aquitaine.4.a
+		change_culture = wallonian
+		change_original_culture = wallonian
+	}
+}
+
+#Swiss Integration - Hidden Event
+country_event = {
+	id = ab_aquitaine.5
+	title = ab_aquitaine.5.t
+	desc = ab_aquitaine.5.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = aqt_switzerland_bonus
+		NOT = {
+			has_country_modifier = mlo_the_swiss_mercs
+		}
+		romandie_area = {
+			type = all
+			culture = aquitaine
+		}
+		switzerland_area = {
+			type = all
+			culture = aquitaine
+		}
+	}
+	
+	option = {
+		name = ab_aquitaine.5.a
+		add_country_modifier = {
+			name = mlo_the_swiss_mercs
+			duration = -1
+		}
+	}
+}

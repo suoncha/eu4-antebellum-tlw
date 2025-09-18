@@ -1,0 +1,652 @@
+namespace = tlw_rome
+
+# Romanization - Trigger for Rewards
+province_event = {
+	id = tlw_rome.0
+	title = tlw_rome.0.t
+	desc = tlw_rome.0.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { culture_group = roman_g }
+	}
+
+	option = {
+		name = tlw_rome.0.a
+		if = {
+			limit = {
+				OR = {
+					region = france_region
+					AND = {
+						region = low_countries_region
+						ROM = {
+							has_country_flag = rom_belgica_isof_gallia
+						}
+					}
+				}
+			}
+			change_culture = gallo_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = maghreb_region
+					area = cap_verde_area
+					area = western_sahara_area
+					area = east_azbin_area
+					area = azbin_area
+				}
+			}
+			change_culture = afro_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = croatia_area
+					area = slavonia_area
+					area = bosnia_area
+					area = rascia_area
+					area = albania_area
+					area = serbia_area
+					area = bulgaria_area
+					area = silistria_area
+					area = east_adriatic_coast_area
+					area = carinthia_area
+					province_id = 4780
+					province_id = 3001
+					province_id = 1764
+				}
+			}
+			change_culture = illyro_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = northern_greece_area
+					area = morea_area
+					area = ionian_islands_area
+					area = macedonia_area
+					area = thrace_area
+				}
+			}
+			change_culture = greco_roman
+		}
+		else_if = {
+			limit = {
+				region = british_isles_region
+			}
+			change_culture = romano_british
+		}
+		else_if = {
+			limit = {
+				region = iberia_region
+			}
+			change_culture = hispano_roman
+		}
+		else_if = {
+			limit = {
+				region = carpathia_region
+			}
+			change_culture = daco_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					area = al_jazira_area
+					area = iraq_arabi_area
+					area = basra_area
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						religion = zoroastrian
+					}
+				}
+				change_culture = perso_roman
+			}
+			else_if = {
+				limit = {
+					ROM = {
+						religion_group = muslim
+					}
+				}
+				change_culture = romano_arabic
+			}
+			else = {
+				change_culture = greco_roman
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = mashriq_region
+					region = egypt_region
+					area = saharan_oases
+					area = dongola_area
+					province_id = 1232
+					province_id = 2324
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						religion_group = christian
+					}
+				}
+				change_culture = greco_roman
+			}
+			else = {
+				change_culture = romano_arabic
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_german_region
+					region = south_german_region
+					AND = {
+						region = low_countries_region
+						ROM = {
+							has_country_flag = rom_belgica_isof_germania
+						}
+					}
+				}
+			}
+			change_culture = romano_germanic
+		}
+		else_if = {
+			limit = {
+				region = scandinavia_region
+			}
+			change_culture = romano_nordic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = korea_region
+					area = liaoning_area
+				}
+			}
+			change_culture = romano_korean
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = crimea_region
+					region = central_asia_region
+					region = mongolia_region
+					region = manchuria_region
+					area = circassia_area
+					area = dagestan_area
+				}
+			}
+			change_culture = romano_scythic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = persia_region
+					region = khorasan_region
+					AND = {
+						region = caucasia_region
+						ROM = {
+							has_country_flag = rom_caucasia_isof_persia
+						}
+					}
+				}
+			}
+			change_culture = perso_roman
+		}
+		else_if = {
+			limit = {
+				superregion = india_superregion
+			}
+			change_culture = indo_roman
+		}
+		else_if = {
+			limit = {
+				region = arabia_region
+			}
+			change_culture = romano_arabic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = wendia_region
+					region = poland_region
+					region = baltic_region
+					area = podlasie_area
+					area = red_ruthenia_area
+				}
+			}
+			change_culture = romano_polish
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = russia_region
+					region = ruthenia_region
+				}
+			}
+			change_culture = russo_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = ural_region
+					region = west_siberia_region
+					region = east_siberia_region
+				}
+			}
+			if = {
+				limit = {
+					owner = {
+						tag = GLH
+					}
+				}
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = russo_roman
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = anatolia_region
+					AND = {
+						region = caucasia_region
+						ROM = {
+							has_country_flag = rom_caucasia_isof_anatolia
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						was_tag = RUM
+					}
+				}
+				change_culture = romano_scythic
+			}
+			else = {
+				change_culture = greco_roman
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = north_china_region
+					region = south_china_region
+					area = chuanbei_area
+					area = sichuan_area
+				}
+			}
+			change_culture = sino_roman
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = tibet_region
+					region = burma_region
+					region = xinan_region
+				}
+			}
+			change_culture = tibeto_roman
+		}
+		else_if = {
+			limit = {
+				region = japan_region
+			}
+			change_culture = romano_japanese
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indo_china_region
+					area = north_tenasserim_area
+					area = tenasserim_area
+				}
+			}
+			change_culture = romano_tai
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = indonesia_region
+					region = moluccas_region
+					region = malaya_region
+				}
+			}
+			change_culture = romano_malay
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = horn_of_africa_region
+					area = kurdufan_area
+					area = sudan_area
+					area = darfur_central_sahara_area
+					area = chad_area
+					area = centralafrica_area
+					area = nkongo_area
+				}
+			}
+			change_culture = romano_cushitic
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = niger_region
+					region = sahel_region
+					region = guinea_region
+					area = cameroon_area
+				}
+			}
+			change_culture = romano_nigerian
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = kongo_region
+					region = kalahari_region
+					region = south_africa_region
+					area = sankuru_area
+					area = chokwe_area
+					area = zambia_area
+				}
+			}
+			change_culture = romano_kongolese
+		}
+		else_if = {
+			limit = {
+				OR = {
+					region = east_africa_region
+					region = central_africa_region
+					region = south_africa_region
+					area = sankuru_area
+					area = chokwe_area
+				}
+			}
+			change_culture = romano_bantu
+		}
+		else_if = {
+			limit = {
+				region = italy_region
+			}
+			change_culture = roman_new
+		}
+		else = {
+			change_culture = ROOT
+		}
+		add_province_modifier = {
+			name = byz_forced_romanized
+			duration = 7300 
+		}
+	}
+}
+
+# Restoration of Rome
+country_event = {
+	id = tlw_rome.1
+	title = tlw_rome.1.t
+	desc = tlw_rome.1.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_variable = {
+				which = tlw_romanization_page_var
+				value = 1
+			}
+			set_variable = {
+				which = tlw_diocese_page_var
+				value = 1
+			}
+		}
+	}
+
+	# Flag clearing to optimize performance
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					mission_completed = byzantium_iron
+				}
+				clr_country_flag = had_16th_crisis
+			}
+			clr_country_flag = byz_court_latin
+			clr_country_flag = byz_court_mixed
+			clr_country_flag = byz_court_greek
+			clr_country_flag = byz_restore_republic
+			clr_country_flag = lat_cant_trigger_events
+			clr_country_flag = byz_greek_spread
+		}
+	}
+
+	option = {
+		name = tlw_rome.1.a
+		if = {
+			limit = {
+				OR = {
+					has_country_flag = byz_restore_republic
+					government = republic
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = byz_restore_republic
+					}
+					change_government = republic
+				}
+			}
+			add_government_reform = byzromanrepublic
+		}
+		else_if = {
+			limit = {
+				government = theocracy
+				NOT = { religion_group = muslim }
+			}
+			add_government_reform = byzromantheocracy
+		}
+		else_if ={
+			limit = {
+				religion_group = muslim
+			}
+			add_government_reform = byzromancaliphate
+		}
+		else = {
+			add_government_reform = byzromanempire
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = byzculturalsphere
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = byz_court_latin
+						religion = catholic
+						religion = sol_invictus
+					}
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -40
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = byz_court_mixed
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -50
+				}
+			}
+			else_if = {
+				limit = {
+					religion = zoroastrian
+				}
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzpersian
+					influence = -60
+				}
+			}
+			else = {
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = 100
+				}
+				add_faction_influence = {
+					faction = faction_byzlatin
+					influence = -60
+				}
+			}
+			country_event = {
+				id = tlw_rome.2
+			}
+		}
+	}
+}
+
+# Diocese System
+country_event = {
+	id = tlw_rome.2
+	title = tlw_rome.2.t
+	desc = tlw_rome.2.d
+	picture = AB_ROMANDIOCESE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = tlw_rome.2.a
+		swap_non_generic_missions = yes
+		hidden_effect = {
+			if = {
+				limit = {
+					was_tag = VSG
+				}
+				country_event = {
+					id = ab_visigoths.5
+				}
+			}
+			else = {
+				country_event = {
+					id = ab_byzantium.70
+				}
+			}
+		}
+	}
+}
+
+# Rome Mission Switch
+country_event = {
+	id = tlw_rome.3
+	title = tlw_rome.3.t
+	desc = tlw_rome.3.d
+	picture = BYZ_BYZANTINE_EMPEROR_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = ab_missionswitch_rome_default
+			clr_country_flag = ab_missionswitch_rome_persian
+			clr_country_flag = ab_missionswitch_rome_chinese
+			if = {
+				limit = {
+					OR = {
+						tag = VSG
+						was_tag = VSG
+					}
+				}
+				clr_country_flag = ab_missionswitch_vsg_sol
+				clr_country_flag = ab_missionswitch_vsg_orthodox
+				clr_country_flag = ab_missionswitch_vsg_catholic
+			}
+		}
+	}
+
+	option = {
+		name = tlw_rome.3.a
+		hidden_effect = {
+			set_country_flag = ab_missionswitch_rome_default
+			swap_non_generic_missions = yes
+		}
+	}
+
+	option = {
+		name = tlw_rome.3.vsg_religion
+		trigger = {
+			OR = {
+				has_country_flag = vsg_religion_sol
+				has_country_flag = vsg_religion_orthodox
+				has_country_flag = vsg_religion_catholic
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = vsg_religion_sol
+			}
+			set_country_flag = ab_missionswitch_vsg_sol
+		}
+		if = {
+			limit = {
+				has_country_flag = vsg_religion_orthodox
+			}
+			set_country_flag = ab_missionswitch_vsg_orthodox
+		}
+		if = {
+			limit = {
+				has_country_flag = vsg_religion_catholic
+			}
+			set_country_flag = ab_missionswitch_vsg_catholic
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+
+	option = {
+		name = tlw_rome.3.persian
+		trigger = {
+			has_country_flag = byz_persian_war_victory
+		}
+		hidden_effect = {
+			set_country_flag = ab_missionswitch_rome_persian
+			swap_non_generic_missions = yes
+		}
+	}
+
+	option = {
+		name = tlw_rome.3.chinese
+		trigger = {
+			has_country_flag = byz_chinese_war_victory
+		}
+		hidden_effect = {
+			set_country_flag = ab_missionswitch_rome_chinese
+			swap_non_generic_missions = yes
+		}
+	}
+}

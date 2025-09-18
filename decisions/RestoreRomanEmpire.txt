@@ -99,31 +99,6 @@ country_decisions = {
 			add_ruler_personality = augustus_personality
 			custom_tooltip = BYZ_ALWAYS_AUGUSTUS
 			custom_tooltip = AB_EMPTY
-			# Inherit
-			if = {
-				limit = {
-					overlord_of = VSV
-				}
-				inherit = VSV
-			}
-			if = {
-				limit = {
-					overlord_of = VSO
-				}
-				inherit = VSO
-			}
-			if = {
-				limit = {
-					overlord_of = VSS
-				}
-				inherit = VSS
-			}
-			if = {
-				limit = {
-					overlord_of = LAT
-				}
-				inherit = LAT
-			}
 			set_country_flag = general_flag_Rome_flag
 			change_tag = ROM
 			on_change_tag_effect = yes
@@ -139,79 +114,84 @@ country_decisions = {
 				}
 				override_country_name = ROMANTHEOCRACY
 			}
-			# Name & Culture
+			# Culture
 			if = {
 				limit = {
-					culture_group = gaelic
+					NOT = { culture_group = roman_g }
 				}
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture_group = ROOT
-						}
-						change_culture = romano_british
+				if = {
+					limit = {
+						culture_group = gaelic
 					}
-				}
-				custom_tooltip = AB_EMPTY
-				change_primary_culture = romano_british
-			}
-			else_if = {
-				limit = {
-					culture_group = iberian
-				}
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture_group = ROOT
+					hidden_effect = {
+						every_province = {
+							limit = {
+								culture_group = ROOT
+							}
+							change_culture = romano_british
 						}
-						change_culture = hispano_roman
 					}
+					custom_tooltip = AB_EMPTY
+					change_primary_culture = romano_british
 				}
-				custom_tooltip = AB_EMPTY
-				change_primary_culture = hispano_roman
-			}
-			else_if = {
-				limit = {
-					culture_group = french
-				}
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture_group = ROOT
+				else_if = {
+					limit = {
+						culture_group = iberian
+					}
+					hidden_effect = {
+						every_province = {
+							limit = {
+								culture_group = ROOT
+							}
+							change_culture = hispano_roman
 						}
-						change_culture = gallo_roman
 					}
+					custom_tooltip = AB_EMPTY
+					change_primary_culture = hispano_roman
 				}
-				custom_tooltip = AB_EMPTY
-				change_primary_culture = gallo_roman
-			}
-			else_if = {
-				limit = {
-					culture_group = germanic
-				}
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture_group = ROOT
+				else_if = {
+					limit = {
+						culture_group = french
+					}
+					hidden_effect = {
+						every_province = {
+							limit = {
+								culture_group = ROOT
+							}
+							change_culture = gallo_roman
 						}
-						change_culture = romano_germanic
 					}
+					custom_tooltip = AB_EMPTY
+					change_primary_culture = gallo_roman
 				}
-				custom_tooltip = AB_EMPTY
-				change_primary_culture = romano_germanic
-			}
-			else = {
-				hidden_effect = {
-					every_province = {
-						limit = {
-							culture_group = ROOT
+				else_if = {
+					limit = {
+						culture_group = germanic
+					}
+					hidden_effect = {
+						every_province = {
+							limit = {
+								culture_group = ROOT
+							}
+							change_culture = romano_germanic
 						}
-						change_culture = roman_new
 					}
+					custom_tooltip = AB_EMPTY
+					change_primary_culture = romano_germanic
 				}
-				custom_tooltip = AB_EMPTY
-				change_primary_culture = roman_new
-			}
+				else = {
+					hidden_effect = {
+						every_province = {
+							limit = {
+								culture_group = ROOT
+							}
+							change_culture = roman_new
+						}
+					}
+					custom_tooltip = AB_EMPTY
+					change_primary_culture = roman_new
+				}
+			}		
 			custom_tooltip = AB_EMPTY
 			custom_tooltip = ROME_CATHOLIC_ROMANIZATION_ON_DECISION
 			hidden_effect = {
@@ -272,11 +252,11 @@ country_decisions = {
 				118 = {
 					add_core = ROOT
 					province_event = {
-						id = ab_byzantium.71
+						id = tlw_rome.0
 					}
 				}
 				country_event = {
-					id = ab_byzantium.67
+					id = tlw_rome.1
 				}
 			}
 			custom_tooltip = AB_EMPTY
@@ -292,7 +272,6 @@ country_decisions = {
 				name = centralization_modifier
 				duration = 7300
 			}
-			swap_non_generic_missions = yes
 		}
 		
 		ai_will_do = {
