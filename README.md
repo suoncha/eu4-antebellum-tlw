@@ -1,3 +1,5 @@
+# This repository is now moved to https://github.com/suoncha/eu4-antebellum-modpack/tree/tlw
+---
 # Ante Bellum - The Lost World
 
 ## Description
